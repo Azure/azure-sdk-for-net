@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of properties of the device. </summary>
     public partial class DeviceProperties
     {
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         public DeviceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         /// <param name="deviceVendor"> Name of the device Vendor. </param>
         /// <param name="deviceModel"> Model of the device. </param>
         /// <param name="linkSpeedInMbps"> Link speed. </param>
-        internal DeviceProperties(string deviceVendor, string deviceModel, int? linkSpeedInMbps)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProperties(string deviceVendor, string deviceModel, int? linkSpeedInMbps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceVendor = deviceVendor;
             DeviceModel = deviceModel;
             LinkSpeedInMbps = linkSpeedInMbps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the device Vendor. </summary>

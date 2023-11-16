@@ -5,23 +5,82 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    internal partial class PaloAltoNetworksFirewallStatusListResult
+    internal partial class PaloAltoNetworksFirewallStatusListResult : IUtf8JsonSerializable, IJsonModel<PaloAltoNetworksFirewallStatusListResult>
     {
-        internal static PaloAltoNetworksFirewallStatusListResult DeserializePaloAltoNetworksFirewallStatusListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaloAltoNetworksFirewallStatusListResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PaloAltoNetworksFirewallStatusListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PaloAltoNetworksFirewallStatusListResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PaloAltoNetworksFirewallStatusListResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PaloAltoNetworksFirewallStatusListResult IJsonModel<PaloAltoNetworksFirewallStatusListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallStatusListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement, options);
+        }
+
+        internal static PaloAltoNetworksFirewallStatusListResult DeserializePaloAltoNetworksFirewallStatusListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<PaloAltoNetworksFirewallStatusData> value = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -39,8 +98,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PaloAltoNetworksFirewallStatusListResult(value, nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PaloAltoNetworksFirewallStatusListResult(value, nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PaloAltoNetworksFirewallStatusListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallStatusListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PaloAltoNetworksFirewallStatusListResult IPersistableModel<PaloAltoNetworksFirewallStatusListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallStatusListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<PaloAltoNetworksFirewallStatusListResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

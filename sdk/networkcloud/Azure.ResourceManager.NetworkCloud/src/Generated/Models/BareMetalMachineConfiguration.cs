@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineConfigurationData represents configuration for the bare metal machine. </summary>
     public partial class BareMetalMachineConfiguration
     {
-        /// <summary> Initializes a new instance of BareMetalMachineConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineConfiguration"/>. </summary>
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>
         /// <param name="bootMacAddress"> The MAC address associated with the PXE NIC card. </param>
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SerialNumber = serialNumber;
         }
 
-        /// <summary> Initializes a new instance of BareMetalMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineConfiguration"/>. </summary>
         /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>
@@ -46,7 +50,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="rackSlot"> The slot the physical machine is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the machine. Hardware suppliers may use an alternate value. For example, service tag. </param>
-        internal BareMetalMachineConfiguration(string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, long rackSlot, string serialNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BareMetalMachineConfiguration(string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, long rackSlot, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BmcConnectionString = bmcConnectionString;
             BmcCredentials = bmcCredentials;
@@ -56,6 +61,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             MachineName = machineName;
             RackSlot = rackSlot;
             SerialNumber = serialNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineConfiguration"/> for deserialization. </summary>
+        internal BareMetalMachineConfiguration()
+        {
         }
 
         /// <summary> The connection string for the baseboard management controller including IP address and protocol. </summary>

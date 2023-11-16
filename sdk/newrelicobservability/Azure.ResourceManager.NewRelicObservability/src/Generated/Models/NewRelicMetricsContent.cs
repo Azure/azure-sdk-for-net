@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of get metrics Operation. </summary>
     public partial class NewRelicMetricsContent
     {
-        /// <summary> Initializes a new instance of NewRelicMetricsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicMetricsContent(string userEmail)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
             UserEmail = userEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsContent"/>. </summary>
+        /// <param name="userEmail"> User Email. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicMetricsContent(string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            UserEmail = userEmail;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsContent"/> for deserialization. </summary>
+        internal NewRelicMetricsContent()
+        {
         }
 
         /// <summary> User Email. </summary>

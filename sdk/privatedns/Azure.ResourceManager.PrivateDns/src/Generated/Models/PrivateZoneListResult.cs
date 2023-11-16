@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PrivateDns;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> The response to a Private DNS zone list operation. </summary>
     internal partial class PrivateZoneListResult
     {
-        /// <summary> Initializes a new instance of PrivateZoneListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateZoneListResult"/>. </summary>
         internal PrivateZoneListResult()
         {
             Value = new ChangeTrackingList<PrivateDnsZoneData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateZoneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateZoneListResult"/>. </summary>
         /// <param name="value"> Information about the Private DNS zones. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal PrivateZoneListResult(IReadOnlyList<PrivateDnsZoneData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateZoneListResult(IReadOnlyList<PrivateDnsZoneData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Information about the Private DNS zones. </summary>

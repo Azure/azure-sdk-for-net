@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Represents a metric metadata value. </summary>
     public partial class QueryBatchMetadataValue
     {
-        /// <summary> Initializes a new instance of QueryBatchMetadataValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetadataValue"/>. </summary>
         internal QueryBatchMetadataValue()
         {
         }
 
-        /// <summary> Initializes a new instance of QueryBatchMetadataValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetadataValue"/>. </summary>
         /// <param name="name"> The name of the metadata. </param>
         /// <param name="value"> The value of the metadata. </param>
-        internal QueryBatchMetadataValue(QueryBatchLocalizableString name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryBatchMetadataValue(QueryBatchLocalizableString name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the metadata. </summary>

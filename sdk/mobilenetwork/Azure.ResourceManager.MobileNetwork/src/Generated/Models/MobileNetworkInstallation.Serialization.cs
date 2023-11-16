@@ -5,28 +5,104 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkInstallation : IUtf8JsonSerializable
+    public partial class MobileNetworkInstallation : IUtf8JsonSerializable, IJsonModel<MobileNetworkInstallation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkInstallation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MobileNetworkInstallation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MobileNetworkInstallation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MobileNetworkInstallation>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ReinstallRequired))
+                {
+                    writer.WritePropertyName("reinstallRequired"u8);
+                    writer.WriteStringValue(ReinstallRequired.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Reasons))
+                {
+                    writer.WritePropertyName("reasons"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Reasons)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Operation))
+                {
+                    writer.WritePropertyName("operation"u8);
+                    JsonSerializer.Serialize(writer, Operation);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkInstallation DeserializeMobileNetworkInstallation(JsonElement element)
+        MobileNetworkInstallation IJsonModel<MobileNetworkInstallation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkInstallation(document.RootElement, options);
+        }
+
+        internal static MobileNetworkInstallation DeserializeMobileNetworkInstallation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +112,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<MobileNetworkReinstallRequired> reinstallRequired = default;
             Optional<IReadOnlyList<MobileNetworkInstallationReason>> reasons = default;
             Optional<SubResource> operation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredState"u8))
@@ -88,8 +166,38 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     operation = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MobileNetworkInstallation(Optional.ToNullable(desiredState), Optional.ToNullable(state), Optional.ToNullable(reinstallRequired), Optional.ToList(reasons), operation);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MobileNetworkInstallation(Optional.ToNullable(desiredState), Optional.ToNullable(state), Optional.ToNullable(reinstallRequired), Optional.ToList(reasons), operation, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MobileNetworkInstallation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MobileNetworkInstallation IPersistableModel<MobileNetworkInstallation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkInstallation(document.RootElement, options);
+        }
+
+        string IPersistableModel<MobileNetworkInstallation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

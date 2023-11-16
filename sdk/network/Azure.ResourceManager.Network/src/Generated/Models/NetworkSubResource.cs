@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Reference to another subresource. </summary>
     public partial class NetworkSubResource
     {
-        /// <summary> Initializes a new instance of NetworkSubResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSubResource"/>. </summary>
         public NetworkSubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSubResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSubResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal NetworkSubResource(ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSubResource(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID. </summary>

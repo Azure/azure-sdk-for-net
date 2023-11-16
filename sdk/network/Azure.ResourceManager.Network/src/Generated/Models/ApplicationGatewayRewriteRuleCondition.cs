@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Set of conditions in the Rewrite Rule in Application Gateway. </summary>
     public partial class ApplicationGatewayRewriteRuleCondition
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleCondition"/>. </summary>
         public ApplicationGatewayRewriteRuleCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleCondition"/>. </summary>
         /// <param name="variable"> The condition parameter of the RewriteRuleCondition. </param>
         /// <param name="pattern"> The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition. </param>
         /// <param name="ignoreCase"> Setting this parameter to truth value with force the pattern to do a case in-sensitive comparison. </param>
         /// <param name="negate"> Setting this value as truth will force to check the negation of the condition given by the user. </param>
-        internal ApplicationGatewayRewriteRuleCondition(string variable, string pattern, bool? ignoreCase, bool? negate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayRewriteRuleCondition(string variable, string pattern, bool? ignoreCase, bool? negate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Variable = variable;
             Pattern = pattern;
             IgnoreCase = ignoreCase;
             Negate = negate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The condition parameter of the RewriteRuleCondition. </summary>

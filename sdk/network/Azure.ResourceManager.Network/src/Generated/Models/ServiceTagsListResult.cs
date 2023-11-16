@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListServiceTags API service call. </summary>
     public partial class ServiceTagsListResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceTagsListResult"/>. </summary>
         internal ServiceTagsListResult()
         {
             Values = new ChangeTrackingList<ServiceTagInformation>();
         }
 
-        /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagsListResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,12 +33,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="cloud"> The name of the cloud. </param>
         /// <param name="values"> The list of service tag information resources. </param>
         /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
-        internal ServiceTagsListResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTagsListResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ChangeNumber = changeNumber;
             Cloud = cloud;
             Values = values;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The iteration number. </summary>

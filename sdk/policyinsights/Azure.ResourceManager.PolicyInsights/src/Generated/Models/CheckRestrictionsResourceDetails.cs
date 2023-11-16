@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The information about the resource that will be evaluated. </summary>
     public partial class CheckRestrictionsResourceDetails
     {
-        /// <summary> Initializes a new instance of CheckRestrictionsResourceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/>. </summary>
         /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceContent"/> is null. </exception>
         public CheckRestrictionsResourceDetails(BinaryData resourceContent)
@@ -21,6 +25,24 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Argument.AssertNotNull(resourceContent, nameof(resourceContent));
 
             ResourceContent = resourceContent;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/>. </summary>
+        /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
+        /// <param name="apiVersion"> The api-version of the resource content. </param>
+        /// <param name="scope"> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckRestrictionsResourceDetails(BinaryData resourceContent, string apiVersion, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceContent = resourceContent;
+            ApiVersion = apiVersion;
+            Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/> for deserialization. </summary>
+        internal CheckRestrictionsResourceDetails()
+        {
         }
 
         /// <summary>

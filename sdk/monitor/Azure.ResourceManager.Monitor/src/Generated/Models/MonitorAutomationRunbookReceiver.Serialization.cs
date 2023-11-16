@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorAutomationRunbookReceiver : IUtf8JsonSerializable
+    public partial class MonitorAutomationRunbookReceiver : IUtf8JsonSerializable, IJsonModel<MonitorAutomationRunbookReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorAutomationRunbookReceiver>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MonitorAutomationRunbookReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MonitorAutomationRunbookReceiver>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MonitorAutomationRunbookReceiver>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("automationAccountId"u8);
             writer.WriteStringValue(AutomationAccountId);
@@ -39,11 +49,40 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorAutomationRunbookReceiver DeserializeMonitorAutomationRunbookReceiver(JsonElement element)
+        MonitorAutomationRunbookReceiver IJsonModel<MonitorAutomationRunbookReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorAutomationRunbookReceiver(document.RootElement, options);
+        }
+
+        internal static MonitorAutomationRunbookReceiver DeserializeMonitorAutomationRunbookReceiver(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +94,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> name = default;
             Optional<Uri> serviceUri = default;
             Optional<bool> useCommonAlertSchema = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("automationAccountId"u8))
@@ -100,8 +141,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     useCommonAlertSchema = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorAutomationRunbookReceiver(automationAccountId, runbookName, webhookResourceId, isGlobalRunbook, name.Value, serviceUri.Value, Optional.ToNullable(useCommonAlertSchema));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitorAutomationRunbookReceiver(automationAccountId, runbookName, webhookResourceId, isGlobalRunbook, name.Value, serviceUri.Value, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitorAutomationRunbookReceiver>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitorAutomationRunbookReceiver IPersistableModel<MonitorAutomationRunbookReceiver>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMonitorAutomationRunbookReceiver(document.RootElement, options);
+        }
+
+        string IPersistableModel<MonitorAutomationRunbookReceiver>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

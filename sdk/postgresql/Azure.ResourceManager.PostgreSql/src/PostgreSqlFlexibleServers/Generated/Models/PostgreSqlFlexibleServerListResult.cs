@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A list of servers. </summary>
     internal partial class PostgreSqlFlexibleServerListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerListResult"/>. </summary>
         internal PostgreSqlFlexibleServerListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlFlexibleServerData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerListResult"/>. </summary>
         /// <param name="value"> The list of flexible servers. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal PostgreSqlFlexibleServerListResult(IReadOnlyList<PostgreSqlFlexibleServerData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerListResult(IReadOnlyList<PostgreSqlFlexibleServerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of flexible servers. </summary>

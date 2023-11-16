@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Dimension splitting and filtering definition. </summary>
     public partial class MonitorDimension
     {
-        /// <summary> Initializes a new instance of MonitorDimension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
@@ -30,15 +33,22 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
-        internal MonitorDimension(string name, MonitorDimensionOperator @operator, IList<string> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorDimension(string name, MonitorDimensionOperator @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Operator = @operator;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorDimension"/> for deserialization. </summary>
+        internal MonitorDimension()
+        {
         }
 
         /// <summary> Name of the dimension. </summary>

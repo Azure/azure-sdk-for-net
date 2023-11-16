@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -13,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Application Insights apps that were part of the metadata request and that the user has access to. </summary>
     internal partial class MetadataApplication
     {
-        /// <summary> Initializes a new instance of MetadataApplication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataApplication"/>. </summary>
         /// <param name="id"> The ID of the Application Insights app. </param>
         /// <param name="resourceId"> The ARM resource ID of the Application Insights app. </param>
         /// <param name="name"> The name of the Application Insights app. </param>
@@ -30,6 +34,28 @@ namespace Azure.Monitor.Query.Models
             ResourceId = resourceId;
             Name = name;
             Region = region;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataApplication"/>. </summary>
+        /// <param name="id"> The ID of the Application Insights app. </param>
+        /// <param name="resourceId"> The ARM resource ID of the Application Insights app. </param>
+        /// <param name="name"> The name of the Application Insights app. </param>
+        /// <param name="region"> The Azure region of the Application Insights app. </param>
+        /// <param name="related"> The related metadata items for the Application Insights app. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataApplication(string id, string resourceId, string name, string region, MetadataApplicationRelated related, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            ResourceId = resourceId;
+            Name = name;
+            Region = region;
+            Related = related;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataApplication"/> for deserialization. </summary>
+        internal MetadataApplication()
+        {
         }
 
         /// <summary> The ID of the Application Insights app. </summary>

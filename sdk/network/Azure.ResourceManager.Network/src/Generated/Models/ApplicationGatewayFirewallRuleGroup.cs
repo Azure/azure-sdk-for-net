@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A web application firewall rule group. </summary>
     public partial class ApplicationGatewayFirewallRuleGroup
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The name of the web application firewall rule group. </param>
         /// <param name="rules"> The rules of the web application firewall rule group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> or <paramref name="rules"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.ResourceManager.Network.Models
             Rules = rules.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The name of the web application firewall rule group. </param>
         /// <param name="description"> The description of the web application firewall rule group. </param>
         /// <param name="rules"> The rules of the web application firewall rule group. </param>
-        internal ApplicationGatewayFirewallRuleGroup(string ruleGroupName, string description, IList<ApplicationGatewayFirewallRule> rules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayFirewallRuleGroup(string ruleGroupName, string description, IList<ApplicationGatewayFirewallRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleGroupName = ruleGroupName;
             Description = description;
             Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleGroup"/> for deserialization. </summary>
+        internal ApplicationGatewayFirewallRuleGroup()
+        {
         }
 
         /// <summary> The name of the web application firewall rule group. </summary>

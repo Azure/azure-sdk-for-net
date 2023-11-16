@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Import source related properties. </summary>
     public partial class ImportSourceProperties
     {
-        /// <summary> Initializes a new instance of ImportSourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImportSourceProperties"/>. </summary>
         public ImportSourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ImportSourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportSourceProperties"/>. </summary>
         /// <param name="storageType"> Storage type of import source. </param>
         /// <param name="storageUri"> Uri of the import source storage. </param>
         /// <param name="sasToken"> Sas token for accessing source storage. Read and list permissions are required for sas token. </param>
         /// <param name="dataDirPath"> Relative path of data directory in storage. </param>
-        internal ImportSourceProperties(ImportSourceStorageType? storageType, Uri storageUri, string sasToken, string dataDirPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImportSourceProperties(ImportSourceStorageType? storageType, Uri storageUri, string sasToken, string dataDirPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageType = storageType;
             StorageUri = storageUri;
             SasToken = sasToken;
             DataDirPath = dataDirPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage type of import source. </summary>

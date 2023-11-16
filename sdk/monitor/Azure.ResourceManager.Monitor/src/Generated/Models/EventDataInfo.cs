@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The Azure event log entries are of type EventData. </summary>
     public partial class EventDataInfo
     {
-        /// <summary> Initializes a new instance of EventDataInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventDataInfo"/>. </summary>
         internal EventDataInfo()
         {
             Claims = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of EventDataInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventDataInfo"/>. </summary>
         /// <param name="authorization"> The sender authorization information. </param>
         /// <param name="claims"> key value pairs to identify ARM permissions. </param>
         /// <param name="caller"> the email address of the user who has performed the operation, the UPN claim or SPN claim based on availability. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="submissionTimestamp"> the timestamp of when the event became available for querying via this API. It is in ISO 8601 format. This value should not be confused eventTimestamp. As there might be a delay between the occurrence time of the event, and the time that the event is submitted to the Azure logging infrastructure. </param>
         /// <param name="subscriptionId"> the Azure subscription Id usually a GUID. </param>
         /// <param name="tenantId"> the Azure tenant Id. </param>
-        internal EventDataInfo(SenderAuthorization authorization, IReadOnlyDictionary<string, string> claims, string caller, string description, string id, string eventDataId, string correlationId, MonitorLocalizableString eventName, MonitorLocalizableString category, EventDataHttpRequestInfo httpRequest, MonitorEventLevel? level, string resourceGroupName, MonitorLocalizableString resourceProviderName, ResourceIdentifier resourceId, MonitorLocalizableString resourceType, string operationId, MonitorLocalizableString operationName, IReadOnlyDictionary<string, string> properties, MonitorLocalizableString status, MonitorLocalizableString subStatus, DateTimeOffset? eventTimestamp, DateTimeOffset? submissionTimestamp, string subscriptionId, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventDataInfo(SenderAuthorization authorization, IReadOnlyDictionary<string, string> claims, string caller, string description, string id, string eventDataId, string correlationId, MonitorLocalizableString eventName, MonitorLocalizableString category, EventDataHttpRequestInfo httpRequest, MonitorEventLevel? level, string resourceGroupName, MonitorLocalizableString resourceProviderName, ResourceIdentifier resourceId, MonitorLocalizableString resourceType, string operationId, MonitorLocalizableString operationName, IReadOnlyDictionary<string, string> properties, MonitorLocalizableString status, MonitorLocalizableString subStatus, DateTimeOffset? eventTimestamp, DateTimeOffset? submissionTimestamp, string subscriptionId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authorization = authorization;
             Claims = claims;
@@ -72,6 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             SubmissionTimestamp = submissionTimestamp;
             SubscriptionId = subscriptionId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The sender authorization information. </summary>

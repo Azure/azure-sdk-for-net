@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents a resource name availability. </summary>
     public partial class MySqlFlexibleServerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerNameAvailabilityResult"/>. </summary>
         internal MySqlFlexibleServerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Reason for name being unavailable. </param>
-        internal MySqlFlexibleServerNameAvailabilityResult(string message, bool? isNameAvailable, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerNameAvailabilityResult(string message, bool? isNameAvailable, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error Message. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application gateway client authentication configuration. </summary>
     public partial class ApplicationGatewayClientAuthConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientAuthConfiguration"/>. </summary>
         public ApplicationGatewayClientAuthConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientAuthConfiguration"/>. </summary>
         /// <param name="verifyClientCertIssuerDN"> Verify client certificate issuer name on the application gateway. </param>
         /// <param name="verifyClientRevocation"> Verify client certificate revocation status. </param>
-        internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN, ApplicationGatewayClientRevocationOption? verifyClientRevocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN, ApplicationGatewayClientRevocationOption? verifyClientRevocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VerifyClientCertIssuerDN = verifyClientCertIssuerDN;
             VerifyClientRevocation = verifyClientRevocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Verify client certificate issuer name on the application gateway. </summary>

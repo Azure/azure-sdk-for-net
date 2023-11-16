@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP addresses associated with azure firewall. </summary>
     public partial class HubIPAddresses
     {
-        /// <summary> Initializes a new instance of HubIPAddresses. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HubIPAddresses"/>. </summary>
         public HubIPAddresses()
         {
         }
 
-        /// <summary> Initializes a new instance of HubIPAddresses. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPAddresses"/>. </summary>
         /// <param name="publicIPs"> Public IP addresses associated with azure firewall. </param>
         /// <param name="privateIPAddress"> Private IP Address associated with azure firewall. </param>
-        internal HubIPAddresses(HubPublicIPAddresses publicIPs, string privateIPAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HubIPAddresses(HubPublicIPAddresses publicIPs, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicIPs = publicIPs;
             PrivateIPAddress = privateIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public IP addresses associated with azure firewall. </summary>

@@ -6,27 +6,113 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppVolumeSnapshotData : IUtf8JsonSerializable
+    public partial class NetAppVolumeSnapshotData : IUtf8JsonSerializable, IJsonModel<NetAppVolumeSnapshotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeSnapshotData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetAppVolumeSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetAppVolumeSnapshotData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetAppVolumeSnapshotData>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SnapshotId))
+                {
+                    writer.WritePropertyName("snapshotId"u8);
+                    writer.WriteStringValue(SnapshotId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Created))
+                {
+                    writer.WritePropertyName("created"u8);
+                    writer.WriteStringValue(Created.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppVolumeSnapshotData DeserializeNetAppVolumeSnapshotData(JsonElement element)
+        NetAppVolumeSnapshotData IJsonModel<NetAppVolumeSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeSnapshotData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeSnapshotData(document.RootElement, options);
+        }
+
+        internal static NetAppVolumeSnapshotData DeserializeNetAppVolumeSnapshotData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +125,8 @@ namespace Azure.ResourceManager.NetApp
             Optional<string> snapshotId = default;
             Optional<DateTimeOffset> created = default;
             Optional<string> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -101,8 +189,38 @@ namespace Azure.ResourceManager.NetApp
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetAppVolumeSnapshotData(id, name, type, systemData.Value, location, snapshotId.Value, Optional.ToNullable(created), provisioningState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetAppVolumeSnapshotData(id, name, type, systemData.Value, location, snapshotId.Value, Optional.ToNullable(created), provisioningState.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppVolumeSnapshotData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeSnapshotData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetAppVolumeSnapshotData IPersistableModel<NetAppVolumeSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeSnapshotData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetAppVolumeSnapshotData(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetAppVolumeSnapshotData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

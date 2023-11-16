@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> VnetInfo for Firewall Networking. </summary>
     public partial class FirewallVnetConfiguration
     {
-        /// <summary> Initializes a new instance of FirewallVnetConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallVnetConfiguration"/>. </summary>
         /// <param name="vnet"> Azure Virtual Network. </param>
         /// <param name="trustSubnet"> Trust Subnet. </param>
         /// <param name="unTrustSubnet"> Untrust Subnet. </param>
@@ -29,17 +33,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             UnTrustSubnet = unTrustSubnet;
         }
 
-        /// <summary> Initializes a new instance of FirewallVnetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallVnetConfiguration"/>. </summary>
         /// <param name="vnet"> Azure Virtual Network. </param>
         /// <param name="trustSubnet"> Trust Subnet. </param>
         /// <param name="unTrustSubnet"> Untrust Subnet. </param>
         /// <param name="ipOfTrustSubnetForUdr"> IP of trust subnet for UDR. </param>
-        internal FirewallVnetConfiguration(IPAddressSpaceInfo vnet, IPAddressSpaceInfo trustSubnet, IPAddressSpaceInfo unTrustSubnet, IPAddressInfo ipOfTrustSubnetForUdr)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallVnetConfiguration(IPAddressSpaceInfo vnet, IPAddressSpaceInfo trustSubnet, IPAddressSpaceInfo unTrustSubnet, IPAddressInfo ipOfTrustSubnetForUdr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Vnet = vnet;
             TrustSubnet = trustSubnet;
             UnTrustSubnet = unTrustSubnet;
             IPOfTrustSubnetForUdr = ipOfTrustSubnetForUdr;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallVnetConfiguration"/> for deserialization. </summary>
+        internal FirewallVnetConfiguration()
+        {
         }
 
         /// <summary> Azure Virtual Network. </summary>

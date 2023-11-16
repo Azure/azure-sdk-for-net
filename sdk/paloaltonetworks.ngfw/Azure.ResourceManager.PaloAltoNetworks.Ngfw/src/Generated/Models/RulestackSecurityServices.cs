@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> security services. </summary>
     public partial class RulestackSecurityServices
     {
-        /// <summary> Initializes a new instance of RulestackSecurityServices. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServices"/>. </summary>
         public RulestackSecurityServices()
         {
         }
 
-        /// <summary> Initializes a new instance of RulestackSecurityServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServices"/>. </summary>
         /// <param name="vulnerabilityProfile"> IPs Vulnerability Profile Data. </param>
         /// <param name="antiSpywareProfile"> Anti spyware Profile data. </param>
         /// <param name="antiVirusProfile"> anti virus profile data. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="dnsSubscription"> DNS Subscription profile data. </param>
         /// <param name="outboundUnTrustCertificate"> Untrusted Egress Decryption profile data. </param>
         /// <param name="outboundTrustCertificate"> Trusted Egress Decryption profile data. </param>
-        internal RulestackSecurityServices(string vulnerabilityProfile, string antiSpywareProfile, string antiVirusProfile, string urlFilteringProfile, string fileBlockingProfile, string dnsSubscription, string outboundUnTrustCertificate, string outboundTrustCertificate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackSecurityServices(string vulnerabilityProfile, string antiSpywareProfile, string antiVirusProfile, string urlFilteringProfile, string fileBlockingProfile, string dnsSubscription, string outboundUnTrustCertificate, string outboundTrustCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VulnerabilityProfile = vulnerabilityProfile;
             AntiSpywareProfile = antiSpywareProfile;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             DnsSubscription = dnsSubscription;
             OutboundUnTrustCertificate = outboundUnTrustCertificate;
             OutboundTrustCertificate = outboundTrustCertificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IPs Vulnerability Profile Data. </summary>

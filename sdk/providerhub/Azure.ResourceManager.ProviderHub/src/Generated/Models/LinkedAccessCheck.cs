@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The LinkedAccessCheck. </summary>
     public partial class LinkedAccessCheck
     {
-        /// <summary> Initializes a new instance of LinkedAccessCheck. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedAccessCheck"/>. </summary>
         public LinkedAccessCheck()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkedAccessCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedAccessCheck"/>. </summary>
         /// <param name="actionName"></param>
         /// <param name="linkedProperty"></param>
         /// <param name="linkedAction"></param>
         /// <param name="linkedActionVerb"></param>
         /// <param name="linkedType"></param>
-        internal LinkedAccessCheck(string actionName, string linkedProperty, string linkedAction, string linkedActionVerb, string linkedType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedAccessCheck(string actionName, string linkedProperty, string linkedAction, string linkedActionVerb, string linkedType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionName = actionName;
             LinkedProperty = linkedProperty;
             LinkedAction = linkedAction;
             LinkedActionVerb = linkedActionVerb;
             LinkedType = linkedType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the action name. </summary>

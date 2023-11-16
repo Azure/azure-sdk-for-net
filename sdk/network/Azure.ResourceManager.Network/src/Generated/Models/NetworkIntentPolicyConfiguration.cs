@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details of NetworkIntentPolicyConfiguration for PrepareNetworkPoliciesRequest. </summary>
     public partial class NetworkIntentPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkIntentPolicyConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkIntentPolicyConfiguration"/>. </summary>
         public NetworkIntentPolicyConfiguration()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkIntentPolicyConfiguration"/>. </summary>
+        /// <param name="networkIntentPolicyName"> The name of the Network Intent Policy for storing in target subscription. </param>
+        /// <param name="sourceNetworkIntentPolicy"> Source network intent policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkIntentPolicyConfiguration(string networkIntentPolicyName, NetworkIntentPolicy sourceNetworkIntentPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NetworkIntentPolicyName = networkIntentPolicyName;
+            SourceNetworkIntentPolicy = sourceNetworkIntentPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the Network Intent Policy for storing in target subscription. </summary>

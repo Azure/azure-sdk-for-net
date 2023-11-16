@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MixedReality.Models;
@@ -14,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MixedReality
 {
-    public partial class RemoteRenderingAccountData : IUtf8JsonSerializable
+    public partial class RemoteRenderingAccountData : IUtf8JsonSerializable, IJsonModel<RemoteRenderingAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoteRenderingAccountData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RemoteRenderingAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RemoteRenderingAccountData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RemoteRenderingAccountData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -52,6 +61,29 @@ namespace Azure.ResourceManager.MixedReality
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountName))
@@ -59,12 +91,57 @@ namespace Azure.ResourceManager.MixedReality
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AccountId))
+                {
+                    writer.WritePropertyName("accountId"u8);
+                    writer.WriteStringValue(AccountId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AccountDomain))
+                {
+                    writer.WritePropertyName("accountDomain"u8);
+                    writer.WriteStringValue(AccountDomain);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RemoteRenderingAccountData DeserializeRemoteRenderingAccountData(JsonElement element)
+        RemoteRenderingAccountData IJsonModel<RemoteRenderingAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemoteRenderingAccountData(document.RootElement, options);
+        }
+
+        internal static RemoteRenderingAccountData DeserializeRemoteRenderingAccountData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +159,8 @@ namespace Azure.ResourceManager.MixedReality
             Optional<string> storageAccountName = default;
             Optional<Guid> accountId = default;
             Optional<string> accountDomain = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -194,8 +273,38 @@ namespace Azure.ResourceManager.MixedReality
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RemoteRenderingAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, plan, sku.Value, kind.Value, storageAccountName.Value, Optional.ToNullable(accountId), accountDomain.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RemoteRenderingAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, plan, sku.Value, kind.Value, storageAccountName.Value, Optional.ToNullable(accountId), accountDomain.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RemoteRenderingAccountData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RemoteRenderingAccountData IPersistableModel<RemoteRenderingAccountData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRemoteRenderingAccountData(document.RootElement, options);
+        }
+
+        string IPersistableModel<RemoteRenderingAccountData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

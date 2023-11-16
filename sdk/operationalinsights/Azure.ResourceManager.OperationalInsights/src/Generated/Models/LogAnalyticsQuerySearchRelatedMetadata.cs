@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,12 +14,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The related metadata items for the function. </summary>
     public partial class LogAnalyticsQuerySearchRelatedMetadata
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQuerySearchRelatedMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySearchRelatedMetadata"/>. </summary>
         public LogAnalyticsQuerySearchRelatedMetadata()
         {
             Categories = new ChangeTrackingList<string>();
             ResourceTypes = new ChangeTrackingList<string>();
             Solutions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySearchRelatedMetadata"/>. </summary>
+        /// <param name="categories"> The related categories for the function. </param>
+        /// <param name="resourceTypes"> The related resource types for the function. </param>
+        /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogAnalyticsQuerySearchRelatedMetadata(IList<string> categories, IList<string> resourceTypes, IList<string> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Categories = categories;
+            ResourceTypes = resourceTypes;
+            Solutions = solutions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The related categories for the function. </summary>

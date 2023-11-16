@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredAsnRegisteredAsnsRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringRegisteredAsnRegisteredAsnsRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringRegisteredAsnResource(Client, PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(e)), _peeringRegisteredAsnRegisteredAsnsClientDiagnostics, Pipeline, "PeeringRegisteredAsnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PeeringRegisteredAsnResource(Client, PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(e)), _peeringRegisteredAsnRegisteredAsnsClientDiagnostics, Pipeline, "PeeringRegisteredAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredAsnRegisteredAsnsRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringRegisteredAsnRegisteredAsnsRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringRegisteredAsnResource(Client, PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(e)), _peeringRegisteredAsnRegisteredAsnsClientDiagnostics, Pipeline, "PeeringRegisteredAsnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PeeringRegisteredAsnResource(Client, PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(e)), _peeringRegisteredAsnRegisteredAsnsClientDiagnostics, Pipeline, "PeeringRegisteredAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

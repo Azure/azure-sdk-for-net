@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Peering;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of peering registered prefixes. </summary>
     internal partial class PeeringRegisteredPrefixListResult
     {
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixListResult"/>. </summary>
         internal PeeringRegisteredPrefixListResult()
         {
             Value = new ChangeTrackingList<PeeringRegisteredPrefixData>();
         }
 
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixListResult"/>. </summary>
         /// <param name="value"> The list of peering registered prefixes. </param>
         /// <param name="nextLink"> The link to fetch the next page of peering registered prefixes. </param>
-        internal PeeringRegisteredPrefixListResult(IReadOnlyList<PeeringRegisteredPrefixData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringRegisteredPrefixListResult(IReadOnlyList<PeeringRegisteredPrefixData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of peering registered prefixes. </summary>

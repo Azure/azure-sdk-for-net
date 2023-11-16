@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents collection of events. </summary>
     internal partial class EventDataCollection
     {
-        /// <summary> Initializes a new instance of EventDataCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventDataCollection"/>. </summary>
         /// <param name="value"> this list that includes the Azure audit logs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal EventDataCollection(IEnumerable<EventDataInfo> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of EventDataCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventDataCollection"/>. </summary>
         /// <param name="value"> this list that includes the Azure audit logs. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of events. </param>
-        internal EventDataCollection(IReadOnlyList<EventDataInfo> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventDataCollection(IReadOnlyList<EventDataInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventDataCollection"/> for deserialization. </summary>
+        internal EventDataCollection()
+        {
         }
 
         /// <summary> this list that includes the Azure audit logs. </summary>

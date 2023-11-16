@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxNetworkProfile. </summary>
     public partial class NginxNetworkProfile
     {
-        /// <summary> Initializes a new instance of NginxNetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
         public NginxNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
         /// <param name="frontEndIPConfiguration"></param>
         /// <param name="networkInterfaceConfiguration"></param>
-        internal NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration, NginxNetworkInterfaceConfiguration networkInterfaceConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration, NginxNetworkInterfaceConfiguration networkInterfaceConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FrontEndIPConfiguration = frontEndIPConfiguration;
             NetworkInterfaceConfiguration = networkInterfaceConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the front end ip configuration. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -12,9 +14,21 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Re-establish request object supplied in the body of the operation. </summary>
     public partial class NetAppVolumeReestablishReplicationContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeReestablishReplicationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReestablishReplicationContent"/>. </summary>
         public NetAppVolumeReestablishReplicationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReestablishReplicationContent"/>. </summary>
+        /// <param name="sourceVolumeId"> Resource id of the source volume for the replication. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeReestablishReplicationContent(ResourceIdentifier sourceVolumeId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceVolumeId = sourceVolumeId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource id of the source volume for the replication. </summary>

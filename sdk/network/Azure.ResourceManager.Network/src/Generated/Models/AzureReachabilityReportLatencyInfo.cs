@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details on latency for a time series. </summary>
     public partial class AzureReachabilityReportLatencyInfo
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReportLatencyInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLatencyInfo"/>. </summary>
         internal AzureReachabilityReportLatencyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureReachabilityReportLatencyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLatencyInfo"/>. </summary>
         /// <param name="timeStamp"> The time stamp. </param>
         /// <param name="score"> The relative latency score between 1 and 100, higher values indicating a faster connection. </param>
-        internal AzureReachabilityReportLatencyInfo(DateTimeOffset? timeStamp, int? score)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureReachabilityReportLatencyInfo(DateTimeOffset? timeStamp, int? score, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeStamp = timeStamp;
             Score = score;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time stamp. </summary>

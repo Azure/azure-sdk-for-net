@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class PaloAltoNetworksFirewallData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="dnsSettings"> DNS settings for Firewall. </param>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             MarketplaceDetails = marketplaceDetails;
         }
 
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +62,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
-        internal PaloAltoNetworksFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallPanoramaConfiguration panoramaConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PaloAltoNetworksFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallPanoramaConfiguration panoramaConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             PanETag = panETag;
@@ -72,6 +76,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ProvisioningState = provisioningState;
             PlanData = planData;
             MarketplaceDetails = marketplaceDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/> for deserialization. </summary>
+        internal PaloAltoNetworksFirewallData()
+        {
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>

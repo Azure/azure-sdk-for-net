@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> predefined url categories response. </summary>
     internal partial class PredefinedUrlCategoryListResult
     {
-        /// <summary> Initializes a new instance of PredefinedUrlCategoryListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategoryListResult"/>. </summary>
         /// <param name="value"> predefined url categories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PredefinedUrlCategoryListResult(IEnumerable<PredefinedUrlCategory> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PredefinedUrlCategoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategoryListResult"/>. </summary>
         /// <param name="value"> predefined url categories. </param>
         /// <param name="nextLink"> next link. </param>
-        internal PredefinedUrlCategoryListResult(IReadOnlyList<PredefinedUrlCategory> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredefinedUrlCategoryListResult(IReadOnlyList<PredefinedUrlCategory> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategoryListResult"/> for deserialization. </summary>
+        internal PredefinedUrlCategoryListResult()
+        {
         }
 
         /// <summary> predefined url categories. </summary>

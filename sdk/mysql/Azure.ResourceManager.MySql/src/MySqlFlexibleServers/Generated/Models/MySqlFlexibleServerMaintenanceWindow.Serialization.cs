@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerMaintenanceWindow : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerMaintenanceWindow : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerMaintenanceWindow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerMaintenanceWindow>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MySqlFlexibleServerMaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MySqlFlexibleServerMaintenanceWindow>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MySqlFlexibleServerMaintenanceWindow>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomWindow))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerMaintenanceWindow DeserializeMySqlFlexibleServerMaintenanceWindow(JsonElement element)
+        MySqlFlexibleServerMaintenanceWindow IJsonModel<MySqlFlexibleServerMaintenanceWindow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceWindow)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerMaintenanceWindow(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerMaintenanceWindow DeserializeMySqlFlexibleServerMaintenanceWindow(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<int> startHour = default;
             Optional<int> startMinute = default;
             Optional<int> dayOfWeek = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customWindow"u8))
@@ -82,8 +124,38 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     dayOfWeek = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MySqlFlexibleServerMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerMaintenanceWindow>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceWindow)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MySqlFlexibleServerMaintenanceWindow IPersistableModel<MySqlFlexibleServerMaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceWindow)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerMaintenanceWindow(document.RootElement, options);
+        }
+
+        string IPersistableModel<MySqlFlexibleServerMaintenanceWindow>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

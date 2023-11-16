@@ -5,22 +5,89 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorTimeSeriesElement
+    public partial class MonitorTimeSeriesElement : IUtf8JsonSerializable, IJsonModel<MonitorTimeSeriesElement>
     {
-        internal static MonitorTimeSeriesElement DeserializeMonitorTimeSeriesElement(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorTimeSeriesElement>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MonitorTimeSeriesElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MonitorTimeSeriesElement>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MonitorTimeSeriesElement>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Metadatavalues))
+            {
+                writer.WritePropertyName("metadatavalues"u8);
+                writer.WriteStartArray();
+                foreach (var item in Metadatavalues)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Data))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStartArray();
+                foreach (var item in Data)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MonitorTimeSeriesElement IJsonModel<MonitorTimeSeriesElement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorTimeSeriesElement(document.RootElement, options);
+        }
+
+        internal static MonitorTimeSeriesElement DeserializeMonitorTimeSeriesElement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MonitorMetadataValue>> metadatavalues = default;
             Optional<IReadOnlyList<MonitorMetricValue>> data = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadatavalues"u8))
@@ -51,8 +118,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     data = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitorTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitorTimeSeriesElement>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitorTimeSeriesElement IPersistableModel<MonitorTimeSeriesElement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMonitorTimeSeriesElement(document.RootElement, options);
+        }
+
+        string IPersistableModel<MonitorTimeSeriesElement>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

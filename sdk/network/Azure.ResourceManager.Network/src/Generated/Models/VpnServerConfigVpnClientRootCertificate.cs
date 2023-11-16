@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of VPN client root certificate of VpnServerConfiguration. </summary>
     public partial class VpnServerConfigVpnClientRootCertificate
     {
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRootCertificate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigVpnClientRootCertificate"/>. </summary>
         public VpnServerConfigVpnClientRootCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigVpnClientRootCertificate"/>. </summary>
         /// <param name="name"> The certificate name. </param>
         /// <param name="publicCertData"> The certificate public data. </param>
-        internal VpnServerConfigVpnClientRootCertificate(string name, BinaryData publicCertData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnServerConfigVpnClientRootCertificate(string name, BinaryData publicCertData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PublicCertData = publicCertData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The certificate name. </summary>

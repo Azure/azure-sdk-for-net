@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub BaiduCredential. </summary>
     public partial class NotificationHubBaiduCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubBaiduCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubBaiduCredential"/>. </summary>
         public NotificationHubBaiduCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubBaiduCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubBaiduCredential"/>. </summary>
         /// <param name="baiduApiKey"> Baidu Api Key. </param>
         /// <param name="baiduEndpoint"> Baidu Endpoint. </param>
         /// <param name="baiduSecretKey"> Baidu Secret Key. </param>
-        internal NotificationHubBaiduCredential(string baiduApiKey, Uri baiduEndpoint, string baiduSecretKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubBaiduCredential(string baiduApiKey, Uri baiduEndpoint, string baiduSecretKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaiduApiKey = baiduApiKey;
             BaiduEndpoint = baiduEndpoint;
             BaiduSecretKey = baiduSecretKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Baidu Api Key. </summary>

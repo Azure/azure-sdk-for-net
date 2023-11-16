@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> MarketplaceDetails of PAN Firewall resource. </summary>
     public partial class PanFirewallMarketplaceDetails
     {
-        /// <summary> Initializes a new instance of PanFirewallMarketplaceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PanFirewallMarketplaceDetails"/>. </summary>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="publisherId"/> is null. </exception>
@@ -26,17 +30,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             PublisherId = publisherId;
         }
 
-        /// <summary> Initializes a new instance of PanFirewallMarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PanFirewallMarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace Subscription Status. </param>
-        internal PanFirewallMarketplaceDetails(string marketplaceSubscriptionId, string offerId, string publisherId, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PanFirewallMarketplaceDetails(string marketplaceSubscriptionId, string offerId, string publisherId, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             OfferId = offerId;
             PublisherId = publisherId;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PanFirewallMarketplaceDetails"/> for deserialization. </summary>
+        internal PanFirewallMarketplaceDetails()
+        {
         }
 
         /// <summary> Marketplace Subscription Id. </summary>

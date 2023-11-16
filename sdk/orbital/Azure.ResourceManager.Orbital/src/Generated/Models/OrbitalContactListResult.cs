@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Orbital;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Response for the ListContacts API service call. </summary>
     internal partial class OrbitalContactListResult
     {
-        /// <summary> Initializes a new instance of OrbitalContactListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactListResult"/>. </summary>
         internal OrbitalContactListResult()
         {
             Value = new ChangeTrackingList<OrbitalContactData>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactListResult"/>. </summary>
         /// <param name="value"> A list of contact resources in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal OrbitalContactListResult(IReadOnlyList<OrbitalContactData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalContactListResult(IReadOnlyList<OrbitalContactData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of contact resources in a resource group. </summary>

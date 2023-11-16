@@ -19,7 +19,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class EmbeddingsOptions
     {
-        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
         /// <param name="user">
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
@@ -36,11 +39,13 @@ namespace Azure.AI.OpenAI
         /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
         /// as we have observed inferior results when newlines are present.
         /// </param>
-        internal EmbeddingsOptions(string user, string deploymentName, IList<string> input)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmbeddingsOptions(string user, string deploymentName, IList<string> input, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             User = user;
             DeploymentName = deploymentName;
             Input = input;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

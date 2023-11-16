@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The comma separated list of resource IDs to query metrics for. </summary>
     internal partial class ResourceIdList
     {
-        /// <summary> Initializes a new instance of ResourceIdList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceIdList"/>. </summary>
         public ResourceIdList()
         {
             Resourceids = new ChangeTrackingList<ResourceIdentifier>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceIdList"/>. </summary>
+        /// <param name="resourceids"> The list of resource IDs to query metrics for. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceIdList(IList<ResourceIdentifier> resourceids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Resourceids = resourceids;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of resource IDs to query metrics for. </summary>

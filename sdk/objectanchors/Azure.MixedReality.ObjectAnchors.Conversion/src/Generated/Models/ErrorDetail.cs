@@ -14,7 +14,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
     /// <summary> Represents an error. </summary>
     internal partial class ErrorDetail
     {
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,19 +31,26 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             Details = new ChangeTrackingList<ErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"></param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal ErrorDetail(string code, string message, string target, IReadOnlyList<ErrorDetail> details, InnerError innererror)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorDetail(string code, string message, string target, IReadOnlyList<ErrorDetail> details, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             Innererror = innererror;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/> for deserialization. </summary>
+        internal ErrorDetail()
+        {
         }
 
         /// <summary> The error code. </summary>

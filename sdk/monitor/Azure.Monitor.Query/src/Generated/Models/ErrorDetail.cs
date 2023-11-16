@@ -14,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Error details. </summary>
     internal partial class ErrorDetail
     {
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> The error's code. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,14 +31,15 @@ namespace Azure.Monitor.Query.Models
             Resources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> The error's code. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="target"> Indicates which property in the request is responsible for the error. </param>
         /// <param name="value"> Indicates which value in 'target' is responsible for the error. </param>
         /// <param name="resources"> Indicates resources which were responsible for the error. </param>
         /// <param name="additionalProperties"> Additional properties that can be provided on the error details object. </param>
-        internal ErrorDetail(string code, string message, string target, string value, IReadOnlyList<string> resources, object additionalProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorDetail(string code, string message, string target, string value, IReadOnlyList<string> resources, object additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
@@ -43,6 +47,12 @@ namespace Azure.Monitor.Query.Models
             Value = value;
             Resources = resources;
             AdditionalProperties = additionalProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/> for deserialization. </summary>
+        internal ErrorDetail()
+        {
         }
 
         /// <summary> The error's code. </summary>

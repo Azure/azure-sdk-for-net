@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkDiagnosticsPackageData : ResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkDiagnosticsPackageData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkDiagnosticsPackageData"/>. </summary>
         public MobileNetworkDiagnosticsPackageData()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkDiagnosticsPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkDiagnosticsPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +35,13 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="provisioningState"> The provisioning state of the diagnostics package resource. </param>
         /// <param name="status"> The status of the diagnostics package collection. </param>
         /// <param name="reason"> The reason for the current state of the diagnostics package collection. </param>
-        internal MobileNetworkDiagnosticsPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkDiagnosticsPackageStatus? status, string reason) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkDiagnosticsPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkDiagnosticsPackageStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the diagnostics package resource. </summary>

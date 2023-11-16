@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -12,12 +14,15 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define an exchange peering facility. </summary>
     public partial class ExchangePeeringFacility
     {
-        /// <summary> Initializes a new instance of ExchangePeeringFacility. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExchangePeeringFacility"/>. </summary>
         public ExchangePeeringFacility()
         {
         }
 
-        /// <summary> Initializes a new instance of ExchangePeeringFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePeeringFacility"/>. </summary>
         /// <param name="exchangeName"> The name of the exchange peering facility. </param>
         /// <param name="bandwidthInMbps"> The bandwidth of the connection between Microsoft and the exchange peering facility. </param>
         /// <param name="microsoftIPv4Address"> The IPv4 address of Microsoft at the exchange peering facility. </param>
@@ -26,7 +31,8 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="facilityIPv6Prefix"> The IPv6 prefixes associated with the exchange peering facility. </param>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
         /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
-        internal ExchangePeeringFacility(string exchangeName, int? bandwidthInMbps, IPAddress microsoftIPv4Address, IPAddress microsoftIPv6Address, string facilityIPv4Prefix, string facilityIPv6Prefix, int? peeringDBFacilityId, string peeringDBFacilityLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExchangePeeringFacility(string exchangeName, int? bandwidthInMbps, IPAddress microsoftIPv4Address, IPAddress microsoftIPv6Address, string facilityIPv4Prefix, string facilityIPv6Prefix, int? peeringDBFacilityId, string peeringDBFacilityLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExchangeName = exchangeName;
             BandwidthInMbps = bandwidthInMbps;
@@ -36,6 +42,7 @@ namespace Azure.ResourceManager.Peering.Models
             FacilityIPv6Prefix = facilityIPv6Prefix;
             PeeringDBFacilityId = peeringDBFacilityId;
             PeeringDBFacilityLink = peeringDBFacilityLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the exchange peering facility. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,30 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Will describe the query to run against the IDPS signatures DB. </summary>
     public partial class IdpsQueryContent
     {
-        /// <summary> Initializes a new instance of IdpsQueryContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryContent"/>. </summary>
         public IdpsQueryContent()
         {
             Filters = new ChangeTrackingList<IdpsQueryFilterItems>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryContent"/>. </summary>
+        /// <param name="filters"> Contain all filters names and values. </param>
+        /// <param name="search"> Search term in all columns. </param>
+        /// <param name="orderBy"> Column to sort response by. </param>
+        /// <param name="resultsPerPage"> The number of the results to return in each page. </param>
+        /// <param name="skip"> The number of records matching the filter to skip. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdpsQueryContent(IList<IdpsQueryFilterItems> filters, string search, IdpsQueryOrderBy orderBy, int? resultsPerPage, int? skip, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Filters = filters;
+            Search = search;
+            OrderBy = orderBy;
+            ResultsPerPage = resultsPerPage;
+            Skip = skip;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contain all filters names and values. </summary>

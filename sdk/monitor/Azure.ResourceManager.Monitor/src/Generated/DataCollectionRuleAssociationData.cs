@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,12 +20,15 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class DataCollectionRuleAssociationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleAssociationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationData"/>. </summary>
         public DataCollectionRuleAssociationData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleAssociationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="metadata"> Metadata about the resource. </param>
-        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Description = description;
@@ -42,6 +48,7 @@ namespace Azure.ResourceManager.Monitor
             DataCollectionEndpointId = dataCollectionEndpointId;
             ProvisioningState = provisioningState;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource entity tag (ETag). </summary>

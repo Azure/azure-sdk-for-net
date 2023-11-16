@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public abstract partial class AlertRuleAction
     {
-        /// <summary> Initializes a new instance of AlertRuleAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertRuleAction"/>. </summary>
         protected AlertRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleAction"/>. </summary>
         /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
-        internal AlertRuleAction(string odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertRuleAction(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </summary>

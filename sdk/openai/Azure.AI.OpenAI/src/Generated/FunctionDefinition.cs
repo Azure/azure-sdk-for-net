@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -13,7 +14,10 @@ namespace Azure.AI.OpenAI
     /// <summary> The definition of a caller-specified function that chat completions may invoke in response to matching user input. </summary>
     public partial class FunctionDefinition
     {
-        /// <summary> Initializes a new instance of FunctionDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FunctionDefinition(string name)
@@ -21,20 +25,23 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description">
         /// A description of what the function does. The model will use this description when selecting the function and
         /// interpreting its parameters.
         /// </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        internal FunctionDefinition(string name, string description, BinaryData parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionDefinition(string name, string description, BinaryData parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary>
         /// A description of what the function does. The model will use this description when selecting the function and

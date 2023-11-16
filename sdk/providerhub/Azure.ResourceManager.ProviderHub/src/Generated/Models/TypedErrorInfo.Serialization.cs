@@ -6,29 +6,85 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class TypedErrorInfo : IUtf8JsonSerializable
+    public partial class TypedErrorInfo : IUtf8JsonSerializable, IJsonModel<TypedErrorInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TypedErrorInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TypedErrorInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TypedErrorInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TypedErrorInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TypedErrorInfoType);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Info))
+                {
+                    writer.WritePropertyName("info"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Info);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Info))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TypedErrorInfo DeserializeTypedErrorInfo(JsonElement element)
+        TypedErrorInfo IJsonModel<TypedErrorInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTypedErrorInfo(document.RootElement, options);
+        }
+
+        internal static TypedErrorInfo DeserializeTypedErrorInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
             Optional<BinaryData> info = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -45,8 +101,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     info = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TypedErrorInfo(type, info.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TypedErrorInfo(type, info.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TypedErrorInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TypedErrorInfo IPersistableModel<TypedErrorInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTypedErrorInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<TypedErrorInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

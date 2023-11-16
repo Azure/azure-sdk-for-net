@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> The minimum time (in seconds) that will pass before a port that was used by a closed pinhole can be recycled for use by another pinhole. All hold times must be minimum 1 second. </summary>
     public partial class MobileNetworkPortReuseHoldTimes
     {
-        /// <summary> Initializes a new instance of MobileNetworkPortReuseHoldTimes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPortReuseHoldTimes"/>. </summary>
         public MobileNetworkPortReuseHoldTimes()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPortReuseHoldTimes. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPortReuseHoldTimes"/>. </summary>
         /// <param name="tcp"> Minimum time in seconds that will pass before a TCP port that was used by a closed pinhole can be reused. Default for TCP is 2 minutes. </param>
         /// <param name="udp"> Minimum time in seconds that will pass before a UDP port that was used by a closed pinhole can be reused. Default for UDP is 1 minute. </param>
-        internal MobileNetworkPortReuseHoldTimes(int? tcp, int? udp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkPortReuseHoldTimes(int? tcp, int? udp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tcp = tcp;
             Udp = udp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Minimum time in seconds that will pass before a TCP port that was used by a closed pinhole can be reused. Default for TCP is 2 minutes. </summary>

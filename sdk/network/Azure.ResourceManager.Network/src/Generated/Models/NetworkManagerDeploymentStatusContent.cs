@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,27 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Manager Deployment Status Parameter. </summary>
     public partial class NetworkManagerDeploymentStatusContent
     {
-        /// <summary> Initializes a new instance of NetworkManagerDeploymentStatusContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatusContent"/>. </summary>
         public NetworkManagerDeploymentStatusContent()
         {
             Regions = new ChangeTrackingList<string>();
             DeploymentTypes = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatusContent"/>. </summary>
+        /// <param name="regions"> List of locations. </param>
+        /// <param name="deploymentTypes"> List of deployment types. </param>
+        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkManagerDeploymentStatusContent(IList<string> regions, IList<NetworkConfigurationDeploymentType> deploymentTypes, string skipToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Regions = regions;
+            DeploymentTypes = deploymentTypes;
+            SkipToken = skipToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of locations. </summary>

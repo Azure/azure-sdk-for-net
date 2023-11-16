@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The Azure Automation Runbook notification receiver. </summary>
     public partial class MonitorAutomationRunbookReceiver
     {
-        /// <summary> Initializes a new instance of MonitorAutomationRunbookReceiver. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorAutomationRunbookReceiver"/>. </summary>
         /// <param name="automationAccountId"> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </param>
         /// <param name="runbookName"> The name for this runbook. </param>
         /// <param name="webhookResourceId"> The resource id for webhook linked to this runbook. </param>
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IsGlobalRunbook = isGlobalRunbook;
         }
 
-        /// <summary> Initializes a new instance of MonitorAutomationRunbookReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorAutomationRunbookReceiver"/>. </summary>
         /// <param name="automationAccountId"> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </param>
         /// <param name="runbookName"> The name for this runbook. </param>
         /// <param name="webhookResourceId"> The resource id for webhook linked to this runbook. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Indicates name of the webhook. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        internal MonitorAutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook, string name, Uri serviceUri, bool? useCommonAlertSchema)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorAutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook, string name, Uri serviceUri, bool? useCommonAlertSchema, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutomationAccountId = automationAccountId;
             RunbookName = runbookName;
@@ -48,6 +53,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
             ServiceUri = serviceUri;
             UseCommonAlertSchema = useCommonAlertSchema;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorAutomationRunbookReceiver"/> for deserialization. </summary>
+        internal MonitorAutomationRunbookReceiver()
+        {
         }
 
         /// <summary> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileDataNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MobileDataNetworkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileDataNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MobileDataNetworkData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MobileDataNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileDataNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the data network resource. </param>
         /// <param name="description"> An optional description for this data network. </param>
-        internal MobileDataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, string description) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileDataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileDataNetworkData"/> for deserialization. </summary>
+        internal MobileDataNetworkData()
+        {
         }
 
         /// <summary> The provisioning state of the data network resource. </summary>

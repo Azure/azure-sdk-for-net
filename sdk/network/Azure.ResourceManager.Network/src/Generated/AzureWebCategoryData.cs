@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class AzureWebCategoryData : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureWebCategoryData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureWebCategoryData"/>. </summary>
         internal AzureWebCategoryData()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureWebCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureWebCategoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="group"> The name of the group that the category belongs to. </param>
-        internal AzureWebCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string group) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureWebCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string group, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Group = group;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a peering bandwidth offer. </summary>
     public partial class PeeringBandwidthOffer
     {
-        /// <summary> Initializes a new instance of PeeringBandwidthOffer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringBandwidthOffer"/>. </summary>
         public PeeringBandwidthOffer()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringBandwidthOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringBandwidthOffer"/>. </summary>
         /// <param name="offerName"> The name of the bandwidth offer. </param>
         /// <param name="valueInMbps"> The value of the bandwidth offer in Mbps. </param>
-        internal PeeringBandwidthOffer(string offerName, int? valueInMbps)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringBandwidthOffer(string offerName, int? valueInMbps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OfferName = offerName;
             ValueInMbps = valueInMbps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the bandwidth offer. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define an exchange peering. </summary>
     public partial class ExchangePeeringProperties
     {
-        /// <summary> Initializes a new instance of ExchangePeeringProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExchangePeeringProperties"/>. </summary>
         public ExchangePeeringProperties()
         {
             Connections = new ChangeTrackingList<PeeringExchangeConnection>();
         }
 
-        /// <summary> Initializes a new instance of ExchangePeeringProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePeeringProperties"/>. </summary>
         /// <param name="connections"> The set of connections that constitute an exchange peering. </param>
         /// <param name="peerAsn"> The reference of the peer ASN. </param>
-        internal ExchangePeeringProperties(IList<PeeringExchangeConnection> connections, WritableSubResource peerAsn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExchangePeeringProperties(IList<PeeringExchangeConnection> connections, WritableSubResource peerAsn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Connections = connections;
             PeerAsn = peerAsn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The set of connections that constitute an exchange peering. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume group resource. </summary>
     public partial class NetAppVolumeGroupResult : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppVolumeGroupResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupResult"/>. </summary>
         internal NetAppVolumeGroupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,11 +31,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="groupMetaData"> Volume group details. </param>
-        internal NetAppVolumeGroupResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeGroupResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
             GroupMetaData = groupMetaData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource location. </summary>

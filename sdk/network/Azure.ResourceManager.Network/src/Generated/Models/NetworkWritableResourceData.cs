@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Common resource representation. </summary>
     public partial class NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of NetworkWritableResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         public NetworkWritableResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkWritableResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        internal NetworkWritableResourceData(ResourceIdentifier id, string name, ResourceType? resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkWritableResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListVirtualRouters API service call. </summary>
     internal partial class VirtualRouterListResult
     {
-        /// <summary> Initializes a new instance of VirtualRouterListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterListResult"/>. </summary>
         internal VirtualRouterListResult()
         {
             Value = new ChangeTrackingList<VirtualRouterData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualRouterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterListResult"/>. </summary>
         /// <param name="value"> List of Virtual Routers. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal VirtualRouterListResult(IReadOnlyList<VirtualRouterData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualRouterListResult(IReadOnlyList<VirtualRouterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Virtual Routers. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeRegistrationProperties. </summary>
     public partial class ResourceTypeRegistrationProperties
     {
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationProperties"/>. </summary>
         public ResourceTypeRegistrationProperties()
         {
             Endpoints = new ChangeTrackingList<ResourceTypeEndpoint>();
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationProperties"/>. </summary>
         /// <param name="routingType"></param>
         /// <param name="regionality"></param>
         /// <param name="endpoints"></param>
@@ -60,7 +64,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="extendedLocations"></param>
         /// <param name="resourceMovePolicy"></param>
         /// <param name="resourceDeletionPolicy"></param>
-        internal ResourceTypeRegistrationProperties(ResourceRoutingType? routingType, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeExtensionOptions extensionOptions, MarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, FeaturesRule featuresRule, bool? isAsyncOperationEnabled, ProviderHubProvisioningState? provisioningState, bool? isThirdPartyS2SEnabled, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, RequestHeaderOptions requestHeaderOptions, IList<ProviderSubscriptionStateRule> subscriptionStateRules, TemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeRegistrationProperties(ResourceRoutingType? routingType, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeExtensionOptions extensionOptions, MarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, FeaturesRule featuresRule, bool? isAsyncOperationEnabled, ProviderHubProvisioningState? provisioningState, bool? isThirdPartyS2SEnabled, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, RequestHeaderOptions requestHeaderOptions, IList<ProviderSubscriptionStateRule> subscriptionStateRules, TemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RoutingType = routingType;
             Regionality = regionality;
@@ -91,6 +96,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocations = extendedLocations;
             ResourceMovePolicy = resourceMovePolicy;
             ResourceDeletionPolicy = resourceDeletionPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the routing type. </summary>

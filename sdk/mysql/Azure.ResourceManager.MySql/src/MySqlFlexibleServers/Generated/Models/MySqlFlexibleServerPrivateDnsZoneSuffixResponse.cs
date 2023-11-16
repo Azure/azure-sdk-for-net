@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The response of get private dns zone suffix. </summary>
     public partial class MySqlFlexibleServerPrivateDnsZoneSuffixResponse
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerPrivateDnsZoneSuffixResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/>. </summary>
         internal MySqlFlexibleServerPrivateDnsZoneSuffixResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerPrivateDnsZoneSuffixResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/>. </summary>
         /// <param name="privateDnsZoneSuffix"> Represents the private DNS zone suffix. </param>
-        internal MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateDnsZoneSuffix = privateDnsZoneSuffix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents the private DNS zone suffix. </summary>

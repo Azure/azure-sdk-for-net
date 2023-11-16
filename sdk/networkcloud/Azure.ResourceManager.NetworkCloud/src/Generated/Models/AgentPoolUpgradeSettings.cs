@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AgentPoolUpgradeSettings specifies the upgrade settings for an agent pool. </summary>
     internal partial class AgentPoolUpgradeSettings
     {
-        /// <summary> Initializes a new instance of AgentPoolUpgradeSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeSettings"/>. </summary>
         public AgentPoolUpgradeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolUpgradeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeSettings"/>. </summary>
         /// <param name="maxSurge"> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </param>
-        internal AgentPoolUpgradeSettings(string maxSurge)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolUpgradeSettings(string maxSurge, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxSurge = maxSurge;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>

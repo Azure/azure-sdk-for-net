@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SKU of a load balancer. </summary>
     public partial class LoadBalancerSku
     {
-        /// <summary> Initializes a new instance of LoadBalancerSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerSku"/>. </summary>
         public LoadBalancerSku()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerSku"/>. </summary>
         /// <param name="name"> Name of a load balancer SKU. </param>
         /// <param name="tier"> Tier of a load balancer SKU. </param>
-        internal LoadBalancerSku(LoadBalancerSkuName? name, LoadBalancerSkuTier? tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerSku(LoadBalancerSkuName? name, LoadBalancerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of a load balancer SKU. </summary>

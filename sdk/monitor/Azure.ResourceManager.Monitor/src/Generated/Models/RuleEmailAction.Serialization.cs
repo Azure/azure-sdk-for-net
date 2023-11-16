@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleEmailAction : IUtf8JsonSerializable
+    public partial class RuleEmailAction : IUtf8JsonSerializable, IJsonModel<RuleEmailAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleEmailAction>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RuleEmailAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RuleEmailAction>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RuleEmailAction>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SendToServiceOwners))
             {
@@ -33,11 +43,40 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleEmailAction DeserializeRuleEmailAction(JsonElement element)
+        RuleEmailAction IJsonModel<RuleEmailAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleEmailAction(document.RootElement, options);
+        }
+
+        internal static RuleEmailAction DeserializeRuleEmailAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +84,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<bool> sendToServiceOwners = default;
             Optional<IList<string>> customEmails = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendToServiceOwners"u8))
@@ -75,8 +116,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RuleEmailAction(odataType, Optional.ToNullable(sendToServiceOwners), Optional.ToList(customEmails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RuleEmailAction(odataType, serializedAdditionalRawData, Optional.ToNullable(sendToServiceOwners), Optional.ToList(customEmails));
         }
+
+        BinaryData IPersistableModel<RuleEmailAction>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RuleEmailAction IPersistableModel<RuleEmailAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRuleEmailAction(document.RootElement, options);
+        }
+
+        string IPersistableModel<RuleEmailAction>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

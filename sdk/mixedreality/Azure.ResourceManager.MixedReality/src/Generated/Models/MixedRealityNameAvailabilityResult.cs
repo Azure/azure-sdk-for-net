@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MixedReality.Models
 {
     /// <summary> Check Name Availability Response. </summary>
     public partial class MixedRealityNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of MixedRealityNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MixedRealityNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> if name Available. </param>
         internal MixedRealityNameAvailabilityResult(bool isNameAvailable)
         {
             IsNameAvailable = isNameAvailable;
         }
 
-        /// <summary> Initializes a new instance of MixedRealityNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedRealityNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> if name Available. </param>
         /// <param name="reason"> Resource Name To Verify. </param>
         /// <param name="message"> detail message. </param>
-        internal MixedRealityNameAvailabilityResult(bool isNameAvailable, MixedRealityNameUnavailableReason? reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MixedRealityNameAvailabilityResult(bool isNameAvailable, MixedRealityNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MixedRealityNameAvailabilityResult"/> for deserialization. </summary>
+        internal MixedRealityNameAvailabilityResult()
+        {
         }
 
         /// <summary> if name Available. </summary>

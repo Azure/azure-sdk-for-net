@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the destination of connection monitor. </summary>
     public partial class ConnectionMonitorDestination
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorDestination"/>. </summary>
         public ConnectionMonitorDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorDestination"/>. </summary>
         /// <param name="resourceId"> The ID of the resource used as the destination by connection monitor. </param>
         /// <param name="address"> Address of the connection monitor destination (IP or domain name). </param>
         /// <param name="port"> The destination port used by connection monitor. </param>
-        internal ConnectionMonitorDestination(ResourceIdentifier resourceId, string address, int? port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorDestination(ResourceIdentifier resourceId, string address, int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Address = address;
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the resource used as the destination by connection monitor. </summary>

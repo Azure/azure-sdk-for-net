@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The ARP table associated with the ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitArpTable
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitArpTable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitArpTable"/>. </summary>
         internal ExpressRouteCircuitArpTable()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitArpTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitArpTable"/>. </summary>
         /// <param name="age"> Entry age in minutes. </param>
         /// <param name="interface"> Interface address. </param>
         /// <param name="ipAddress"> The IP address. </param>
         /// <param name="macAddress"> The MAC address. </param>
-        internal ExpressRouteCircuitArpTable(int? age, string @interface, string ipAddress, string macAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitArpTable(int? age, string @interface, string ipAddress, string macAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Age = age;
             Interface = @interface;
             IPAddress = ipAddress;
             MacAddress = macAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Entry age in minutes. </summary>

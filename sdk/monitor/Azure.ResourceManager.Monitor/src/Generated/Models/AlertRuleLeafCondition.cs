@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,24 +17,29 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class AlertRuleLeafCondition
     {
-        /// <summary> Initializes a new instance of AlertRuleLeafCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertRuleLeafCondition"/>. </summary>
         public AlertRuleLeafCondition()
         {
             ContainsAny = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AlertRuleLeafCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleLeafCondition"/>. </summary>
         /// <param name="field">
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
         /// </param>
         /// <param name="equalsValue"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
-        internal AlertRuleLeafCondition(string field, string equalsValue, IList<string> containsAny)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertRuleLeafCondition(string field, string equalsValue, IList<string> containsAny, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Field = field;
             EqualsValue = equalsValue;
             ContainsAny = containsAny;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

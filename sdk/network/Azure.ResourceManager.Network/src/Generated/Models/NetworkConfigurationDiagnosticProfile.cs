@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters to compare with network configuration. </summary>
     public partial class NetworkConfigurationDiagnosticProfile
     {
-        /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticProfile"/>. </summary>
         /// <param name="direction"> The direction of the traffic. </param>
         /// <param name="protocol"> Protocol to be verified on. Accepted values are '*', TCP, UDP. </param>
         /// <param name="source"> Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag. </param>
@@ -32,6 +36,28 @@ namespace Azure.ResourceManager.Network.Models
             Source = source;
             Destination = destination;
             DestinationPort = destinationPort;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticProfile"/>. </summary>
+        /// <param name="direction"> The direction of the traffic. </param>
+        /// <param name="protocol"> Protocol to be verified on. Accepted values are '*', TCP, UDP. </param>
+        /// <param name="source"> Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag. </param>
+        /// <param name="destination"> Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag. </param>
+        /// <param name="destinationPort"> Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection direction, string protocol, string source, string destination, string destinationPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Direction = direction;
+            Protocol = protocol;
+            Source = source;
+            Destination = destination;
+            DestinationPort = destinationPort;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticProfile"/> for deserialization. </summary>
+        internal NetworkConfigurationDiagnosticProfile()
+        {
         }
 
         /// <summary> The direction of the traffic. </summary>

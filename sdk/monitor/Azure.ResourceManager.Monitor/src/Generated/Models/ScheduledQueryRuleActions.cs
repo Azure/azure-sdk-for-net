@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Actions to invoke when the alert fires. </summary>
     public partial class ScheduledQueryRuleActions
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRuleActions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
         public ScheduledQueryRuleActions()
         {
             ActionGroups = new ChangeTrackingList<string>();
             CustomProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
         /// <param name="actionGroups"> Action Group resource Ids to invoke when the alert fires. </param>
         /// <param name="customProperties"> The properties of an alert payload. </param>
-        internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionGroups = actionGroups;
             CustomProperties = customProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Action Group resource Ids to invoke when the alert fires. </summary>

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Geographic and time constraints for Azure reachability report. </summary>
     public partial class AzureReachabilityReportContent
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReportContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/>. </summary>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
         /// <param name="startOn"> The start time for the Azure reachability report. </param>
         /// <param name="endOn"> The end time for the Azure reachability report. </param>
@@ -28,6 +31,28 @@ namespace Azure.ResourceManager.Network.Models
             AzureLocations = new ChangeTrackingList<AzureLocation>();
             StartOn = startOn;
             EndOn = endOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/>. </summary>
+        /// <param name="providerLocation"> Parameters that define a geographic location. </param>
+        /// <param name="providers"> List of Internet service providers. </param>
+        /// <param name="azureLocations"> Optional Azure regions to scope the query to. </param>
+        /// <param name="startOn"> The start time for the Azure reachability report. </param>
+        /// <param name="endOn"> The end time for the Azure reachability report. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureReachabilityReportContent(AzureReachabilityReportLocation providerLocation, IList<string> providers, IList<AzureLocation> azureLocations, DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ProviderLocation = providerLocation;
+            Providers = providers;
+            AzureLocations = azureLocations;
+            StartOn = startOn;
+            EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/> for deserialization. </summary>
+        internal AzureReachabilityReportContent()
+        {
         }
 
         /// <summary> Parameters that define a geographic location. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The details of the policy triggered deployment that created or modified the tracked resource. </summary>
     public partial class TrackedResourceModificationDetails
     {
-        /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrackedResourceModificationDetails"/>. </summary>
         internal TrackedResourceModificationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackedResourceModificationDetails"/>. </summary>
         /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
         /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
         /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>
-        internal TrackedResourceModificationDetails(PolicyDetails policyDetails, ResourceIdentifier deploymentId, DateTimeOffset? deploymentOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrackedResourceModificationDetails(PolicyDetails policyDetails, ResourceIdentifier deploymentId, DateTimeOffset? deploymentOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyDetails = policyDetails;
             DeploymentId = deploymentId;
             DeploymentOn = deploymentOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The details of the policy that created or modified the tracked resource. </summary>

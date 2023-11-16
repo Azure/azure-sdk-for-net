@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class ProcessCpuData : IUtf8JsonSerializable
+    internal partial class ProcessCpuData : IUtf8JsonSerializable, IJsonModel<ProcessCpuData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessCpuData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ProcessCpuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ProcessCpuData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ProcessCpuData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProcessName))
             {
@@ -25,7 +36,96 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WritePropertyName("CpuPercentage"u8);
                 writer.WriteNumberValue(CpuPercentage.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ProcessCpuData IJsonModel<ProcessCpuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProcessCpuData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProcessCpuData(document.RootElement, options);
+        }
+
+        internal static ProcessCpuData DeserializeProcessCpuData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> processName = default;
+            Optional<int> cpuPercentage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("ProcessName"u8))
+                {
+                    processName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("CpuPercentage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cpuPercentage = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProcessCpuData(processName.Value, Optional.ToNullable(cpuPercentage), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ProcessCpuData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProcessCpuData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProcessCpuData IPersistableModel<ProcessCpuData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProcessCpuData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProcessCpuData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ProcessCpuData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Details of VM Resource having NewRelic OneAgent installed. </summary>
     public partial class NewRelicObservabilityVmInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityVmInfo"/>. </summary>
         internal NewRelicObservabilityVmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityVmInfo"/>. </summary>
         /// <param name="vmId"> Azure VM resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the VM. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the VM. </param>
-        internal NewRelicObservabilityVmInfo(ResourceIdentifier vmId, string agentVersion, string agentStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityVmInfo(ResourceIdentifier vmId, string agentVersion, string agentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmId = vmId;
             AgentVersion = agentVersion;
             AgentStatus = agentStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure VM resource ID. </summary>

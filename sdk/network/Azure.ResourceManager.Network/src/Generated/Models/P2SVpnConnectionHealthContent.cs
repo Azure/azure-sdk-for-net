@@ -14,10 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of P2S Vpn connection health request. </summary>
     public partial class P2SVpnConnectionHealthContent
     {
-        /// <summary> Initializes a new instance of P2SVpnConnectionHealthContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionHealthContent"/>. </summary>
         public P2SVpnConnectionHealthContent()
         {
             VpnUserNamesFilter = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionHealthContent"/>. </summary>
+        /// <param name="vpnUserNamesFilter"> The list of p2s vpn user names whose p2s vpn connection detailed health to retrieve for. </param>
+        /// <param name="outputBlobSasUri"> The sas-url to download the P2S Vpn connection health detail. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal P2SVpnConnectionHealthContent(IList<string> vpnUserNamesFilter, Uri outputBlobSasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VpnUserNamesFilter = vpnUserNamesFilter;
+            OutputBlobSasUri = outputBlobSasUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of p2s vpn user names whose p2s vpn connection detailed health to retrieve for. </summary>

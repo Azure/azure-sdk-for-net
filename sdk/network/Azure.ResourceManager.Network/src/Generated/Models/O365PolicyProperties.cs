@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The Office365 breakout policy. </summary>
     internal partial class O365PolicyProperties
     {
-        /// <summary> Initializes a new instance of O365PolicyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="O365PolicyProperties"/>. </summary>
         public O365PolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of O365PolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="O365PolicyProperties"/>. </summary>
         /// <param name="breakOutCategories"> Office365 breakout categories. </param>
-        internal O365PolicyProperties(O365BreakOutCategoryPolicies breakOutCategories)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal O365PolicyProperties(O365BreakOutCategoryPolicies breakOutCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BreakOutCategories = breakOutCategories;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Office365 breakout categories. </summary>

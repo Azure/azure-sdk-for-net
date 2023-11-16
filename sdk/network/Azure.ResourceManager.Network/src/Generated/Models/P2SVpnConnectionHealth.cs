@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> P2S Vpn connection detailed health written to sas url. </summary>
     public partial class P2SVpnConnectionHealth
     {
-        /// <summary> Initializes a new instance of P2SVpnConnectionHealth. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionHealth"/>. </summary>
         internal P2SVpnConnectionHealth()
         {
         }
 
-        /// <summary> Initializes a new instance of P2SVpnConnectionHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionHealth"/>. </summary>
         /// <param name="sasUri"> Returned sas url of the blob to which the p2s vpn connection detailed health will be written. </param>
-        internal P2SVpnConnectionHealth(Uri sasUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal P2SVpnConnectionHealth(Uri sasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SasUri = sasUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Returned sas url of the blob to which the p2s vpn connection detailed health will be written. </summary>

@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> The KeyValuePairString. </summary>
     internal partial class KeyValuePairString
     {
-        /// <summary> Initializes a new instance of KeyValuePairString. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairString"/>. </summary>
         public KeyValuePairString()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairString"/>. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyValuePairString(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Key = key;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the key. </summary>

@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkPacketCaptureData : ResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPacketCaptureData"/>. </summary>
         public MobileNetworkPacketCaptureData()
         {
             NetworkInterfaces = new ChangeTrackingList<string>();
             OutputFiles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPacketCaptureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +43,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <param name="outputFiles"> The list of output files of a packet capture session. </param>
-        internal MobileNetworkPacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkPacketCaptureStatus? status, string reason, DateTimeOffset? captureStartOn, IList<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, IReadOnlyList<string> outputFiles) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkPacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkPacketCaptureStatus? status, string reason, DateTimeOffset? captureStartOn, IList<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, IReadOnlyList<string> outputFiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -51,6 +55,7 @@ namespace Azure.ResourceManager.MobileNetwork
             TotalBytesPerSession = totalBytesPerSession;
             TimeLimitInSeconds = timeLimitInSeconds;
             OutputFiles = outputFiles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the packet capture session resource. </summary>

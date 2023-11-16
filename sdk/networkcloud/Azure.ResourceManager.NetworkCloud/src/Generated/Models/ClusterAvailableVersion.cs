@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterAvailableVersion represents the cluster version that the cluster manager can be asked to create and manage. </summary>
     public partial class ClusterAvailableVersion
     {
-        /// <summary> Initializes a new instance of ClusterAvailableVersion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterAvailableVersion"/>. </summary>
         internal ClusterAvailableVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterAvailableVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAvailableVersion"/>. </summary>
         /// <param name="supportExpiryDate"> The last date the version of the platform is supported. </param>
         /// <param name="targetClusterVersion"> The version of the cluster to be deployed. </param>
-        internal ClusterAvailableVersion(string supportExpiryDate, string targetClusterVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterAvailableVersion(string supportExpiryDate, string targetClusterVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SupportExpiryDate = supportExpiryDate;
             TargetClusterVersion = targetClusterVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The last date the version of the platform is supported. </summary>

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityPoolPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityPoolPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityPoolResource(Client, CapacityPoolData.DeserializeCapacityPoolData(e)), _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CapacityPoolResource(Client, CapacityPoolData.DeserializeCapacityPoolData(e)), _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityPoolPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityPoolPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityPoolResource(Client, CapacityPoolData.DeserializeCapacityPoolData(e)), _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CapacityPoolResource(Client, CapacityPoolData.DeserializeCapacityPoolData(e)), _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

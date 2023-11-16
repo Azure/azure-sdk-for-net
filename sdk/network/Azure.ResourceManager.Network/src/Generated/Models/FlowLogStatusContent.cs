@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define a resource to query flow log and traffic analytics (optional) status. </summary>
     public partial class FlowLogStatusContent
     {
-        /// <summary> Initializes a new instance of FlowLogStatusContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowLogStatusContent"/>. </summary>
         /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public FlowLogStatusContent(ResourceIdentifier targetResourceId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
 
             TargetResourceId = targetResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlowLogStatusContent"/>. </summary>
+        /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowLogStatusContent(ResourceIdentifier targetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetResourceId = targetResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlowLogStatusContent"/> for deserialization. </summary>
+        internal FlowLogStatusContent()
+        {
         }
 
         /// <summary> The target resource where getting the flow log and traffic analytics (optional) status. </summary>

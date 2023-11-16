@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network security rules evaluation result. </summary>
     public partial class NetworkSecurityRulesEvaluationResult
     {
-        /// <summary> Initializes a new instance of NetworkSecurityRulesEvaluationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityRulesEvaluationResult"/>. </summary>
         internal NetworkSecurityRulesEvaluationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityRulesEvaluationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityRulesEvaluationResult"/>. </summary>
         /// <param name="name"> Name of the network security rule. </param>
         /// <param name="protocolMatched"> Value indicating whether protocol is matched. </param>
         /// <param name="sourceMatched"> Value indicating whether source is matched. </param>
         /// <param name="sourcePortMatched"> Value indicating whether source port is matched. </param>
         /// <param name="destinationMatched"> Value indicating whether destination is matched. </param>
         /// <param name="destinationPortMatched"> Value indicating whether destination port is matched. </param>
-        internal NetworkSecurityRulesEvaluationResult(string name, bool? protocolMatched, bool? sourceMatched, bool? sourcePortMatched, bool? destinationMatched, bool? destinationPortMatched)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityRulesEvaluationResult(string name, bool? protocolMatched, bool? sourceMatched, bool? sourcePortMatched, bool? destinationMatched, bool? destinationPortMatched, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ProtocolMatched = protocolMatched;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             SourcePortMatched = sourcePortMatched;
             DestinationMatched = destinationMatched;
             DestinationPortMatched = destinationPortMatched;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the network security rule. </summary>

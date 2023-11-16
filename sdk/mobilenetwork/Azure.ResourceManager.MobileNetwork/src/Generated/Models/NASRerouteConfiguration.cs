@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Configuration enabling NAS reroute. </summary>
     internal partial class NASRerouteConfiguration
     {
-        /// <summary> Initializes a new instance of NASRerouteConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NASRerouteConfiguration"/>. </summary>
         /// <param name="macroMmeGroupId"> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </param>
         public NASRerouteConfiguration(int macroMmeGroupId)
         {
             MacroMmeGroupId = macroMmeGroupId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NASRerouteConfiguration"/>. </summary>
+        /// <param name="macroMmeGroupId"> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NASRerouteConfiguration(int macroMmeGroupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MacroMmeGroupId = macroMmeGroupId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NASRerouteConfiguration"/> for deserialization. </summary>
+        internal NASRerouteConfiguration()
+        {
         }
 
         /// <summary> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </summary>

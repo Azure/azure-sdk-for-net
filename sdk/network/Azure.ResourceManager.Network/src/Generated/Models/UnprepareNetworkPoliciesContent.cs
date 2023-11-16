@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details of UnprepareNetworkPolicies for Subnet. </summary>
     public partial class UnprepareNetworkPoliciesContent
     {
-        /// <summary> Initializes a new instance of UnprepareNetworkPoliciesContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnprepareNetworkPoliciesContent"/>. </summary>
         public UnprepareNetworkPoliciesContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnprepareNetworkPoliciesContent"/>. </summary>
+        /// <param name="serviceName"> The name of the service for which subnet is being unprepared for. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnprepareNetworkPoliciesContent(string serviceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ServiceName = serviceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the service for which subnet is being unprepared for. </summary>

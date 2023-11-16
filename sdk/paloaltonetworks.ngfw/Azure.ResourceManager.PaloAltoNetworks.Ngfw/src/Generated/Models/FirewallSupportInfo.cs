@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Support information for the resource. </summary>
     public partial class FirewallSupportInfo
     {
-        /// <summary> Initializes a new instance of FirewallSupportInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallSupportInfo"/>. </summary>
         internal FirewallSupportInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallSupportInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallSupportInfo"/>. </summary>
         /// <param name="productSku"> product SKU associated with given resource. </param>
         /// <param name="productSerial"> product Serial associated with given resource. </param>
         /// <param name="accountRegistered"> account registered in Customer Support Portal. </param>
@@ -28,7 +34,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="helpURL"> URL for paloaltonetworks live community. </param>
         /// <param name="supportURL"> URL for paloaltonetworks Customer Service Portal. </param>
         /// <param name="registerURL"> URL for registering product in paloaltonetworks Customer Service Portal. </param>
-        internal FirewallSupportInfo(string productSku, string productSerial, FirewallBooleanType? accountRegistered, string accountId, FirewallBooleanType? userDomainSupported, FirewallBooleanType? userRegistered, FirewallBooleanType? freeTrial, int? freeTrialDaysLeft, int? freeTrialCreditLeft, string helpURL, string supportURL, string registerURL)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallSupportInfo(string productSku, string productSerial, FirewallBooleanType? accountRegistered, string accountId, FirewallBooleanType? userDomainSupported, FirewallBooleanType? userRegistered, FirewallBooleanType? freeTrial, int? freeTrialDaysLeft, int? freeTrialCreditLeft, string helpURL, string supportURL, string registerURL, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductSku = productSku;
             ProductSerial = productSerial;
@@ -42,6 +49,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             HelpURL = helpURL;
             SupportURL = supportURL;
             RegisterURL = registerURL;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> product SKU associated with given resource. </summary>

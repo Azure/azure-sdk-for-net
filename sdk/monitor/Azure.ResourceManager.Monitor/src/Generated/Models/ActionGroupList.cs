@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Monitor;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A list of action groups. </summary>
     internal partial class ActionGroupList
     {
-        /// <summary> Initializes a new instance of ActionGroupList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActionGroupList"/>. </summary>
         internal ActionGroupList()
         {
             Value = new ChangeTrackingList<ActionGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ActionGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupList"/>. </summary>
         /// <param name="value"> The list of action groups. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
-        internal ActionGroupList(IReadOnlyList<ActionGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionGroupList(IReadOnlyList<ActionGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of action groups. </summary>

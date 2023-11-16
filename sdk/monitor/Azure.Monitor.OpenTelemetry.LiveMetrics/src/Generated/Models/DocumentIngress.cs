@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,27 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Base class of the specific document types. </summary>
     internal partial class DocumentIngress
     {
-        /// <summary> Initializes a new instance of DocumentIngress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIngress"/>. </summary>
         public DocumentIngress()
         {
             DocumentStreamIds = new ChangeTrackingList<string>();
             Properties = new ChangeTrackingList<object>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIngress"/>. </summary>
+        /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
+        /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<object> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DocumentType = documentType;
+            DocumentStreamIds = documentStreamIds;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </summary>

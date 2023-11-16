@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BareMetalMachinePowerOffParameters represents the body of the request to power off bare metal machine. </summary>
     public partial class BareMetalMachinePowerOffContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachinePowerOffContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachinePowerOffContent"/>. </summary>
         public BareMetalMachinePowerOffContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachinePowerOffContent"/>. </summary>
+        /// <param name="skipShutdown"> The indicator of whether to skip the graceful OS shutdown and power off the bare metal machine immediately. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BareMetalMachinePowerOffContent(BareMetalMachineSkipShutdown? skipShutdown, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SkipShutdown = skipShutdown;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The indicator of whether to skip the graceful OS shutdown and power off the bare metal machine immediately. </summary>

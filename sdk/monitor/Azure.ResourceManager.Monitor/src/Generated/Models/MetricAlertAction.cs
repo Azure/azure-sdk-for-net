@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An alert action. </summary>
     public partial class MetricAlertAction
     {
-        /// <summary> Initializes a new instance of MetricAlertAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricAlertAction"/>. </summary>
         public MetricAlertAction()
         {
             WebHookProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertAction"/>. </summary>
         /// <param name="actionGroupId"> the id of the action group to use. </param>
         /// <param name="webHookProperties"> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </param>
-        internal MetricAlertAction(ResourceIdentifier actionGroupId, IDictionary<string, string> webHookProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricAlertAction(ResourceIdentifier actionGroupId, IDictionary<string, string> webHookProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionGroupId = actionGroupId;
             WebHookProperties = webHookProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the id of the action group to use. </summary>

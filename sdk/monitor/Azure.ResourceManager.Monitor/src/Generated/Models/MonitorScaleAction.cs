@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The parameters for the scaling action. </summary>
     public partial class MonitorScaleAction
     {
-        /// <summary> Initializes a new instance of MonitorScaleAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorScaleAction"/>. </summary>
         /// <param name="direction"> the scale direction. Whether the scaling action increases or decreases the number of instances. </param>
         /// <param name="scaleType"> the type of action that should occur when the scale rule fires. </param>
         /// <param name="cooldown"> the amount of time to wait since the last scaling action before this action occurs. It must be between 1 week and 1 minute in ISO 8601 format. </param>
@@ -23,17 +27,24 @@ namespace Azure.ResourceManager.Monitor.Models
             Cooldown = cooldown;
         }
 
-        /// <summary> Initializes a new instance of MonitorScaleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorScaleAction"/>. </summary>
         /// <param name="direction"> the scale direction. Whether the scaling action increases or decreases the number of instances. </param>
         /// <param name="scaleType"> the type of action that should occur when the scale rule fires. </param>
         /// <param name="value"> the number of instances that are involved in the scaling action. This value must be 1 or greater. The default value is 1. </param>
         /// <param name="cooldown"> the amount of time to wait since the last scaling action before this action occurs. It must be between 1 week and 1 minute in ISO 8601 format. </param>
-        internal MonitorScaleAction(MonitorScaleDirection direction, MonitorScaleType scaleType, string value, TimeSpan cooldown)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorScaleAction(MonitorScaleDirection direction, MonitorScaleType scaleType, string value, TimeSpan cooldown, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             ScaleType = scaleType;
             Value = value;
             Cooldown = cooldown;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorScaleAction"/> for deserialization. </summary>
+        internal MonitorScaleAction()
+        {
         }
 
         /// <summary> the scale direction. Whether the scaling action increases or decreases the number of instances. </summary>

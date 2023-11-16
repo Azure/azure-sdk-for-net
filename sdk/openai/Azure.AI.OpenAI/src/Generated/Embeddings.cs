@@ -19,7 +19,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class Embeddings
     {
-        /// <summary> Initializes a new instance of Embeddings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="usage"/> is null. </exception>
@@ -30,15 +33,23 @@ namespace Azure.AI.OpenAI
 
             Data = data.ToList();
             Usage = usage;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of Embeddings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
-        internal Embeddings(IReadOnlyList<EmbeddingItem> data, EmbeddingsUsage usage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Embeddings(IReadOnlyList<EmbeddingItem> data, EmbeddingsUsage usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Data = data;
             Usage = usage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Embeddings"/> for deserialization. </summary>
+        internal Embeddings()
+        {
         }
 
         /// <summary> Embedding values for the prompts submitted in the request. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume group properties. </summary>
     public partial class NetAppVolumeGroupMetadata
     {
-        /// <summary> Initializes a new instance of NetAppVolumeGroupMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupMetadata"/>. </summary>
         public NetAppVolumeGroupMetadata()
         {
             GlobalPlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupMetadata"/>. </summary>
         /// <param name="groupDescription"> Group Description. </param>
         /// <param name="applicationType"> Application Type. </param>
         /// <param name="applicationIdentifier"> Application specific identifier. </param>
         /// <param name="globalPlacementRules"> Application specific placement rules for the volume group. </param>
         /// <param name="deploymentSpecId"> Application specific identifier of deployment rules for the volume group. </param>
         /// <param name="volumesCount"> Number of volumes in volume group. </param>
-        internal NetAppVolumeGroupMetadata(string groupDescription, NetAppApplicationType? applicationType, string applicationIdentifier, IList<NetAppVolumePlacementRule> globalPlacementRules, string deploymentSpecId, long? volumesCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeGroupMetadata(string groupDescription, NetAppApplicationType? applicationType, string applicationIdentifier, IList<NetAppVolumePlacementRule> globalPlacementRules, string deploymentSpecId, long? volumesCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupDescription = groupDescription;
             ApplicationType = applicationType;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
             GlobalPlacementRules = globalPlacementRules;
             DeploymentSpecId = deploymentSpecId;
             VolumesCount = volumesCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Group Description. </summary>

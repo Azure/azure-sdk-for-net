@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a direct peering location. </summary>
     public partial class DirectPeeringLocationProperties
     {
-        /// <summary> Initializes a new instance of DirectPeeringLocationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringLocationProperties"/>. </summary>
         public DirectPeeringLocationProperties()
         {
             PeeringFacilities = new ChangeTrackingList<DirectPeeringFacility>();
             BandwidthOffers = new ChangeTrackingList<PeeringBandwidthOffer>();
         }
 
-        /// <summary> Initializes a new instance of DirectPeeringLocationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringLocationProperties"/>. </summary>
         /// <param name="peeringFacilities"> The list of direct peering facilities at the peering location. </param>
         /// <param name="bandwidthOffers"> The list of bandwidth offers available at the peering location. </param>
-        internal DirectPeeringLocationProperties(IList<DirectPeeringFacility> peeringFacilities, IList<PeeringBandwidthOffer> bandwidthOffers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DirectPeeringLocationProperties(IList<DirectPeeringFacility> peeringFacilities, IList<PeeringBandwidthOffer> bandwidthOffers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PeeringFacilities = peeringFacilities;
             BandwidthOffers = bandwidthOffers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of direct peering facilities at the peering location. </summary>

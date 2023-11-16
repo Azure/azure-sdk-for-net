@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of RouteMaps and a URL nextLink to get the next set of results. </summary>
     internal partial class ListRouteMapsResult
     {
-        /// <summary> Initializes a new instance of ListRouteMapsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListRouteMapsResult"/>. </summary>
         internal ListRouteMapsResult()
         {
             Value = new ChangeTrackingList<RouteMapData>();
         }
 
-        /// <summary> Initializes a new instance of ListRouteMapsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListRouteMapsResult"/>. </summary>
         /// <param name="value"> List of RouteMaps. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListRouteMapsResult(IReadOnlyList<RouteMapData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListRouteMapsResult(IReadOnlyList<RouteMapData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of RouteMaps. </summary>

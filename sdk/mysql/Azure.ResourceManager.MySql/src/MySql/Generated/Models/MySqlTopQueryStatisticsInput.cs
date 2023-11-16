@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Input to get top query statistics. </summary>
     public partial class MySqlTopQueryStatisticsInput
     {
-        /// <summary> Initializes a new instance of MySqlTopQueryStatisticsInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlTopQueryStatisticsInput"/>. </summary>
         /// <param name="numberOfTopQueries"> Max number of top queries to return. </param>
         /// <param name="aggregationFunction"> Aggregation function name. </param>
         /// <param name="observedMetric"> Observed metric name. </param>
@@ -33,6 +37,30 @@ namespace Azure.ResourceManager.MySql.Models
             ObservationStartOn = observationStartOn;
             ObservationEndOn = observationEndOn;
             AggregationWindow = aggregationWindow;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlTopQueryStatisticsInput"/>. </summary>
+        /// <param name="numberOfTopQueries"> Max number of top queries to return. </param>
+        /// <param name="aggregationFunction"> Aggregation function name. </param>
+        /// <param name="observedMetric"> Observed metric name. </param>
+        /// <param name="observationStartOn"> Observation start time. </param>
+        /// <param name="observationEndOn"> Observation end time. </param>
+        /// <param name="aggregationWindow"> Aggregation interval type in ISO 8601 format. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlTopQueryStatisticsInput(int numberOfTopQueries, string aggregationFunction, string observedMetric, DateTimeOffset observationStartOn, DateTimeOffset observationEndOn, string aggregationWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NumberOfTopQueries = numberOfTopQueries;
+            AggregationFunction = aggregationFunction;
+            ObservedMetric = observedMetric;
+            ObservationStartOn = observationStartOn;
+            ObservationEndOn = observationEndOn;
+            AggregationWindow = aggregationWindow;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlTopQueryStatisticsInput"/> for deserialization. </summary>
+        internal MySqlTopQueryStatisticsInput()
+        {
         }
 
         /// <summary> Max number of top queries to return. </summary>

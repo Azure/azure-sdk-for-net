@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the table. </summary>
     internal partial class MetadataTableRelated
     {
-        /// <summary> Initializes a new instance of MetadataTableRelated. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataTableRelated"/>. </summary>
         internal MetadataTableRelated()
         {
             Categories = new ChangeTrackingList<string>();
@@ -22,6 +26,25 @@ namespace Azure.Monitor.Query.Models
             Workspaces = new ChangeTrackingList<string>();
             Functions = new ChangeTrackingList<string>();
             Queries = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataTableRelated"/>. </summary>
+        /// <param name="categories"> The related categories for the table. </param>
+        /// <param name="solutions"> The related Log Analytics solutions for the table. </param>
+        /// <param name="resourceTypes"> The related resource types for the table. </param>
+        /// <param name="workspaces"> The related Log Analytics workspaces for the table. </param>
+        /// <param name="functions"> The related functions for the table. </param>
+        /// <param name="queries"> The related saved queries for the table. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataTableRelated(IReadOnlyList<string> categories, IReadOnlyList<string> solutions, IReadOnlyList<string> resourceTypes, IReadOnlyList<string> workspaces, IReadOnlyList<string> functions, IReadOnlyList<string> queries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Categories = categories;
+            Solutions = solutions;
+            ResourceTypes = resourceTypes;
+            Workspaces = workspaces;
+            Functions = functions;
+            Queries = queries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The related categories for the table. </summary>

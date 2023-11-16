@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A list of Activity Log Alert rule actions. </summary>
     internal partial class ActionList
     {
-        /// <summary> Initializes a new instance of ActionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActionList"/>. </summary>
         public ActionList()
         {
             ActionGroups = new ChangeTrackingList<ActivityLogAlertActionGroup>();
         }
 
-        /// <summary> Initializes a new instance of ActionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionList"/>. </summary>
         /// <param name="actionGroups"> The list of the Action Groups. </param>
-        internal ActionList(IList<ActivityLogAlertActionGroup> actionGroups)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionList(IList<ActivityLogAlertActionGroup> actionGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionGroups = actionGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of the Action Groups. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Log Destination. </summary>
     public partial class FirewallLogDestination
     {
-        /// <summary> Initializes a new instance of FirewallLogDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallLogDestination"/>. </summary>
         public FirewallLogDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallLogDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallLogDestination"/>. </summary>
         /// <param name="storageConfiguration"> Storage account configurations. </param>
         /// <param name="eventHubConfiguration"> Event Hub configurations. </param>
         /// <param name="monitorConfiguration"> Monitor Log configurations. </param>
-        internal FirewallLogDestination(StorageAccountConfiguration storageConfiguration, EventHubConfiguration eventHubConfiguration, MonitorLogConfiguration monitorConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallLogDestination(StorageAccountConfiguration storageConfiguration, EventHubConfiguration eventHubConfiguration, MonitorLogConfiguration monitorConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageConfiguration = storageConfiguration;
             EventHubConfiguration = eventHubConfiguration;
             MonitorConfiguration = monitorConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage account configurations. </summary>

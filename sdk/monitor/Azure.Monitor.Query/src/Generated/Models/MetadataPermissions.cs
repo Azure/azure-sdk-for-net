@@ -15,7 +15,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Permission information for the metadata call, includes apps/workspaces/resource the user didn't have access to. </summary>
     internal partial class MetadataPermissions
     {
-        /// <summary> Initializes a new instance of MetadataPermissions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissions"/>. </summary>
         /// <param name="workspaces"> The permission indication for the workspaces on the metadata request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaces"/> is null. </exception>
         internal MetadataPermissions(IEnumerable<MetadataPermissionsWorkspacesItem> workspaces)
@@ -25,6 +28,24 @@ namespace Azure.Monitor.Query.Models
             Workspaces = workspaces.ToList();
             Resources = new ChangeTrackingList<MetadataPermissionsResourcesItem>();
             Applications = new ChangeTrackingList<MetadataPermissionsApplicationsItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissions"/>. </summary>
+        /// <param name="workspaces"> The permission indication for the workspaces on the metadata request. </param>
+        /// <param name="resources"> The permission indication for the Azure resources on the metadata request. </param>
+        /// <param name="applications"> The permission indication for the Application Insights apps on the metadata request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataPermissions(IReadOnlyList<MetadataPermissionsWorkspacesItem> workspaces, IReadOnlyList<MetadataPermissionsResourcesItem> resources, IReadOnlyList<MetadataPermissionsApplicationsItem> applications, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Workspaces = workspaces;
+            Resources = resources;
+            Applications = applications;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissions"/> for deserialization. </summary>
+        internal MetadataPermissions()
+        {
         }
 
         /// <summary> The permission indication for the workspaces on the metadata request. </summary>

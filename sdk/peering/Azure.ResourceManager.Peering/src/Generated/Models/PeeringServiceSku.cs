@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The SKU that defines the type of the peering service. </summary>
     internal partial class PeeringServiceSku
     {
-        /// <summary> Initializes a new instance of PeeringServiceSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceSku"/>. </summary>
         public PeeringServiceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringServiceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceSku"/>. </summary>
         /// <param name="name"> The name of the peering service SKU. </param>
-        internal PeeringServiceSku(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringServiceSku(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the peering service SKU. </summary>

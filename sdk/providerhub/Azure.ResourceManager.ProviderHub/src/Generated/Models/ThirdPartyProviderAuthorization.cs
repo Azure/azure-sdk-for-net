@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ThirdPartyProviderAuthorization. </summary>
     public partial class ThirdPartyProviderAuthorization
     {
-        /// <summary> Initializes a new instance of ThirdPartyProviderAuthorization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThirdPartyProviderAuthorization"/>. </summary>
         public ThirdPartyProviderAuthorization()
         {
             Authorizations = new ChangeTrackingList<LightHouseAuthorization>();
         }
 
-        /// <summary> Initializes a new instance of ThirdPartyProviderAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThirdPartyProviderAuthorization"/>. </summary>
         /// <param name="authorizations"></param>
         /// <param name="managedByTenantId"></param>
-        internal ThirdPartyProviderAuthorization(IList<LightHouseAuthorization> authorizations, string managedByTenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThirdPartyProviderAuthorization(IList<LightHouseAuthorization> authorizations, string managedByTenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authorizations = authorizations;
             ManagedByTenantId = managedByTenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the authorizations. </summary>

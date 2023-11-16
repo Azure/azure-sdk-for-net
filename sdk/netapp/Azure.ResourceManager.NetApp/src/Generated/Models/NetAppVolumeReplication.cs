@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Replication properties. </summary>
     public partial class NetAppVolumeReplication
     {
-        /// <summary> Initializes a new instance of NetAppVolumeReplication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
         internal NetAppVolumeReplication(ResourceIdentifier remoteVolumeResourceId)
@@ -23,17 +27,24 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeResourceId = remoteVolumeResourceId;
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeReplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        internal NetAppVolumeReplication(NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeReplication(NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
             ReplicationSchedule = replicationSchedule;
             RemoteVolumeResourceId = remoteVolumeResourceId;
             RemoteVolumeRegion = remoteVolumeRegion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/> for deserialization. </summary>
+        internal NetAppVolumeReplication()
+        {
         }
 
         /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a baseline metadata value. </summary>
     public partial class MonitorBaselineMetadata
     {
-        /// <summary> Initializes a new instance of MonitorBaselineMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorBaselineMetadata"/>. </summary>
         /// <param name="name"> Name of the baseline metadata. </param>
         /// <param name="value"> Value of the baseline metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Monitor.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorBaselineMetadata"/>. </summary>
+        /// <param name="name"> Name of the baseline metadata. </param>
+        /// <param name="value"> Value of the baseline metadata. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorBaselineMetadata(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorBaselineMetadata"/> for deserialization. </summary>
+        internal MonitorBaselineMetadata()
+        {
         }
 
         /// <summary> Name of the baseline metadata. </summary>

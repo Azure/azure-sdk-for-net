@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Log Analytics Resources for Firewall Policy Insights. </summary>
     public partial class FirewallPolicyLogAnalyticsResources
     {
-        /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsResources. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLogAnalyticsResources"/>. </summary>
         public FirewallPolicyLogAnalyticsResources()
         {
             Workspaces = new ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLogAnalyticsResources"/>. </summary>
         /// <param name="workspaces"> List of workspaces for Firewall Policy Insights. </param>
         /// <param name="defaultWorkspaceId"> The default workspace Id for Firewall Policy Insights. </param>
-        internal FirewallPolicyLogAnalyticsResources(IList<FirewallPolicyLogAnalyticsWorkspace> workspaces, WritableSubResource defaultWorkspaceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyLogAnalyticsResources(IList<FirewallPolicyLogAnalyticsWorkspace> workspaces, WritableSubResource defaultWorkspaceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Workspaces = workspaces;
             DefaultWorkspaceId = defaultWorkspaceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of workspaces for Firewall Policy Insights. </summary>

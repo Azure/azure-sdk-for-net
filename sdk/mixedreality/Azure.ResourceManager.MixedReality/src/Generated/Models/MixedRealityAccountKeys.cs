@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MixedReality.Models
 {
     /// <summary> Developer Keys of account. </summary>
     public partial class MixedRealityAccountKeys
     {
-        /// <summary> Initializes a new instance of MixedRealityAccountKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MixedRealityAccountKeys"/>. </summary>
         internal MixedRealityAccountKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of MixedRealityAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedRealityAccountKeys"/>. </summary>
         /// <param name="primaryKey"> value of primary key. </param>
         /// <param name="secondaryKey"> value of secondary key. </param>
-        internal MixedRealityAccountKeys(string primaryKey, string secondaryKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MixedRealityAccountKeys(string primaryKey, string secondaryKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> value of primary key. </summary>

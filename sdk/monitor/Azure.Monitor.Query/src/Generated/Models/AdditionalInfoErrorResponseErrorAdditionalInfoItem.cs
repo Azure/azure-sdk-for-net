@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The AdditionalInfoErrorResponseErrorAdditionalInfoItem. </summary>
     internal partial class AdditionalInfoErrorResponseErrorAdditionalInfoItem
     {
-        /// <summary> Initializes a new instance of AdditionalInfoErrorResponseErrorAdditionalInfoItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponseErrorAdditionalInfoItem"/>. </summary>
         internal AdditionalInfoErrorResponseErrorAdditionalInfoItem()
         {
         }
 
-        /// <summary> Initializes a new instance of AdditionalInfoErrorResponseErrorAdditionalInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponseErrorAdditionalInfoItem"/>. </summary>
         /// <param name="type"> The type of the info property (e.g. string). </param>
         /// <param name="info"> Additional information related to the error. </param>
-        internal AdditionalInfoErrorResponseErrorAdditionalInfoItem(string type, string info)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdditionalInfoErrorResponseErrorAdditionalInfoItem(string type, string info, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Info = info;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the info property (e.g. string). </summary>

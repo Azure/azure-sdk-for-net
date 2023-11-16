@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AttachedNetworkConfiguration represents the set of workload networks to attach to a resource. </summary>
     public partial class AttachedNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of AttachedNetworkConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkConfiguration"/>. </summary>
         public AttachedNetworkConfiguration()
         {
             L2Networks = new ChangeTrackingList<L2NetworkAttachmentConfiguration>();
@@ -21,15 +25,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             TrunkedNetworks = new ChangeTrackingList<TrunkedNetworkAttachmentConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of AttachedNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkConfiguration"/>. </summary>
         /// <param name="l2Networks"> The list of Layer 2 Networks and related configuration for attachment. </param>
         /// <param name="l3Networks"> The list of Layer 3 Networks and related configuration for attachment. </param>
         /// <param name="trunkedNetworks"> The list of Trunked Networks and related configuration for attachment. </param>
-        internal AttachedNetworkConfiguration(IList<L2NetworkAttachmentConfiguration> l2Networks, IList<L3NetworkAttachmentConfiguration> l3Networks, IList<TrunkedNetworkAttachmentConfiguration> trunkedNetworks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttachedNetworkConfiguration(IList<L2NetworkAttachmentConfiguration> l2Networks, IList<L3NetworkAttachmentConfiguration> l3Networks, IList<TrunkedNetworkAttachmentConfiguration> trunkedNetworks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             L2Networks = l2Networks;
             L3Networks = l3Networks;
             TrunkedNetworks = trunkedNetworks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Layer 2 Networks and related configuration for attachment. </summary>

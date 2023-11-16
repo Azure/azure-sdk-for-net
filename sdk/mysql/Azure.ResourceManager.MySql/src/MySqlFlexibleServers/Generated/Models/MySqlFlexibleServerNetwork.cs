@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Network related properties of a server. </summary>
     public partial class MySqlFlexibleServerNetwork
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNetwork. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerNetwork"/>. </summary>
         public MySqlFlexibleServerNetwork()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerNetwork"/>. </summary>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </param>
         /// <param name="delegatedSubnetResourceId"> Delegated subnet resource id used to setup vnet for a server. </param>
         /// <param name="privateDnsZoneResourceId"> Private DNS zone resource id. </param>
-        internal MySqlFlexibleServerNetwork(MySqlFlexibleServerEnableStatusEnum? publicNetworkAccess, ResourceIdentifier delegatedSubnetResourceId, ResourceIdentifier privateDnsZoneResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerNetwork(MySqlFlexibleServerEnableStatusEnum? publicNetworkAccess, ResourceIdentifier delegatedSubnetResourceId, ResourceIdentifier privateDnsZoneResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicNetworkAccess = publicNetworkAccess;
             DelegatedSubnetResourceId = delegatedSubnetResourceId;
             PrivateDnsZoneResourceId = privateDnsZoneResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </summary>

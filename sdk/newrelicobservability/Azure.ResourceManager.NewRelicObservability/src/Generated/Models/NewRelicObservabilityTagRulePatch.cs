@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The type used for update operations of the TagRule. </summary>
     public partial class NewRelicObservabilityTagRulePatch
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityTagRulePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRulePatch"/>. </summary>
         public NewRelicObservabilityTagRulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRulePatch"/>. </summary>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityTagRulePatch(NewRelicObservabilityLogRules logRules, NewRelicObservabilityMetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LogRules = logRules;
+            MetricRules = metricRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
