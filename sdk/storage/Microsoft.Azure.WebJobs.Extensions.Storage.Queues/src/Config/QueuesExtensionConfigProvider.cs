@@ -25,14 +25,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
         private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly QueueTriggerAttributeBindingProvider _triggerProvider;
         private readonly QueueCausalityManager _queueCausalityManager;
+        private readonly IDrainModeManager _drainModeManager;
 
-        public QueuesExtensionConfigProvider(QueueServiceClientProvider queueServiceClientProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter,
-            QueueTriggerAttributeBindingProvider triggerProvider, QueueCausalityManager queueCausalityManager)
+        public QueuesExtensionConfigProvider(
+            QueueServiceClientProvider queueServiceClientProvider,
+            IContextGetter<IMessageEnqueuedWatcher> contextGetter,
+            QueueTriggerAttributeBindingProvider triggerProvider,
+            QueueCausalityManager queueCausalityManager,
+            IDrainModeManager drainModeManager)
         {
             _contextGetter = contextGetter;
             _queueServiceClientProvider = queueServiceClientProvider;
             _triggerProvider = triggerProvider;
             _queueCausalityManager = queueCausalityManager;
+            _drainModeManager = drainModeManager;
         }
 
         public void Initialize(ExtensionConfigContext context)

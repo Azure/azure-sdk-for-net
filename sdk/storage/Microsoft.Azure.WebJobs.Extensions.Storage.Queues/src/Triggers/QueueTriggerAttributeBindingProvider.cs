@@ -31,6 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
         private readonly IQueueProcessorFactory _queueProcessorFactory;
         private readonly QueueCausalityManager _queueCausalityManager;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly IDrainModeManager _drainModeManager;
 
         public QueueTriggerAttributeBindingProvider(INameResolver nameResolver,
             QueueServiceClientProvider queueServiceClientProvider,
@@ -40,7 +41,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             ILoggerFactory loggerFactory,
             IQueueProcessorFactory queueProcessorFactory,
             QueueCausalityManager queueCausalityManager,
-            ConcurrencyManager concurrencyManager)
+            ConcurrencyManager concurrencyManager,
+            IDrainModeManager drainModeManager)
         {
             _queueServiceClientProvider = queueServiceClientProvider ?? throw new ArgumentNullException(nameof(queueServiceClientProvider));
             _queueOptions = (queueOptions ?? throw new ArgumentNullException(nameof(queueOptions))).Value;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 new ConverterArgumentBindingProvider<BinaryData>(new StorageQueueMessageToBinaryDataConverter(), loggerFactory),
                 new ConverterArgumentBindingProvider<ParameterBindingData>(new StorageQueueMessageToParameterBindingDataConverter(), loggerFactory),
                 new UserTypeArgumentBindingProvider(loggerFactory)); // Must come last, because it will attempt to bind all types.
+            _drainModeManager = drainModeManager;
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
