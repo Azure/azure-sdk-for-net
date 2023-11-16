@@ -452,6 +452,13 @@
       ]
     },
     {
+      "filename": "**/sdk/documentintelligence/**/*.cs",
+      "words": [
+        "UPCA",
+        "UPCE"
+      ]
+    },
+    {
       "filename": "**/sdk/dynatrace/**/*.cs",
       "words": [
         "Dynatrace",
