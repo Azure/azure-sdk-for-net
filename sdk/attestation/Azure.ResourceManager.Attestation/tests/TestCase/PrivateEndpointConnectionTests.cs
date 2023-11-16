@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Attestation.Tests
             var endpointName2 = Recording.GenerateAssetName("testEndpointConnection-");
             var endpointName3 = Recording.GenerateAssetName("testEndpointConnection-");
             var resourceGroup = await CreateResourceGroupAsync();
-            var endpoint = await GetEndpointResource(resourceGroup);
             var collection = resourceGroup.GetAttestationProviders();
             var providrerCollection = resourceGroup.GetAttestationProviders();
             var providerInput = ResourceDataHelper.GetProviderData(DefaultLocation);
             var providerResource = (await providrerCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, providerInput)).Value;
+            var endpoint = await GetEndpointResource(resourceGroup, providerResource.Data.Id);
             var endppintCollection = providerResource.GetAttestationPrivateEndpointConnections();
             //1.CreateOrUpdate
             var input = ResourceDataHelper.GetPrivateEndpointConnectionData();
@@ -80,17 +80,11 @@ namespace Azure.ResourceManager.Attestation.Tests
             await endpointResource4.DeleteAsync(WaitUntil.Completed);
         }
 
-        public async Task<PrivateEndpointResource> GetEndpointResource(ResourceGroupResource resourceGroup)
+        public async Task<PrivateEndpointResource> GetEndpointResource(ResourceGroupResource resourceGroup, ResourceIdentifier providerId)
         {
             string VnetName = Recording.GenerateAssetName("vnetname");
             string SubnetName = Recording.GenerateAssetName("subnetname");
             string EndpointName = Recording.GenerateAssetName("endpointxyz");
-            string configurationStoreName = Recording.GenerateAssetName("testapp-");
-            AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(AzureLocation.EastUS, new AppConfigurationSku("Standard"))
-            {
-                PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
-            };
-            var ConfigStore = (await resourceGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
                 Location = "eastus",
@@ -106,8 +100,8 @@ namespace Azure.ResourceManager.Attestation.Tests
                 PrivateLinkServiceConnections = { new NetworkPrivateLinkServiceConnection()
                         {
                             Name ="myconnection",
-                            PrivateLinkServiceId = ConfigStore.Data.Id,
-                            GroupIds = {"configurationStores"},
+                            PrivateLinkServiceId = providerId,
+                            GroupIds = {"standard"},
                             RequestMessage = "Please approve my connection",
                         }
                         },
