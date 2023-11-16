@@ -129,8 +129,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(page.Unit, Is.EqualTo(LengthUnit.Inch));
             }
 
-            Assert.That(analyzeResult.Documents.Count, Is.EqualTo(1));
-
             var document = analyzeResult.Documents.Single();
 
             Assert.That(document.DocType, Is.EqualTo("IRS-1040-A"));
