@@ -9,10 +9,12 @@
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
     <PackageReference Include="Microsoft.AspNetCore" VersionOverride="2.1.7" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" VersionOverride="8.0.0-rc.2.23479.6" />
   </ItemGroup>
 
   <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" VersionOverride="6.0.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -23,7 +25,6 @@
     <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" VersionOverride="3.1.13" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" VersionOverride="3.1.32" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" VersionOverride="8.0.0-rc.2.23479.6" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="coverlet.collector">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
