@@ -8,12 +8,16 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
+    [CodeGenSuppress("GetOperationAsync", typeof(Guid), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperation", typeof(Guid), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperationAsync", typeof(Guid), typeof(RequestContext))]
+    [CodeGenSuppress("GetOperation", typeof(Guid), typeof(RequestContext))]
     public partial class DocumentModelAdministrationClient
     {
         // CUSTOM CODE NOTE: the spec incorrectly defines the operationId parameter as a GUID
         // in the GetOperation APIs, but it should be a string. This makes it impossible to
         // use the API since IDs will never be a GUID. Because of this we're manually adding
-        // overloads that take a string and forcing the generated ones to be internal. Ideally
+        // overloads that take a string and forcing the generated ones to be suppressed. Ideally
         // we'll get the spec fixed and this piece of custom code will be removed.
 
         /// <summary> Gets operation info. </summary>
@@ -625,55 +629,5 @@ namespace Azure.AI.DocumentIntelligence
             request.Content = content;
             return message;
         }
-
-        #region Hidden generated methods
-
-        internal async Task<Response<OperationDetails>> GetOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetOperationAsync(operationId, context).ConfigureAwait(false);
-            return Response.FromValue(OperationDetails.FromResponse(response), response);
-        }
-
-        internal Response<OperationDetails> GetOperation(Guid operationId, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetOperation(operationId, context);
-            return Response.FromValue(OperationDetails.FromResponse(response), response);
-        }
-
-        internal async Task<Response> GetOperationAsync(Guid operationId, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.GetOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal Response GetOperation(Guid operationId, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.GetOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #endregion
     }
 }
