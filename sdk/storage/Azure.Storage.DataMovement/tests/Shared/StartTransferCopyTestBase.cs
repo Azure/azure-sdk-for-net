@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Azure.Core.TestFramework;
 using Azure.Core;
 using Azure.Storage.Test.Shared;
@@ -359,7 +358,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(100, 10)]
+        [TestCase(Constants.KB/2, 10)]
         [TestCase(Constants.KB, 10)]
         [TestCase(2 * Constants.KB, 10)]
         public async Task SourceObjectToDestinationObject_SmallSize(long size, int waitTimeInSec)
@@ -400,8 +399,8 @@ namespace Azure.Storage.DataMovement.Tests
         [LiveOnly]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
-        [TestCase(2, 100, 30)]
-        [TestCase(6, 100, 30)]
+        [TestCase(2, Constants.KB/2, 30)]
+        [TestCase(6, Constants.KB/2, 30)]
         [TestCase(2, Constants.KB, 300)]
         [TestCase(6, Constants.KB, 300)]
         public async Task SourceObjectToDestinationObject_SmallMultiple(int count, long size, int waitTimeInSec)

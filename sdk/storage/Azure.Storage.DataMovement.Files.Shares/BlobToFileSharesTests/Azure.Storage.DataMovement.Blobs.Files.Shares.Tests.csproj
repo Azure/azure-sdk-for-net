@@ -22,6 +22,7 @@
     <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared\Storage" />
