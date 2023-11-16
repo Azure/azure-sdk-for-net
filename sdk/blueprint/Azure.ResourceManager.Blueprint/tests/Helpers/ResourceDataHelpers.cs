@@ -22,7 +22,90 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         }
 
         #region Assignment
-
+        //TemplateData
+        public  static ArtifactData GetTemplateArtifactData()
+        {
+            ArtifactData data = new TemplateArtifact(BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+            {
+                ["contentVersion"] = "1.0.0.0",
+                ["outputs"] = new Dictionary<string, object>()
+                {
+                    ["storageAccountName"] = new Dictionary<string, object>()
+                    {
+                        ["type"] = "string",
+                        ["value"] = "[variables('storageAccountName')]"
+                    }
+                },
+                ["parameters"] = new Dictionary<string, object>()
+                {
+                    ["storageAccountType"] = new Dictionary<string, object>()
+                    {
+                        ["type"] = "string",
+                        ["allowedValues"] = new object[] { "Standard_LRS", "Standard_GRS", "Standard_ZRS", "Premium_LRS" },
+                        ["defaultValue"] = "Standard_LRS",
+                        ["metadata"] = new Dictionary<string, object>()
+                        {
+                            ["description"] = "Storage Account type"
+                        }
+                    }
+                },
+                ["resources"] = new object[] { new Dictionary<string, object>()
+                {
+                    ["name"] = "[variables('storageAccountName')]",
+                    ["type"] = "Microsoft.Storage/storageAccounts",
+                    ["apiVersion"] = "2016-01-01",
+                    ["kind"] = "Storage",
+                    ["location"] = "[resourceGroup().location]",
+                    ["properties"] = new Dictionary<string, object>()
+                        {
+                        },
+                    ["sku"] = new Dictionary<string, object>()
+                    {
+                    ["name"] = "[parameters('storageAccountType')]"}} },
+                    ["variables"] = new Dictionary<string, object>()
+                {
+                    ["storageAccountName"] = "[concat(uniquestring(resourceGroup().id), 'standardsa')]"
+                }
+            }), new Dictionary<string, ParameterValue>()
+            {
+                ["storageAccountType"] = new ParameterValue()
+                {
+                    Value = BinaryData.FromString("[parameters('storageAccountType')]"),
+                },
+            })
+            {
+                ResourceGroup = "storageRG",
+            };
+            return data;
+        }
+        //PolicyAssignmentArtifact
+        public static ArtifactData GetPolicyAssignmentArtifactData()
+        {
+            ArtifactData data = new PolicyAssignmentArtifact("/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62", new Dictionary<string, ParameterValue>()
+            {
+                ["tagName"] = new ParameterValue()
+                {
+                    Value = BinaryData.FromString("costCenter"),
+                },
+                ["tagValue"] = new ParameterValue()
+                {
+                    Value = BinaryData.FromString("[parameter('costCenter')]"),
+                },
+            })
+            {
+                DisplayName = "force costCenter tag on all resources",
+            };
+            return data;
+        }
+        //RoleAssignmentArtifact
+        public static ArtifactData GetRoleAssignmentData()
+        {
+            ArtifactData data = new RoleAssignmentArtifact("/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7", BinaryData.FromString("[parameters('owners')]"))
+            {
+                DisplayName = "enforce owners of given subscription",
+            };
+            return data;
+        }
         #endregion
 
         #region Blueprint
