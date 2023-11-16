@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PrincipalIds);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(PrincipalIds.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(PrincipalIds))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             if (Optional.IsDefined(ResourceGroup))
             {

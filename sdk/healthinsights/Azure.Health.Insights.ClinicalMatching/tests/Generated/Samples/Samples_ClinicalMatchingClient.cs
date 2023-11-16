@@ -26,7 +26,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 patients = new object[]
             {
@@ -55,7 +55,7 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 patients = new object[]
             {
@@ -116,7 +116,7 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 patients = new object[]
             {
@@ -352,7 +352,7 @@ radius = 123.45,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 patients = new object[]
             {

@@ -26,18 +26,43 @@ namespace Azure.AI.OpenAI
 
         /// <summary> The absolute endpoint path for the Azure Cognitive Search resource to use. </summary>
         public Uri SearchEndpoint { get; set; }
-        /// <summary> The API key to use with the specified Azure Cognitive Search endpoint. </summary>
-        public AzureKeyCredential SearchKey { get; set; }
         /// <summary> The name of the index to use as available in the referenced Azure Cognitive Search resource. </summary>
         public string IndexName { get; set; }
+
+        /// <summary> The API key to use with the specified Azure Cognitive Search endpoint. </summary>
+        private string SearchKey { get; set; }
         /// <summary> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </summary>
-        public AzureKeyCredential EmbeddingKey { get; set; }
+        private string EmbeddingKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration.
         /// </summary>
         public AzureCognitiveSearchChatExtensionConfiguration()
         {
+            // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
+            //                      may be reconsidered for required payload constituents in the future.
+        }
+
+        // CUSTOM CODE NOTE: Users must set the search key using the SetSearchKey method, so we make the constructor
+        //                       that receives it as a parameter to be internal and instead expose a public constructor
+        //                       without it.
+
+        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
+        /// <param name="type">
+        /// The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
+        /// default value for Azure Cognitive Search.
+        /// </param>
+        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
+        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchEndpoint"/>, or <paramref name="indexName"/> is null. </exception>
+        public AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string indexName)
+        {
+            Argument.AssertNotNull(searchEndpoint, nameof(searchEndpoint));
+            Argument.AssertNotNull(indexName, nameof(indexName));
+
+            Type = type;
+            SearchEndpoint = searchEndpoint;
+            IndexName = indexName;
         }
 
         /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
@@ -46,10 +71,10 @@ namespace Azure.AI.OpenAI
         /// default value for Azure Cognitive Search.
         /// </param>
         /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
-        /// <param name="searchKey"> The API key to use with the specified Azure Cognitive Search endpoint. </param>
+        /// <param name="searchKey"> The API admin key to use with the specified Azure Cognitive Search endpoint. </param>
         /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchEndpoint"/>, <paramref name="searchKey"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, AzureKeyCredential searchKey, string indexName)
+        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string searchKey, string indexName)
         {
             Argument.AssertNotNull(searchEndpoint, nameof(searchEndpoint));
             Argument.AssertNotNull(searchKey, nameof(searchKey));
@@ -61,46 +86,22 @@ namespace Azure.AI.OpenAI
             IndexName = indexName;
         }
 
-        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
-        /// <param name="type">
-        /// The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
-        /// default value for Azure Cognitive Search.
-        /// </param>
-        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
-        /// <param name="searchKey"> The API key to use with the specified Azure Cognitive Search endpoint. </param>
-        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
-        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
-        /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
-        /// <param name="queryType"> The query type to use with Azure Cognitive Search. </param>
-        /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
-        /// <param name="semanticConfiguration"> The additional semantic configuration for the query. </param>
-        /// <param name="embeddingEndpoint"> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </param>
-        /// <param name="embeddingKey"> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </param>
-        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, AzureKeyCredential searchKey, string indexName, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, int? documentCount, AzureCognitiveSearchQueryType? queryType, bool? shouldRestrictResultScope, string semanticConfiguration, Uri embeddingEndpoint, AzureKeyCredential embeddingKey)
+        /// <summary>
+        /// Sets the API key to use with the specified Azure Cognitive Search endpoint.
+        /// </summary>
+        /// <param name="searchKey"> The API key. </param>
+        public void SetSearchKey(string searchKey)
         {
-            Type = type;
-            SearchEndpoint = searchEndpoint;
             SearchKey = searchKey;
-            IndexName = indexName;
-            FieldMappingOptions = fieldMappingOptions;
-            DocumentCount = documentCount;
-            QueryType = queryType;
-            ShouldRestrictResultScope = shouldRestrictResultScope;
-            SemanticConfiguration = semanticConfiguration;
-            EmbeddingEndpoint = embeddingEndpoint;
+        }
+
+        /// <summary>
+        /// Sets the API key to use with the provided embeddings endpoint when using embeddings.
+        /// </summary>
+        /// <param name="embeddingKey"> The API key. </param>
+        public void SetEmbeddingKey(string embeddingKey)
+        {
             EmbeddingKey = embeddingKey;
         }
-        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
-        public AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
-        /// <summary> The configured top number of documents to feature for the configured query. </summary>
-        public int? DocumentCount { get; set; }
-        /// <summary> The query type to use with Azure Cognitive Search. </summary>
-        public AzureCognitiveSearchQueryType? QueryType { get; set; }
-        /// <summary> Whether queries should be restricted to use of indexed data. </summary>
-        public bool? ShouldRestrictResultScope { get; set; }
-        /// <summary> The additional semantic configuration for the query. </summary>
-        public string SemanticConfiguration { get; set; }
-        /// <summary> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </summary>
-        public Uri EmbeddingEndpoint { get; set; }
     }
 }

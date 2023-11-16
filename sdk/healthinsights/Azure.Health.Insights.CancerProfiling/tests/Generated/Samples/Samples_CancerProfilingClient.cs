@@ -26,7 +26,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 patients = new object[]
             {
@@ -55,7 +55,7 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 patients = new object[]
             {
@@ -116,7 +116,7 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 patients = new object[]
             {
@@ -206,7 +206,7 @@ value = "<value>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 patients = new object[]
             {

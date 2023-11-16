@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.PolicyInsights
     public partial class PolicyRemediationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyRemediationResource"/> instance. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="remediationName"> The remediationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string remediationName)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}";

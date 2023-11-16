@@ -709,7 +709,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     components = new
     {
@@ -727,7 +727,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     components = new
     {
@@ -765,7 +765,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     components = new
     {
@@ -783,7 +783,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     components = new
     {
@@ -893,7 +893,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testRunId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -905,7 +905,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     metrics = new
     {
@@ -947,7 +947,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateServerMetricsConfig("<testRunId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -959,7 +959,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     metrics = new
     {
@@ -1075,7 +1075,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = null;
+using RequestContent content = null;
 await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1088,7 +1088,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     filters = new object[]
     {
@@ -1120,7 +1120,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = null;
+using RequestContent content = null;
 foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1133,7 +1133,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     filters = new object[]
     {

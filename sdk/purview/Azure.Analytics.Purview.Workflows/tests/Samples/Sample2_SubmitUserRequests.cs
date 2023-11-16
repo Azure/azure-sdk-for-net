@@ -26,13 +26,13 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             string password = Environment.GetEnvironmentVariable("Password");
 
             TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
-            var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
+            var client = new UserRequestsClient(endpoint, usernamePasswordCredential);
 
             #region Snippet:Azure_Analytics_Purview_Workflows_SubmitUserRequests
 
             string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
 
-            Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Create(request));
+            Response submitResult = await client.SubmitAsync(RequestContent.Create(request));
 
             #endregion
 

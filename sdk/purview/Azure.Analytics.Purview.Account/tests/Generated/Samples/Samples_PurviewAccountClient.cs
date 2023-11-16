@@ -156,7 +156,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateAccountProperties(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -171,7 +171,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateAccountPropertiesAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -186,7 +186,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 friendlyName = "<friendlyName>",
             });
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 friendlyName = "<friendlyName>",
             });
@@ -354,7 +354,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.RegenerateAccessKey(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -369,7 +369,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.RegenerateAccessKeyAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -384,7 +384,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 keyType = "PrimaryAtlasKafkaKey",
             });
@@ -403,7 +403,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 keyType = "PrimaryAtlasKafkaKey",
             });

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class DefaultSecurityRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DefaultSecurityRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkSecurityGroupName"> The networkSecurityGroupName. </param>
+        /// <param name="defaultSecurityRuleName"> The defaultSecurityRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}";

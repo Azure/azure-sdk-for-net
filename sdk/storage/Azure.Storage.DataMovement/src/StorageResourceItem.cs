@@ -4,7 +4,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
@@ -29,9 +28,9 @@ namespace Azure.Storage.DataMovement
         protected internal abstract DataTransferOrder TransferType { get; }
 
         /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
+        /// Defines the maximum supported chunk size for the storage resource.
         /// </summary>
-        protected internal abstract long MaxChunkSize { get; }
+        protected internal abstract long MaxSupportedChunkSize { get; }
 
         /// <summary>
         /// Storage Resource is a container.
@@ -185,17 +184,5 @@ namespace Azure.Storage.DataMovement
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
         protected internal abstract Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
-        protected internal abstract StorageResourceCheckpointData GetSourceCheckpointData();
-
-        /// <summary>
-        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
-        protected internal abstract StorageResourceCheckpointData GetDestinationCheckpointData();
     }
 }

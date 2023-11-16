@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2023-08-14)
+
+### Features Added
+
+- Make `StorageArmClientMockingExtension`, `StorageResourceGroupMockingExtension`, `StorageSubscriptionMockingExtension` public for mocking the extension methods.
 
 ## 1.2.0-beta.1 (2023-05-31)
 

@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new MultipartFormDataRequestContent();
-            content.Add(new StringContent(InternalNonAzureModelName), "model");
+            content.Add(new StringContent(DeploymentName), "model");
             content.Add(new ByteArrayContent(AudioData.ToArray()), "file", "@file.wav");
             if (Optional.IsDefined(ResponseFormat))
             {

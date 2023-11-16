@@ -8,7 +8,7 @@ This sample shows how to call CancelAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
 });
@@ -22,7 +22,7 @@ This sample shows how to call CancelAsync with all parameters and request conten
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
     partnerRequestBody = new
@@ -43,7 +43,7 @@ This sample shows how to call Cancel and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
 });
@@ -57,7 +57,7 @@ This sample shows how to call Cancel with all parameters and request content and
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
     partnerRequestBody = new
@@ -78,7 +78,7 @@ This sample shows how to call FetchAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
 });
@@ -92,7 +92,7 @@ This sample shows how to call FetchAsync with all parameters and request content
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
     partnerRequestBody = new
@@ -113,7 +113,7 @@ This sample shows how to call Fetch and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
 });
@@ -127,7 +127,7 @@ This sample shows how to call Fetch with all parameters and request content and 
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
     partnerRequestBody = new
@@ -148,7 +148,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
 });
@@ -163,7 +163,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
     partnerRequestBody = new
@@ -185,7 +185,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
 });
@@ -200,7 +200,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 TokenCredential credential = new DefaultAzureCredential();
 SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     requestPath = "<requestPath>",
     partnerRequestBody = new

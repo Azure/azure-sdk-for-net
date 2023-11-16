@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}";
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of GeoBackupPolicyResources and their operations over a GeoBackupPolicyResource. </returns>
         public virtual GeoBackupPolicyCollection GetGeoBackupPolicies()
         {
-            return GetCachedClient(Client => new GeoBackupPolicyCollection(Client, Id));
+            return GetCachedClient(client => new GeoBackupPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseAdvisorResources and their operations over a SqlDatabaseAdvisorResource. </returns>
         public virtual SqlDatabaseAdvisorCollection GetSqlDatabaseAdvisors()
         {
-            return GetCachedClient(Client => new SqlDatabaseAdvisorCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseAdvisorCollection(client, Id));
         }
 
         /// <summary>
@@ -210,8 +214,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlDatabaseAdvisorResource>> GetSqlDatabaseAdvisorAsync(string advisorName, CancellationToken cancellationToken = default)
         {
@@ -233,8 +237,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlDatabaseAdvisorResource> GetSqlDatabaseAdvisor(string advisorName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +256,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseSchemaResources and their operations over a SqlDatabaseSchemaResource. </returns>
         public virtual SqlDatabaseSchemaCollection GetSqlDatabaseSchemas()
         {
-            return GetCachedClient(Client => new SqlDatabaseSchemaCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseSchemaCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +274,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlDatabaseSchemaResource>> GetSqlDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +297,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlDatabaseSchemaResource> GetSqlDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +309,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseSecurityAlertPolicyResources and their operations over a SqlDatabaseSecurityAlertPolicyResource. </returns>
         public virtual SqlDatabaseSecurityAlertPolicyCollection GetSqlDatabaseSecurityAlertPolicies()
         {
-            return GetCachedClient(Client => new SqlDatabaseSecurityAlertPolicyCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseSecurityAlertPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -354,7 +358,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseVulnerabilityAssessmentResources and their operations over a SqlDatabaseVulnerabilityAssessmentResource. </returns>
         public virtual SqlDatabaseVulnerabilityAssessmentCollection GetSqlDatabaseVulnerabilityAssessments()
         {
-            return GetCachedClient(Client => new SqlDatabaseVulnerabilityAssessmentCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseVulnerabilityAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -403,7 +407,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of DataWarehouseUserActivityResources and their operations over a DataWarehouseUserActivityResource. </returns>
         public virtual DataWarehouseUserActivityCollection GetDataWarehouseUserActivities()
         {
-            return GetCachedClient(Client => new DataWarehouseUserActivityCollection(Client, Id));
+            return GetCachedClient(client => new DataWarehouseUserActivityCollection(client, Id));
         }
 
         /// <summary>
@@ -452,7 +456,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of LongTermRetentionPolicyResources and their operations over a LongTermRetentionPolicyResource. </returns>
         public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
         {
-            return GetCachedClient(Client => new LongTermRetentionPolicyCollection(Client, Id));
+            return GetCachedClient(client => new LongTermRetentionPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -515,7 +519,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerDatabaseRestorePointResources and their operations over a SqlServerDatabaseRestorePointResource. </returns>
         public virtual SqlServerDatabaseRestorePointCollection GetSqlServerDatabaseRestorePoints()
         {
-            return GetCachedClient(Client => new SqlServerDatabaseRestorePointCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerDatabaseRestorePointCollection(client, Id));
         }
 
         /// <summary>
@@ -533,8 +537,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerDatabaseRestorePointResource>> GetSqlServerDatabaseRestorePointAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
@@ -556,8 +560,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerDatabaseRestorePointResource> GetSqlServerDatabaseRestorePoint(string restorePointName, CancellationToken cancellationToken = default)
         {
@@ -568,7 +572,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SyncGroupResources and their operations over a SyncGroupResource. </returns>
         public virtual SyncGroupCollection GetSyncGroups()
         {
-            return GetCachedClient(Client => new SyncGroupCollection(Client, Id));
+            return GetCachedClient(client => new SyncGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -586,8 +590,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SyncGroupResource>> GetSyncGroupAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
@@ -609,8 +613,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SyncGroupResource> GetSyncGroup(string syncGroupName, CancellationToken cancellationToken = default)
         {
@@ -621,7 +625,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of WorkloadGroupResources and their operations over a WorkloadGroupResource. </returns>
         public virtual WorkloadGroupCollection GetWorkloadGroups()
         {
-            return GetCachedClient(Client => new WorkloadGroupCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -639,8 +643,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadGroupResource>> GetWorkloadGroupAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
@@ -662,8 +666,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadGroupResource> GetWorkloadGroup(string workloadGroupName, CancellationToken cancellationToken = default)
         {
@@ -674,7 +678,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of BackupShortTermRetentionPolicyResources and their operations over a BackupShortTermRetentionPolicyResource. </returns>
         public virtual BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
         {
-            return GetCachedClient(Client => new BackupShortTermRetentionPolicyCollection(Client, Id));
+            return GetCachedClient(client => new BackupShortTermRetentionPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -723,7 +727,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of LedgerDigestUploadResources and their operations over a LedgerDigestUploadResource. </returns>
         public virtual LedgerDigestUploadCollection GetLedgerDigestUploads()
         {
-            return GetCachedClient(Client => new LedgerDigestUploadCollection(Client, Id));
+            return GetCachedClient(client => new LedgerDigestUploadCollection(client, Id));
         }
 
         /// <summary>
@@ -772,7 +776,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseBlobAuditingPolicyResources and their operations over a SqlDatabaseBlobAuditingPolicyResource. </returns>
         public virtual SqlDatabaseBlobAuditingPolicyCollection GetSqlDatabaseBlobAuditingPolicies()
         {
-            return GetCachedClient(Client => new SqlDatabaseBlobAuditingPolicyCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseBlobAuditingPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -821,7 +825,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ExtendedDatabaseBlobAuditingPolicyResources and their operations over a ExtendedDatabaseBlobAuditingPolicyResource. </returns>
         public virtual ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies()
         {
-            return GetCachedClient(Client => new ExtendedDatabaseBlobAuditingPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ExtendedDatabaseBlobAuditingPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -870,7 +874,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of DatabaseAdvancedThreatProtectionResources and their operations over a DatabaseAdvancedThreatProtectionResource. </returns>
         public virtual DatabaseAdvancedThreatProtectionCollection GetDatabaseAdvancedThreatProtections()
         {
-            return GetCachedClient(Client => new DatabaseAdvancedThreatProtectionCollection(Client, Id));
+            return GetCachedClient(client => new DatabaseAdvancedThreatProtectionCollection(client, Id));
         }
 
         /// <summary>
@@ -919,7 +923,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerDatabaseReplicationLinkResources and their operations over a SqlServerDatabaseReplicationLinkResource. </returns>
         public virtual SqlServerDatabaseReplicationLinkCollection GetSqlServerDatabaseReplicationLinks()
         {
-            return GetCachedClient(Client => new SqlServerDatabaseReplicationLinkCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerDatabaseReplicationLinkCollection(client, Id));
         }
 
         /// <summary>
@@ -937,8 +941,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerDatabaseReplicationLinkResource>> GetSqlServerDatabaseReplicationLinkAsync(string linkId, CancellationToken cancellationToken = default)
         {
@@ -960,8 +964,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerDatabaseReplicationLinkResource> GetSqlServerDatabaseReplicationLink(string linkId, CancellationToken cancellationToken = default)
         {
@@ -972,7 +976,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptionResources and their operations over a LogicalDatabaseTransparentDataEncryptionResource. </returns>
         public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
         {
-            return GetCachedClient(Client => new LogicalDatabaseTransparentDataEncryptionCollection(Client, Id));
+            return GetCachedClient(client => new LogicalDatabaseTransparentDataEncryptionCollection(client, Id));
         }
 
         /// <summary>
@@ -1021,7 +1025,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseSqlVulnerabilityAssessmentResources and their operations over a SqlDatabaseSqlVulnerabilityAssessmentResource. </returns>
         public virtual SqlDatabaseSqlVulnerabilityAssessmentCollection GetSqlDatabaseSqlVulnerabilityAssessments()
         {
-            return GetCachedClient(Client => new SqlDatabaseSqlVulnerabilityAssessmentCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseSqlVulnerabilityAssessmentCollection(client, Id));
         }
 
         /// <summary>

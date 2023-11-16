@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceConnector
     }
     public partial class ResourceConnectorApplianceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ResourceConnectorApplianceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ResourceConnectorApplianceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro? Distro { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider? InfrastructureConfigProvider { get { throw null; } set { } }
@@ -64,6 +64,29 @@ namespace Azure.ResourceManager.ResourceConnector
         public static Azure.AsyncPageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ResourceConnector.Mocking
+{
+    public partial class MockableResourceConnectorArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceConnectorArmClient() { }
+        public virtual Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableResourceConnectorResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceConnectorResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliance(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceCollection GetResourceConnectorAppliances() { throw null; }
+    }
+    public partial class MockableResourceConnectorSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceConnectorSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliances(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ResourceConnector.Models

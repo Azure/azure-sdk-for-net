@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     public partial class VMwareDatastoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VMwareDatastoreResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="datastoreName"> The datastoreName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string datastoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}";
@@ -236,18 +239,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Resource properties to update. </param>
+        /// <param name="content"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<VMwareDatastoreResource>> UpdateAsync(ResourcePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<VMwareDatastoreResource>> UpdateAsync(VMwareResourcePatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.Update");
             scope.Start();
             try
             {
-                var response = await _vMwareDatastoreDatastoresRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _vMwareDatastoreDatastoresRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VMwareDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,18 +273,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Resource properties to update. </param>
+        /// <param name="content"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<VMwareDatastoreResource> Update(ResourcePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<VMwareDatastoreResource> Update(VMwareResourcePatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.Update");
             scope.Start();
             try
             {
-                var response = _vMwareDatastoreDatastoresRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var response = _vMwareDatastoreDatastoresRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return Response.FromValue(new VMwareDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -328,7 +331,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ResourcePatch();
+                    var patch = new VMwareResourcePatchContent();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -382,7 +385,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ResourcePatch();
+                    var patch = new VMwareResourcePatchContent();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -435,7 +438,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ResourcePatch();
+                    var patch = new VMwareResourcePatchContent();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -484,7 +487,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ResourcePatch();
+                    var patch = new VMwareResourcePatchContent();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -532,7 +535,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ResourcePatch();
+                    var patch = new VMwareResourcePatchContent();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -584,7 +587,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ResourcePatch();
+                    var patch = new VMwareResourcePatchContent();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

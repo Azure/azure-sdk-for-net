@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests
 
         private SearchClient CreateTestClient(HttpPipelineTransport transport)
         {
-            var options = new SearchClientOptions(SearchClientOptions.ServiceVersion.V2021_04_30_Preview)
+            var options = new SearchClientOptions(SearchClientOptions.ServiceVersion.V2023_11_01)
             {
                 Transport = transport
             };

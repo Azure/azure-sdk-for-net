@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Redis
     public partial class RedisPatchScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RedisPatchScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="defaultName"> The defaultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/patchSchedules/{defaultName}";

@@ -54,7 +54,7 @@
 - [BREAKING CHANGE] Renamed `StorageTransferStatus` to `DataTransferStatus`
 - [BREAKING CHANGE] Changed `DataTransferStatus` from `enum` to a `class`.
 - [BREAKING CHANGE] Renamed `StorageResourceCreateMode` to `StorageResourceCreationPreference`.
-- [BREAKING CHANGE] Renamed `StorageResourceCreationPreference` values from `Fail` to `FailIfExists`, `Overwrite` to `OverwriteIfExists` and `Skip` to `SkipIfExists`. `None` was removed, use `FailIfExists` instead.
+- [BREAKING CHANGE] Renamed `StorageResourceCreationPreference` values from `Fail` to `FailIfExists`, `Overwrite` to `OverwriteIfExists`, `Skip` to `SkipIfExists` and `None` to `Default` which will default to `FailIfExists`.
 - [BREAKING CHANGE] Renamed `DataTransferOptions.CreateMode` to `CreationPreference`.
 - [BREAKING CHANGE] Changed `StorageTransferProgress` constructor from `public` to `protected internal`. 
 - [BREAKING CHANGE] Renamed `StorageTransferProgress` to `DataTransferProgress`.
@@ -67,6 +67,7 @@
 - [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
 
 ### Bugs Fixed
+- Fixed bug where if a transfer was in a failed state, and during clean up an exception was thrown the transfer would throw or hang.
 
 ### Other Changes
 

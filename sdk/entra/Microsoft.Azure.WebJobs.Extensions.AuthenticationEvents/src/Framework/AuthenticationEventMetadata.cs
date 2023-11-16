@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Net.Http;
 using System.Reflection;
@@ -71,7 +72,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
             if (validate)
             {
-                Helpers.ValidateGraph(eventRequest);
+                // Validate the request body. If the validation fails, throw a request validation
+                // exception that will return a 500 error back to eSTS.
+                try
+                {
+                    Helpers.ValidateGraph(eventRequest);
+                }
+                catch (ValidationException exception)
+                {
+                    throw new AuthenticationEventTriggerRequestValidationException(exception.Message, exception.InnerException);
+                }
             }
 
             responseInfo.SetValue(eventRequest, eventResponse);

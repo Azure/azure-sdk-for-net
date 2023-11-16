@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkVirtualApplianceSkuResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkVirtualApplianceSkuResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="skuName"> The skuName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string skuName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}";
