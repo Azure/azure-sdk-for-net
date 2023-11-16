@@ -9,6 +9,12 @@ namespace Azure.Communication.JobRouter
 {
     public partial class ScoringRuleOptions : IUtf8JsonSerializable
     {
+        /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
+        public ScoringRuleOptions()
+        {
+            ScoringParameters = new ChangeTrackingList<ScoringRuleParameterSelector>();
+        }
+
         /// <summary>
         /// List of extra parameters from a job that will be sent as part of the payload to scoring rule.
         /// If not set, a job's labels (sent in the payload as `job`) and a job's worker selectors (sent in the payload as `selectors`) are added to the payload of the scoring rule by default.
