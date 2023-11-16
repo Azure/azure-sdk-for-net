@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcScVmm
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.InventoryItemResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.InventoryItemResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class InventoryItemData : Azure.ResourceManager.Models.ResourceData
+    public partial class InventoryItemData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.InventoryItemData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.InventoryItemData>
     {
         public InventoryItemData(Azure.ResourceManager.ArcScVmm.Models.InventoryType inventoryType) { }
         public string InventoryItemName { get { throw null; } }
@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.ArcScVmm
         public string ManagedResourceId { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Uuid { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.InventoryItemData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.InventoryItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.InventoryItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.InventoryItemData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.InventoryItemData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.InventoryItemData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.InventoryItemData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class InventoryItemResource : Azure.ResourceManager.ArmResource
     {
@@ -97,13 +102,18 @@ namespace Azure.ResourceManager.ArcScVmm
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScVmmAvailabilitySetData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ScVmmAvailabilitySetData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData>
     {
         public ScVmmAvailabilitySetData(Azure.Core.AzureLocation location) { }
         public string AvailabilitySetName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string VmmServerId { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScVmmAvailabilitySetResource : Azure.ResourceManager.ArmResource
     {
@@ -142,7 +152,7 @@ namespace Azure.ResourceManager.ArcScVmm
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScVmmCloudData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ScVmmCloudData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmCloudData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmCloudData>
     {
         public ScVmmCloudData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public Azure.ResourceManager.ArcScVmm.Models.CloudCapacity CloudCapacity { get { throw null; } }
@@ -153,6 +163,11 @@ namespace Azure.ResourceManager.ArcScVmm
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy> StorageQoSPolicies { get { throw null; } }
         public string Uuid { get { throw null; } set { } }
         public string VmmServerId { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.ScVmmCloudData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmCloudData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmCloudData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.ScVmmCloudData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmCloudData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmCloudData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmCloudData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScVmmCloudResource : Azure.ResourceManager.ArmResource
     {
@@ -191,7 +206,7 @@ namespace Azure.ResourceManager.ArcScVmm
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScVmmServerData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ScVmmServerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmServerData>
     {
         public ScVmmServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, string fqdn) { }
         public string ConnectionStatus { get { throw null; } }
@@ -203,6 +218,11 @@ namespace Azure.ResourceManager.ArcScVmm
         public string ProvisioningState { get { throw null; } }
         public string Uuid { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.ScVmmServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.ScVmmServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmServerData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmServerData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmServerData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScVmmServerResource : Azure.ResourceManager.ArmResource
     {
@@ -244,7 +264,7 @@ namespace Azure.ResourceManager.ArcScVmm
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScVmmVirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ScVmmVirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData>
     {
         public ScVmmVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem> AvailabilitySets { get { throw null; } }
@@ -264,6 +284,11 @@ namespace Azure.ResourceManager.ArcScVmm
         public string Uuid { get { throw null; } set { } }
         public string VmmServerId { get { throw null; } set { } }
         public string VmName { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScVmmVirtualMachineResource : Azure.ResourceManager.ArmResource
     {
@@ -314,7 +339,7 @@ namespace Azure.ResourceManager.ArcScVmm
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScVmmVirtualMachineTemplateData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ScVmmVirtualMachineTemplateData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData>
     {
         public ScVmmVirtualMachineTemplateData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public string ComputerName { get { throw null; } }
@@ -336,6 +361,11 @@ namespace Azure.ResourceManager.ArcScVmm
         public string ProvisioningState { get { throw null; } }
         public string Uuid { get { throw null; } set { } }
         public string VmmServerId { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScVmmVirtualMachineTemplateResource : Azure.ResourceManager.ArmResource
     {
@@ -374,7 +404,7 @@ namespace Azure.ResourceManager.ArcScVmm
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScVmmVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ScVmmVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData>
     {
         public ScVmmVirtualNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -383,6 +413,11 @@ namespace Azure.ResourceManager.ArcScVmm
         public string ProvisioningState { get { throw null; } }
         public string Uuid { get { throw null; } set { } }
         public string VmmServerId { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScVmmVirtualNetworkResource : Azure.ResourceManager.ArmResource
     {
@@ -491,26 +526,41 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy StorageQoSPolicy(string name = null, string id = null, long? iopsMaximum = default(long?), long? iopsMinimum = default(long?), long? bandwidthLimit = default(long?), string policyId = null) { throw null; }
         public static Azure.ResourceManager.ArcScVmm.Models.VirtualDisk VirtualDisk(string name = null, string displayName = null, string diskId = null, int? diskSizeGB = default(int?), int? maxDiskSizeGB = default(int?), int? bus = default(int?), int? lun = default(int?), string busType = null, string vhdType = null, string volumeType = null, string vhdFormatType = null, string templateDiskId = null, Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails storageQoSPolicy = null, Azure.ResourceManager.ArcScVmm.Models.CreateDiffDisk? createDiffDisk = default(Azure.ResourceManager.ArcScVmm.Models.CreateDiffDisk?)) { throw null; }
     }
-    public partial class AvailabilitySetListItem
+    public partial class AvailabilitySetListItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem>
     {
         public AvailabilitySetListItem() { }
         public string Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Checkpoint
+    public partial class Checkpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.Checkpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.Checkpoint>
     {
         public Checkpoint() { }
         public string CheckpointId { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string ParentCheckpointId { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.Checkpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.Checkpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.Checkpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.Checkpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.Checkpoint>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.Checkpoint>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.Checkpoint>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CloudCapacity
+    public partial class CloudCapacity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.CloudCapacity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.CloudCapacity>
     {
         internal CloudCapacity() { }
         public long? CpuCount { get { throw null; } }
         public long? MemoryMB { get { throw null; } }
         public long? VmCount { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.Models.CloudCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.CloudCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.CloudCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.CloudCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.CloudCapacity>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.CloudCapacity>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.CloudCapacity>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreateDiffDisk : System.IEquatable<Azure.ResourceManager.ArcScVmm.Models.CreateDiffDisk>
@@ -548,7 +598,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static bool operator !=(Azure.ResourceManager.ArcScVmm.Models.DynamicMemoryEnabled left, Azure.ResourceManager.ArcScVmm.Models.DynamicMemoryEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HardwareProfile
+    public partial class HardwareProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfile>
     {
         public HardwareProfile() { }
         public int? CpuCount { get { throw null; } set { } }
@@ -558,8 +608,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public string IsHighlyAvailable { get { throw null; } set { } }
         public Azure.ResourceManager.ArcScVmm.Models.LimitCpuForMigration? LimitCpuForMigration { get { throw null; } set { } }
         public int? MemoryMB { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.HardwareProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.HardwareProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfile>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfile>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfile>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HardwareProfileUpdate
+    public partial class HardwareProfileUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate>
     {
         public HardwareProfileUpdate() { }
         public int? CpuCount { get { throw null; } set { } }
@@ -568,6 +623,11 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public int? DynamicMemoryMinMB { get { throw null; } set { } }
         public Azure.ResourceManager.ArcScVmm.Models.LimitCpuForMigration? LimitCpuForMigration { get { throw null; } set { } }
         public int? MemoryMB { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InventoryType : System.IEquatable<Azure.ResourceManager.ArcScVmm.Models.InventoryType>
@@ -625,7 +685,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static bool operator !=(Azure.ResourceManager.ArcScVmm.Models.LimitCpuForMigration left, Azure.ResourceManager.ArcScVmm.Models.LimitCpuForMigration right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkInterfaces
+    public partial class NetworkInterfaces : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces>
     {
         public NetworkInterfaces() { }
         public string DisplayName { get { throw null; } }
@@ -639,8 +699,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public string NetworkName { get { throw null; } }
         public string NicId { get { throw null; } set { } }
         public string VirtualNetworkId { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkInterfacesUpdate
+    public partial class NetworkInterfacesUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate>
     {
         public NetworkInterfacesUpdate() { }
         public Azure.ResourceManager.ArcScVmm.Models.AllocationMethod? IPv4AddressType { get { throw null; } set { } }
@@ -650,14 +715,24 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public string Name { get { throw null; } set { } }
         public string NicId { get { throw null; } set { } }
         public string VirtualNetworkId { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OSProfile
+    public partial class OSProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.OSProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.OSProfile>
     {
         public OSProfile() { }
         public string AdminPassword { get { throw null; } set { } }
         public string ComputerName { get { throw null; } set { } }
         public string OSName { get { throw null; } }
         public Azure.ResourceManager.ArcScVmm.Models.OSType? OSType { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.Models.OSProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.OSProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.OSProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.OSProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.OSProfile>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.OSProfile>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.OSProfile>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OSType : System.IEquatable<Azure.ResourceManager.ArcScVmm.Models.OSType>
@@ -678,23 +753,38 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static bool operator !=(Azure.ResourceManager.ArcScVmm.Models.OSType left, Azure.ResourceManager.ArcScVmm.Models.OSType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourcePatch
+    public partial class ResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.ResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.ResourcePatch>
     {
         public ResourcePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.Models.ResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.ResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.ResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.ResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.ResourcePatch>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.ResourcePatch>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.ResourcePatch>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmVirtualMachinePatch
+    public partial class ScVmmVirtualMachinePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch>
     {
         public ScVmmVirtualMachinePatch() { }
         public Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.ScVmmVirtualMachinePatch>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StopVirtualMachineContent
+    public partial class StopVirtualMachineContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent>
     {
         public StopVirtualMachineContent() { }
         public bool? SkipShutdown { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StopVirtualMachineContent>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StorageQoSPolicy
+    public partial class StorageQoSPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy>
     {
         internal StorageQoSPolicy() { }
         public long? BandwidthLimit { get { throw null; } }
@@ -703,14 +793,24 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public long? IopsMinimum { get { throw null; } }
         public string Name { get { throw null; } }
         public string PolicyId { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StorageQoSPolicyDetails
+    public partial class StorageQoSPolicyDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails>
     {
         public StorageQoSPolicyDetails() { }
         public string Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualDisk
+    public partial class VirtualDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk>
     {
         public VirtualDisk() { }
         public int? Bus { get { throw null; } set { } }
@@ -727,8 +827,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public string VhdFormatType { get { throw null; } }
         public string VhdType { get { throw null; } set { } }
         public string VolumeType { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualDiskUpdate
+    public partial class VirtualDiskUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate>
     {
         public VirtualDiskUpdate() { }
         public int? Bus { get { throw null; } set { } }
@@ -739,35 +844,65 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails StorageQoSPolicy { get { throw null; } set { } }
         public string VhdType { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualMachineCreateCheckpoint
+    public partial class VirtualMachineCreateCheckpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint>
     {
         public VirtualMachineCreateCheckpoint() { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineCreateCheckpoint>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualMachineDeleteCheckpoint
+    public partial class VirtualMachineDeleteCheckpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint>
     {
         public VirtualMachineDeleteCheckpoint() { }
         public string Id { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineDeleteCheckpoint>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualMachineRestoreCheckpoint
+    public partial class VirtualMachineRestoreCheckpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint>
     {
         public VirtualMachineRestoreCheckpoint() { }
         public string Id { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineRestoreCheckpoint>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualMachineUpdateProperties
+    public partial class VirtualMachineUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties>
     {
         public VirtualMachineUpdateProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem> AvailabilitySets { get { throw null; } }
         public Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate HardwareProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate> NetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate> StorageDisks { get { throw null; } }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VirtualMachineUpdateProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VmmServerPropertiesCredentials
+    public partial class VmmServerPropertiesCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials>
     {
         public VmmServerPropertiesCredentials() { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

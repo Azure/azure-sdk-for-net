@@ -171,14 +171,17 @@ namespace Azure.Storage.Queues.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MessageText { get { throw null; } }
     }
-    public partial class QueueAccessPolicy
+    public partial class QueueAccessPolicy : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueAccessPolicy>
     {
         public QueueAccessPolicy() { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
         public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        Azure.Storage.Queues.Models.QueueAccessPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueAccessPolicy>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueAccessPolicy>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueAccessPolicy>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueueAnalyticsLogging
+    public partial class QueueAnalyticsLogging : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueAnalyticsLogging>
     {
         public QueueAnalyticsLogging() { }
         public bool Delete { get { throw null; } set { } }
@@ -186,6 +189,9 @@ namespace Azure.Storage.Queues.Models
         public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         public bool Write { get { throw null; } set { } }
+        Azure.Storage.Queues.Models.QueueAnalyticsLogging System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueAnalyticsLogging>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueAnalyticsLogging>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueAnalyticsLogging>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueueAudience : System.IEquatable<Azure.Storage.Queues.Models.QueueAudience>
@@ -205,7 +211,7 @@ namespace Azure.Storage.Queues.Models
         public static bool operator !=(Azure.Storage.Queues.Models.QueueAudience left, Azure.Storage.Queues.Models.QueueAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QueueCorsRule
+    public partial class QueueCorsRule : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueCorsRule>
     {
         public QueueCorsRule() { }
         public string AllowedHeaders { get { throw null; } set { } }
@@ -213,6 +219,9 @@ namespace Azure.Storage.Queues.Models
         public string AllowedOrigins { get { throw null; } set { } }
         public string ExposedHeaders { get { throw null; } set { } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
+        Azure.Storage.Queues.Models.QueueCorsRule System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueCorsRule>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueCorsRule>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueCorsRule>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueueErrorCode : System.IEquatable<Azure.Storage.Queues.Models.QueueErrorCode>
@@ -287,11 +296,14 @@ namespace Azure.Storage.Queues.Models
         public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QueueGeoReplication
+    public partial class QueueGeoReplication : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueGeoReplication>
     {
         internal QueueGeoReplication() { }
         public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
         public Azure.Storage.Queues.Models.QueueGeoReplicationStatus Status { get { throw null; } }
+        Azure.Storage.Queues.Models.QueueGeoReplication System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueGeoReplication>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueGeoReplication>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueGeoReplication>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum QueueGeoReplicationStatus
     {
@@ -299,13 +311,16 @@ namespace Azure.Storage.Queues.Models
         Bootstrap = 1,
         Unavailable = 2,
     }
-    public partial class QueueItem
+    public partial class QueueItem : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueItem>
     {
         internal QueueItem() { }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.Storage.Queues.Models.QueueItem System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueItem>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueItem>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueItem>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueueMessage
+    public partial class QueueMessage : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueMessage>
     {
         internal QueueMessage() { }
         public System.BinaryData Body { get { throw null; } }
@@ -317,15 +332,21 @@ namespace Azure.Storage.Queues.Models
         public string MessageText { get { throw null; } }
         public System.DateTimeOffset? NextVisibleOn { get { throw null; } }
         public string PopReceipt { get { throw null; } }
+        Azure.Storage.Queues.Models.QueueMessage System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueMessage>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueMessage>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueMessage>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
         public Azure.Storage.Queues.Models.QueueMessage Update(Azure.Storage.Queues.Models.UpdateReceipt updated) { throw null; }
     }
-    public partial class QueueMetrics
+    public partial class QueueMetrics : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueMetrics>
     {
         public QueueMetrics() { }
         public bool Enabled { get { throw null; } set { } }
         public bool? IncludeApis { get { throw null; } set { } }
         public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.Storage.Queues.Models.QueueMetrics System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueMetrics>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueMetrics>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueMetrics>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class QueueProperties
     {
@@ -333,30 +354,42 @@ namespace Azure.Storage.Queues.Models
         public int ApproximateMessagesCount { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
-    public partial class QueueRetentionPolicy
+    public partial class QueueRetentionPolicy : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueRetentionPolicy>
     {
         public QueueRetentionPolicy() { }
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
+        Azure.Storage.Queues.Models.QueueRetentionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueRetentionPolicy>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueRetentionPolicy>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueRetentionPolicy>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueueServiceProperties
+    public partial class QueueServiceProperties : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueServiceProperties>
     {
         public QueueServiceProperties() { }
         public System.Collections.Generic.IList<Azure.Storage.Queues.Models.QueueCorsRule> Cors { get { throw null; } set { } }
         public Azure.Storage.Queues.Models.QueueMetrics HourMetrics { get { throw null; } set { } }
         public Azure.Storage.Queues.Models.QueueAnalyticsLogging Logging { get { throw null; } set { } }
         public Azure.Storage.Queues.Models.QueueMetrics MinuteMetrics { get { throw null; } set { } }
+        Azure.Storage.Queues.Models.QueueServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueServiceProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueServiceProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueServiceProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueueServiceStatistics
+    public partial class QueueServiceStatistics : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueServiceStatistics>
     {
         internal QueueServiceStatistics() { }
         public Azure.Storage.Queues.Models.QueueGeoReplication GeoReplication { get { throw null; } }
+        Azure.Storage.Queues.Models.QueueServiceStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueServiceStatistics>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueServiceStatistics>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueServiceStatistics>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueueSignedIdentifier
+    public partial class QueueSignedIdentifier : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueSignedIdentifier>
     {
         public QueueSignedIdentifier() { }
         public Azure.Storage.Queues.Models.QueueAccessPolicy AccessPolicy { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        Azure.Storage.Queues.Models.QueueSignedIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueSignedIdentifier>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueSignedIdentifier>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.QueueSignedIdentifier>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class QueuesModelFactory
     {
@@ -379,7 +412,7 @@ namespace Azure.Storage.Queues.Models
         None = 0,
         Metadata = 1,
     }
-    public partial class SendReceipt
+    public partial class SendReceipt : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.SendReceipt>
     {
         internal SendReceipt() { }
         public System.DateTimeOffset ExpirationTime { get { throw null; } }
@@ -387,6 +420,9 @@ namespace Azure.Storage.Queues.Models
         public string MessageId { get { throw null; } }
         public string PopReceipt { get { throw null; } }
         public System.DateTimeOffset TimeNextVisible { get { throw null; } }
+        Azure.Storage.Queues.Models.SendReceipt System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.SendReceipt>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.SendReceipt>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Queues.Models.SendReceipt>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UpdateReceipt
     {

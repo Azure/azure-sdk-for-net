@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="isComposedModel">Indicates if the model is a composed model.</param>
         /// <returns>A new <see cref="Training.CustomFormModelProperties"/> instance for mocking.</returns>
         public static CustomFormModelProperties CustomFormModelProperties(bool isComposedModel) =>
-            new CustomFormModelProperties(isComposedModel);
+            new CustomFormModelProperties(isComposedModel, serializedAdditionalRawData: null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormSubmodel"/> class.

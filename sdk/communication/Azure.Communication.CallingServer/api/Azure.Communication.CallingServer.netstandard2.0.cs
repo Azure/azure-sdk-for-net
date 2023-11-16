@@ -87,7 +87,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.CallAutomationEventBase[] ParseMany(Azure.Messaging.CloudEvent[] cloudEvents) { throw null; }
         public static Azure.Communication.CallingServer.CallAutomationEventBase[] ParseMany(System.BinaryData json) { throw null; }
     }
-    public partial class CallConnected : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class CallConnected : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallConnected>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallConnected>
     {
         internal CallConnected() { }
         public string EventSource { get { throw null; } }
@@ -96,6 +96,11 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.CallConnected Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.CallConnected System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallConnected>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallConnected>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.CallConnected System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallConnected>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallConnected>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallConnected>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CallConnection
     {
@@ -152,7 +157,7 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.CallConnectionState left, Azure.Communication.CallingServer.CallConnectionState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CallDisconnected : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class CallDisconnected : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallDisconnected>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallDisconnected>
     {
         internal CallDisconnected() { }
         public string EventSource { get { throw null; } }
@@ -161,6 +166,11 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.CallDisconnected Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.CallDisconnected System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallDisconnected>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallDisconnected>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.CallDisconnected System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallDisconnected>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallDisconnected>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallDisconnected>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class CallLocator : System.IEquatable<Azure.Communication.CallingServer.CallLocator>
     {
@@ -246,7 +256,7 @@ namespace Azure.Communication.CallingServer
         public virtual Azure.Response StopRecording(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopRecordingAsync(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CallRecordingStateChanged : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class CallRecordingStateChanged : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallRecordingStateChanged>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallRecordingStateChanged>
     {
         internal CallRecordingStateChanged() { }
         public string EventSource { get { throw null; } }
@@ -258,6 +268,11 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.RecordingState State { get { throw null; } set { } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.CallRecordingStateChanged Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.CallRecordingStateChanged System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallRecordingStateChanged>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallRecordingStateChanged>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.CallRecordingStateChanged System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallRecordingStateChanged>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallRecordingStateChanged>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallRecordingStateChanged>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CallRejectReason : System.IEquatable<Azure.Communication.CallingServer.CallRejectReason>
@@ -284,7 +299,7 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.PhoneNumberIdentifier CallerId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Identifier { get { throw null; } }
     }
-    public partial class CallTransferAccepted : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class CallTransferAccepted : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallTransferAccepted>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallTransferAccepted>
     {
         internal CallTransferAccepted() { }
         public string EventSource { get { throw null; } }
@@ -293,8 +308,13 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.CallTransferAccepted Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.CallTransferAccepted System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallTransferAccepted>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallTransferAccepted>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.CallTransferAccepted System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallTransferAccepted>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallTransferAccepted>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallTransferAccepted>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CallTransferFailed : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class CallTransferFailed : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallTransferFailed>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallTransferFailed>
     {
         internal CallTransferFailed() { }
         public string EventSource { get { throw null; } }
@@ -303,6 +323,11 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.CallTransferFailed Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.CallTransferFailed System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallTransferFailed>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CallTransferFailed>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.CallTransferFailed System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallTransferFailed>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallTransferFailed>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CallTransferFailed>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ChannelAffinity
     {
@@ -310,10 +335,15 @@ namespace Azure.Communication.CallingServer
         public int Channel { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } set { } }
     }
-    public partial class CollectTonesResult
+    public partial class CollectTonesResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CollectTonesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CollectTonesResult>
     {
         internal CollectTonesResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallingServer.DtmfTone> Tones { get { throw null; } }
+        Azure.Communication.CallingServer.CollectTonesResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CollectTonesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.CollectTonesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.CollectTonesResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CollectTonesResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CollectTonesResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.CollectTonesResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class CommunicationCallingServerModelFactory
     {
@@ -330,6 +360,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.CallTransferFailed CallTransferFailed(string eventSource = null, string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null) { throw null; }
         public static Azure.Communication.CallingServer.CollectTonesResult CollectTonesResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallingServer.DtmfTone> tones = null) { throw null; }
         public static Azure.Communication.CallingServer.CreateCallResult CreateCallResult(Azure.Communication.CallingServer.CallConnection callConnection = null, Azure.Communication.CallingServer.CallConnectionProperties callConnectionProperties = null) { throw null; }
+        public static Azure.Communication.CallingServer.DtmfOptionsInternal DtmfOptionsInternal(int? interToneTimeoutInSeconds = default(int?), int? maxTonesToCollect = default(int?), System.Collections.Generic.IEnumerable<Azure.Communication.CallingServer.DtmfTone> stopTones = null) { throw null; }
         public static Azure.Communication.CallingServer.ParticipantsUpdated ParticipantsUpdated(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participants = null, string version = null, string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallingServer.PlayCompleted PlayCompleted(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null) { throw null; }
         public static Azure.Communication.CallingServer.PlayFailed PlayFailed(string eventSource = null, string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null) { throw null; }
@@ -372,12 +403,17 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallingServer.CallConnectionProperties CallConnectionProperties { get { throw null; } }
     }
-    public partial class DtmfOptionsInternal
+    public partial class DtmfOptionsInternal : System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.DtmfOptionsInternal>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.DtmfOptionsInternal>
     {
         public DtmfOptionsInternal() { }
         public int? InterToneTimeoutInSeconds { get { throw null; } set { } }
         public int? MaxTonesToCollect { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallingServer.DtmfTone> StopTones { get { throw null; } set { } }
+        Azure.Communication.CallingServer.DtmfOptionsInternal System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.DtmfOptionsInternal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.DtmfOptionsInternal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.DtmfOptionsInternal System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.DtmfOptionsInternal>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.DtmfOptionsInternal>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.DtmfOptionsInternal>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DtmfTone : System.IEquatable<Azure.Communication.CallingServer.DtmfTone>
@@ -534,7 +570,7 @@ namespace Azure.Communication.CallingServer
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.ParticipantsUpdated Deserialize(string content) { throw null; }
     }
-    public partial class PlayCompleted : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class PlayCompleted : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.PlayCompleted>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.PlayCompleted>
     {
         internal PlayCompleted() { }
         public string OperationContext { get { throw null; } }
@@ -542,8 +578,13 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.PlayCompleted Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.PlayCompleted System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.PlayCompleted>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.PlayCompleted>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.PlayCompleted System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.PlayCompleted>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.PlayCompleted>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.PlayCompleted>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PlayFailed : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class PlayFailed : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.PlayFailed>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.PlayFailed>
     {
         internal PlayFailed() { }
         public string EventSource { get { throw null; } }
@@ -552,6 +593,11 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.PlayFailed Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.PlayFailed System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.PlayFailed>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.PlayFailed>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.PlayFailed System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.PlayFailed>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.PlayFailed>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.PlayFailed>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PlayOptions
     {
@@ -564,7 +610,7 @@ namespace Azure.Communication.CallingServer
         protected PlaySource() { }
         public string PlaySourceId { get { throw null; } set { } }
     }
-    public partial class RecognizeCompleted : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class RecognizeCompleted : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecognizeCompleted>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecognizeCompleted>
     {
         internal RecognizeCompleted() { }
         public Azure.Communication.CallingServer.CollectTonesResult CollectTonesResult { get { throw null; } }
@@ -574,8 +620,13 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.RecognizeCompleted Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.RecognizeCompleted System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecognizeCompleted>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecognizeCompleted>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.RecognizeCompleted System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecognizeCompleted>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecognizeCompleted>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecognizeCompleted>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RecognizeFailed : Azure.Communication.CallingServer.CallAutomationEventBase
+    public partial class RecognizeFailed : Azure.Communication.CallingServer.CallAutomationEventBase, System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecognizeFailed>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecognizeFailed>
     {
         internal RecognizeFailed() { }
         public string OperationContext { get { throw null; } }
@@ -583,6 +634,11 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallingServer.RecognizeFailed Deserialize(string content) { throw null; }
+        Azure.Communication.CallingServer.RecognizeFailed System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecognizeFailed>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecognizeFailed>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.RecognizeFailed System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecognizeFailed>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecognizeFailed>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecognizeFailed>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecognizeInputType : System.IEquatable<Azure.Communication.CallingServer.RecognizeInputType>
@@ -674,23 +730,38 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.RecordingState left, Azure.Communication.CallingServer.RecordingState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RecordingStateResult
+    public partial class RecordingStateResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecordingStateResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecordingStateResult>
     {
         internal RecordingStateResult() { }
         public string RecordingId { get { throw null; } }
         public Azure.Communication.CallingServer.RecordingState? RecordingState { get { throw null; } }
+        Azure.Communication.CallingServer.RecordingStateResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecordingStateResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RecordingStateResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.RecordingStateResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecordingStateResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecordingStateResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RecordingStateResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RemoveParticipantsResult
+    public partial class RemoveParticipantsResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RemoveParticipantsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RemoveParticipantsResult>
     {
         internal RemoveParticipantsResult() { }
         public string OperationContext { get { throw null; } }
+        Azure.Communication.CallingServer.RemoveParticipantsResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RemoveParticipantsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.RemoveParticipantsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.RemoveParticipantsResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RemoveParticipantsResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RemoveParticipantsResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.RemoveParticipantsResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResultInformation
+    public partial class ResultInformation : System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.ResultInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.ResultInformation>
     {
         internal ResultInformation() { }
         public int? Code { get { throw null; } }
         public string Message { get { throw null; } }
         public int? SubCode { get { throw null; } }
+        Azure.Communication.CallingServer.ResultInformation System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.ResultInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.ResultInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.ResultInformation System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.ResultInformation>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.ResultInformation>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.ResultInformation>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServerCallLocator : Azure.Communication.CallingServer.CallLocator
     {
@@ -708,9 +779,14 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackEndpoint { get { throw null; } set { } }
     }
-    public partial class TransferCallToParticipantResult
+    public partial class TransferCallToParticipantResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.TransferCallToParticipantResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.TransferCallToParticipantResult>
     {
         internal TransferCallToParticipantResult() { }
         public string OperationContext { get { throw null; } }
+        Azure.Communication.CallingServer.TransferCallToParticipantResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.TransferCallToParticipantResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.CallingServer.TransferCallToParticipantResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.CallingServer.TransferCallToParticipantResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.TransferCallToParticipantResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.TransferCallToParticipantResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.CallingServer.TransferCallToParticipantResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

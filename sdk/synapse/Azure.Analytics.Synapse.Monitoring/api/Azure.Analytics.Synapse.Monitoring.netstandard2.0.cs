@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         public static Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse SparkJobListViewResponse(int? nJobs = default(int?), System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Monitoring.Models.SparkJob> sparkJobs = null) { throw null; }
         public static Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel SqlQueryStringDataModel(string query = null) { throw null; }
     }
-    public partial class SparkJob
+    public partial class SparkJob : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJob>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJob>
     {
         internal SparkJob() { }
         public string Compute { get { throw null; } }
@@ -44,16 +44,31 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         public System.DateTimeOffset? SubmitTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Timing { get { throw null; } }
         public string TotalDuration { get { throw null; } }
+        Azure.Analytics.Synapse.Monitoring.Models.SparkJob System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Monitoring.Models.SparkJob System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJob>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJob>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJob>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkJobListViewResponse
+    public partial class SparkJobListViewResponse : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>
     {
         internal SparkJobListViewResponse() { }
         public int? NJobs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Monitoring.Models.SparkJob> SparkJobs { get { throw null; } }
+        Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SqlQueryStringDataModel
+    public partial class SqlQueryStringDataModel : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>
     {
         internal SqlQueryStringDataModel() { }
         public string Query { get { throw null; } }
+        Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

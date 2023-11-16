@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Updated WorkerSelectors. </summary>
         public IList<RouterWorkerSelector> WorkerSelectors { get; } = new List<RouterWorkerSelector>();
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))

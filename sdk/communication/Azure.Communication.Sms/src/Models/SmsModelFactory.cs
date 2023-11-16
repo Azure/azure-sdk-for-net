@@ -1,12 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.Sms.Models
 {
     /// <summary>
     /// Model factory that enables mocking for the Sms library.
     /// </summary>
-    public static class SmsModelFactory
+    [CodeGenType("CommunicationSmsModelFactory")]
+    public static partial class SmsModelFactory
     {
         /// <summary> Initializes a new instance of SmsSendResult. </summary>
         /// <param name="to"> The recipient&apos;s phone number in E.164 format. </param>
@@ -15,6 +20,6 @@ namespace Azure.Communication.Sms.Models
         /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
         /// <param name="errorMessage"> Optional error message in case of 4xx/5xx/repeatable errors. </param>
         public static SmsSendResult SmsSendResult(string to, string messageId, int httpStatusCode, bool successful, string errorMessage)
-            => new SmsSendResult(to, messageId, httpStatusCode, SmsSendResponseItemRepeatabilityResult.Accepted, successful, errorMessage);
+            => new SmsSendResult(to, messageId, httpStatusCode, SmsSendResponseItemRepeatabilityResult.Accepted, successful, errorMessage, serializedAdditionalRawData: null);
     }
 }

@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -15,8 +16,10 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementViewData : IUtf8JsonSerializable
     {
-        internal static CostManagementViewData DeserializeCostManagementViewData(JsonElement element)
+        internal static CostManagementViewData DeserializeCostManagementViewData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +45,8 @@ namespace Azure.ResourceManager.CostManagement
             Optional<ReportConfigTimePeriod> timePeriod = default;
             Optional<ReportConfigDataset> dataSet = default;
             Optional<bool> includeMonetaryCommitment = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -97,7 +102,8 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            scope = property.Value.GetString().StartsWith("/") ? new ResourceIdentifier(property.Value.GetString()) : new ResourceIdentifier($"/{property.Value.GetString()}");
+                            var scopeString = property0.Value.GetString();
+                            scope = scopeString.StartsWith("/") ? new ResourceIdentifier(scopeString) : new ResourceIdentifier($"/{scopeString}");
                             continue;
                         }
                         if (property0.NameEquals("createdOn"u8))
@@ -243,8 +249,13 @@ namespace Azure.ResourceManager.CostManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CostManagementViewData(id, name, type, systemData.Value, displayName.Value, scope.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), dateRange.Value, currency.Value, Optional.ToNullable(chart), Optional.ToNullable(accumulated), Optional.ToNullable(metric), Optional.ToList(kpis), Optional.ToList(pivots), Optional.ToNullable(type0), Optional.ToNullable(timeframe), timePeriod.Value, dataSet.Value, Optional.ToNullable(includeMonetaryCommitment), Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CostManagementViewData(id, name, type, systemData.Value, displayName.Value, scope.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), dateRange.Value, currency.Value, Optional.ToNullable(chart), Optional.ToNullable(accumulated), Optional.ToNullable(metric), Optional.ToList(kpis), Optional.ToList(pivots), Optional.ToNullable(type0), Optional.ToNullable(timeframe), timePeriod.Value, dataSet.Value, Optional.ToNullable(includeMonetaryCommitment), Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
     }
 }

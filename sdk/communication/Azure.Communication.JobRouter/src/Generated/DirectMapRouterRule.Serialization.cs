@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class DirectMapRouterRule : IUtf8JsonSerializable, IJsonModel<DirectMapRouterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectMapRouterRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<DirectMapRouterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DirectMapRouterRule>)this).GetFormatFromOptions(options) : options.Format;

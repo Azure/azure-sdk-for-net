@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownDistributionMode))]
     public partial class DistributionMode : IUtf8JsonSerializable, IJsonModel<DistributionMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<DistributionMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DistributionMode>)this).GetFormatFromOptions(options) : options.Format;

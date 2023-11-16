@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter
             QueueSelectors = queueSelectors.ToList();
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("weight"u8);

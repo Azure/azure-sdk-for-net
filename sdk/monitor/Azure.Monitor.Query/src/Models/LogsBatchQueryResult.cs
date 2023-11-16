@@ -1,14 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.ClientModel;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
     [CodeGenModel("batchQueryResults")]
-    public partial class LogsBatchQueryResult: LogsQueryResult
+    public partial class LogsBatchQueryResult : LogsQueryResult
     {
         internal int StatusCode { get; set; }
 
@@ -18,13 +20,20 @@ namespace Azure.Monitor.Query.Models
         public string Id { get; internal set; }
 
         // TODO, remove after https://github.com/Azure/azure-sdk-for-net/issues/21655 is fixed
-        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element)
+        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JsonElement> error = default;
             IReadOnlyList<LogsTable> tables = default;
             Optional<JsonElement> statistics = default;
             Optional<JsonElement> render = default;
-
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             // This is the workaround to remove the double-encoding
             if (element.ValueKind == JsonValueKind.String)
             {
@@ -71,8 +80,14 @@ namespace Azure.Monitor.Query.Models
                     render = property.Value.Clone();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogsBatchQueryResult(tables, statistics, render, error);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+
+            return new LogsBatchQueryResult(tables, statistics, render, error, serializedAdditionalRawData);
         }
     }
 }
