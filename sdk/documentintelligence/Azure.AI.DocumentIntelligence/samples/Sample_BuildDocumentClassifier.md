@@ -15,7 +15,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateDocumentIntelligenceAdministrationClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Build a document classifier
@@ -45,9 +45,9 @@ var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
     { "IRS-1040-B", docTypeB }
 };
 
-var request = new BuildDocumentClassifierRequest(classifierId, docTypes);
+var content = new BuildDocumentClassifierContent(classifierId, docTypes);
 
-Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, request);
+Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
 DocumentClassifierDetails classifier = operation.Value;
 
 Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");

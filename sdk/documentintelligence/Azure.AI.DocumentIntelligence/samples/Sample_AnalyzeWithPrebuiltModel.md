@@ -13,7 +13,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Use a prebuilt model to analyze a document from a URI
@@ -25,12 +25,12 @@ For simplicity, we are not showing all the fields that the service returns. To s
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var request = new AnalyzeDocumentRequest()
+var content = new AnalyzeDocumentContent()
 {
     UrlSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", request);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the

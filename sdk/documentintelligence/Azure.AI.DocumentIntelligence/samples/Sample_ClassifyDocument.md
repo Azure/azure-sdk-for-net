@@ -13,7 +13,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Classify a document from a URI
@@ -24,12 +24,12 @@ To classify a given file at a URI, use the `ClassifyDocument` method. The return
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var request = new ClassifyDocumentRequest()
+var content = new ClassifyDocumentContent()
 {
     UrlSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, request);
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, content);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");

@@ -101,7 +101,7 @@ Once you have the value for the API key, create an `AzureKeyCredential`. With th
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 #### Create DocumentIntelligenceClient with Azure Active Directory Credential
@@ -120,7 +120,7 @@ Set the values of the client ID, tenant ID, and client secret of the AAD applica
 
 ```C# Snippet:CreateDocumentIntelligenceClientTokenCredential
 string endpoint = "<endpoint>";
-var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -183,12 +183,12 @@ Analyze text, selection marks, table structures, styles, paragraphs, and key-val
 ```C# Snippet:DocumentIntelligenceAnalyzePrebuiltDocumentFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var request = new AnalyzeDocumentRequest()
+var content = new AnalyzeDocumentContent()
 {
     UrlSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", request);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", content);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");
@@ -266,12 +266,12 @@ For example, to analyze fields from an invoice, use the prebuilt Invoice model p
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var request = new AnalyzeDocumentRequest()
+var content = new AnalyzeDocumentContent()
 {
     UrlSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", request);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -373,12 +373,12 @@ Uri blobContainerUri = new Uri("<blobContainerUri>");
 // build modes and their differences, see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
 {
     AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
 };
 
-Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, request);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"Model ID: {model.ModelId}");
@@ -463,9 +463,9 @@ var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
     { "IRS-1040-B", docTypeB }
 };
 
-var request = new BuildDocumentClassifierRequest(classifierId, docTypes);
+var content = new BuildDocumentClassifierContent(classifierId, docTypes);
 
-Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, request);
+Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
 DocumentClassifierDetails classifier = operation.Value;
 
 Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");
@@ -488,12 +488,12 @@ Use document classifiers to accurately detect and identify documents you process
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var request = new ClassifyDocumentRequest()
+var content = new ClassifyDocumentContent()
 {
     UrlSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, request);
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, content);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");
@@ -515,14 +515,14 @@ When you interact with the Document Intelligence client library using the .NET S
 For example, if you submit a receipt image with an invalid `Uri`, a `400` error is returned, indicating "Bad Request".
 
 ```C# Snippet:DocumentIntelligenceBadRequest
-var request = new AnalyzeDocumentRequest()
+var content = new AnalyzeDocumentContent()
 {
     UrlSource = new Uri("http://invalid.uri")
 };
 
 try
 {
-    Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", request);
+    Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
 }
 catch (RequestFailedException e)
 {

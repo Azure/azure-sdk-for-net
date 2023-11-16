@@ -13,7 +13,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Use the prebuilt general document model to analyze a document from a URI
@@ -23,12 +23,12 @@ To analyze a given file at a URI, use the `AnalyzeDocument` method and pass `pre
 ```C# Snippet:DocumentIntelligenceAnalyzePrebuiltDocumentFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var request = new AnalyzeDocumentRequest()
+var content = new AnalyzeDocumentContent()
 {
     UrlSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", request);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", content);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");

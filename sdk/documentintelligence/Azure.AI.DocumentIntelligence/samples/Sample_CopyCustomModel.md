@@ -27,7 +27,7 @@ The source client that contains the custom model to copy.
 ```C# Snippet:DocumentIntelligenceSampleCreateCopySourceClient
 string sourceEndpoint = "<sourceEndpoint>";
 string sourceApiKey = "<sourceApiKey>";
-var sourceClient = new DocumentModelAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
+var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
 ```
 
 ### Target client
@@ -37,7 +37,7 @@ The target client to copy the custom model to.
 ```C# Snippet:DocumentIntelligenceSampleCreateCopyTargetClient
 string targetEndpoint = "<targetEndpoint>";
 string targetApiKey = "<targetApiKey>";
-var targetClient = new DocumentModelAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
+var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
 ```
 
 ### Authorize the copy
@@ -45,8 +45,8 @@ var targetClient = new DocumentModelAdministrationClient(new Uri(targetEndpoint)
 Before starting, we need to get a `CopyAuthorization` from the target resource that will give us permission to execute the copy.
 ```C# Snippet:DocumentIntelligenceSampleGetCopyAuthorization
 string targetModelId = "<targetModelId>";
-var authorizeCopyRequest = new AuthorizeCopyRequest(targetModelId);
-CopyAuthorization copyAuthorization = await targetClient.AuthorizeModelCopyAsync(authorizeCopyRequest);
+var authorizeCopyContent = new AuthorizeCopyContent(targetModelId);
+CopyAuthorization copyAuthorization = await targetClient.AuthorizeModelCopyAsync(authorizeCopyContent);
 ```
 
 ### Execute the copy
