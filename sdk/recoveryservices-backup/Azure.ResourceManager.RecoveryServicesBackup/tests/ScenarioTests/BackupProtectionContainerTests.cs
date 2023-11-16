@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
 {
+    [NonParallelizable]
     public class BackupProtectionContainerTests : RecoveryServicesBackupManagementTestBase
     {
         public BackupProtectionContainerTests(bool isAsnyc)
