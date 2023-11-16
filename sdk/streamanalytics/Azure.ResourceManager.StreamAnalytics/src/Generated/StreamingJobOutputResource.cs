@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class StreamingJobOutputResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StreamingJobOutputResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="jobName"> The jobName. </param>
+        /// <param name="outputName"> The outputName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName, string outputName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/outputs/{outputName}";

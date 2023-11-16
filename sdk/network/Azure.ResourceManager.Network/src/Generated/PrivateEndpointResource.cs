@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateEndpointName"> The privateEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}";
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PrivateDnsZoneGroupResources and their operations over a PrivateDnsZoneGroupResource. </returns>
         public virtual PrivateDnsZoneGroupCollection GetPrivateDnsZoneGroups()
         {
-            return GetCachedClient(Client => new PrivateDnsZoneGroupCollection(Client, Id));
+            return GetCachedClient(client => new PrivateDnsZoneGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PrivateDnsZoneGroupResource>> GetPrivateDnsZoneGroupAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +136,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PrivateDnsZoneGroupResource> GetPrivateDnsZoneGroup(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {

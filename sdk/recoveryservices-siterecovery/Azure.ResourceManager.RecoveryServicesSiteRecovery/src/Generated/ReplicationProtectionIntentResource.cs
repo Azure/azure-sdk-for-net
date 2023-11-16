@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     public partial class ReplicationProtectionIntentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReplicationProtectionIntentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="intentObjectName"> The intentObjectName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string intentObjectName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}";

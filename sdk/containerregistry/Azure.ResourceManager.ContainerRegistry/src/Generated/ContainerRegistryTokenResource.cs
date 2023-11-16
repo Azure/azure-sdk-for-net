@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ContainerRegistry
     public partial class ContainerRegistryTokenResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerRegistryTokenResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="tokenName"> The tokenName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string tokenName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tokens/{tokenName}";

@@ -33,6 +33,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("creationToken"u8);
@@ -132,8 +142,15 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(SmbAccessBasedEnumeration))
             {
-                writer.WritePropertyName("smbAccessBasedEnumeration"u8);
-                writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                if (SmbAccessBasedEnumeration != null)
+                {
+                    writer.WritePropertyName("smbAccessBasedEnumeration"u8);
+                    writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("smbAccessBasedEnumeration");
+                }
             }
             if (Optional.IsDefined(SmbNonBrowsable))
             {
@@ -181,6 +198,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
+            }
+            if (Optional.IsDefined(CoolAccessRetrievalPolicy))
+            {
+                writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
+                writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
             }
             if (Optional.IsDefined(UnixPermissions))
             {
@@ -263,6 +285,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<string>> zones = default;
             Optional<Guid> fileSystemId = default;
             string creationToken = default;
             Optional<NetAppFileServiceLevel> serviceLevel = default;
@@ -286,7 +309,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> kerberosEnabled = default;
             Optional<NetAppVolumeSecurityStyle> securityStyle = default;
             Optional<bool> smbEncryption = default;
-            Optional<SmbAccessBasedEnumeration> smbAccessBasedEnumeration = default;
+            Optional<SmbAccessBasedEnumeration?> smbAccessBasedEnumeration = default;
             Optional<SmbNonBrowsable> smbNonBrowsable = default;
             Optional<bool> smbContinuouslyAvailable = default;
             Optional<float?> throughputMibps = default;
@@ -296,6 +319,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> ldapEnabled = default;
             Optional<bool> coolAccess = default;
             Optional<int> coolnessPeriod = default;
+            Optional<CoolAccessRetrievalPolicy> coolAccessRetrievalPolicy = default;
             Optional<string> unixPermissions = default;
             Optional<int?> cloneProgress = default;
             Optional<NetAppFileAccessLog> fileAccessLogs = default;
@@ -353,6 +377,20 @@ namespace Azure.ResourceManager.NetApp.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -563,6 +601,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                smbAccessBasedEnumeration = null;
                                 continue;
                             }
                             smbAccessBasedEnumeration = new SmbAccessBasedEnumeration(property0.Value.GetString());
@@ -648,6 +687,15 @@ namespace Azure.ResourceManager.NetApp.Models
                                 continue;
                             }
                             coolnessPeriod = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("coolAccessRetrievalPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            coolAccessRetrievalPolicy = new CoolAccessRetrievalPolicy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("unixPermissions"u8))
@@ -843,7 +891,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value);
+            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value);
         }
     }
 }

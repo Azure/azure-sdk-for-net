@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object[]
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
@@ -23,7 +23,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object[]
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
@@ -40,7 +40,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object[]
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
@@ -54,7 +54,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object[]
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });

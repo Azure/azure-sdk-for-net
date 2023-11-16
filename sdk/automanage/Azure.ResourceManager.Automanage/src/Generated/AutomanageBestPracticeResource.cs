@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Automanage
     public partial class AutomanageBestPracticeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageBestPracticeResource"/> instance. </summary>
+        /// <param name="bestPracticeName"> The bestPracticeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string bestPracticeName)
         {
             var resourceId = $"/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}";

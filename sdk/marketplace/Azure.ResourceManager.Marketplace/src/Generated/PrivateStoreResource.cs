@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateStoreResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}";
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of MarketplaceApprovalRequestResources and their operations over a MarketplaceApprovalRequestResource. </returns>
         public virtual MarketplaceApprovalRequestCollection GetMarketplaceApprovalRequests()
         {
-            return GetCachedClient(Client => new MarketplaceApprovalRequestCollection(Client, Id));
+            return GetCachedClient(client => new MarketplaceApprovalRequestCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +116,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MarketplaceApprovalRequestResource>> GetMarketplaceApprovalRequestAsync(string requestApprovalId, CancellationToken cancellationToken = default)
         {
@@ -138,8 +139,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MarketplaceApprovalRequestResource> GetMarketplaceApprovalRequest(string requestApprovalId, CancellationToken cancellationToken = default)
         {
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of MarketplaceAdminApprovalRequestResources and their operations over a MarketplaceAdminApprovalRequestResource. </returns>
         public virtual MarketplaceAdminApprovalRequestCollection GetMarketplaceAdminApprovalRequests()
         {
-            return GetCachedClient(Client => new MarketplaceAdminApprovalRequestCollection(Client, Id));
+            return GetCachedClient(client => new MarketplaceAdminApprovalRequestCollection(client, Id));
         }
 
         /// <summary>
@@ -169,8 +170,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetMarketplaceAdminApprovalRequestAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
@@ -193,8 +194,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MarketplaceAdminApprovalRequestResource> GetMarketplaceAdminApprovalRequest(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of PrivateStoreCollectionInfoResources and their operations over a PrivateStoreCollectionInfoResource. </returns>
         public virtual PrivateStoreCollectionInfoCollection GetPrivateStoreCollectionInfos()
         {
-            return GetCachedClient(Client => new PrivateStoreCollectionInfoCollection(Client, Id));
+            return GetCachedClient(client => new PrivateStoreCollectionInfoCollection(client, Id));
         }
 
         /// <summary>

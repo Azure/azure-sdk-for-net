@@ -1,6 +1,15 @@
 # Release History
 
-## 12.0.0-preview.39 (Unreleased)
+## 12.0.0-preview.42 (Unreleased)
+- Added support for service version 2024-02-04.
+
+## 12.0.0-preview.41 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.0.0-preview.40 (2023-11-06)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.39 (2023-10-16)
 - Added support for service version 2023-11-03.
 
 ## 12.0.0-preview.38 (2023-09-12)

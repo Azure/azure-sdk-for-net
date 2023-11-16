@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NewRelicObservability
     public partial class NewRelicMonitorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NewRelicMonitorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}";
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> An object representing collection of NewRelicObservabilityTagRuleResources and their operations over a NewRelicObservabilityTagRuleResource. </returns>
         public virtual NewRelicObservabilityTagRuleCollection GetNewRelicObservabilityTagRules()
         {
-            return GetCachedClient(Client => new NewRelicObservabilityTagRuleCollection(Client, Id));
+            return GetCachedClient(client => new NewRelicObservabilityTagRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </summary>
         /// <param name="ruleSetName"> Name of the TagRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NewRelicObservabilityTagRuleResource>> GetNewRelicObservabilityTagRuleAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </summary>
         /// <param name="ruleSetName"> Name of the TagRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NewRelicObservabilityTagRuleResource> GetNewRelicObservabilityTagRule(string ruleSetName, CancellationToken cancellationToken = default)
         {

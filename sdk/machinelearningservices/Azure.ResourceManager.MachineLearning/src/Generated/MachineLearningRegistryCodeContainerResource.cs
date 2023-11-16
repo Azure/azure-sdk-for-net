@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearningRegistryCodeContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningRegistryCodeContainerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="codeName"> The codeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string codeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}";
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningRegistryCodeVersionResources and their operations over a MachineLearningRegistryCodeVersionResource. </returns>
         public virtual MachineLearningRegistryCodeVersionCollection GetMachineLearningRegistryCodeVersions()
         {
-            return GetCachedClient(Client => new MachineLearningRegistryCodeVersionCollection(Client, Id));
+            return GetCachedClient(client => new MachineLearningRegistryCodeVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MachineLearningRegistryCodeVersionResource>> GetMachineLearningRegistryCodeVersionAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningRegistryCodeVersionResource> GetMachineLearningRegistryCodeVersion(string version, CancellationToken cancellationToken = default)
         {

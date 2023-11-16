@@ -250,7 +250,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateResourceSetRule(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -265,7 +265,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -280,7 +280,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 advancedResourceSet = new
                 {
@@ -489,7 +489,7 @@ storeType = "<storeType>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 advancedResourceSet = new
                 {

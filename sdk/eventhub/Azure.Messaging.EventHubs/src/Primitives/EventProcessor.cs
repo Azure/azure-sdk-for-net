@@ -1112,16 +1112,15 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <remarks>
-        ///   The number of events in the <paramref name="events"/> batch may vary.  The batch will contain a number of events between zero and batch size that was
-        ///   requested when the processor was created, depending on the availability of events in the partition within the requested <see cref="EventProcessorOptions.MaximumWaitTime"/>
-        ///   interval.
+        ///   The number of events in the <paramref name="events"/> batch may vary, with the batch containing between zero and maximum batch size that was specified when the processor was created.
+        ///   The actual number of events in a batch depends on the number events available in the processor's prefetch queue at the time when a read takes place.
         ///
-        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the Event Hub partition
-        ///   to be read.  When no events are available in prefetch the processor will wait until at least one event is available or the requested <see cref="EventProcessorOptions.MaximumWaitTime"/>
-        ///   has elapsed.
+        ///   When at least one event is available in the prefetch queue, they will be used to form the batch as close to the requested maximum batch size as possible without waiting for additional
+        ///   events from the Event Hub partition to be read.  When no events are available in prefetch the processor will wait until at least one event is available or the requested
+        ///   <see cref="EventProcessorOptions.MaximumWaitTime"/> has elapsed, after which the batch will be dispatched for processing.
         ///
-        ///   If <see cref="EventProcessorOptions.MaximumWaitTime"/> is <c>null</c>, the event processor will continue reading from the Event Hub
-        ///   partition until a batch with at least one event could be formed and will not dispatch any empty batches to this method.
+        ///   If <see cref="EventProcessorOptions.MaximumWaitTime"/> is <c>null</c>, the processor will continue trying to read from the Event Hub partition until a batch with at least one event could
+        ///   be formed and will not dispatch any empty batches to this method.
         ///
         ///   This method will be invoked concurrently, limited to one call per partition. The processor will await each invocation to ensure
         ///   that the events from the same partition are processed in the order that they were read from the partition.  No time limit is

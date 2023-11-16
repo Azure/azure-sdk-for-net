@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.AppService
     public partial class WebSiteSlotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}";
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDetectorResources and their operations over a SiteSlotDetectorResource. </returns>
         public virtual SiteSlotDetectorCollection GetSiteSlotDetectors()
         {
-            return GetCachedClient(Client => new SiteSlotDetectorCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotDetectorCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +119,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDetectorResource>> GetSiteSlotDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
@@ -141,8 +145,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotDetectorResource> GetSiteSlotDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotPrivateEndpointConnectionResources and their operations over a SiteSlotPrivateEndpointConnectionResource. </returns>
         public virtual SiteSlotPrivateEndpointConnectionCollection GetSiteSlotPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new SiteSlotPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -171,8 +175,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotPrivateEndpointConnectionResource>> GetSiteSlotPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -194,8 +198,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotPrivateEndpointConnectionResource> GetSiteSlotPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -206,7 +210,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotHybridConnectionNamespaceRelayResources and their operations over a SiteSlotHybridConnectionNamespaceRelayResource. </returns>
         public virtual SiteSlotHybridConnectionNamespaceRelayCollection GetSiteSlotHybridConnectionNamespaceRelays()
         {
-            return GetCachedClient(Client => new SiteSlotHybridConnectionNamespaceRelayCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotHybridConnectionNamespaceRelayCollection(client, Id));
         }
 
         /// <summary>
@@ -225,8 +229,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotHybridConnectionNamespaceRelayResource>> GetSiteSlotHybridConnectionNamespaceRelayAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
@@ -249,8 +253,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotHybridConnectionNamespaceRelayResource> GetSiteSlotHybridConnectionNamespaceRelay(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
@@ -261,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotVirtualNetworkConnectionResources and their operations over a SiteSlotVirtualNetworkConnectionResource. </returns>
         public virtual SiteSlotVirtualNetworkConnectionCollection GetSiteSlotVirtualNetworkConnections()
         {
-            return GetCachedClient(Client => new SiteSlotVirtualNetworkConnectionCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotVirtualNetworkConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -279,8 +283,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotVirtualNetworkConnectionResource>> GetSiteSlotVirtualNetworkConnectionAsync(string vnetName, CancellationToken cancellationToken = default)
         {
@@ -302,8 +306,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotVirtualNetworkConnectionResource> GetSiteSlotVirtualNetworkConnection(string vnetName, CancellationToken cancellationToken = default)
         {
@@ -314,7 +318,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDiagnosticResources and their operations over a SiteSlotDiagnosticResource. </returns>
         public virtual SiteSlotDiagnosticCollection GetSiteSlotDiagnostics()
         {
-            return GetCachedClient(Client => new SiteSlotDiagnosticCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotDiagnosticCollection(client, Id));
         }
 
         /// <summary>
@@ -332,8 +336,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDiagnosticResource>> GetSiteSlotDiagnosticAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
@@ -355,8 +359,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotDiagnosticResource> GetSiteSlotDiagnostic(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
@@ -374,7 +378,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotBackupResources and their operations over a SiteSlotBackupResource. </returns>
         public virtual SiteSlotBackupCollection GetSiteSlotBackups()
         {
-            return GetCachedClient(Client => new SiteSlotBackupCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotBackupCollection(client, Id));
         }
 
         /// <summary>
@@ -392,8 +396,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotBackupResource>> GetSiteSlotBackupAsync(string backupId, CancellationToken cancellationToken = default)
         {
@@ -415,8 +419,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotBackupResource> GetSiteSlotBackup(string backupId, CancellationToken cancellationToken = default)
         {
@@ -441,7 +445,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotConfigAppSettingResources and their operations over a WebSiteSlotConfigAppSettingResource. </returns>
         public virtual WebSiteSlotConfigAppSettingCollection GetWebSiteSlotConfigAppSettings()
         {
-            return GetCachedClient(Client => new WebSiteSlotConfigAppSettingCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotConfigAppSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -459,8 +463,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotConfigAppSettingResource>> GetWebSiteSlotConfigAppSettingAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
@@ -482,8 +486,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotConfigAppSettingResource> GetWebSiteSlotConfigAppSetting(string appSettingKey, CancellationToken cancellationToken = default)
         {
@@ -494,7 +498,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotConfigConnectionStringResources and their operations over a WebSiteSlotConfigConnectionStringResource. </returns>
         public virtual WebSiteSlotConfigConnectionStringCollection GetWebSiteSlotConfigConnectionStrings()
         {
-            return GetCachedClient(Client => new WebSiteSlotConfigConnectionStringCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotConfigConnectionStringCollection(client, Id));
         }
 
         /// <summary>
@@ -512,8 +516,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotConfigConnectionStringResource>> GetWebSiteSlotConfigConnectionStringAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
@@ -535,8 +539,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotConfigConnectionStringResource> GetWebSiteSlotConfigConnectionString(string connectionStringKey, CancellationToken cancellationToken = default)
         {
@@ -561,7 +565,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotContinuousWebJobResources and their operations over a WebSiteSlotContinuousWebJobResource. </returns>
         public virtual WebSiteSlotContinuousWebJobCollection GetWebSiteSlotContinuousWebJobs()
         {
-            return GetCachedClient(Client => new WebSiteSlotContinuousWebJobCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotContinuousWebJobCollection(client, Id));
         }
 
         /// <summary>
@@ -579,8 +583,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotContinuousWebJobResource>> GetWebSiteSlotContinuousWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
         {
@@ -602,8 +606,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotContinuousWebJobResource> GetWebSiteSlotContinuousWebJob(string webJobName, CancellationToken cancellationToken = default)
         {
@@ -614,7 +618,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDeploymentResources and their operations over a SiteSlotDeploymentResource. </returns>
         public virtual SiteSlotDeploymentCollection GetSiteSlotDeployments()
         {
-            return GetCachedClient(Client => new SiteSlotDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -632,8 +636,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDeploymentResource>> GetSiteSlotDeploymentAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -655,8 +659,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotDeploymentResource> GetSiteSlotDeployment(string id, CancellationToken cancellationToken = default)
         {
@@ -667,7 +671,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDomainOwnershipIdentifierResources and their operations over a SiteSlotDomainOwnershipIdentifierResource. </returns>
         public virtual SiteSlotDomainOwnershipIdentifierCollection GetSiteSlotDomainOwnershipIdentifiers()
         {
-            return GetCachedClient(Client => new SiteSlotDomainOwnershipIdentifierCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotDomainOwnershipIdentifierCollection(client, Id));
         }
 
         /// <summary>
@@ -685,8 +689,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDomainOwnershipIdentifierResource>> GetSiteSlotDomainOwnershipIdentifierAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
@@ -708,8 +712,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotDomainOwnershipIdentifierResource> GetSiteSlotDomainOwnershipIdentifier(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
@@ -727,7 +731,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotFunctionResources and their operations over a SiteSlotFunctionResource. </returns>
         public virtual SiteSlotFunctionCollection GetSiteSlotFunctions()
         {
-            return GetCachedClient(Client => new SiteSlotFunctionCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotFunctionCollection(client, Id));
         }
 
         /// <summary>
@@ -745,8 +749,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotFunctionResource>> GetSiteSlotFunctionAsync(string functionName, CancellationToken cancellationToken = default)
         {
@@ -768,8 +772,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotFunctionResource> GetSiteSlotFunction(string functionName, CancellationToken cancellationToken = default)
         {
@@ -780,7 +784,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotHostNameBindingResources and their operations over a SiteSlotHostNameBindingResource. </returns>
         public virtual SiteSlotHostNameBindingCollection GetSiteSlotHostNameBindings()
         {
-            return GetCachedClient(Client => new SiteSlotHostNameBindingCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotHostNameBindingCollection(client, Id));
         }
 
         /// <summary>
@@ -798,8 +802,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotHostNameBindingResource>> GetSiteSlotHostNameBindingAsync(string hostName, CancellationToken cancellationToken = default)
         {
@@ -821,8 +825,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotHostNameBindingResource> GetSiteSlotHostNameBinding(string hostName, CancellationToken cancellationToken = default)
         {
@@ -833,7 +837,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotHybridConnectionResources and their operations over a WebSiteSlotHybridConnectionResource. </returns>
         public virtual WebSiteSlotHybridConnectionCollection GetWebSiteSlotHybridConnections()
         {
-            return GetCachedClient(Client => new WebSiteSlotHybridConnectionCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotHybridConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -851,8 +855,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotHybridConnectionResource>> GetWebSiteSlotHybridConnectionAsync(string entityName, CancellationToken cancellationToken = default)
         {
@@ -874,8 +878,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotHybridConnectionResource> GetWebSiteSlotHybridConnection(string entityName, CancellationToken cancellationToken = default)
         {
@@ -886,7 +890,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotInstanceResources and their operations over a SiteSlotInstanceResource. </returns>
         public virtual SiteSlotInstanceCollection GetSiteSlotInstances()
         {
-            return GetCachedClient(Client => new SiteSlotInstanceCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -904,8 +908,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotInstanceResource>> GetSiteSlotInstanceAsync(string instanceId, CancellationToken cancellationToken = default)
         {
@@ -927,8 +931,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotInstanceResource> GetSiteSlotInstance(string instanceId, CancellationToken cancellationToken = default)
         {
@@ -939,7 +943,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotProcessResources and their operations over a SiteSlotProcessResource. </returns>
         public virtual SiteSlotProcessCollection GetSiteSlotProcesses()
         {
-            return GetCachedClient(Client => new SiteSlotProcessCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotProcessCollection(client, Id));
         }
 
         /// <summary>
@@ -957,8 +961,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotProcessResource>> GetSiteSlotProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
@@ -980,8 +984,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotProcessResource> GetSiteSlotProcess(string processId, CancellationToken cancellationToken = default)
         {
@@ -999,7 +1003,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotPremierAddOnResources and their operations over a WebSiteSlotPremierAddOnResource. </returns>
         public virtual WebSiteSlotPremierAddOnCollection GetWebSiteSlotPremierAddOns()
         {
-            return GetCachedClient(Client => new WebSiteSlotPremierAddOnCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotPremierAddOnCollection(client, Id));
         }
 
         /// <summary>
@@ -1017,8 +1021,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotPremierAddOnResource>> GetWebSiteSlotPremierAddOnAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
@@ -1040,8 +1044,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotPremierAddOnResource> GetWebSiteSlotPremierAddOn(string premierAddOnName, CancellationToken cancellationToken = default)
         {
@@ -1059,7 +1063,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotPublicCertificateResources and their operations over a WebSiteSlotPublicCertificateResource. </returns>
         public virtual WebSiteSlotPublicCertificateCollection GetWebSiteSlotPublicCertificates()
         {
-            return GetCachedClient(Client => new WebSiteSlotPublicCertificateCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotPublicCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -1077,8 +1081,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotPublicCertificateResource>> GetWebSiteSlotPublicCertificateAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
@@ -1100,8 +1104,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotPublicCertificateResource> GetWebSiteSlotPublicCertificate(string publicCertificateName, CancellationToken cancellationToken = default)
         {
@@ -1112,7 +1116,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotExtensionResources and their operations over a WebSiteSlotExtensionResource. </returns>
         public virtual WebSiteSlotExtensionCollection GetWebSiteSlotExtensions()
         {
-            return GetCachedClient(Client => new WebSiteSlotExtensionCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotExtensionCollection(client, Id));
         }
 
         /// <summary>
@@ -1130,8 +1134,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotExtensionResource>> GetWebSiteSlotExtensionAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
@@ -1153,8 +1157,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotExtensionResource> GetWebSiteSlotExtension(string siteExtensionId, CancellationToken cancellationToken = default)
         {
@@ -1172,7 +1176,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of NetworkFeatureResources and their operations over a NetworkFeatureResource. </returns>
         public virtual NetworkFeatureCollection GetNetworkFeatures()
         {
-            return GetCachedClient(Client => new NetworkFeatureCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFeatureCollection(client, Id));
         }
 
         /// <summary>
@@ -1190,8 +1194,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFeatureResource>> GetNetworkFeatureAsync(string view, CancellationToken cancellationToken = default)
         {
@@ -1213,8 +1217,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFeatureResource> GetNetworkFeature(string view, CancellationToken cancellationToken = default)
         {
@@ -1232,7 +1236,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotTriggeredWebJobResources and their operations over a WebSiteSlotTriggeredWebJobResource. </returns>
         public virtual WebSiteSlotTriggeredWebJobCollection GetWebSiteSlotTriggeredWebJobs()
         {
-            return GetCachedClient(Client => new WebSiteSlotTriggeredWebJobCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotTriggeredWebJobCollection(client, Id));
         }
 
         /// <summary>
@@ -1250,8 +1254,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotTriggeredWebJobResource>> GetWebSiteSlotTriggeredWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
         {
@@ -1273,8 +1277,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotTriggeredWebJobResource> GetWebSiteSlotTriggeredWebJob(string webJobName, CancellationToken cancellationToken = default)
         {
@@ -1285,7 +1289,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteSlotWebJobResources and their operations over a WebSiteSlotWebJobResource. </returns>
         public virtual WebSiteSlotWebJobCollection GetWebSiteSlotWebJobs()
         {
-            return GetCachedClient(Client => new WebSiteSlotWebJobCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteSlotWebJobCollection(client, Id));
         }
 
         /// <summary>
@@ -1303,8 +1307,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteSlotWebJobResource>> GetWebSiteSlotWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
         {
@@ -1326,8 +1330,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteSlotWebJobResource> GetWebSiteSlotWebJob(string webJobName, CancellationToken cancellationToken = default)
         {

@@ -128,7 +128,12 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2023-11-03 service version.
             /// </summary>
-            V2023_11_03 = 20
+            V2023_11_03 = 20,
+
+            /// <summary>
+            /// The 2024-02-04 service version.
+            /// </summary>
+            V2024_02_04 = 21
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -274,7 +279,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
         /// </summary>
-        /// <value>If <c>null</c>, <see cref="ShareAudience.PublicAudience" /> will be assumed.</value>
+        /// <value>If <c>null</c>, <see cref="ShareAudience.DefaultAudience" /> will be assumed.</value>
         public ShareAudience? Audience { get; set; }
     }
 }

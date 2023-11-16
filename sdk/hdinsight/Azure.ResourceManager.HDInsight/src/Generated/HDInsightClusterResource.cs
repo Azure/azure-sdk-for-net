@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HDInsight
     public partial class HDInsightClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HDInsightClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}";
@@ -114,7 +117,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightApplicationResources and their operations over a HDInsightApplicationResource. </returns>
         public virtual HDInsightApplicationCollection GetHDInsightApplications()
         {
-            return GetCachedClient(Client => new HDInsightApplicationCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -132,8 +135,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightApplicationResource>> GetHDInsightApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -155,8 +158,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightApplicationResource> GetHDInsightApplication(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -167,7 +170,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightPrivateEndpointConnectionResources and their operations over a HDInsightPrivateEndpointConnectionResource. </returns>
         public virtual HDInsightPrivateEndpointConnectionCollection GetHDInsightPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HDInsightPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -185,8 +188,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightPrivateEndpointConnectionResource>> GetHDInsightPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -208,8 +211,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightPrivateEndpointConnectionResource> GetHDInsightPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -220,7 +223,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightPrivateLinkResources and their operations over a HDInsightPrivateLinkResource. </returns>
         public virtual HDInsightPrivateLinkResourceCollection GetHDInsightPrivateLinkResources()
         {
-            return GetCachedClient(Client => new HDInsightPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -238,8 +241,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightPrivateLinkResource>> GetHDInsightPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -261,8 +264,8 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightPrivateLinkResource> GetHDInsightPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
