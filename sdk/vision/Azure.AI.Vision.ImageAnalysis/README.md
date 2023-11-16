@@ -64,11 +64,11 @@ For more information about these features, see [Image Analysis overview][image_a
 
 ### Analyze from image buffer or URL
 
-The `ImageAnalysisClient` has two methods `AnalyzeFromBuffer` and `AnalyzeFromUrl`:
-* `AnalyzeFromBuffer`: Analyze an image from an input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object. The client will upload the image to the service as part of the REST request. 
-* `AnalyzeFromUrl`: Analyze an image from a publicly-accessible URL, via the `Uri` object. The client will send the image URL to the service. The service will download the image.
+The `ImageAnalysisClient` has two methods `Analyze` and `Analyze`:
+* `Analyze`: Analyze an image from an input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object. The client will upload the image to the service as part of the REST request. 
+* `Analyze`: Analyze an image from a publicly-accessible URL, via the `Uri` object. The client will send the image URL to the service. The service will download the image.
 
-The examples below show how to do both. The `AnalyzeFromBuffer` examples populate the input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object by loading an image from a file on disk.
+The examples below show how to do both. The `Analyze` examples populate the input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object by loading an image from a file on disk.
 
 ### Supported image formats
 
@@ -92,7 +92,7 @@ See the [Samples](samples) folder for fully working samples for all visual featu
 
 ### Generate an image caption for an image file
 
-This example demonstrates how to generate a one-sentence caption for the image file [sample.jpg](sample.jpg) using the `ImageAnalysisClient`. The synchronous (blocking) `AnalyzeFromBuffer` method call returns a `CaptionResult` object, which contains the generated caption and its confidence score in the range [0, 1]. By default, the caption may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `AnalyzeFromBuffer`.
+This example demonstrates how to generate a one-sentence caption for the image file [sample.jpg](sample.jpg) using the `ImageAnalysisClient`. The synchronous (blocking) `Analyze` method call returns a `CaptionResult` object, which contains the generated caption and its confidence score in the range [0, 1]. By default, the caption may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `Analyze`.
 
 Notes:
 * Caption is only available in some Azure regions. See [Prerequisites](#prerequisites).
@@ -116,7 +116,7 @@ Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confi
 
 ### Generate an image caption for an image URL
 
-This example is similar to the above, expect it calls the `AnalyzeFromUrl` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisGenerateCaptionFromUrl
 // Get a caption for the image. This will be a synchronously (blocking) call.
@@ -133,7 +133,7 @@ Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confi
 
 ### Extract text from an image file
 
-This example demonstrates how to extract printed or hand-written text for the image file [sample.jpg](sample.jpg) using the `ImageAnalysisClient`. The synchronous (blocking) `AnalyzeFromBuffer` method call returns a `ReadResult` object. This object includes a list of text lines and a bounding polygon surrounding each text line. For each line, it also returns a list of words in the text line and a bounding polygon surrounding each word.
+This example demonstrates how to extract printed or hand-written text for the image file [sample.jpg](sample.jpg) using the `ImageAnalysisClient`. The synchronous (blocking) `Analyze` method call returns a `ReadResult` object. This object includes a list of text lines and a bounding polygon surrounding each text line. For each line, it also returns a list of words in the text line and a bounding polygon surrounding each word.
 
 ```C# Snippet:ImageAnalysisExtractTextFromFile
 // Load image to analyze into a stream
@@ -169,7 +169,7 @@ foreach (DocumentWord word in result.Read.Pages[0].Words)
 
 ### Extract text from an image URL
 
-This example is similar to the above, expect it calls the `AnalyzeFromUrl` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisExtractTextFromUrl
 // Extract text (OCR) from an image stream. This will be a synchronously (blocking) call.
