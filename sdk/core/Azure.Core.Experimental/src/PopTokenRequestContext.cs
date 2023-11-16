@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Azure.Core
@@ -6,19 +6,17 @@ namespace Azure.Core
     /// <summary>
     /// Contains the details of an authentication token request.
     /// </summary>
-    public readonly struct TokenRequestContext
+    public readonly struct PopTokenRequestContext
     {
         /// <summary>
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId)
+        public PopTokenRequestContext(string[] scopes, string? parentRequestId)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
-            Claims = default;
-            TenantId = default;
         }
 
         /// <summary>
@@ -27,12 +25,11 @@ namespace Azure.Core
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims)
+        public PopTokenRequestContext(string[] scopes, string? parentRequestId, string? claims)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = claims;
-            TenantId = default;
         }
 
         /// <summary>
@@ -42,7 +39,7 @@ namespace Azure.Core
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request. </param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId)
+        public PopTokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
@@ -58,13 +55,41 @@ namespace Azure.Core
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false)
+        public PopTokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId, bool isCaeEnabled)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = claims;
             TenantId = tenantId;
             IsCaeEnabled = isCaeEnabled;
+        }
+
+        /// <summary>
+        /// Creates a new TokenRequest with the specified scopes.
+        /// </summary>
+        /// <param name="scopes">The scopes required for the token.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="claims">Additional claims to be included in the token.</param>
+        /// <param name="tenantId"> The tenantId to be included in the token request.</param>
+        /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
+        /// <param name="proofOfPossessionNonce">The nonce value required for Pop token requests.</param>
+        public PopTokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, string? proofOfPossessionNonce = default)
+        {
+            Scopes = scopes;
+            ParentRequestId = parentRequestId;
+            Claims = claims;
+            TenantId = tenantId;
+            IsCaeEnabled = isCaeEnabled;
+            ProofOfPossessionNonce = proofOfPossessionNonce;
+        }
+
+        /// <summary>
+        /// Creates a new TokenRequestContext from this instance.
+        /// </summary>
+        /// <returns></returns>
+        public TokenRequestContext ToTokenRequestContext()
+        {
+            return new TokenRequestContext(Scopes, ParentRequestId, Claims, TenantId, IsCaeEnabled);
         }
 
         /// <summary>
@@ -96,5 +121,10 @@ namespace Azure.Core
         /// If you don't handle CAE responses in these API calls, your app could end up in a loop retrying an API call with a token that is still in the returned lifespan of the token but has been revoked due to CAE.
         /// </remarks>
         public bool IsCaeEnabled { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string? ProofOfPossessionNonce { get; }
     }
 }
