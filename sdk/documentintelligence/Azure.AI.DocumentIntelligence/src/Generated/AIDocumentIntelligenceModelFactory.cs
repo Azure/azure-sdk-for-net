@@ -14,6 +14,30 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Model factory for models. </summary>
     public static partial class AIDocumentIntelligenceModelFactory
     {
+        /// <summary> Initializes a new instance of DocumentIntelligenceError. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="target"> The target of the error. </param>
+        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
+        public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, InnerError innererror = null)
+        {
+            details ??= new List<DocumentIntelligenceError>();
+
+            return new DocumentIntelligenceError(code, message, target, details?.ToList(), innererror);
+        }
+
+        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="innerErrorObject"> Inner error. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.InnerError"/> instance for mocking. </returns>
+        public static InnerError InnerError(string code = null, string message = null, InnerError innerErrorObject = null)
+        {
+            return new InnerError(code, message, innerErrorObject);
+        }
+
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="apiVersion"> API version used to produce this result. </param>
         /// <param name="modelId"> Document model ID used to produce this result. </param>
@@ -592,30 +616,6 @@ namespace Azure.AI.DocumentIntelligence
             tags ??= new Dictionary<string, string>();
 
             return new UnknownOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags, error);
-        }
-
-        /// <summary> Initializes a new instance of DocumentIntelligenceError. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="target"> The target of the error. </param>
-        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
-        public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, InnerError innererror = null)
-        {
-            details ??= new List<DocumentIntelligenceError>();
-
-            return new DocumentIntelligenceError(code, message, target, details?.ToList(), innererror);
-        }
-
-        /// <summary> Initializes a new instance of InnerError. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="innerErrorObject"> Inner error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string code = null, string message = null, InnerError innerErrorObject = null)
-        {
-            return new InnerError(code, message, innerErrorObject);
         }
 
         /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
