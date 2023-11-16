@@ -2,7 +2,7 @@
 
 This sample demonstrates how to extract text, paragraphs, styles, table structures, and selection marks, along with their bounding region coordinates from documents.
 
-To get started you'll need a Cognitive Services resource or a Form Recognizer resource. See [README][README] for prerequisites and instructions.
+To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
 ## Creating a `DocumentIntelligenceClient`
 
@@ -18,7 +18,7 @@ var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCrede
 
 ## Extract the layout of a document from a URI
 
-To extract the layout from a given file at a URI, use the `AnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To extract the layout from a given file at a URI, use the `AnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
