@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(SharingProfile))
+            {
+                writer.WritePropertyName("sharingProfile"u8);
+                writer.WriteObjectValue(SharingProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -64,6 +69,7 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<SubResource>> capacityReservations = default;
             Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
             Optional<CapacityReservationGroupInstanceView> instanceView = default;
+            Optional<ResourceSharingProfile> sharingProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -169,11 +175,20 @@ namespace Azure.ResourceManager.Compute
                             instanceView = CapacityReservationGroupInstanceView.DeserializeCapacityReservationGroupInstanceView(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("sharingProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new CapacityReservationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToList(capacityReservations), Optional.ToList(virtualMachinesAssociated), instanceView.Value);
+            return new CapacityReservationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToList(capacityReservations), Optional.ToList(virtualMachinesAssociated), instanceView.Value, sharingProfile.Value);
         }
     }
 }

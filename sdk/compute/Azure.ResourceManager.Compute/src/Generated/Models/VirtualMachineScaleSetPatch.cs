@@ -59,5 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
         /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
         public SpotRestorePolicy SpotRestorePolicy { get; set; }
+        /// <summary> Policy for Resiliency. </summary>
+        public ResiliencyPolicy ResiliencyPolicy { get; set; }
     }
 }
