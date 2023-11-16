@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of BatchEndpoint entities. </summary>
     internal partial class BatchEndpointTrackedResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointTrackedResourceArmPaginatedResult"/>. </summary>
         internal BatchEndpointTrackedResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningBatchEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointTrackedResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of BatchEndpoint objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type BatchEndpoint. </param>
-        internal BatchEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningBatchEndpointData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningBatchEndpointData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of BatchEndpoint objects. If null, there are no additional pages. </summary>

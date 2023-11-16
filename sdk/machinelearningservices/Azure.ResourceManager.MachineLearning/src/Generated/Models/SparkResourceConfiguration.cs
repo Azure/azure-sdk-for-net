@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The SparkResourceConfiguration. </summary>
     public partial class SparkResourceConfiguration
     {
-        /// <summary> Initializes a new instance of SparkResourceConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkResourceConfiguration"/>. </summary>
         public SparkResourceConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkResourceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkResourceConfiguration"/>. </summary>
         /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
         /// <param name="runtimeVersion"> Version of spark runtime used for the job. </param>
-        internal SparkResourceConfiguration(string instanceType, string runtimeVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkResourceConfiguration(string instanceType, string runtimeVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
             RuntimeVersion = runtimeVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Optional type of VM used as supported by the compute target. </summary>

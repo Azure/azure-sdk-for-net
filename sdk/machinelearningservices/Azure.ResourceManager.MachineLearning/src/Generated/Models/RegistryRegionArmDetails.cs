@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Details for each region the registry is in. </summary>
     public partial class RegistryRegionArmDetails
     {
-        /// <summary> Initializes a new instance of RegistryRegionArmDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegistryRegionArmDetails"/>. </summary>
         public RegistryRegionArmDetails()
         {
             AcrDetails = new ChangeTrackingList<RegistryAcrDetails>();
             StorageAccountDetails = new ChangeTrackingList<StorageAccountDetails>();
         }
 
-        /// <summary> Initializes a new instance of RegistryRegionArmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryRegionArmDetails"/>. </summary>
         /// <param name="acrDetails"> List of ACR accounts. </param>
         /// <param name="location"> The location where the registry exists. </param>
         /// <param name="storageAccountDetails"> List of storage accounts. </param>
-        internal RegistryRegionArmDetails(IList<RegistryAcrDetails> acrDetails, AzureLocation? location, IList<StorageAccountDetails> storageAccountDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegistryRegionArmDetails(IList<RegistryAcrDetails> acrDetails, AzureLocation? location, IList<StorageAccountDetails> storageAccountDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AcrDetails = acrDetails;
             Location = location;
             StorageAccountDetails = storageAccountDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of ACR accounts. </summary>

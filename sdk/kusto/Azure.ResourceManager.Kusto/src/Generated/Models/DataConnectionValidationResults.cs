@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto data connection validation result. </summary>
     public partial class DataConnectionValidationResults
     {
-        /// <summary> Initializes a new instance of DataConnectionValidationResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationResults"/>. </summary>
         internal DataConnectionValidationResults()
         {
             Value = new ChangeTrackingList<DataConnectionValidationResult>();
         }
 
-        /// <summary> Initializes a new instance of DataConnectionValidationResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationResults"/>. </summary>
         /// <param name="value"> The list of Kusto data connection validation errors. </param>
-        internal DataConnectionValidationResults(IReadOnlyList<DataConnectionValidationResult> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataConnectionValidationResults(IReadOnlyList<DataConnectionValidationResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Kusto data connection validation errors. </summary>

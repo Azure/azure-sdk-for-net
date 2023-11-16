@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotHub;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The list of private endpoint connections for an IotHub. </summary>
     internal partial class IotHubPrivateEndpointConnectionsList
     {
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionsList"/>. </summary>
         internal IotHubPrivateEndpointConnectionsList()
         {
             Value = new ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionsList"/>. </summary>
         /// <param name="value"> The array of Private Endpoint Connections. </param>
-        internal IotHubPrivateEndpointConnectionsList(IReadOnlyList<IotHubPrivateEndpointConnectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubPrivateEndpointConnectionsList(IReadOnlyList<IotHubPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The array of Private Endpoint Connections. </summary>

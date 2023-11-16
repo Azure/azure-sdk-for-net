@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Error detail information. </summary>
     public partial class ErrorDetail
     {
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
             Code = code;
             Message = message;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorDetail(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Code = code;
+            Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/> for deserialization. </summary>
+        internal ErrorDetail()
+        {
         }
 
         /// <summary> Error code. </summary>

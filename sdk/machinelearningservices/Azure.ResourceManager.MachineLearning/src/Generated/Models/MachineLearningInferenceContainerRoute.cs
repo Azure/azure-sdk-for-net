@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningInferenceContainerRoute. </summary>
     public partial class MachineLearningInferenceContainerRoute
     {
-        /// <summary> Initializes a new instance of MachineLearningInferenceContainerRoute. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInferenceContainerRoute"/>. </summary>
         /// <param name="path"> [Required] The path for the route. </param>
         /// <param name="port"> [Required] The port for the route. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             Path = path;
             Port = port;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInferenceContainerRoute"/>. </summary>
+        /// <param name="path"> [Required] The path for the route. </param>
+        /// <param name="port"> [Required] The port for the route. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningInferenceContainerRoute(string path, int port, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Path = path;
+            Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInferenceContainerRoute"/> for deserialization. </summary>
+        internal MachineLearningInferenceContainerRoute()
+        {
         }
 
         /// <summary> [Required] The path for the route. </summary>

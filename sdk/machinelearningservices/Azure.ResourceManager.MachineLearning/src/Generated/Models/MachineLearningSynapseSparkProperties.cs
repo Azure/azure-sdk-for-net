@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningSynapseSparkProperties. </summary>
     public partial class MachineLearningSynapseSparkProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningSynapseSparkProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSynapseSparkProperties"/>. </summary>
         public MachineLearningSynapseSparkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSynapseSparkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSynapseSparkProperties"/>. </summary>
         /// <param name="autoScaleProperties"> Auto scale properties. </param>
         /// <param name="autoPauseProperties"> Auto pause properties. </param>
         /// <param name="sparkVersion"> Spark version. </param>
@@ -26,7 +32,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceGroup"> Name of the resource group in which workspace is located. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="poolName"> Pool name. </param>
-        internal MachineLearningSynapseSparkProperties(MachineLearningAutoScaleProperties autoScaleProperties, MachineLearningAutoPauseProperties autoPauseProperties, string sparkVersion, int? nodeCount, string nodeSize, string nodeSizeFamily, string subscriptionId, string resourceGroup, string workspaceName, string poolName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSynapseSparkProperties(MachineLearningAutoScaleProperties autoScaleProperties, MachineLearningAutoPauseProperties autoPauseProperties, string sparkVersion, int? nodeCount, string nodeSize, string nodeSizeFamily, string subscriptionId, string resourceGroup, string workspaceName, string poolName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutoScaleProperties = autoScaleProperties;
             AutoPauseProperties = autoPauseProperties;
@@ -38,6 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ResourceGroup = resourceGroup;
             WorkspaceName = workspaceName;
             PoolName = poolName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Auto scale properties. </summary>

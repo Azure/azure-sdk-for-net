@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Configuration for notification. </summary>
     public partial class NotificationSetting
     {
-        /// <summary> Initializes a new instance of NotificationSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationSetting"/>. </summary>
         public NotificationSetting()
         {
             EmailOn = new ChangeTrackingList<EmailNotificationEnableType>();
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Webhooks = new ChangeTrackingDictionary<string, MachineLearningWebhook>();
         }
 
-        /// <summary> Initializes a new instance of NotificationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationSetting"/>. </summary>
         /// <param name="emailOn"> Send email notification to user on specified notification type. </param>
         /// <param name="emails"> This is the email recipient list which has a limitation of 499 characters in total concat with comma separator. </param>
         /// <param name="webhooks">
@@ -29,11 +33,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningWebhook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureDevOpsWebhook"/>.
         /// </param>
-        internal NotificationSetting(IList<EmailNotificationEnableType> emailOn, IList<string> emails, IDictionary<string, MachineLearningWebhook> webhooks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationSetting(IList<EmailNotificationEnableType> emailOn, IList<string> emails, IDictionary<string, MachineLearningWebhook> webhooks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EmailOn = emailOn;
             Emails = emails;
             Webhooks = webhooks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Send email notification to user on specified notification type. </summary>

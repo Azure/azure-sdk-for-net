@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> This object is returned from a successful Route Reachable Range call. </summary>
     public partial class RouteRangeResult
     {
-        /// <summary> Initializes a new instance of RouteRangeResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteRangeResult"/>. </summary>
         internal RouteRangeResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteRangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteRangeResult"/>. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="reachableRange"> Reachable Range. </param>
         /// <param name="report"> Reports the effective settings used in the current call. </param>
-        internal RouteRangeResult(string formatVersion, RouteRange reachableRange, RouteReport report)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteRangeResult(string formatVersion, RouteRange reachableRange, RouteReport report, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FormatVersion = formatVersion;
             ReachableRange = reachableRange;
             Report = report;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Format Version property. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The result of a device message queue purge operation. </summary>
     public partial class PurgeMessageQueueResult
     {
-        /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurgeMessageQueueResult"/>. </summary>
         internal PurgeMessageQueueResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurgeMessageQueueResult"/>. </summary>
         /// <param name="totalMessagesPurged"> The total number of messages purged. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="moduleId"> The unique identifier of the module. </param>
-        internal PurgeMessageQueueResult(int? totalMessagesPurged, string deviceId, string moduleId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurgeMessageQueueResult(int? totalMessagesPurged, string deviceId, string moduleId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalMessagesPurged = totalMessagesPurged;
             DeviceId = deviceId;
             ModuleId = moduleId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The total number of messages purged. </summary>

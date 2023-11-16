@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 message identifier. </summary>
     public partial class X12MessageIdentifier
     {
-        /// <summary> Initializes a new instance of X12MessageIdentifier. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12MessageIdentifier"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public X12MessageIdentifier(string messageId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Logic.Models
             Argument.AssertNotNull(messageId, nameof(messageId));
 
             MessageId = messageId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12MessageIdentifier"/>. </summary>
+        /// <param name="messageId"> The message id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12MessageIdentifier(string messageId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageId = messageId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12MessageIdentifier"/> for deserialization. </summary>
+        internal X12MessageIdentifier()
+        {
         }
 
         /// <summary> The message id. </summary>

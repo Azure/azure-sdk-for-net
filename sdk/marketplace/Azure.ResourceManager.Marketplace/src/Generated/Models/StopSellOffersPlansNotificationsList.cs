@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of stop sell offers and plans notifications. </summary>
     public partial class StopSellOffersPlansNotificationsList
     {
-        /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StopSellOffersPlansNotificationsList"/>. </summary>
         internal StopSellOffersPlansNotificationsList()
         {
             StopSellNotifications = new ChangeTrackingList<StopSellOffersPlansNotificationsResult>();
         }
 
-        /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopSellOffersPlansNotificationsList"/>. </summary>
         /// <param name="stopSellNotifications"></param>
-        internal StopSellOffersPlansNotificationsList(IReadOnlyList<StopSellOffersPlansNotificationsResult> stopSellNotifications)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StopSellOffersPlansNotificationsList(IReadOnlyList<StopSellOffersPlansNotificationsResult> stopSellNotifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StopSellNotifications = stopSellNotifications;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the stop sell notifications. </summary>

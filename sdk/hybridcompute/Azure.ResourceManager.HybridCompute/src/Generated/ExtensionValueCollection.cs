@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual AsyncPageable<ExtensionValueResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionValueExtensionMetadataRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExtensionValueResource(Client, ExtensionValueData.DeserializeExtensionValueData(e)), _extensionValueExtensionMetadataClientDiagnostics, Pipeline, "ExtensionValueCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ExtensionValueResource(Client, ExtensionValueData.DeserializeExtensionValueData(e)), _extensionValueExtensionMetadataClientDiagnostics, Pipeline, "ExtensionValueCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Pageable<ExtensionValueResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionValueExtensionMetadataRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExtensionValueResource(Client, ExtensionValueData.DeserializeExtensionValueData(e)), _extensionValueExtensionMetadataClientDiagnostics, Pipeline, "ExtensionValueCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ExtensionValueResource(Client, ExtensionValueData.DeserializeExtensionValueData(e)), _extensionValueExtensionMetadataClientDiagnostics, Pipeline, "ExtensionValueCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

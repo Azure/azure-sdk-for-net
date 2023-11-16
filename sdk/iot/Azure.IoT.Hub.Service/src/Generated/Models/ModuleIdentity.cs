@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The module identity on a device. </summary>
     public partial class ModuleIdentity
     {
-        /// <summary> Initializes a new instance of ModuleIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModuleIdentity"/>. </summary>
         public ModuleIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ModuleIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModuleIdentity"/>. </summary>
         /// <param name="moduleId"> The unique identifier of the module. </param>
         /// <param name="managedBy"> Identifies who manages this module. For instance, this value is \"IotEdge\" if the edge runtime owns this module. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>
@@ -28,7 +32,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="lastActivityTime"> The date and time the device last connected, received, or sent a message. </param>
         /// <param name="cloudToDeviceMessageCount"> The number of cloud-to-module messages currently queued to be sent to the module. </param>
         /// <param name="authentication"> The authentication mechanism used by the module when connecting to the service and edge hub. </param>
-        internal ModuleIdentity(string moduleId, string managedBy, string deviceId, string generationId, string etag, ModuleConnectionState? connectionState, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModuleIdentity(string moduleId, string managedBy, string deviceId, string generationId, string etag, ModuleConnectionState? connectionState, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModuleId = moduleId;
             ManagedBy = managedBy;
@@ -40,6 +45,7 @@ namespace Azure.IoT.Hub.Service.Models
             LastActivityTime = lastActivityTime;
             CloudToDeviceMessageCount = cloudToDeviceMessageCount;
             Authentication = authentication;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the module. </summary>

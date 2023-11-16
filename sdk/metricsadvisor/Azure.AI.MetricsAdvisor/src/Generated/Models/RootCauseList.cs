@@ -15,7 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The RootCauseList. </summary>
     internal partial class RootCauseList
     {
-        /// <summary> Initializes a new instance of RootCauseList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RootCauseList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RootCauseList(IEnumerable<IncidentRootCause> value)
@@ -25,11 +28,18 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RootCauseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RootCauseList"/>. </summary>
         /// <param name="value"></param>
-        internal RootCauseList(IReadOnlyList<IncidentRootCause> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RootCauseList(IReadOnlyList<IncidentRootCause> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RootCauseList"/> for deserialization. </summary>
+        internal RootCauseList()
+        {
         }
 
         /// <summary> Gets the value. </summary>

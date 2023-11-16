@@ -5,14 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureCosmosDBParameterPatch. </summary>
     internal partial class AzureCosmosDBParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureCosmosDBParameterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBParameterPatch"/>. </summary>
         public AzureCosmosDBParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this Azure CosmosDB. </param>
+        /// <param name="sqlQuery"> The statement to query this collection. </param>
+        /// <param name="database"> A database name in this Azure CosmosDB. </param>
+        /// <param name="collectionId"> A collection id in this database. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureCosmosDBParameterPatch(string connectionString, string sqlQuery, string database, string collectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConnectionString = connectionString;
+            SqlQuery = sqlQuery;
+            Database = database;
+            CollectionId = collectionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The connection string of this Azure CosmosDB. </summary>

@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Properties of the secret. </summary>
     public partial class SecretPatchProperties
     {
-        /// <summary> Initializes a new instance of SecretPatchProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretPatchProperties"/>. </summary>
         public SecretPatchProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecretPatchProperties"/>. </summary>
+        /// <param name="value"> The value of the secret. </param>
+        /// <param name="contentType"> The content type of the secret. </param>
+        /// <param name="attributes"> The attributes of the secret. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretPatchProperties(string value, string contentType, SecretAttributes attributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            ContentType = contentType;
+            Attributes = attributes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value of the secret. </summary>

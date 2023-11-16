@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IngestionStatus. </summary>
     public partial class DataFeedIngestionStatus
     {
-        /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionStatus"/>. </summary>
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest ingestion task status for this data slice. </param>
         /// <param name="message"> the trimmed message of last ingestion job. </param>
@@ -25,6 +29,24 @@ namespace Azure.AI.MetricsAdvisor.Models
             Timestamp = timestamp;
             Status = status;
             Message = message;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionStatus"/>. </summary>
+        /// <param name="timestamp"> data slice timestamp. </param>
+        /// <param name="status"> latest ingestion task status for this data slice. </param>
+        /// <param name="message"> the trimmed message of last ingestion job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFeedIngestionStatus(DateTimeOffset timestamp, IngestionStatusType status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Timestamp = timestamp;
+            Status = status;
+            Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionStatus"/> for deserialization. </summary>
+        internal DataFeedIngestionStatus()
+        {
         }
     }
 }

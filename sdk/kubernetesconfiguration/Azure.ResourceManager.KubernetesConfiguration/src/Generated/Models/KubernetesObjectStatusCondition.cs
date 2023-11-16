@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Status condition of Kubernetes object. </summary>
     public partial class KubernetesObjectStatusCondition
     {
-        /// <summary> Initializes a new instance of KubernetesObjectStatusCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectStatusCondition"/>. </summary>
         internal KubernetesObjectStatusCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesObjectStatusCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectStatusCondition"/>. </summary>
         /// <param name="lastTransitionOn"> Last time this status condition has changed. </param>
         /// <param name="message"> A more verbose description of the object status condition. </param>
         /// <param name="reason"> Reason for the specified status condition type status. </param>
         /// <param name="status"> Status of the Kubernetes object condition type. </param>
         /// <param name="objectStatusConditionDefinitionType"> Object status condition type for this object. </param>
-        internal KubernetesObjectStatusCondition(DateTimeOffset? lastTransitionOn, string message, string reason, string status, string objectStatusConditionDefinitionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesObjectStatusCondition(DateTimeOffset? lastTransitionOn, string message, string reason, string status, string objectStatusConditionDefinitionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastTransitionOn = lastTransitionOn;
             Message = message;
             Reason = reason;
             Status = status;
             ObjectStatusConditionDefinitionType = objectStatusConditionDefinitionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Last time this status condition has changed. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingEndpointAccessControl : IUtf8JsonSerializable
+    public partial class StreamingEndpointAccessControl : IUtf8JsonSerializable, IJsonModel<StreamingEndpointAccessControl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointAccessControl>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StreamingEndpointAccessControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StreamingEndpointAccessControl>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StreamingEndpointAccessControl>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Akamai))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("ip"u8);
                 writer.WriteObjectValue(IPs);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamingEndpointAccessControl DeserializeStreamingEndpointAccessControl(JsonElement element)
+        StreamingEndpointAccessControl IJsonModel<StreamingEndpointAccessControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingEndpointAccessControl(document.RootElement, options);
+        }
+
+        internal static StreamingEndpointAccessControl DeserializeStreamingEndpointAccessControl(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AkamaiAccessControl> akamai = default;
             Optional<IPAccessControl> ip = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("akamai"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.Media.Models
                     ip = IPAccessControl.DeserializeIPAccessControl(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamingEndpointAccessControl(akamai.Value, ip.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StreamingEndpointAccessControl(akamai.Value, ip.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamingEndpointAccessControl>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamingEndpointAccessControl IPersistableModel<StreamingEndpointAccessControl>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamingEndpointAccessControl(document.RootElement, options);
+        }
+
+        string IPersistableModel<StreamingEndpointAccessControl>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

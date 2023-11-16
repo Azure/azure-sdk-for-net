@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network and credential configuration currently applied on terminal server. </summary>
     public partial class TerminalServerPatchableProperties
     {
-        /// <summary> Initializes a new instance of TerminalServerPatchableProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
         public TerminalServerPatchableProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TerminalServerPatchableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        internal TerminalServerPatchableProperties(string username, string password, string serialNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TerminalServerPatchableProperties(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             SerialNumber = serialNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Username for the terminal server connection. </summary>

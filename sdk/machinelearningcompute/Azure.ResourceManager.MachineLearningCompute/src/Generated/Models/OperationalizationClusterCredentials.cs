@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Credentials to resources in the cluster. </summary>
     public partial class OperationalizationClusterCredentials
     {
-        /// <summary> Initializes a new instance of OperationalizationClusterCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalizationClusterCredentials"/>. </summary>
         internal OperationalizationClusterCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalizationClusterCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalizationClusterCredentials"/>. </summary>
         /// <param name="storageAccount"> Credentials for the Storage Account. </param>
         /// <param name="containerRegistry"> Credentials for Azure Container Registry. </param>
         /// <param name="containerService"> Credentials for Azure Container Service. </param>
         /// <param name="appInsights"> Credentials for Azure AppInsights. </param>
         /// <param name="serviceAuthConfiguration"> Global authorization keys for all user services deployed in cluster. These are used if the service does not have auth keys. </param>
         /// <param name="sslConfiguration"> The SSL configuration for the services. </param>
-        internal OperationalizationClusterCredentials(StorageAccountCredentials storageAccount, ContainerRegistryCredentials containerRegistry, ContainerServiceCredentials containerService, AppInsightsCredentials appInsights, ServiceAuthConfiguration serviceAuthConfiguration, SslConfiguration sslConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalizationClusterCredentials(StorageAccountCredentials storageAccount, ContainerRegistryCredentials containerRegistry, ContainerServiceCredentials containerService, AppInsightsCredentials appInsights, ServiceAuthConfiguration serviceAuthConfiguration, SslConfiguration sslConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccount = storageAccount;
             ContainerRegistry = containerRegistry;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             AppInsights = appInsights;
             ServiceAuthConfiguration = serviceAuthConfiguration;
             SslConfiguration = sslConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Credentials for the Storage Account. </summary>

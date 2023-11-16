@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceDiagnoseResult. </summary>
     public partial class MachineLearningWorkspaceDiagnoseResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceDiagnoseResult"/>. </summary>
         internal MachineLearningWorkspaceDiagnoseResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceDiagnoseResult"/>. </summary>
         /// <param name="value"></param>
-        internal MachineLearningWorkspaceDiagnoseResult(MachineLearningDiagnoseResultValue value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceDiagnoseResult(MachineLearningDiagnoseResultValue value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

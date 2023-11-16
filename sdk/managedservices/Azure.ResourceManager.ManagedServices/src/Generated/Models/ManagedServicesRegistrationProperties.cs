@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The properties of a registration definition. </summary>
     public partial class ManagedServicesRegistrationProperties
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationProperties"/>. </summary>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="managedByTenantId"> The identifier of the managedBy tenant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizations"/> is null. </exception>
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             ManagedByTenantId = managedByTenantId;
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationProperties"/>. </summary>
         /// <param name="description"> The description of the registration definition. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <param name="manageeTenantId"> The identifier of the managed tenant. </param>
         /// <param name="manageeTenantName"> The name of the managed tenant. </param>
         /// <param name="managedByTenantName"> The name of the managedBy tenant. </param>
-        internal ManagedServicesRegistrationProperties(string description, IList<ManagedServicesAuthorization> authorizations, IList<ManagedServicesEligibleAuthorization> eligibleAuthorizations, string registrationDefinitionName, Guid managedByTenantId, ManagedServicesProvisioningState? provisioningState, Guid? manageeTenantId, string manageeTenantName, string managedByTenantName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesRegistrationProperties(string description, IList<ManagedServicesAuthorization> authorizations, IList<ManagedServicesEligibleAuthorization> eligibleAuthorizations, string registrationDefinitionName, Guid managedByTenantId, ManagedServicesProvisioningState? provisioningState, Guid? manageeTenantId, string manageeTenantName, string managedByTenantName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Authorizations = authorizations;
@@ -49,6 +53,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             ManageeTenantId = manageeTenantId;
             ManageeTenantName = manageeTenantName;
             ManagedByTenantName = managedByTenantName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationProperties"/> for deserialization. </summary>
+        internal ManagedServicesRegistrationProperties()
+        {
         }
 
         /// <summary> The description of the registration definition. </summary>

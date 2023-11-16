@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Billing accounts response object. </summary>
     public partial class PrivateStoreBillingAccountsResult
     {
-        /// <summary> Initializes a new instance of PrivateStoreBillingAccountsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreBillingAccountsResult"/>. </summary>
         internal PrivateStoreBillingAccountsResult()
         {
             BillingAccounts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreBillingAccountsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreBillingAccountsResult"/>. </summary>
         /// <param name="billingAccounts"> Billing accounts list. </param>
-        internal PrivateStoreBillingAccountsResult(IReadOnlyList<string> billingAccounts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreBillingAccountsResult(IReadOnlyList<string> billingAccounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingAccounts = billingAccounts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Billing accounts list. </summary>

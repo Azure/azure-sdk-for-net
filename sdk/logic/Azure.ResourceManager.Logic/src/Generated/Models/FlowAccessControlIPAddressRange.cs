@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The ip address range. </summary>
     public partial class FlowAccessControlIPAddressRange
     {
-        /// <summary> Initializes a new instance of FlowAccessControlIPAddressRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlIPAddressRange"/>. </summary>
         public FlowAccessControlIPAddressRange()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowAccessControlIPAddressRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlIPAddressRange"/>. </summary>
         /// <param name="addressRange"> The IP address range. </param>
-        internal FlowAccessControlIPAddressRange(string addressRange)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowAccessControlIPAddressRange(string addressRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressRange = addressRange;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IP address range. </summary>

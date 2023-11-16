@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The X12 agreement acknowledgement settings. </summary>
     public partial class X12AcknowledgementSettings
     {
-        /// <summary> Initializes a new instance of X12AcknowledgementSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12AcknowledgementSettings"/>. </summary>
         /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
         /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
         /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
@@ -37,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
             RolloverAcknowledgementControlNumber = rolloverAcknowledgementControlNumber;
         }
 
-        /// <summary> Initializes a new instance of X12AcknowledgementSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12AcknowledgementSettings"/>. </summary>
         /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
         /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
         /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
@@ -53,7 +59,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="acknowledgementControlNumberLowerBound"> The acknowledgement control number lower bound. </param>
         /// <param name="acknowledgementControlNumberUpperBound"> The acknowledgement control number upper bound. </param>
         /// <param name="rolloverAcknowledgementControlNumber"> The value indicating whether to rollover acknowledgement control number. </param>
-        internal X12AcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, string functionalAcknowledgementVersion, bool batchFunctionalAcknowledgement, bool needImplementationAcknowledgement, string implementationAcknowledgementVersion, bool batchImplementationAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, string acknowledgementControlNumberPrefix, string acknowledgementControlNumberSuffix, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12AcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, string functionalAcknowledgementVersion, bool batchFunctionalAcknowledgement, bool needImplementationAcknowledgement, string implementationAcknowledgementVersion, bool batchImplementationAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, string acknowledgementControlNumberPrefix, string acknowledgementControlNumberSuffix, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
             BatchTechnicalAcknowledgement = batchTechnicalAcknowledgement;
@@ -70,6 +77,12 @@ namespace Azure.ResourceManager.Logic.Models
             AcknowledgementControlNumberLowerBound = acknowledgementControlNumberLowerBound;
             AcknowledgementControlNumberUpperBound = acknowledgementControlNumberUpperBound;
             RolloverAcknowledgementControlNumber = rolloverAcknowledgementControlNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12AcknowledgementSettings"/> for deserialization. </summary>
+        internal X12AcknowledgementSettings()
+        {
         }
 
         /// <summary> The value indicating whether technical acknowledgement is needed. </summary>

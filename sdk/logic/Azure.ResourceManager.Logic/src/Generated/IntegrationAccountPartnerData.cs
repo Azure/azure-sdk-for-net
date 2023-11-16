@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationAccountPartnerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="partnerType"> The partner type. </param>
         /// <param name="content"> The partner content. </param>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Logic
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,13 +47,20 @@ namespace Azure.ResourceManager.Logic
         /// <param name="changedOn"> The changed time. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="content"> The partner content. </param>
-        internal IntegrationAccountPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountPartnerType partnerType, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountPartnerContent content) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountPartnerType partnerType, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountPartnerContent content, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PartnerType = partnerType;
             CreatedOn = createdOn;
             ChangedOn = changedOn;
             Metadata = metadata;
             Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerData"/> for deserialization. </summary>
+        internal IntegrationAccountPartnerData()
+        {
         }
 
         /// <summary> The partner type. </summary>

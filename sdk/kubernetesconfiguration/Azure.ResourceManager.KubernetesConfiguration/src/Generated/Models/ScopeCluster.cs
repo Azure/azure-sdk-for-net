@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Specifies that the scope of the extension is Cluster. </summary>
     internal partial class ScopeCluster
     {
-        /// <summary> Initializes a new instance of ScopeCluster. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScopeCluster"/>. </summary>
         public ScopeCluster()
         {
         }
 
-        /// <summary> Initializes a new instance of ScopeCluster. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeCluster"/>. </summary>
         /// <param name="releaseNamespace"> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </param>
-        internal ScopeCluster(string releaseNamespace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScopeCluster(string releaseNamespace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReleaseNamespace = releaseNamespace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </summary>

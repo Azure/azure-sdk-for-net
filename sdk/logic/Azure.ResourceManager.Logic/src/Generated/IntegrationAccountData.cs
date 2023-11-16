@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationAccountData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public IntegrationAccountData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +38,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="sku"> The sku. </param>
         /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
         /// <param name="state"> The workflow state. </param>
-        internal IntegrationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSku sku, LogicResourceReference integrationServiceEnvironment, LogicWorkflowState? state) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSku sku, LogicResourceReference integrationServiceEnvironment, LogicWorkflowState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             IntegrationServiceEnvironment = integrationServiceEnvironment;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountData"/> for deserialization. </summary>
+        internal IntegrationAccountData()
+        {
         }
 
         /// <summary> The sku. </summary>

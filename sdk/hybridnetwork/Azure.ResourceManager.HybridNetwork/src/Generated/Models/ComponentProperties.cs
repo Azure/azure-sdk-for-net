@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The component properties of the network function. </summary>
     public partial class ComponentProperties
     {
-        /// <summary> Initializes a new instance of ComponentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComponentProperties"/>. </summary>
         public ComponentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ComponentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the component resource. </param>
         /// <param name="deploymentProfile"> The JSON-serialized deployment profile of the component resource. </param>
         /// <param name="deploymentStatus"> The deployment status of the component resource. </param>
-        internal ComponentProperties(ProvisioningState? provisioningState, string deploymentProfile, DeploymentStatusProperties deploymentStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentProperties(ProvisioningState? provisioningState, string deploymentProfile, DeploymentStatusProperties deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DeploymentProfile = deploymentProfile;
             DeploymentStatus = deploymentStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the component resource. </summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The workflow trigger cron for ComputeStartStop schedule type. </summary>
     public partial class ComputeStartStopCronSchedule
     {
-        /// <summary> Initializes a new instance of ComputeStartStopCronSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopCronSchedule"/>. </summary>
         public ComputeStartStopCronSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeStartStopCronSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopCronSchedule"/>. </summary>
         /// <param name="startTime"> The start time in yyyy-MM-ddTHH:mm:ss format. </param>
         /// <param name="timeZone">
         /// Specifies time zone in which the schedule runs.
@@ -25,11 +31,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
-        internal ComputeStartStopCronSchedule(string startTime, string timeZone, string expression)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeStartStopCronSchedule(string startTime, string timeZone, string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTime = startTime;
             TimeZone = timeZone;
             Expression = expression;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The start time in yyyy-MM-ddTHH:mm:ss format. </summary>

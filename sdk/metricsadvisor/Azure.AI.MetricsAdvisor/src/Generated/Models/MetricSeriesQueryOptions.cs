@@ -14,12 +14,31 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricSeriesQueryOptions. </summary>
     internal partial class MetricSeriesQueryOptions
     {
-        /// <summary> Initializes a new instance of MetricSeriesQueryOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesQueryOptions"/>. </summary>
         /// <param name="activeSince"> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </param>
         public MetricSeriesQueryOptions(DateTimeOffset activeSince)
         {
             ActiveSince = activeSince;
             DimensionFilter = new ChangeTrackingDictionary<string, IList<string>>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesQueryOptions"/>. </summary>
+        /// <param name="activeSince"> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="dimensionFilter"> filter specific dimension name and values. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricSeriesQueryOptions(DateTimeOffset activeSince, IDictionary<string, IList<string>> dimensionFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ActiveSince = activeSince;
+            DimensionFilter = dimensionFilter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesQueryOptions"/> for deserialization. </summary>
+        internal MetricSeriesQueryOptions()
+        {
         }
 
         /// <summary> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </summary>

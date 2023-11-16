@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Vhd artifact profile. </summary>
     public partial class VhdImageArtifactProfile
     {
-        /// <summary> Initializes a new instance of VhdImageArtifactProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VhdImageArtifactProfile"/>. </summary>
         public VhdImageArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VhdImageArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VhdImageArtifactProfile"/>. </summary>
         /// <param name="vhdName"> Vhd name. </param>
         /// <param name="vhdVersion"> Vhd version. </param>
-        internal VhdImageArtifactProfile(string vhdName, string vhdVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VhdImageArtifactProfile(string vhdName, string vhdVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VhdName = vhdName;
             VhdVersion = vhdVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Vhd name. </summary>

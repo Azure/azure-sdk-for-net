@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The Azure Active Directory principal identifier and Azure built-in role that describes the access the principal will receive on the delegated resource in the managed tenant. </summary>
     public partial class ManagedServicesAuthorization
     {
-        /// <summary> Initializes a new instance of ManagedServicesAuthorization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesAuthorization"/>. </summary>
         /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
         /// <param name="roleDefinitionId"> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
@@ -27,17 +30,24 @@ namespace Azure.ResourceManager.ManagedServices.Models
             DelegatedRoleDefinitionIds = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesAuthorization"/>. </summary>
         /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
         /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
         /// <param name="roleDefinitionId"> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </param>
         /// <param name="delegatedRoleDefinitionIds"> The delegatedRoleDefinitionIds field is required when the roleDefinitionId refers to the User Access Administrator Role. It is the list of role definition ids which define all the permissions that the user in the authorization can assign to other principals. </param>
-        internal ManagedServicesAuthorization(Guid principalId, string principalIdDisplayName, string roleDefinitionId, IList<Guid> delegatedRoleDefinitionIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesAuthorization(Guid principalId, string principalIdDisplayName, string roleDefinitionId, IList<Guid> delegatedRoleDefinitionIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalId = principalId;
             PrincipalIdDisplayName = principalIdDisplayName;
             RoleDefinitionId = roleDefinitionId;
             DelegatedRoleDefinitionIds = delegatedRoleDefinitionIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesAuthorization"/> for deserialization. </summary>
+        internal ManagedServicesAuthorization()
+        {
         }
 
         /// <summary> The identifier of the Azure Active Directory principal. </summary>

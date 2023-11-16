@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The StorageSpacesPropertiesStatusProvisioningStatusError. </summary>
     public partial class StorageSpacesPropertiesStatusProvisioningStatusError
     {
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatusProvisioningStatusError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesStatusProvisioningStatusError"/>. </summary>
         public StorageSpacesPropertiesStatusProvisioningStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatusProvisioningStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesStatusProvisioningStatusError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        internal StorageSpacesPropertiesStatusProvisioningStatusError(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSpacesPropertiesStatusProvisioningStatusError(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the code. </summary>

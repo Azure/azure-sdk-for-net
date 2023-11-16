@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowTriggerHistoryData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerHistoryData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerHistoryData"/>. </summary>
         internal LogicWorkflowTriggerHistoryData()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerHistoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="outputsLink"> Gets the link to output parameters. </param>
         /// <param name="isFired"> The value indicating whether trigger was fired. </param>
         /// <param name="run"> Gets the reference to workflow run. </param>
-        internal LogicWorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, LogicWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, Correlation correlation, LogicContentLink inputsLink, LogicContentLink outputsLink, bool? isFired, LogicResourceReference run) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, LogicWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, Correlation correlation, LogicContentLink inputsLink, LogicContentLink outputsLink, bool? isFired, LogicResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.Logic
             OutputsLink = outputsLink;
             IsFired = isFired;
             Run = run;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the start time. </summary>

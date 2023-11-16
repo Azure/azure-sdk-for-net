@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,13 +14,23 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The Dimension. </summary>
     public partial class DataFeedDimension
     {
-        /// <summary> Initializes a new instance of DataFeedDimension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFeedDimension"/>. </summary>
         /// <param name="name"> dimension name. </param>
         /// <param name="displayName"> dimension display name. </param>
-        internal DataFeedDimension(string name, string displayName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFeedDimension(string name, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFeedDimension"/> for deserialization. </summary>
+        internal DataFeedDimension()
+        {
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,12 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The SystemCreatedStorageAccount. </summary>
     public partial class SystemCreatedStorageAccount
     {
-        /// <summary> Initializes a new instance of SystemCreatedStorageAccount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SystemCreatedStorageAccount"/>. </summary>
         public SystemCreatedStorageAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of SystemCreatedStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemCreatedStorageAccount"/>. </summary>
         /// <param name="allowBlobPublicAccess"> Public blob access allowed. </param>
         /// <param name="armResourceIdentifier"> This is populated once the storage account is created. </param>
         /// <param name="storageAccountHnsEnabled"> HNS enabled for storage account. </param>
@@ -33,13 +38,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// "Premium_LRS",
         /// "Premium_ZRS"
         /// </param>
-        internal SystemCreatedStorageAccount(bool? allowBlobPublicAccess, ArmResourceId armResourceIdentifier, bool? storageAccountHnsEnabled, string storageAccountName, string storageAccountType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SystemCreatedStorageAccount(bool? allowBlobPublicAccess, ArmResourceId armResourceIdentifier, bool? storageAccountHnsEnabled, string storageAccountName, string storageAccountType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowBlobPublicAccess = allowBlobPublicAccess;
             ArmResourceIdentifier = armResourceIdentifier;
             StorageAccountHnsEnabled = storageAccountHnsEnabled;
             StorageAccountName = storageAccountName;
             StorageAccountType = storageAccountType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public blob access allowed. </summary>

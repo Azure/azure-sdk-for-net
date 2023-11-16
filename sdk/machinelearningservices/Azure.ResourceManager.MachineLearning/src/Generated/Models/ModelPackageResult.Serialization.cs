@@ -7,15 +7,219 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ModelPackageResult
+    public partial class ModelPackageResult : IUtf8JsonSerializable, IJsonModel<ModelPackageResult>
     {
-        internal static ModelPackageResult DeserializeModelPackageResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelPackageResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ModelPackageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ModelPackageResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelPackageResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BaseEnvironmentSource))
+                {
+                    if (BaseEnvironmentSource != null)
+                    {
+                        writer.WritePropertyName("baseEnvironmentSource"u8);
+                        writer.WriteObjectValue(BaseEnvironmentSource);
+                    }
+                    else
+                    {
+                        writer.WriteNull("baseEnvironmentSource");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BuildId))
+                {
+                    if (BuildId != null)
+                    {
+                        writer.WritePropertyName("buildId"u8);
+                        writer.WriteStringValue(BuildId);
+                    }
+                    else
+                    {
+                        writer.WriteNull("buildId");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BuildState))
+                {
+                    writer.WritePropertyName("buildState"u8);
+                    writer.WriteStringValue(BuildState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(EnvironmentVariables))
+                {
+                    if (EnvironmentVariables != null)
+                    {
+                        writer.WritePropertyName("environmentVariables"u8);
+                        writer.WriteStartObject();
+                        foreach (var item in EnvironmentVariables)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            writer.WriteStringValue(item.Value);
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
+                    {
+                        writer.WriteNull("environmentVariables");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InferencingServer))
+                {
+                    if (InferencingServer != null)
+                    {
+                        writer.WritePropertyName("inferencingServer"u8);
+                        writer.WriteObjectValue(InferencingServer);
+                    }
+                    else
+                    {
+                        writer.WriteNull("inferencingServer");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Inputs))
+                {
+                    if (Inputs != null)
+                    {
+                        writer.WritePropertyName("inputs"u8);
+                        writer.WriteStartArray();
+                        foreach (var item in Inputs)
+                        {
+                            writer.WriteObjectValue(item);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
+                    {
+                        writer.WriteNull("inputs");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LogUri))
+                {
+                    if (LogUri != null)
+                    {
+                        writer.WritePropertyName("logUrl"u8);
+                        writer.WriteStringValue(LogUri.AbsoluteUri);
+                    }
+                    else
+                    {
+                        writer.WriteNull("logUrl");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ModelConfiguration))
+                {
+                    if (ModelConfiguration != null)
+                    {
+                        writer.WritePropertyName("modelConfiguration"u8);
+                        writer.WriteObjectValue(ModelConfiguration);
+                    }
+                    else
+                    {
+                        writer.WriteNull("modelConfiguration");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags != null)
+                    {
+                        writer.WritePropertyName("tags"u8);
+                        writer.WriteStartObject();
+                        foreach (var item in Tags)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            writer.WriteStringValue(item.Value);
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
+                    {
+                        writer.WriteNull("tags");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TargetEnvironmentId))
+                {
+                    if (TargetEnvironmentId != null)
+                    {
+                        writer.WritePropertyName("targetEnvironmentId"u8);
+                        writer.WriteStringValue(TargetEnvironmentId);
+                    }
+                    else
+                    {
+                        writer.WriteNull("targetEnvironmentId");
+                    }
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ModelPackageResult IJsonModel<ModelPackageResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeModelPackageResult(document.RootElement, options);
+        }
+
+        internal static ModelPackageResult DeserializeModelPackageResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +234,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ModelConfiguration> modelConfiguration = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<string> targetEnvironmentId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseEnvironmentSource"u8))
@@ -146,8 +352,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetEnvironmentId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ModelPackageResult(baseEnvironmentSource.Value, buildId.Value, Optional.ToNullable(buildState), Optional.ToDictionary(environmentVariables), inferencingServer.Value, Optional.ToList(inputs), logUrl.Value, modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ModelPackageResult(baseEnvironmentSource.Value, buildId.Value, Optional.ToNullable(buildState), Optional.ToDictionary(environmentVariables), inferencingServer.Value, Optional.ToList(inputs), logUrl.Value, modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ModelPackageResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ModelPackageResult IPersistableModel<ModelPackageResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeModelPackageResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<ModelPackageResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the vault access policy. </summary>
     public partial class KeyVaultAccessPolicyProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyProperties"/>. </summary>
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicies"/> is null. </exception>
         public KeyVaultAccessPolicyProperties(IEnumerable<KeyVaultAccessPolicy> accessPolicies)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             AccessPolicies = accessPolicies.ToList();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyProperties"/>. </summary>
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
-        internal KeyVaultAccessPolicyProperties(IList<KeyVaultAccessPolicy> accessPolicies)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultAccessPolicyProperties(IList<KeyVaultAccessPolicy> accessPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessPolicies = accessPolicies;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyProperties"/> for deserialization. </summary>
+        internal KeyVaultAccessPolicyProperties()
+        {
         }
 
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </summary>

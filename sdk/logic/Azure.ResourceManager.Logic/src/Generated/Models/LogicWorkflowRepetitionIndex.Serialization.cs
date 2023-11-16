@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRepetitionIndex : IUtf8JsonSerializable
+    public partial class LogicWorkflowRepetitionIndex : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRepetitionIndex>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRepetitionIndex>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LogicWorkflowRepetitionIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LogicWorkflowRepetitionIndex>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LogicWorkflowRepetitionIndex>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ScopeName))
             {
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.Logic.Models
             }
             writer.WritePropertyName("itemIndex"u8);
             writer.WriteNumberValue(ItemIndex);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowRepetitionIndex DeserializeLogicWorkflowRepetitionIndex(JsonElement element)
+        LogicWorkflowRepetitionIndex IJsonModel<LogicWorkflowRepetitionIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRepetitionIndex)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowRepetitionIndex(document.RootElement, options);
+        }
+
+        internal static LogicWorkflowRepetitionIndex DeserializeLogicWorkflowRepetitionIndex(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> scopeName = default;
             int itemIndex = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scopeName"u8))
@@ -45,8 +87,38 @@ namespace Azure.ResourceManager.Logic.Models
                     itemIndex = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicWorkflowRepetitionIndex(scopeName.Value, itemIndex);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogicWorkflowRepetitionIndex(scopeName.Value, itemIndex, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicWorkflowRepetitionIndex>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRepetitionIndex)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LogicWorkflowRepetitionIndex IPersistableModel<LogicWorkflowRepetitionIndex>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRepetitionIndex)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowRepetitionIndex(document.RootElement, options);
+        }
+
+        string IPersistableModel<LogicWorkflowRepetitionIndex>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

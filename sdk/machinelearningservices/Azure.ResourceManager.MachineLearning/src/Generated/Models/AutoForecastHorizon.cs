@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Forecast horizon determined automatically by system. </summary>
     public partial class AutoForecastHorizon : ForecastHorizon
     {
-        /// <summary> Initializes a new instance of AutoForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoForecastHorizon"/>. </summary>
         public AutoForecastHorizon()
         {
             Mode = ForecastHorizonMode.Auto;
         }
 
-        /// <summary> Initializes a new instance of AutoForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoForecastHorizon"/>. </summary>
         /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
-        internal AutoForecastHorizon(ForecastHorizonMode mode) : base(mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoForecastHorizon(ForecastHorizonMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
         {
             Mode = mode;
         }

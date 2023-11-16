@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningDataLakeAnalyticsProperties. </summary>
     internal partial class MachineLearningDataLakeAnalyticsProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningDataLakeAnalyticsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataLakeAnalyticsProperties"/>. </summary>
         public MachineLearningDataLakeAnalyticsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataLakeAnalyticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataLakeAnalyticsProperties"/>. </summary>
         /// <param name="dataLakeStoreAccountName"> DataLake Store Account Name. </param>
-        internal MachineLearningDataLakeAnalyticsProperties(string dataLakeStoreAccountName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDataLakeAnalyticsProperties(string dataLakeStoreAccountName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataLakeStoreAccountName = dataLakeStoreAccountName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> DataLake Store Account Name. </summary>

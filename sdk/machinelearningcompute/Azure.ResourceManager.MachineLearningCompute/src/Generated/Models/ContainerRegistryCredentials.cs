@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Information about the Azure Container Registry which contains the images deployed to the cluster. </summary>
     public partial class ContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         internal ContainerRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         /// <param name="loginServer"> The ACR login server name. User name is the first part of the FQDN. </param>
         /// <param name="password"> The ACR primary password. </param>
         /// <param name="password2"> The ACR secondary password. </param>
         /// <param name="username"> The ACR login username. </param>
-        internal ContainerRegistryCredentials(string loginServer, string password, string password2, string username)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryCredentials(string loginServer, string password, string password2, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoginServer = loginServer;
             Password = password;
             Password2 = password2;
             Username = username;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ACR login server name. User name is the first part of the FQDN. </summary>

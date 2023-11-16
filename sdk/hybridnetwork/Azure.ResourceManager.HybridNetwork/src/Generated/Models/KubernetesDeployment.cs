@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm Deployment status properties. </summary>
     public partial class KubernetesDeployment
     {
-        /// <summary> Initializes a new instance of KubernetesDeployment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesDeployment"/>. </summary>
         internal KubernetesDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesDeployment"/>. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="upToDateNumberOfPods"> Number of upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of deployment. </param>
-        internal KubernetesDeployment(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesDeployment(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Namespace = @namespace;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             UpToDateNumberOfPods = upToDateNumberOfPods;
             AvailableNumberOfPods = availableNumberOfPods;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the deployment. </summary>

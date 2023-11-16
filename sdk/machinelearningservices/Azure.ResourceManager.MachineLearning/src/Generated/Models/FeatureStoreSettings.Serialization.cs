@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class FeatureStoreSettings : IUtf8JsonSerializable
+    public partial class FeatureStoreSettings : IUtf8JsonSerializable, IJsonModel<FeatureStoreSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureStoreSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FeatureStoreSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FeatureStoreSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FeatureStoreSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeRuntime))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("onlineStoreConnectionName"u8);
                 writer.WriteStringValue(OnlineStoreConnectionName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FeatureStoreSettings DeserializeFeatureStoreSettings(JsonElement element)
+        FeatureStoreSettings IJsonModel<FeatureStoreSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFeatureStoreSettings(document.RootElement, options);
+        }
+
+        internal static FeatureStoreSettings DeserializeFeatureStoreSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ComputeRuntimeDto> computeRuntime = default;
             Optional<string> offlineStoreConnectionName = default;
             Optional<string> onlineStoreConnectionName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeRuntime"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     onlineStoreConnectionName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FeatureStoreSettings(computeRuntime.Value, offlineStoreConnectionName.Value, onlineStoreConnectionName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FeatureStoreSettings(computeRuntime.Value, offlineStoreConnectionName.Value, onlineStoreConnectionName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FeatureStoreSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FeatureStoreSettings IPersistableModel<FeatureStoreSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFeatureStoreSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<FeatureStoreSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

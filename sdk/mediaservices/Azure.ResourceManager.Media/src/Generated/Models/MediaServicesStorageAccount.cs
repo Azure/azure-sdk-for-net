@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -12,24 +14,34 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The storage account details. </summary>
     public partial class MediaServicesStorageAccount
     {
-        /// <summary> Initializes a new instance of MediaServicesStorageAccount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaServicesStorageAccount"/>. </summary>
         /// <param name="accountType"> The type of the storage account. </param>
         public MediaServicesStorageAccount(MediaServicesStorageAccountType accountType)
         {
             AccountType = accountType;
         }
 
-        /// <summary> Initializes a new instance of MediaServicesStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesStorageAccount"/>. </summary>
         /// <param name="id"> The ID of the storage account resource. Media Services relies on tables and queues as well as blobs, so the primary storage account must be a Standard Storage account (either Microsoft.ClassicStorage or Microsoft.Storage). Blob only storage accounts can be added as secondary storage accounts. </param>
         /// <param name="accountType"> The type of the storage account. </param>
         /// <param name="identity"> The storage account identity. </param>
         /// <param name="status"> The current status of the storage account mapping. </param>
-        internal MediaServicesStorageAccount(ResourceIdentifier id, MediaServicesStorageAccountType accountType, ResourceIdentity identity, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaServicesStorageAccount(ResourceIdentifier id, MediaServicesStorageAccountType accountType, ResourceIdentity identity, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             AccountType = accountType;
             Identity = identity;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaServicesStorageAccount"/> for deserialization. </summary>
+        internal MediaServicesStorageAccount()
+        {
         }
 
         /// <summary> The ID of the storage account resource. Media Services relies on tables and queues as well as blobs, so the primary storage account must be a Standard Storage account (either Microsoft.ClassicStorage or Microsoft.Storage). Blob only storage accounts can be added as secondary storage accounts. </summary>

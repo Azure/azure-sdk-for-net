@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The class to specify one track property condition. </summary>
     public partial class FilterTrackPropertyCondition
     {
-        /// <summary> Initializes a new instance of FilterTrackPropertyCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilterTrackPropertyCondition"/>. </summary>
         /// <param name="property"> The track property type. </param>
         /// <param name="value"> The track property value. </param>
         /// <param name="operation"> The track property condition operation. </param>
@@ -25,6 +29,24 @@ namespace Azure.ResourceManager.Media.Models
             Property = property;
             Value = value;
             Operation = operation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterTrackPropertyCondition"/>. </summary>
+        /// <param name="property"> The track property type. </param>
+        /// <param name="value"> The track property value. </param>
+        /// <param name="operation"> The track property condition operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilterTrackPropertyCondition(FilterTrackPropertyType property, string value, FilterTrackPropertyCompareOperation operation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Property = property;
+            Value = value;
+            Operation = operation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterTrackPropertyCondition"/> for deserialization. </summary>
+        internal FilterTrackPropertyCondition()
+        {
         }
 
         /// <summary> The track property type. </summary>

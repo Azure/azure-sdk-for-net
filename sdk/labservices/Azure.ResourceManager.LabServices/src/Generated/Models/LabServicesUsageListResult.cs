@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> List of Core Usages. </summary>
     internal partial class LabServicesUsageListResult
     {
-        /// <summary> Initializes a new instance of LabServicesUsageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesUsageListResult"/>. </summary>
         internal LabServicesUsageListResult()
         {
             Value = new ChangeTrackingList<LabServicesUsage>();
         }
 
-        /// <summary> Initializes a new instance of LabServicesUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesUsageListResult"/>. </summary>
         /// <param name="value"> The array page of Usages. </param>
         /// <param name="nextLink"> The link to get the next page of Usage result. </param>
-        internal LabServicesUsageListResult(IReadOnlyList<LabServicesUsage> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabServicesUsageListResult(IReadOnlyList<LabServicesUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The array page of Usages. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> A domain name and connection details used to access a dependency. </summary>
     public partial class LoadTestingEndpointDependency
     {
-        /// <summary> Initializes a new instance of LoadTestingEndpointDependency. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingEndpointDependency"/>. </summary>
         internal LoadTestingEndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<LoadTestingEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of LoadTestingEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </param>
         /// <param name="description"> Human-readable supplemental information about the dependency and when it is applicable. </param>
         /// <param name="endpointDetails"> The list of connection details for this endpoint. </param>
-        internal LoadTestingEndpointDependency(string domainName, string description, IReadOnlyList<LoadTestingEndpointDetail> endpointDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingEndpointDependency(string domainName, string description, IReadOnlyList<LoadTestingEndpointDetail> endpointDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DomainName = domainName;
             Description = description;
             EndpointDetails = endpointDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </summary>

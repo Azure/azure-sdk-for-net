@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Maps.Search.Models
     /// <summary> The classification for the POI being returned. </summary>
     public partial class PointOfInterestClassification
     {
-        /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestClassification"/>. </summary>
         internal PointOfInterestClassification()
         {
             Names = new ChangeTrackingList<ClassificationName>();
         }
 
-        /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestClassification"/>. </summary>
         /// <param name="code"> Code property. </param>
         /// <param name="names"> Names array. </param>
-        internal PointOfInterestClassification(string code, IReadOnlyList<ClassificationName> names)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PointOfInterestClassification(string code, IReadOnlyList<ClassificationName> names, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Names = names;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Code property. </summary>

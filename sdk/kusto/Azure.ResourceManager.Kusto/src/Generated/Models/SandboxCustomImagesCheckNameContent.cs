@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a sandboxCustomImage check name availability request. </summary>
     public partial class SandboxCustomImagesCheckNameContent
     {
-        /// <summary> Initializes a new instance of SandboxCustomImagesCheckNameContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImagesCheckNameContent"/>. </summary>
         /// <param name="name"> Sandbox custom image resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SandboxCustomImagesCheckNameContent(string name)
@@ -22,6 +26,22 @@ namespace Azure.ResourceManager.Kusto.Models
 
             Name = name;
             ImageType = SandboxCustomImageType.MicrosoftKustoClustersSandboxCustomImages;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImagesCheckNameContent"/>. </summary>
+        /// <param name="name"> Sandbox custom image resource name. </param>
+        /// <param name="imageType"> The type of resource, for instance Microsoft.Kusto/clusters/sandboxCustomImages. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SandboxCustomImagesCheckNameContent(string name, SandboxCustomImageType imageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ImageType = imageType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SandboxCustomImagesCheckNameContent"/> for deserialization. </summary>
+        internal SandboxCustomImagesCheckNameContent()
+        {
         }
 
         /// <summary> Sandbox custom image resource name. </summary>

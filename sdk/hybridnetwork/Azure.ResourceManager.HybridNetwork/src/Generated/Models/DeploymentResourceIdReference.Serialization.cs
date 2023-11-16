@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class DeploymentResourceIdReference : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownDeploymentResourceIdReference))]
+    public partial class DeploymentResourceIdReference : IUtf8JsonSerializable, IJsonModel<DeploymentResourceIdReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentResourceIdReference>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DeploymentResourceIdReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DeploymentResourceIdReference>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DeploymentResourceIdReference>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("idType"u8);
             writer.WriteStringValue(IdType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeploymentResourceIdReference DeserializeDeploymentResourceIdReference(JsonElement element)
+        DeploymentResourceIdReference IJsonModel<DeploymentResourceIdReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeploymentResourceIdReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeploymentResourceIdReference(document.RootElement, options);
+        }
+
+        internal static DeploymentResourceIdReference DeserializeDeploymentResourceIdReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,5 +76,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             return UnknownDeploymentResourceIdReference.DeserializeUnknownDeploymentResourceIdReference(element);
         }
+
+        BinaryData IPersistableModel<DeploymentResourceIdReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeploymentResourceIdReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DeploymentResourceIdReference IPersistableModel<DeploymentResourceIdReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeploymentResourceIdReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDeploymentResourceIdReference(document.RootElement, options);
+        }
+
+        string IPersistableModel<DeploymentResourceIdReference>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

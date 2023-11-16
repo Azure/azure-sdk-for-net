@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The nfvi details. </summary>
     public partial class NfviDetails
     {
-        /// <summary> Initializes a new instance of NfviDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NfviDetails"/>. </summary>
         public NfviDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of NfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfviDetails"/>. </summary>
         /// <param name="name"> The nfvi name. </param>
         /// <param name="nfviDetailsType"> The nfvi type. </param>
-        internal NfviDetails(string name, string nfviDetailsType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NfviDetails(string name, string nfviDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             NfviDetailsType = nfviDetailsType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The nfvi name. </summary>

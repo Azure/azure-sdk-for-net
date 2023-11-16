@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -12,18 +13,23 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Result of testing one route. </summary>
     public partial class IotHubTestRouteResult
     {
-        /// <summary> Initializes a new instance of IotHubTestRouteResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResult"/>. </summary>
         internal IotHubTestRouteResult()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubTestRouteResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResult"/>. </summary>
         /// <param name="result"> Result of testing route. </param>
         /// <param name="details"> Detailed result of testing route. </param>
-        internal IotHubTestRouteResult(IotHubTestResultStatus? result, IotHubTestRouteResultDetails details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubTestRouteResult(IotHubTestResultStatus? result, IotHubTestRouteResultDetails details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Result = result;
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of testing route. </summary>

@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> SKU details. </summary>
     public partial class KeyVaultSku
     {
-        /// <summary> Initializes a new instance of KeyVaultSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSku"/>. </summary>
         /// <param name="family"> SKU family name. </param>
         /// <param name="name"> SKU name to specify whether the key vault is a standard vault or a premium vault. </param>
         public KeyVaultSku(KeyVaultSkuFamily family, KeyVaultSkuName name)
         {
             Family = family;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSku"/>. </summary>
+        /// <param name="family"> SKU family name. </param>
+        /// <param name="name"> SKU name to specify whether the key vault is a standard vault or a premium vault. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultSku(KeyVaultSkuFamily family, KeyVaultSkuName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Family = family;
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSku"/> for deserialization. </summary>
+        internal KeyVaultSku()
+        {
         }
 
         /// <summary> SKU family name. </summary>

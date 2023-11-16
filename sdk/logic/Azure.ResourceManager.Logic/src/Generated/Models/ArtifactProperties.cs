@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The artifact properties definition. </summary>
     public partial class ArtifactProperties
     {
-        /// <summary> Initializes a new instance of ArtifactProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactProperties"/>. </summary>
         public ArtifactProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactProperties"/>. </summary>
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>
-        internal ArtifactProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The artifact creation time. </summary>

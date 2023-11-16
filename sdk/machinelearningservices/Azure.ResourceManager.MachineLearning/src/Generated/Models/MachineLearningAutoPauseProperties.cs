@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Auto pause properties. </summary>
     public partial class MachineLearningAutoPauseProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAutoPauseProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAutoPauseProperties"/>. </summary>
         public MachineLearningAutoPauseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAutoPauseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAutoPauseProperties"/>. </summary>
         /// <param name="delayInMinutes"></param>
         /// <param name="isEnabled"></param>
-        internal MachineLearningAutoPauseProperties(int? delayInMinutes, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAutoPauseProperties(int? delayInMinutes, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DelayInMinutes = delayInMinutes;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the delay in minutes. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotFirmwareDefense;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Return a list of firmware analysis workspaces. </summary>
     internal partial class WorkspaceList
     {
-        /// <summary> Initializes a new instance of WorkspaceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         internal WorkspaceList()
         {
             Value = new ChangeTrackingList<FirmwareWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         /// <param name="value"> The list of firmware analysis workspaces. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
-        internal WorkspaceList(IReadOnlyList<FirmwareWorkspaceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceList(IReadOnlyList<FirmwareWorkspaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of firmware analysis workspaces. </summary>

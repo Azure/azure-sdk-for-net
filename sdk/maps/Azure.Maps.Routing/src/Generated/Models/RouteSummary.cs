@@ -6,15 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Summary object. </summary>
     public partial class RouteSummary
     {
-        /// <summary> Initializes a new instance of RouteSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteSummary"/>. </summary>
         internal RouteSummary()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouteSummary"/>. </summary>
+        /// <param name="lengthInMeters"> Length In Meters property. </param>
+        /// <param name="travelTimeInSeconds"> Estimated travel time in seconds property that includes the delay due to real-time traffic. Note that even when traffic=false travelTimeInSeconds still includes the delay due to traffic. If DepartAt is in the future, travel time is calculated using time-dependent historic traffic data. </param>
+        /// <param name="trafficDelayInSeconds"> Estimated delay in seconds caused by the real-time incident(s) according to traffic information. For routes planned with departure time in the future, delays is always 0. To return additional travel times using different types of traffic information, parameter computeTravelTimeFor=all needs to be added. </param>
+        /// <param name="departureTime"> The estimated departure time for the route or leg. </param>
+        /// <param name="arrivalTime"> The estimated arrival time for the route or leg. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteSummary(int? lengthInMeters, int? travelTimeInSeconds, int? trafficDelayInSeconds, DateTimeOffset? departureTime, DateTimeOffset? arrivalTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LengthInMeters = lengthInMeters;
+            TravelTimeInSeconds = travelTimeInSeconds;
+            TrafficDelayInSeconds = trafficDelayInSeconds;
+            DepartureTime = departureTime;
+            ArrivalTime = arrivalTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Length In Meters property. </summary>

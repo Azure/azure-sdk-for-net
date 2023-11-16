@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,27 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Query approved plans payload. </summary>
     public partial class QueryApprovedPlansContent
     {
-        /// <summary> Initializes a new instance of QueryApprovedPlansContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansContent"/>. </summary>
         public QueryApprovedPlansContent()
         {
             PlanIds = new ChangeTrackingList<string>();
             SubscriptionIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansContent"/>. </summary>
+        /// <param name="offerId"> Offer id. </param>
+        /// <param name="planIds"> Offer plan ids. </param>
+        /// <param name="subscriptionIds"> List of subscription IDs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryApprovedPlansContent(string offerId, IList<string> planIds, IList<string> subscriptionIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OfferId = offerId;
+            PlanIds = planIds;
+            SubscriptionIds = subscriptionIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Offer id. </summary>

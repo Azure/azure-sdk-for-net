@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The recurrence schedule occurrence. </summary>
     public partial class LogicWorkflowRecurrenceScheduleOccurrence
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceScheduleOccurrence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRecurrenceScheduleOccurrence"/>. </summary>
         public LogicWorkflowRecurrenceScheduleOccurrence()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceScheduleOccurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRecurrenceScheduleOccurrence"/>. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="occurrence"> The occurrence. </param>
-        internal LogicWorkflowRecurrenceScheduleOccurrence(LogicWorkflowDayOfWeek? day, int? occurrence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRecurrenceScheduleOccurrence(LogicWorkflowDayOfWeek? day, int? occurrence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Day = day;
             Occurrence = occurrence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The day of the week. </summary>

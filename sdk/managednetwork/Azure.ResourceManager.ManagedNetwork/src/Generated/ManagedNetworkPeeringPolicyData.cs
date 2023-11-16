@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// </summary>
     public partial class ManagedNetworkPeeringPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyData"/>. </summary>
         public ManagedNetworkPeeringPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Gets or sets the properties of a Managed Network Policy. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ManagedNetworkPeeringPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedNetworkPeeringPolicyProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedNetworkPeeringPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedNetworkPeeringPolicyProperties properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the properties of a Managed Network Policy. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of NetworkTaps. </summary>
     internal partial class NetworkTapsListResult
     {
-        /// <summary> Initializes a new instance of NetworkTapsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkTapsListResult"/>. </summary>
         internal NetworkTapsListResult()
         {
             Value = new ChangeTrackingList<NetworkTapData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkTapsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapsListResult"/>. </summary>
         /// <param name="value"> List of NetworkTap resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkTapsListResult(IReadOnlyList<NetworkTapData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkTapsListResult(IReadOnlyList<NetworkTapData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of NetworkTap resources. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> Error response indicates Logic service is not able to process the incoming request. The error property contains the error details. </summary>
     public partial class LogicErrorResponse
     {
-        /// <summary> Initializes a new instance of LogicErrorResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicErrorResponse"/>. </summary>
         public LogicErrorResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicErrorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicErrorResponse"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
-        internal LogicErrorResponse(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicErrorResponse(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code. </summary>

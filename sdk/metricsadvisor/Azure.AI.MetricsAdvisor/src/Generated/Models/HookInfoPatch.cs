@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,10 +18,30 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     internal partial class HookInfoPatch
     {
-        /// <summary> Initializes a new instance of HookInfoPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HookInfoPatch"/>. </summary>
         public HookInfoPatch()
         {
             Admins = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HookInfoPatch"/>. </summary>
+        /// <param name="hookType"> hook type. </param>
+        /// <param name="hookName"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="externalLink"> hook external link. </param>
+        /// <param name="admins"> hook administrators. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HookInfoPatch(NotificationHookKind hookType, string hookName, string description, string externalLink, IList<string> admins, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HookType = hookType;
+            HookName = hookName;
+            Description = description;
+            ExternalLink = externalLink;
+            Admins = admins;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> hook type. </summary>

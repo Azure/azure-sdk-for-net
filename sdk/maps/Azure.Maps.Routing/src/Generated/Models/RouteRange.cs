@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Reachable Range. </summary>
     public partial class RouteRange
     {
-        /// <summary> Initializes a new instance of RouteRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteRange"/>. </summary>
         internal RouteRange()
         {
             BoundaryInternal = new ChangeTrackingList<LatLongPair>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouteRange"/>. </summary>
+        /// <param name="centerInternal"> Center point of the reachable range. </param>
+        /// <param name="boundaryInternal"> Polygon boundary of the reachable range represented as a list of points. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteRange(LatLongPair centerInternal, IReadOnlyList<LatLongPair> boundaryInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CenterInternal = centerInternal;
+            BoundaryInternal = boundaryInternal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

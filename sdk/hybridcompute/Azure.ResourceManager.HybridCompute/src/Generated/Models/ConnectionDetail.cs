@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The ConnectionDetail. </summary>
     public partial class ConnectionDetail
     {
-        /// <summary> Initializes a new instance of ConnectionDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionDetail"/>. </summary>
         internal ConnectionDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionDetail"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>
         /// <param name="groupId"> The private endpoint connection group id. </param>
         /// <param name="memberName"> The private endpoint connection member name. </param>
-        internal ConnectionDetail(string id, string privateIPAddress, string linkIdentifier, string groupId, string memberName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionDetail(string id, string privateIPAddress, string linkIdentifier, string groupId, string memberName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PrivateIPAddress = privateIPAddress;
             LinkIdentifier = linkIdentifier;
             GroupId = groupId;
             MemberName = memberName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure resource Id. </summary>

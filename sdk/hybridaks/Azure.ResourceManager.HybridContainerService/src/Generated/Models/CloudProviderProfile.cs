@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
@@ -12,18 +13,23 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> CloudProviderProfile - The underlying cloud infra provider properties. </summary>
     public partial class CloudProviderProfile
     {
-        /// <summary> Initializes a new instance of CloudProviderProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudProviderProfile"/>. </summary>
         public CloudProviderProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudProviderProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudProviderProfile"/>. </summary>
         /// <param name="infraNetworkProfile"> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </param>
         /// <param name="infraStorageProfile"> InfraStorageProfile - List of infra storage profiles for the provisioned cluster. </param>
-        internal CloudProviderProfile(CloudProviderProfileInfraNetworkProfile infraNetworkProfile, CloudProviderProfileInfraStorageProfile infraStorageProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudProviderProfile(CloudProviderProfileInfraNetworkProfile infraNetworkProfile, CloudProviderProfileInfraStorageProfile infraStorageProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InfraNetworkProfile = infraNetworkProfile;
             InfraStorageProfile = infraStorageProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </summary>

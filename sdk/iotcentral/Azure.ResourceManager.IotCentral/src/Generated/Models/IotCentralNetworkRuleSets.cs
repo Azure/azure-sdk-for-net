@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> Network Rule Set Properties of this IoT Central application. </summary>
     public partial class IotCentralNetworkRuleSets
     {
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralNetworkRuleSets"/>. </summary>
         public IotCentralNetworkRuleSets()
         {
             IPRules = new ChangeTrackingList<IotCentralNetworkRuleSetIPRule>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralNetworkRuleSets"/>. </summary>
         /// <param name="applyToDevices"> Whether these rules apply for device connectivity to IoT Hub and Device Provisioning service associated with this application. </param>
         /// <param name="applyToIotCentral"> Whether these rules apply for connectivity via IoT Central web portal and APIs. </param>
         /// <param name="defaultAction"> The default network action to apply. </param>
         /// <param name="ipRules"> List of IP rules. </param>
-        internal IotCentralNetworkRuleSets(bool? applyToDevices, bool? applyToIotCentral, IotCentralNetworkAction? defaultAction, IList<IotCentralNetworkRuleSetIPRule> ipRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralNetworkRuleSets(bool? applyToDevices, bool? applyToIotCentral, IotCentralNetworkAction? defaultAction, IList<IotCentralNetworkRuleSetIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplyToDevices = applyToDevices;
             ApplyToIotCentral = applyToIotCentral;
             DefaultAction = defaultAction;
             IPRules = ipRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether these rules apply for device connectivity to IoT Hub and Device Provisioning service associated with this application. </summary>

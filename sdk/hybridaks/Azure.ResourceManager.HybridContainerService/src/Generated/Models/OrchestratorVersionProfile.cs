@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The profile of an orchestrator and its available versions. </summary>
     public partial class OrchestratorVersionProfile
     {
-        /// <summary> Initializes a new instance of OrchestratorVersionProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrchestratorVersionProfile"/>. </summary>
         internal OrchestratorVersionProfile()
         {
             Upgrades = new ChangeTrackingList<OrchestratorProfile>();
         }
 
-        /// <summary> Initializes a new instance of OrchestratorVersionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorVersionProfile"/>. </summary>
         /// <param name="isPreview"> Whether Kubernetes version is currently in preview. </param>
         /// <param name="default"> Installed by default if version is not specified. </param>
         /// <param name="orchestratorType"> Orchestrator type. </param>
         /// <param name="orchestratorVersion"> Orchestrator version major.minor.patch, for example 1.21.9. </param>
         /// <param name="upgrades"> The list of available upgrade versions. </param>
-        internal OrchestratorVersionProfile(bool? isPreview, bool? @default, string orchestratorType, string orchestratorVersion, IReadOnlyList<OrchestratorProfile> upgrades)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrchestratorVersionProfile(bool? isPreview, bool? @default, string orchestratorType, string orchestratorVersion, IReadOnlyList<OrchestratorProfile> upgrades, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsPreview = isPreview;
             Default = @default;
             OrchestratorType = orchestratorType;
             OrchestratorVersion = orchestratorVersion;
             Upgrades = upgrades;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether Kubernetes version is currently in preview. </summary>

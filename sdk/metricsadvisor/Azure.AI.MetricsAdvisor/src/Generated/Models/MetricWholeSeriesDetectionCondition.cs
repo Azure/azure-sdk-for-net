@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The WholeMetricConfiguration. </summary>
     public partial class MetricWholeSeriesDetectionCondition
     {
-        /// <summary> Initializes a new instance of MetricWholeSeriesDetectionCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricWholeSeriesDetectionCondition"/>. </summary>
         /// <param name="conditionOperator">
         /// condition operator
         ///
@@ -19,12 +25,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="smartDetectionCondition"></param>
         /// <param name="hardThresholdCondition"></param>
         /// <param name="changeThresholdCondition"></param>
-        internal MetricWholeSeriesDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricWholeSeriesDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionOperator = conditionOperator;
             SmartDetectionCondition = smartDetectionCondition;
             HardThresholdCondition = hardThresholdCondition;
             ChangeThresholdCondition = changeThresholdCondition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

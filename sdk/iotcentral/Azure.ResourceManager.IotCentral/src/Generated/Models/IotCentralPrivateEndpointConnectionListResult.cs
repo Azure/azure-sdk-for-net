@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotCentral;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> List of private endpoint connections associated with the specified resource. </summary>
     internal partial class IotCentralPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateEndpointConnectionListResult"/>. </summary>
         internal IotCentralPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal IotCentralPrivateEndpointConnectionListResult(IReadOnlyList<IotCentralPrivateEndpointConnectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralPrivateEndpointConnectionListResult(IReadOnlyList<IotCentralPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

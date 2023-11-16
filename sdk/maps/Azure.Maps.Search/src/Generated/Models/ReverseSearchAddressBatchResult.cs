@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,19 @@ namespace Azure.Maps.Search.Models
     /// <summary> This object is returned from a successful Search Address Reverse Batch service call. </summary>
     public partial class ReverseSearchAddressBatchResult : BatchResult
     {
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressBatchResult"/>. </summary>
         internal ReverseSearchAddressBatchResult()
         {
             BatchItems = new ChangeTrackingList<ReverseSearchAddressBatchItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressBatchResult"/>. </summary>
+        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="batchItems"> Array containing the batch results. </param>
+        internal ReverseSearchAddressBatchResult(BatchResultSummary batchSummary, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ReverseSearchAddressBatchItem> batchItems) : base(batchSummary, serializedAdditionalRawData)
+        {
+            BatchItems = batchItems;
         }
     }
 }

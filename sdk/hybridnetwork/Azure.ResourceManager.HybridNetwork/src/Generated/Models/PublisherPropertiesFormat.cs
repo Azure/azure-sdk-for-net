@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> publisher properties. </summary>
     public partial class PublisherPropertiesFormat
     {
-        /// <summary> Initializes a new instance of PublisherPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublisherPropertiesFormat"/>. </summary>
         public PublisherPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of PublisherPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
         /// <param name="scope"> The publisher scope. </param>
-        internal PublisherPropertiesFormat(ProvisioningState? provisioningState, PublisherScope? scope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublisherPropertiesFormat(ProvisioningState? provisioningState, PublisherScope? scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the publisher resource. </summary>

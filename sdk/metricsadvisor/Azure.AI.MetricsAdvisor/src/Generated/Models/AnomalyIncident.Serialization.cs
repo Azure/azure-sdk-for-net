@@ -6,15 +6,94 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class AnomalyIncident
+    public partial class AnomalyIncident : IUtf8JsonSerializable, IJsonModel<AnomalyIncident>
     {
-        internal static AnomalyIncident DeserializeAnomalyIncident(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnomalyIncident>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AnomalyIncident>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AnomalyIncident>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AnomalyIncident>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataFeedId))
+                {
+                    writer.WritePropertyName("dataFeedId"u8);
+                    writer.WriteStringValue(DataFeedId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MetricId))
+                {
+                    writer.WritePropertyName("metricId"u8);
+                    writer.WriteStringValue(MetricId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DetectionConfigurationId))
+                {
+                    writer.WritePropertyName("anomalyDetectionConfigurationId"u8);
+                    writer.WriteStringValue(DetectionConfigurationId);
+                }
+            }
+            writer.WritePropertyName("incidentId"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("startTime"u8);
+            writer.WriteStringValue(StartedOn, "O");
+            writer.WritePropertyName("lastTime"u8);
+            writer.WriteStringValue(LastDetectedOn, "O");
+            writer.WritePropertyName("rootNode"u8);
+            writer.WriteObjectValue(RootNode);
+            writer.WritePropertyName("property"u8);
+            writer.WriteObjectValue(Property);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnomalyIncident IJsonModel<AnomalyIncident>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyIncident)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalyIncident(document.RootElement, options);
+        }
+
+        internal static AnomalyIncident DeserializeAnomalyIncident(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +106,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             DateTimeOffset lastTime = default;
             SeriesIdentity rootNode = default;
             IncidentProperty property = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("dataFeedId"u8))
@@ -69,8 +150,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                     property = IncidentProperty.DeserializeIncidentProperty(property0.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                }
             }
-            return new AnomalyIncident(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, incidentId, startTime, lastTime, rootNode, property);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnomalyIncident(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, incidentId, startTime, lastTime, rootNode, property, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnomalyIncident>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyIncident)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnomalyIncident IPersistableModel<AnomalyIncident>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyIncident)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnomalyIncident(document.RootElement, options);
+        }
+
+        string IPersistableModel<AnomalyIncident>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

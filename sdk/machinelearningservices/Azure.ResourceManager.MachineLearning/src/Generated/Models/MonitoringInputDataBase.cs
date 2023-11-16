@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitoringInputDataBase
     {
-        /// <summary> Initializes a new instance of MonitoringInputDataBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringInputDataBase"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
@@ -31,19 +34,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of MonitoringInputDataBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringInputDataBase"/>. </summary>
         /// <param name="columns"> Mapping of column names to special uses. </param>
         /// <param name="dataContext"> The context metadata of the data source. </param>
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        internal MonitoringInputDataBase(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringInputDataBase(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Columns = columns;
             DataContext = dataContext;
             InputDataType = inputDataType;
             JobInputType = jobInputType;
             Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringInputDataBase"/> for deserialization. </summary>
+        internal MonitoringInputDataBase()
+        {
         }
 
         /// <summary> Mapping of column names to special uses. </summary>

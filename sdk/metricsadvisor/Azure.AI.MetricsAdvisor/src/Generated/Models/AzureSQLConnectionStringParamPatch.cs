@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureSQLConnectionStringParamPatch. </summary>
     internal partial class AzureSQLConnectionStringParamPatch
     {
-        /// <summary> Initializes a new instance of AzureSQLConnectionStringParamPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringParamPatch"/>. </summary>
         public AzureSQLConnectionStringParamPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringParamPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string to access the Azure SQL. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureSQLConnectionStringParamPatch(string connectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConnectionString = connectionString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The connection string to access the Azure SQL. </summary>

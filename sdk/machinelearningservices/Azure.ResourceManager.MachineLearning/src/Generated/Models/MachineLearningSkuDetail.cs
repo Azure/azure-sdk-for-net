@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Fulfills ARM Contract requirement to list all available SKUS for a resource. </summary>
     public partial class MachineLearningSkuDetail
     {
-        /// <summary> Initializes a new instance of MachineLearningSkuDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuDetail"/>. </summary>
         internal MachineLearningSkuDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuDetail"/>. </summary>
         /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>
-        internal MachineLearningSkuDetail(MachineLearningSkuCapacity capacity, string resourceType, MachineLearningSkuSetting sku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSkuDetail(MachineLearningSkuCapacity capacity, string resourceType, MachineLearningSkuSetting sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capacity = capacity;
             ResourceType = resourceType;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the Sku Capacity. </summary>

@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DataFeedIngestionProgress. </summary>
     public partial class DataFeedIngestionProgress
     {
-        /// <summary> Initializes a new instance of DataFeedIngestionProgress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionProgress"/>. </summary>
         internal DataFeedIngestionProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFeedIngestionProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionProgress"/>. </summary>
         /// <param name="latestSuccessTimestamp">
         /// the timestamp of latest success ingestion job.
         /// null indicates not available
@@ -26,10 +30,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// the timestamp of latest ingestion job with status update.
         /// null indicates not available
         /// </param>
-        internal DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp, DateTimeOffset? latestActiveTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp, DateTimeOffset? latestActiveTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LatestSuccessTimestamp = latestSuccessTimestamp;
             LatestActiveTimestamp = latestActiveTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

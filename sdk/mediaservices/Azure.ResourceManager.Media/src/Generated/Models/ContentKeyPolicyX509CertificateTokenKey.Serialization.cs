@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyX509CertificateTokenKey : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyX509CertificateTokenKey : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyX509CertificateTokenKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyX509CertificateTokenKey>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContentKeyPolicyX509CertificateTokenKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContentKeyPolicyX509CertificateTokenKey>)} interface");
+            }
+
             writer.WriteStartObject();
             if (RawBody != null)
             {
@@ -27,17 +37,48 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyX509CertificateTokenKey DeserializeContentKeyPolicyX509CertificateTokenKey(JsonElement element)
+        ContentKeyPolicyX509CertificateTokenKey IJsonModel<ContentKeyPolicyX509CertificateTokenKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyX509CertificateTokenKey(document.RootElement, options);
+        }
+
+        internal static ContentKeyPolicyX509CertificateTokenKey DeserializeContentKeyPolicyX509CertificateTokenKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             byte[] rawBody = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawBody"u8))
@@ -55,8 +96,38 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentKeyPolicyX509CertificateTokenKey(odataType, rawBody);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContentKeyPolicyX509CertificateTokenKey(odataType, serializedAdditionalRawData, rawBody);
         }
+
+        BinaryData IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContentKeyPolicyX509CertificateTokenKey IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContentKeyPolicyX509CertificateTokenKey(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

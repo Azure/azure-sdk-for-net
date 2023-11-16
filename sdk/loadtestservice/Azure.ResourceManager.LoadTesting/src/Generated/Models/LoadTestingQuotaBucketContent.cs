@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Request object of new quota for a quota bucket. </summary>
     public partial class LoadTestingQuotaBucketContent : ResourceData
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaBucketContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketContent"/>. </summary>
         public LoadTestingQuotaBucketContent()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaBucketContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,12 +32,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="currentQuota"> Current quota limit of the quota bucket. </param>
         /// <param name="newQuota"> New quota limit of the quota bucket. </param>
         /// <param name="dimensions"> Dimensions for new quota request. </param>
-        internal LoadTestingQuotaBucketContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? currentUsage, int? currentQuota, int? newQuota, LoadTestingQuotaBucketDimensions dimensions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingQuotaBucketContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? currentUsage, int? currentQuota, int? newQuota, LoadTestingQuotaBucketDimensions dimensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CurrentUsage = currentUsage;
             CurrentQuota = currentQuota;
             NewQuota = newQuota;
             Dimensions = dimensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Current quota usage of the quota bucket. </summary>

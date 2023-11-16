@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Dimensions for new quota request. </summary>
     public partial class LoadTestingQuotaBucketDimensions
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaBucketDimensions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketDimensions"/>. </summary>
         public LoadTestingQuotaBucketDimensions()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaBucketDimensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketDimensions"/>. </summary>
         /// <param name="subscriptionId"> Subscription Id dimension for new quota request of the quota bucket. </param>
         /// <param name="location"> Location dimension for new quota request of the quota bucket. </param>
-        internal LoadTestingQuotaBucketDimensions(string subscriptionId, AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingQuotaBucketDimensions(string subscriptionId, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Subscription Id dimension for new quota request of the quota bucket. </summary>

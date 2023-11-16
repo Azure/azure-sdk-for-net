@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// </summary>
     public partial class SystemAssignedIdentityData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SystemAssignedIdentityData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SystemAssignedIdentityData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SystemAssignedIdentityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +38,19 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
         /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
         /// <param name="clientSecretUri"> The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. </param>
-        internal SystemAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, Uri clientSecretUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SystemAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, Uri clientSecretUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TenantId = tenantId;
             PrincipalId = principalId;
             ClientId = clientId;
             ClientSecretUri = clientSecretUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityData"/> for deserialization. </summary>
+        internal SystemAssignedIdentityData()
+        {
         }
 
         /// <summary> The id of the tenant which the identity belongs to. </summary>

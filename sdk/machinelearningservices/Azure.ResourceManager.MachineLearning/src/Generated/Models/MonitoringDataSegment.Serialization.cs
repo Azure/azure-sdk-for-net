@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MonitoringDataSegment : IUtf8JsonSerializable
+    public partial class MonitoringDataSegment : IUtf8JsonSerializable, IJsonModel<MonitoringDataSegment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringDataSegment>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MonitoringDataSegment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MonitoringDataSegment>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MonitoringDataSegment>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Feature))
             {
@@ -45,17 +55,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("values");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitoringDataSegment DeserializeMonitoringDataSegment(JsonElement element)
+        MonitoringDataSegment IJsonModel<MonitoringDataSegment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringDataSegment(document.RootElement, options);
+        }
+
+        internal static MonitoringDataSegment DeserializeMonitoringDataSegment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> feature = default;
             Optional<IList<string>> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("feature"u8))
@@ -83,8 +124,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     values = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitoringDataSegment(feature.Value, Optional.ToList(values));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitoringDataSegment(feature.Value, Optional.ToList(values), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitoringDataSegment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitoringDataSegment IPersistableModel<MonitoringDataSegment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMonitoringDataSegment(document.RootElement, options);
+        }
+
+        string IPersistableModel<MonitoringDataSegment>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

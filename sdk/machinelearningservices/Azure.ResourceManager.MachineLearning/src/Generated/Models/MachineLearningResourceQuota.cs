@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The quota assigned to a resource. </summary>
     public partial class MachineLearningResourceQuota
     {
-        /// <summary> Initializes a new instance of MachineLearningResourceQuota. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourceQuota"/>. </summary>
         internal MachineLearningResourceQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningResourceQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourceQuota"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
         /// <param name="resourceQuotaType"> Specifies the resource type. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="limit"> The maximum permitted quota of the resource. </param>
         /// <param name="unit"> An enum describing the unit of quota measurement. </param>
-        internal MachineLearningResourceQuota(string id, string amlWorkspaceLocation, string resourceQuotaType, MachineLearningResourceName name, long? limit, MachineLearningQuotaUnit? unit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningResourceQuota(string id, string amlWorkspaceLocation, string resourceQuotaType, MachineLearningResourceName name, long? limit, MachineLearningQuotaUnit? unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Name = name;
             Limit = limit;
             Unit = unit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the resource ID. </summary>

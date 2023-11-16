@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> A location represented as a latitude and longitude. </summary>
     internal partial class LatLongPair
     {
-        /// <summary> Initializes a new instance of LatLongPair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LatLongPair"/>. </summary>
         internal LatLongPair()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LatLongPair"/>. </summary>
+        /// <param name="latitude"> Latitude property. </param>
+        /// <param name="longitude"> Longitude property. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LatLongPair(double? latitude, double? longitude, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            _Latitude = latitude;
+            _Longitude = longitude;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

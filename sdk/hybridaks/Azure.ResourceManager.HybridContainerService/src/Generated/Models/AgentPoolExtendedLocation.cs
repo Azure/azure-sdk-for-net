@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The AgentPoolExtendedLocation. </summary>
     public partial class AgentPoolExtendedLocation
     {
-        /// <summary> Initializes a new instance of AgentPoolExtendedLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolExtendedLocation"/>. </summary>
         public AgentPoolExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolExtendedLocation"/>. </summary>
         /// <param name="agentPoolExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
-        internal AgentPoolExtendedLocation(string agentPoolExtendedLocationType, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolExtendedLocation(string agentPoolExtendedLocationType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentPoolExtendedLocationType = agentPoolExtendedLocationType;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The extended location type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,13 +16,16 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Endpoints accessed for a common purpose that the Kusto Service Environment requires outbound network access to. </summary>
     public partial class OutboundNetworkDependenciesEndpoint : ResourceData
     {
-        /// <summary> Initializes a new instance of OutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OutboundNetworkDependenciesEndpoint"/>. </summary>
         public OutboundNetworkDependenciesEndpoint()
         {
             Endpoints = new ChangeTrackingList<EndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of OutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundNetworkDependenciesEndpoint"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,12 +34,14 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="category"> The type of service accessed by the Kusto Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the Kusto Service Environment reaches the service at. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal OutboundNetworkDependenciesEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, IList<EndpointDependency> endpoints, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OutboundNetworkDependenciesEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, IList<EndpointDependency> endpoints, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Category = category;
             Endpoints = endpoints;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

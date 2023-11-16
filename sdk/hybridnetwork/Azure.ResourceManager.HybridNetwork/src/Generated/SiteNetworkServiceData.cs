@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class SiteNetworkServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SiteNetworkServiceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SiteNetworkServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SiteNetworkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +38,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="properties"> Site network service properties. </param>
         /// <param name="identity"> The managed identity of the Site network service, if configured. </param>
         /// <param name="sku"> Sku of the site network service. </param>
-        internal SiteNetworkServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SiteNetworkServicePropertiesFormat properties, ManagedServiceIdentity identity, HybridNetworkSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteNetworkServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SiteNetworkServicePropertiesFormat properties, ManagedServiceIdentity identity, HybridNetworkSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceData"/> for deserialization. </summary>
+        internal SiteNetworkServiceData()
+        {
         }
 
         /// <summary> Site network service properties. </summary>

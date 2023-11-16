@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The helm deployment install options. </summary>
     public partial class HelmUpgradeConfig
     {
-        /// <summary> Initializes a new instance of HelmUpgradeConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HelmUpgradeConfig"/>. </summary>
         public HelmUpgradeConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmUpgradeConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmUpgradeConfig"/>. </summary>
         /// <param name="atomic"> The helm deployment atomic options. </param>
         /// <param name="wait"> The helm deployment wait options. </param>
         /// <param name="timeout"> The helm deployment timeout options. </param>
-        internal HelmUpgradeConfig(string atomic, string wait, string timeout)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HelmUpgradeConfig(string atomic, string wait, string timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Atomic = atomic;
             Wait = wait;
             Timeout = timeout;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The helm deployment atomic options. </summary>

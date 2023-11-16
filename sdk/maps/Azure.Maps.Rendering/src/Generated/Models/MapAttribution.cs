@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Maps.Rendering
     /// <summary> Copyright attribution for the requested section of a tileset. </summary>
     internal partial class MapAttribution
     {
-        /// <summary> Initializes a new instance of MapAttribution. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapAttribution"/>. </summary>
         internal MapAttribution()
         {
             Copyrights = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MapAttribution. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapAttribution"/>. </summary>
         /// <param name="copyrights"> A list of copyright strings. </param>
-        internal MapAttribution(IReadOnlyList<string> copyrights)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapAttribution(IReadOnlyList<string> copyrights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Copyrights = copyrights;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of copyright strings. </summary>

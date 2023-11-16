@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The StorageSpacesPropertiesHciStorageProfile. </summary>
     public partial class StorageSpacesPropertiesHciStorageProfile
     {
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesHciStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesHciStorageProfile"/>. </summary>
         public StorageSpacesPropertiesHciStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesHciStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesHciStorageProfile"/>. </summary>
         /// <param name="mocGroup"> Resource group in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocStorageContainer"> Name of the storage container in MOC(Microsoft On-premises Cloud). </param>
-        internal StorageSpacesPropertiesHciStorageProfile(string mocGroup, string mocLocation, string mocStorageContainer)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSpacesPropertiesHciStorageProfile(string mocGroup, string mocLocation, string mocStorageContainer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MocGroup = mocGroup;
             MocLocation = mocLocation;
             MocStorageContainer = mocStorageContainer;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource group in MOC(Microsoft On-premises Cloud). </summary>

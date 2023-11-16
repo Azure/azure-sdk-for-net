@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -20,7 +21,10 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// </summary>
     public partial class ManagedNetworkGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedNetworkGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkGroupData"/>. </summary>
         public ManagedNetworkGroupData()
         {
             ManagementGroups = new ChangeTrackingList<WritableSubResource>();
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +46,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="virtualNetworks"> The collection of virtual nets covered by the Managed Network. </param>
         /// <param name="subnets"> The collection of  subnets covered by the Managed Network. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ManagedNetworkGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedNetworkKind? kind, ProvisioningState? provisioningState, ETag? etag, IList<WritableSubResource> managementGroups, IList<WritableSubResource> subscriptions, IList<WritableSubResource> virtualNetworks, IList<WritableSubResource> subnets, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedNetworkGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedNetworkKind? kind, ProvisioningState? provisioningState, ETag? etag, IList<WritableSubResource> managementGroups, IList<WritableSubResource> subscriptions, IList<WritableSubResource> virtualNetworks, IList<WritableSubResource> subnets, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -52,6 +57,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             VirtualNetworks = virtualNetworks;
             Subnets = subnets;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Responsibility role under which this Managed Network Group will be created. </summary>

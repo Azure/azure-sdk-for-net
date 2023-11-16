@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Scope of the extension. It can be either Cluster or Namespace; but not both. </summary>
     public partial class KubernetesClusterExtensionScope
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         public KubernetesClusterExtensionScope()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         /// <param name="cluster"> Specifies that the scope of the extension is Cluster. </param>
         /// <param name="namespace"> Specifies that the scope of the extension is Namespace. </param>
-        internal KubernetesClusterExtensionScope(ScopeCluster cluster, ScopeNamespace @namespace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterExtensionScope(ScopeCluster cluster, ScopeNamespace @namespace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cluster = cluster;
             Namespace = @namespace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies that the scope of the extension is Cluster. </summary>

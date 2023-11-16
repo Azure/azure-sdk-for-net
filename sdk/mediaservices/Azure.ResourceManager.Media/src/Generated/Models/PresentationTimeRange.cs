@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The presentation time range, this is asset related and not recommended for Account Filter. </summary>
     public partial class PresentationTimeRange
     {
-        /// <summary> Initializes a new instance of PresentationTimeRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PresentationTimeRange"/>. </summary>
         public PresentationTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of PresentationTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationTimeRange"/>. </summary>
         /// <param name="startTimestamp"> The absolute start time boundary. </param>
         /// <param name="endTimestamp"> The absolute end time boundary. </param>
         /// <param name="presentationWindowDuration"> The relative to end sliding window. </param>
         /// <param name="liveBackoffDuration"> The relative to end right edge. </param>
         /// <param name="timescale"> The time scale of time stamps. </param>
         /// <param name="forceEndTimestamp"> The indicator of forcing existing of end time stamp. </param>
-        internal PresentationTimeRange(long? startTimestamp, long? endTimestamp, long? presentationWindowDuration, long? liveBackoffDuration, long? timescale, bool? forceEndTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PresentationTimeRange(long? startTimestamp, long? endTimestamp, long? presentationWindowDuration, long? liveBackoffDuration, long? timescale, bool? forceEndTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTimestamp = startTimestamp;
             EndTimestamp = endTimestamp;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             LiveBackoffDuration = liveBackoffDuration;
             Timescale = timescale;
             ForceEndTimestamp = forceEndTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The absolute start time boundary. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Maps.Search.Models
     /// <summary> Details of the returned POI including information such as the name, phone, url address, and classifications. </summary>
     public partial class PointOfInterest
     {
-        /// <summary> Initializes a new instance of PointOfInterest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PointOfInterest"/>. </summary>
         internal PointOfInterest()
         {
             CategorySets = new ChangeTrackingList<PointOfInterestCategorySet>();
@@ -22,7 +26,7 @@ namespace Azure.Maps.Search.Models
             Brands = new ChangeTrackingList<BrandName>();
         }
 
-        /// <summary> Initializes a new instance of PointOfInterest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterest"/>. </summary>
         /// <param name="name"> Name of the POI property. </param>
         /// <param name="phone"> Telephone number property. </param>
         /// <param name="urlInternal"> Website URL property. </param>
@@ -31,7 +35,8 @@ namespace Azure.Maps.Search.Models
         /// <param name="classifications"> Classification array. </param>
         /// <param name="brands"> Brands array. The name of the brand for the POI being returned. </param>
         /// <param name="operatingHours"> Opening hours for a POI (Points of Interest). </param>
-        internal PointOfInterest(string name, string phone, string urlInternal, IReadOnlyList<PointOfInterestCategorySet> categorySets, IReadOnlyList<string> categories, IReadOnlyList<PointOfInterestClassification> classifications, IReadOnlyList<BrandName> brands, OperatingHours operatingHours)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PointOfInterest(string name, string phone, string urlInternal, IReadOnlyList<PointOfInterestCategorySet> categorySets, IReadOnlyList<string> categories, IReadOnlyList<PointOfInterestClassification> classifications, IReadOnlyList<BrandName> brands, OperatingHours operatingHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Phone = phone;
@@ -41,6 +46,7 @@ namespace Azure.Maps.Search.Models
             Classifications = classifications;
             Brands = brands;
             OperatingHours = operatingHours;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the POI property. </summary>

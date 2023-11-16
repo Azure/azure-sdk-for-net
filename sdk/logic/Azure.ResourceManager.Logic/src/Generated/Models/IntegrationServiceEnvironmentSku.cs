@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration service environment sku. </summary>
     public partial class IntegrationServiceEnvironmentSku
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSku"/>. </summary>
         public IntegrationServiceEnvironmentSku()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="capacity"> The sku capacity. </param>
-        internal IntegrationServiceEnvironmentSku(IntegrationServiceEnvironmentSkuName? name, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentSku(IntegrationServiceEnvironmentSkuName? name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The sku name. </summary>

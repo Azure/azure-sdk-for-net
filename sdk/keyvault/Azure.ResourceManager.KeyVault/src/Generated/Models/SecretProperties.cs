@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Properties of the secret. </summary>
     public partial class SecretProperties
     {
-        /// <summary> Initializes a new instance of SecretProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretProperties"/>. </summary>
         public SecretProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretProperties"/>. </summary>
         /// <param name="value"> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </param>
         /// <param name="contentType"> The content type of the secret. </param>
         /// <param name="attributes"> The attributes of the secret. </param>
         /// <param name="secretUri"> The URI to retrieve the current version of the secret. </param>
         /// <param name="secretUriWithVersion"> The URI to retrieve the specific version of the secret. </param>
-        internal SecretProperties(string value, string contentType, SecretAttributes attributes, Uri secretUri, string secretUriWithVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretProperties(string value, string contentType, SecretAttributes attributes, Uri secretUri, string secretUriWithVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ContentType = contentType;
             Attributes = attributes;
             SecretUri = secretUri;
             SecretUriWithVersion = secretUriWithVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </summary>

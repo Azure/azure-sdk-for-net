@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The VirtualNetworksListResult. </summary>
     internal partial class VirtualNetworksListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworksListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>
         internal VirtualNetworksListResult()
         {
             Value = new ChangeTrackingList<HybridContainerServiceVirtualNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal VirtualNetworksListResult(IReadOnlyList<HybridContainerServiceVirtualNetworkData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksListResult(IReadOnlyList<HybridContainerServiceVirtualNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

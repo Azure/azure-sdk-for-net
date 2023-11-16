@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> network service design version properties. </summary>
     public partial class NetworkServiceDesignVersionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
         public NetworkServiceDesignVersionPropertiesFormat()
         {
             ConfigurationGroupSchemaReferences = new ChangeTrackingDictionary<string, WritableSubResource>();
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ResourceElementTemplates = new ChangeTrackingList<ResourceElementTemplate>();
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design version resource. </param>
         /// <param name="versionState"> The network service design version state. </param>
         /// <param name="description"> The network service design version description. </param>
@@ -33,7 +37,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// Please note <see cref="ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
         /// </param>
-        internal NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, IDictionary<string, WritableSubResource> configurationGroupSchemaReferences, IDictionary<string, NfviDetails> nfvisFromSite, IList<ResourceElementTemplate> resourceElementTemplates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, IDictionary<string, WritableSubResource> configurationGroupSchemaReferences, IDictionary<string, NfviDetails> nfvisFromSite, IList<ResourceElementTemplate> resourceElementTemplates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             VersionState = versionState;
@@ -41,6 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ConfigurationGroupSchemaReferences = configurationGroupSchemaReferences;
             NfvisFromSite = nfvisFromSite;
             ResourceElementTemplates = resourceElementTemplates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the network service design version resource. </summary>

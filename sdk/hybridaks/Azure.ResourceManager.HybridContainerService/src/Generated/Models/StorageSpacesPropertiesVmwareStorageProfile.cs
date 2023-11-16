@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The StorageSpacesPropertiesVmwareStorageProfile. </summary>
     public partial class StorageSpacesPropertiesVmwareStorageProfile
     {
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesVmwareStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesVmwareStorageProfile"/>. </summary>
         public StorageSpacesPropertiesVmwareStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesVmwareStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesVmwareStorageProfile"/>. </summary>
         /// <param name="datacenter"> Name of the datacenter in VSphere. </param>
         /// <param name="datastore"> Name of the datastore in VSphere. </param>
         /// <param name="folder"> Name of the folder in VSphere. </param>
         /// <param name="resourcePool"> Name of the resource pool in VSphere. </param>
-        internal StorageSpacesPropertiesVmwareStorageProfile(string datacenter, string datastore, string folder, string resourcePool)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSpacesPropertiesVmwareStorageProfile(string datacenter, string datastore, string folder, string resourcePool, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Datacenter = datacenter;
             Datastore = datastore;
             Folder = folder;
             ResourcePool = resourcePool;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the datacenter in VSphere. </summary>

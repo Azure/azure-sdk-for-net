@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of Datastore entities. </summary>
     internal partial class DatastoreResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatastoreResourceArmPaginatedResult"/>. </summary>
         internal DatastoreResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningDatastoreData>();
         }
 
-        /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Datastore objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Datastore. </param>
-        internal DatastoreResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDatastoreData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatastoreResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDatastoreData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of Datastore objects. If null, there are no additional pages. </summary>

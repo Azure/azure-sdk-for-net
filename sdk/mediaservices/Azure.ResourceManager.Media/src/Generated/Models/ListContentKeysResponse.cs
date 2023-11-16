@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class of response for listContentKeys action. </summary>
     internal partial class ListContentKeysResponse
     {
-        /// <summary> Initializes a new instance of ListContentKeysResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListContentKeysResponse"/>. </summary>
         internal ListContentKeysResponse()
         {
             ContentKeys = new ChangeTrackingList<StreamingLocatorContentKey>();
         }
 
-        /// <summary> Initializes a new instance of ListContentKeysResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContentKeysResponse"/>. </summary>
         /// <param name="contentKeys"> ContentKeys used by current Streaming Locator. </param>
-        internal ListContentKeysResponse(IReadOnlyList<StreamingLocatorContentKey> contentKeys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListContentKeysResponse(IReadOnlyList<StreamingLocatorContentKey> contentKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentKeys = contentKeys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ContentKeys used by current Streaming Locator. </summary>

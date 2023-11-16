@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The sku type. </summary>
     public partial class LogicSku
     {
-        /// <summary> Initializes a new instance of LogicSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicSku"/>. </summary>
         /// <param name="name"> The name. </param>
         internal LogicSku(LogicSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of LogicSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicSku"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="plan"> The reference to plan. </param>
-        internal LogicSku(LogicSkuName name, LogicResourceReference plan)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicSku(LogicSkuName name, LogicResourceReference plan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Plan = plan;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicSku"/> for deserialization. </summary>
+        internal LogicSku()
+        {
         }
 
         /// <summary> The name. </summary>

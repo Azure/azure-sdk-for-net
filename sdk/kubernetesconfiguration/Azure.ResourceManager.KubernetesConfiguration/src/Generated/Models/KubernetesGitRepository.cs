@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
     public partial class KubernetesGitRepository
     {
-        /// <summary> Initializes a new instance of KubernetesGitRepository. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepository"/>. </summary>
         public KubernetesGitRepository()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesGitRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepository"/>. </summary>
         /// <param name="uri"> The URL to sync for the flux configuration git repository. </param>
         /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster git repository source with the remote. </param>
         /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster git repository source with the remote. </param>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="httpsUser"> Plaintext HTTPS username used to access private git repositories over HTTPS. </param>
         /// <param name="httpsCACert"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        internal KubernetesGitRepository(Uri uri, long? timeoutInSeconds, long? syncIntervalInSeconds, KubernetesGitRepositoryRef repositoryRef, string sshKnownHosts, string httpsUser, string httpsCACert, string localAuthRef)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesGitRepository(Uri uri, long? timeoutInSeconds, long? syncIntervalInSeconds, KubernetesGitRepositoryRef repositoryRef, string sshKnownHosts, string httpsUser, string httpsCACert, string localAuthRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             TimeoutInSeconds = timeoutInSeconds;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             HttpsUser = httpsUser;
             HttpsCACert = httpsCACert;
             LocalAuthRef = localAuthRef;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL to sync for the flux configuration git repository. </summary>

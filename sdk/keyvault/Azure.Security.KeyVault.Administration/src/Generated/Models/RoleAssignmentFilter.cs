@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role Assignments filter. </summary>
     internal partial class RoleAssignmentFilter
     {
-        /// <summary> Initializes a new instance of RoleAssignmentFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentFilter"/>. </summary>
         internal RoleAssignmentFilter()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentFilter"/>. </summary>
+        /// <param name="principalId"> Returns role assignment of the specific principal. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentFilter(string principalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PrincipalId = principalId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Returns role assignment of the specific principal. </summary>

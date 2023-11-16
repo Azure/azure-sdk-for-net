@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class BatchEndpointDefaults : IUtf8JsonSerializable
+    internal partial class BatchEndpointDefaults : IUtf8JsonSerializable, IJsonModel<BatchEndpointDefaults>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchEndpointDefaults>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BatchEndpointDefaults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BatchEndpointDefaults>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BatchEndpointDefaults>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DeploymentName))
             {
@@ -27,16 +38,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("deploymentName");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchEndpointDefaults DeserializeBatchEndpointDefaults(JsonElement element)
+        BatchEndpointDefaults IJsonModel<BatchEndpointDefaults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchEndpointDefaults(document.RootElement, options);
+        }
+
+        internal static BatchEndpointDefaults DeserializeBatchEndpointDefaults(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> deploymentName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deploymentName"u8))
@@ -49,8 +91,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     deploymentName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchEndpointDefaults(deploymentName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchEndpointDefaults(deploymentName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchEndpointDefaults>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BatchEndpointDefaults IPersistableModel<BatchEndpointDefaults>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBatchEndpointDefaults(document.RootElement, options);
+        }
+
+        string IPersistableModel<BatchEndpointDefaults>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

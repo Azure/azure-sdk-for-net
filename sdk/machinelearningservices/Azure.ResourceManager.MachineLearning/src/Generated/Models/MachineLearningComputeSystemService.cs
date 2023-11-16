@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> A system service running on a compute. </summary>
     public partial class MachineLearningComputeSystemService
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeSystemService. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSystemService"/>. </summary>
         internal MachineLearningComputeSystemService()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeSystemService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSystemService"/>. </summary>
         /// <param name="systemServiceType"> The type of this system service. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="version"> The version for this type. </param>
-        internal MachineLearningComputeSystemService(string systemServiceType, string publicIPAddress, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeSystemService(string systemServiceType, string publicIPAddress, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemServiceType = systemServiceType;
             PublicIPAddress = publicIPAddress;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of this system service. </summary>
