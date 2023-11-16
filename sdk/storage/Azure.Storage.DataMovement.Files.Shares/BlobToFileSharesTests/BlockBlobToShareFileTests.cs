@@ -15,10 +15,11 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
+using Azure.Storage.Blobs.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [BlobShareClientTestFixture]
+    [BlobsClientTestFixture]
     public class BlockBlobToShareFileTests : StartTransferCopyTestBase
         <BlobServiceClient,
         BlobContainerClient,
