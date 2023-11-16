@@ -541,13 +541,13 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
-        public static new Azure.Core.RequestContent Create(System.ClientModel.Primitives.IPersistableModel<object> model, System.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
+        public static Azure.Core.RequestContent Create<T>(T model, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Core.Serialization.DynamicData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (string content) { throw null; }

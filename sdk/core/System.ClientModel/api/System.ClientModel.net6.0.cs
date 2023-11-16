@@ -1,18 +1,19 @@
 namespace System.ClientModel
 {
-    public partial class ClientRequestException : System.Exception
+    public partial class ClientRequestException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response) { }
-        protected ClientRequestException(System.ClientModel.Primitives.PipelineResponse response, string message, System.Exception? innerException) { }
+        public ClientRequestException(System.ClientModel.Primitives.PipelineResponse? response, string? message, System.Exception? innerException = null) { }
         protected ClientRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public int Status { get { throw null; } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public virtual System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
     public abstract partial class InputContent : System.IDisposable
     {
         protected InputContent() { }
         public static System.ClientModel.InputContent Create(System.BinaryData value) { throw null; }
-        public static System.ClientModel.InputContent Create(System.ClientModel.Primitives.IPersistableModel<object> model, System.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.ClientModel.InputContent Create<T>(T model, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);

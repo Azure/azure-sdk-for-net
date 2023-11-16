@@ -2,20 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure
 {
-#pragma warning disable CA2229, CA2235 // False positive
     /// <summary>
     /// An exception thrown when service request fails.
     /// </summary>
@@ -73,33 +72,9 @@ namespace Azure
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
-            : base(new ErrorPipelineResult(status), message, innerException)
+            : base(new ErrorPipelineResponse(status), message, innerException)
         {
             ErrorCode = errorCode;
-        }
-
-        private class ErrorPipelineResult : PipelineResponse
-        {
-            private readonly int _status;
-
-            public ErrorPipelineResult(int status)
-            {
-                _status = status;
-            }
-
-            public override int Status => _status;
-
-            public override Stream? ContentStream
-            {
-                get => throw new NotImplementedException();
-                protected set => throw new NotImplementedException();
-            }
-
-            public override string ReasonPhrase => throw new NotSupportedException();
-
-            public override MessageHeaders Headers => throw new NotSupportedException();
-
-            public override void Dispose() => throw new NotSupportedException();
         }
 
         internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :
@@ -159,7 +134,6 @@ namespace Azure
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            info.AddValue(nameof(Status), Status);
             info.AddValue(nameof(ErrorCode), ErrorCode);
 
             base.GetObjectData(info, context);
@@ -301,6 +275,30 @@ namespace Azure
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }
+        }
+
+        private class ErrorPipelineResponse : PipelineResponse
+        {
+            private readonly int _status;
+
+            public ErrorPipelineResponse(int status)
+            {
+                _status = status;
+            }
+
+            public override int Status => _status;
+
+            public override Stream? ContentStream
+            {
+                get => throw new NotImplementedException();
+                protected set => throw new NotImplementedException();
+            }
+
+            public override string ReasonPhrase => throw new NotSupportedException();
+
+            public override MessageHeaders Headers => throw new NotSupportedException();
+
+            public override void Dispose() => throw new NotSupportedException();
         }
     }
 }

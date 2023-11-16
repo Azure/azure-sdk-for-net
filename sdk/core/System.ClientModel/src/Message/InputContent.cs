@@ -24,8 +24,8 @@ namespace System.ClientModel
         /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="InputContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
-        public static InputContent Create(IPersistableModel<object> model, ModelReaderWriterOptions? options = default)
-            => new ModelMessageBody(model, options ?? ModelReaderWriterHelper.WireOptions);
+        public static InputContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T: IPersistableModel<T>
+            => new ModelMessageBody<T>(model, options ?? ModelReaderWriterHelper.WireOptions);
 
         /// <summary>
         /// Attempts to compute the length of the underlying body content, if available.
@@ -48,9 +48,9 @@ namespace System.ClientModel
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
         public abstract void Dispose();
 
-        private sealed class ModelMessageBody : InputContent
+        private sealed class ModelMessageBody<T> : InputContent where T: IPersistableModel<T>
         {
-            private readonly IPersistableModel<object> _model;
+            private readonly T _model;
             private readonly ModelReaderWriterOptions _options;
 
             // Used when _model is an IJsonModel
@@ -59,7 +59,7 @@ namespace System.ClientModel
             // Used when _model is an IModel
             private BinaryData? _data;
 
-            public ModelMessageBody(IPersistableModel<object> model, ModelReaderWriterOptions options)
+            public ModelMessageBody(T model, ModelReaderWriterOptions options)
             {
                 _model = model;
                 _options = options;
@@ -69,12 +69,12 @@ namespace System.ClientModel
             {
                 get
                 {
-                    if (_model is not IJsonModel<object> jsonModel)
+                    if (_model is not IJsonModel<T> jsonModel)
                     {
                         throw new InvalidOperationException("Cannot use Writer with non-IJsonModel model type.");
                     }
 
-                    _writer ??= new ModelWriter(jsonModel, _options);
+                    _writer ??= new ModelWriter((IJsonModel<object>)jsonModel, _options);
                     return _writer;
                 }
             }
@@ -83,7 +83,7 @@ namespace System.ClientModel
             {
                 get
                 {
-                    if (_model is IJsonModel<object> && _options.Format == "J")
+                    if (_model is IJsonModel<T> && _options.Format == "J")
                     {
                         throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
                     }
@@ -95,7 +95,7 @@ namespace System.ClientModel
 
             public override bool TryComputeLength(out long length)
             {
-                if (_model is IJsonModel<object> && _options.Format == "J")
+                if (_model is IJsonModel<T> && _options.Format == "J")
                 {
                     return Writer.TryComputeLength(out length);
                 }
@@ -111,7 +111,7 @@ namespace System.ClientModel
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
-                if (_model is IJsonModel<object> && _options.Format == "J")
+                if (_model is IJsonModel<T> && _options.Format == "J")
                 {
                     Writer.CopyTo(stream, cancellation);
                     return;
@@ -126,7 +126,7 @@ namespace System.ClientModel
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-                if (_model is IJsonModel<object> && _options.Format == "J")
+                if (_model is IJsonModel<T> && _options.Format == "J")
                 {
                     await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
                     return;
