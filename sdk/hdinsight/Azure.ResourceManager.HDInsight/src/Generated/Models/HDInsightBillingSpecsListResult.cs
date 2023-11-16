@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The response for the operation to get regional billingSpecs for a subscription. </summary>
     public partial class HDInsightBillingSpecsListResult
     {
-        /// <summary> Initializes a new instance of HDInsightBillingSpecsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingSpecsListResult"/>. </summary>
         internal HDInsightBillingSpecsListResult()
         {
             VmSizes = new ChangeTrackingList<string>();
@@ -23,19 +27,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             BillingResources = new ChangeTrackingList<HDInsightBillingResources>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightBillingSpecsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingSpecsListResult"/>. </summary>
         /// <param name="vmSizes"> The virtual machine sizes to include or exclude. </param>
         /// <param name="vmSizesWithEncryptionAtHost"> The vm sizes which enable encryption at host. </param>
         /// <param name="vmSizeFilters"> The virtual machine filtering mode. Effectively this can enabling or disabling the virtual machine sizes in a particular set. </param>
         /// <param name="vmSizeProperties"> The vm size properties. </param>
         /// <param name="billingResources"> The billing and managed disk billing resources for a region. </param>
-        internal HDInsightBillingSpecsListResult(IReadOnlyList<string> vmSizes, IReadOnlyList<string> vmSizesWithEncryptionAtHost, IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters, IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties, IReadOnlyList<HDInsightBillingResources> billingResources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightBillingSpecsListResult(IReadOnlyList<string> vmSizes, IReadOnlyList<string> vmSizesWithEncryptionAtHost, IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters, IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties, IReadOnlyList<HDInsightBillingResources> billingResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSizes = vmSizes;
             VmSizesWithEncryptionAtHost = vmSizesWithEncryptionAtHost;
             VmSizeFilters = vmSizeFilters;
             VmSizeProperties = vmSizeProperties;
             BillingResources = billingResources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The virtual machine sizes to include or exclude. </summary>

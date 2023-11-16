@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsServiceBusProperties : IUtf8JsonSerializable
+    public partial class DigitalTwinsServiceBusProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsServiceBusProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsServiceBusProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DigitalTwinsServiceBusProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DigitalTwinsServiceBusProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DigitalTwinsServiceBusProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryConnectionString))
             {
@@ -66,6 +76,36 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    if (ProvisioningState != null)
+                    {
+                        writer.WritePropertyName("provisioningState"u8);
+                        writer.WriteStringValue(ProvisioningState.Value.ToString());
+                    }
+                    else
+                    {
+                        writer.WriteNull("provisioningState");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    if (CreatedOn != null)
+                    {
+                        writer.WritePropertyName("createdTime"u8);
+                        writer.WriteStringValue(CreatedOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("createdTime");
+                    }
+                }
+            }
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -107,11 +147,40 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("identity");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DigitalTwinsServiceBusProperties DeserializeDigitalTwinsServiceBusProperties(JsonElement element)
+        DigitalTwinsServiceBusProperties IJsonModel<DigitalTwinsServiceBusProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsServiceBusProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsServiceBusProperties(document.RootElement, options);
+        }
+
+        internal static DigitalTwinsServiceBusProperties DeserializeDigitalTwinsServiceBusProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -127,6 +196,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryConnectionString"u8))
@@ -233,8 +304,38 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DigitalTwinsServiceBusProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, primaryConnectionString.Value, secondaryConnectionString.Value, endpointUri.Value, entityPath.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DigitalTwinsServiceBusProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, serializedAdditionalRawData, primaryConnectionString.Value, secondaryConnectionString.Value, endpointUri.Value, entityPath.Value);
         }
+
+        BinaryData IPersistableModel<DigitalTwinsServiceBusProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsServiceBusProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DigitalTwinsServiceBusProperties IPersistableModel<DigitalTwinsServiceBusProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsServiceBusProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDigitalTwinsServiceBusProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<DigitalTwinsServiceBusProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

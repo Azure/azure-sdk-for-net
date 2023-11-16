@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Image validation error details. </summary>
     public partial class ImageValidationErrorDetails
     {
-        /// <summary> Initializes a new instance of ImageValidationErrorDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageValidationErrorDetails"/>. </summary>
         internal ImageValidationErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageValidationErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageValidationErrorDetails"/>. </summary>
         /// <param name="code"> An identifier for the error. </param>
         /// <param name="message"> A message describing the error. </param>
-        internal ImageValidationErrorDetails(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageValidationErrorDetails(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An identifier for the error. </summary>

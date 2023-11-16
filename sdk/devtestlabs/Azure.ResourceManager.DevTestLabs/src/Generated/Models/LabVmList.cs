@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class LabVmList
     {
-        /// <summary> Initializes a new instance of LabVmList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVmList"/>. </summary>
         internal LabVmList()
         {
             Value = new ChangeTrackingList<DevTestLabVmData>();
         }
 
-        /// <summary> Initializes a new instance of LabVmList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVmList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal LabVmList(IReadOnlyList<DevTestLabVmData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVmList(IReadOnlyList<DevTestLabVmData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Results of the list operation. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The virtual network properties. </summary>
     public partial class HDInsightVirtualNetworkProfile
     {
-        /// <summary> Initializes a new instance of HDInsightVirtualNetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightVirtualNetworkProfile"/>. </summary>
         public HDInsightVirtualNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightVirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVirtualNetworkProfile"/>. </summary>
         /// <param name="id"> The ID of the virtual network. </param>
         /// <param name="subnet"> The name of the subnet. </param>
-        internal HDInsightVirtualNetworkProfile(ResourceIdentifier id, string subnet)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightVirtualNetworkProfile(ResourceIdentifier id, string subnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Subnet = subnet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the virtual network. </summary>

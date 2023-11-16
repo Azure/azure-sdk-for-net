@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A barcode object. </summary>
     public partial class DocumentBarcode
     {
-        /// <summary> Initializes a new instance of DocumentBarcode. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
@@ -31,19 +34,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentBarcode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         /// <param name="polygon"> Bounding polygon of the barcode. </param>
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
-        internal DocumentBarcode(DocumentBarcodeKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentBarcode(DocumentBarcodeKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Value = value;
             Polygon = polygon;
             Span = span;
             Confidence = confidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/> for deserialization. </summary>
+        internal DocumentBarcode()
+        {
         }
 
         /// <summary> Barcode kind. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines a list of preconfigured endpoints. </summary>
     internal partial class PreconfiguredEndpointList
     {
-        /// <summary> Initializes a new instance of PreconfiguredEndpointList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpointList"/>. </summary>
         internal PreconfiguredEndpointList()
         {
             Value = new ChangeTrackingList<PreconfiguredEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of PreconfiguredEndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpointList"/>. </summary>
         /// <param name="value"> List of PreconfiguredEndpoints supported by NetworkExperiment. </param>
         /// <param name="nextLink"> URL to get the next set of PreconfiguredEndpoints if there are any. </param>
-        internal PreconfiguredEndpointList(IReadOnlyList<PreconfiguredEndpoint> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PreconfiguredEndpointList(IReadOnlyList<PreconfiguredEndpoint> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of PreconfiguredEndpoints supported by NetworkExperiment. </summary>

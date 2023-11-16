@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Channel Configuration. </summary>
     public partial class AcsRouterChannelConfiguration
     {
-        /// <summary> Initializes a new instance of AcsRouterChannelConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsRouterChannelConfiguration"/>. </summary>
         internal AcsRouterChannelConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterChannelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterChannelConfiguration"/>. </summary>
         /// <param name="channelId"> Channel ID for Router Job. </param>
         /// <param name="capacityCostPerJob"> Capacity Cost Per Job for Router Job. </param>
         /// <param name="maxNumberOfJobs"> Max Number of Jobs for Router Job. </param>
-        internal AcsRouterChannelConfiguration(string channelId, int? capacityCostPerJob, int? maxNumberOfJobs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterChannelConfiguration(string channelId, int? capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ChannelId = channelId;
             CapacityCostPerJob = capacityCostPerJob;
             MaxNumberOfJobs = maxNumberOfJobs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Channel ID for Router Job. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> Time and capacity request parameters. </summary>
     public partial class HDInsightAutoScaleTimeAndCapacity
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleTimeAndCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleTimeAndCapacity"/>. </summary>
         public HDInsightAutoScaleTimeAndCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightAutoScaleTimeAndCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleTimeAndCapacity"/>. </summary>
         /// <param name="time"> 24-hour time in the form xx:xx. </param>
         /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
         /// <param name="maxInstanceCount"> The maximum instance count of the cluster. </param>
-        internal HDInsightAutoScaleTimeAndCapacity(string time, int? minInstanceCount, int? maxInstanceCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightAutoScaleTimeAndCapacity(string time, int? minInstanceCount, int? maxInstanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Time = time;
             MinInstanceCount = minInstanceCount;
             MaxInstanceCount = maxInstanceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> 24-hour time in the form xx:xx. </summary>

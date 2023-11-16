@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary>
@@ -14,20 +17,25 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// </summary>
     public abstract partial class TimeSeriesDatabaseConnectionProperties
     {
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionProperties"/>. </summary>
         protected TimeSeriesDatabaseConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionProperties"/>. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
-        internal TimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionType = connectionType;
             ProvisioningState = provisioningState;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of time series connection resource. </summary>

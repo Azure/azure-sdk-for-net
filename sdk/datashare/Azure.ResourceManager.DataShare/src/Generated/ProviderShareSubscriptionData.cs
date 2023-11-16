@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class ProviderShareSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProviderShareSubscriptionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderShareSubscriptionData"/>. </summary>
         public ProviderShareSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderShareSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="sharedOn"> Shared at. </param>
         /// <param name="shareSubscriptionObjectId"> share Subscription Object Id. </param>
         /// <param name="shareSubscriptionStatus"> Gets the status of share subscription. </param>
-        internal ProviderShareSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string consumerEmail, string consumerName, string consumerTenantName, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string providerEmail, string providerName, DateTimeOffset? sharedOn, string shareSubscriptionObjectId, ShareSubscriptionStatus? shareSubscriptionStatus) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderShareSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string consumerEmail, string consumerName, string consumerTenantName, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string providerEmail, string providerName, DateTimeOffset? sharedOn, string shareSubscriptionObjectId, ShareSubscriptionStatus? shareSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ConsumerEmail = consumerEmail;
             ConsumerName = consumerName;
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.DataShare
             SharedOn = sharedOn;
             ShareSubscriptionObjectId = shareSubscriptionObjectId;
             ShareSubscriptionStatus = shareSubscriptionStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Email of the consumer who created the share subscription. </summary>

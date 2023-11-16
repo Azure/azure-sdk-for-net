@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Dynatrace
     /// </summary>
     public partial class DynatraceSingleSignOnData : ResourceData
     {
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnData"/>. </summary>
         public DynatraceSingleSignOnData()
         {
             AadDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +38,15 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
         /// <param name="aadDomains"> array of Aad(azure active directory) domains. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal DynatraceSingleSignOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceSingleSignOnState? singleSignOnState, Guid? enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, DynatraceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceSingleSignOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceSingleSignOnState? singleSignOnState, Guid? enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
             SingleSignOnUri = singleSignOnUri;
             AadDomains = aadDomains;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of Single Sign On. </summary>

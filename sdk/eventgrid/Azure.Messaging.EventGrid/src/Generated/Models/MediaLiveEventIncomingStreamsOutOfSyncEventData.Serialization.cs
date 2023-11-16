@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,100 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaLiveEventIncomingStreamsOutOfSyncEventDataConverter))]
-    public partial class MediaLiveEventIncomingStreamsOutOfSyncEventData
+    public partial class MediaLiveEventIncomingStreamsOutOfSyncEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>
     {
-        internal static MediaLiveEventIncomingStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MinLastTimestamp))
+                {
+                    writer.WritePropertyName("minLastTimestamp"u8);
+                    writer.WriteStringValue(MinLastTimestamp);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TypeOfStreamWithMinLastTimestamp))
+                {
+                    writer.WritePropertyName("typeOfStreamWithMinLastTimestamp"u8);
+                    writer.WriteStringValue(TypeOfStreamWithMinLastTimestamp);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MaxLastTimestamp))
+                {
+                    writer.WritePropertyName("maxLastTimestamp"u8);
+                    writer.WriteStringValue(MaxLastTimestamp);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TypeOfStreamWithMaxLastTimestamp))
+                {
+                    writer.WritePropertyName("typeOfStreamWithMaxLastTimestamp"u8);
+                    writer.WriteStringValue(TypeOfStreamWithMaxLastTimestamp);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TimescaleOfMinLastTimestamp))
+                {
+                    writer.WritePropertyName("timescaleOfMinLastTimestamp"u8);
+                    writer.WriteStringValue(TimescaleOfMinLastTimestamp);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TimescaleOfMaxLastTimestamp))
+                {
+                    writer.WritePropertyName("timescaleOfMaxLastTimestamp"u8);
+                    writer.WriteStringValue(TimescaleOfMaxLastTimestamp);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaLiveEventIncomingStreamsOutOfSyncEventData IJsonModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIncomingStreamsOutOfSyncEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData(document.RootElement, options);
+        }
+
+        internal static MediaLiveEventIncomingStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +120,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> typeOfStreamWithMaxLastTimestamp = default;
             Optional<string> timescaleOfMinLastTimestamp = default;
             Optional<string> timescaleOfMaxLastTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minLastTimestamp"u8))
@@ -59,15 +154,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     timescaleOfMaxLastTimestamp = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(minLastTimestamp.Value, typeOfStreamWithMinLastTimestamp.Value, maxLastTimestamp.Value, typeOfStreamWithMaxLastTimestamp.Value, timescaleOfMinLastTimestamp.Value, timescaleOfMaxLastTimestamp.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(minLastTimestamp.Value, typeOfStreamWithMinLastTimestamp.Value, maxLastTimestamp.Value, typeOfStreamWithMaxLastTimestamp.Value, timescaleOfMinLastTimestamp.Value, timescaleOfMaxLastTimestamp.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIncomingStreamsOutOfSyncEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaLiveEventIncomingStreamsOutOfSyncEventData IPersistableModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIncomingStreamsOutOfSyncEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData(document.RootElement, options);
+        }
+
+        string IPersistableModel<MediaLiveEventIncomingStreamsOutOfSyncEventData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class MediaLiveEventIncomingStreamsOutOfSyncEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamsOutOfSyncEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventIncomingStreamsOutOfSyncEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaLiveEventIncomingStreamsOutOfSyncEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

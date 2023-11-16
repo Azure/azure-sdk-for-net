@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The network properties. </summary>
     public partial class HDInsightClusterNetworkProperties
     {
-        /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterNetworkProperties"/>. </summary>
         public HDInsightClusterNetworkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterNetworkProperties"/>. </summary>
         /// <param name="resourceProviderConnection"> The direction for the resource provider connection. </param>
         /// <param name="privateLink"> Indicates whether or not private link is enabled. </param>
-        internal HDInsightClusterNetworkProperties(HDInsightResourceProviderConnection? resourceProviderConnection, HDInsightPrivateLinkState? privateLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterNetworkProperties(HDInsightResourceProviderConnection? resourceProviderConnection, HDInsightPrivateLinkState? privateLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceProviderConnection = resourceProviderConnection;
             PrivateLink = privateLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The direction for the resource provider connection. </summary>

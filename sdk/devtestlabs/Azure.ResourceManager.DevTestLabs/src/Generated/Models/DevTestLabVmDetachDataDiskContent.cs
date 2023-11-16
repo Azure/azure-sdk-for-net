@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -12,9 +14,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Request body for detaching data disk from a virtual machine. </summary>
     public partial class DevTestLabVmDetachDataDiskContent
     {
-        /// <summary> Initializes a new instance of DevTestLabVmDetachDataDiskContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmDetachDataDiskContent"/>. </summary>
         public DevTestLabVmDetachDataDiskContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmDetachDataDiskContent"/>. </summary>
+        /// <param name="existingLabDiskId"> Specifies the disk resource ID to detach from virtual machine. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabVmDetachDataDiskContent(ResourceIdentifier existingLabDiskId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ExistingLabDiskId = existingLabDiskId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the disk resource ID to detach from virtual machine. </summary>

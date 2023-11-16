@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The response for the operation to get regional usages for a subscription. </summary>
     internal partial class UsagesListResult
     {
-        /// <summary> Initializes a new instance of UsagesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         internal UsagesListResult()
         {
             Value = new ChangeTrackingList<HDInsightUsage>();
         }
 
-        /// <summary> Initializes a new instance of UsagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         /// <param name="value"> The list of usages. </param>
-        internal UsagesListResult(IReadOnlyList<HDInsightUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UsagesListResult(IReadOnlyList<HDInsightUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of usages. </summary>

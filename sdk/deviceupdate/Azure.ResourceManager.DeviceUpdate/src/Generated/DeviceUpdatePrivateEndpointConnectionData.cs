@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class DeviceUpdatePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointConnectionData"/>. </summary>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public DeviceUpdatePrivateEndpointConnectionData(DeviceUpdatePrivateLinkServiceConnectionState connectionState)
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,12 +43,19 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="groupIds"> Array of group IDs. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal DeviceUpdatePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, DeviceUpdatePrivateLinkServiceConnectionState connectionState, IList<string> groupIds, DeviceUpdatePrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceUpdatePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, DeviceUpdatePrivateLinkServiceConnectionState connectionState, IList<string> groupIds, DeviceUpdatePrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             GroupIds = groupIds;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateEndpointConnectionData"/> for deserialization. </summary>
+        internal DeviceUpdatePrivateEndpointConnectionData()
+        {
         }
 
         /// <summary> The resource of private end point. </summary>

@@ -15,7 +15,10 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The body of the Onco Phenotype request. </summary>
     public partial class OncoPhenotypeData
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeData"/>. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
         public OncoPhenotypeData(IEnumerable<PatientRecord> patients)
@@ -23,15 +26,23 @@ namespace Azure.Health.Insights.CancerProfiling
             Argument.AssertNotNull(patients, nameof(patients));
 
             Patients = patients.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeData"/>. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <param name="configuration"> Configuration affecting the Onco Phenotype model's inference. </param>
-        internal OncoPhenotypeData(IList<PatientRecord> patients, OncoPhenotypeModelConfiguration configuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypeData(IList<PatientRecord> patients, OncoPhenotypeModelConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Patients = patients;
             Configuration = configuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeData"/> for deserialization. </summary>
+        internal OncoPhenotypeData()
+        {
         }
 
         /// <summary> The list of patients, including their clinical information and data. </summary>

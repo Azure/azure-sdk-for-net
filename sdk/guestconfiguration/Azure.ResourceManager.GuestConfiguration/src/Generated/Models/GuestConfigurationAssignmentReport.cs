@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
     public partial class GuestConfigurationAssignmentReport
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReport. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReport"/>. </summary>
         internal GuestConfigurationAssignmentReport()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReport"/>. </summary>
         /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
         /// <param name="name"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="properties"> Properties of the guest configuration report. </param>
-        internal GuestConfigurationAssignmentReport(ResourceIdentifier id, string name, GuestConfigurationAssignmentReportProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationAssignmentReport(ResourceIdentifier id, string name, GuestConfigurationAssignmentReportProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,28 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Response for ElasticSan update request. </summary>
     public partial class ElasticSanPatch
     {
-        /// <summary> Initializes a new instance of ElasticSanPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPatch"/>. </summary>
         public ElasticSanPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPatch"/>. </summary>
+        /// <param name="tags"> Update tags. </param>
+        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
+        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanPatch(IDictionary<string, string> tags, long? baseSizeTiB, long? extendedCapacitySizeTiB, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            BaseSizeTiB = baseSizeTiB;
+            ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
+            PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Update tags. </summary>

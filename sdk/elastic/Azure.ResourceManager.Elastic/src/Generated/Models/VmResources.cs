@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> The vm resource properties that is currently being monitored by the Elastic monitor resource. </summary>
     public partial class VmResources
     {
-        /// <summary> Initializes a new instance of VmResources. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmResources"/>. </summary>
         internal VmResources()
         {
         }
 
-        /// <summary> Initializes a new instance of VmResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmResources"/>. </summary>
         /// <param name="vmResourceId"> The ARM id of the VM resource. </param>
-        internal VmResources(string vmResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmResources(string vmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmResourceId = vmResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ARM id of the VM resource. </summary>

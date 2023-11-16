@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.DevSpaces
     /// <summary> A class representing the Controller data model. </summary>
     public partial class ControllerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ControllerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ControllerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Model representing SKU for Azure Dev Spaces Controller. </param>
         /// <param name="targetContainerHostResourceId"> Resource ID of the target container host. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.DevSpaces
             TargetContainerHostCredentialsBase64 = targetContainerHostCredentialsBase64;
         }
 
-        /// <summary> Initializes a new instance of ControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="targetContainerHostApiServerFqdn"> DNS of the target container host's API server. </param>
         /// <param name="targetContainerHostResourceId"> Resource ID of the target container host. </param>
         /// <param name="targetContainerHostCredentialsBase64"> Credentials of the target container host (base64). </param>
-        internal ControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevSpacesSku sku, ProvisioningState? provisioningState, string hostSuffix, string dataPlaneFqdn, string targetContainerHostApiServerFqdn, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevSpacesSku sku, ProvisioningState? provisioningState, string hostSuffix, string dataPlaneFqdn, string targetContainerHostApiServerFqdn, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -56,6 +60,12 @@ namespace Azure.ResourceManager.DevSpaces
             TargetContainerHostApiServerFqdn = targetContainerHostApiServerFqdn;
             TargetContainerHostResourceId = targetContainerHostResourceId;
             TargetContainerHostCredentialsBase64 = targetContainerHostCredentialsBase64;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ControllerData"/> for deserialization. </summary>
+        internal ControllerData()
+        {
         }
 
         /// <summary> Model representing SKU for Azure Dev Spaces Controller. </summary>

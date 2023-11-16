@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Encoder connect event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventEncoderConnected event. </summary>
     public partial class MediaLiveEventEncoderConnectedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventEncoderConnectedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventEncoderConnectedEventData"/>. </summary>
         internal MediaLiveEventEncoderConnectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventEncoderConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventEncoderConnectedEventData"/>. </summary>
         /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
         /// <param name="streamId"> Gets the stream Id. </param>
         /// <param name="encoderIp"> Gets the remote IP. </param>
         /// <param name="encoderPort"> Gets the remote port. </param>
-        internal MediaLiveEventEncoderConnectedEventData(string ingestUrl, string streamId, string encoderIp, string encoderPort)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventEncoderConnectedEventData(string ingestUrl, string streamId, string encoderIp, string encoderPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IngestUrl = ingestUrl;
             StreamId = streamId;
             EncoderIp = encoderIp;
             EncoderPort = encoderPort;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the ingest URL provided by the live event. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsDisasterRecoveryData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsDisasterRecoveryData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsDisasterRecoveryData"/>. </summary>
         public EventHubsDisasterRecoveryData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsDisasterRecoveryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsDisasterRecoveryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +38,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="role"> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsDisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, EventHubsDisasterRecoveryRole? role, long? pendingReplicationOperationsCount, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsDisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, EventHubsDisasterRecoveryRole? role, long? pendingReplicationOperationsCount, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PartnerNamespace = partnerNamespace;
@@ -41,6 +47,7 @@ namespace Azure.ResourceManager.EventHubs
             Role = role;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </summary>

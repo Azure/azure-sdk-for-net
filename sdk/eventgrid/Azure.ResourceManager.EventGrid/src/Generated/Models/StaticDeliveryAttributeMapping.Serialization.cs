@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StaticDeliveryAttributeMapping : IUtf8JsonSerializable
+    public partial class StaticDeliveryAttributeMapping : IUtf8JsonSerializable, IJsonModel<StaticDeliveryAttributeMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticDeliveryAttributeMapping>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StaticDeliveryAttributeMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StaticDeliveryAttributeMapping>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StaticDeliveryAttributeMapping>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteBooleanValue(IsSecret.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StaticDeliveryAttributeMapping DeserializeStaticDeliveryAttributeMapping(JsonElement element)
+        StaticDeliveryAttributeMapping IJsonModel<StaticDeliveryAttributeMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticDeliveryAttributeMapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticDeliveryAttributeMapping(document.RootElement, options);
+        }
+
+        internal static StaticDeliveryAttributeMapping DeserializeStaticDeliveryAttributeMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             DeliveryAttributeMappingType type = default;
             Optional<string> value = default;
             Optional<bool> isSecret = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -86,8 +128,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StaticDeliveryAttributeMapping(name.Value, type, value.Value, Optional.ToNullable(isSecret));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StaticDeliveryAttributeMapping(name.Value, type, serializedAdditionalRawData, value.Value, Optional.ToNullable(isSecret));
         }
+
+        BinaryData IPersistableModel<StaticDeliveryAttributeMapping>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticDeliveryAttributeMapping)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StaticDeliveryAttributeMapping IPersistableModel<StaticDeliveryAttributeMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticDeliveryAttributeMapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStaticDeliveryAttributeMapping(document.RootElement, options);
+        }
+
+        string IPersistableModel<StaticDeliveryAttributeMapping>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

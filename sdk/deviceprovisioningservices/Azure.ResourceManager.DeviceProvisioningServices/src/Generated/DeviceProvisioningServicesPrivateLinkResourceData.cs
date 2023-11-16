@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="properties"> The properties for a group information object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal DeviceProvisioningServicesPrivateLinkResourceData(DeviceProvisioningServicesPrivateLinkResourceProperties properties)
@@ -28,15 +32,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties for a group information object. </param>
-        internal DeviceProvisioningServicesPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceProvisioningServicesPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServicesPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceProvisioningServicesPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateLinkResourceData"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesPrivateLinkResourceData()
+        {
         }
 
         /// <summary> The properties for a group information object. </summary>

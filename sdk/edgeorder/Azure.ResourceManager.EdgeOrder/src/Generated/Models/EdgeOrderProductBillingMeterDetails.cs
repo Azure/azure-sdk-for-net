@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Holds billing meter details for each type of billing. </summary>
     public partial class EdgeOrderProductBillingMeterDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderProductBillingMeterDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductBillingMeterDetails"/>. </summary>
         internal EdgeOrderProductBillingMeterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductBillingMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductBillingMeterDetails"/>. </summary>
         /// <param name="name"> Represents Billing type name. </param>
         /// <param name="meterDetails">
         /// Represents MeterDetails
@@ -24,12 +30,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>
         /// <param name="frequency"> Frequency of recurrence. </param>
-        internal EdgeOrderProductBillingMeterDetails(string name, EdgeOrderProductMeterDetails meterDetails, EdgeOrderProductMeteringType? meteringType, string frequency)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProductBillingMeterDetails(string name, EdgeOrderProductMeterDetails meterDetails, EdgeOrderProductMeteringType? meteringType, string frequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             MeterDetails = meterDetails;
             MeteringType = meteringType;
             Frequency = frequency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents Billing type name. </summary>

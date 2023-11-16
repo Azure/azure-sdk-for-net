@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Definition of the properties for a TagRules resource. </summary>
     public partial class MonitoringTagRulesProperties
     {
-        /// <summary> Initializes a new instance of MonitoringTagRulesProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
         public MonitoringTagRulesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringTagRulesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the monitoring tag rules. </param>
         /// <param name="logRules"> Rules for sending logs. </param>
-        internal MonitoringTagRulesProperties(ProvisioningState? provisioningState, LogRules logRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringTagRulesProperties(ProvisioningState? provisioningState, LogRules logRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             LogRules = logRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the monitoring tag rules. </summary>

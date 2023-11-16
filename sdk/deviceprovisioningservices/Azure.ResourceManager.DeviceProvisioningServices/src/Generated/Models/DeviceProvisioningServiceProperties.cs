@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> the service specific properties of a provisioning service, including keys, linked iot hubs, current state, and system generated properties such as hostname and idScope. </summary>
     public partial class DeviceProvisioningServiceProperties
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceProperties"/>. </summary>
         public DeviceProvisioningServiceProperties()
         {
             IPFilterRules = new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             AuthorizationPolicies = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceProperties"/>. </summary>
         /// <param name="state"> Current state of the provisioning service. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="ipFilterRules"> The IP filter rules. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// Optional.
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
         /// </param>
-        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             PublicNetworkAccess = publicNetworkAccess;
@@ -53,6 +58,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IdScope = idScope;
             AuthorizationPolicies = authorizationPolicies;
             IsDataResidencyEnabled = isDataResidencyEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Current state of the provisioning service. </summary>

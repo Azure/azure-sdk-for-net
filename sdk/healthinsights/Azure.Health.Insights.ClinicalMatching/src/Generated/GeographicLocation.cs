@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -17,7 +18,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// </summary>
     public partial class GeographicLocation
     {
-        /// <summary> Initializes a new instance of GeographicLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeographicLocation"/>. </summary>
         /// <param name="countryOrRegion"> Country/region name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryOrRegion"/> is null. </exception>
         public GeographicLocation(string countryOrRegion)
@@ -25,17 +29,25 @@ namespace Azure.Health.Insights.ClinicalMatching
             Argument.AssertNotNull(countryOrRegion, nameof(countryOrRegion));
 
             CountryOrRegion = countryOrRegion;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of GeographicLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeographicLocation"/>. </summary>
         /// <param name="city"> City name. </param>
         /// <param name="state"> State name. </param>
         /// <param name="countryOrRegion"> Country/region name. </param>
-        internal GeographicLocation(string city, string state, string countryOrRegion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeographicLocation(string city, string state, string countryOrRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             City = city;
             State = state;
             CountryOrRegion = countryOrRegion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeographicLocation"/> for deserialization. </summary>
+        internal GeographicLocation()
+        {
         }
 
         /// <summary> City name. </summary>

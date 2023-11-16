@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerRegistered event. </summary>
     public partial class AcsRouterWorkerRegisteredEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterWorkerRegisteredEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
         internal AcsRouterWorkerRegisteredEventData()
         {
             QueueAssignments = new ChangeTrackingList<AcsRouterQueueDetails>();
@@ -22,14 +26,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterWorkerRegisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Registered Worker Id. </param>
         /// <param name="queueAssignments"> Router Worker Registered Queue Info. </param>
         /// <param name="channelConfigurations"> Router Worker Registered Channel Configuration. </param>
         /// <param name="totalCapacity"> Router Worker Register Total Capacity. </param>
         /// <param name="labels"> Router Worker Registered Labels. </param>
         /// <param name="tags"> Router Worker Registered Tags. </param>
-        internal AcsRouterWorkerRegisteredEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterWorkerRegisteredEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkerId = workerId;
             QueueAssignments = queueAssignments;
@@ -37,6 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TotalCapacity = totalCapacity;
             Labels = labels;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Router Worker Registered Worker Id. </summary>

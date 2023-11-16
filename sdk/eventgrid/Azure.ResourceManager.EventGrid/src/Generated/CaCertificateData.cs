@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class CaCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of CaCertificateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CaCertificateData"/>. </summary>
         public CaCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of CaCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,13 +37,15 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="issueTimeInUtc"> Certificate issue time in UTC. This is a read-only field. </param>
         /// <param name="expiryTimeInUtc"> Certificate expiry time in UTC. This is a read-only field. </param>
         /// <param name="provisioningState"> Provisioning state of the CA Certificate resource. </param>
-        internal CaCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string encodedCertificate, DateTimeOffset? issueTimeInUtc, DateTimeOffset? expiryTimeInUtc, CaCertificateProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CaCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string encodedCertificate, DateTimeOffset? issueTimeInUtc, DateTimeOffset? expiryTimeInUtc, CaCertificateProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             EncodedCertificate = encodedCertificate;
             IssueTimeInUtc = issueTimeInUtc;
             ExpiryTimeInUtc = expiryTimeInUtc;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description for the CA Certificate resource. </summary>

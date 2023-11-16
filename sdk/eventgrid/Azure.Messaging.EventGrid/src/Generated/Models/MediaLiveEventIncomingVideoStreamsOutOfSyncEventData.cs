@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Incoming video stream out of sync event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync event. </summary>
     public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingVideoStreamsOutOfSyncEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingVideoStreamsOutOfSyncEventData"/>. </summary>
         internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingVideoStreamsOutOfSyncEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingVideoStreamsOutOfSyncEventData"/>. </summary>
         /// <param name="firstTimestamp"> Gets the first timestamp received for one of the quality levels. </param>
         /// <param name="firstDuration"> Gets the duration of the data chunk with first timestamp. </param>
         /// <param name="secondTimestamp"> Gets the timestamp received for some other quality levels. </param>
         /// <param name="secondDuration"> Gets the duration of the data chunk with second timestamp. </param>
         /// <param name="timescale"> Gets the timescale in which both the timestamps and durations are represented. </param>
-        internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(string firstTimestamp, string firstDuration, string secondTimestamp, string secondDuration, string timescale)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(string firstTimestamp, string firstDuration, string secondTimestamp, string secondDuration, string timescale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstTimestamp = firstTimestamp;
             FirstDuration = firstDuration;
             SecondTimestamp = secondTimestamp;
             SecondDuration = secondDuration;
             Timescale = timescale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the first timestamp received for one of the quality levels. </summary>

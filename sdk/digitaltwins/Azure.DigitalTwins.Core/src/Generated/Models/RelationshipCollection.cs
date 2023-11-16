@@ -15,7 +15,10 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A collection of relationships which relate digital twins together. </summary>
     internal partial class RelationshipCollection
     {
-        /// <summary> Initializes a new instance of RelationshipCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipCollection"/>. </summary>
         /// <param name="value"> The relationship objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RelationshipCollection(IEnumerable<object> value)
@@ -25,13 +28,20 @@ namespace Azure.DigitalTwins.Core
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RelationshipCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipCollection"/>. </summary>
         /// <param name="value"> The relationship objects. </param>
         /// <param name="nextLink"> A URI to retrieve the next page of objects. </param>
-        internal RelationshipCollection(IReadOnlyList<object> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelationshipCollection(IReadOnlyList<object> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipCollection"/> for deserialization. </summary>
+        internal RelationshipCollection()
+        {
         }
 
         /// <summary> The relationship objects. </summary>

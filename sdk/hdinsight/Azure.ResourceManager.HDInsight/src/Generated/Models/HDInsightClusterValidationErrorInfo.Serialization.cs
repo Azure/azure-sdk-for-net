@@ -5,16 +5,86 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterValidationErrorInfo
+    public partial class HDInsightClusterValidationErrorInfo : IUtf8JsonSerializable, IJsonModel<HDInsightClusterValidationErrorInfo>
     {
-        internal static HDInsightClusterValidationErrorInfo DeserializeHDInsightClusterValidationErrorInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterValidationErrorInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HDInsightClusterValidationErrorInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HDInsightClusterValidationErrorInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HDInsightClusterValidationErrorInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(ErrorResource))
+            {
+                writer.WritePropertyName("errorResource"u8);
+                writer.WriteStringValue(ErrorResource);
+            }
+            if (Optional.IsCollectionDefined(MessageArguments))
+            {
+                writer.WritePropertyName("messageArguments"u8);
+                writer.WriteStartArray();
+                foreach (var item in MessageArguments)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HDInsightClusterValidationErrorInfo IJsonModel<HDInsightClusterValidationErrorInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterValidationErrorInfo(document.RootElement, options);
+        }
+
+        internal static HDInsightClusterValidationErrorInfo DeserializeHDInsightClusterValidationErrorInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +93,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> message = default;
             Optional<string> errorResource = default;
             Optional<IReadOnlyList<string>> messageArguments = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -54,8 +126,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                     messageArguments = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightClusterValidationErrorInfo(code.Value, message.Value, errorResource.Value, Optional.ToList(messageArguments));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightClusterValidationErrorInfo(code.Value, message.Value, errorResource.Value, Optional.ToList(messageArguments), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightClusterValidationErrorInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightClusterValidationErrorInfo IPersistableModel<HDInsightClusterValidationErrorInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterValidationErrorInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<HDInsightClusterValidationErrorInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

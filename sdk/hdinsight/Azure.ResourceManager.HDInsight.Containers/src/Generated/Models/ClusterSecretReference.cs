@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Secret reference and corresponding properties of a key vault secret. </summary>
     public partial class ClusterSecretReference
     {
-        /// <summary> Initializes a new instance of ClusterSecretReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterSecretReference"/>. </summary>
         /// <param name="referenceName"> Reference name of the secret to be used in service configs. </param>
         /// <param name="keyVaultObjectType"> Type of key vault object: secret, key or certificate. </param>
         /// <param name="keyVaultObjectName"> Object identifier name of the secret in key vault. </param>
@@ -28,17 +32,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             KeyVaultObjectName = keyVaultObjectName;
         }
 
-        /// <summary> Initializes a new instance of ClusterSecretReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterSecretReference"/>. </summary>
         /// <param name="referenceName"> Reference name of the secret to be used in service configs. </param>
         /// <param name="keyVaultObjectType"> Type of key vault object: secret, key or certificate. </param>
         /// <param name="version"> Version of the secret in key vault. </param>
         /// <param name="keyVaultObjectName"> Object identifier name of the secret in key vault. </param>
-        internal ClusterSecretReference(string referenceName, KeyVaultObjectType keyVaultObjectType, string version, string keyVaultObjectName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterSecretReference(string referenceName, KeyVaultObjectType keyVaultObjectType, string version, string keyVaultObjectName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferenceName = referenceName;
             KeyVaultObjectType = keyVaultObjectType;
             Version = version;
             KeyVaultObjectName = keyVaultObjectName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterSecretReference"/> for deserialization. </summary>
+        internal ClusterSecretReference()
+        {
         }
 
         /// <summary> Reference name of the secret to be used in service configs. </summary>

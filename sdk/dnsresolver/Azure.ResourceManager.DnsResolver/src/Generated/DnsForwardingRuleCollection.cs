@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRuleForwardingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRuleForwardingRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRuleResource(Client, DnsForwardingRuleData.DeserializeDnsForwardingRuleData(e)), _dnsForwardingRuleForwardingRulesClientDiagnostics, Pipeline, "DnsForwardingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DnsForwardingRuleResource(Client, DnsForwardingRuleData.DeserializeDnsForwardingRuleData(e)), _dnsForwardingRuleForwardingRulesClientDiagnostics, Pipeline, "DnsForwardingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRuleForwardingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRuleForwardingRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRuleResource(Client, DnsForwardingRuleData.DeserializeDnsForwardingRuleData(e)), _dnsForwardingRuleForwardingRulesClientDiagnostics, Pipeline, "DnsForwardingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DnsForwardingRuleResource(Client, DnsForwardingRuleData.DeserializeDnsForwardingRuleData(e)), _dnsForwardingRuleForwardingRulesClientDiagnostics, Pipeline, "DnsForwardingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

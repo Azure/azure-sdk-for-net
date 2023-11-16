@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The allocation details of the per subscription free trial slot of the subscription. </summary>
     public partial class MarketplaceTrialQuota
     {
-        /// <summary> Initializes a new instance of MarketplaceTrialQuota. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MarketplaceTrialQuota"/>. </summary>
         internal MarketplaceTrialQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of MarketplaceTrialQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceTrialQuota"/>. </summary>
         /// <param name="availablePromotion"> Available enterprise promotion for the subscription. </param>
         /// <param name="grafanaResourceId"> Resource Id of the Grafana resource which is doing the trial. </param>
         /// <param name="trialStartOn"> The date and time in UTC of when the trial starts. </param>
         /// <param name="trialEndOn"> The date and time in UTC of when the trial ends. </param>
-        internal MarketplaceTrialQuota(AvailablePromotion? availablePromotion, ResourceIdentifier grafanaResourceId, DateTimeOffset? trialStartOn, DateTimeOffset? trialEndOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceTrialQuota(AvailablePromotion? availablePromotion, ResourceIdentifier grafanaResourceId, DateTimeOffset? trialStartOn, DateTimeOffset? trialEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AvailablePromotion = availablePromotion;
             GrafanaResourceId = grafanaResourceId;
             TrialStartOn = trialStartOn;
             TrialEndOn = trialEndOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Available enterprise promotion for the subscription. </summary>

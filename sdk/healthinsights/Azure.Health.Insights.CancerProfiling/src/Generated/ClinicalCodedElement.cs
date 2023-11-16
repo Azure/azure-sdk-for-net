@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -13,7 +14,10 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> A piece of clinical information, expressed as a code in a clinical coding system. </summary>
     public partial class ClinicalCodedElement
     {
-        /// <summary> Initializes a new instance of ClinicalCodedElement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalCodedElement"/>. </summary>
         /// <param name="system"> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </param>
         /// <param name="code"> The code within the given clinical coding system. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="system"/> or <paramref name="code"/> is null. </exception>
@@ -24,19 +28,27 @@ namespace Azure.Health.Insights.CancerProfiling
 
             System = system;
             Code = code;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalCodedElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalCodedElement"/>. </summary>
         /// <param name="system"> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </param>
         /// <param name="code"> The code within the given clinical coding system. </param>
         /// <param name="name"> The name of this coded concept in the coding system. </param>
         /// <param name="value"> A value associated with the code within the given clinical coding system. </param>
-        internal ClinicalCodedElement(string system, string code, string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalCodedElement(string system, string code, string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             System = system;
             Code = code;
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalCodedElement"/> for deserialization. </summary>
+        internal ClinicalCodedElement()
+        {
         }
 
         /// <summary> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </summary>

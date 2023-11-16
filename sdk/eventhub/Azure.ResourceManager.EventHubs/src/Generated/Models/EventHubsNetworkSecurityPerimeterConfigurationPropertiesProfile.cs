@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Information about current network profile. </summary>
     public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile()
         {
             AccessRules = new ChangeTrackingList<EventHubsNspAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
-        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IReadOnlyList<EventHubsNspAccessRule> accessRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IReadOnlyList<EventHubsNspAccessRule> accessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
             AccessRules = accessRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the resource. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Update properties for the corresponding partner topic of a channel. </summary>
     internal partial class PartnerUpdateTopicInfo
     {
-        /// <summary> Initializes a new instance of PartnerUpdateTopicInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerUpdateTopicInfo"/>. </summary>
         public PartnerUpdateTopicInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerUpdateTopicInfo"/>. </summary>
+        /// <param name="eventTypeInfo"> Event type info for the partner topic. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerUpdateTopicInfo(PartnerTopicEventTypeInfo eventTypeInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EventTypeInfo = eventTypeInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Event type info for the partner topic. </summary>

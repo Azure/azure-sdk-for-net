@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Hive Catalog Option for Flink cluster. </summary>
     public partial class FlinkHiveCatalogOption
     {
-        /// <summary> Initializes a new instance of FlinkHiveCatalogOption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlinkHiveCatalogOption"/>. </summary>
         /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
         /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>
         /// <param name="metastoreDBConnectionUserName"> User name for database connection. </param>
@@ -27,6 +31,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
             MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
             MetastoreDBConnectionUserName = metastoreDBConnectionUserName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlinkHiveCatalogOption"/>. </summary>
+        /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
+        /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>
+        /// <param name="metastoreDBConnectionUserName"> User name for database connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlinkHiveCatalogOption(string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
+            MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
+            MetastoreDBConnectionUserName = metastoreDBConnectionUserName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlinkHiveCatalogOption"/> for deserialization. </summary>
+        internal FlinkHiveCatalogOption()
+        {
         }
 
         /// <summary> Secret reference name from secretsProfile.secrets containing password for database connection. </summary>

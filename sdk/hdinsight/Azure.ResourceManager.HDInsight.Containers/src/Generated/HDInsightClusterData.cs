@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Containers.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.HDInsight.Containers
     /// </summary>
     public partial class HDInsightClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightClusterData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HDInsightClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="computeProfile"> The compute profile. </param>
         /// <param name="clusterProfile"> Cluster profile. </param>
         /// <param name="status"> Business status of the resource. </param>
-        internal HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightProvisioningStatus? provisioningState, string clusterType, string deploymentId, ComputeProfile computeProfile, ClusterProfile clusterProfile, string status) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightProvisioningStatus? provisioningState, string clusterType, string deploymentId, ComputeProfile computeProfile, ClusterProfile clusterProfile, string status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ClusterType = clusterType;
@@ -45,6 +50,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
             ComputeProfile = computeProfile;
             ClusterProfile = clusterProfile;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterData"/> for deserialization. </summary>
+        internal HDInsightClusterData()
+        {
         }
 
         /// <summary> Provisioning state of the resource. </summary>

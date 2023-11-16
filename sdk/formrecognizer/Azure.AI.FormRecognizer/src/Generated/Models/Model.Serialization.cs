@@ -5,17 +5,84 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class Model
+    internal partial class Model : IUtf8JsonSerializable, IJsonModel<Model>
     {
-        internal static Model DeserializeModel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Model>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<Model>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<Model>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<Model>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("modelInfo"u8);
+            writer.WriteObjectValue(ModelInfo);
+            if (Optional.IsDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteObjectValue(Keys);
+            }
+            if (Optional.IsDefined(TrainResult))
+            {
+                writer.WritePropertyName("trainResult"u8);
+                writer.WriteObjectValue(TrainResult);
+            }
+            if (Optional.IsCollectionDefined(ComposedTrainResults))
+            {
+                writer.WritePropertyName("composedTrainResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in ComposedTrainResults)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        Model IJsonModel<Model>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Model)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeModel(document.RootElement, options);
+        }
+
+        internal static Model DeserializeModel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +91,8 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<KeysResult> keys = default;
             Optional<TrainResult> trainResult = default;
             Optional<IReadOnlyList<TrainResult>> composedTrainResults = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelInfo"u8))
@@ -63,8 +132,38 @@ namespace Azure.AI.FormRecognizer.Models
                     composedTrainResults = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Model(modelInfo, keys.Value, trainResult.Value, Optional.ToList(composedTrainResults));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Model(modelInfo, keys.Value, trainResult.Value, Optional.ToList(composedTrainResults), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Model>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Model)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        Model IPersistableModel<Model>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Model)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeModel(document.RootElement, options);
+        }
+
+        string IPersistableModel<Model>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

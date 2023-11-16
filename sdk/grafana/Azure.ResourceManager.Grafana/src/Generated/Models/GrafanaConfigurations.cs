@@ -5,24 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> Server configurations of a Grafana instance. </summary>
     internal partial class GrafanaConfigurations
     {
-        /// <summary> Initializes a new instance of GrafanaConfigurations. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GrafanaConfigurations"/>. </summary>
         public GrafanaConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of GrafanaConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaConfigurations"/>. </summary>
         /// <param name="smtp">
         /// Email server settings.
         /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
         /// </param>
-        internal GrafanaConfigurations(Smtp smtp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaConfigurations(Smtp smtp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Smtp = smtp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsSmsEventBaseProperties
+    public partial class AcsSmsEventBaseProperties : IUtf8JsonSerializable, IJsonModel<AcsSmsEventBaseProperties>
     {
-        internal static AcsSmsEventBaseProperties DeserializeAcsSmsEventBaseProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsSmsEventBaseProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AcsSmsEventBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AcsSmsEventBaseProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AcsSmsEventBaseProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(From))
+            {
+                writer.WritePropertyName("from"u8);
+                writer.WriteStringValue(From);
+            }
+            if (Optional.IsDefined(To))
+            {
+                writer.WritePropertyName("to"u8);
+                writer.WriteStringValue(To);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsSmsEventBaseProperties IJsonModel<AcsSmsEventBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsSmsEventBaseProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsSmsEventBaseProperties(document.RootElement, options);
+        }
+
+        internal static AcsSmsEventBaseProperties DeserializeAcsSmsEventBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> messageId = default;
             Optional<string> @from = default;
             Optional<string> to = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -38,8 +101,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     to = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsSmsEventBaseProperties(messageId.Value, @from.Value, to.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsSmsEventBaseProperties(messageId.Value, @from.Value, to.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsSmsEventBaseProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsSmsEventBaseProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsSmsEventBaseProperties IPersistableModel<AcsSmsEventBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsSmsEventBaseProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsSmsEventBaseProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<AcsSmsEventBaseProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

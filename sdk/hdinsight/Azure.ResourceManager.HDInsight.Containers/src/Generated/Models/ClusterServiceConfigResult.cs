@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster instance service config. </summary>
     public partial class ClusterServiceConfigResult
     {
-        /// <summary> Initializes a new instance of ClusterServiceConfigResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigResult"/>. </summary>
         internal ClusterServiceConfigResult()
         {
             CustomKeys = new ChangeTrackingDictionary<string, string>();
             DefaultKeys = new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>();
         }
 
-        /// <summary> Initializes a new instance of ClusterServiceConfigResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigResult"/>. </summary>
         /// <param name="serviceName"> Service Config Name. </param>
         /// <param name="fileName"> File Name. </param>
         /// <param name="content"> Content in the service config file. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="path"> Config file path. </param>
         /// <param name="customKeys"> The custom keys. </param>
         /// <param name="defaultKeys"> The default keys. </param>
-        internal ClusterServiceConfigResult(string serviceName, string fileName, string content, string componentName, string serviceConfigListResultPropertiesType, string path, IReadOnlyDictionary<string, string> customKeys, IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterServiceConfigResult(string serviceName, string fileName, string content, string componentName, string serviceConfigListResultPropertiesType, string path, IReadOnlyDictionary<string, string> customKeys, IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceName = serviceName;
             FileName = fileName;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Path = path;
             CustomKeys = customKeys;
             DefaultKeys = defaultKeys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Service Config Name. </summary>

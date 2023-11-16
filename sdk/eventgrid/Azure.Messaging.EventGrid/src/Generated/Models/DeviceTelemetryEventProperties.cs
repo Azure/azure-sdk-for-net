@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a device telemetry event (DeviceTelemetry). </summary>
     public partial class DeviceTelemetryEventProperties
     {
-        /// <summary> Initializes a new instance of DeviceTelemetryEventProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceTelemetryEventProperties"/>. </summary>
         internal DeviceTelemetryEventProperties()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
             SystemProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DeviceTelemetryEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceTelemetryEventProperties"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
-        internal DeviceTelemetryEventProperties(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceTelemetryEventProperties(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Body = body;
             Properties = properties;
             SystemProperties = systemProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The content of the message from the device. </summary>

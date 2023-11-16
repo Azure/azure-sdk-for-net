@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Contact Details. </summary>
     public partial class EdgeOrderAddressContactDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderAddressContactDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
@@ -31,19 +34,26 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EmailList = emailList.ToList();
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderAddressContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
         /// <param name="mobile"> Mobile number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
-        internal EdgeOrderAddressContactDetails(string contactName, string phone, string phoneExtension, string mobile, IList<string> emailList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderAddressContactDetails(string contactName, string phone, string phoneExtension, string mobile, IList<string> emailList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactName = contactName;
             Phone = phone;
             PhoneExtension = phoneExtension;
             Mobile = mobile;
             EmailList = emailList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/> for deserialization. </summary>
+        internal EdgeOrderAddressContactDetails()
+        {
         }
 
         /// <summary> Contact name of the person. </summary>

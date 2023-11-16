@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Desktop properties that can be patched. </summary>
     public partial class VirtualDesktopPatch
     {
-        /// <summary> Initializes a new instance of VirtualDesktopPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualDesktopPatch"/>. </summary>
         public VirtualDesktopPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualDesktopPatch"/>. </summary>
+        /// <param name="tags"> tags to be updated. </param>
+        /// <param name="description"> Description of Desktop. </param>
+        /// <param name="friendlyName"> Friendly name of Desktop. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualDesktopPatch(IDictionary<string, string> tags, string description, string friendlyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Description = description;
+            FriendlyName = friendlyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> tags to be updated. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Identity Profile with details of an MSI. </summary>
     public partial class HDInsightIdentityProfile
     {
-        /// <summary> Initializes a new instance of HDInsightIdentityProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightIdentityProfile"/>. </summary>
         /// <param name="msiResourceId"> ResourceId of the MSI. </param>
         /// <param name="msiClientId"> ClientId of the MSI. </param>
         /// <param name="msiObjectId"> ObjectId of the MSI. </param>
@@ -27,6 +31,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             MsiResourceId = msiResourceId;
             MsiClientId = msiClientId;
             MsiObjectId = msiObjectId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightIdentityProfile"/>. </summary>
+        /// <param name="msiResourceId"> ResourceId of the MSI. </param>
+        /// <param name="msiClientId"> ClientId of the MSI. </param>
+        /// <param name="msiObjectId"> ObjectId of the MSI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightIdentityProfile(ResourceIdentifier msiResourceId, string msiClientId, string msiObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MsiResourceId = msiResourceId;
+            MsiClientId = msiClientId;
+            MsiObjectId = msiObjectId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightIdentityProfile"/> for deserialization. </summary>
+        internal HDInsightIdentityProfile()
+        {
         }
 
         /// <summary> ResourceId of the MSI. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster service configs. </summary>
     public partial class ClusterServiceConfigsProfile
     {
-        /// <summary> Initializes a new instance of ClusterServiceConfigsProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigsProfile"/>. </summary>
         /// <param name="serviceName"> Name of the service the configurations should apply to. </param>
         /// <param name="configs"> List of service configs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="configs"/> is null. </exception>
@@ -28,13 +31,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Configs = configs.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterServiceConfigsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigsProfile"/>. </summary>
         /// <param name="serviceName"> Name of the service the configurations should apply to. </param>
         /// <param name="configs"> List of service configs. </param>
-        internal ClusterServiceConfigsProfile(string serviceName, IList<ClusterServiceConfig> configs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterServiceConfigsProfile(string serviceName, IList<ClusterServiceConfig> configs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceName = serviceName;
             Configs = configs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigsProfile"/> for deserialization. </summary>
+        internal ClusterServiceConfigsProfile()
+        {
         }
 
         /// <summary> Name of the service the configurations should apply to. </summary>

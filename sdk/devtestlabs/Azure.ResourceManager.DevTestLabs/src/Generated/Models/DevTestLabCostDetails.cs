@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The properties of a lab cost item. </summary>
     public partial class DevTestLabCostDetails
     {
-        /// <summary> Initializes a new instance of DevTestLabCostDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostDetails"/>. </summary>
         internal DevTestLabCostDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCostDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostDetails"/>. </summary>
         /// <param name="on"> The date of the cost item. </param>
         /// <param name="cost"> The cost component of the cost item. </param>
         /// <param name="costType"> The type of the cost. </param>
-        internal DevTestLabCostDetails(DateTimeOffset? @on, double? cost, DevTestLabCostType? costType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCostDetails(DateTimeOffset? @on, double? cost, DevTestLabCostType? costType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             On = @on;
             Cost = cost;
             CostType = costType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The date of the cost item. </summary>

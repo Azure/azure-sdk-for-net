@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterGitCatalog : IUtf8JsonSerializable
+    public partial class DevCenterGitCatalog : IUtf8JsonSerializable, IJsonModel<DevCenterGitCatalog>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterGitCatalog>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DevCenterGitCatalog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DevCenterGitCatalog>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DevCenterGitCatalog>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -36,11 +46,40 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevCenterGitCatalog DeserializeDevCenterGitCatalog(JsonElement element)
+        DevCenterGitCatalog IJsonModel<DevCenterGitCatalog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevCenterGitCatalog)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterGitCatalog(document.RootElement, options);
+        }
+
+        internal static DevCenterGitCatalog DeserializeDevCenterGitCatalog(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +88,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             Optional<string> branch = default;
             Optional<string> secretIdentifier = default;
             Optional<string> path = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -75,8 +116,38 @@ namespace Azure.ResourceManager.DevCenter.Models
                     path = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevCenterGitCatalog(uri.Value, branch.Value, secretIdentifier.Value, path.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevCenterGitCatalog(uri.Value, branch.Value, secretIdentifier.Value, path.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevCenterGitCatalog>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevCenterGitCatalog)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DevCenterGitCatalog IPersistableModel<DevCenterGitCatalog>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevCenterGitCatalog)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDevCenterGitCatalog(document.RootElement, options);
+        }
+
+        string IPersistableModel<DevCenterGitCatalog>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

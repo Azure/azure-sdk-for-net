@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
@@ -19,20 +21,25 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class ShareDataSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of ShareDataSetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareDataSetData"/>. </summary>
         public ShareDataSetData()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareDataSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareDataSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
-        internal ShareDataSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareDataSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of data set. </summary>

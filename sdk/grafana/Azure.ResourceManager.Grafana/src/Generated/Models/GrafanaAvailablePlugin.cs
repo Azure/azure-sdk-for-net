@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> Available plugins of grafana. </summary>
     public partial class GrafanaAvailablePlugin
     {
-        /// <summary> Initializes a new instance of GrafanaAvailablePlugin. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePlugin"/>. </summary>
         internal GrafanaAvailablePlugin()
         {
         }
 
-        /// <summary> Initializes a new instance of GrafanaAvailablePlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePlugin"/>. </summary>
         /// <param name="pluginId"> Grafana plugin id. </param>
         /// <param name="name"> Grafana plugin display name. </param>
-        internal GrafanaAvailablePlugin(string pluginId, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaAvailablePlugin(string pluginId, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PluginId = pluginId;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Grafana plugin id. </summary>

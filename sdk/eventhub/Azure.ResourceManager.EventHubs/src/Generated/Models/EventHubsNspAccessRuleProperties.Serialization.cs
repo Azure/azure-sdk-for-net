@@ -5,17 +5,113 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNspAccessRuleProperties
+    public partial class EventHubsNspAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<EventHubsNspAccessRuleProperties>
     {
-        internal static EventHubsNspAccessRuleProperties DeserializeEventHubsNspAccessRuleProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNspAccessRuleProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EventHubsNspAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EventHubsNspAccessRuleProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EventHubsNspAccessRuleProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Direction))
+            {
+                writer.WritePropertyName("direction"u8);
+                writer.WriteStringValue(Direction.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(AddressPrefixes))
+            {
+                writer.WritePropertyName("addressPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddressPrefixes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Subscriptions))
+            {
+                writer.WritePropertyName("subscriptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Subscriptions)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+                {
+                    writer.WritePropertyName("networkSecurityPerimeters"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NetworkSecurityPerimeters)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(FullyQualifiedDomainNames))
+                {
+                    writer.WritePropertyName("fullyQualifiedDomainNames"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in FullyQualifiedDomainNames)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EventHubsNspAccessRuleProperties IJsonModel<EventHubsNspAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsNspAccessRuleProperties(document.RootElement, options);
+        }
+
+        internal static EventHubsNspAccessRuleProperties DeserializeEventHubsNspAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +121,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<IReadOnlyList<SubResource>> subscriptions = default;
             Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeter>> networkSecurityPerimeters = default;
             Optional<IReadOnlyList<string>> fullyQualifiedDomainNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -92,8 +190,38 @@ namespace Azure.ResourceManager.EventHubs.Models
                     fullyQualifiedDomainNames = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventHubsNspAccessRuleProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventHubsNspAccessRuleProperties IPersistableModel<EventHubsNspAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventHubsNspAccessRuleProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<EventHubsNspAccessRuleProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Client authentication settings for namespace resource. </summary>
     internal partial class ClientAuthenticationSettings
     {
-        /// <summary> Initializes a new instance of ClientAuthenticationSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClientAuthenticationSettings"/>. </summary>
         public ClientAuthenticationSettings()
         {
             AlternativeAuthenticationNameSources = new ChangeTrackingList<AlternativeAuthenticationNameSource>();
         }
 
-        /// <summary> Initializes a new instance of ClientAuthenticationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientAuthenticationSettings"/>. </summary>
         /// <param name="alternativeAuthenticationNameSources"> Alternative authentication name sources related to client authentication settings for namespace resource. </param>
-        internal ClientAuthenticationSettings(IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientAuthenticationSettings(IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlternativeAuthenticationNameSources = alternativeAuthenticationNameSources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Alternative authentication name sources related to client authentication settings for namespace resource. </summary>

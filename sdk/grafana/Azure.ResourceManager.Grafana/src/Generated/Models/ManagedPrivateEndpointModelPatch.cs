@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The parameters for a PATCH request to a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpointModelPatch
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelPatch"/>. </summary>
         public ManagedPrivateEndpointModelPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelPatch"/>. </summary>
+        /// <param name="tags"> The new tags of the managed private endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedPrivateEndpointModelPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The new tags of the managed private endpoint. </summary>

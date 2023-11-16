@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> SKU parameters supplied to the create namespace operation. </summary>
     public partial class EventHubsSku
     {
-        /// <summary> Initializes a new instance of EventHubsSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         public EventHubsSku(EventHubsSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of EventHubsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
         /// <param name="capacity"> The Event Hubs throughput units for Basic or Standard tiers, where value should be 0 to 20 throughput units. The Event Hubs premium units for Premium tier, where value should be 0 to 10 premium units. </param>
-        internal EventHubsSku(EventHubsSkuName name, EventHubsSkuTier? tier, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsSku(EventHubsSkuName name, EventHubsSkuTier? tier, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsSku"/> for deserialization. </summary>
+        internal EventHubsSku()
+        {
         }
 
         /// <summary> Name of this SKU. </summary>

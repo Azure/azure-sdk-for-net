@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentTypeDetails
+    public partial class DocumentTypeDetails : IUtf8JsonSerializable, IJsonModel<DocumentTypeDetails>
     {
-        internal static DocumentTypeDetails DeserializeDocumentTypeDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentTypeDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DocumentTypeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentTypeDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentTypeDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(BuildMode))
+            {
+                writer.WritePropertyName("buildMode"u8);
+                writer.WriteStringValue(BuildMode.Value.ToString());
+            }
+            writer.WritePropertyName("fieldSchema"u8);
+            writer.WriteStartObject();
+            foreach (var item in FieldSchema)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+            if (Optional.IsCollectionDefined(FieldConfidence))
+            {
+                writer.WritePropertyName("fieldConfidence"u8);
+                writer.WriteStartObject();
+                foreach (var item in FieldConfidence)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentTypeDetails IJsonModel<DocumentTypeDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentTypeDetails(document.RootElement, options);
+        }
+
+        internal static DocumentTypeDetails DeserializeDocumentTypeDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +97,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<DocumentBuildMode> buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
             Optional<IReadOnlyDictionary<string, float>> fieldConfidence = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -63,8 +139,38 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     fieldConfidence = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentTypeDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentTypeDetails IPersistableModel<DocumentTypeDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentTypeDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentTypeDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

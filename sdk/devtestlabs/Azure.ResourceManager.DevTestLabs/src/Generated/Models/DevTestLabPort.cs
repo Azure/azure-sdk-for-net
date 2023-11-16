@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a network port. </summary>
     public partial class DevTestLabPort
     {
-        /// <summary> Initializes a new instance of DevTestLabPort. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPort"/>. </summary>
         public DevTestLabPort()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPort"/>. </summary>
         /// <param name="transportProtocol"> Protocol type of the port. </param>
         /// <param name="backendPort"> Backend port of the target virtual machine. </param>
-        internal DevTestLabPort(DevTestLabTransportProtocol? transportProtocol, int? backendPort)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabPort(DevTestLabTransportProtocol? transportProtocol, int? backendPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TransportProtocol = transportProtocol;
             BackendPort = backendPort;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Protocol type of the port. </summary>

@@ -7,15 +7,86 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class DocumentResult
+    internal partial class DocumentResult : IUtf8JsonSerializable, IJsonModel<DocumentResult>
     {
-        internal static DocumentResult DeserializeDocumentResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DocumentResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("docType"u8);
+            writer.WriteStringValue(DocType);
+            if (Optional.IsDefined(ModelId))
+            {
+                writer.WritePropertyName("modelId"u8);
+                writer.WriteStringValue(ModelId.Value);
+            }
+            writer.WritePropertyName("pageRange"u8);
+            writer.WriteStartArray();
+            foreach (var item in PageRange)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(DocTypeConfidence))
+            {
+                writer.WritePropertyName("docTypeConfidence"u8);
+                writer.WriteNumberValue(DocTypeConfidence.Value);
+            }
+            writer.WritePropertyName("fields"u8);
+            writer.WriteStartObject();
+            foreach (var item in Fields)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentResult IJsonModel<DocumentResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentResult(document.RootElement, options);
+        }
+
+        internal static DocumentResult DeserializeDocumentResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +96,8 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyList<int> pageRange = default;
             Optional<float> docTypeConfidence = default;
             IReadOnlyDictionary<string, FieldValue_internal> fields = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("docType"u8))
@@ -70,8 +143,38 @@ namespace Azure.AI.FormRecognizer.Models
                     fields = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentResult(docType, Optional.ToNullable(modelId), pageRange, Optional.ToNullable(docTypeConfidence), fields);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentResult(docType, Optional.ToNullable(modelId), pageRange, Optional.ToNullable(docTypeConfidence), fields, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentResult IPersistableModel<DocumentResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     internal partial class ImportJobsListOptions
     {
-        /// <summary> Initializes a new instance of ImportJobsListOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImportJobsListOptions"/>. </summary>
         public ImportJobsListOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportJobsListOptions"/>. </summary>
+        /// <param name="traceparent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="tracestate"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="maxItemsPerPage"> The maximum number of items to retrieve per request. The server may choose to return less than the requested number. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImportJobsListOptions(string traceparent, string tracestate, int? maxItemsPerPage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Traceparent = traceparent;
+            Tracestate = tracestate;
+            MaxItemsPerPage = maxItemsPerPage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identifies the request in a distributed tracing system. </summary>

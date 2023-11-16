@@ -14,25 +14,30 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The details of a Dynatrace single sign-on. </summary>
     public partial class DynatraceSingleSignOnProperties
     {
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnProperties"/>. </summary>
         public DynatraceSingleSignOnProperties()
         {
             AadDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnProperties"/>. </summary>
         /// <param name="singleSignOnState"> State of Single Sign On. </param>
         /// <param name="enterpriseAppId"> Version of the Dynatrace agent installed on the VM. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
         /// <param name="aadDomains"> array of Aad(azure active directory) domains. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal DynatraceSingleSignOnProperties(DynatraceSingleSignOnState? singleSignOnState, Guid? enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, DynatraceProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceSingleSignOnProperties(DynatraceSingleSignOnState? singleSignOnState, Guid? enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
             SingleSignOnUri = singleSignOnUri;
             AadDomains = aadDomains;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of Single Sign On. </summary>

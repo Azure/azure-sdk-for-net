@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> One credential result item. </summary>
     public partial class FleetCredentialResult
     {
-        /// <summary> Initializes a new instance of FleetCredentialResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FleetCredentialResult"/>. </summary>
         internal FleetCredentialResult()
         {
         }
 
-        /// <summary> Initializes a new instance of FleetCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetCredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
-        internal FleetCredentialResult(string name, byte[] value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FleetCredentialResult(string name, byte[] value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the credential. </summary>

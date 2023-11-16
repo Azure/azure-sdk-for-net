@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on DNS forwarding rulesets. </summary>
     internal partial class DnsForwardingRulesetListResult
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetListResult"/>. </summary>
         internal DnsForwardingRulesetListResult()
         {
             Value = new ChangeTrackingList<DnsForwardingRulesetData>();
         }
 
-        /// <summary> Initializes a new instance of DnsForwardingRulesetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetListResult"/>. </summary>
         /// <param name="value"> Enumeration of the DNS forwarding rulesets. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal DnsForwardingRulesetListResult(IReadOnlyList<DnsForwardingRulesetData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsForwardingRulesetListResult(IReadOnlyList<DnsForwardingRulesetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enumeration of the DNS forwarding rulesets. </summary>

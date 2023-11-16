@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Media.JobStateChange event. </summary>
     public partial class MediaJobStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobStateChangeEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobStateChangeEventData"/>. </summary>
         internal MediaJobStateChangeEventData()
         {
             CorrelationData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobStateChangeEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobStateChangeEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
-        internal MediaJobStateChangeEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobStateChangeEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreviousState = previousState;
             State = state;
             CorrelationData = correlationData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The previous state of the Job. </summary>

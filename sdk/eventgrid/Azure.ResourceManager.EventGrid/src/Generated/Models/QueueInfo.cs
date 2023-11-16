@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Queue info for event subscription. </summary>
     public partial class QueueInfo
     {
-        /// <summary> Initializes a new instance of QueueInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueueInfo"/>. </summary>
         public QueueInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of QueueInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueInfo"/>. </summary>
         /// <param name="receiveLockDurationInSeconds">
         /// Maximum period in seconds in which once the message is in received (by the client) state and waiting to be accepted, released or rejected.
         /// If this time elapsed after a message has been received by the client and not transitioned into accepted (not processed), released or rejected,
@@ -46,12 +50,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         ///     - \'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.
         ///     - \'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.
         /// </param>
-        internal QueueInfo(int? receiveLockDurationInSeconds, int? maxDeliveryCount, DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity, TimeSpan? eventTimeToLive)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueInfo(int? receiveLockDurationInSeconds, int? maxDeliveryCount, DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity, TimeSpan? eventTimeToLive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReceiveLockDurationInSeconds = receiveLockDurationInSeconds;
             MaxDeliveryCount = maxDeliveryCount;
             DeadLetterDestinationWithResourceIdentity = deadLetterDestinationWithResourceIdentity;
             EventTimeToLive = eventTimeToLive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

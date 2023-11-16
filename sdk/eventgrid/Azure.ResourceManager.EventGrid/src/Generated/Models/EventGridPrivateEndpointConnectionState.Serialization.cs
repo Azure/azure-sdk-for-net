@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridPrivateEndpointConnectionState : IUtf8JsonSerializable
+    public partial class EventGridPrivateEndpointConnectionState : IUtf8JsonSerializable, IJsonModel<EventGridPrivateEndpointConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridPrivateEndpointConnectionState>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EventGridPrivateEndpointConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EventGridPrivateEndpointConnectionState>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EventGridPrivateEndpointConnectionState>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridPrivateEndpointConnectionState DeserializeEventGridPrivateEndpointConnectionState(JsonElement element)
+        EventGridPrivateEndpointConnectionState IJsonModel<EventGridPrivateEndpointConnectionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridPrivateEndpointConnectionState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridPrivateEndpointConnectionState(document.RootElement, options);
+        }
+
+        internal static EventGridPrivateEndpointConnectionState DeserializeEventGridPrivateEndpointConnectionState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<EventGridPrivateEndpointPersistedConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventGridPrivateEndpointConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridPrivateEndpointConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventGridPrivateEndpointConnectionState>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridPrivateEndpointConnectionState)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventGridPrivateEndpointConnectionState IPersistableModel<EventGridPrivateEndpointConnectionState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridPrivateEndpointConnectionState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventGridPrivateEndpointConnectionState(document.RootElement, options);
+        }
+
+        string IPersistableModel<EventGridPrivateEndpointConnectionState>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

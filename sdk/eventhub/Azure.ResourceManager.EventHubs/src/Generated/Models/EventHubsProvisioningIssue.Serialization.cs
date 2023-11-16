@@ -5,32 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsProvisioningIssue : IUtf8JsonSerializable
+    public partial class EventHubsProvisioningIssue : IUtf8JsonSerializable, IJsonModel<EventHubsProvisioningIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsProvisioningIssue>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EventHubsProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EventHubsProvisioningIssue>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EventHubsProvisioningIssue>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteObjectValue(Properties);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubsProvisioningIssue DeserializeEventHubsProvisioningIssue(JsonElement element)
+        EventHubsProvisioningIssue IJsonModel<EventHubsProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsProvisioningIssue(document.RootElement, options);
+        }
+
+        internal static EventHubsProvisioningIssue DeserializeEventHubsProvisioningIssue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<EventHubsProvisioningIssueProperties> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,8 +97,38 @@ namespace Azure.ResourceManager.EventHubs.Models
                     properties = EventHubsProvisioningIssueProperties.DeserializeEventHubsProvisioningIssueProperties(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubsProvisioningIssue(name.Value, properties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubsProvisioningIssue(name.Value, properties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventHubsProvisioningIssue>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventHubsProvisioningIssue IPersistableModel<EventHubsProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventHubsProvisioningIssue(document.RootElement, options);
+        }
+
+        string IPersistableModel<EventHubsProvisioningIssue>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

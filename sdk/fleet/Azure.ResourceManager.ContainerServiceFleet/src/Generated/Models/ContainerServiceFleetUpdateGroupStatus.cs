@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of a UpdateGroup. </summary>
     public partial class ContainerServiceFleetUpdateGroupStatus
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateGroupStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroupStatus"/>. </summary>
         internal ContainerServiceFleetUpdateGroupStatus()
         {
             Members = new ChangeTrackingList<MemberUpdateStatus>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateGroupStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroupStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateGroup. </param>
         /// <param name="name"> The name of the UpdateGroup. </param>
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
-        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<MemberUpdateStatus> members)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<MemberUpdateStatus> members, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Name = name;
             Members = members;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the UpdateGroup. </summary>

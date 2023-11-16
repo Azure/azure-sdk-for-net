@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Collection of workspace object with a next link. </summary>
     internal partial class WorkspaceList
     {
-        /// <summary> Initializes a new instance of WorkspaceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         internal WorkspaceList()
         {
             Value = new ChangeTrackingList<HealthcareApisWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page. </param>
         /// <param name="value"> Collection of resources. </param>
-        internal WorkspaceList(string nextLink, IReadOnlyList<HealthcareApisWorkspaceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceList(string nextLink, IReadOnlyList<HealthcareApisWorkspaceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page. </summary>

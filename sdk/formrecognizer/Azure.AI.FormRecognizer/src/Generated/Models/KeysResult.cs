@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Keys extracted by the custom model. </summary>
     internal partial class KeysResult
     {
-        /// <summary> Initializes a new instance of KeysResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeysResult"/>. </summary>
         /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusters"/> is null. </exception>
         internal KeysResult(IReadOnlyDictionary<string, IList<string>> clusters)
@@ -22,6 +25,20 @@ namespace Azure.AI.FormRecognizer.Models
             Argument.AssertNotNull(clusters, nameof(clusters));
 
             Clusters = clusters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeysResult"/>. </summary>
+        /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeysResult(IReadOnlyDictionary<string, IList<string>> clusters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Clusters = clusters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeysResult"/> for deserialization. </summary>
+        internal KeysResult()
+        {
         }
 
         /// <summary> Object mapping clusterIds to a list of keys. </summary>

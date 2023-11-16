@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Status of the instance view. </summary>
     public partial class ClusterInstanceViewStatus
     {
-        /// <summary> Initializes a new instance of ClusterInstanceViewStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewStatus"/>. </summary>
         /// <param name="ready"> The cluster ready status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ready"/> is null. </exception>
         internal ClusterInstanceViewStatus(string ready)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Ready = ready;
         }
 
-        /// <summary> Initializes a new instance of ClusterInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewStatus"/>. </summary>
         /// <param name="ready"> The cluster ready status. </param>
         /// <param name="reason"> The status reason. </param>
         /// <param name="message"> The additional message. </param>
-        internal ClusterInstanceViewStatus(string ready, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterInstanceViewStatus(string ready, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ready = ready;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewStatus"/> for deserialization. </summary>
+        internal ClusterInstanceViewStatus()
+        {
         }
 
         /// <summary> The cluster ready status. </summary>

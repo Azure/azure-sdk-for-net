@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Device Update account integration with IoT Hub settings. </summary>
     public partial class IotHubSettings
     {
-        /// <summary> Initializes a new instance of IotHubSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubSettings"/>. </summary>
         /// <param name="resourceId"> IoTHub resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public IotHubSettings(string resourceId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubSettings"/>. </summary>
+        /// <param name="resourceId"> IoTHub resource ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubSettings(string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubSettings"/> for deserialization. </summary>
+        internal IotHubSettings()
+        {
         }
 
         /// <summary> IoTHub resource ID. </summary>

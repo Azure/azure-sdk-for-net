@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The properties for a group information object. </summary>
     public partial class DigitalTwinsPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateLinkResourceProperties"/>. </summary>
         internal DigitalTwinsPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
-        internal DigitalTwinsPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The group id. </summary>

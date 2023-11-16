@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Guest configuration assignment properties. </summary>
     public partial class GuestConfigurationAssignmentProperties
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentProperties"/>. </summary>
         public GuestConfigurationAssignmentProperties()
         {
             VmssVmList = new ChangeTrackingList<GuestConfigurationVmssVmInfo>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentProperties"/>. </summary>
         /// <param name="targetResourceId"> VM resource Id. </param>
         /// <param name="guestConfiguration"> The guest configuration to assign. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="resourceType"> Type of the resource - VMSS / VM. </param>
         /// <param name="vmssVmList"> The list of VM Compliance data for VMSS. </param>
-        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
@@ -47,6 +51,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             ProvisioningState = provisioningState;
             ResourceType = resourceType;
             VmssVmList = vmssVmList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> VM resource Id. </summary>

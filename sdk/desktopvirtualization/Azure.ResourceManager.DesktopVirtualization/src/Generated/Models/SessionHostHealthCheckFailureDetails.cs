@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Contains details on the failure. </summary>
     public partial class SessionHostHealthCheckFailureDetails
     {
-        /// <summary> Initializes a new instance of SessionHostHealthCheckFailureDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SessionHostHealthCheckFailureDetails"/>. </summary>
         internal SessionHostHealthCheckFailureDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SessionHostHealthCheckFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostHealthCheckFailureDetails"/>. </summary>
         /// <param name="message"> Failure message: hints on what is wrong and how to recover. </param>
         /// <param name="errorCode"> Error code corresponding for the failure. </param>
         /// <param name="lastHealthCheckOn"> The timestamp of the last update. </param>
-        internal SessionHostHealthCheckFailureDetails(string message, int? errorCode, DateTimeOffset? lastHealthCheckOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SessionHostHealthCheckFailureDetails(string message, int? errorCode, DateTimeOffset? lastHealthCheckOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             ErrorCode = errorCode;
             LastHealthCheckOn = lastHealthCheckOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Failure message: hints on what is wrong and how to recover. </summary>

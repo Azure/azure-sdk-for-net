@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The current billing term of the SaaS Subscription. </summary>
     public partial class SubscriptionTerm
     {
-        /// <summary> Initializes a new instance of SubscriptionTerm. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionTerm"/>. </summary>
         internal SubscriptionTerm()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionTerm. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionTerm"/>. </summary>
         /// <param name="termUnit"> The unit of the billing term. </param>
         /// <param name="startOn"> The date and time in UTC of when the billing term starts. </param>
         /// <param name="endOn"> The date and time in UTC of when the billing term ends. </param>
-        internal SubscriptionTerm(string termUnit, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionTerm(string termUnit, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TermUnit = termUnit;
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unit of the billing term. </summary>

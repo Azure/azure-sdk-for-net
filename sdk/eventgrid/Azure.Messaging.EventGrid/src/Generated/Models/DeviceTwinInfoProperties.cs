@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Properties JSON element. </summary>
     public partial class DeviceTwinInfoProperties
     {
-        /// <summary> Initializes a new instance of DeviceTwinInfoProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoProperties"/>. </summary>
         internal DeviceTwinInfoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceTwinInfoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoProperties"/>. </summary>
         /// <param name="desired"> A portion of the properties that can be written only by the application back-end, and read by the device. </param>
         /// <param name="reported"> A portion of the properties that can be written only by the device, and read by the application back-end. </param>
-        internal DeviceTwinInfoProperties(DeviceTwinProperties desired, DeviceTwinProperties reported)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceTwinInfoProperties(DeviceTwinProperties desired, DeviceTwinProperties reported, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Desired = desired;
             Reported = reported;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A portion of the properties that can be written only by the application back-end, and read by the device. </summary>

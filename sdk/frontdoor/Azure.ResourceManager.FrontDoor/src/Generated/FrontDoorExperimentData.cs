@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorExperimentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorExperimentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorExperimentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorExperimentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="resourceState"> Resource status. </param>
         /// <param name="status"> The description of Experiment status from the server side. </param>
         /// <param name="scriptFileUri"> The uri to the Script used in the Experiment. </param>
-        internal FrontDoorExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, FrontDoorExperimentEndpointProperties experimentEndpointA, FrontDoorExperimentEndpointProperties experimentEndpointB, FrontDoorExperimentState? enabledState, NetworkExperimentResourceState? resourceState, string status, Uri scriptFileUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, FrontDoorExperimentEndpointProperties experimentEndpointA, FrontDoorExperimentEndpointProperties experimentEndpointB, FrontDoorExperimentState? enabledState, NetworkExperimentResourceState? resourceState, string status, Uri scriptFileUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             ExperimentEndpointA = experimentEndpointA;
@@ -48,6 +52,12 @@ namespace Azure.ResourceManager.FrontDoor
             ResourceState = resourceState;
             Status = status;
             ScriptFileUri = scriptFileUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/> for deserialization. </summary>
+        internal FrontDoorExperimentData()
+        {
         }
 
         /// <summary> The description of the details or intents of the Experiment. </summary>

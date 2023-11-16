@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Topics Configuration. </summary>
     internal partial class TopicsConfiguration
     {
-        /// <summary> Initializes a new instance of TopicsConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicsConfiguration"/>. </summary>
         public TopicsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TopicsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicsConfiguration"/>. </summary>
         /// <param name="hostname"> The hostname for the topics configuration. This is a read-only property. </param>
-        internal TopicsConfiguration(string hostname)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicsConfiguration(string hostname, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hostname = hostname;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The hostname for the topics configuration. This is a read-only property. </summary>

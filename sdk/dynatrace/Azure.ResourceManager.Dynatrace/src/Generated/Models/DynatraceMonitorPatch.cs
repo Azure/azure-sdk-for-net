@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,32 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The updatable properties of the MonitorResource. </summary>
     public partial class DynatraceMonitorPatch
     {
-        /// <summary> Initializes a new instance of DynatraceMonitorPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorPatch"/>. </summary>
         public DynatraceMonitorPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="monitoringStatus"> Status of the monitor. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="dynatraceEnvironmentProperties"> Properties of the Dynatrace environment. </param>
+        /// <param name="userInfo"> User info. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceMonitorPatch(IDictionary<string, string> tags, DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, DynatraceMonitorUserInfo userInfo, DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            MonitoringStatus = monitoringStatus;
+            MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+            DynatraceEnvironmentProperties = dynatraceEnvironmentProperties;
+            UserInfo = userInfo;
+            PlanData = planData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

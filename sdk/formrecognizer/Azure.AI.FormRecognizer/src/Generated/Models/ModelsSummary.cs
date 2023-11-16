@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Summary of all trained custom models. </summary>
     internal partial class ModelsSummary
     {
-        /// <summary> Initializes a new instance of ModelsSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelsSummary"/>. </summary>
         /// <param name="count"> Current count of trained custom models. </param>
         /// <param name="limit"> Max number of models that can be trained for this account. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the summary was last updated. </param>
@@ -21,6 +25,24 @@ namespace Azure.AI.FormRecognizer.Models
             Count = count;
             Limit = limit;
             LastUpdatedDateTime = lastUpdatedDateTime;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ModelsSummary"/>. </summary>
+        /// <param name="count"> Current count of trained custom models. </param>
+        /// <param name="limit"> Max number of models that can be trained for this account. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the summary was last updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelsSummary(int count, int limit, DateTimeOffset lastUpdatedDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Count = count;
+            Limit = limit;
+            LastUpdatedDateTime = lastUpdatedDateTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ModelsSummary"/> for deserialization. </summary>
+        internal ModelsSummary()
+        {
         }
 
         /// <summary> Current count of trained custom models. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Authentication configuration information. </summary>
     public partial class DicomServiceAuthenticationConfiguration
     {
-        /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DicomServiceAuthenticationConfiguration"/>. </summary>
         public DicomServiceAuthenticationConfiguration()
         {
             Audiences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DicomServiceAuthenticationConfiguration"/>. </summary>
         /// <param name="authority"> The authority url for the service. </param>
         /// <param name="audiences"> The audiences for the service. </param>
-        internal DicomServiceAuthenticationConfiguration(string authority, IReadOnlyList<string> audiences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DicomServiceAuthenticationConfiguration(string authority, IReadOnlyList<string> audiences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authority = authority;
             Audiences = audiences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The authority url for the service. </summary>

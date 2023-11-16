@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The autoscale configuration update parameter. </summary>
     public partial class HDInsightAutoScaleConfigurationUpdateContent
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleConfigurationUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleConfigurationUpdateContent"/>. </summary>
         public HDInsightAutoScaleConfigurationUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleConfigurationUpdateContent"/>. </summary>
+        /// <param name="autoScale"> The autoscale configuration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightAutoScaleConfigurationUpdateContent(HDInsightAutoScaleConfiguration autoScale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AutoScale = autoScale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The autoscale configuration. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Event Types operation. </summary>
     internal partial class EventTypesListResult
     {
-        /// <summary> Initializes a new instance of EventTypesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventTypesListResult"/>. </summary>
         internal EventTypesListResult()
         {
             Value = new ChangeTrackingList<EventTypeUnderTopic>();
         }
 
-        /// <summary> Initializes a new instance of EventTypesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventTypesListResult"/>. </summary>
         /// <param name="value"> A collection of event types. </param>
-        internal EventTypesListResult(IReadOnlyList<EventTypeUnderTopic> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventTypesListResult(IReadOnlyList<EventTypeUnderTopic> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A collection of event types. </summary>

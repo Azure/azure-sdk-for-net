@@ -5,23 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> Demographic criteria for a clinical trial. </summary>
     public partial class ClinicalTrialDemographics
     {
-        /// <summary> Initializes a new instance of ClinicalTrialDemographics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialDemographics"/>. </summary>
         public ClinicalTrialDemographics()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrialDemographics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialDemographics"/>. </summary>
         /// <param name="acceptedSex"> Indication of the sex of people who may participate in the clinical trial. </param>
         /// <param name="acceptedAgeRange"> A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age. </param>
-        internal ClinicalTrialDemographics(ClinicalTrialAcceptedSex? acceptedSex, AcceptedAgeRange acceptedAgeRange)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialDemographics(ClinicalTrialAcceptedSex? acceptedSex, AcceptedAgeRange acceptedAgeRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AcceptedSex = acceptedSex;
             AcceptedAgeRange = acceptedAgeRange;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indication of the sex of people who may participate in the clinical trial. </summary>

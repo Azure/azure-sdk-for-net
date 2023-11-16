@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class AdvancedFilter
     {
-        /// <summary> Initializes a new instance of AdvancedFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdvancedFilter"/>. </summary>
         protected AdvancedFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of AdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        internal AdvancedFilter(AdvancedFilterOperatorType operatorType, string key)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperatorType = operatorType;
             Key = key;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>

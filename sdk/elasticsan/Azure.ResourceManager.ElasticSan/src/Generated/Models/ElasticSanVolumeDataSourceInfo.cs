@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Data source used when creating the volume. </summary>
     public partial class ElasticSanVolumeDataSourceInfo
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeDataSourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeDataSourceInfo"/>. </summary>
         public ElasticSanVolumeDataSourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeDataSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeDataSourceInfo"/>. </summary>
         /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
         /// <param name="sourceId"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
-        internal ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource, ResourceIdentifier sourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource, ResourceIdentifier sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateSource = createSource;
             SourceId = sourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This enumerates the possible sources of a volume creation. </summary>

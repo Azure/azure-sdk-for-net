@@ -14,14 +14,18 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A model definition and metadata for that model. </summary>
     public partial class DigitalTwinsModelData
     {
-        /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsModelData"/>. </summary>
         /// <param name="languageDisplayNames"> A language map that contains the localized display names as specified in the model definition. </param>
         /// <param name="languageDescriptions"> A language map that contains the localized descriptions as specified in the model definition. </param>
         /// <param name="id"> The id of the model as specified in the model definition. </param>
         /// <param name="uploadedOn"> The time the model was uploaded to the service. </param>
         /// <param name="decommissioned"> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </param>
         /// <param name="dtdlModel"> The model definition. </param>
-        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames, IReadOnlyDictionary<string, string> languageDescriptions, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames, IReadOnlyDictionary<string, string> languageDescriptions, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LanguageDisplayNames = languageDisplayNames;
             LanguageDescriptions = languageDescriptions;
@@ -29,6 +33,12 @@ namespace Azure.DigitalTwins.Core
             UploadedOn = uploadedOn;
             Decommissioned = decommissioned;
             DtdlModel = dtdlModel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsModelData"/> for deserialization. </summary>
+        internal DigitalTwinsModelData()
+        {
         }
         /// <summary> The id of the model as specified in the model definition. </summary>
         public string Id { get; }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The ClusterComponentItem. </summary>
     public partial class ClusterComponentItem
     {
-        /// <summary> Initializes a new instance of ClusterComponentItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterComponentItem"/>. </summary>
         internal ClusterComponentItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterComponentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterComponentItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="version"></param>
-        internal ClusterComponentItem(string name, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterComponentItem(string name, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>
