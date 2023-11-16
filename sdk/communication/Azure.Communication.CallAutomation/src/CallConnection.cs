@@ -536,7 +536,7 @@ namespace Azure.Communication.CallAutomation
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove))
                 {
                     OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    OperationCallbackUri = options.OverrideCallbackUrl
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
                 };
 
                 var response = await RestClient.RemoveParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
@@ -586,7 +586,7 @@ namespace Azure.Communication.CallAutomation
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove))
                 {
                     OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    OperationCallbackUri = options.OverrideCallbackUrl,
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
                 var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
