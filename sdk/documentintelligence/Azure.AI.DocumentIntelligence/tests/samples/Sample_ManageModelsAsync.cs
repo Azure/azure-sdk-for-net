@@ -16,10 +16,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string apiKey = TestEnvironment.ApiKey;
             var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            // Build a custom model to make sure that there is at least one custom model.
-            string modelId = Guid.NewGuid().ToString();
+            // Build to make sure that there is at least one custom model.
+            string setupModelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
+            var content = new BuildDocumentModelContent(setupModelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
             };
@@ -38,6 +38,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             // Get a model by ID.
 #if SNIPPET
             string modelId = "<modelId>";
+#else
+            string modelId = setupModelId;
 #endif
             DocumentModelDetails model = await client.GetModelAsync(modelId);
 

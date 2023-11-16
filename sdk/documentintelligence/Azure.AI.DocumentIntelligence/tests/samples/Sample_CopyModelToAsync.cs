@@ -26,9 +26,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             // For the purpose of this sample, we are going to create a model to copy. Note that
             // if you already have a model, this is not necessary.
 
-            string sourceModelId = Guid.NewGuid().ToString();
+            string setupModelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var buildContent = new BuildDocumentModelContent(sourceModelId, DocumentBuildMode.Template)
+            var buildContent = new BuildDocumentModelContent(setupModelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
             };
@@ -59,6 +59,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:DocumentIntelligenceSampleCreateCopyModel
 #if SNIPPET
             string sourceModelId = "<sourceModelId>";
+#else
+            string sourceModelId = setupModelId;
 #endif
             Operation<DocumentModelDetails> copyOperation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, sourceModelId, copyAuthorization);
             DocumentModelDetails copiedModel = copyOperation.Value;

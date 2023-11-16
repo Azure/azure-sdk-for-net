@@ -19,7 +19,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             var adminClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string classifierId = Guid.NewGuid().ToString();
+            string setupClassifierId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
 
             var sourceA = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 { "IRS-1040-B", docTypeB }
             };
 
-            var buildContent = new BuildDocumentClassifierContent(classifierId, docTypes);
+            var buildContent = new BuildDocumentClassifierContent(setupClassifierId, docTypes);
 
             // Firstly, create a document classifier we can use to classify the custom document. Note that
             // classifiers can also be built using a graphical user interface such as the Document Intelligence
@@ -48,6 +48,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string classifierId = "<classifierId>";
             Uri uriSource = new Uri("<uriSource>");
 #else
+            string classifierId = setupClassifierId;
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("IRS-1040_2.pdf");
 #endif
 
