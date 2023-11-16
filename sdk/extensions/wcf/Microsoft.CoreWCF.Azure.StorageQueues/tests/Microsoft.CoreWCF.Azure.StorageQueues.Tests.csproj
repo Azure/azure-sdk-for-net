@@ -21,7 +21,6 @@
     <PackageReference Include="Azure.Storage.Files.Shares" VersionOverride="12.1.0" />
     <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.14.0"/>
     <PackageReference Include="CoreWCF.Queue" VersionOverride="1.4.1" />
-    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" VersionOverride="3.1.13" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" VersionOverride="3.1.32" />

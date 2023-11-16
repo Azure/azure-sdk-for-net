@@ -29,7 +29,10 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             app.UseServiceModel(services =>
             {
                 services.AddService<TestService>();
-                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName),
+                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName)
+                {
+                    MessageEncoding = AzureQueueStorageMessageEncoding.Text
+                },
                 endpointUrlString);
             });
         }

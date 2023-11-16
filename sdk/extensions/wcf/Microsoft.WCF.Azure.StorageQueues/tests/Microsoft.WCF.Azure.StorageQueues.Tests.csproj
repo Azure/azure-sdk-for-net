@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Identity" VersionOverride="1.9.0"/>
     <PackageReference Include="Azure.Storage.Files.Shares" VersionOverride="12.1.0" />
     <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.14.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" VersionOverride="2.1.1" />

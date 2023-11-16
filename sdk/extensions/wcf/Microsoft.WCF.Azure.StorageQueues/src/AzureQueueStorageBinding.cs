@@ -88,6 +88,6 @@ namespace Microsoft.WCF.Azure.StorageQueues
         /// <summary>
         /// Gets and sets the message encoding.
         /// </summary>
-        public AzureQueueStorageMessageEncoding MessageEncoding { get; set; } = AzureQueueStorageMessageEncoding.Text;
+        public AzureQueueStorageMessageEncoding MessageEncoding { get; set; } = AzureQueueStorageMessageEncoding.Binary;
     }
 }
