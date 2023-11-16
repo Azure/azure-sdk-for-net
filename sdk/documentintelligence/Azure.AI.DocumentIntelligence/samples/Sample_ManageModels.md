@@ -16,6 +16,14 @@ string apiKey = "<apiKey>";
 var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
+## Model administration operations
+
+Supported operations:
+- Get quota details about the resource, such as the number of custom models or the maximum quota of models allowed.
+- Get a specific model using its ID.
+- List the models currently stored in the resource.
+- Delete a custom model from the resource.
+
 ## Manage Models
 
 ```C# Snippet:DocumentIntelligenceSampleManageModelsAsync
