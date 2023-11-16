@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
@@ -76,56 +75,6 @@ namespace Azure.Monitor.Query.Models
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLogsBatchQueryResult(document.RootElement, options);
-        }
-
-        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelReaderWriterOptions.Wire;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            IReadOnlyList<LogsTable> tables = default;
-            Optional<JsonElement> statistics = default;
-            Optional<JsonElement> render = default;
-            Optional<JsonElement> error = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("tables"u8))
-                {
-                    List<LogsTable> array = new List<LogsTable>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LogsTable.DeserializeLogsTable(item));
-                    }
-                    tables = array;
-                    continue;
-                }
-                if (property.NameEquals("statistics"u8))
-                {
-                    statistics = property.Value.Clone();
-                    continue;
-                }
-                if (property.NameEquals("render"u8))
-                {
-                    render = property.Value.Clone();
-                    continue;
-                }
-                if (property.NameEquals("error"u8))
-                {
-                    error = property.Value.Clone();
-                    continue;
-                }
-                if (options.Format == "J")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogsBatchQueryResult(tables, statistics, render, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogsBatchQueryResult>.Write(ModelReaderWriterOptions options)

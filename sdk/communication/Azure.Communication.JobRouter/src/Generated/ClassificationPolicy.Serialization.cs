@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class ClassificationPolicy : IUtf8JsonSerializable, IJsonModel<ClassificationPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationPolicy>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<ClassificationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<ClassificationPolicy>)this).GetWireFormat(options) != "J") && options.Format != "J")

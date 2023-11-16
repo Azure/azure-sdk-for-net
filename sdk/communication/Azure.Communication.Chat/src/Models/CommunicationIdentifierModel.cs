@@ -3,6 +3,8 @@
 
 // This is a temporary solution.
 // Please remove this code when swagger is updated to support `kind` property: https://github.com/Azure/azure-rest-api-specs/pull/19675
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
@@ -17,7 +19,7 @@ namespace Azure.Communication
         public CommunicationIdentifierModelKind? Kind { get; set; }
 
         public CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, CommunicationIdentifierModelKind? kind)
-        : this(rawId, communicationUser, phoneNumber, microsoftTeamsUser)
+        : this(rawId, communicationUser, phoneNumber, microsoftTeamsUser, new Dictionary<string, BinaryData>())
         {
             Kind = kind;
         }

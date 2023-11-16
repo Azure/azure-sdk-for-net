@@ -61,7 +61,7 @@ namespace Azure.Communication.Chat
         /// <returns>A new <see cref="ChatThreadItem"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatThreadItem ChatThreadItem(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn)
-            => new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
+            => new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn, new Dictionary<string, BinaryData>());
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatMessageReadReceipt"/> class.

@@ -17,10 +17,15 @@ namespace Azure.ResourceManager.ConfidentialLedger
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ConfidentialLedgerData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ConfidentialLedgerData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData>
     {
         public ConfidentialLedgerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ConfidentialLedgerExtensions
     {
@@ -76,10 +81,15 @@ namespace Azure.ResourceManager.ConfidentialLedger
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedCcfData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ManagedCcfData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.ManagedCcfData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.ManagedCcfData>
     {
         public ManagedCcfData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.ConfidentialLedger.ManagedCcfData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.ManagedCcfData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.ManagedCcfData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.ManagedCcfData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.ManagedCcfData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.ManagedCcfData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.ManagedCcfData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedCcfResource : Azure.ResourceManager.ArmResource
     {
@@ -133,12 +143,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
 }
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class AadBasedSecurityPrincipal
+    public partial class AadBasedSecurityPrincipal : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>
     {
         public AadBasedSecurityPrincipal() { }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRoleName? LedgerRoleName { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmConfidentialLedgerModelFactory
     {
@@ -148,17 +163,27 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static Azure.ResourceManager.ConfidentialLedger.ManagedCcfData ManagedCcfData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties ManagedCcfProperties(string appName = null, System.Uri appUri = null, System.Uri identityServiceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType deploymentType = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? provisioningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState?), int? nodeCount = default(int?)) { throw null; }
     }
-    public partial class CertBasedSecurityPrincipal
+    public partial class CertBasedSecurityPrincipal : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>
     {
         public CertBasedSecurityPrincipal() { }
         public string Cert { get { throw null; } set { } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRoleName? LedgerRoleName { get { throw null; } set { } }
+        Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfidentialLedgerDeploymentType
+    public partial class ConfidentialLedgerDeploymentType : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>
     {
         public ConfidentialLedgerDeploymentType() { }
         public System.Uri AppSourceUri { get { throw null; } set { } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime? LanguageRuntime { get { throw null; } set { } }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfidentialLedgerLanguageRuntime : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime>
@@ -178,25 +203,40 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConfidentialLedgerMemberIdentityCertificate
+    public partial class ConfidentialLedgerMemberIdentityCertificate : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate>
     {
         public ConfidentialLedgerMemberIdentityCertificate() { }
         public string Certificate { get { throw null; } set { } }
         public string Encryptionkey { get { throw null; } set { } }
         public System.BinaryData Tags { get { throw null; } set { } }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfidentialLedgerNameAvailabilityContent
+    public partial class ConfidentialLedgerNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent>
     {
         public ConfidentialLedgerNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfidentialLedgerNameAvailabilityResult
+    public partial class ConfidentialLedgerNameAvailabilityResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult>
     {
         internal ConfidentialLedgerNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfidentialLedgerNameUnavailableReason : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason>
@@ -216,7 +256,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConfidentialLedgerProperties
+    public partial class ConfidentialLedgerProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties>
     {
         public ConfidentialLedgerProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal> AadBasedSecurityPrincipals { get { throw null; } }
@@ -228,6 +268,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public System.Uri LedgerUri { get { throw null; } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState? RunningState { get { throw null; } set { } }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfidentialLedgerProvisioningState : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState>
@@ -311,7 +356,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedCcfProperties
+    public partial class ManagedCcfProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>
     {
         public ManagedCcfProperties() { }
         public string AppName { get { throw null; } }
@@ -321,5 +366,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate> MemberIdentityCertificates { get { throw null; } }
         public int? NodeCount { get { throw null; } set { } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

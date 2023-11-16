@@ -17,12 +17,17 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseAadOnlyAuthenticationData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseAadOnlyAuthenticationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData>
     {
         public SynapseAadOnlyAuthenticationData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? IsAadOnlyAuthenticationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.AadAuthenticationState? State { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseAadOnlyAuthenticationResource : Azure.ResourceManager.ArmResource
     {
@@ -53,7 +58,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseAttachedDatabaseConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseAttachedDatabaseConfigurationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData>
     {
         public SynapseAttachedDatabaseConfigurationData() { }
         public System.Collections.Generic.IReadOnlyList<string> AttachedDatabaseNames { get { throw null; } }
@@ -63,6 +68,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseAttachedDatabaseConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -95,7 +105,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseBigDataPoolInfoData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SynapseBigDataPoolInfoData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData>
     {
         public SynapseBigDataPoolInfoData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties AutoPause { get { throw null; } set { } }
@@ -117,6 +127,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties SparkConfigProperties { get { throw null; } set { } }
         public string SparkEventsFolder { get { throw null; } set { } }
         public string SparkVersion { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseBigDataPoolInfoResource : Azure.ResourceManager.ArmResource
     {
@@ -155,7 +170,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseClusterPrincipalAssignmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseClusterPrincipalAssignmentData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData>
     {
         public SynapseClusterPrincipalAssignmentData() { }
         public System.Guid? AadObjectId { get { throw null; } }
@@ -166,6 +181,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole? Role { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         public string TenantName { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseClusterPrincipalAssignmentData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseClusterPrincipalAssignmentResource : Azure.ResourceManager.ArmResource
     {
@@ -198,10 +218,16 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseDatabaseData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseDatabaseData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDatabaseData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDatabaseData>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public SynapseDatabaseData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseDatabaseData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDatabaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDatabaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseDatabaseData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDatabaseData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDatabaseData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDatabaseData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseDatabasePrincipalAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentResource>, System.Collections.IEnumerable
     {
@@ -220,7 +246,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseDatabasePrincipalAssignmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseDatabasePrincipalAssignmentData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData>
     {
         public SynapseDatabasePrincipalAssignmentData() { }
         public System.Guid? AadObjectId { get { throw null; } }
@@ -231,6 +257,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalRole? Role { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         public string TenantName { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseDatabasePrincipalAssignmentResource : Azure.ResourceManager.ArmResource
     {
@@ -289,10 +320,16 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseDataConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDataConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseDataConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseDataConnectionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataConnectionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataConnectionData>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public SynapseDataConnectionData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseDataConnectionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseDataConnectionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataConnectionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataConnectionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataConnectionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseDataConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -308,7 +345,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseDataConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapseDataConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseDataConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapseDataConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseDataMaskingPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseDataMaskingPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData>
     {
         public SynapseDataMaskingPolicyData() { }
         public string ApplicationPrincipals { get { throw null; } }
@@ -318,6 +355,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string ManagedBy { get { throw null; } }
         public string MaskingLevel { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataMaskingPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseDataMaskingPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -351,7 +393,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseDataMaskingRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseDataMaskingRuleData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData>
     {
         public SynapseDataMaskingRuleData() { }
         public string AliasName { get { throw null; } set { } }
@@ -368,6 +410,11 @@ namespace Azure.ResourceManager.Synapse
         public string SchemaName { get { throw null; } set { } }
         public string SuffixSize { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataMaskingRuleData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseDataMaskingRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -391,10 +438,15 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.NullableResponse<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityResource> GetIfExists(Azure.ResourceManager.Synapse.Models.SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityResource>> GetIfExistsAsync(Azure.ResourceManager.Synapse.Models.SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseDataWarehouseUserActivityData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseDataWarehouseUserActivityData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData>
     {
         public SynapseDataWarehouseUserActivityData() { }
         public int? ActiveQueriesCount { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDataWarehouseUserActivityData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseDataWarehouseUserActivityResource : Azure.ResourceManager.ArmResource
     {
@@ -423,11 +475,16 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseDedicatedSqlMinimalTlsSettingData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseDedicatedSqlMinimalTlsSettingData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData>
     {
         public SynapseDedicatedSqlMinimalTlsSettingData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string MinimalTlsVersion { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseDedicatedSqlMinimalTlsSettingData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseDedicatedSqlMinimalTlsSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -458,7 +515,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseEncryptionProtectorData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseEncryptionProtectorData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData>
     {
         public SynapseEncryptionProtectorData() { }
         public string Kind { get { throw null; } }
@@ -468,6 +525,11 @@ namespace Azure.ResourceManager.Synapse
         public string Subregion { get { throw null; } }
         public System.BinaryData Thumbprint { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseEncryptionProtectorData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseEncryptionProtectorResource : Azure.ResourceManager.ArmResource
     {
@@ -500,7 +562,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseExtendedServerBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseExtendedServerBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData>
     {
         public SynapseExtendedServerBlobAuditingPolicyData() { }
         public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
@@ -514,6 +576,11 @@ namespace Azure.ResourceManager.Synapse
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseExtendedServerBlobAuditingPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -527,7 +594,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapseExtendedServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData>
     {
         public SynapseExtendedSqlPoolBlobAuditingPolicyData() { }
         public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
@@ -540,6 +607,11 @@ namespace Azure.ResourceManager.Synapse
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseExtendedSqlPoolBlobAuditingPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -641,13 +713,18 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseGeoBackupPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseGeoBackupPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData>
     {
         public SynapseGeoBackupPolicyData(Azure.ResourceManager.Synapse.Models.SynapseGeoBackupPolicyState state) { }
         public string Kind { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseGeoBackupPolicyState State { get { throw null; } set { } }
         public string StorageType { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseGeoBackupPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseGeoBackupPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -678,11 +755,16 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseIntegrationRuntimeData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData>
     {
         public SynapseIntegrationRuntimeData(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties properties) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseIntegrationRuntimeData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseIntegrationRuntimeResource : Azure.ResourceManager.ArmResource
     {
@@ -751,12 +833,17 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseIPFirewallRuleInfoData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseIPFirewallRuleInfoData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData>
     {
         public SynapseIPFirewallRuleInfoData() { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseProvisioningState? ProvisioningState { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseIPFirewallRuleInfoResource : Azure.ResourceManager.ArmResource
     {
@@ -789,11 +876,16 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseKeyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseKeyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseKeyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseKeyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseKeyData>
     {
         public SynapseKeyData() { }
         public bool? IsActiveCmk { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseKeyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseKeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseKeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseKeyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseKeyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseKeyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseKeyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseKeyResource : Azure.ResourceManager.ArmResource
     {
@@ -826,7 +918,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseKustoPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseKustoPoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseKustoPoolData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SynapseKustoPoolData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseKustoPoolData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseKustoPoolData>
     {
         public SynapseKustoPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku sku) { }
         public System.Uri DataIngestionUri { get { throw null; } }
@@ -841,6 +933,11 @@ namespace Azure.ResourceManager.Synapse
         public string StateReason { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public System.Guid? WorkspaceUid { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseKustoPoolData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseKustoPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseKustoPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseKustoPoolData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseKustoPoolData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseKustoPoolData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseKustoPoolData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseKustoPoolResource : Azure.ResourceManager.ArmResource
     {
@@ -908,7 +1005,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseLibraryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseLibraryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseLibraryData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseLibraryData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseLibraryData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseLibraryData>
     {
         public SynapseLibraryData() { }
         public string ContainerName { get { throw null; } set { } }
@@ -919,6 +1016,11 @@ namespace Azure.ResourceManager.Synapse
         public string ProvisioningStatus { get { throw null; } }
         public string TypePropertiesType { get { throw null; } set { } }
         public System.DateTimeOffset? UploadedOn { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseLibraryData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseLibraryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseLibraryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseLibraryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseLibraryData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseLibraryData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseLibraryData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseLibraryResource : Azure.ResourceManager.ArmResource
     {
@@ -930,12 +1032,17 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseLibraryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseLibraryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseMaintenanceWindowData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseMaintenanceWindowData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData>
     {
         public SynapseMaintenanceWindowData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange> TimeRanges { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseMaintenanceWindowOptionData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseMaintenanceWindowOptionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData>
     {
         public SynapseMaintenanceWindowOptionData() { }
         public bool? AllowMultipleMaintenanceWindowsPerCycle { get { throw null; } set { } }
@@ -945,6 +1052,11 @@ namespace Azure.ResourceManager.Synapse
         public int? MinCycles { get { throw null; } set { } }
         public int? MinDurationInMinutes { get { throw null; } set { } }
         public int? TimeGranularityInMinutes { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowOptionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseMaintenanceWindowOptionResource : Azure.ResourceManager.ArmResource
     {
@@ -968,10 +1080,15 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowResource> Get(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseMaintenanceWindowResource>> GetAsync(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseManagedIdentitySqlControlSettingData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseManagedIdentitySqlControlSettingData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData>
     {
         public SynapseManagedIdentitySqlControlSettingData() { }
         public Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity GrantSqlControlToManagedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseManagedIdentitySqlControlSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -985,11 +1102,16 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseManagedIdentitySqlControlSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseMetadataSyncConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseMetadataSyncConfigurationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData>
     {
         public SynapseMetadataSyncConfigurationData() { }
         public bool? IsEnabled { get { throw null; } set { } }
         public int? SyncIntervalInMinutes { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseMetadataSyncConfigurationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseMetadataSyncConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -1020,12 +1142,17 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapsePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapsePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData>
     {
         public SynapsePrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapsePrivateEndpointConnectionForPrivateLinkHubCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubResource>, System.Collections.IEnumerable
     {
@@ -1042,10 +1169,15 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapsePrivateEndpointConnectionForPrivateLinkHubData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapsePrivateEndpointConnectionForPrivateLinkHubData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData>
     {
         internal SynapsePrivateEndpointConnectionForPrivateLinkHubData() { }
         public Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapsePrivateEndpointConnectionForPrivateLinkHubResource : Azure.ResourceManager.ArmResource
     {
@@ -1088,11 +1220,16 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapsePrivateLinkHubData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SynapsePrivateLinkHubData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData>
     {
         public SynapsePrivateLinkHubData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapsePrivateLinkHubResource : Azure.ResourceManager.ArmResource
     {
@@ -1145,10 +1282,15 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapsePrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapsePrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData>
     {
         public SynapsePrivateLinkResourceData() { }
         public Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseRecoverableSqlPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolResource>, System.Collections.IEnumerable
     {
@@ -1165,13 +1307,18 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseRecoverableSqlPoolData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseRecoverableSqlPoolData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData>
     {
         public SynapseRecoverableSqlPoolData() { }
         public string Edition { get { throw null; } }
         public string ElasticPoolName { get { throw null; } }
         public System.DateTimeOffset? LastAvailableBackupOn { get { throw null; } }
         public string ServiceLevelObjective { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRecoverableSqlPoolData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseRecoverableSqlPoolResource : Azure.ResourceManager.ArmResource
     {
@@ -1198,7 +1345,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseReplicationLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseReplicationLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseReplicationLinkData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseReplicationLinkData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseReplicationLinkData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseReplicationLinkData>
     {
         public SynapseReplicationLinkData() { }
         public bool? IsTerminationAllowed { get { throw null; } }
@@ -1212,6 +1359,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.SynapseReplicationState? ReplicationState { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseReplicationRole? Role { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseReplicationLinkData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseReplicationLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseReplicationLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseReplicationLinkData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseReplicationLinkData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseReplicationLinkData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseReplicationLinkData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseReplicationLinkResource : Azure.ResourceManager.ArmResource
     {
@@ -1238,7 +1390,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseRestorableDroppedSqlPoolData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseRestorableDroppedSqlPoolData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData>
     {
         public SynapseRestorableDroppedSqlPoolData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1250,6 +1402,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string MaxSizeBytes { get { throw null; } }
         public string ServiceLevelObjective { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRestorableDroppedSqlPoolData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseRestorableDroppedSqlPoolResource : Azure.ResourceManager.ArmResource
     {
@@ -1276,7 +1433,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseRestorePointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseRestorePointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseRestorePointData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseRestorePointData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRestorePointData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRestorePointData>
     {
         public SynapseRestorePointData() { }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
@@ -1284,6 +1441,11 @@ namespace Azure.ResourceManager.Synapse
         public System.DateTimeOffset? RestorePointCreationOn { get { throw null; } }
         public string RestorePointLabel { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseRestorePointType? RestorePointType { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseRestorePointData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRestorePointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseRestorePointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseRestorePointData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRestorePointData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRestorePointData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseRestorePointData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseRestorePointResource : Azure.ResourceManager.ArmResource
     {
@@ -1309,7 +1471,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.NullableResponse<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource> GetIfExists(Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource>> GetIfExistsAsync(Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseSensitivityLabelData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSensitivityLabelData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSensitivityLabelData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSensitivityLabelData>
     {
         public SynapseSensitivityLabelData() { }
         public string ColumnName { get { throw null; } }
@@ -1322,6 +1484,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelRank? Rank { get { throw null; } set { } }
         public string SchemaName { get { throw null; } }
         public string TableName { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseSensitivityLabelData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSensitivityLabelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSensitivityLabelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSensitivityLabelData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSensitivityLabelData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSensitivityLabelData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSensitivityLabelData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSensitivityLabelResource : Azure.ResourceManager.ArmResource
     {
@@ -1354,7 +1521,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseServerBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseServerBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData>
     {
         public SynapseServerBlobAuditingPolicyData() { }
         public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
@@ -1367,6 +1534,11 @@ namespace Azure.ResourceManager.Synapse
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerBlobAuditingPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseServerBlobAuditingPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -1397,7 +1569,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseServerSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseServerSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData>
     {
         public SynapseServerSecurityAlertPolicyData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1408,6 +1580,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.SynapseSecurityAlertPolicyState? State { get { throw null; } set { } }
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerSecurityAlertPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseServerSecurityAlertPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -1438,13 +1615,18 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseServerVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseServerVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData>
     {
         public SynapseServerVulnerabilityAssessmentData() { }
         public Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties RecurringScans { get { throw null; } set { } }
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public string StorageContainerPath { get { throw null; } set { } }
         public string StorageContainerSasKey { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseServerVulnerabilityAssessmentData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseServerVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
     {
@@ -1475,7 +1657,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseSparkConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseSparkConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseSparkConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSparkConfigurationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSparkConfigurationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSparkConfigurationData>
     {
         public SynapseSparkConfigurationData(System.Collections.Generic.IDictionary<string, string> configs) { }
         public System.Collections.Generic.IList<string> Annotations { get { throw null; } }
@@ -1486,6 +1668,11 @@ namespace Azure.ResourceManager.Synapse
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string Notes { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseSparkConfigurationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSparkConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSparkConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSparkConfigurationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSparkConfigurationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSparkConfigurationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSparkConfigurationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSparkConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -1497,7 +1684,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSparkConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSparkConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseSqlPoolBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSqlPoolBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData>
     {
         public SynapseSqlPoolBlobAuditingPolicyData() { }
         public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
@@ -1509,6 +1696,11 @@ namespace Azure.ResourceManager.Synapse
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolBlobAuditingPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolBlobAuditingPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -1554,11 +1746,16 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseSqlPoolColumnData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSqlPoolColumnData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData>
     {
         public SynapseSqlPoolColumnData() { }
         public Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType? ColumnType { get { throw null; } set { } }
         public bool? IsComputed { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolColumnResource : Azure.ResourceManager.ArmResource
     {
@@ -1587,7 +1784,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.NullableResponse<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyResource> GetIfExists(Azure.ResourceManager.Synapse.Models.SqlPoolConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyResource>> GetIfExistsAsync(Azure.ResourceManager.Synapse.Models.SqlPoolConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseSqlPoolConnectionPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSqlPoolConnectionPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData>
     {
         public SynapseSqlPoolConnectionPolicyData() { }
         public string Kind { get { throw null; } }
@@ -1599,6 +1796,11 @@ namespace Azure.ResourceManager.Synapse
         public string State { get { throw null; } set { } }
         public string UseServerDefault { get { throw null; } set { } }
         public string Visibility { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolConnectionPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -1610,7 +1812,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseSqlPoolData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SynapseSqlPoolData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>
     {
         public SynapseSqlPoolData(Azure.Core.AzureLocation location) { }
         public string Collation { get { throw null; } set { } }
@@ -1625,6 +1827,11 @@ namespace Azure.ResourceManager.Synapse
         public string SourceDatabaseId { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType? StorageAccountType { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolResource : Azure.ResourceManager.ArmResource
     {
@@ -1721,9 +1928,14 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseSqlPoolSchemaData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSqlPoolSchemaData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData>
     {
         public SynapseSqlPoolSchemaData() { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolSchemaResource : Azure.ResourceManager.ArmResource
     {
@@ -1755,7 +1967,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseSqlPoolSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSqlPoolSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData>
     {
         public SynapseSqlPoolSecurityAlertPolicyData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1766,6 +1978,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.SynapseSecurityAlertPolicyState? State { get { throw null; } set { } }
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolSecurityAlertPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -1794,9 +2011,14 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseSqlPoolTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseSqlPoolTableResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseSqlPoolTableData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSqlPoolTableData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolTableData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolTableData>
     {
         public SynapseSqlPoolTableData() { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolTableData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolTableData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolTableData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolTableData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolTableData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolTableData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolTableData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolTableResource : Azure.ResourceManager.ArmResource
     {
@@ -1828,13 +2050,18 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseSqlPoolVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSqlPoolVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData>
     {
         public SynapseSqlPoolVulnerabilityAssessmentData() { }
         public Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties RecurringScans { get { throw null; } set { } }
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public string StorageContainerPath { get { throw null; } set { } }
         public string StorageContainerSasKey { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
     {
@@ -1868,10 +2095,15 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.NullableResponse<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource> GetIfExists(string ruleId, Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource>> GetIfExistsAsync(string ruleId, Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData>
     {
         public SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem> BaselineResults { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource : Azure.ResourceManager.ArmResource
     {
@@ -1904,11 +2136,16 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseTransparentDataEncryptionData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseTransparentDataEncryptionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData>
     {
         public SynapseTransparentDataEncryptionData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseTransparentDataEncryptionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseTransparentDataEncryptionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseTransparentDataEncryptionResource : Azure.ResourceManager.ArmResource
     {
@@ -1937,7 +2174,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseVulnerabilityAssessmentScanRecordData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseVulnerabilityAssessmentScanRecordData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData>
     {
         public SynapseVulnerabilityAssessmentScanRecordData() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
@@ -1948,6 +2185,11 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanState? State { get { throw null; } }
         public string StorageContainerPath { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType? TriggerType { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseVulnerabilityAssessmentScanRecordData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseVulnerabilityAssessmentScanRecordResource : Azure.ResourceManager.ArmResource
     {
@@ -1980,7 +2222,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseWorkloadClassifierData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseWorkloadClassifierData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData>
     {
         public SynapseWorkloadClassifierData() { }
         public string Context { get { throw null; } set { } }
@@ -1989,6 +2231,11 @@ namespace Azure.ResourceManager.Synapse
         public string Label { get { throw null; } set { } }
         public string MemberName { get { throw null; } set { } }
         public string StartTime { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkloadClassifierData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseWorkloadClassifierResource : Azure.ResourceManager.ArmResource
     {
@@ -2021,7 +2268,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseWorkloadGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseWorkloadGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseWorkloadGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseWorkloadGroupData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkloadGroupData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkloadGroupData>
     {
         public SynapseWorkloadGroupData() { }
         public string Importance { get { throw null; } set { } }
@@ -2030,6 +2277,11 @@ namespace Azure.ResourceManager.Synapse
         public int? MinResourcePercent { get { throw null; } set { } }
         public double? MinResourcePercentPerRequest { get { throw null; } set { } }
         public int? QueryExecutionTimeout { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseWorkloadGroupData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkloadGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkloadGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseWorkloadGroupData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkloadGroupData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkloadGroupData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkloadGroupData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseWorkloadGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -2048,13 +2300,18 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseWorkloadGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapseWorkloadGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseWorkloadGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapseWorkloadGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SynapseWorkspaceAadAdminInfoData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseWorkspaceAadAdminInfoData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData>
     {
         public SynapseWorkspaceAadAdminInfoData() { }
         public string AdministratorType { get { throw null; } set { } }
         public string Login { get { throw null; } set { } }
         public string Sid { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseWorkspaceAdministratorResource : Azure.ResourceManager.ArmResource
     {
@@ -2087,7 +2344,7 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseWorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SynapseWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkspaceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkspaceData>
     {
         public SynapseWorkspaceData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier AdlaResourceId { get { throw null; } }
@@ -2112,6 +2369,11 @@ namespace Azure.ResourceManager.Synapse
         public string VirtualNetworkComputeSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get { throw null; } set { } }
         public System.Guid? WorkspaceUid { get { throw null; } }
+        Azure.ResourceManager.Synapse.SynapseWorkspaceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.SynapseWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.SynapseWorkspaceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkspaceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkspaceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.SynapseWorkspaceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SynapseWorkspacePrivateLinkResource : Azure.ResourceManager.ArmResource
     {
@@ -2346,7 +2608,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo BigDataPoolLibraryInfo(string name = null, string path = null, string containerName = null, System.DateTimeOffset? uploadedOn = default(System.DateTimeOffset?), string libraryInfoType = null, string provisioningStatus = null, string creatorId = null) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements BigDataPoolLibraryRequirements(System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string content = null, string filename = null) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties BigDataPoolSparkConfigProperties(System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string content = null, string filename = null, Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType? configurationType = default(Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType?)) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name = null, Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType resourceType = default(Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType)) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent KustoPoolDataConnectionNameAvailabilityContent(string name = null, Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType resourceType = default(Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType)) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent KustoPoolNameAvailabilityContent(string name = null, Azure.ResourceManager.Synapse.Models.KustoPoolType resourceType = default(Azure.ResourceManager.Synapse.Models.KustoPoolType)) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult KustoPoolNameAvailabilityResult(bool? isNameAvailable = default(bool?), string name = null, string message = null, Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason? reason = default(Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason?)) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent KustoPoolPrincipalAssignmentNameAvailabilityContent(string name = null, Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType resourceType = default(Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType)) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription KustoPoolSkuDescription(string resourceType = null, string name = null, string size = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem> locationInfo = null, System.Collections.Generic.IEnumerable<System.BinaryData> restrictions = null) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem KustoPoolSkuLocationInfoItem(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic PrivateEndpointConnectionForPrivateLinkHubBasic(string id = null, Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties properties = null) { throw null; }
@@ -2390,6 +2656,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult SynapseIntegrationRuntimeStatusResult(string name = null, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus properties = null) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection SynapseIotHubDataConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier iotHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat? dataFormat = default(Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat?), System.Collections.Generic.IEnumerable<string> eventSystemProperties = null, string sharedAccessPolicyName = null, Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Synapse.Models.ResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData SynapseIPFirewallRuleInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Net.IPAddress endIPAddress = null, Azure.ResourceManager.Synapse.Models.SynapseProvisioningState? provisioningState = default(Azure.ResourceManager.Synapse.Models.SynapseProvisioningState?), System.Net.IPAddress startIPAddress = null) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties SynapseIPFirewallRuleProperties(System.Net.IPAddress endIPAddress = null, Azure.ResourceManager.Synapse.Models.SynapseProvisioningState? provisioningState = default(Azure.ResourceManager.Synapse.Models.SynapseProvisioningState?), System.Net.IPAddress startIPAddress = null) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseKeyData SynapseKeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isActiveCmk = default(bool?), System.Uri keyVaultUri = null) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseKustoPoolData SynapseKustoPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku sku = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Synapse.Models.KustoPoolState? state = default(Azure.ResourceManager.Synapse.Models.KustoPoolState?), Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Synapse.Models.ResourceProvisioningState?), System.Uri uri = null, System.Uri dataIngestionUri = null, string stateReason = null, Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale optimizedAutoscale = null, bool? enableStreamingIngest = default(bool?), bool? enablePurge = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension> languageExtensionsValue = null, System.Guid? workspaceUid = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch SynapseKustoPoolPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku sku = null, Azure.ResourceManager.Synapse.Models.KustoPoolState? state = default(Azure.ResourceManager.Synapse.Models.KustoPoolState?), Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Synapse.Models.ResourceProvisioningState?), System.Uri uri = null, System.Uri dataIngestionUri = null, string stateReason = null, Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale optimizedAutoscale = null, bool? enableStreamingIngest = default(bool?), bool? enablePurge = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension> languageExtensionsValue = null, System.Guid? workspaceUid = default(System.Guid?)) { throw null; }
@@ -2432,6 +2699,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.SynapseSqlPoolColumnData SynapseSqlPoolColumnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType? columnType = default(Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType?), bool? isComputed = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseSqlPoolConnectionPolicyData SynapseSqlPoolConnectionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string securityEnabledAccess = null, string proxyDnsName = null, string proxyPort = null, string visibility = null, string useServerDefault = null, string redirectionState = null, string state = null) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseSqlPoolData SynapseSqlPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Synapse.Models.SynapseSku sku = null, long? maxSizeBytes = default(long?), string collation = null, string sourceDatabaseId = null, string recoverableDatabaseId = null, string provisioningState = null, string status = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode? createMode = default(Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType? storageAccountType = default(Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType?), System.DateTimeOffset? sourceDatabaseDeletionOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch SynapseSqlPoolPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Synapse.Models.SynapseSku sku = null, long? maxSizeBytes = default(long?), string collation = null, string sourceDatabaseId = null, string recoverableDatabaseId = null, string provisioningState = null, string status = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode? createMode = default(Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType? storageAccountType = default(Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType?), System.DateTimeOffset? sourceDatabaseDeletionOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseSqlPoolSchemaData SynapseSqlPoolSchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseSqlPoolSecurityAlertPolicyData SynapseSqlPoolSecurityAlertPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Synapse.Models.SynapseSecurityAlertPolicyState? state = default(Azure.ResourceManager.Synapse.Models.SynapseSecurityAlertPolicyState?), System.Collections.Generic.IEnumerable<string> disabledAlerts = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, bool? enableEmailToAccountAdmins = default(bool?), string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseSqlPoolTableData SynapseSqlPoolTableData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
@@ -2453,22 +2721,33 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.SynapseWorkloadGroupData SynapseWorkloadGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? minResourcePercent = default(int?), int? maxResourcePercent = default(int?), double? minResourcePercentPerRequest = default(double?), double? maxResourcePercentPerRequest = default(double?), string importance = null, int? queryExecutionTimeout = default(int?)) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseWorkspaceAadAdminInfoData SynapseWorkspaceAadAdminInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), string login = null, string administratorType = null, string sid = null) { throw null; }
         public static Azure.ResourceManager.Synapse.SynapseWorkspaceData SynapseWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, string virtualNetworkComputeSubnetId = null, System.Collections.Generic.IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails encryption = null, System.Guid? workspaceUid = default(System.Guid?), System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> extraProperties = null, Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, Azure.Core.ResourceIdentifier purviewResourceId = null, Azure.Core.ResourceIdentifier adlaResourceId = null, Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess?), System.Guid? initialWorkspaceAdminObjectId = default(System.Guid?), System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> settings = null, bool? isAadOnlyAuthenticationEnabled = default(bool?), bool? isTrustedServiceBypassEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch SynapseWorkspacePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string sqlAdministratorLoginPassword = null, Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, Azure.Core.ResourceIdentifier purviewResourceId = null, string provisioningState = null, Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails encryption = null, Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess?)) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails WorkspaceCustomerManagedKeyDetails(string status = null, Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails key = null, Azure.ResourceManager.Synapse.Models.KekIdentityProperties kekIdentity = null) { throw null; }
     }
-    public partial class BigDataPoolAutoPauseProperties
+    public partial class BigDataPoolAutoPauseProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties>
     {
         public BigDataPoolAutoPauseProperties() { }
         public int? DelayInMinutes { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BigDataPoolAutoScaleProperties
+    public partial class BigDataPoolAutoScaleProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties>
     {
         public BigDataPoolAutoScaleProperties() { }
         public bool? IsEnabled { get { throw null; } set { } }
         public int? MaxNodeCount { get { throw null; } set { } }
         public int? MinNodeCount { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BigDataPoolLibraryInfo
+    public partial class BigDataPoolLibraryInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo>
     {
         public BigDataPoolLibraryInfo() { }
         public string ContainerName { get { throw null; } set { } }
@@ -2478,13 +2757,23 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Path { get { throw null; } set { } }
         public string ProvisioningStatus { get { throw null; } }
         public System.DateTimeOffset? UploadedOn { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BigDataPoolLibraryRequirements
+    public partial class BigDataPoolLibraryRequirements : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements>
     {
         public BigDataPoolLibraryRequirements() { }
         public string Content { get { throw null; } set { } }
         public string Filename { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolLibraryRequirements>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BigDataPoolNodeSize : System.IEquatable<Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSize>
@@ -2529,30 +2818,50 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSizeFamily left, Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSizeFamily right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BigDataPoolSparkConfigProperties
+    public partial class BigDataPoolSparkConfigProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties>
     {
         public BigDataPoolSparkConfigProperties() { }
         public Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType? ConfigurationType { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
         public string Filename { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.BigDataPoolSparkConfigProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IntegrationRuntimeRegenerateKeyContent
+    public partial class IntegrationRuntimeRegenerateKeyContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent>
     {
         public IntegrationRuntimeRegenerateKeyContent() { }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName? KeyName { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KekIdentityProperties
+    public partial class KekIdentityProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KekIdentityProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KekIdentityProperties>
     {
         public KekIdentityProperties() { }
         public Azure.Core.ResourceIdentifier UserAssignedIdentityId { get { throw null; } set { } }
         public System.BinaryData UseSystemAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.KekIdentityProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KekIdentityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KekIdentityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KekIdentityProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KekIdentityProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KekIdentityProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KekIdentityProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoPoolChildResourceNameAvailabilityContent
+    public partial class KustoPoolChildResourceNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent>
     {
         public KustoPoolChildResourceNameAvailabilityContent(string name, Azure.ResourceManager.Synapse.Models.KustoPoolDatabaseType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.KustoPoolDatabaseType ResourceType { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolChildResourceNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KustoPoolCompressionType : System.IEquatable<Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType>
@@ -2572,36 +2881,56 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType left, Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent
+    public partial class KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent>
     {
         public KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType ResourceType { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum KustoPoolDatabaseType
     {
         MicrosoftSynapseWorkspacesKustoPoolsDatabases = 0,
         MicrosoftSynapseWorkspacesKustoPoolsAttachedDatabaseConfigurations = 1,
     }
-    public partial class KustoPoolDataConnectionNameAvailabilityContent
+    public partial class KustoPoolDataConnectionNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent>
     {
         public KustoPoolDataConnectionNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType ResourceType { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolDataConnectionNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoPoolNameAvailabilityContent
+    public partial class KustoPoolNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent>
     {
         public KustoPoolNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.KustoPoolType ResourceType { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoPoolNameAvailabilityResult
+    public partial class KustoPoolNameAvailabilityResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>
     {
         internal KustoPoolNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KustoPoolNameUnavailableReason : System.IEquatable<Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason>
@@ -2621,13 +2950,18 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason left, Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KustoPoolPrincipalAssignmentNameAvailabilityContent
+    public partial class KustoPoolPrincipalAssignmentNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent>
     {
         public KustoPoolPrincipalAssignmentNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType ResourceType { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolPrincipalAssignmentNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoPoolSkuDescription
+    public partial class KustoPoolSkuDescription : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription>
     {
         internal KustoPoolSkuDescription() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem> LocationInfo { get { throw null; } }
@@ -2636,12 +2970,22 @@ namespace Azure.ResourceManager.Synapse.Models
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.BinaryData> Restrictions { get { throw null; } }
         public string Size { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoPoolSkuLocationInfoItem
+    public partial class KustoPoolSkuLocationInfoItem : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem>
     {
         internal KustoPoolSkuLocationInfoItem() { }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.KustoPoolSkuLocationInfoItem>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KustoPoolSkuSize : System.IEquatable<Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize>
@@ -2705,21 +3049,37 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.KustoPoolType left, Azure.ResourceManager.Synapse.Models.KustoPoolType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateEndpointConnectionForPrivateLinkHubBasic
+    public partial class PrivateEndpointConnectionForPrivateLinkHubBasic : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic>
     {
         internal PrivateEndpointConnectionForPrivateLinkHubBasic() { }
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReplaceAllFirewallRulesOperationResult
+    public partial class ReplaceAllFirewallRulesOperationResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult>
     {
         internal ReplaceAllFirewallRulesOperationResult() { }
         public string OperationId { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.ReplaceAllFirewallRulesOperationResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReplaceAllIPFirewallRulesContent
+    public partial class ReplaceAllIPFirewallRulesContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent>
     {
         public ReplaceAllIPFirewallRulesContent() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties> IPFirewallRules { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.ReplaceAllIPFirewallRulesContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Synapse.Models.ResourceProvisioningState>
@@ -2831,10 +3191,15 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode left, Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SqlPoolCreateRestorePointContent
+    public partial class SqlPoolCreateRestorePointContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent>
     {
         public SqlPoolCreateRestorePointContent(string restorePointLabel) { }
         public string RestorePointLabel { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlPoolSecurityAlertPolicyName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SqlPoolSecurityAlertPolicyName>
@@ -2871,7 +3236,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType left, Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SqlPoolUsage
+    public partial class SqlPoolUsage : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolUsage>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolUsage>
     {
         internal SqlPoolUsage() { }
         public double? CurrentValue { get { throw null; } }
@@ -2881,16 +3246,31 @@ namespace Azure.ResourceManager.Synapse.Models
         public System.DateTimeOffset? NextResetOn { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SqlPoolUsage System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SqlPoolUsage System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolUsage>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolUsage>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolUsage>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SqlPoolVulnerabilityAssessmentRuleBaselineItem
+    public partial class SqlPoolVulnerabilityAssessmentRuleBaselineItem : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem>
     {
         public SqlPoolVulnerabilityAssessmentRuleBaselineItem(System.Collections.Generic.IEnumerable<string> result) { }
         public System.Collections.Generic.IList<string> Result { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentRuleBaselineItem>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SqlPoolVulnerabilityAssessmentScansExport : Azure.ResourceManager.Models.ResourceData
+    public partial class SqlPoolVulnerabilityAssessmentScansExport : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport>
     {
         public SqlPoolVulnerabilityAssessmentScansExport() { }
         public string ExportedReportLocation { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SqlPoolVulnerabilityAssessmentScansExport>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlServerSecurityAlertPolicyName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SqlServerSecurityAlertPolicyName>
@@ -2926,10 +3306,15 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseAadOnlyAuthenticationName left, Azure.ResourceManager.Synapse.Models.SynapseAadOnlyAuthenticationName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseBigDataPoolInfoPatch
+    public partial class SynapseBigDataPoolInfoPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch>
     {
         public SynapseBigDataPoolInfoPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseBigDataPoolInfoPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseBlobAuditingPolicyName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseBlobAuditingPolicyName>
@@ -2989,22 +3374,38 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole left, Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseCmdkeySetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase
+    public partial class SynapseCmdkeySetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup>
     {
         public SynapseCmdkeySetup(System.BinaryData targetName, System.BinaryData userName, Azure.ResourceManager.Synapse.Models.SynapseSecretBase password) { }
         public Azure.ResourceManager.Synapse.Models.SynapseSecretBase Password { get { throw null; } set { } }
         public System.BinaryData TargetName { get { throw null; } set { } }
         public System.BinaryData UserName { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseCmdkeySetup>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseComponentSetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase
+    public partial class SynapseComponentSetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseComponentSetup>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseComponentSetup>
     {
         public SynapseComponentSetup(string componentName) { }
         public string ComponentName { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseSecretBase LicenseKey { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseComponentSetup System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseComponentSetup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseComponentSetup>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseComponentSetup System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseComponentSetup>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseComponentSetup>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseComponentSetup>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class SynapseCustomSetupBase
+    public abstract partial class SynapseCustomSetupBase : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         protected SynapseCustomSetupBase() { }
+        Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseDatabasePrincipalAssignmentType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType>
@@ -3062,21 +3463,36 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType left, Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseDataConnectionValidation
+    public partial class SynapseDataConnectionValidation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation>
     {
         public SynapseDataConnectionValidation() { }
         public string DataConnectionName { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.SynapseDataConnectionData Properties { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseDataConnectionValidationListResult
+    public partial class SynapseDataConnectionValidationListResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult>
     {
         internal SynapseDataConnectionValidationListResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult> Value { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationListResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseDataConnectionValidationResult
+    public partial class SynapseDataConnectionValidationResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult>
     {
         internal SynapseDataConnectionValidationResult() { }
         public string ErrorMessage { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataConnectionValidationResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseDataFlowComputeType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType>
@@ -3097,13 +3513,18 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType left, Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseDataLakeStorageAccountDetails
+    public partial class SynapseDataLakeStorageAccountDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails>
     {
         public SynapseDataLakeStorageAccountDetails() { }
         public System.Uri AccountUri { get { throw null; } set { } }
         public bool? CreateManagedPrivateEndpoint { get { throw null; } set { } }
         public string Filesystem { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SynapseDataMaskingFunction
     {
@@ -3124,20 +3545,30 @@ namespace Azure.ResourceManager.Synapse.Models
         Disabled = 0,
         Enabled = 1,
     }
-    public partial class SynapseDataSourceCapacity
+    public partial class SynapseDataSourceCapacity : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity>
     {
         internal SynapseDataSourceCapacity() { }
         public int Default { get { throw null; } }
         public int Maximum { get { throw null; } }
         public int Minimum { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType ScaleType { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseDataSourceResourceSku
+    public partial class SynapseDataSourceResourceSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku>
     {
         internal SynapseDataSourceResourceSku() { }
         public Azure.ResourceManager.Synapse.Models.SynapseDataSourceCapacity Capacity { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku Sku { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseDataSourceScaleType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType>
@@ -3158,12 +3589,17 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType left, Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseDataSourceSku
+    public partial class SynapseDataSourceSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku>
     {
         public SynapseDataSourceSku(Azure.ResourceManager.Synapse.Models.SynapseSkuName name, Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize size) { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseSkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize Size { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseDataWarehouseUserActivityName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseDataWarehouseUserActivityName>
@@ -3246,18 +3682,28 @@ namespace Azure.ResourceManager.Synapse.Models
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class SynapseDynamicExecutorAllocation
+    public partial class SynapseDynamicExecutorAllocation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation>
     {
         public SynapseDynamicExecutorAllocation() { }
         public bool? IsEnabled { get { throw null; } set { } }
         public int? MaxExecutors { get { throw null; } set { } }
         public int? MinExecutors { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseDynamicExecutorAllocation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseEncryptionDetails
+    public partial class SynapseEncryptionDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails>
     {
         public SynapseEncryptionDetails() { }
         public Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails Cmk { get { throw null; } set { } }
         public bool? IsDoubleEncryptionEnabled { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseEncryptionProtectorName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName>
@@ -3276,19 +3722,29 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName left, Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseEntityReference
+    public partial class SynapseEntityReference : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEntityReference>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEntityReference>
     {
         public SynapseEntityReference() { }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType? IntegrationRuntimeEntityReferenceType { get { throw null; } set { } }
         public string ReferenceName { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseEntityReference System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEntityReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEntityReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseEntityReference System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEntityReference>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEntityReference>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEntityReference>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseEnvironmentVariableSetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase
+    public partial class SynapseEnvironmentVariableSetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup>
     {
         public SynapseEnvironmentVariableSetup(string variableName, string variableValue) { }
         public string VariableName { get { throw null; } set { } }
         public string VariableValue { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEnvironmentVariableSetup>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseEventGridDataConnection : Azure.ResourceManager.Synapse.SynapseDataConnectionData
+    public partial class SynapseEventGridDataConnection : Azure.ResourceManager.Synapse.SynapseDataConnectionData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection>
     {
         public SynapseEventGridDataConnection() { }
         public Azure.ResourceManager.Synapse.Models.SynapseBlobStorageEventType? BlobStorageEventType { get { throw null; } set { } }
@@ -3300,6 +3756,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEventGridDataConnection>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseEventGridDataFormat : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat>
@@ -3333,7 +3794,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat left, Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseEventHubDataConnection : Azure.ResourceManager.Synapse.SynapseDataConnectionData
+    public partial class SynapseEventHubDataConnection : Azure.ResourceManager.Synapse.SynapseDataConnectionData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection>
     {
         public SynapseEventHubDataConnection() { }
         public Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType? Compression { get { throw null; } set { } }
@@ -3345,6 +3806,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public string MappingRuleName { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public string TableName { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseEventHubDataConnection>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseEventHubDataFormat : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat>
@@ -3378,12 +3844,17 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat left, Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseFollowerDatabaseDefinition
+    public partial class SynapseFollowerDatabaseDefinition : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition>
     {
         public SynapseFollowerDatabaseDefinition(Azure.Core.ResourceIdentifier kustoPoolResourceId, string attachedDatabaseConfigurationName) { }
         public string AttachedDatabaseConfigurationName { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } }
         public Azure.Core.ResourceIdentifier KustoPoolResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseGeoBackupPolicyName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseGeoBackupPolicyName>
@@ -3407,16 +3878,26 @@ namespace Azure.ResourceManager.Synapse.Models
         Disabled = 0,
         Enabled = 1,
     }
-    public partial class SynapseGetSsisObjectMetadataContent
+    public partial class SynapseGetSsisObjectMetadataContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent>
     {
         public SynapseGetSsisObjectMetadataContent() { }
         public string MetadataPath { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseGetSsisObjectMetadataContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseGrantSqlControlToManagedIdentity
+    public partial class SynapseGrantSqlControlToManagedIdentity : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity>
     {
         public SynapseGrantSqlControlToManagedIdentity() { }
         public Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentityState? ActualState { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseDesiredState? DesiredState { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseGrantSqlControlToManagedIdentity>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SynapseGrantSqlControlToManagedIdentityState
     {
@@ -3444,11 +3925,16 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeAuthKeys
+    public partial class SynapseIntegrationRuntimeAuthKeys : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys>
     {
         internal SynapseIntegrationRuntimeAuthKeys() { }
         public string AuthKey1 { get { throw null; } }
         public string AuthKey2 { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseIntegrationRuntimeAutoUpdate : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate>
@@ -3468,7 +3954,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeComputeProperties
+    public partial class SynapseIntegrationRuntimeComputeProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties>
     {
         public SynapseIntegrationRuntimeComputeProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -3478,8 +3964,13 @@ namespace Azure.ResourceManager.Synapse.Models
         public string NodeSize { get { throw null; } set { } }
         public int? NumberOfNodes { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties VnetProperties { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeConnectionInfo
+    public partial class SynapseIntegrationRuntimeConnectionInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo>
     {
         internal SynapseIntegrationRuntimeConnectionInfo() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -3489,14 +3980,24 @@ namespace Azure.ResourceManager.Synapse.Models
         public string PublicKey { get { throw null; } }
         public string ServiceToken { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeConnectionInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeCustomSetupScriptProperties
+    public partial class SynapseIntegrationRuntimeCustomSetupScriptProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties>
     {
         public SynapseIntegrationRuntimeCustomSetupScriptProperties() { }
         public System.Uri BlobContainerUri { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseSecureString SasToken { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeDataFlowProperties
+    public partial class SynapseIntegrationRuntimeDataFlowProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties>
     {
         public SynapseIntegrationRuntimeDataFlowProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -3504,13 +4005,23 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType? ComputeType { get { throw null; } set { } }
         public int? CoreCount { get { throw null; } set { } }
         public int? TimeToLive { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeDataProxyProperties
+    public partial class SynapseIntegrationRuntimeDataProxyProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties>
     {
         public SynapseIntegrationRuntimeDataProxyProperties() { }
         public Azure.ResourceManager.Synapse.Models.SynapseEntityReference ConnectVia { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseEntityReference StagingLinkedService { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseIntegrationRuntimeEdition : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition>
@@ -3585,18 +4096,28 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeMonitoringResult
+    public partial class SynapseIntegrationRuntimeMonitoringResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult>
     {
         internal SynapseIntegrationRuntimeMonitoringResult() { }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult> Nodes { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeMonitoringResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeNodeIPAddress
+    public partial class SynapseIntegrationRuntimeNodeIPAddress : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress>
     {
         internal SynapseIntegrationRuntimeNodeIPAddress() { }
         public System.Net.IPAddress IPAddress { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeIPAddress>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeNodeMonitoringResult
+    public partial class SynapseIntegrationRuntimeNodeMonitoringResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult>
     {
         internal SynapseIntegrationRuntimeNodeMonitoringResult() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -3608,37 +4129,67 @@ namespace Azure.ResourceManager.Synapse.Models
         public string NodeName { get { throw null; } }
         public float? ReceivedBytes { get { throw null; } }
         public float? SentBytes { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeNodeMonitoringResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
+    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>
     {
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint() { }
         public string Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint> Endpoints { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint
+    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>
     {
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint() { }
         public string DomainName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> EndpointDetails { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
+    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>
     {
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails() { }
         public int? Port { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimePatch
+    public partial class SynapseIntegrationRuntimePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch>
     {
         public SynapseIntegrationRuntimePatch() { }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate? AutoUpdate { get { throw null; } set { } }
         public string UpdateDelayOffset { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeProperties
+    public partial class SynapseIntegrationRuntimeProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties>
     {
         public SynapseIntegrationRuntimeProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string Description { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeSsisCatalogInfo
+    public partial class SynapseIntegrationRuntimeSsisCatalogInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo>
     {
         public SynapseIntegrationRuntimeSsisCatalogInfo() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -3646,6 +4197,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public string CatalogAdminUserName { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get { throw null; } set { } }
         public System.Uri CatalogServerEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseIntegrationRuntimeSsisCatalogPricingTier : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier>
@@ -3667,7 +4223,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeSsisProperties
+    public partial class SynapseIntegrationRuntimeSsisProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties>
     {
         public SynapseIntegrationRuntimeSsisProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -3677,6 +4233,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition? Edition { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase> ExpressCustomSetupProperties { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType? LicenseType { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseIntegrationRuntimeState : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState>
@@ -3704,18 +4265,28 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeStatus
+    public partial class SynapseIntegrationRuntimeStatus : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus>
     {
         internal SynapseIntegrationRuntimeStatus() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string DataFactoryName { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState? State { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeStatusResult
+    public partial class SynapseIntegrationRuntimeStatusResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult>
     {
         internal SynapseIntegrationRuntimeStatusResult() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus Properties { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseIntegrationRuntimeUpdateResult : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult>
@@ -3736,7 +4307,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeVnetProperties
+    public partial class SynapseIntegrationRuntimeVnetProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties>
     {
         public SynapseIntegrationRuntimeVnetProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -3744,8 +4315,13 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Subnet { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public System.Guid? VnetId { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseIotHubDataConnection : Azure.ResourceManager.Synapse.SynapseDataConnectionData
+    public partial class SynapseIotHubDataConnection : Azure.ResourceManager.Synapse.SynapseDataConnectionData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection>
     {
         public SynapseIotHubDataConnection() { }
         public string ConsumerGroup { get { throw null; } set { } }
@@ -3756,6 +4332,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public string SharedAccessPolicyName { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIotHubDataConnection>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseIotHubDataFormat : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat>
@@ -3789,14 +4370,19 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat left, Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIPFirewallRuleProperties
+    public partial class SynapseIPFirewallRuleProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties>
     {
         public SynapseIPFirewallRuleProperties() { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseProvisioningState? ProvisioningState { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseIPFirewallRuleProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseKustoPoolPatch : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseKustoPoolPatch : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch>
     {
         public SynapseKustoPoolPatch() { }
         public System.Uri DataIngestionUri { get { throw null; } }
@@ -3811,19 +4397,34 @@ namespace Azure.ResourceManager.Synapse.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public System.Guid? WorkspaceUid { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseKustoPoolPrivateLinkData : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseKustoPoolPrivateLinkData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData>
     {
         public SynapseKustoPoolPrivateLinkData() { }
         public string GroupId { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseLanguageExtension
+    public partial class SynapseLanguageExtension : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension>
     {
         public SynapseLanguageExtension() { }
         public Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName? LanguageExtensionName { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseLanguageExtensionName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName>
@@ -3843,12 +4444,17 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName left, Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseLanguageExtensionsList
+    public partial class SynapseLanguageExtensionsList : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList>
     {
         public SynapseLanguageExtensionsList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension> Value { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionsList>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseLinkedIntegrationRuntime
+    public partial class SynapseLinkedIntegrationRuntime : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime>
     {
         internal SynapseLinkedIntegrationRuntime() { }
         public System.DateTimeOffset? CreateOn { get { throw null; } }
@@ -3856,29 +4462,55 @@ namespace Azure.ResourceManager.Synapse.Models
         public string DataFactoryName { get { throw null; } }
         public string Name { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseLinkedIntegrationRuntimeKeyAuthorization : Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType
+    public partial class SynapseLinkedIntegrationRuntimeKeyAuthorization : Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization>
     {
         public SynapseLinkedIntegrationRuntimeKeyAuthorization(Azure.ResourceManager.Synapse.Models.SynapseSecureString key) { }
         public Azure.ResourceManager.Synapse.Models.SynapseSecureString Key { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeKeyAuthorization>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseLinkedIntegrationRuntimeRbacAuthorization : Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType
+    public partial class SynapseLinkedIntegrationRuntimeRbacAuthorization : Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization>
     {
         public SynapseLinkedIntegrationRuntimeRbacAuthorization(Azure.Core.ResourceIdentifier resourceId) { }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeRbacAuthorization>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class SynapseLinkedIntegrationRuntimeType
+    public abstract partial class SynapseLinkedIntegrationRuntimeType : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         protected SynapseLinkedIntegrationRuntimeType() { }
+        Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseMaintenanceWindowTimeRange
+    public partial class SynapseMaintenanceWindowTimeRange : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange>
     {
         public SynapseMaintenanceWindowTimeRange() { }
         public Azure.ResourceManager.Synapse.Models.SynapseDayOfWeek? DayOfWeek { get { throw null; } set { } }
         public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.TimeSpan? StartOn { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseMaintenanceWindowTimeRange>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseManagedIntegrationRuntime : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties
+    public partial class SynapseManagedIntegrationRuntime : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime>
     {
         public SynapseManagedIntegrationRuntime() { }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties ComputeProperties { get { throw null; } set { } }
@@ -3887,8 +4519,13 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties SsisProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState? State { get { throw null; } }
         public string TypeManagedVirtualNetworkType { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntime>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseManagedIntegrationRuntimeError
+    public partial class SynapseManagedIntegrationRuntimeError : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError>
     {
         internal SynapseManagedIntegrationRuntimeError() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -3896,14 +4533,24 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Parameters { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseManagedIntegrationRuntimeNode
+    public partial class SynapseManagedIntegrationRuntimeNode : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode>
     {
         internal SynapseManagedIntegrationRuntimeNode() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError> Errors { get { throw null; } }
         public string NodeId { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseManagedIntegrationRuntimeNodeStatus : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus>
@@ -3925,7 +4572,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseManagedIntegrationRuntimeOperationResult
+    public partial class SynapseManagedIntegrationRuntimeOperationResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult>
     {
         internal SynapseManagedIntegrationRuntimeOperationResult() { }
         public string ActivityId { get { throw null; } }
@@ -3935,29 +4582,49 @@ namespace Azure.ResourceManager.Synapse.Models
         public System.Collections.Generic.IReadOnlyList<string> Parameters { get { throw null; } }
         public string Result { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseManagedIntegrationRuntimeStatus : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus
+    public partial class SynapseManagedIntegrationRuntimeStatus : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus>
     {
         internal SynapseManagedIntegrationRuntimeStatus() { }
         public System.DateTimeOffset? CreateOn { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult LastOperation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode> Nodes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError> OtherErrors { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeStatus>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseManagedVirtualNetworkSettings
+    public partial class SynapseManagedVirtualNetworkSettings : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings>
     {
         public SynapseManagedVirtualNetworkSettings() { }
         public System.Collections.Generic.IList<string> AllowedAadTenantIdsForLinking { get { throw null; } }
         public bool? EnableLinkedAccessCheckOnTargetResource { get { throw null; } set { } }
         public bool? PreventDataExfiltration { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseManagedVirtualNetworkSettings>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseOptimizedAutoscale
+    public partial class SynapseOptimizedAutoscale : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale>
     {
         public SynapseOptimizedAutoscale(int version, bool isEnabled, int minimum, int maximum) { }
         public bool IsEnabled { get { throw null; } set { } }
         public int Maximum { get { throw null; } set { } }
         public int Minimum { get { throw null; } set { } }
         public int Version { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseOptimizedAutoscale>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapsePrincipalAssignmentType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType>
@@ -4014,31 +4681,51 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapsePrincipalType left, Azure.ResourceManager.Synapse.Models.SynapsePrincipalType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapsePrivateEndpointConnectionProperties
+    public partial class SynapsePrivateEndpointConnectionProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties>
     {
         internal SynapsePrivateEndpointConnectionProperties() { }
         public Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateEndpointConnectionProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapsePrivateLinkHubPatch
+    public partial class SynapsePrivateLinkHubPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch>
     {
         public SynapsePrivateLinkHubPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkHubPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapsePrivateLinkResourceProperties
+    public partial class SynapsePrivateLinkResourceProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties>
     {
         internal SynapsePrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkResourceProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapsePrivateLinkServiceConnectionState
+    public partial class SynapsePrivateLinkServiceConnectionState : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState>
     {
         public SynapsePrivateLinkServiceConnectionState() { }
         public string ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapsePrivateLinkServiceConnectionState>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseProvisioningState : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseProvisioningState>
@@ -4061,7 +4748,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseProvisioningState left, Azure.ResourceManager.Synapse.Models.SynapseProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseReadOnlyFollowingDatabase : Azure.ResourceManager.Synapse.SynapseDatabaseData
+    public partial class SynapseReadOnlyFollowingDatabase : Azure.ResourceManager.Synapse.SynapseDatabaseData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase>
     {
         public SynapseReadOnlyFollowingDatabase() { }
         public string AttachedDatabaseConfigurationName { get { throw null; } }
@@ -4071,8 +4758,13 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan? SoftDeletePeriod { get { throw null; } }
         public float? StatisticsSize { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseReadOnlyFollowingDatabase>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseReadWriteDatabase : Azure.ResourceManager.Synapse.SynapseDatabaseData
+    public partial class SynapseReadWriteDatabase : Azure.ResourceManager.Synapse.SynapseDatabaseData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase>
     {
         public SynapseReadWriteDatabase() { }
         public System.TimeSpan? HotCachePeriod { get { throw null; } set { } }
@@ -4080,24 +4772,39 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan? SoftDeletePeriod { get { throw null; } set { } }
         public float? StatisticsSize { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseReadWriteDatabase>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseRecommendedSensitivityLabelUpdate : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseRecommendedSensitivityLabelUpdate : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate>
     {
         public SynapseRecommendedSensitivityLabelUpdate() { }
         public string Column { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateKind? Op { get { throw null; } set { } }
         public string Schema { get { throw null; } set { } }
         public string Table { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SynapseRecommendedSensitivityLabelUpdateKind
     {
         Enable = 0,
         Disable = 1,
     }
-    public partial class SynapseRecommendedSensitivityLabelUpdateOperationListResult
+    public partial class SynapseRecommendedSensitivityLabelUpdateOperationListResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult>
     {
         public SynapseRecommendedSensitivityLabelUpdateOperationListResult() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdate> Operations { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SynapseReplicationRole
     {
@@ -4127,24 +4834,40 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseReplicationState left, Azure.ResourceManager.Synapse.Models.SynapseReplicationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseResourceMoveDefinition
+    public partial class SynapseResourceMoveDefinition : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition>
     {
         public SynapseResourceMoveDefinition(Azure.Core.ResourceIdentifier id) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SynapseRestorePointType
     {
         Continuous = 0,
         Discrete = 1,
     }
-    public abstract partial class SynapseSecretBase
+    public abstract partial class SynapseSecretBase : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSecretBase>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSecretBase>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         protected SynapseSecretBase() { }
+        Azure.ResourceManager.Synapse.Models.SynapseSecretBase System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSecretBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSecretBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSecretBase System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSecretBase>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSecretBase>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSecretBase>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSecureString : Azure.ResourceManager.Synapse.Models.SynapseSecretBase
+    public partial class SynapseSecureString : Azure.ResourceManager.Synapse.Models.SynapseSecretBase, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSecureString>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSecureString>
     {
         public SynapseSecureString(string value) { }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseSecureString System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSecureString>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSecureString>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSecureString System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSecureString>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSecureString>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSecureString>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SynapseSecurityAlertPolicyState
     {
@@ -4152,12 +4875,17 @@ namespace Azure.ResourceManager.Synapse.Models
         Enabled = 1,
         Disabled = 2,
     }
-    public partial class SynapseSelfHostedIntegrationRuntime : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties
+    public partial class SynapseSelfHostedIntegrationRuntime : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime>
     {
         public SynapseSelfHostedIntegrationRuntime() { }
         public Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType LinkedInfo { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntime>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSelfHostedIntegrationRuntimeNode
+    public partial class SynapseSelfHostedIntegrationRuntimeNode : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode>
     {
         internal SynapseSelfHostedIntegrationRuntimeNode() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -4179,6 +4907,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus? Status { get { throw null; } }
         public string Version { get { throw null; } }
         public string VersionStatus { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseSelfHostedIntegrationRuntimeNodeStatus : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus>
@@ -4203,7 +4936,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseSelfHostedIntegrationRuntimeStatus : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus
+    public partial class SynapseSelfHostedIntegrationRuntimeStatus : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus>
     {
         internal SynapseSelfHostedIntegrationRuntimeStatus() { }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate? AutoUpdate { get { throw null; } }
@@ -4225,6 +4958,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public string UpdateDelayOffset { get { throw null; } }
         public string Version { get { throw null; } }
         public string VersionStatus { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeStatus>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SynapseSensitivityLabelRank
     {
@@ -4239,7 +4977,7 @@ namespace Azure.ResourceManager.Synapse.Models
         Current = 0,
         Recommended = 1,
     }
-    public partial class SynapseSensitivityLabelUpdate : Azure.ResourceManager.Models.ResourceData
+    public partial class SynapseSensitivityLabelUpdate : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate>
     {
         public SynapseSensitivityLabelUpdate() { }
         public string Column { get { throw null; } set { } }
@@ -4247,16 +4985,26 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Schema { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.SynapseSensitivityLabelData SensitivityLabel { get { throw null; } set { } }
         public string Table { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SynapseSensitivityLabelUpdateKind
     {
         Set = 0,
         Remove = 1,
     }
-    public partial class SynapseSensitivityLabelUpdateListResult
+    public partial class SynapseSensitivityLabelUpdateListResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult>
     {
         public SynapseSensitivityLabelUpdateListResult() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdate> Operations { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseServerKeyType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseServerKeyType>
@@ -4276,7 +5024,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseServerKeyType left, Azure.ResourceManager.Synapse.Models.SynapseServerKeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseServerUsage
+    public partial class SynapseServerUsage : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseServerUsage>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseServerUsage>
     {
         internal SynapseServerUsage() { }
         public double? CurrentValue { get { throw null; } }
@@ -4286,13 +5034,23 @@ namespace Azure.ResourceManager.Synapse.Models
         public System.DateTimeOffset? NextResetOn { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseServerUsage System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseServerUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseServerUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseServerUsage System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseServerUsage>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseServerUsage>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseServerUsage>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSku
+    public partial class SynapseSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSku>
     {
         public SynapseSku() { }
         public int? Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseSkuName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseSkuName>
@@ -4330,7 +5088,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType left, Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseSqlPoolPatch
+    public partial class SynapseSqlPoolPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch>
     {
         public SynapseSqlPoolPatch() { }
         public string Collation { get { throw null; } set { } }
@@ -4347,49 +5105,85 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Status { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType? StorageAccountType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSsisEnvironment : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata
+    public partial class SynapseSsisEnvironment : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment>
     {
         internal SynapseSsisEnvironment() { }
         public long? FolderId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseSsisVariable> Variables { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironment>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSsisEnvironmentReference
+    public partial class SynapseSsisEnvironmentReference : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference>
     {
         internal SynapseSsisEnvironmentReference() { }
         public string EnvironmentFolderName { get { throw null; } }
         public string EnvironmentName { get { throw null; } }
         public long? Id { get { throw null; } }
         public string ReferenceType { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSsisFolder : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata
+    public partial class SynapseSsisFolder : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisFolder>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisFolder>
     {
         internal SynapseSsisFolder() { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisFolder System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisFolder>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisFolder>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisFolder System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisFolder>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisFolder>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisFolder>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class SynapseSsisObjectMetadata
+    public abstract partial class SynapseSsisObjectMetadata : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         protected SynapseSsisObjectMetadata() { }
         public string Description { get { throw null; } }
         public long? Id { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSsisObjectMetadataStatusResult
+    public partial class SynapseSsisObjectMetadataStatusResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult>
     {
         internal SynapseSsisObjectMetadataStatusResult() { }
         public string Error { get { throw null; } }
         public string Name { get { throw null; } }
         public string Properties { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSsisPackage : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata
+    public partial class SynapseSsisPackage : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisPackage>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisPackage>
     {
         internal SynapseSsisPackage() { }
         public long? FolderId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter> Parameters { get { throw null; } }
         public long? ProjectId { get { throw null; } }
         public long? ProjectVersion { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisPackage System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisPackage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisPackage>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisPackage System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisPackage>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisPackage>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisPackage>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSsisParameter
+    public partial class SynapseSsisParameter : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter>
     {
         internal SynapseSsisParameter() { }
         public string DataType { get { throw null; } }
@@ -4404,16 +5198,26 @@ namespace Azure.ResourceManager.Synapse.Models
         public bool? ValueSet { get { throw null; } }
         public string ValueType { get { throw null; } }
         public string Variable { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisParameter System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisParameter System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSsisProject : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata
+    public partial class SynapseSsisProject : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisProject>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisProject>
     {
         internal SynapseSsisProject() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseSsisEnvironmentReference> EnvironmentRefs { get { throw null; } }
         public long? FolderId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseSsisParameter> Parameters { get { throw null; } }
         public long? Version { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisProject System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisProject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisProject>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisProject System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisProject>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisProject>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisProject>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseSsisVariable
+    public partial class SynapseSsisVariable : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisVariable>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisVariable>
     {
         internal SynapseSsisVariable() { }
         public string DataType { get { throw null; } }
@@ -4423,8 +5227,13 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Name { get { throw null; } }
         public string SensitiveValue { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisVariable System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisVariable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseSsisVariable>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseSsisVariable System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisVariable>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisVariable>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseSsisVariable>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseTableLevelSharingProperties
+    public partial class SynapseTableLevelSharingProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties>
     {
         public SynapseTableLevelSharingProperties() { }
         public System.Collections.Generic.IList<string> ExternalTablesToExclude { get { throw null; } }
@@ -4433,6 +5242,11 @@ namespace Azure.ResourceManager.Synapse.Models
         public System.Collections.Generic.IList<string> MaterializedViewsToInclude { get { throw null; } }
         public System.Collections.Generic.IList<string> TablesToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> TablesToInclude { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseTableLevelSharingProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseTransparentDataEncryptionName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseTransparentDataEncryptionName>
@@ -4478,18 +5292,28 @@ namespace Azure.ResourceManager.Synapse.Models
         Master = 0,
         Default = 1,
     }
-    public partial class SynapseVulnerabilityAssessmentRecurringScansProperties
+    public partial class SynapseVulnerabilityAssessmentRecurringScansProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties>
     {
         public SynapseVulnerabilityAssessmentRecurringScansProperties() { }
         public System.Collections.Generic.IList<string> Emails { get { throw null; } }
         public bool? EnableEmailToAccountAdmins { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentRecurringScansProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseVulnerabilityAssessmentScanError
+    public partial class SynapseVulnerabilityAssessmentScanError : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError>
     {
         internal SynapseVulnerabilityAssessmentScanError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanError>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseVulnerabilityAssessmentScanState : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanState>
@@ -4529,13 +5353,18 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType left, Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseWorkspaceKeyDetails
+    public partial class SynapseWorkspaceKeyDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails>
     {
         public SynapseWorkspaceKeyDetails() { }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseWorkspacePatch
+    public partial class SynapseWorkspacePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch>
     {
         public SynapseWorkspacePatch() { }
         public Azure.ResourceManager.Synapse.Models.SynapseEncryptionDetails Encryption { get { throw null; } set { } }
@@ -4547,8 +5376,13 @@ namespace Azure.ResourceManager.Synapse.Models
         public string SqlAdministratorLoginPassword { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspacePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseWorkspaceRepositoryConfiguration
+    public partial class SynapseWorkspaceRepositoryConfiguration : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration>
     {
         public SynapseWorkspaceRepositoryConfiguration() { }
         public string AccountName { get { throw null; } set { } }
@@ -4560,18 +5394,33 @@ namespace Azure.ResourceManager.Synapse.Models
         public string RootFolder { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         public string WorkspaceRepositoryConfigurationType { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.SynapseWorkspaceRepositoryConfiguration>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UpdateIntegrationRuntimeNodeContent
+    public partial class UpdateIntegrationRuntimeNodeContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent>
     {
         public UpdateIntegrationRuntimeNodeContent() { }
         public int? ConcurrentJobsLimit { get { throw null; } set { } }
+        Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.UpdateIntegrationRuntimeNodeContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WorkspaceCustomerManagedKeyDetails
+    public partial class WorkspaceCustomerManagedKeyDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails>
     {
         public WorkspaceCustomerManagedKeyDetails() { }
         public Azure.ResourceManager.Synapse.Models.KekIdentityProperties KekIdentity { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.SynapseWorkspaceKeyDetails Key { get { throw null; } set { } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Synapse.Models.WorkspaceCustomerManagedKeyDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WorkspacePublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess>

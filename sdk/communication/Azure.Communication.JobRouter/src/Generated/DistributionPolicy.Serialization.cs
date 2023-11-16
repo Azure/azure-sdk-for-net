@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class DistributionPolicy : IUtf8JsonSerializable, IJsonModel<DistributionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionPolicy>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<DistributionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<DistributionPolicy>)this).GetWireFormat(options) != "J") && options.Format != "J")

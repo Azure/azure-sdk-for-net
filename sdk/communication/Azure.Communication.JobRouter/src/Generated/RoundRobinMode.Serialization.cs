@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class RoundRobinMode : IUtf8JsonSerializable, IJsonModel<RoundRobinMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoundRobinMode>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<RoundRobinMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<RoundRobinMode>)this).GetWireFormat(options) != "J") && options.Format != "J")

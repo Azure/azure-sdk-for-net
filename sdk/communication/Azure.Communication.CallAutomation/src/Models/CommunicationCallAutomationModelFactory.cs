@@ -119,7 +119,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                new Dictionary<string, BinaryData>()
                 );
 
             return new AddParticipantFailed(internalObject);
@@ -136,7 +137,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                new Dictionary<string, BinaryData>()
                 );
 
             return new AddParticipantSucceeded(internalObject);
@@ -154,7 +156,8 @@ namespace Azure.Communication.CallAutomation
                 sequenceNumber,
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, new Dictionary<string, BinaryData>())).ToList(),
+                new Dictionary<string, BinaryData>()
                 );
 
             return new ParticipantsUpdated(internalObject);
@@ -171,7 +174,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                new Dictionary<string, BinaryData>()
                 );
 
             return new RemoveParticipantFailed(internalObject);
@@ -188,7 +192,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                new Dictionary<string, BinaryData>()
                 );
 
             return new RemoveParticipantSucceeded(internalObject);
@@ -222,14 +227,15 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
         public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CommunicationIdentifier transferee = null, CommunicationIdentifier transferTarget = null)
         {
-            var internalEvent =  new CallTransferAcceptedInternal(
+            var internalEvent = new CallTransferAcceptedInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
                 resultInformation,
                 transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
-                transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
+                transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee),
+                new Dictionary<string, BinaryData>()
                 );
             return new CallTransferAccepted(internalEvent);
         }
@@ -251,7 +257,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 participant: CommunicationIdentifierSerializer.Serialize(participant),
-                invitationId);
+                invitationId,
+                new Dictionary<string, BinaryData>());
 
             return new AddParticipantCancelled(internalObject);
         }
@@ -273,7 +280,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                invitationId);
+                invitationId,
+                new Dictionary<string, BinaryData>());
 
             return new CancelAddParticipantFailed(internalObject);
         }

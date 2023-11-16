@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> The queue selectors to attach. </summary>
         public IList<RouterWorkerSelector> WorkerSelectors { get; } = new List<RouterWorkerSelector>();
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("condition"u8);

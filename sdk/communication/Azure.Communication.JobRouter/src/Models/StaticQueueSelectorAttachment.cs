@@ -23,7 +23,7 @@ namespace Azure.Communication.JobRouter
             QueueSelector = queueSelector;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("queueSelector"u8);

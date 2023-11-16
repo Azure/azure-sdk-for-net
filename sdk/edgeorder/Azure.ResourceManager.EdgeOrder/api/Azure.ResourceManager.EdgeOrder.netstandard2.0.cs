@@ -17,12 +17,17 @@ namespace Azure.ResourceManager.EdgeOrder
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EdgeOrderAddressData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EdgeOrderAddressData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData>
     {
         public EdgeOrderAddressData(Azure.Core.AzureLocation location, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails contactDetails) { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressValidationStatus? AddressValidationStatus { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails ContactDetails { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress ShippingAddress { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EdgeOrderAddressResource : Azure.ResourceManager.ArmResource
     {
@@ -54,12 +59,17 @@ namespace Azure.ResourceManager.EdgeOrder
         public virtual Azure.NullableResponse<Azure.ResourceManager.EdgeOrder.EdgeOrderResource> GetIfExists(Azure.Core.AzureLocation location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.EdgeOrder.EdgeOrderResource>> GetIfExistsAsync(Azure.Core.AzureLocation location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EdgeOrderData : Azure.ResourceManager.Models.ResourceData
+    public partial class EdgeOrderData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderData>
     {
         public EdgeOrderData() { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails CurrentStage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> OrderItemIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails> OrderStageHistory { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.EdgeOrderData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.EdgeOrderData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class EdgeOrderExtensions
     {
@@ -107,13 +117,18 @@ namespace Azure.ResourceManager.EdgeOrder
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EdgeOrder.EdgeOrderItemResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.EdgeOrderItemResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EdgeOrderItemData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EdgeOrderItemData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderItemData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderItemData>
     {
         public EdgeOrderItemData(Azure.Core.AzureLocation location, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails orderItemDetails, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails addressDetails, Azure.Core.ResourceIdentifier orderId) { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails AddressDetails { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OrderId { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails OrderItemDetails { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.EdgeOrderItemData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.EdgeOrderItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.EdgeOrderItemData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderItemData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderItemData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.EdgeOrderItemData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EdgeOrderItemResource : Azure.ResourceManager.ArmResource
     {
@@ -195,12 +210,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public static partial class ArmEdgeOrderModelFactory
     {
+        public static Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters ConfigurationFilters(Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation hierarchyInformation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> filterableProperty = null) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails CustomerSubscriptionDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures> registeredFeatures = null, string locationPlacementId = null, string quotaId = null) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData EdgeOrderAddressData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress shippingAddress = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails contactDetails = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressValidationStatus? addressValidationStatus = default(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.EdgeOrderData EdgeOrderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> orderItemIds = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails currentStage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails> orderStageHistory = null) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails EdgeOrderItemAddressDetails(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties forwardAddress = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties returnAddress = null) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties EdgeOrderItemAddressProperties(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress shippingAddress = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails contactDetails = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressValidationStatus? addressValidationStatus = default(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.EdgeOrderItemData EdgeOrderItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails orderItemDetails = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails addressDetails = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier orderId = null) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails EdgeOrderItemDetails(Azure.ResourceManager.EdgeOrder.Models.ProductDetails productDetails = null, Azure.ResourceManager.EdgeOrder.Models.OrderItemType orderItemType = default(Azure.ResourceManager.EdgeOrder.Models.OrderItemType), Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails currentStage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails> orderItemStageHistory = null, Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences preferences = null, Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails forwardShippingDetails = null, Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails reverseShippingDetails = null, System.Collections.Generic.IEnumerable<string> notificationEmailList = null, string cancellationReason = null, Azure.ResourceManager.EdgeOrder.Models.OrderItemCancellationStatus? cancellationStatus = default(Azure.ResourceManager.EdgeOrder.Models.OrderItemCancellationStatus?), Azure.ResourceManager.EdgeOrder.Models.EdgeOrderActionStatus? deletionStatus = default(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderActionStatus?), string returnReason = null, Azure.ResourceManager.EdgeOrder.Models.OrderItemReturnStatus? returnStatus = default(Azure.ResourceManager.EdgeOrder.Models.OrderItemReturnStatus?), string firstOrDefaultManagementResourceProviderNamespace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails> managementRPDetailsList = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent EdgeOrderItemReturnContent(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties returnAddress = null, string returnReason = null, string serviceTag = null, bool? isShippingBoxRequired = default(bool?)) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct EdgeOrderProduct(string displayName = null, Azure.ResourceManager.EdgeOrder.Models.ProductDescription description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> imageInformation = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation costInformation = null, Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation availabilityInformation = null, Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation hierarchyInformation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> filterableProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration> configurations = null) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails EdgeOrderProductBillingMeterDetails(string name = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails meterDetails = null, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType? meteringType = default(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType?), string frequency = null) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation EdgeOrderProductCostInformation(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails> billingMeterDetails = null, System.Uri billingInfoUri = null) { throw null; }
@@ -225,30 +243,50 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails ResourceProviderDetails(string resourceProviderNamespace = null) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails ReverseShippingDetails(string sasKeyForLabel = null, string carrierName = null, string carrierDisplayName = null, string trackingId = null, System.Uri trackingUri = null) { throw null; }
     }
-    public partial class ConfigurationFilters
+    public partial class ConfigurationFilters : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters>
     {
         public ConfigurationFilters(Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation hierarchyInformation) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> FilterableProperty { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationsContent
+    public partial class ConfigurationsContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent>
     {
         public ConfigurationsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters> configurationFilters) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters> ConfigurationFilters { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails CustomerSubscriptionDetails { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomerSubscriptionDetails
+    public partial class CustomerSubscriptionDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails>
     {
         public CustomerSubscriptionDetails(string quotaId) { }
         public string LocationPlacementId { get { throw null; } set { } }
         public string QuotaId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures> RegisteredFeatures { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomerSubscriptionRegisteredFeatures
+    public partial class CustomerSubscriptionRegisteredFeatures : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures>
     {
         public CustomerSubscriptionRegisteredFeatures() { }
         public string Name { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionRegisteredFeatures>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DoubleEncryptionStatus : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus>
@@ -286,7 +324,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderActionStatus left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderActionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EdgeOrderAddressContactDetails
+    public partial class EdgeOrderAddressContactDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails>
     {
         public EdgeOrderAddressContactDetails(string contactName, string phone, System.Collections.Generic.IEnumerable<string> emailList) { }
         public string ContactName { get { throw null; } set { } }
@@ -294,13 +332,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string Mobile { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
         public string PhoneExtension { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderAddressPatch
+    public partial class EdgeOrderAddressPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch>
     {
         public EdgeOrderAddressPatch() { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails ContactDetails { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress ShippingAddress { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeOrderAddressType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressType>
@@ -340,25 +388,40 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressValidationStatus left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressValidationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EdgeOrderItemAddressDetails
+    public partial class EdgeOrderItemAddressDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails>
     {
         public EdgeOrderItemAddressDetails(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties forwardAddress) { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties ForwardAddress { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties ReturnAddress { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderItemAddressProperties
+    public partial class EdgeOrderItemAddressProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties>
     {
         public EdgeOrderItemAddressProperties(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails contactDetails) { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressValidationStatus? AddressValidationStatus { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressContactDetails ContactDetails { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress ShippingAddress { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderItemCancellationReason
+    public partial class EdgeOrderItemCancellationReason : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason>
     {
         public EdgeOrderItemCancellationReason(string reason) { }
         public string Reason { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemCancellationReason>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderItemDetails
+    public partial class EdgeOrderItemDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails>
     {
         public EdgeOrderItemDetails(Azure.ResourceManager.EdgeOrder.Models.ProductDetails productDetails, Azure.ResourceManager.EdgeOrder.Models.OrderItemType orderItemType) { }
         public string CancellationReason { get { throw null; } }
@@ -377,24 +440,39 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string ReturnReason { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.OrderItemReturnStatus? ReturnStatus { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails ReverseShippingDetails { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderItemPatch
+    public partial class EdgeOrderItemPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch>
     {
         public EdgeOrderItemPatch() { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties ForwardAddress { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> NotificationEmailList { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences Preferences { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderItemReturnContent
+    public partial class EdgeOrderItemReturnContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent>
     {
         public EdgeOrderItemReturnContent(string returnReason) { }
         public bool? IsShippingBoxRequired { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemAddressProperties ReturnAddress { get { throw null; } set { } }
         public string ReturnReason { get { throw null; } }
         public string ServiceTag { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderItemReturnContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderProduct
+    public partial class EdgeOrderProduct : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct>
     {
         internal EdgeOrderProduct() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
@@ -405,14 +483,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> FilterableProperties { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderProductBillingMeterDetails
+    public partial class EdgeOrderProductBillingMeterDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails>
     {
         internal EdgeOrderProductBillingMeterDetails() { }
         public string Frequency { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails MeterDetails { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType? MeteringType { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeOrderProductChargingType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType>
@@ -432,24 +520,39 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EdgeOrderProductCostInformation
+    public partial class EdgeOrderProductCostInformation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation>
     {
         internal EdgeOrderProductCostInformation() { }
         public System.Uri BillingInfoUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails> BillingMeterDetails { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderProductDeviceDetails
+    public partial class EdgeOrderProductDeviceDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails>
     {
         internal EdgeOrderProductDeviceDetails() { }
         public string ManagementResourceId { get { throw null; } }
         public string ManagementResourceTenantId { get { throw null; } }
         public string SerialNumber { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderProductImageInformation
+    public partial class EdgeOrderProductImageInformation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation>
     {
         internal EdgeOrderProductImageInformation() { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType? ImageType { get { throw null; } }
         public System.Uri ImageUri { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeOrderProductImageType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType>
@@ -470,11 +573,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class EdgeOrderProductMeterDetails
+    public abstract partial class EdgeOrderProductMeterDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         protected EdgeOrderProductMeterDetails() { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType? ChargingType { get { throw null; } }
         public double? Multiplier { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeOrderProductMeteringType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType>
@@ -495,7 +604,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EdgeOrderShippingAddress
+    public partial class EdgeOrderShippingAddress : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress>
     {
         public EdgeOrderShippingAddress(string streetAddress1, string country) { }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderAddressType? AddressType { get { throw null; } set { } }
@@ -508,14 +617,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string StreetAddress2 { get { throw null; } set { } }
         public string StreetAddress3 { get { throw null; } set { } }
         public string ZipExtendedCode { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderShippingAddress>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeOrderStageDetails
+    public partial class EdgeOrderStageDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails>
     {
         internal EdgeOrderStageDetails() { }
         public string DisplayName { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageName? StageName { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageStatus? StageStatus { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeOrderStageName : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageName>
@@ -567,33 +686,53 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageStatus left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderStageStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FilterableProperty
+    public partial class FilterableProperty : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>
     {
         public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType supportedFilterType, System.Collections.Generic.IEnumerable<string> supportedValues) { }
         public Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType SupportedFilterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportedValues { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.FilterableProperty System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.FilterableProperty System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ForwardShippingDetails
+    public partial class ForwardShippingDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails>
     {
         internal ForwardShippingDetails() { }
         public string CarrierDisplayName { get { throw null; } }
         public string CarrierName { get { throw null; } }
         public string TrackingId { get { throw null; } }
         public System.Uri TrackingUri { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HierarchyInformation
+    public partial class HierarchyInformation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation>
     {
         public HierarchyInformation() { }
         public string ConfigurationName { get { throw null; } set { } }
         public string ProductFamilyName { get { throw null; } set { } }
         public string ProductLineName { get { throw null; } set { } }
         public string ProductName { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NotificationPreference
+    public partial class NotificationPreference : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference>
     {
         public NotificationPreference(Azure.ResourceManager.EdgeOrder.Models.NotificationStageName stageName, bool isNotificationRequired) { }
         public bool IsNotificationRequired { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.NotificationStageName StageName { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.NotificationPreference System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.NotificationPreference System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NotificationStageName : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.NotificationStageName>
@@ -632,13 +771,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.OrderItemCancellationStatus left, Azure.ResourceManager.EdgeOrder.Models.OrderItemCancellationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OrderItemPreferences
+    public partial class OrderItemPreferences : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences>
     {
         public OrderItemPreferences() { }
         public Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus? DoubleEncryptionStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference> NotificationPreferences { get { throw null; } }
         public string PreferredManagementResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
+        Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OrderItemReturnStatus : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.OrderItemReturnStatus>
@@ -677,17 +821,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.OrderItemType left, Azure.ResourceManager.EdgeOrder.Models.OrderItemType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Pav2MeterDetails : Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails
+    public partial class Pav2MeterDetails : Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails>
     {
         internal Pav2MeterDetails() { }
         public System.Guid? MeterGuid { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.Pav2MeterDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProductAvailabilityInformation
+    public partial class ProductAvailabilityInformation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation>
     {
         internal ProductAvailabilityInformation() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityStage? AvailabilityStage { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductDisabledReason? DisabledReason { get { throw null; } }
         public string DisabledReasonMessage { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProductAvailabilityStage : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityStage>
@@ -711,7 +865,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityStage left, Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityStage right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProductConfiguration
+    public partial class ProductConfiguration : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration>
     {
         internal ProductConfiguration() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
@@ -723,8 +877,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification> Specifications { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProductDescription
+    public partial class ProductDescription : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDescription>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDescription>
     {
         internal ProductDescription() { }
         public System.Collections.Generic.IReadOnlyList<string> Attributes { get { throw null; } }
@@ -733,6 +892,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ProductLink> Links { get { throw null; } }
         public string LongDescription { get { throw null; } }
         public string ShortDescription { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductDescription System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductDescription System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDescription>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDescription>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDescription>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProductDescriptionType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductDescriptionType>
@@ -751,7 +915,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductDescriptionType left, Azure.ResourceManager.EdgeOrder.Models.ProductDescriptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProductDetails
+    public partial class ProductDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDetails>
     {
         public ProductDetails(Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation hierarchyInformation) { }
         public int? Count { get { throw null; } }
@@ -759,8 +923,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo DisplayInfo { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus? ProductDoubleEncryptionStatus { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProductDimensions
+    public partial class ProductDimensions : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDimensions>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDimensions>
     {
         internal ProductDimensions() { }
         public double? Depth { get { throw null; } }
@@ -770,6 +939,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public double? Weight { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit? WeightUnit { get { throw null; } }
         public double? Width { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductDimensions System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDimensions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDimensions>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductDimensions System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDimensions>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDimensions>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDimensions>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProductDisabledReason : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductDisabledReason>
@@ -795,19 +969,29 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductDisabledReason left, Azure.ResourceManager.EdgeOrder.Models.ProductDisabledReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProductDisplayInfo
+    public partial class ProductDisplayInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo>
     {
         public ProductDisplayInfo() { }
         public string ConfigurationDisplayName { get { throw null; } }
         public string ProductFamilyDisplayName { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProductFamiliesContent
+    public partial class ProductFamiliesContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent>
     {
         public ProductFamiliesContent(System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>> filterableProperties) { }
         public Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails CustomerSubscriptionDetails { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty>> FilterableProperties { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProductFamiliesMetadata
+    public partial class ProductFamiliesMetadata : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata>
     {
         internal ProductFamiliesMetadata() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
@@ -819,8 +1003,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ProductLine> ProductLines { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails> ResourceProviderDetails { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamiliesMetadata>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProductFamily
+    public partial class ProductFamily : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamily>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamily>
     {
         internal ProductFamily() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
@@ -832,6 +1021,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ProductLine> ProductLines { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails> ResourceProviderDetails { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductFamily System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamily>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamily>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductFamily System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamily>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamily>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductFamily>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProductLengthHeightWidthUnit : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit>
@@ -851,7 +1045,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit left, Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProductLine
+    public partial class ProductLine : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductLine>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductLine>
     {
         internal ProductLine() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
@@ -862,12 +1056,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct> Products { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductLine System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductLine>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductLine>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductLine System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductLine>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductLine>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductLine>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProductLink
+    public partial class ProductLink : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductLink>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductLink>
     {
         internal ProductLink() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductLinkType? LinkType { get { throw null; } }
         public System.Uri LinkUri { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductLink System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductLink System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductLink>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductLink>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductLink>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProductLinkType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductLinkType>
@@ -891,11 +1095,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductLinkType left, Azure.ResourceManager.EdgeOrder.Models.ProductLinkType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProductSpecification
+    public partial class ProductSpecification : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification>
     {
         internal ProductSpecification() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ProductSpecification System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ProductSpecification System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProductWeightMeasurementUnit : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit>
@@ -915,19 +1124,29 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit left, Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PurchaseMeterDetails : Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails
+    public partial class PurchaseMeterDetails : Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails>
     {
         internal PurchaseMeterDetails() { }
         public string ProductId { get { throw null; } }
         public string SkuId { get { throw null; } }
         public string TermId { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceProviderDetails
+    public partial class ResourceProviderDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails>
     {
         internal ResourceProviderDetails() { }
         public string ResourceProviderNamespace { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReverseShippingDetails
+    public partial class ReverseShippingDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails>
     {
         internal ReverseShippingDetails() { }
         public string CarrierDisplayName { get { throw null; } }
@@ -935,6 +1154,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string SasKeyForLabel { get { throw null; } }
         public string TrackingId { get { throw null; } }
         public System.Uri TrackingUri { get { throw null; } }
+        Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SupportedFilterType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType>

@@ -16,9 +16,6 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
     public partial class LogsQueryResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>

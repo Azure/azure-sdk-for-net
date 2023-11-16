@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NewRelicMonitorResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NewRelicMonitorResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData>
     {
         public NewRelicMonitorResourceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? AccountCreationSource { get { throw null; } set { } }
@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.NewRelicObservability
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails PlanData { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo UserInfo { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class NewRelicObservabilityExtensions
     {
@@ -103,12 +108,17 @@ namespace Azure.ResourceManager.NewRelicObservability
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NewRelicObservabilityTagRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class NewRelicObservabilityTagRuleData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData>
     {
         public NewRelicObservabilityTagRuleData() { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules LogRules { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules MetricRules { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NewRelicObservabilityTagRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -158,6 +168,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public static partial class ArmNewRelicObservabilityModelFactory
     {
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData NewRelicAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, Azure.Core.AzureLocation? region = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent NewRelicAppServicesGetContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> azureResourceIds = null, string userEmail = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent NewRelicHostsGetContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> vmIds = null, string userEmail = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent NewRelicMetricsStatusContent(System.Collections.Generic.IEnumerable<string> azureResourceIds = null, string userEmail = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult NewRelicMetricsStatusResult(System.Collections.Generic.IEnumerable<string> azureResourceIds = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData NewRelicMonitorResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus?), string marketplaceSubscriptionId = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties newRelicAccountProperties = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo userInfo = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory?), int? liftrResourcePreference = default(int?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? orgCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? accountCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource?)) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo NewRelicObservabilityAppServiceInfo(Azure.Core.ResourceIdentifier azureResourceId = null, string agentVersion = null, string agentStatus = null) { throw null; }
@@ -167,34 +180,55 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData NewRelicOrganizationResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string organizationId = null, string organizationName = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource? billingSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource?)) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData NewRelicPlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? orgCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? accountCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource?)) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult NewRelicResourceMonitorResult(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus? sendingMetrics = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus?), string reasonForMetricsStatus = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus? sendingLogs = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus?), string reasonForLogsStatus = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent NewRelicSwitchBillingContent(Azure.Core.ResourceIdentifier azureResourceId = null, string organizationId = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, string userEmail = null) { throw null; }
     }
-    public partial class NewRelicAccountProperties
+    public partial class NewRelicAccountProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties>
     {
         public NewRelicAccountProperties() { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo AccountInfo { get { throw null; } set { } }
         public string OrganizationId { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties SingleSignOnProperties { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicAccountResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class NewRelicAccountResourceData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData>
     {
         public NewRelicAccountResourceData() { }
         public string AccountId { get { throw null; } set { } }
         public string AccountName { get { throw null; } set { } }
         public string OrganizationId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Region { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicAppServicesGetContent
+    public partial class NewRelicAppServicesGetContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>
     {
         public NewRelicAppServicesGetContent(string userEmail) { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> AzureResourceIds { get { throw null; } }
         public string UserEmail { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicHostsGetContent
+    public partial class NewRelicHostsGetContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent>
     {
         public NewRelicHostsGetContent(string userEmail) { }
         public string UserEmail { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> VmIds { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NewRelicLiftrResourceCategory : System.IEquatable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory>
@@ -214,23 +248,38 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator !=(Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NewRelicMetricsContent
+    public partial class NewRelicMetricsContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent>
     {
         public NewRelicMetricsContent(string userEmail) { }
         public string UserEmail { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicMetricsStatusContent
+    public partial class NewRelicMetricsStatusContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent>
     {
         public NewRelicMetricsStatusContent(string userEmail) { }
         public System.Collections.Generic.IList<string> AzureResourceIds { get { throw null; } }
         public string UserEmail { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicMetricsStatusResult
+    public partial class NewRelicMetricsStatusResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult>
     {
         internal NewRelicMetricsStatusResult() { }
         public System.Collections.Generic.IReadOnlyList<string> AzureResourceIds { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicMonitorResourcePatch
+    public partial class NewRelicMonitorResourcePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch>
     {
         public NewRelicMonitorResourcePatch() { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? AccountCreationSource { get { throw null; } set { } }
@@ -240,6 +289,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails PlanData { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo UserInfo { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NewRelicObservabilityAccountCreationSource : System.IEquatable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource>
@@ -259,19 +313,29 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator !=(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NewRelicObservabilityAccountInfo
+    public partial class NewRelicObservabilityAccountInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo>
     {
         public NewRelicObservabilityAccountInfo() { }
         public string AccountId { get { throw null; } set { } }
         public string IngestionKey { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Region { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicObservabilityAppServiceInfo
+    public partial class NewRelicObservabilityAppServiceInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo>
     {
         internal NewRelicObservabilityAppServiceInfo() { }
         public string AgentStatus { get { throw null; } }
         public string AgentVersion { get { throw null; } }
         public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NewRelicObservabilityBillingCycle : System.IEquatable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingCycle>
@@ -310,20 +374,30 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator !=(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NewRelicObservabilityFilteringTag
+    public partial class NewRelicObservabilityFilteringTag : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag>
     {
         public NewRelicObservabilityFilteringTag() { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction? Action { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicObservabilityLogRules
+    public partial class NewRelicObservabilityLogRules : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules>
     {
         public NewRelicObservabilityLogRules() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag> FilteringTags { get { throw null; } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus? SendAadLogs { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus? SendActivityLogs { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus? SendSubscriptionLogs { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NewRelicObservabilityMarketplaceSubscriptionStatus : System.IEquatable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus>
@@ -343,12 +417,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator !=(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NewRelicObservabilityMetricRules
+    public partial class NewRelicObservabilityMetricRules : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules>
     {
         public NewRelicObservabilityMetricRules() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag> FilteringTags { get { throw null; } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus? SendMetrics { get { throw null; } set { } }
         public string UserEmail { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NewRelicObservabilityMonitoringStatus : System.IEquatable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus>
@@ -512,11 +591,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator !=(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NewRelicObservabilityTagRulePatch
+    public partial class NewRelicObservabilityTagRulePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch>
     {
         public NewRelicObservabilityTagRulePatch() { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules LogRules { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules MetricRules { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NewRelicObservabilityUsageType : System.IEquatable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType>
@@ -536,7 +620,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator !=(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NewRelicObservabilityUserInfo
+    public partial class NewRelicObservabilityUserInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo>
     {
         public NewRelicObservabilityUserInfo() { }
         public string Country { get { throw null; } set { } }
@@ -544,40 +628,70 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public string FirstName { get { throw null; } set { } }
         public string LastName { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicObservabilityVmExtensionPayload
+    public partial class NewRelicObservabilityVmExtensionPayload : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload>
     {
         internal NewRelicObservabilityVmExtensionPayload() { }
         public string IngestionKey { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicObservabilityVmInfo
+    public partial class NewRelicObservabilityVmInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo>
     {
         internal NewRelicObservabilityVmInfo() { }
         public string AgentStatus { get { throw null; } }
         public string AgentVersion { get { throw null; } }
         public Azure.Core.ResourceIdentifier VmId { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicOrganizationResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class NewRelicOrganizationResourceData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData>
     {
         public NewRelicOrganizationResourceData() { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource? BillingSource { get { throw null; } set { } }
         public string OrganizationId { get { throw null; } set { } }
         public string OrganizationName { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicPlanData : Azure.ResourceManager.Models.ResourceData
+    public partial class NewRelicPlanData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData>
     {
         public NewRelicPlanData() { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? AccountCreationSource { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? OrgCreationSource { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails PlanData { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicPlanDetails
+    public partial class NewRelicPlanDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails>
     {
         public NewRelicPlanDetails() { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingCycle? BillingCycle { get { throw null; } set { } }
         public System.DateTimeOffset? EffectiveOn { get { throw null; } set { } }
         public string PlanDetails { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType? UsageType { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NewRelicProvisioningState : System.IEquatable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState>
@@ -604,7 +718,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator !=(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NewRelicResourceMonitorResult
+    public partial class NewRelicResourceMonitorResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>
     {
         internal NewRelicResourceMonitorResult() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -612,14 +726,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public string ReasonForMetricsStatus { get { throw null; } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus? SendingLogs { get { throw null; } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus? SendingMetrics { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NewRelicSingleSignOnProperties
+    public partial class NewRelicSingleSignOnProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties>
     {
         public NewRelicSingleSignOnProperties() { }
         public string EnterpriseAppId { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NewRelicSingleSignOnState : System.IEquatable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState>
@@ -641,12 +765,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator !=(Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState left, Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NewRelicSwitchBillingContent
+    public partial class NewRelicSwitchBillingContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>
     {
         public NewRelicSwitchBillingContent(string userEmail) { }
         public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } set { } }
         public string OrganizationId { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails PlanData { get { throw null; } set { } }
         public string UserEmail { get { throw null; } }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

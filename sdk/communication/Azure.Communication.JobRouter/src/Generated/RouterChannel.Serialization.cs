@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class RouterChannel : IUtf8JsonSerializable, IJsonModel<RouterChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterChannel>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<RouterChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<RouterChannel>)this).GetWireFormat(options) != "J") && options.Format != "J")

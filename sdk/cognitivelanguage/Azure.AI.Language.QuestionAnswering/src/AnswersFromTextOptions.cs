@@ -46,7 +46,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// Gets the method used to interpret string offsets, which always returns <see cref="QuestionAnsweringClientOptions.DefaultStringIndexType"/> for .NET.
         /// </summary>
 #pragma warning disable CA1822 // Mark members as static
-        internal StringIndexType? StringIndexType => QuestionAnsweringClientOptions.DefaultStringIndexType;
+        internal StringIndexType? StringIndexType { get; private set; } = QuestionAnsweringClientOptions.DefaultStringIndexType;
 #pragma warning restore CA1822 // Mark members as static
 
         /// <summary>

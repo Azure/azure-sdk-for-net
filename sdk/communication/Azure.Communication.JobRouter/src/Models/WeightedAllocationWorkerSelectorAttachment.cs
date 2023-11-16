@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
             Allocations = allocations.ToList();
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("allocations"u8);

@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownExceptionAction))]
     public partial class ExceptionAction : IUtf8JsonSerializable, IJsonModel<ExceptionAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExceptionAction>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<ExceptionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<ExceptionAction>)this).GetWireFormat(options) != "J") && options.Format != "J")

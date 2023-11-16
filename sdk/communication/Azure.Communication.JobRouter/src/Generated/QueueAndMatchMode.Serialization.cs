@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class QueueAndMatchMode : IUtf8JsonSerializable, IJsonModel<QueueAndMatchMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueAndMatchMode>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<QueueAndMatchMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<QueueAndMatchMode>)this).GetWireFormat(options) != "J") && options.Format != "J")

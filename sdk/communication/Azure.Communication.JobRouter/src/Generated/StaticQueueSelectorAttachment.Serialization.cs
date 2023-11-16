@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class StaticQueueSelectorAttachment : IUtf8JsonSerializable, IJsonModel<StaticQueueSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticQueueSelectorAttachment>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<StaticQueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<StaticQueueSelectorAttachment>)this).GetWireFormat(options) != "J") && options.Format != "J")

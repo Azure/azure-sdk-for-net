@@ -10,10 +10,15 @@ namespace Azure.ResourceManager.Subscription
         public virtual Azure.NullableResponse<Azure.ResourceManager.Subscription.BillingAccountPolicyResource> GetIfExists(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Subscription.BillingAccountPolicyResource>> GetIfExistsAsync(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BillingAccountPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class BillingAccountPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>
     {
         internal BillingAccountPolicyData() { }
         public Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Subscription.BillingAccountPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.BillingAccountPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BillingAccountPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -42,10 +47,15 @@ namespace Azure.ResourceManager.Subscription
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Subscription.SubscriptionAliasResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Subscription.SubscriptionAliasResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SubscriptionAliasData : Azure.ResourceManager.Models.ResourceData
+    public partial class SubscriptionAliasData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>
     {
         internal SubscriptionAliasData() { }
         public Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Subscription.SubscriptionAliasData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.SubscriptionAliasData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SubscriptionAliasResource : Azure.ResourceManager.ArmResource
     {
@@ -84,10 +94,15 @@ namespace Azure.ResourceManager.Subscription
         public static Azure.Response<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId> RenameSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Subscription.Models.SubscriptionName body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>> RenameSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Subscription.Models.SubscriptionName body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TenantPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class TenantPolicyData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.TenantPolicyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>
     {
         internal TenantPolicyData() { }
         public Azure.ResourceManager.Subscription.Models.TenantPolicyProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Subscription.TenantPolicyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.TenantPolicyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TenantPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -139,10 +154,15 @@ namespace Azure.ResourceManager.Subscription.Mocking
 }
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class AcceptOwnershipContent
+    public partial class AcceptOwnershipContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent>
     {
         public AcceptOwnershipContent() { }
         public Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AcceptOwnershipProvisioningState : System.IEquatable<Azure.ResourceManager.Subscription.Models.AcceptOwnershipProvisioningState>
@@ -163,12 +183,17 @@ namespace Azure.ResourceManager.Subscription.Models
         public static bool operator !=(Azure.ResourceManager.Subscription.Models.AcceptOwnershipProvisioningState left, Azure.ResourceManager.Subscription.Models.AcceptOwnershipProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AcceptOwnershipRequestProperties
+    public partial class AcceptOwnershipRequestProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties>
     {
         public AcceptOwnershipRequestProperties(string displayName) { }
         public string DisplayName { get { throw null; } }
         public string ManagementGroupId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AcceptOwnershipState : System.IEquatable<Azure.ResourceManager.Subscription.Models.AcceptOwnershipState>
@@ -189,7 +214,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public static bool operator !=(Azure.ResourceManager.Subscription.Models.AcceptOwnershipState left, Azure.ResourceManager.Subscription.Models.AcceptOwnershipState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AcceptOwnershipStatus
+    public partial class AcceptOwnershipStatus : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>
     {
         internal AcceptOwnershipStatus() { }
         public Azure.ResourceManager.Subscription.Models.AcceptOwnershipState? AcceptOwnershipState { get { throw null; } }
@@ -199,9 +224,15 @@ namespace Azure.ResourceManager.Subscription.Models
         public string SubscriptionId { get { throw null; } }
         public System.Guid? SubscriptionTenantId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmSubscriptionModelFactory
     {
+        public static Azure.ResourceManager.Subscription.Models.AcceptOwnershipRequestProperties AcceptOwnershipRequestProperties(string displayName = null, string managementGroupId = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus AcceptOwnershipStatus(string subscriptionId = null, Azure.ResourceManager.Subscription.Models.AcceptOwnershipState? acceptOwnershipState = default(Azure.ResourceManager.Subscription.Models.AcceptOwnershipState?), Azure.ResourceManager.Subscription.Models.AcceptOwnershipProvisioningState? provisioningState = default(Azure.ResourceManager.Subscription.Models.AcceptOwnershipProvisioningState?), string billingOwner = null, System.Guid? subscriptionTenantId = default(System.Guid?), string displayName = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Subscription.BillingAccountPolicyData BillingAccountPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties BillingAccountPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Subscription.Models.ServiceTenant> serviceTenants = null, bool? allowTransfers = default(bool?)) { throw null; }
@@ -214,42 +245,72 @@ namespace Azure.ResourceManager.Subscription.Models
         public static Azure.ResourceManager.Subscription.TenantPolicyData TenantPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Subscription.Models.TenantPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Subscription.Models.TenantPolicyProperties TenantPolicyProperties(string policyId = null, bool? blockSubscriptionsLeavingTenant = default(bool?), bool? blockSubscriptionsIntoTenant = default(bool?), System.Collections.Generic.IEnumerable<System.Guid> exemptedPrincipals = null) { throw null; }
     }
-    public partial class BillingAccountPolicyProperties
+    public partial class BillingAccountPolicyProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties>
     {
         internal BillingAccountPolicyProperties() { }
         public bool? AllowTransfers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Subscription.Models.ServiceTenant> ServiceTenants { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.BillingAccountPolicyProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CanceledSubscriptionId
+    public partial class CanceledSubscriptionId : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>
     {
         internal CanceledSubscriptionId() { }
         public string SubscriptionId { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EnabledSubscriptionId
+    public partial class EnabledSubscriptionId : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>
     {
         internal EnabledSubscriptionId() { }
         public string SubscriptionId { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RenamedSubscriptionId
+    public partial class RenamedSubscriptionId : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>
     {
         internal RenamedSubscriptionId() { }
         public string SubscriptionId { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceTenant
+    public partial class ServiceTenant : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.ServiceTenant>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.ServiceTenant>
     {
         internal ServiceTenant() { }
         public System.Guid? TenantId { get { throw null; } }
         public string TenantName { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.ServiceTenant System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.ServiceTenant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.ServiceTenant>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.ServiceTenant System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.ServiceTenant>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.ServiceTenant>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.ServiceTenant>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SubscriptionAliasAdditionalProperties
+    public partial class SubscriptionAliasAdditionalProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties>
     {
         public SubscriptionAliasAdditionalProperties() { }
         public string ManagementGroupId { get { throw null; } set { } }
         public string SubscriptionOwnerId { get { throw null; } set { } }
         public System.Guid? SubscriptionTenantId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SubscriptionAliasCreateOrUpdateContent
+    public partial class SubscriptionAliasCreateOrUpdateContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent>
     {
         public SubscriptionAliasCreateOrUpdateContent() { }
         public Azure.ResourceManager.Subscription.Models.SubscriptionAliasAdditionalProperties AdditionalProperties { get { throw null; } set { } }
@@ -258,8 +319,13 @@ namespace Azure.ResourceManager.Subscription.Models
         public string ResellerId { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.Subscription.Models.SubscriptionWorkload? Workload { get { throw null; } set { } }
+        Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SubscriptionAliasProperties
+    public partial class SubscriptionAliasProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties>
     {
         internal SubscriptionAliasProperties() { }
         public Azure.ResourceManager.Subscription.Models.AcceptOwnershipState? AcceptOwnershipState { get { throw null; } }
@@ -274,11 +340,21 @@ namespace Azure.ResourceManager.Subscription.Models
         public string SubscriptionOwnerId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Subscription.Models.SubscriptionWorkload? Workload { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionAliasProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SubscriptionName
+    public partial class SubscriptionName : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>
     {
         public SubscriptionName() { }
         public string SubscriptionNameValue { get { throw null; } set { } }
+        Azure.ResourceManager.Subscription.Models.SubscriptionName System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.SubscriptionName System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.SubscriptionName>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SubscriptionProvisioningState : System.IEquatable<Azure.ResourceManager.Subscription.Models.SubscriptionProvisioningState>
@@ -317,19 +393,29 @@ namespace Azure.ResourceManager.Subscription.Models
         public static bool operator !=(Azure.ResourceManager.Subscription.Models.SubscriptionWorkload left, Azure.ResourceManager.Subscription.Models.SubscriptionWorkload right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TenantPolicyCreateOrUpdateContent
+    public partial class TenantPolicyCreateOrUpdateContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent>
     {
         public TenantPolicyCreateOrUpdateContent() { }
         public bool? BlockSubscriptionsIntoTenant { get { throw null; } set { } }
         public bool? BlockSubscriptionsLeavingTenant { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Guid> ExemptedPrincipals { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.TenantPolicyCreateOrUpdateContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TenantPolicyProperties
+    public partial class TenantPolicyProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.TenantPolicyProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.TenantPolicyProperties>
     {
         internal TenantPolicyProperties() { }
         public bool? BlockSubscriptionsIntoTenant { get { throw null; } }
         public bool? BlockSubscriptionsLeavingTenant { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Guid> ExemptedPrincipals { get { throw null; } }
         public string PolicyId { get { throw null; } }
+        Azure.ResourceManager.Subscription.Models.TenantPolicyProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.TenantPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Subscription.Models.TenantPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.Models.TenantPolicyProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.TenantPolicyProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.TenantPolicyProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Subscription.Models.TenantPolicyProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

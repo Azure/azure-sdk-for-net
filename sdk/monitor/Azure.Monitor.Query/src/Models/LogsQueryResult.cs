@@ -12,14 +12,20 @@ namespace Azure.Monitor.Query.Models
     [CodeGenModel("queryResults")]
     public partial class LogsQueryResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> The error. </summary>
         [CodeGenMember("Error")]
-        private readonly JsonElement _error;
+        protected internal readonly JsonElement _error;
 
+        /// <summary> The statistics. </summary>
         [CodeGenMember("Statistics")]
-        private readonly JsonElement _statistics;
+        protected internal readonly JsonElement _statistics;
 
+        /// <summary> The visualization. </summary>
         [CodeGenMember("Render")]
-        private readonly JsonElement _visualization;
+        protected internal readonly JsonElement _visualization;
 
         /// <summary>
         /// Gets the single table result of the query.

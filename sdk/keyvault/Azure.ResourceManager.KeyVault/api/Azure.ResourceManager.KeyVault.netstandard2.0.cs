@@ -10,10 +10,15 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.NullableResponse<Azure.ResourceManager.KeyVault.DeletedKeyVaultResource> GetIfExists(Azure.Core.AzureLocation location, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.KeyVault.DeletedKeyVaultResource>> GetIfExistsAsync(Azure.Core.AzureLocation location, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeletedKeyVaultData : Azure.ResourceManager.Models.ResourceData
+    public partial class DeletedKeyVaultData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.DeletedKeyVaultData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedKeyVaultData>
     {
         internal DeletedKeyVaultData() { }
         public Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties Properties { get { throw null; } }
+        Azure.ResourceManager.KeyVault.DeletedKeyVaultData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.DeletedKeyVaultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.DeletedKeyVaultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.DeletedKeyVaultData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedKeyVaultData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedKeyVaultData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedKeyVaultData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeletedKeyVaultResource : Azure.ResourceManager.ArmResource
     {
@@ -37,10 +42,15 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.NullableResponse<Azure.ResourceManager.KeyVault.DeletedManagedHsmResource> GetIfExists(Azure.Core.AzureLocation location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.KeyVault.DeletedManagedHsmResource>> GetIfExistsAsync(Azure.Core.AzureLocation location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeletedManagedHsmData : Azure.ResourceManager.Models.ResourceData
+    public partial class DeletedManagedHsmData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>
     {
         internal DeletedManagedHsmData() { }
         public Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties Properties { get { throw null; } }
+        Azure.ResourceManager.KeyVault.DeletedManagedHsmData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.DeletedManagedHsmData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.DeletedManagedHsmData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeletedManagedHsmResource : Azure.ResourceManager.ArmResource
     {
@@ -71,10 +81,15 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.KeyVaultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.KeyVaultResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class KeyVaultData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class KeyVaultData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultData>
     {
         public KeyVaultData(Azure.Core.AzureLocation location, Azure.ResourceManager.KeyVault.Models.KeyVaultProperties properties) { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.KeyVaultData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.KeyVaultData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class KeyVaultExtensions
     {
@@ -127,7 +142,7 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class KeyVaultPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class KeyVaultPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData>
     {
         public KeyVaultPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
@@ -136,6 +151,11 @@ namespace Azure.ResourceManager.KeyVault
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KeyVaultPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -216,12 +236,17 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.KeyVaultSecretResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.KeyVaultSecretResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class KeyVaultSecretData : Azure.ResourceManager.Models.ResourceData
+    public partial class KeyVaultSecretData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>
     {
         public KeyVaultSecretData(Azure.ResourceManager.KeyVault.Models.SecretProperties properties) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.SecretProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.KeyVaultSecretData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.KeyVaultSecretData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KeyVaultSecretResource : Azure.ResourceManager.ArmResource
     {
@@ -252,11 +277,16 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.ManagedHsmResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedHsmData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ManagedHsmData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.ManagedHsmData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.ManagedHsmData>
     {
         public ManagedHsmData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.ManagedHsmData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.ManagedHsmData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.ManagedHsmData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.ManagedHsmData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.ManagedHsmData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.ManagedHsmData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.ManagedHsmData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedHsmPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -275,7 +305,7 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedHsmPrivateEndpointConnectionData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ManagedHsmPrivateEndpointConnectionData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData>
     {
         public ManagedHsmPrivateEndpointConnectionData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -283,6 +313,11 @@ namespace Azure.ResourceManager.KeyVault
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedHsmPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -393,12 +428,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static Azure.ResourceManager.KeyVault.DeletedManagedHsmData DeletedManagedHsmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties properties = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties DeletedManagedHsmProperties(Azure.Core.ResourceIdentifier managedHsmId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), bool? purgeProtectionEnabled = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> accessPolicies = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent KeyVaultCreateOrUpdateContent(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.KeyVault.Models.KeyVaultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.KeyVaultData KeyVaultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.KeyVault.Models.KeyVaultProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent KeyVaultNameAvailabilityContent(string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult KeyVaultNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.KeyVault.Models.KeyVaultNameUnavailableReason? reason = default(Azure.ResourceManager.KeyVault.Models.KeyVaultNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.KeyVaultProperties KeyVaultProperties(System.Guid tenantId = default(System.Guid), Azure.ResourceManager.KeyVault.Models.KeyVaultSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> accessPolicies = null, System.Uri vaultUri = null, string hsmPoolResourceId = null, bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enableRbacAuthorization = default(bool?), Azure.ResourceManager.KeyVault.Models.KeyVaultCreateMode? createMode = default(Azure.ResourceManager.KeyVault.Models.KeyVaultCreateMode?), bool? enablePurgeProtection = default(bool?), Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet networkRuleSet = null, Azure.ResourceManager.KeyVault.Models.KeyVaultProvisioningState? provisioningState = default(Azure.ResourceManager.KeyVault.Models.KeyVaultProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = null, string publicNetworkAccess = null) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent KeyVaultSecretCreateOrUpdateContent(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.KeyVault.Models.SecretProperties properties = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.KeyVaultSecretData KeyVaultSecretData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.KeyVault.Models.SecretProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.ManagedHsmData ManagedHsmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties properties = null, Azure.ResourceManager.KeyVault.Models.ManagedHsmSku sku = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion ManagedHsmGeoReplicatedRegion(string name = null, Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState = default(Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegionProvisioningState?), bool? isPrimary = default(bool?)) { throw null; }
@@ -412,7 +450,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes SecretBaseAttributes(bool? enabled = default(bool?), System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), System.DateTimeOffset? expires = default(System.DateTimeOffset?), System.DateTimeOffset? created = default(System.DateTimeOffset?), System.DateTimeOffset? updated = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.SecretProperties SecretProperties(string value = null, string contentType = null, Azure.ResourceManager.KeyVault.Models.SecretAttributes attributes = null, System.Uri secretUri = null, string secretUriWithVersion = null) { throw null; }
     }
-    public partial class DeletedKeyVaultProperties
+    public partial class DeletedKeyVaultProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties>
     {
         internal DeletedKeyVaultProperties() { }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
@@ -424,8 +462,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.DeletedKeyVaultProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeletedManagedHsmProperties
+    public partial class DeletedManagedHsmProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties>
     {
         internal DeletedManagedHsmProperties() { }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
@@ -437,6 +480,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? PurgeProtectionEnabled { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IdentityAccessCertificatePermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission>
@@ -508,13 +556,18 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IdentityAccessPermissions
+    public partial class IdentityAccessPermissions : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>
     {
         public IdentityAccessPermissions() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission> Certificates { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission> Keys { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission> Secrets { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission> Storage { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IdentityAccessSecretPermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission>
@@ -572,24 +625,39 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultAccessPolicy
+    public partial class KeyVaultAccessPolicy : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>
     {
         public KeyVaultAccessPolicy(System.Guid tenantId, string objectId, Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions permissions) { }
         public System.Guid? ApplicationId { get { throw null; } set { } }
         public string ObjectId { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions Permissions { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultAccessPolicyParameters : Azure.ResourceManager.Models.ResourceData
+    public partial class KeyVaultAccessPolicyParameters : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>
     {
         public KeyVaultAccessPolicyParameters(Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties properties) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> AccessPolicies { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultAccessPolicyProperties
+    public partial class KeyVaultAccessPolicyProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>
     {
         public KeyVaultAccessPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> accessPolicies) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> AccessPolicies { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultActionsRequiredMessage : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultActionsRequiredMessage>
@@ -613,30 +681,50 @@ namespace Azure.ResourceManager.KeyVault.Models
         Default = 0,
         Recover = 1,
     }
-    public partial class KeyVaultCreateOrUpdateContent
+    public partial class KeyVaultCreateOrUpdateContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent>
     {
         public KeyVaultCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.KeyVault.Models.KeyVaultProperties properties) { }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultProperties Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultCreateOrUpdateContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultIPRule
+    public partial class KeyVaultIPRule : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule>
     {
         public KeyVaultIPRule(string addressRange) { }
         public string AddressRange { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultNameAvailabilityContent
+    public partial class KeyVaultNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent>
     {
         public KeyVaultNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultNameAvailabilityResult
+    public partial class KeyVaultNameAvailabilityResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult>
     {
         internal KeyVaultNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum KeyVaultNameUnavailableReason
     {
@@ -679,26 +767,36 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleBypassOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultNetworkRuleSet
+    public partial class KeyVaultNetworkRuleSet : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>
     {
         public KeyVaultNetworkRuleSet() { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleBypassOption? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultPatch
+    public partial class KeyVaultPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>
     {
         public KeyVaultPatch() { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum KeyVaultPatchMode
     {
         Default = 0,
         Recover = 1,
     }
-    public partial class KeyVaultPatchProperties
+    public partial class KeyVaultPatchProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties>
     {
         public KeyVaultPatchProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> AccessPolicies { get { throw null; } }
@@ -714,8 +812,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.KeyVaultSku Sku { get { throw null; } set { } }
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPatchProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultPrivateEndpointConnectionItemData
+    public partial class KeyVaultPrivateEndpointConnectionItemData : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData>
     {
         internal KeyVaultPrivateEndpointConnectionItemData() { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
@@ -723,6 +826,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Id { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionItemData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState>
@@ -766,7 +874,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class KeyVaultPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData>
     {
         public KeyVaultPrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
@@ -774,15 +882,25 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultPrivateLinkServiceConnectionState
+    public partial class KeyVaultPrivateLinkServiceConnectionState : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState>
     {
         public KeyVaultPrivateLinkServiceConnectionState() { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultActionsRequiredMessage? ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultProperties
+    public partial class KeyVaultProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>
     {
         public KeyVaultProperties(System.Guid tenantId, Azure.ResourceManager.KeyVault.Models.KeyVaultSku sku) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> AccessPolicies { get { throw null; } }
@@ -802,6 +920,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
         public System.Uri VaultUri { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultProvisioningState : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultProvisioningState>
@@ -821,23 +944,38 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultProvisioningState left, Azure.ResourceManager.KeyVault.Models.KeyVaultProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultSecretCreateOrUpdateContent
+    public partial class KeyVaultSecretCreateOrUpdateContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent>
     {
         public KeyVaultSecretCreateOrUpdateContent(Azure.ResourceManager.KeyVault.Models.SecretProperties properties) { }
         public Azure.ResourceManager.KeyVault.Models.SecretProperties Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretCreateOrUpdateContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultSecretPatch
+    public partial class KeyVaultSecretPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch>
     {
         public KeyVaultSecretPatch() { }
         public Azure.ResourceManager.KeyVault.Models.SecretPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSecretPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultSku
+    public partial class KeyVaultSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>
     {
         public KeyVaultSku(Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily family, Azure.ResourceManager.KeyVault.Models.KeyVaultSkuName name) { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily Family { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultSkuName Name { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultSkuFamily : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily>
@@ -861,11 +999,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         Standard = 0,
         Premium = 1,
     }
-    public partial class KeyVaultVirtualNetworkRule
+    public partial class KeyVaultVirtualNetworkRule : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule>
     {
         public KeyVaultVirtualNetworkRule(string id) { }
         public string Id { get { throw null; } set { } }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedHsmActionsRequiredMessage : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage>
@@ -889,12 +1032,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         Default = 0,
         Recover = 1,
     }
-    public partial class ManagedHsmGeoReplicatedRegion
+    public partial class ManagedHsmGeoReplicatedRegion : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion>
     {
         public ManagedHsmGeoReplicatedRegion() { }
         public bool? IsPrimary { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegionProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedHsmGeoReplicatedRegionProvisioningState : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegionProvisioningState>
@@ -918,22 +1066,37 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegionProvisioningState left, Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedHsmIPRule
+    public partial class ManagedHsmIPRule : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule>
     {
         public ManagedHsmIPRule(string addressRange) { }
         public string AddressRange { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedHsmNameAvailabilityContent
+    public partial class ManagedHsmNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent>
     {
         public ManagedHsmNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedHsmNameAvailabilityResult
+    public partial class ManagedHsmNameAvailabilityResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult>
     {
         internal ManagedHsmNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedHsmNameUnavailableReason : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameUnavailableReason>
@@ -989,15 +1152,20 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedHsmNetworkRuleSet
+    public partial class ManagedHsmNetworkRuleSet : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet>
     {
         public ManagedHsmNetworkRuleSet() { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedHsmPrivateEndpointConnectionItemData
+    public partial class ManagedHsmPrivateEndpointConnectionItemData : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData>
     {
         internal ManagedHsmPrivateEndpointConnectionItemData() { }
         public Azure.ETag? ETag { get { throw null; } }
@@ -1005,6 +1173,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedHsmPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionProvisioningState>
@@ -1048,22 +1221,32 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedHsmPrivateLinkResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ManagedHsmPrivateLinkResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData>
     {
         public ManagedHsmPrivateLinkResourceData(Azure.Core.AzureLocation location) { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedHsmPrivateLinkServiceConnectionState
+    public partial class ManagedHsmPrivateLinkServiceConnectionState : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState>
     {
         public ManagedHsmPrivateLinkServiceConnectionState() { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage? ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedHsmProperties
+    public partial class ManagedHsmProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties>
     {
         public ManagedHsmProperties() { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmCreateMode? CreateMode { get { throw null; } set { } }
@@ -1081,6 +1264,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public string StatusMessage { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedHsmProvisioningState : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState>
@@ -1144,17 +1332,27 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainActivationStatus left, Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainActivationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedHSMSecurityDomainProperties
+    public partial class ManagedHSMSecurityDomainProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>
     {
         internal ManagedHSMSecurityDomainProperties() { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainActivationStatus? ActivationStatus { get { throw null; } }
         public string ActivationStatusMessage { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedHsmSku
+    public partial class ManagedHsmSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>
     {
         public ManagedHsmSku(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily family, Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName name) { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily Family { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName Name { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedHsmSkuFamily : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily>
@@ -1179,32 +1377,53 @@ namespace Azure.ResourceManager.KeyVault.Models
         CustomB32 = 1,
         CustomB6 = 2,
     }
-    public partial class ManagedHsmVirtualNetworkRule
+    public partial class ManagedHsmVirtualNetworkRule : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>
     {
         public ManagedHsmVirtualNetworkRule(Azure.Core.ResourceIdentifier subnetId) { }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecretAttributes : Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes
+    public partial class SecretAttributes : Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretAttributes>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretAttributes>
     {
         public SecretAttributes() { }
+        Azure.ResourceManager.KeyVault.Models.SecretAttributes System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretAttributes>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretAttributes>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.SecretAttributes System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretAttributes>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretAttributes>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretAttributes>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecretBaseAttributes
+    public partial class SecretBaseAttributes : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public SecretBaseAttributes() { }
         public System.DateTimeOffset? Created { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? Expires { get { throw null; } set { } }
         public System.DateTimeOffset? NotBefore { get { throw null; } set { } }
         public System.DateTimeOffset? Updated { get { throw null; } }
+        Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecretPatchProperties
+    public partial class SecretPatchProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretPatchProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretPatchProperties>
     {
         public SecretPatchProperties() { }
         public Azure.ResourceManager.KeyVault.Models.SecretAttributes Attributes { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.SecretPatchProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.SecretPatchProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretPatchProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretPatchProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretPatchProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecretProperties
+    public partial class SecretProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>
     {
         public SecretProperties() { }
         public Azure.ResourceManager.KeyVault.Models.SecretAttributes Attributes { get { throw null; } set { } }
@@ -1212,5 +1431,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Uri SecretUri { get { throw null; } }
         public string SecretUriWithVersion { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.KeyVault.Models.SecretProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KeyVault.Models.SecretProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -12,11 +12,6 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers
 {
     [CodeGenModel("PhoneNumberAreaCodes")]
-    [CodeGenSuppress("PhoneNumberAreaCodes", typeof(IEnumerable<PhoneNumberAreaCode>))]
-    [CodeGenSuppress("PhoneNumberAreaCodes", typeof(IReadOnlyList<PhoneNumberAreaCode>), typeof(string))]
-    [CodeGenSuppress("AreaCodes", typeof(IReadOnlyList<PhoneNumberAreaCode>))]
-    [CodeGenSuppress("NextLink", typeof(string))]
-    [CodeGenSuppress("DeserializePhoneNumberAreaCodes", typeof(JsonElement))]
     internal partial class PhoneNumberAreaCodes
     {
     }

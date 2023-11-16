@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class ConditionalWorkerSelectorAttachment : IUtf8JsonSerializable, IJsonModel<ConditionalWorkerSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConditionalWorkerSelectorAttachment>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<ConditionalWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<ConditionalWorkerSelectorAttachment>)this).GetWireFormat(options) != "J") && options.Format != "J")

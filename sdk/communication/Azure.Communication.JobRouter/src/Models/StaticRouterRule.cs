@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,11 +27,11 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of StaticRule. </summary>
         /// <param name="value"> The static value this rule always returns. Values must be primitive values - number, string, boolean. </param>
-        public StaticRouterRule(RouterValue value) : this(RouterRuleKind.Static, BinaryData.FromObjectAsJson(value.Value))
+        public StaticRouterRule(RouterValue value) : this(RouterRuleKind.Static, new Dictionary<string, BinaryData>(), BinaryData.FromObjectAsJson(value.Value))
         {
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(_value))
