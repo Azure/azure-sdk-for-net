@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerDatabaseReplicationLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerDatabaseReplicationLinkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseReplicationLinkData"/>. </summary>
         public SqlServerDatabaseReplicationLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerDatabaseReplicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseReplicationLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
         /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
         /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). </param>
-        internal SqlServerDatabaseReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string partnerServer, string partnerDatabase, AzureLocation? partnerLocation, SqlServerDatabaseReplicationRole? role, SqlServerDatabaseReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startOn, int? percentComplete, ReplicationLinkState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerDatabaseReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string partnerServer, string partnerDatabase, AzureLocation? partnerLocation, SqlServerDatabaseReplicationRole? role, SqlServerDatabaseReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startOn, int? percentComplete, ReplicationLinkState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PartnerServer = partnerServer;
             PartnerDatabase = partnerDatabase;
@@ -52,6 +57,7 @@ namespace Azure.ResourceManager.Sql
             ReplicationState = replicationState;
             IsTerminationAllowed = isTerminationAllowed;
             LinkType = linkType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource partner server. </summary>

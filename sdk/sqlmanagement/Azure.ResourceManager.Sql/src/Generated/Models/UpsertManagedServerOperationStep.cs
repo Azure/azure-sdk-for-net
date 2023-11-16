@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The UpsertManagedServerOperationStep. </summary>
     public partial class UpsertManagedServerOperationStep
     {
-        /// <summary> Initializes a new instance of UpsertManagedServerOperationStep. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStep"/>. </summary>
         internal UpsertManagedServerOperationStep()
         {
         }
 
-        /// <summary> Initializes a new instance of UpsertManagedServerOperationStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStep"/>. </summary>
         /// <param name="order"></param>
         /// <param name="name"></param>
         /// <param name="status"></param>
-        internal UpsertManagedServerOperationStep(int? order, string name, UpsertManagedServerOperationStepStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpsertManagedServerOperationStep(int? order, string name, UpsertManagedServerOperationStepStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Order = order;
             Name = name;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the order. </summary>

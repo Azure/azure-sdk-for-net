@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Renew Certificate input properties. </summary>
     internal partial class RenewCertificateContentProperties
     {
-        /// <summary> Initializes a new instance of RenewCertificateContentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RenewCertificateContentProperties"/>. </summary>
         public RenewCertificateContentProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RenewCertificateContentProperties"/>. </summary>
+        /// <param name="renewCertificateType"> Renew certificate type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RenewCertificateContentProperties(string renewCertificateType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RenewCertificateType = renewCertificateType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Renew certificate type. </summary>

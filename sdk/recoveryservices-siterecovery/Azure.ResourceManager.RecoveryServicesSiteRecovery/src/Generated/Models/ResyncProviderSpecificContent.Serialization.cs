@@ -5,19 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ResyncProviderSpecificContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownResyncProviderSpecificContent))]
+    public partial class ResyncProviderSpecificContent : IUtf8JsonSerializable, IJsonModel<ResyncProviderSpecificContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResyncProviderSpecificContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ResyncProviderSpecificContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ResyncProviderSpecificContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ResyncProviderSpecificContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ResyncProviderSpecificContent IJsonModel<ResyncProviderSpecificContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResyncProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResyncProviderSpecificContent(document.RootElement, options);
+        }
+
+        internal static ResyncProviderSpecificContent DeserializeResyncProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "VMwareCbt": return VMwareCbtResyncContent.DeserializeVMwareCbtResyncContent(element);
+                }
+            }
+            return UnknownResyncProviderSpecificContent.DeserializeUnknownResyncProviderSpecificContent(element);
+        }
+
+        BinaryData IPersistableModel<ResyncProviderSpecificContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResyncProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResyncProviderSpecificContent IPersistableModel<ResyncProviderSpecificContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResyncProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResyncProviderSpecificContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<ResyncProviderSpecificContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

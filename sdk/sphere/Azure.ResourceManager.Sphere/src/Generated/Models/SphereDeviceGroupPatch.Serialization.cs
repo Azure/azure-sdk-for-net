@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class SphereDeviceGroupPatch : IUtf8JsonSerializable
+    public partial class SphereDeviceGroupPatch : IUtf8JsonSerializable, IJsonModel<SphereDeviceGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereDeviceGroupPatch>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SphereDeviceGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SphereDeviceGroupPatch>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SphereDeviceGroupPatch>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -43,7 +54,138 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SphereDeviceGroupPatch IJsonModel<SphereDeviceGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSphereDeviceGroupPatch(document.RootElement, options);
+        }
+
+        internal static SphereDeviceGroupPatch DeserializeSphereDeviceGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> description = default;
+            Optional<SphereOSFeedType> osFeedType = default;
+            Optional<SphereUpdatePolicy> updatePolicy = default;
+            Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
+            Optional<RegionalDataBoundary> regionalDataBoundary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("osFeedType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            osFeedType = new SphereOSFeedType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("updatePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            updatePolicy = new SphereUpdatePolicy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("allowCrashDumpsCollection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowCrashDumpsCollection = new SphereAllowCrashDumpCollectionStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("regionalDataBoundary"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            regionalDataBoundary = new RegionalDataBoundary(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SphereDeviceGroupPatch(description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SphereDeviceGroupPatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SphereDeviceGroupPatch IPersistableModel<SphereDeviceGroupPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSphereDeviceGroupPatch(document.RootElement, options);
+        }
+
+        string IPersistableModel<SphereDeviceGroupPatch>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

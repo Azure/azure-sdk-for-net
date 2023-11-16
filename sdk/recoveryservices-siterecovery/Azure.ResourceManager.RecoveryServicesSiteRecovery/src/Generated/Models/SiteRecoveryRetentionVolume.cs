@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The retention details of the MT. </summary>
     public partial class SiteRecoveryRetentionVolume
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRetentionVolume. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRetentionVolume"/>. </summary>
         internal SiteRecoveryRetentionVolume()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRetentionVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRetentionVolume"/>. </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="capacityInBytes"> The volume capacity. </param>
         /// <param name="freeSpaceInBytes"> The free space available in this volume. </param>
         /// <param name="thresholdPercentage"> The threshold percentage. </param>
-        internal SiteRecoveryRetentionVolume(string volumeName, long? capacityInBytes, long? freeSpaceInBytes, int? thresholdPercentage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryRetentionVolume(string volumeName, long? capacityInBytes, long? freeSpaceInBytes, int? thresholdPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VolumeName = volumeName;
             CapacityInBytes = capacityInBytes;
             FreeSpaceInBytes = freeSpaceInBytes;
             ThresholdPercentage = thresholdPercentage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The volume name. </summary>

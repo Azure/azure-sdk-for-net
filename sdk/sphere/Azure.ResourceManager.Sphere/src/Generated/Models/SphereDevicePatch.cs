@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sphere.Models
 {
     /// <summary>
@@ -13,9 +16,24 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereDevicePatch
     {
-        /// <summary> Initializes a new instance of SphereDevicePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereDevicePatch"/>. </summary>
         public SphereDevicePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SphereDevicePatch"/>. </summary>
+        /// <param name="deviceGroupId">
+        /// Device group id
+        /// Serialized Name: DeviceUpdate.properties.deviceGroupId
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereDevicePatch(string deviceGroupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DeviceGroupId = deviceGroupId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

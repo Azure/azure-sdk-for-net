@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Network ACLs for the resource. </summary>
     public partial class SignalRNetworkAcls
     {
-        /// <summary> Initializes a new instance of SignalRNetworkAcls. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRNetworkAcls"/>. </summary>
         public SignalRNetworkAcls()
         {
             PrivateEndpoints = new ChangeTrackingList<SignalRPrivateEndpointAcl>();
         }
 
-        /// <summary> Initializes a new instance of SignalRNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRNetworkAcls"/>. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
-        internal SignalRNetworkAcls(SignalRNetworkAclAction? defaultAction, SignalRNetworkAcl publicNetwork, IList<SignalRPrivateEndpointAcl> privateEndpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRNetworkAcls(SignalRNetworkAclAction? defaultAction, SignalRNetworkAcl publicNetwork, IList<SignalRPrivateEndpointAcl> privateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
             PublicNetwork = publicNetwork;
             PrivateEndpoints = privateEndpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure Networking ACL Action. </summary>

@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Container identity information. </summary>
     public partial class ContainerIdentityInfo
     {
-        /// <summary> Initializes a new instance of ContainerIdentityInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerIdentityInfo"/>. </summary>
         public ContainerIdentityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerIdentityInfo"/>. </summary>
         /// <param name="uniqueName"> Unique name of the container. </param>
         /// <param name="aadTenantId"> Protection container identity - AAD Tenant. </param>
         /// <param name="servicePrincipalClientId"> Protection container identity - AAD Service Principal. </param>
         /// <param name="audience"> Protection container identity - Audience. </param>
-        internal ContainerIdentityInfo(string uniqueName, Guid? aadTenantId, string servicePrincipalClientId, string audience)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerIdentityInfo(string uniqueName, Guid? aadTenantId, string servicePrincipalClientId, string audience, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UniqueName = uniqueName;
             AadTenantId = aadTenantId;
             ServicePrincipalClientId = servicePrincipalClientId;
             Audience = audience;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique name of the container. </summary>

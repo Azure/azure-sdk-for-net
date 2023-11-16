@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Required for resources collection. </summary>
     public partial class RequiredForResourcesList
     {
-        /// <summary> Initializes a new instance of RequiredForResourcesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequiredForResourcesList"/>. </summary>
         internal RequiredForResourcesList()
         {
             SourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RequiredForResourcesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequiredForResourcesList"/>. </summary>
         /// <param name="sourceIds"> Gets or sets the list of source Ids for which the input resource is required. </param>
-        internal RequiredForResourcesList(IReadOnlyList<string> sourceIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequiredForResourcesList(IReadOnlyList<string> sourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceIds = sourceIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of source Ids for which the input resource is required. </summary>

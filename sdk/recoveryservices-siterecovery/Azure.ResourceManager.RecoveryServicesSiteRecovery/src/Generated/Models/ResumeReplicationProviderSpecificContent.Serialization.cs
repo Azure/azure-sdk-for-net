@@ -5,19 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ResumeReplicationProviderSpecificContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownResumeReplicationProviderSpecificContent))]
+    public partial class ResumeReplicationProviderSpecificContent : IUtf8JsonSerializable, IJsonModel<ResumeReplicationProviderSpecificContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResumeReplicationProviderSpecificContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ResumeReplicationProviderSpecificContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ResumeReplicationProviderSpecificContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ResumeReplicationProviderSpecificContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ResumeReplicationProviderSpecificContent IJsonModel<ResumeReplicationProviderSpecificContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResumeReplicationProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResumeReplicationProviderSpecificContent(document.RootElement, options);
+        }
+
+        internal static ResumeReplicationProviderSpecificContent DeserializeResumeReplicationProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "VMwareCbt": return VMwareCbtResumeReplicationContent.DeserializeVMwareCbtResumeReplicationContent(element);
+                }
+            }
+            return UnknownResumeReplicationProviderSpecificContent.DeserializeUnknownResumeReplicationProviderSpecificContent(element);
+        }
+
+        BinaryData IPersistableModel<ResumeReplicationProviderSpecificContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResumeReplicationProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResumeReplicationProviderSpecificContent IPersistableModel<ResumeReplicationProviderSpecificContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResumeReplicationProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResumeReplicationProviderSpecificContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<ResumeReplicationProviderSpecificContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

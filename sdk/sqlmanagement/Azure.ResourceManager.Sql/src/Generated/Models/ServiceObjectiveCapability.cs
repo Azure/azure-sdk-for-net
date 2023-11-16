@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The service objectives capability. </summary>
     public partial class ServiceObjectiveCapability
     {
-        /// <summary> Initializes a new instance of ServiceObjectiveCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveCapability"/>. </summary>
         internal ServiceObjectiveCapability()
         {
             SupportedMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveCapability"/>. </summary>
         /// <param name="id"> The unique ID of the service objective. </param>
         /// <param name="name"> The service objective name. </param>
         /// <param name="supportedMaxSizes"> The list of supported maximum database sizes. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -54,6 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique ID of the service objective. </summary>

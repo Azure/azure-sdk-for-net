@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Protected item dynamic memory config. </summary>
     public partial class ProtectedItemDynamicMemoryConfig
     {
-        /// <summary> Initializes a new instance of ProtectedItemDynamicMemoryConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtectedItemDynamicMemoryConfig"/>. </summary>
         /// <param name="maximumMemoryInMegaBytes"> Gets or sets maximum memory in MB. </param>
         /// <param name="minimumMemoryInMegaBytes"> Gets or sets minimum memory in MB. </param>
         /// <param name="targetMemoryBufferPercentage"> Gets or sets target memory buffer in %. </param>
@@ -19,6 +25,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             MaximumMemoryInMegaBytes = maximumMemoryInMegaBytes;
             MinimumMemoryInMegaBytes = minimumMemoryInMegaBytes;
             TargetMemoryBufferPercentage = targetMemoryBufferPercentage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProtectedItemDynamicMemoryConfig"/>. </summary>
+        /// <param name="maximumMemoryInMegaBytes"> Gets or sets maximum memory in MB. </param>
+        /// <param name="minimumMemoryInMegaBytes"> Gets or sets minimum memory in MB. </param>
+        /// <param name="targetMemoryBufferPercentage"> Gets or sets target memory buffer in %. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectedItemDynamicMemoryConfig(long maximumMemoryInMegaBytes, long minimumMemoryInMegaBytes, int targetMemoryBufferPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MaximumMemoryInMegaBytes = maximumMemoryInMegaBytes;
+            MinimumMemoryInMegaBytes = minimumMemoryInMegaBytes;
+            TargetMemoryBufferPercentage = targetMemoryBufferPercentage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProtectedItemDynamicMemoryConfig"/> for deserialization. </summary>
+        internal ProtectedItemDynamicMemoryConfig()
+        {
         }
 
         /// <summary> Gets or sets maximum memory in MB. </summary>

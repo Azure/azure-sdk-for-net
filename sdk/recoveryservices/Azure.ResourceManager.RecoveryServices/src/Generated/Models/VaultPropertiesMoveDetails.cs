@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The details of the latest move operation performed on the Azure Resource. </summary>
     public partial class VaultPropertiesMoveDetails
     {
-        /// <summary> Initializes a new instance of VaultPropertiesMoveDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesMoveDetails"/>. </summary>
         public VaultPropertiesMoveDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultPropertiesMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesMoveDetails"/>. </summary>
         /// <param name="operationId"> OperationId of the Resource Move Operation. </param>
         /// <param name="startOn"> Start Time of the Resource Move Operation. </param>
         /// <param name="completedOn"> End Time of the Resource Move Operation. </param>
         /// <param name="sourceResourceId"> Source Resource of the Resource Move Operation. </param>
         /// <param name="targetResourceId"> Target Resource of the Resource Move Operation. </param>
-        internal VaultPropertiesMoveDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? completedOn, ResourceIdentifier sourceResourceId, ResourceIdentifier targetResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultPropertiesMoveDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? completedOn, ResourceIdentifier sourceResourceId, ResourceIdentifier targetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             StartOn = startOn;
             CompletedOn = completedOn;
             SourceResourceId = sourceResourceId;
             TargetResourceId = targetResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> OperationId of the Resource Move Operation. </summary>

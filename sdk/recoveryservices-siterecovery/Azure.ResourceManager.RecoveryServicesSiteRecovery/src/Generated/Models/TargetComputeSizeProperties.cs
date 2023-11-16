@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Represents applicable recovery vm sizes properties. </summary>
     public partial class TargetComputeSizeProperties
     {
-        /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSizeProperties"/>. </summary>
         internal TargetComputeSizeProperties()
         {
             Errors = new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>();
             HyperVGenerations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSizeProperties"/>. </summary>
         /// <param name="name"> Target compute size name. </param>
         /// <param name="friendlyName"> Target compute size display name. </param>
         /// <param name="cpuCoresCount"> The maximum cpu cores count supported by target compute size. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="errors"> The reasons why the target compute size is not applicable for the protected item. </param>
         /// <param name="highIopsSupported"> The value indicating whether the target compute size supports high Iops. </param>
         /// <param name="hyperVGenerations"> The supported HyperV Generations. </param>
-        internal TargetComputeSizeProperties(string name, string friendlyName, int? cpuCoresCount, int? vCpusAvailable, double? memoryInGB, int? maxDataDiskCount, int? maxNicsCount, IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> errors, string highIopsSupported, IReadOnlyList<string> hyperVGenerations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetComputeSizeProperties(string name, string friendlyName, int? cpuCoresCount, int? vCpusAvailable, double? memoryInGB, int? maxDataDiskCount, int? maxNicsCount, IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> errors, string highIopsSupported, IReadOnlyList<string> hyperVGenerations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FriendlyName = friendlyName;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Errors = errors;
             HighIopsSupported = highIopsSupported;
             HyperVGenerations = hyperVGenerations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Target compute size name. </summary>

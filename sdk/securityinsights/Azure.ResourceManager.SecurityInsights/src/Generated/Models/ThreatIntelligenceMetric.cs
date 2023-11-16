@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes threat intelligence metric. </summary>
     public partial class ThreatIntelligenceMetric
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetric"/>. </summary>
         internal ThreatIntelligenceMetric()
         {
             ThreatTypeMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
@@ -21,17 +25,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SourceMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetric"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated indicator metric. </param>
         /// <param name="threatTypeMetrics"> Threat type metrics. </param>
         /// <param name="patternTypeMetrics"> Pattern type metrics. </param>
         /// <param name="sourceMetrics"> Source metrics. </param>
-        internal ThreatIntelligenceMetric(string lastUpdatedOn, IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceMetric(string lastUpdatedOn, IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             ThreatTypeMetrics = threatTypeMetrics;
             PatternTypeMetrics = patternTypeMetrics;
             SourceMetrics = sourceMetrics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Last updated indicator metric. </summary>

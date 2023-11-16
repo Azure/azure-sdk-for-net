@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>
     public partial class ShareableSearchServicePrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of ShareableSearchServicePrivateLinkResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareableSearchServicePrivateLinkResourceProperties"/>. </summary>
         internal ShareableSearchServicePrivateLinkResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareableSearchServicePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareableSearchServicePrivateLinkResourceProperties"/>. </summary>
         /// <param name="shareablePrivateLinkResourcePropertiesType"> The resource provider type for the resource that has been onboarded to private link service, supported by Azure Cognitive Search. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service, supported by Azure Cognitive Search. </param>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </param>
-        internal ShareableSearchServicePrivateLinkResourceProperties(string shareablePrivateLinkResourcePropertiesType, string groupId, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareableSearchServicePrivateLinkResourceProperties(string shareablePrivateLinkResourcePropertiesType, string groupId, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShareablePrivateLinkResourcePropertiesType = shareablePrivateLinkResourcePropertiesType;
             GroupId = groupId;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource provider type for the resource that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>

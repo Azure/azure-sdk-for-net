@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     public partial class RelayNetworkRuleSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayNetworkRuleSetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelayNetworkRuleSetData"/>. </summary>
         public RelayNetworkRuleSetData()
         {
             IPRules = new ChangeTrackingList<RelayNetworkRuleSetIPRule>();
         }
 
-        /// <summary> Initializes a new instance of RelayNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNetworkRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,11 +36,13 @@ namespace Azure.ResourceManager.Relay
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="ipRules"> List of IpRules. </param>
-        internal RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IList<RelayNetworkRuleSetIPRule> ipRules) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IList<RelayNetworkRuleSetIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DefaultAction = defaultAction;
             PublicNetworkAccess = publicNetworkAccess;
             IPRules = ipRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Default Action for Network Rule Set. </summary>

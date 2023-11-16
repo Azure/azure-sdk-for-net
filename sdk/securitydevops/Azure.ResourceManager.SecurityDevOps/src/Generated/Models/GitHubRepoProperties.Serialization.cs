@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class GitHubRepoProperties : IUtf8JsonSerializable
+    public partial class GitHubRepoProperties : IUtf8JsonSerializable, IJsonModel<GitHubRepoProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubRepoProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GitHubRepoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GitHubRepoProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GitHubRepoProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -36,11 +46,40 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WritePropertyName("ownerName"u8);
                 writer.WriteStringValue(OwnerName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GitHubRepoProperties DeserializeGitHubRepoProperties(JsonElement element)
+        GitHubRepoProperties IJsonModel<GitHubRepoProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGitHubRepoProperties(document.RootElement, options);
+        }
+
+        internal static GitHubRepoProperties DeserializeGitHubRepoProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +88,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             Optional<long> accountId = default;
             Optional<Uri> repoUrl = default;
             Optional<string> ownerName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -83,8 +124,38 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     ownerName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GitHubRepoProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(accountId), repoUrl.Value, ownerName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GitHubRepoProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(accountId), repoUrl.Value, ownerName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GitHubRepoProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GitHubRepoProperties IPersistableModel<GitHubRepoProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GitHubRepoProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGitHubRepoProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<GitHubRepoProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

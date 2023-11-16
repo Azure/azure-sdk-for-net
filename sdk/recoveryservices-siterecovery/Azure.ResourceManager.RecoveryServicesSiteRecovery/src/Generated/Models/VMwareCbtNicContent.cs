@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt NIC input. </summary>
     public partial class VMwareCbtNicContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtNicContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtNicContent"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="isPrimaryNic"/> is null. </exception>
@@ -25,6 +29,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtNicContent"/>. </summary>
+        /// <param name="nicId"> The NIC Id. </param>
+        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="targetSubnetName"> Target subnet name. </param>
+        /// <param name="targetStaticIPAddress"> The static IP address. </param>
+        /// <param name="isSelectedForMigration"> A value indicating whether this NIC is selected for migration. </param>
+        /// <param name="targetNicName"> Target NIC name. </param>
+        /// <param name="testSubnetName"> The test subnet name. </param>
+        /// <param name="testStaticIPAddress"> The test static IP address. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareCbtNicContent(string nicId, string isPrimaryNic, string targetSubnetName, IPAddress targetStaticIPAddress, string isSelectedForMigration, string targetNicName, string testSubnetName, IPAddress testStaticIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NicId = nicId;
+            IsPrimaryNic = isPrimaryNic;
+            TargetSubnetName = targetSubnetName;
+            TargetStaticIPAddress = targetStaticIPAddress;
+            IsSelectedForMigration = isSelectedForMigration;
+            TargetNicName = targetNicName;
+            TestSubnetName = testSubnetName;
+            TestStaticIPAddress = testStaticIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtNicContent"/> for deserialization. </summary>
+        internal VMwareCbtNicContent()
+        {
         }
 
         /// <summary> The NIC Id. </summary>

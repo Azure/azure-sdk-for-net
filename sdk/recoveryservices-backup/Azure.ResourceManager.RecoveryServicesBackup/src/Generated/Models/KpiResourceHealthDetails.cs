@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> KPI Resource Health Details. </summary>
     public partial class KpiResourceHealthDetails
     {
-        /// <summary> Initializes a new instance of KpiResourceHealthDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KpiResourceHealthDetails"/>. </summary>
         public KpiResourceHealthDetails()
         {
             ResourceHealthDetails = new ChangeTrackingList<ResourceHealthDetails>();
         }
 
-        /// <summary> Initializes a new instance of KpiResourceHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiResourceHealthDetails"/>. </summary>
         /// <param name="resourceHealthStatus"> Resource Health Status. </param>
         /// <param name="resourceHealthDetails"> Resource Health Status. </param>
-        internal KpiResourceHealthDetails(ResourceHealthStatus? resourceHealthStatus, IList<ResourceHealthDetails> resourceHealthDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KpiResourceHealthDetails(ResourceHealthStatus? resourceHealthStatus, IList<ResourceHealthDetails> resourceHealthDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceHealthStatus = resourceHealthStatus;
             ResourceHealthDetails = resourceHealthDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Health Status. </summary>

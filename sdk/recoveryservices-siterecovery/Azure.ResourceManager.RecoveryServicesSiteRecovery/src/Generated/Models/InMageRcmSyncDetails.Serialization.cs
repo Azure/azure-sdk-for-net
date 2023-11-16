@@ -6,15 +6,124 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmSyncDetails
+    public partial class InMageRcmSyncDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmSyncDetails>
     {
-        internal static InMageRcmSyncDetails DeserializeInMageRcmSyncDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmSyncDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<InMageRcmSyncDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InMageRcmSyncDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InMageRcmSyncDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProgressHealth))
+                {
+                    writer.WritePropertyName("progressHealth"u8);
+                    writer.WriteStringValue(ProgressHealth.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TransferredBytes))
+                {
+                    writer.WritePropertyName("transferredBytes"u8);
+                    writer.WriteNumberValue(TransferredBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Last15MinutesTransferredBytes))
+                {
+                    writer.WritePropertyName("last15MinutesTransferredBytes"u8);
+                    writer.WriteNumberValue(Last15MinutesTransferredBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastDataTransferTimeUtc))
+                {
+                    writer.WritePropertyName("lastDataTransferTimeUtc"u8);
+                    writer.WriteStringValue(LastDataTransferTimeUtc);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProcessedBytes))
+                {
+                    writer.WritePropertyName("processedBytes"u8);
+                    writer.WriteNumberValue(ProcessedBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StaStartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StaStartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastRefreshedOn))
+                {
+                    writer.WritePropertyName("lastRefreshTime"u8);
+                    writer.WriteStringValue(LastRefreshedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProgressPercentage))
+                {
+                    writer.WritePropertyName("progressPercentage"u8);
+                    writer.WriteNumberValue(ProgressPercentage.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmSyncDetails IJsonModel<InMageRcmSyncDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmSyncDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmSyncDetails DeserializeInMageRcmSyncDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +136,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> lastRefreshTime = default;
             Optional<int> progressPercentage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("progressHealth"u8))
@@ -97,8 +208,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     progressPercentage = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), lastDataTransferTimeUtc.Value, Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), lastDataTransferTimeUtc.Value, Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InMageRcmSyncDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InMageRcmSyncDetails IPersistableModel<InMageRcmSyncDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInMageRcmSyncDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<InMageRcmSyncDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

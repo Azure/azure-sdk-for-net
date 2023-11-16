@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesDataReplication;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Email configuration model collection. </summary>
     internal partial class DataReplicationEmailConfigurationListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationEmailConfigurationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationListResult"/>. </summary>
         internal DataReplicationEmailConfigurationListResult()
         {
             Value = new ChangeTrackingList<DataReplicationEmailConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationEmailConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of email configurations. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
-        internal DataReplicationEmailConfigurationListResult(IReadOnlyList<DataReplicationEmailConfigurationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationEmailConfigurationListResult(IReadOnlyList<DataReplicationEmailConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of email configurations. </summary>

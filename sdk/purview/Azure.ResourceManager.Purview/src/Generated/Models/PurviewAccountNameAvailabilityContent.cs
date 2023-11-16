@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The request payload for CheckNameAvailability API. </summary>
     public partial class PurviewAccountNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of PurviewAccountNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountNameAvailabilityContent"/>. </summary>
         public PurviewAccountNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify for availability. </param>
+        /// <param name="resourceType"> Fully qualified resource type which includes provider namespace. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewAccountNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource name to verify for availability. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The result of the Service Fabric runtime versions. </summary>
     public partial class ClusterCodeVersionsResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ClusterCodeVersionsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterCodeVersionsResult"/>. </summary>
         internal ClusterCodeVersionsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterCodeVersionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCodeVersionsResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,11 +31,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
         /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
-        internal ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CodeVersion = codeVersion;
             SupportExpireOn = supportExpireOn;
             Environment = environment;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Service Fabric runtime version of the cluster. </summary>

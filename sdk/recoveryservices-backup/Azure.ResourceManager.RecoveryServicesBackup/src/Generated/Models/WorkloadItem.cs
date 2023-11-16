@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -14,24 +17,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class WorkloadItem
     {
-        /// <summary> Initializes a new instance of WorkloadItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadItem"/>. </summary>
         protected WorkloadItem()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="workloadItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        internal WorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
             WorkloadItemType = workloadItemType;
             FriendlyName = friendlyName;
             ProtectionState = protectionState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of backup management to backup an item. </summary>

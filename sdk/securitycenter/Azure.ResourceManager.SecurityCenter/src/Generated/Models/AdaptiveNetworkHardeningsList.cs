@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Response for ListAdaptiveNetworkHardenings API service call. </summary>
     internal partial class AdaptiveNetworkHardeningsList
     {
-        /// <summary> Initializes a new instance of AdaptiveNetworkHardeningsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningsList"/>. </summary>
         internal AdaptiveNetworkHardeningsList()
         {
             Value = new ChangeTrackingList<AdaptiveNetworkHardeningData>();
         }
 
-        /// <summary> Initializes a new instance of AdaptiveNetworkHardeningsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningsList"/>. </summary>
         /// <param name="value"> A list of Adaptive Network Hardenings resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AdaptiveNetworkHardeningsList(IReadOnlyList<AdaptiveNetworkHardeningData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdaptiveNetworkHardeningsList(IReadOnlyList<AdaptiveNetworkHardeningData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of Adaptive Network Hardenings resources. </summary>

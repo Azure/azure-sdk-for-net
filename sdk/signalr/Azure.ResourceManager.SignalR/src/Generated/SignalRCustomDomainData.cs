@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRCustomDomainData : ResourceData
     {
-        /// <summary> Initializes a new instance of SignalRCustomDomainData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomDomainData"/>. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificate"> Reference to a resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="customCertificate"/> is null. </exception>
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.SignalR
             CustomCertificate = customCertificate;
         }
 
-        /// <summary> Initializes a new instance of SignalRCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,11 +44,18 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificate"> Reference to a resource. </param>
-        internal SignalRCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SignalRProvisioningState? provisioningState, string domainName, WritableSubResource customCertificate) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SignalRProvisioningState? provisioningState, string domainName, WritableSubResource customCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DomainName = domainName;
             CustomCertificate = customCertificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomDomainData"/> for deserialization. </summary>
+        internal SignalRCustomDomainData()
+        {
         }
 
         /// <summary> Provisioning state of the resource. </summary>

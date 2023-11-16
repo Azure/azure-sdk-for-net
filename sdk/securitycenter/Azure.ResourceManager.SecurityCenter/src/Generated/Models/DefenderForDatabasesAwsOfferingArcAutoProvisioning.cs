@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The ARC autoprovisioning configuration. </summary>
     public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioning
     {
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingArcAutoProvisioning. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingArcAutoProvisioning"/>. </summary>
         public DefenderForDatabasesAwsOfferingArcAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingArcAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal DefenderForDatabasesAwsOfferingArcAutoProvisioning(bool? isEnabled, string cloudRoleArn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForDatabasesAwsOfferingArcAutoProvisioning(bool? isEnabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Is arc auto provisioning enabled. </summary>

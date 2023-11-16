@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,21 +18,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of BackupGenericProtectionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionPolicy"/>. </summary>
         protected BackupGenericProtectionPolicy()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupGenericProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
-        internal BackupGenericProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtectedItemsCount = protectedItemsCount;
             BackupManagementType = backupManagementType;
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of items associated with this policy. </summary>

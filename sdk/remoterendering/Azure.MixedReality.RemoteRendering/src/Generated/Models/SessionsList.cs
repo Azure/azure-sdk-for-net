@@ -15,7 +15,10 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> The result of a list sessions request. </summary>
     internal partial class SessionsList
     {
-        /// <summary> Initializes a new instance of SessionsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SessionsList"/>. </summary>
         /// <param name="sessions"> The list of rendering sessions. Does not include sessions in 'Stopped' state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessions"/> is null. </exception>
         internal SessionsList(IEnumerable<RenderingSession> sessions)
@@ -25,13 +28,20 @@ namespace Azure.MixedReality.RemoteRendering
             Sessions = sessions.ToList();
         }
 
-        /// <summary> Initializes a new instance of SessionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionsList"/>. </summary>
         /// <param name="sessions"> The list of rendering sessions. Does not include sessions in 'Stopped' state. </param>
         /// <param name="nextLink"> If more rendering sessions are available this field will contain a URL where the next batch of sessions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </param>
-        internal SessionsList(IReadOnlyList<RenderingSession> sessions, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SessionsList(IReadOnlyList<RenderingSession> sessions, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sessions = sessions;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SessionsList"/> for deserialization. </summary>
+        internal SessionsList()
+        {
         }
 
         /// <summary> The list of rendering sessions. Does not include sessions in 'Stopped' state. </summary>

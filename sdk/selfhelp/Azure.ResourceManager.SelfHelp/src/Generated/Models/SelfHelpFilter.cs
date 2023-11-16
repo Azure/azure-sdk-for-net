@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Filter criterion. </summary>
     public partial class SelfHelpFilter
     {
-        /// <summary> Initializes a new instance of SelfHelpFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelpFilter"/>. </summary>
         public SelfHelpFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of SelfHelpFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpFilter"/>. </summary>
         /// <param name="name"> Filter name. </param>
         /// <param name="values"> Filter values. </param>
         /// <param name="operator"> Filter operator. </param>
-        internal SelfHelpFilter(string name, string values, string @operator)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpFilter(string name, string values, string @operator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Values = values;
             Operator = @operator;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Filter name. </summary>

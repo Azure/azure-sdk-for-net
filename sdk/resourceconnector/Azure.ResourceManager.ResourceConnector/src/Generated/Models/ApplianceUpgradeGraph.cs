@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> The Upgrade Graph for appliance. </summary>
     public partial class ApplianceUpgradeGraph
     {
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraph. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceUpgradeGraph"/>. </summary>
         internal ApplianceUpgradeGraph()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraph. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceUpgradeGraph"/>. </summary>
         /// <param name="id"> The appliance resource path. </param>
         /// <param name="name"> The release train name. </param>
         /// <param name="properties"> The properties of supported version. </param>
-        internal ApplianceUpgradeGraph(string id, string name, ApplianceUpgradeGraphProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceUpgradeGraph(string id, string name, ApplianceUpgradeGraphProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The appliance resource path. </summary>

@@ -5,15 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    public partial class UsageEvent
+    public partial class UsageEvent : IUtf8JsonSerializable, IJsonModel<UsageEvent>
     {
-        internal static UsageEvent DeserializeUsageEvent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsageEvent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<UsageEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UsageEvent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UsageEvent>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DimensionId))
+            {
+                writer.WritePropertyName("dimensionId"u8);
+                writer.WriteStringValue(DimensionId);
+            }
+            if (Optional.IsDefined(DimensionName))
+            {
+                writer.WritePropertyName("dimensionName"u8);
+                writer.WriteStringValue(DimensionName);
+            }
+            if (Optional.IsDefined(MeasureUnit))
+            {
+                writer.WritePropertyName("measureUnit"u8);
+                writer.WriteStringValue(MeasureUnit);
+            }
+            if (Optional.IsDefined(AmountBilled))
+            {
+                writer.WritePropertyName("amountBilled"u8);
+                writer.WriteNumberValue(AmountBilled.Value);
+            }
+            if (Optional.IsDefined(AmountConsumed))
+            {
+                writer.WritePropertyName("amountConsumed"u8);
+                writer.WriteNumberValue(AmountConsumed.Value);
+            }
+            if (Optional.IsDefined(UnitPrice))
+            {
+                writer.WritePropertyName("unitPrice"u8);
+                writer.WriteNumberValue(UnitPrice.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UsageEvent IJsonModel<UsageEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UsageEvent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUsageEvent(document.RootElement, options);
+        }
+
+        internal static UsageEvent DeserializeUsageEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +100,8 @@ namespace Azure.Quantum.Jobs.Models
             Optional<float> amountBilled = default;
             Optional<float> amountConsumed = default;
             Optional<float> unitPrice = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensionId"u8))
@@ -68,8 +146,38 @@ namespace Azure.Quantum.Jobs.Models
                     unitPrice = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UsageEvent(dimensionId.Value, dimensionName.Value, measureUnit.Value, Optional.ToNullable(amountBilled), Optional.ToNullable(amountConsumed), Optional.ToNullable(unitPrice));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UsageEvent(dimensionId.Value, dimensionName.Value, measureUnit.Value, Optional.ToNullable(amountBilled), Optional.ToNullable(amountConsumed), Optional.ToNullable(unitPrice), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UsageEvent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UsageEvent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UsageEvent IPersistableModel<UsageEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UsageEvent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUsageEvent(document.RootElement, options);
+        }
+
+        string IPersistableModel<UsageEvent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

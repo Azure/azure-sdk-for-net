@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
     public partial class ShareablePrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkResourceProperties"/>. </summary>
         public ShareablePrivateLinkResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkResourceProperties"/>. </summary>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
         /// <param name="shareablePrivateLinkResourcePropertiesType"> The resource provider type for the resource that has been onboarded to private link service. </param>
-        internal ShareablePrivateLinkResourceProperties(string description, string groupId, string shareablePrivateLinkResourcePropertiesType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareablePrivateLinkResourceProperties(string description, string groupId, string shareablePrivateLinkResourcePropertiesType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             GroupId = groupId;
             ShareablePrivateLinkResourcePropertiesType = shareablePrivateLinkResourcePropertiesType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The description of the resource type that has been onboarded to private link service. </summary>

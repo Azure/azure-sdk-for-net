@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Base class for fabric specific details of container. </summary>
     internal partial class ProtectionContainerFabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of ProtectionContainerFabricSpecificDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerFabricSpecificDetails"/>. </summary>
         internal ProtectionContainerFabricSpecificDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerFabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerFabricSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        internal ProtectionContainerFabricSpecificDetails(string instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectionContainerFabricSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the class type. Overridden in derived classes. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SelfHelp.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class SolutionResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SolutionResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SolutionResourceData"/>. </summary>
         public SolutionResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SolutionResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Solution result. </param>
-        internal SolutionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SolutionResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SolutionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SolutionResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution result. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusNetworkRuleSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetData"/>. </summary>
         public ServiceBusNetworkRuleSetData()
         {
             VirtualNetworkRules = new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>();
             IPRules = new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ServiceBusNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isTrustedServiceAccessEnabled, ServiceBusNetworkRuleSetDefaultAction? defaultAction, IList<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<ServiceBusNetworkRuleSetIPRules> ipRules, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isTrustedServiceAccessEnabled, ServiceBusNetworkRuleSetDefaultAction? defaultAction, IList<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<ServiceBusNetworkRuleSetIPRules> ipRules, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsTrustedServiceAccessEnabled = isTrustedServiceAccessEnabled;
             DefaultAction = defaultAction;
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.ServiceBus
             IPRules = ipRules;
             PublicNetworkAccess = publicNetworkAccess;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>

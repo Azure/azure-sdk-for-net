@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary>
@@ -14,22 +17,27 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     public abstract partial class VectorQuery
     {
-        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
         protected VectorQuery()
         {
         }
 
-        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
         /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
-        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             KNearestNeighborsCount = kNearestNeighborsCount;
             FieldsRaw = fieldsRaw;
             Exhaustive = exhaustive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The kind of vector query being performed. </summary>

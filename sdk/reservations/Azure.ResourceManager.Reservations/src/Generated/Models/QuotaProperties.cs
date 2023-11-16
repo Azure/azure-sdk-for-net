@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Quota properties for the resource. </summary>
     public partial class QuotaProperties
     {
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         public QuotaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         /// <param name="limit"> Quota properties. </param>
         /// <param name="currentValue"> Current usage value for the resource. </param>
         /// <param name="unit"> The limit units, such as **count** and **bytes**. Use the unit field provided in the response of the GET quota operation. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="resourceTypeName"> The name of the resource type. </param>
         /// <param name="quotaPeriod"> The time period over which the quota usage values are summarized. For example, P1D (per one day), PT1M (per one minute), and PT1S (per one second). This parameter is optional because, for some resources such as compute, the time period is irrelevant. </param>
         /// <param name="properties"> Additional properties for the specified resource provider. </param>
-        internal QuotaProperties(int? limit, int? currentValue, string unit, ReservationResourceName resourceName, ResourceTypeName? resourceTypeName, string quotaPeriod, BinaryData properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaProperties(int? limit, int? currentValue, string unit, ReservationResourceName resourceName, ResourceTypeName? resourceTypeName, string quotaPeriod, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Limit = limit;
             CurrentValue = currentValue;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ResourceTypeName = resourceTypeName;
             QuotaPeriod = quotaPeriod;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Quota properties. </summary>

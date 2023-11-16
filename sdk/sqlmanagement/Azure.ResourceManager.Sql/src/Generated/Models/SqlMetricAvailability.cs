@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A metric availability value. </summary>
     public partial class SqlMetricAvailability
     {
-        /// <summary> Initializes a new instance of SqlMetricAvailability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlMetricAvailability"/>. </summary>
         internal SqlMetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricAvailability"/>. </summary>
         /// <param name="retention"> The length of retention for the database metric. </param>
         /// <param name="timeGrain"> The granularity of the database metric. </param>
-        internal SqlMetricAvailability(string retention, string timeGrain)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlMetricAvailability(string retention, string timeGrain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Retention = retention;
             TimeGrain = timeGrain;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The length of retention for the database metric. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk input for update. </summary>
     public partial class UpdateDiskContent
     {
-        /// <summary> Initializes a new instance of UpdateDiskContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public UpdateDiskContent(string diskId)
@@ -21,6 +25,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(diskId, nameof(diskId));
 
             DiskId = diskId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="targetDiskName"> The target disk name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateDiskContent(string diskId, string targetDiskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DiskId = diskId;
+            TargetDiskName = targetDiskName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDiskContent"/> for deserialization. </summary>
+        internal UpdateDiskContent()
+        {
         }
 
         /// <summary> The disk Id. </summary>

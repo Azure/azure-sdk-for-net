@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlTimeZoneData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlTimeZoneData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlTimeZoneData"/>. </summary>
         public SqlTimeZoneData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlTimeZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlTimeZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="timeZoneId"> The time zone id. </param>
         /// <param name="displayName"> The time zone display name. </param>
-        internal SqlTimeZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string timeZoneId, string displayName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlTimeZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string timeZoneId, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TimeZoneId = timeZoneId;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time zone id. </summary>

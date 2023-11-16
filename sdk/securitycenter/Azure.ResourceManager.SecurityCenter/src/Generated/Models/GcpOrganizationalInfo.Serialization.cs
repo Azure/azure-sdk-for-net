@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpOrganizationalInfo : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownGcpOrganizationalData))]
+    public partial class GcpOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<GcpOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpOrganizationalInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GcpOrganizationalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GcpOrganizationalInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GcpOrganizationalInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("organizationMembershipType"u8);
             writer.WriteStringValue(OrganizationMembershipType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GcpOrganizationalInfo DeserializeGcpOrganizationalInfo(JsonElement element)
+        GcpOrganizationalInfo IJsonModel<GcpOrganizationalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpOrganizationalInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGcpOrganizationalInfo(document.RootElement, options);
+        }
+
+        internal static GcpOrganizationalInfo DeserializeGcpOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,5 +76,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             return UnknownGcpOrganizationalData.DeserializeUnknownGcpOrganizationalData(element);
         }
+
+        BinaryData IPersistableModel<GcpOrganizationalInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpOrganizationalInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GcpOrganizationalInfo IPersistableModel<GcpOrganizationalInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpOrganizationalInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGcpOrganizationalInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<GcpOrganizationalInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

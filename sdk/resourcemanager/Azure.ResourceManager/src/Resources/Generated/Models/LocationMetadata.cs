@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Location metadata information. </summary>
     public partial class LocationMetadata
     {
-        /// <summary> Initializes a new instance of LocationMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocationMetadata"/>. </summary>
         internal LocationMetadata()
         {
             PairedRegions = new ChangeTrackingList<PairedRegion>();
         }
 
-        /// <summary> Initializes a new instance of LocationMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationMetadata"/>. </summary>
         /// <param name="regionType"> The type of the region. </param>
         /// <param name="regionCategory"> The category of the region. </param>
         /// <param name="geography"> The geography of the location. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="physicalLocation"> The physical location of the Azure location. </param>
         /// <param name="pairedRegions"> The regions paired to this region. </param>
         /// <param name="homeLocation"> The home location of an edge zone. </param>
-        internal LocationMetadata(RegionType? regionType, RegionCategory? regionCategory, string geography, string geographyGroup, double? longitude, double? latitude, string physicalLocation, IReadOnlyList<PairedRegion> pairedRegions, string homeLocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocationMetadata(RegionType? regionType, RegionCategory? regionCategory, string geography, string geographyGroup, double? longitude, double? latitude, string physicalLocation, IReadOnlyList<PairedRegion> pairedRegions, string homeLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegionType = regionType;
             RegionCategory = regionCategory;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
             PhysicalLocation = physicalLocation;
             PairedRegions = pairedRegions;
             HomeLocation = homeLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the region. </summary>

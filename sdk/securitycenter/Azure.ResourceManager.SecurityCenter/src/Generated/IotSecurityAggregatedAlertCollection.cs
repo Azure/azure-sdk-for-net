@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecurityAggregatedAlertResource(Client, IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e)), _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IotSecurityAggregatedAlertResource(Client, IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e)), _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecurityAggregatedAlertResource(Client, IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e)), _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IotSecurityAggregatedAlertResource(Client, IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e)), _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

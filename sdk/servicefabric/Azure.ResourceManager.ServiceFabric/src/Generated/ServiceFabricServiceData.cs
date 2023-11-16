@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.ServiceFabric
     /// </summary>
     public partial class ServiceFabricServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricServiceData(AzureLocation location) : base(location)
         {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric
             ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +55,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
         /// <param name="serviceDnsName"> Dns name used for the service. If this is specified, then the service can be accessed via its DNS name instead of service name. </param>
         /// <param name="etag"> Azure resource etag. </param>
-        internal ServiceFabricServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;
@@ -65,6 +70,12 @@ namespace Azure.ResourceManager.ServiceFabric
             ServicePackageActivationMode = servicePackageActivationMode;
             ServiceDnsName = serviceDnsName;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/> for deserialization. </summary>
+        internal ServiceFabricServiceData()
+        {
         }
 
         /// <summary> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </summary>

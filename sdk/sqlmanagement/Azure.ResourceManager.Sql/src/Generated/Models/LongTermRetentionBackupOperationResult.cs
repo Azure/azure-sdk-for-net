@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A LongTermRetentionBackup operation result resource. </summary>
     public partial class LongTermRetentionBackupOperationResult : ResourceData
     {
-        /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupOperationResult"/>. </summary>
         public LongTermRetentionBackupOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="message"> Progress message. </param>
-        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string operationType, ResourceIdentifier fromBackupResourceId, ResourceIdentifier toBackupResourceId, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string operationType, ResourceIdentifier fromBackupResourceId, ResourceIdentifier toBackupResourceId, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RequestId = requestId;
             OperationType = operationType;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
             TargetBackupStorageRedundancy = targetBackupStorageRedundancy;
             Status = status;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Request Id. </summary>

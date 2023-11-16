@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -19,20 +21,25 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsAlertRuleTemplateData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleTemplateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleTemplateData"/>. </summary>
         public SecurityInsightsAlertRuleTemplateData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The alert rule kind. </param>
-        internal SecurityInsightsAlertRuleTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertRuleTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The alert rule kind. </summary>

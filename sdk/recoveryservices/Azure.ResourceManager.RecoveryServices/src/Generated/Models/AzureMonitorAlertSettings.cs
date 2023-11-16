@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Settings for Azure Monitor based alerts. </summary>
     internal partial class AzureMonitorAlertSettings
     {
-        /// <summary> Initializes a new instance of AzureMonitorAlertSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
         public AzureMonitorAlertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureMonitorAlertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
         /// <param name="alertsForAllJobFailures"></param>
-        internal AzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertsForAllJobFailures = alertsForAllJobFailures;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the alerts for all job failures. </summary>

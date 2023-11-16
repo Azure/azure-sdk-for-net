@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Relay.Models
 {
     /// <summary> SKU of the namespace. </summary>
     public partial class RelaySku
     {
-        /// <summary> Initializes a new instance of RelaySku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelaySku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         public RelaySku(RelaySkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RelaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelaySku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The tier of this SKU. </param>
-        internal RelaySku(RelaySkuName name, RelaySkuTier? tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelaySku(RelaySkuName name, RelaySkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelaySku"/> for deserialization. </summary>
+        internal RelaySku()
+        {
         }
 
         /// <summary> Name of this SKU. </summary>

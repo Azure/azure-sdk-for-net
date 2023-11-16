@@ -5,21 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class RecoveryServicesVaultProperties : IUtf8JsonSerializable
+    public partial class RecoveryServicesVaultProperties : IUtf8JsonSerializable, IJsonModel<RecoveryServicesVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesVaultProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RecoveryServicesVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecoveryServicesVaultProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecoveryServicesVaultProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             if (Optional.IsDefined(UpgradeDetails))
             {
                 writer.WritePropertyName("upgradeDetails"u8);
                 writer.WriteObjectValue(UpgradeDetails);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrivateEndpointStateForBackup))
+                {
+                    writer.WritePropertyName("privateEndpointStateForBackup"u8);
+                    writer.WriteStringValue(PrivateEndpointStateForBackup.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrivateEndpointStateForSiteRecovery))
+                {
+                    writer.WritePropertyName("privateEndpointStateForSiteRecovery"u8);
+                    writer.WriteStringValue(PrivateEndpointStateForSiteRecovery.Value.ToString());
+                }
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -30,6 +77,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 writer.WritePropertyName("moveDetails"u8);
                 writer.WriteObjectValue(MoveDetails);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MoveState))
+                {
+                    writer.WritePropertyName("moveState"u8);
+                    writer.WriteStringValue(MoveState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BackupStorageVersion))
+                {
+                    writer.WritePropertyName("backupStorageVersion"u8);
+                    writer.WriteStringValue(BackupStorageVersion.Value.ToString());
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -56,11 +119,48 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SecureScore))
+                {
+                    writer.WritePropertyName("secureScore"u8);
+                    writer.WriteStringValue(SecureScore.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryServicesVaultProperties DeserializeRecoveryServicesVaultProperties(JsonElement element)
+        RecoveryServicesVaultProperties IJsonModel<RecoveryServicesVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryServicesVaultProperties(document.RootElement, options);
+        }
+
+        internal static RecoveryServicesVaultProperties DeserializeRecoveryServicesVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +180,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<VaultPropertiesRedundancySettings> redundancySettings = default;
             Optional<RecoveryServicesSecuritySettings> securitySettings = default;
             Optional<SecureScoreLevel> secureScore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -218,8 +320,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     secureScore = new SecureScoreLevel(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, restoreSettings.Value, redundancySettings.Value, securitySettings.Value, Optional.ToNullable(secureScore));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, restoreSettings.Value, redundancySettings.Value, securitySettings.Value, Optional.ToNullable(secureScore), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecoveryServicesVaultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecoveryServicesVaultProperties IPersistableModel<RecoveryServicesVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecoveryServicesVaultProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecoveryServicesVaultProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

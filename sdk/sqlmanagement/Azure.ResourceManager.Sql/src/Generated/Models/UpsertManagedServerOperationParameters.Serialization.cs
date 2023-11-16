@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UpsertManagedServerOperationParameters
+    public partial class UpsertManagedServerOperationParameters : IUtf8JsonSerializable, IJsonModel<UpsertManagedServerOperationParameters>
     {
-        internal static UpsertManagedServerOperationParameters DeserializeUpsertManagedServerOperationParameters(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpsertManagedServerOperationParameters>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<UpsertManagedServerOperationParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UpsertManagedServerOperationParameters>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UpsertManagedServerOperationParameters>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family);
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier);
+            }
+            if (Optional.IsDefined(VCores))
+            {
+                writer.WritePropertyName("vCores"u8);
+                writer.WriteNumberValue(VCores.Value);
+            }
+            if (Optional.IsDefined(StorageSizeInGB))
+            {
+                writer.WritePropertyName("storageSizeInGB"u8);
+                writer.WriteNumberValue(StorageSizeInGB.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UpsertManagedServerOperationParameters IJsonModel<UpsertManagedServerOperationParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpsertManagedServerOperationParameters(document.RootElement, options);
+        }
+
+        internal static UpsertManagedServerOperationParameters DeserializeUpsertManagedServerOperationParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> tier = default;
             Optional<int> vCores = default;
             Optional<int> storageSizeInGB = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("family"u8))
@@ -52,8 +120,38 @@ namespace Azure.ResourceManager.Sql.Models
                     storageSizeInGB = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpsertManagedServerOperationParameters(family.Value, tier.Value, Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpsertManagedServerOperationParameters(family.Value, tier.Value, Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UpsertManagedServerOperationParameters>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UpsertManagedServerOperationParameters IPersistableModel<UpsertManagedServerOperationParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUpsertManagedServerOperationParameters(document.RootElement, options);
+        }
+
+        string IPersistableModel<UpsertManagedServerOperationParameters>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

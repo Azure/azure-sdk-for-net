@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An export managed database operation result resource. </summary>
     public partial class SqlDatabaseExtension : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlDatabaseExtension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseExtension"/>. </summary>
         public SqlDatabaseExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseExtension"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,12 +32,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        internal SqlDatabaseExtension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseExtensionOperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDatabaseExtension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseExtensionOperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OperationMode = operationMode;
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;
             StorageUri = storageUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Operation Mode. </summary>

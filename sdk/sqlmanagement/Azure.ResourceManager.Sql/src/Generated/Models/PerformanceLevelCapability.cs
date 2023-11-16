@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The performance level capability. </summary>
     public partial class PerformanceLevelCapability
     {
-        /// <summary> Initializes a new instance of PerformanceLevelCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PerformanceLevelCapability"/>. </summary>
         internal PerformanceLevelCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of PerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerformanceLevelCapability"/>. </summary>
         /// <param name="value"> Performance level value. </param>
         /// <param name="unit"> Unit type used to measure performance level. </param>
-        internal PerformanceLevelCapability(double? value, PerformanceLevelUnit? unit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PerformanceLevelCapability(double? value, PerformanceLevelUnit? unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Unit = unit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Performance level value. </summary>

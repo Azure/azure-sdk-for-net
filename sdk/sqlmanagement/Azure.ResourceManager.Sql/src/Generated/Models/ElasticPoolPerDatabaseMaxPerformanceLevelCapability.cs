@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The max per-database performance level capability. </summary>
     public partial class ElasticPoolPerDatabaseMaxPerformanceLevelCapability
     {
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMaxPerformanceLevelCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseMaxPerformanceLevelCapability"/>. </summary>
         internal ElasticPoolPerDatabaseMaxPerformanceLevelCapability()
         {
             SupportedPerDatabaseMinPerformanceLevels = new ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMaxPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseMaxPerformanceLevelCapability"/>. </summary>
         /// <param name="limit"> The maximum performance level per database. </param>
         /// <param name="unit"> Unit type used to measure performance level. </param>
         /// <param name="supportedPerDatabaseMinPerformanceLevels"> The list of supported min database performance levels. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerDatabaseMaxPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolPerDatabaseMaxPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Limit = limit;
             Unit = unit;
             SupportedPerDatabaseMinPerformanceLevels = supportedPerDatabaseMinPerformanceLevels;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The maximum performance level per database. </summary>

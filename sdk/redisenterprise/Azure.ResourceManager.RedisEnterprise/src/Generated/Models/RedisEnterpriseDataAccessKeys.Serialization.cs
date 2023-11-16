@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseDataAccessKeys
+    public partial class RedisEnterpriseDataAccessKeys : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseDataAccessKeys>
     {
-        internal static RedisEnterpriseDataAccessKeys DeserializeRedisEnterpriseDataAccessKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDataAccessKeys>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RedisEnterpriseDataAccessKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RedisEnterpriseDataAccessKeys>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RedisEnterpriseDataAccessKeys>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrimaryKey))
+                {
+                    writer.WritePropertyName("primaryKey"u8);
+                    writer.WriteStringValue(PrimaryKey);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SecondaryKey))
+                {
+                    writer.WritePropertyName("secondaryKey"u8);
+                    writer.WriteStringValue(SecondaryKey);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RedisEnterpriseDataAccessKeys IJsonModel<RedisEnterpriseDataAccessKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseDataAccessKeys)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterpriseDataAccessKeys(document.RootElement, options);
+        }
+
+        internal static RedisEnterpriseDataAccessKeys DeserializeRedisEnterpriseDataAccessKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -32,8 +96,38 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisEnterpriseDataAccessKeys(primaryKey.Value, secondaryKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RedisEnterpriseDataAccessKeys(primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RedisEnterpriseDataAccessKeys>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseDataAccessKeys)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RedisEnterpriseDataAccessKeys IPersistableModel<RedisEnterpriseDataAccessKeys>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseDataAccessKeys)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRedisEnterpriseDataAccessKeys(document.RootElement, options);
+        }
+
+        string IPersistableModel<RedisEnterpriseDataAccessKeys>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

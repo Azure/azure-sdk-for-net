@@ -5,14 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ProviderSpecificRecoveryPointDetails
+    [PersistableModelProxy(typeof(UnknownProviderSpecificRecoveryPointDetails))]
+    public partial class ProviderSpecificRecoveryPointDetails : IUtf8JsonSerializable, IJsonModel<ProviderSpecificRecoveryPointDetails>
     {
-        internal static ProviderSpecificRecoveryPointDetails DeserializeProviderSpecificRecoveryPointDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderSpecificRecoveryPointDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ProviderSpecificRecoveryPointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ProviderSpecificRecoveryPointDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ProviderSpecificRecoveryPointDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProviderSpecificRecoveryPointDetails IJsonModel<ProviderSpecificRecoveryPointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderSpecificRecoveryPointDetails(document.RootElement, options);
+        }
+
+        internal static ProviderSpecificRecoveryPointDetails DeserializeProviderSpecificRecoveryPointDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,5 +77,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             return UnknownProviderSpecificRecoveryPointDetails.DeserializeUnknownProviderSpecificRecoveryPointDetails(element);
         }
+
+        BinaryData IPersistableModel<ProviderSpecificRecoveryPointDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProviderSpecificRecoveryPointDetails IPersistableModel<ProviderSpecificRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProviderSpecificRecoveryPointDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<ProviderSpecificRecoveryPointDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

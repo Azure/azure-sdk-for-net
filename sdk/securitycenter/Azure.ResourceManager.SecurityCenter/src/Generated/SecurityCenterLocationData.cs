@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,20 +18,25 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCenterLocationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityCenterLocationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterLocationData"/>. </summary>
         public SecurityCenterLocationData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterLocationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> An empty set of properties. </param>
-        internal SecurityCenterLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCenterLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

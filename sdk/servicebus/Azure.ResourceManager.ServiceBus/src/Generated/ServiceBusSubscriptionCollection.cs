@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusSubscriptionSubscriptionsRestClient.CreateListByTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusSubscriptionSubscriptionsRestClient.CreateListByTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusSubscriptionResource(Client, ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(e)), _serviceBusSubscriptionSubscriptionsClientDiagnostics, Pipeline, "ServiceBusSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceBusSubscriptionResource(Client, ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(e)), _serviceBusSubscriptionSubscriptionsClientDiagnostics, Pipeline, "ServiceBusSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusSubscriptionSubscriptionsRestClient.CreateListByTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusSubscriptionSubscriptionsRestClient.CreateListByTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusSubscriptionResource(Client, ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(e)), _serviceBusSubscriptionSubscriptionsClientDiagnostics, Pipeline, "ServiceBusSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceBusSubscriptionResource(Client, ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(e)), _serviceBusSubscriptionSubscriptionsClientDiagnostics, Pipeline, "ServiceBusSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

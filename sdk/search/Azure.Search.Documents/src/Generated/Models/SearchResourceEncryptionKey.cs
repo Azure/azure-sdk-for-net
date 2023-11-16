@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,17 +14,27 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest on your search service, such as indexes and synonym maps. </summary>
     public partial class SearchResourceEncryptionKey
     {
-        /// <summary> Initializes a new instance of SearchResourceEncryptionKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
         /// <param name="accessCredentialsInternal"> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </param>
-        internal SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri, AzureActiveDirectoryApplicationCredentials accessCredentialsInternal)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri, AzureActiveDirectoryApplicationCredentials accessCredentialsInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             _vaultUri = vaultUri;
             AccessCredentialsInternal = accessCredentialsInternal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/> for deserialization. </summary>
+        internal SearchResourceEncryptionKey()
+        {
         }
     }
 }

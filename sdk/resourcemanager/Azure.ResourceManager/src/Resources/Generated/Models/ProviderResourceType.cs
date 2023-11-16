@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType
     {
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         internal ProviderResourceType()
         {
             Locations = new ChangeTrackingList<string>();
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="locations"> The collection of locations where this resource type can be created. </param>
         /// <param name="locationMappings"> The location mappings that are supported by this resource type. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
         /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
         /// <param name="properties"> The properties. </param>
-        internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<ResourceTypeAlias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ZoneMapping> zoneMappings, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<ResourceTypeAlias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ZoneMapping> zoneMappings, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Locations = locations;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.Resources.Models
             ApiProfiles = apiProfiles;
             Capabilities = capabilities;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource type. </summary>

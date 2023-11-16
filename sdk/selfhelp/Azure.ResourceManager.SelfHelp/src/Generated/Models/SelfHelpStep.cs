@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,14 +15,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooter step. </summary>
     public partial class SelfHelpStep
     {
-        /// <summary> Initializes a new instance of SelfHelpStep. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelpStep"/>. </summary>
         internal SelfHelpStep()
         {
             Inputs = new ChangeTrackingList<StepInput>();
             Insights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpStep"/>. </summary>
         /// <param name="id"> Unique step id. </param>
         /// <param name="title"> Step title. </param>
         /// <param name="description"> Step description. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="automatedCheckResults"> Only for AutomatedStep type. </param>
         /// <param name="insights"></param>
         /// <param name="error"> The error detail. </param>
-        internal SelfHelpStep(string id, string title, string description, string guidance, ExecutionStatus? executionStatus, string executionStatusDescription, SelfHelpType? stepType, bool? isLastStep, IReadOnlyList<StepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpStep(string id, string title, string description, string guidance, ExecutionStatus? executionStatus, string executionStatusDescription, SelfHelpType? stepType, bool? isLastStep, IReadOnlyList<StepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Title = title;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             AutomatedCheckResults = automatedCheckResults;
             Insights = insights;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique step id. </summary>

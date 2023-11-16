@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> The RP custom operation error info. </summary>
     public partial class AffectedMoverResourceInfo
     {
-        /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AffectedMoverResourceInfo"/>. </summary>
         internal AffectedMoverResourceInfo()
         {
             MoverResources = new ChangeTrackingList<AffectedMoverResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AffectedMoverResourceInfo"/>. </summary>
         /// <param name="id"> The affected move resource id. </param>
         /// <param name="sourceId"> The affected move resource source id. </param>
         /// <param name="moverResources"> The affected move resources. </param>
-        internal AffectedMoverResourceInfo(ResourceIdentifier id, ResourceIdentifier sourceId, IReadOnlyList<AffectedMoverResourceInfo> moverResources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AffectedMoverResourceInfo(ResourceIdentifier id, ResourceIdentifier sourceId, IReadOnlyList<AffectedMoverResourceInfo> moverResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SourceId = sourceId;
             MoverResources = moverResources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The affected move resource id. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform a create database restore point operation. </summary>
     public partial class CreateDatabaseRestorePointDefinition
     {
-        /// <summary> Initializes a new instance of CreateDatabaseRestorePointDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateDatabaseRestorePointDefinition"/>. </summary>
         /// <param name="restorePointLabel"> The restore point label to apply. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public CreateDatabaseRestorePointDefinition(string restorePointLabel)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Sql.Models
             Argument.AssertNotNull(restorePointLabel, nameof(restorePointLabel));
 
             RestorePointLabel = restorePointLabel;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateDatabaseRestorePointDefinition"/>. </summary>
+        /// <param name="restorePointLabel"> The restore point label to apply. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateDatabaseRestorePointDefinition(string restorePointLabel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RestorePointLabel = restorePointLabel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateDatabaseRestorePointDefinition"/> for deserialization. </summary>
+        internal CreateDatabaseRestorePointDefinition()
+        {
         }
 
         /// <summary> The restore point label to apply. </summary>

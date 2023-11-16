@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> The SupportedVersionMetadata object for appliance. </summary>
     internal partial class ApplianceSupportedVersionMetadata
     {
-        /// <summary> Initializes a new instance of ApplianceSupportedVersionMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceSupportedVersionMetadata"/>. </summary>
         internal ApplianceSupportedVersionMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceSupportedVersionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceSupportedVersionMetadata"/>. </summary>
         /// <param name="catalogVersion"> The newer supported version catalog version. </param>
-        internal ApplianceSupportedVersionMetadata(ApplianceSupportedVersionCatalogVersion catalogVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceSupportedVersionMetadata(ApplianceSupportedVersionCatalogVersion catalogVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CatalogVersion = catalogVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The newer supported version catalog version. </summary>

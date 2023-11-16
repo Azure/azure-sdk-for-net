@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.RecoveryServices
     /// </summary>
     public partial class RecoveryServicesVaultExtendedInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecoveryServicesVaultExtendedInfoData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultExtendedInfoData"/>. </summary>
         public RecoveryServicesVaultExtendedInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultExtendedInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultExtendedInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +37,15 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="encryptionKeyThumbprint"> Encryption key thumbprint. </param>
         /// <param name="algorithm"> Algorithm for Vault ExtendedInfo. </param>
         /// <param name="etag"> Optional ETag. </param>
-        internal RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string integrityKey, string encryptionKey, string encryptionKeyThumbprint, string algorithm, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string integrityKey, string encryptionKey, string encryptionKeyThumbprint, string algorithm, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IntegrityKey = integrityKey;
             EncryptionKey = encryptionKey;
             EncryptionKeyThumbprint = encryptionKeyThumbprint;
             Algorithm = algorithm;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Integrity key. </summary>

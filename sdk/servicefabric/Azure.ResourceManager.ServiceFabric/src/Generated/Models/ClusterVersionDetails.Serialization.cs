@@ -6,15 +6,75 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterVersionDetails
+    public partial class ClusterVersionDetails : IUtf8JsonSerializable, IJsonModel<ClusterVersionDetails>
     {
-        internal static ClusterVersionDetails DeserializeClusterVersionDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterVersionDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ClusterVersionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ClusterVersionDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ClusterVersionDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CodeVersion))
+            {
+                writer.WritePropertyName("codeVersion"u8);
+                writer.WriteStringValue(CodeVersion);
+            }
+            if (Optional.IsDefined(SupportExpireOn))
+            {
+                writer.WritePropertyName("supportExpiryUtc"u8);
+                writer.WriteStringValue(SupportExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(Environment))
+            {
+                writer.WritePropertyName("environment"u8);
+                writer.WriteStringValue(Environment.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ClusterVersionDetails IJsonModel<ClusterVersionDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterVersionDetails(document.RootElement, options);
+        }
+
+        internal static ClusterVersionDetails DeserializeClusterVersionDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +82,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<string> codeVersion = default;
             Optional<DateTimeOffset> supportExpiryUtc = default;
             Optional<ClusterEnvironment> environment = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeVersion"u8))
@@ -47,8 +109,38 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     environment = new ClusterEnvironment(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterVersionDetails(codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterVersionDetails(codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterVersionDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClusterVersionDetails IPersistableModel<ClusterVersionDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClusterVersionDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<ClusterVersionDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

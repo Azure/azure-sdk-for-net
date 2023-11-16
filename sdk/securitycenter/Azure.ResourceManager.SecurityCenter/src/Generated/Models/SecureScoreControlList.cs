@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security controls. </summary>
     internal partial class SecureScoreControlList
     {
-        /// <summary> Initializes a new instance of SecureScoreControlList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlList"/>. </summary>
         internal SecureScoreControlList()
         {
             Value = new ChangeTrackingList<SecureScoreControlDetails>();
         }
 
-        /// <summary> Initializes a new instance of SecureScoreControlList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlList"/>. </summary>
         /// <param name="value"> Collection of security controls in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SecureScoreControlList(IReadOnlyList<SecureScoreControlDetails> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecureScoreControlList(IReadOnlyList<SecureScoreControlDetails> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of security controls in this page. </summary>

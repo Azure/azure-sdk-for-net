@@ -14,25 +14,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes external reference. </summary>
     public partial class ThreatIntelligenceExternalReference
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceExternalReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceExternalReference"/>. </summary>
         public ThreatIntelligenceExternalReference()
         {
             Hashes = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceExternalReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceExternalReference"/>. </summary>
         /// <param name="description"> External reference description. </param>
         /// <param name="externalId"> External reference ID. </param>
         /// <param name="sourceName"> External reference source name. </param>
         /// <param name="uri"> External reference URL. </param>
         /// <param name="hashes"> External reference hashes. </param>
-        internal ThreatIntelligenceExternalReference(string description, string externalId, string sourceName, Uri uri, IDictionary<string, string> hashes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceExternalReference(string description, string externalId, string sourceName, Uri uri, IDictionary<string, string> hashes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             ExternalId = externalId;
             SourceName = sourceName;
             Uri = uri;
             Hashes = hashes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> External reference description. </summary>

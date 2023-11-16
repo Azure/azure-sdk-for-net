@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The details of a management group. </summary>
     public partial class ManagementGroupInfo
     {
-        /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupInfo"/>. </summary>
         internal ManagementGroupInfo()
         {
             Path = new ChangeTrackingList<ManagementGroupPathElement>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             ManagementGroupAncestorChain = new ChangeTrackingList<ManagementGroupPathElement>();
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupInfo"/>. </summary>
         /// <param name="version"> The version number of the object. </param>
         /// <param name="updatedOn"> The date and time when this object was last updated. </param>
         /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <param name="path"> The path from the root to the current group. </param>
         /// <param name="managementGroupAncestors"> The ancestors of the management group. </param>
         /// <param name="managementGroupAncestorChain"> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </param>
-        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedOn, string updatedBy, ParentManagementGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedOn, string updatedBy, ParentManagementGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             UpdatedOn = updatedOn;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Path = path;
             ManagementGroupAncestors = managementGroupAncestors;
             ManagementGroupAncestorChain = managementGroupAncestorChain;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version number of the object. </summary>

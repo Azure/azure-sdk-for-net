@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The IotSecuritySolutionAnalyticsModelDevicesMetrics. </summary>
     public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics
     {
-        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelDevicesMetrics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelDevicesMetrics"/>. </summary>
         internal IotSecuritySolutionAnalyticsModelDevicesMetrics()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelDevicesMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelDevicesMetrics"/>. </summary>
         /// <param name="date"> Aggregation of IoT Security solution device alert metrics by date. </param>
         /// <param name="devicesMetrics"> Device alert count by severity. </param>
-        internal IotSecuritySolutionAnalyticsModelDevicesMetrics(DateTimeOffset? date, IotSeverityMetrics devicesMetrics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecuritySolutionAnalyticsModelDevicesMetrics(DateTimeOffset? date, IotSeverityMetrics devicesMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Date = date;
             DevicesMetrics = devicesMetrics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Device alert count by severity. </summary>
         public IotSeverityMetrics DevicesMetrics { get; }

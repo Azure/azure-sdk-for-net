@@ -5,16 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationRefundPolicyResultProperty
+    public partial class ReservationRefundPolicyResultProperty : IUtf8JsonSerializable, IJsonModel<ReservationRefundPolicyResultProperty>
     {
-        internal static ReservationRefundPolicyResultProperty DeserializeReservationRefundPolicyResultProperty(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundPolicyResultProperty>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ReservationRefundPolicyResultProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ReservationRefundPolicyResultProperty>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ReservationRefundPolicyResultProperty>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConsumedRefundsTotal))
+            {
+                writer.WritePropertyName("consumedRefundsTotal"u8);
+                writer.WriteObjectValue(ConsumedRefundsTotal);
+            }
+            if (Optional.IsDefined(MaxRefundLimit))
+            {
+                writer.WritePropertyName("maxRefundLimit"u8);
+                writer.WriteObjectValue(MaxRefundLimit);
+            }
+            if (Optional.IsCollectionDefined(PolicyErrors))
+            {
+                writer.WritePropertyName("policyErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyErrors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReservationRefundPolicyResultProperty IJsonModel<ReservationRefundPolicyResultProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationRefundPolicyResultProperty(document.RootElement, options);
+        }
+
+        internal static ReservationRefundPolicyResultProperty DeserializeReservationRefundPolicyResultProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +87,8 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> consumedRefundsTotal = default;
             Optional<PurchasePrice> maxRefundLimit = default;
             Optional<IReadOnlyList<ReservationRefundPolicyError>> policyErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consumedRefundsTotal"u8))
@@ -56,8 +123,38 @@ namespace Azure.ResourceManager.Reservations.Models
                     policyErrors = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, Optional.ToList(policyErrors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, Optional.ToList(policyErrors), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationRefundPolicyResultProperty>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReservationRefundPolicyResultProperty IPersistableModel<ReservationRefundPolicyResultProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReservationRefundPolicyResultProperty(document.RootElement, options);
+        }
+
+        string IPersistableModel<ReservationRefundPolicyResultProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

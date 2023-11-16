@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Detailed pricing information for an sku. </summary>
     public partial class PricingDetail
     {
-        /// <summary> Initializes a new instance of PricingDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PricingDetail"/>. </summary>
         internal PricingDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of PricingDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PricingDetail"/>. </summary>
         /// <param name="id"> Unique id for this pricing information. </param>
         /// <param name="value"> The unit cost of this sku. </param>
-        internal PricingDetail(string id, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PricingDetail(string id, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique id for this pricing information. </summary>

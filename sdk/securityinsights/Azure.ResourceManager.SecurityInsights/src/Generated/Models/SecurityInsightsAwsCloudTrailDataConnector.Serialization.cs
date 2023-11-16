@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -12,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAwsCloudTrailDataConnector : IUtf8JsonSerializable
+    public partial class SecurityInsightsAwsCloudTrailDataConnector : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityInsightsAwsCloudTrailDataConnector>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -23,6 +34,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -37,11 +71,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteObjectValue(DataTypes);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsAwsCloudTrailDataConnector DeserializeSecurityInsightsAwsCloudTrailDataConnector(JsonElement element)
+        SecurityInsightsAwsCloudTrailDataConnector IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAwsCloudTrailDataConnector)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAwsCloudTrailDataConnector(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsAwsCloudTrailDataConnector DeserializeSecurityInsightsAwsCloudTrailDataConnector(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +117,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SystemData> systemData = default;
             Optional<string> awsRoleArn = default;
             Optional<AwsCloudTrailDataConnectorDataTypes> dataTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -120,8 +185,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), awsRoleArn.Value, dataTypes.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, awsRoleArn.Value, dataTypes.Value);
         }
+
+        BinaryData IPersistableModel<SecurityInsightsAwsCloudTrailDataConnector>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAwsCloudTrailDataConnector)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityInsightsAwsCloudTrailDataConnector IPersistableModel<SecurityInsightsAwsCloudTrailDataConnector>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAwsCloudTrailDataConnector)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAwsCloudTrailDataConnector(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityInsightsAwsCloudTrailDataConnector>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

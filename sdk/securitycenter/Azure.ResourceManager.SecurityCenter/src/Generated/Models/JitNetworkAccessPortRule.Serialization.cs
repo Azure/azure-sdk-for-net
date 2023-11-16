@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPortRule : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPortRule : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessPortRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessPortRule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<JitNetworkAccessPortRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<JitNetworkAccessPortRule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<JitNetworkAccessPortRule>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
@@ -38,11 +47,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("maxRequestAccessDuration"u8);
             writer.WriteStringValue(MaxRequestAccessDuration, "P");
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JitNetworkAccessPortRule DeserializeJitNetworkAccessPortRule(JsonElement element)
+        JitNetworkAccessPortRule IJsonModel<JitNetworkAccessPortRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessPortRule(document.RootElement, options);
+        }
+
+        internal static JitNetworkAccessPortRule DeserializeJitNetworkAccessPortRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +90,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> allowedSourceAddressPrefix = default;
             Optional<IList<string>> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("number"u8))
@@ -88,8 +128,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     maxRequestAccessDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), maxRequestAccessDuration);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), maxRequestAccessDuration, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JitNetworkAccessPortRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JitNetworkAccessPortRule IPersistableModel<JitNetworkAccessPortRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJitNetworkAccessPortRule(document.RootElement, options);
+        }
+
+        string IPersistableModel<JitNetworkAccessPortRule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

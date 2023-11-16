@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application deployment policy. </summary>
     internal partial class ArmApplicationDeploymentPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationDeploymentPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDeploymentPolicy"/>. </summary>
         /// <param name="deploymentMode"> The managed application deployment mode. </param>
         public ArmApplicationDeploymentPolicy(ArmApplicationDeploymentMode deploymentMode)
         {
             DeploymentMode = deploymentMode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDeploymentPolicy"/>. </summary>
+        /// <param name="deploymentMode"> The managed application deployment mode. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationDeploymentPolicy(ArmApplicationDeploymentMode deploymentMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DeploymentMode = deploymentMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDeploymentPolicy"/> for deserialization. </summary>
+        internal ArmApplicationDeploymentPolicy()
+        {
         }
 
         /// <summary> The managed application deployment mode. </summary>

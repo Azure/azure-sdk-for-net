@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Enable protection input. </summary>
     public partial class ReplicationProtectedItemCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ReplicationProtectedItemCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemCreateOrUpdateContent"/>. </summary>
         public ReplicationProtectedItemCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Enable protection input properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProtectedItemCreateOrUpdateContent(EnableProtectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable protection input properties. </summary>

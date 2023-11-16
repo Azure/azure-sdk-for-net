@@ -5,14 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class PolicyProviderSpecificDetails
+    [PersistableModelProxy(typeof(UnknownPolicyProviderSpecificDetails))]
+    public partial class PolicyProviderSpecificDetails : IUtf8JsonSerializable, IJsonModel<PolicyProviderSpecificDetails>
     {
-        internal static PolicyProviderSpecificDetails DeserializePolicyProviderSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyProviderSpecificDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PolicyProviderSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PolicyProviderSpecificDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyProviderSpecificDetails IJsonModel<PolicyProviderSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyProviderSpecificDetails(document.RootElement, options);
+        }
+
+        internal static PolicyProviderSpecificDetails DeserializePolicyProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,5 +85,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             return UnknownPolicyProviderSpecificDetails.DeserializeUnknownPolicyProviderSpecificDetails(element);
         }
+
+        BinaryData IPersistableModel<PolicyProviderSpecificDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PolicyProviderSpecificDetails IPersistableModel<PolicyProviderSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePolicyProviderSpecificDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<PolicyProviderSpecificDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

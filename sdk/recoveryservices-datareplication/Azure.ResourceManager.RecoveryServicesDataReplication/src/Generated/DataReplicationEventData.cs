@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationEventData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventData"/>. </summary>
         /// <param name="properties"> Event model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal DataReplicationEventData(DataReplicationEventProperties properties)
@@ -28,15 +32,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Event model properties. </param>
-        internal DataReplicationEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataReplicationEventProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataReplicationEventProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventData"/> for deserialization. </summary>
+        internal DataReplicationEventData()
+        {
         }
 
         /// <summary> Event model properties. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform a complete database restore operation. </summary>
     public partial class CompleteDatabaseRestoreDefinition
     {
-        /// <summary> Initializes a new instance of CompleteDatabaseRestoreDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompleteDatabaseRestoreDefinition"/>. </summary>
         /// <param name="lastBackupName"> The last backup name to apply. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lastBackupName"/> is null. </exception>
         public CompleteDatabaseRestoreDefinition(string lastBackupName)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Sql.Models
             Argument.AssertNotNull(lastBackupName, nameof(lastBackupName));
 
             LastBackupName = lastBackupName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompleteDatabaseRestoreDefinition"/>. </summary>
+        /// <param name="lastBackupName"> The last backup name to apply. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompleteDatabaseRestoreDefinition(string lastBackupName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LastBackupName = lastBackupName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompleteDatabaseRestoreDefinition"/> for deserialization. </summary>
+        internal CompleteDatabaseRestoreDefinition()
+        {
         }
 
         /// <summary> The last backup name to apply. </summary>

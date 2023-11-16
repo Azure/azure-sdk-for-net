@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Implements InnerHealthError class. HealthError object has a list of InnerHealthErrors as child errors. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </summary>
     public partial class SiteRecoveryInnerHealthError
     {
-        /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryInnerHealthError"/>. </summary>
         internal SiteRecoveryInnerHealthError()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryInnerHealthError"/>. </summary>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
         /// <param name="errorLevel"> Level of error. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="entityId"> ID of the entity. </param>
         /// <param name="errorId"> The health error unique id. </param>
         /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
-        internal SiteRecoveryInnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? createdOn, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryInnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? createdOn, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorSource = errorSource;
             ErrorType = errorType;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             EntityId = entityId;
             ErrorId = errorId;
             CustomerResolvability = customerResolvability;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source of error. </summary>

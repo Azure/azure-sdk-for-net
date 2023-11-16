@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,24 +19,29 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerTrustGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerTrustGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerTrustGroupData"/>. </summary>
         public SqlServerTrustGroupData()
         {
             GroupMembers = new ChangeTrackingList<ServerTrustGroupServerInfo>();
             TrustScopes = new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerTrustGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerTrustGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupMembers"> Group members information for the server trust group. </param>
         /// <param name="trustScopes"> Trust scope of the server trust group. </param>
-        internal SqlServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServerTrustGroupServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServerTrustGroupServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupMembers = groupMembers;
             TrustScopes = trustScopes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Group members information for the server trust group. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Troubleshooter restart response. </summary>
     public partial class RestartTroubleshooterResult
     {
-        /// <summary> Initializes a new instance of RestartTroubleshooterResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestartTroubleshooterResult"/>. </summary>
         internal RestartTroubleshooterResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RestartTroubleshooterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestartTroubleshooterResult"/>. </summary>
         /// <param name="troubleshooterResourceName"> Updated TroubleshooterResource Name . </param>
-        internal RestartTroubleshooterResult(string troubleshooterResourceName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestartTroubleshooterResult(string troubleshooterResourceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TroubleshooterResourceName = troubleshooterResourceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Updated TroubleshooterResource Name . </summary>

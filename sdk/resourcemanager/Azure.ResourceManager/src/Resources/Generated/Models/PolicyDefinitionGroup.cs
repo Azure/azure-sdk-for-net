@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The policy definition group. </summary>
     public partial class PolicyDefinitionGroup
     {
-        /// <summary> Initializes a new instance of PolicyDefinitionGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionGroup"/>. </summary>
         /// <param name="name"> The name of the group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PolicyDefinitionGroup(string name)
@@ -23,19 +27,26 @@ namespace Azure.ResourceManager.Resources.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionGroup"/>. </summary>
         /// <param name="name"> The name of the group. </param>
         /// <param name="displayName"> The group's display name. </param>
         /// <param name="category"> The group's category. </param>
         /// <param name="description"> The group's description. </param>
         /// <param name="additionalMetadataId"> A resource ID of a resource that contains additional metadata about the group. </param>
-        internal PolicyDefinitionGroup(string name, string displayName, string category, string description, string additionalMetadataId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyDefinitionGroup(string name, string displayName, string category, string description, string additionalMetadataId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
             Category = category;
             Description = description;
             AdditionalMetadataId = additionalMetadataId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionGroup"/> for deserialization. </summary>
+        internal PolicyDefinitionGroup()
+        {
         }
 
         /// <summary> The name of the group. </summary>

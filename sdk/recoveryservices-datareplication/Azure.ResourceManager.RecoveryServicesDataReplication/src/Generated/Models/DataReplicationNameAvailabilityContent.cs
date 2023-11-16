@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Check name availability model. </summary>
     public partial class DataReplicationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataReplicationNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationNameAvailabilityContent"/>. </summary>
         public DataReplicationNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Gets or sets the resource name. </param>
+        /// <param name="resourceType"> Gets or sets the resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the resource name. </summary>

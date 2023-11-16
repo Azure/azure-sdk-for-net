@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Specifies which Redis node(s) to reboot. </summary>
     public partial class RedisRebootContent
     {
-        /// <summary> Initializes a new instance of RedisRebootContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisRebootContent"/>. </summary>
         public RedisRebootContent()
         {
             Ports = new ChangeTrackingList<int>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedisRebootContent"/>. </summary>
+        /// <param name="rebootType"> Which Redis node(s) to reboot. Depending on this value data loss is possible. </param>
+        /// <param name="shardId"> If clustering is enabled, the ID of the shard to be rebooted. </param>
+        /// <param name="ports"> A list of redis instances to reboot, specified by per-instance SSL ports or non-SSL ports. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisRebootContent(RedisRebootType? rebootType, int? shardId, IList<int> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RebootType = rebootType;
+            ShardId = shardId;
+            Ports = ports;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Which Redis node(s) to reboot. Depending on this value data loss is possible. </summary>

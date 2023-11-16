@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class MaintenanceWindowTimeRange : IUtf8JsonSerializable
+    public partial class MaintenanceWindowTimeRange : IUtf8JsonSerializable, IJsonModel<MaintenanceWindowTimeRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceWindowTimeRange>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MaintenanceWindowTimeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MaintenanceWindowTimeRange>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MaintenanceWindowTimeRange>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DayOfWeek))
             {
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MaintenanceWindowTimeRange DeserializeMaintenanceWindowTimeRange(JsonElement element)
+        MaintenanceWindowTimeRange IJsonModel<MaintenanceWindowTimeRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceWindowTimeRange(document.RootElement, options);
+        }
+
+        internal static MaintenanceWindowTimeRange DeserializeMaintenanceWindowTimeRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<SqlDayOfWeek> dayOfWeek = default;
             Optional<string> startTime = default;
             Optional<TimeSpan> duration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"u8))
@@ -68,8 +109,38 @@ namespace Azure.ResourceManager.Sql.Models
                     duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), startTime.Value, Optional.ToNullable(duration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), startTime.Value, Optional.ToNullable(duration), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MaintenanceWindowTimeRange>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MaintenanceWindowTimeRange IPersistableModel<MaintenanceWindowTimeRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMaintenanceWindowTimeRange(document.RootElement, options);
+        }
+
+        string IPersistableModel<MaintenanceWindowTimeRange>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

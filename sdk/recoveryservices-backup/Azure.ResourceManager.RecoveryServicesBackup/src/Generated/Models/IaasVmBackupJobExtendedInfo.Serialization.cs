@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupJobExtendedInfo : IUtf8JsonSerializable
+    public partial class IaasVmBackupJobExtendedInfo : IUtf8JsonSerializable, IJsonModel<IaasVmBackupJobExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmBackupJobExtendedInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<IaasVmBackupJobExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IaasVmBackupJobExtendedInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IaasVmBackupJobExtendedInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TasksList))
             {
@@ -63,11 +73,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmBackupJobExtendedInfo DeserializeIaasVmBackupJobExtendedInfo(JsonElement element)
+        IaasVmBackupJobExtendedInfo IJsonModel<IaasVmBackupJobExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmBackupJobExtendedInfo(document.RootElement, options);
+        }
+
+        internal static IaasVmBackupJobExtendedInfo DeserializeIaasVmBackupJobExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +117,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<double> progressPercentage = default;
             Optional<string> estimatedRemainingDuration = default;
             Optional<string> dynamicErrorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tasksList"u8))
@@ -141,8 +182,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     dynamicErrorMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IaasVmBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), Optional.ToDictionary(internalPropertyBag), Optional.ToNullable(progressPercentage), estimatedRemainingDuration.Value, dynamicErrorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IaasVmBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), Optional.ToDictionary(internalPropertyBag), Optional.ToNullable(progressPercentage), estimatedRemainingDuration.Value, dynamicErrorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IaasVmBackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IaasVmBackupJobExtendedInfo IPersistableModel<IaasVmBackupJobExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIaasVmBackupJobExtendedInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<IaasVmBackupJobExtendedInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class IotSecuritySolutionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IotSecuritySolutionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public IotSecuritySolutionData(AzureLocation location) : base(location)
         {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
             AdditionalWorkspaces = new ChangeTrackingList<AdditionalWorkspacesProperties>();
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
         /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
         /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
-        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string workspace, string displayName, SecuritySolutionStatus? status, IList<IotSecuritySolutionExportOption> export, IList<IotSecuritySolutionDataSource> disabledDataSources, IList<string> iotHubs, UserDefinedResourcesProperties userDefinedResources, IReadOnlyList<string> autoDiscoveredResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus, IList<AdditionalWorkspacesProperties> additionalWorkspaces) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string workspace, string displayName, SecuritySolutionStatus? status, IList<IotSecuritySolutionExportOption> export, IList<IotSecuritySolutionDataSource> disabledDataSources, IList<string> iotHubs, UserDefinedResourcesProperties userDefinedResources, IReadOnlyList<string> autoDiscoveredResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus, IList<AdditionalWorkspacesProperties> additionalWorkspaces, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Workspace = workspace;
             DisplayName = displayName;
@@ -61,6 +66,12 @@ namespace Azure.ResourceManager.SecurityCenter
             RecommendationsConfiguration = recommendationsConfiguration;
             UnmaskedIPLoggingStatus = unmaskedIPLoggingStatus;
             AdditionalWorkspaces = additionalWorkspaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/> for deserialization. </summary>
+        internal IotSecuritySolutionData()
+        {
         }
 
         /// <summary> Workspace resource ID. </summary>

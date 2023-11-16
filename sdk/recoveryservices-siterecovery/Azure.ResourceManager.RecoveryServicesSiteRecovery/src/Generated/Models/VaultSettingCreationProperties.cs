@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input to create vault setting. </summary>
     public partial class VaultSettingCreationProperties
     {
-        /// <summary> Initializes a new instance of VaultSettingCreationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultSettingCreationProperties"/>. </summary>
         public VaultSettingCreationProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VaultSettingCreationProperties"/>. </summary>
+        /// <param name="migrationSolutionId"> The migration solution Id. </param>
+        /// <param name="vmwareToAzureProviderType"> VMware to Azure provider type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultSettingCreationProperties(ResourceIdentifier migrationSolutionId, string vmwareToAzureProviderType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MigrationSolutionId = migrationSolutionId;
+            VMwareToAzureProviderType = vmwareToAzureProviderType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The migration solution Id. </summary>

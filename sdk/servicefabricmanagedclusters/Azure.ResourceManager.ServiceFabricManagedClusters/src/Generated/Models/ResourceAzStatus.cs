@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes Az Resiliency status of Base resources. </summary>
     public partial class ResourceAzStatus
     {
-        /// <summary> Initializes a new instance of ResourceAzStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceAzStatus"/>. </summary>
         internal ResourceAzStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceAzStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceAzStatus"/>. </summary>
         /// <param name="resourceName"> VM Size properties. </param>
         /// <param name="resourceType"> VM Size id. </param>
         /// <param name="isZoneResilient"> VM Size name. </param>
-        internal ResourceAzStatus(string resourceName, ResourceType? resourceType, bool? isZoneResilient)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceAzStatus(string resourceName, ResourceType? resourceType, bool? isZoneResilient, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceName = resourceName;
             ResourceType = resourceType;
             IsZoneResilient = isZoneResilient;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> VM Size properties. </summary>

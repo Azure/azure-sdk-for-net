@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceFilteringCriteria : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceFilteringCriteria : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceFilteringCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceFilteringCriteria>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ThreatIntelligenceFilteringCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ThreatIntelligenceFilteringCriteria>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ThreatIntelligenceFilteringCriteria>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PageSize))
             {
@@ -110,7 +121,236 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ThreatIntelligenceFilteringCriteria IJsonModel<ThreatIntelligenceFilteringCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreatIntelligenceFilteringCriteria(document.RootElement, options);
+        }
+
+        internal static ThreatIntelligenceFilteringCriteria DeserializeThreatIntelligenceFilteringCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> pageSize = default;
+            Optional<int> minConfidence = default;
+            Optional<int> maxConfidence = default;
+            Optional<DateTimeOffset> minValidUntil = default;
+            Optional<DateTimeOffset> maxValidUntil = default;
+            Optional<bool> includeDisabled = default;
+            Optional<IList<ThreatIntelligenceSortingCriteria>> sortBy = default;
+            Optional<IList<string>> sources = default;
+            Optional<IList<string>> patternTypes = default;
+            Optional<IList<string>> threatTypes = default;
+            Optional<IList<string>> ids = default;
+            Optional<IList<string>> keywords = default;
+            Optional<string> skipToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("pageSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("minConfidence"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minConfidence = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxConfidence"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConfidence = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("minValidUntil"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minValidUntil = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("maxValidUntil"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxValidUntil = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("includeDisabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeDisabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("sortBy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ThreatIntelligenceSortingCriteria> array = new List<ThreatIntelligenceSortingCriteria>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ThreatIntelligenceSortingCriteria.DeserializeThreatIntelligenceSortingCriteria(item));
+                    }
+                    sortBy = array;
+                    continue;
+                }
+                if (property.NameEquals("sources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    sources = array;
+                    continue;
+                }
+                if (property.NameEquals("patternTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    patternTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("threatTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    threatTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("ids"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    ids = array;
+                    continue;
+                }
+                if (property.NameEquals("keywords"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    keywords = array;
+                    continue;
+                }
+                if (property.NameEquals("skipToken"u8))
+                {
+                    skipToken = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ThreatIntelligenceFilteringCriteria(Optional.ToNullable(pageSize), Optional.ToNullable(minConfidence), Optional.ToNullable(maxConfidence), Optional.ToNullable(minValidUntil), Optional.ToNullable(maxValidUntil), Optional.ToNullable(includeDisabled), Optional.ToList(sortBy), Optional.ToList(sources), Optional.ToList(patternTypes), Optional.ToList(threatTypes), Optional.ToList(ids), Optional.ToList(keywords), skipToken.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ThreatIntelligenceFilteringCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ThreatIntelligenceFilteringCriteria IPersistableModel<ThreatIntelligenceFilteringCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeThreatIntelligenceFilteringCriteria(document.RootElement, options);
+        }
+
+        string IPersistableModel<ThreatIntelligenceFilteringCriteria>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

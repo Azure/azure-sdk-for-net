@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The type of IoT Security recommendation. </summary>
     public partial class RecommendationConfigurationProperties
     {
-        /// <summary> Initializes a new instance of RecommendationConfigurationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendationConfigurationProperties"/>. </summary>
         /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
         public RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType, RecommendationConfigStatus status)
@@ -19,15 +25,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of RecommendationConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationConfigurationProperties"/>. </summary>
         /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="name"></param>
         /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
-        internal RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType, string name, RecommendationConfigStatus status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType, string name, RecommendationConfigStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecommendationType = recommendationType;
             Name = name;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecommendationConfigurationProperties"/> for deserialization. </summary>
+        internal RecommendationConfigurationProperties()
+        {
         }
 
         /// <summary> The type of IoT Security recommendation. </summary>

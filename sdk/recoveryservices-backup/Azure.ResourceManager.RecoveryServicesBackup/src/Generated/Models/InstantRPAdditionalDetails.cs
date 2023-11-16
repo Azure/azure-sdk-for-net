@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The InstantRPAdditionalDetails. </summary>
     public partial class InstantRPAdditionalDetails
     {
-        /// <summary> Initializes a new instance of InstantRPAdditionalDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstantRPAdditionalDetails"/>. </summary>
         public InstantRPAdditionalDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InstantRPAdditionalDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstantRPAdditionalDetails"/>. </summary>
         /// <param name="azureBackupRGNamePrefix"></param>
         /// <param name="azureBackupRGNameSuffix"></param>
-        internal InstantRPAdditionalDetails(string azureBackupRGNamePrefix, string azureBackupRGNameSuffix)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstantRPAdditionalDetails(string azureBackupRGNamePrefix, string azureBackupRGNameSuffix, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureBackupRGNamePrefix = azureBackupRGNamePrefix;
             AzureBackupRGNameSuffix = azureBackupRGNameSuffix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the azure backup rg name prefix. </summary>

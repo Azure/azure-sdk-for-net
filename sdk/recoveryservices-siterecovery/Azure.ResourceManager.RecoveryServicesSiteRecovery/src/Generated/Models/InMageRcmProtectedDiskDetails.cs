@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,12 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm protected disk details. </summary>
     public partial class InMageRcmProtectedDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmProtectedDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmProtectedDiskDetails"/>. </summary>
         internal InMageRcmProtectedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
         /// <param name="irDetails"> The initial replication details. </param>
         /// <param name="resyncDetails"> The resync details. </param>
-        internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -51,6 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsInitialReplicationComplete = isInitialReplicationComplete;
             IrDetails = irDetails;
             ResyncDetails = resyncDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk Id. </summary>

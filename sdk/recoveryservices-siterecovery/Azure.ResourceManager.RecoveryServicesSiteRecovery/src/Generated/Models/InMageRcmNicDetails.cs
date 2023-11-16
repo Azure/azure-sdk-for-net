@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm NIC details. </summary>
     public partial class InMageRcmNicDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmNicDetails"/>. </summary>
         internal InMageRcmNicDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmNicDetails"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <param name="isSelectedForFailover"> A value indicating whether this NIC is selected for failover. </param>
@@ -32,7 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="testSubnetName"> Test subnet name. </param>
         /// <param name="testIPAddress"> The test IP address. </param>
         /// <param name="testIPAddressType"> The test IP address type. </param>
-        internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -47,6 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TestSubnetName = testSubnetName;
             TestIPAddress = testIPAddress;
             TestIPAddressType = testIPAddressType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The NIC Id. </summary>

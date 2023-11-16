@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Usage metric of a database. </summary>
     public partial class DatabaseUsage : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseUsage"/>. </summary>
         public DatabaseUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseUsage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,12 +32,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> Current value of the metric. </param>
         /// <param name="limit"> Boundary value of the metric. </param>
         /// <param name="unit"> Unit of the metric. </param>
-        internal DatabaseUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, double? currentValue, double? limit, string unit) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, double? currentValue, double? limit, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User-readable name of the metric. </summary>

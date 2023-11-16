@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmRecoveryPointDetails
+    public partial class InMageRcmRecoveryPointDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmRecoveryPointDetails>
     {
-        internal static InMageRcmRecoveryPointDetails DeserializeInMageRcmRecoveryPointDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmRecoveryPointDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<InMageRcmRecoveryPointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InMageRcmRecoveryPointDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InMageRcmRecoveryPointDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsMultiVmSyncPoint))
+                {
+                    writer.WritePropertyName("isMultiVmSyncPoint"u8);
+                    writer.WriteStringValue(IsMultiVmSyncPoint);
+                }
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmRecoveryPointDetails IJsonModel<InMageRcmRecoveryPointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmRecoveryPointDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmRecoveryPointDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmRecoveryPointDetails DeserializeInMageRcmRecoveryPointDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> isMultiVmSyncPoint = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isMultiVmSyncPoint"u8))
@@ -32,8 +90,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmRecoveryPointDetails(instanceType, isMultiVmSyncPoint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmRecoveryPointDetails(instanceType, serializedAdditionalRawData, isMultiVmSyncPoint.Value);
         }
+
+        BinaryData IPersistableModel<InMageRcmRecoveryPointDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmRecoveryPointDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InMageRcmRecoveryPointDetails IPersistableModel<InMageRcmRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmRecoveryPointDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInMageRcmRecoveryPointDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<InMageRcmRecoveryPointDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

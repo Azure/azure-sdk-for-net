@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The minimum per-database performance level capability. </summary>
     public partial class ElasticPoolPerDatabaseMinPerformanceLevelCapability
     {
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMinPerformanceLevelCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseMinPerformanceLevelCapability"/>. </summary>
         internal ElasticPoolPerDatabaseMinPerformanceLevelCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMinPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseMinPerformanceLevelCapability"/>. </summary>
         /// <param name="limit"> The minimum performance level per database. </param>
         /// <param name="unit"> Unit type used to measure performance level. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Limit = limit;
             Unit = unit;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minimum performance level per database. </summary>

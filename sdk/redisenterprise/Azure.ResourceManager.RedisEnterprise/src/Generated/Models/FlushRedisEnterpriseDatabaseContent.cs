@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Parameters for a Redis Enterprise active geo-replication flush operation. </summary>
     public partial class FlushRedisEnterpriseDatabaseContent
     {
-        /// <summary> Initializes a new instance of FlushRedisEnterpriseDatabaseContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlushRedisEnterpriseDatabaseContent"/>. </summary>
         public FlushRedisEnterpriseDatabaseContent()
         {
             Ids = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlushRedisEnterpriseDatabaseContent"/>. </summary>
+        /// <param name="ids"> The resource identifiers of all the other database resources in the georeplication group to be flushed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlushRedisEnterpriseDatabaseContent(IList<string> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Ids = ids;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource identifiers of all the other database resources in the georeplication group to be flushed. </summary>

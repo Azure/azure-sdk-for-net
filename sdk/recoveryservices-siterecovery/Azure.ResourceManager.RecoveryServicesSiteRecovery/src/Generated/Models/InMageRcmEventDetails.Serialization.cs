@@ -5,15 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmEventDetails
+    public partial class InMageRcmEventDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmEventDetails>
     {
-        internal static InMageRcmEventDetails DeserializeInMageRcmEventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmEventDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<InMageRcmEventDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InMageRcmEventDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InMageRcmEventDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProtectedItemName))
+                {
+                    writer.WritePropertyName("protectedItemName"u8);
+                    writer.WriteStringValue(ProtectedItemName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VmName))
+                {
+                    writer.WritePropertyName("vmName"u8);
+                    writer.WriteStringValue(VmName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LatestAgentVersion))
+                {
+                    writer.WritePropertyName("latestAgentVersion"u8);
+                    writer.WriteStringValue(LatestAgentVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(JobId))
+                {
+                    writer.WritePropertyName("jobId"u8);
+                    writer.WriteStringValue(JobId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FabricName))
+                {
+                    writer.WritePropertyName("fabricName"u8);
+                    writer.WriteStringValue(FabricName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ApplianceName))
+                {
+                    writer.WritePropertyName("applianceName"u8);
+                    writer.WriteStringValue(ApplianceName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServerType))
+                {
+                    writer.WritePropertyName("serverType"u8);
+                    writer.WriteStringValue(ServerType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ComponentDisplayName))
+                {
+                    writer.WritePropertyName("componentDisplayName"u8);
+                    writer.WriteStringValue(ComponentDisplayName);
+                }
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmEventDetails IJsonModel<InMageRcmEventDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmEventDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmEventDetails DeserializeInMageRcmEventDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +139,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> serverType = default;
             Optional<string> componentDisplayName = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectedItemName"u8))
@@ -78,8 +192,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmEventDetails(instanceType, protectedItemName.Value, vmName.Value, latestAgentVersion.Value, jobId.Value, fabricName.Value, applianceName.Value, serverType.Value, componentDisplayName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmEventDetails(instanceType, serializedAdditionalRawData, protectedItemName.Value, vmName.Value, latestAgentVersion.Value, jobId.Value, fabricName.Value, applianceName.Value, serverType.Value, componentDisplayName.Value);
         }
+
+        BinaryData IPersistableModel<InMageRcmEventDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InMageRcmEventDetails IPersistableModel<InMageRcmEventDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInMageRcmEventDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<InMageRcmEventDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

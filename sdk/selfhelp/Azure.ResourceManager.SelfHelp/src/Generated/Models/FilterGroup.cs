@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Filter group. </summary>
     internal partial class FilterGroup
     {
-        /// <summary> Initializes a new instance of FilterGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilterGroup"/>. </summary>
         public FilterGroup()
         {
             Filter = new ChangeTrackingList<SelfHelpFilter>();
         }
 
-        /// <summary> Initializes a new instance of FilterGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterGroup"/>. </summary>
         /// <param name="filter"> List of filters. </param>
-        internal FilterGroup(IList<SelfHelpFilter> filter)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilterGroup(IList<SelfHelpFilter> filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Filter = filter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of filters. </summary>

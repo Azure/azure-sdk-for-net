@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The properties of an update mobility service request. </summary>
     internal partial class UpdateMobilityServiceRequestProperties
     {
-        /// <summary> Initializes a new instance of UpdateMobilityServiceRequestProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceRequestProperties"/>. </summary>
         public UpdateMobilityServiceRequestProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceRequestProperties"/>. </summary>
+        /// <param name="runAsAccountId"> The CS run as account Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateMobilityServiceRequestProperties(string runAsAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RunAsAccountId = runAsAccountId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The CS run as account Id. </summary>

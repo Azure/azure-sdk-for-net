@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityCenterResourceDetails : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownResourceDetails))]
+    public partial class SecurityCenterResourceDetails : IUtf8JsonSerializable, IJsonModel<SecurityCenterResourceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterResourceDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SecurityCenterResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityCenterResourceDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityCenterResourceDetails>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityCenterResourceDetails DeserializeSecurityCenterResourceDetails(JsonElement element)
+        SecurityCenterResourceDetails IJsonModel<SecurityCenterResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityCenterResourceDetails(document.RootElement, options);
+        }
+
+        internal static SecurityCenterResourceDetails DeserializeSecurityCenterResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +77,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             return UnknownResourceDetails.DeserializeUnknownResourceDetails(element);
         }
+
+        BinaryData IPersistableModel<SecurityCenterResourceDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityCenterResourceDetails IPersistableModel<SecurityCenterResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityCenterResourceDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityCenterResourceDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

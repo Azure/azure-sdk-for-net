@@ -14,7 +14,10 @@ namespace Azure.Search.Documents.Models
     /// <summary> Describes an error condition for the API. </summary>
     internal partial class SearchError
     {
-        /// <summary> Initializes a new instance of SearchError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchError"/>. </summary>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal SearchError(string message)
@@ -25,15 +28,22 @@ namespace Azure.Search.Documents.Models
             Details = new ChangeTrackingList<SearchError>();
         }
 
-        /// <summary> Initializes a new instance of SearchError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        internal SearchError(string code, string message, IReadOnlyList<SearchError> details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchError(string code, string message, IReadOnlyList<SearchError> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchError"/> for deserialization. </summary>
+        internal SearchError()
+        {
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>

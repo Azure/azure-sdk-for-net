@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents the software inventory of the virtual machine. </summary>
     internal partial class SoftwaresList
     {
-        /// <summary> Initializes a new instance of SoftwaresList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwaresList"/>. </summary>
         internal SoftwaresList()
         {
             Value = new ChangeTrackingList<SoftwareInventoryData>();
         }
 
-        /// <summary> Initializes a new instance of SoftwaresList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwaresList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SoftwaresList(IReadOnlyList<SoftwareInventoryData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwaresList(IReadOnlyList<SoftwareInventoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

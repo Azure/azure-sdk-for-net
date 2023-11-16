@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Relay.Models
 {
     /// <summary> ConnectionState information. </summary>
     public partial class RelayPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of RelayPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkServiceConnectionState"/>. </summary>
         public RelayPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of RelayPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
-        internal RelayPrivateLinkServiceConnectionState(RelayPrivateLinkConnectionStatus? status, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelayPrivateLinkServiceConnectionState(RelayPrivateLinkConnectionStatus? status, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status of the connection. </summary>

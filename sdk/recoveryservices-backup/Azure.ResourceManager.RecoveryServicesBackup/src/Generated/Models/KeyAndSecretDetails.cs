@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -18,20 +21,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class KeyAndSecretDetails
     {
-        /// <summary> Initializes a new instance of KeyAndSecretDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyAndSecretDetails"/>. </summary>
         public KeyAndSecretDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyAndSecretDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyAndSecretDetails"/>. </summary>
         /// <param name="kekDetails"> KEK is encryption key for BEK. </param>
         /// <param name="bekDetails"> BEK is bitlocker encryption key. </param>
         /// <param name="encryptionMechanism"> Encryption mechanism: None/ SinglePass/ DoublePass. </param>
-        internal KeyAndSecretDetails(KekDetails kekDetails, BekDetails bekDetails, string encryptionMechanism)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyAndSecretDetails(KekDetails kekDetails, BekDetails bekDetails, string encryptionMechanism, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KekDetails = kekDetails;
             BekDetails = bekDetails;
             EncryptionMechanism = encryptionMechanism;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> KEK is encryption key for BEK. </summary>

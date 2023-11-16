@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> Contains infrastructure information about the Appliance. </summary>
     internal partial class AppliancePropertiesInfrastructureConfig
     {
-        /// <summary> Initializes a new instance of AppliancePropertiesInfrastructureConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppliancePropertiesInfrastructureConfig"/>. </summary>
         public AppliancePropertiesInfrastructureConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of AppliancePropertiesInfrastructureConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliancePropertiesInfrastructureConfig"/>. </summary>
         /// <param name="provider"> Information about the connected appliance. </param>
-        internal AppliancePropertiesInfrastructureConfig(ApplianceProvider? provider)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppliancePropertiesInfrastructureConfig(ApplianceProvider? provider, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Provider = provider;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Information about the connected appliance. </summary>

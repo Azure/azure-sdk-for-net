@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SyncMemberData : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncMemberData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncMemberData"/>. </summary>
         public SyncMemberData()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncMemberData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="password"> Password of the member database in the sync member. </param>
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
-        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.Sql
             Password = password;
             SyncDirection = syncDirection;
             SyncState = syncState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Database type of the sync member. </summary>

@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpCredentialsDetailsProperties : IUtf8JsonSerializable
+    public partial class GcpCredentialsDetailsProperties : IUtf8JsonSerializable, IJsonModel<GcpCredentialsDetailsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpCredentialsDetailsProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GcpCredentialsDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GcpCredentialsDetailsProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GcpCredentialsDetailsProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("organizationId"u8);
             writer.WriteStringValue(OrganizationId);
@@ -39,13 +48,63 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(AuthProviderX509CertUri.AbsoluteUri);
             writer.WritePropertyName("clientX509CertUrl"u8);
             writer.WriteStringValue(ClientX509CertUri.AbsoluteUri);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AuthenticationProvisioningState))
+                {
+                    writer.WritePropertyName("authenticationProvisioningState"u8);
+                    writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(GrantedPermissions))
+                {
+                    writer.WritePropertyName("grantedPermissions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in GrantedPermissions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GcpCredentialsDetailsProperties DeserializeGcpCredentialsDetailsProperties(JsonElement element)
+        GcpCredentialsDetailsProperties IJsonModel<GcpCredentialsDetailsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGcpCredentialsDetailsProperties(document.RootElement, options);
+        }
+
+        internal static GcpCredentialsDetailsProperties DeserializeGcpCredentialsDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +123,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
             Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
             AuthenticationType authenticationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("organizationId"u8))
@@ -149,8 +210,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GcpCredentialsDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, organizationId, type, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUrl, clientX509CertUrl);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GcpCredentialsDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, serializedAdditionalRawData, organizationId, type, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUrl, clientX509CertUrl);
         }
+
+        BinaryData IPersistableModel<GcpCredentialsDetailsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GcpCredentialsDetailsProperties IPersistableModel<GcpCredentialsDetailsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGcpCredentialsDetailsProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<GcpCredentialsDetailsProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

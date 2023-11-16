@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents the response to a list server metrics request. </summary>
     internal partial class ServerUsageListResult
     {
-        /// <summary> Initializes a new instance of ServerUsageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/>. </summary>
         /// <param name="value"> The list of server metrics for the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ServerUsageListResult(IEnumerable<SqlServerUsage> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ServerUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/>. </summary>
         /// <param name="value"> The list of server metrics for the server. </param>
-        internal ServerUsageListResult(IReadOnlyList<SqlServerUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerUsageListResult(IReadOnlyList<SqlServerUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/> for deserialization. </summary>
+        internal ServerUsageListResult()
+        {
         }
 
         /// <summary> The list of server metrics for the server. </summary>

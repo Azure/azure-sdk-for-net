@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk Encryption Key Information (BitLocker Encryption Key (BEK) on Windows). </summary>
     public partial class SiteRecoveryDiskEncryptionKeyInfo
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionKeyInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskEncryptionKeyInfo"/>. </summary>
         public SiteRecoveryDiskEncryptionKeyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskEncryptionKeyInfo"/>. </summary>
         /// <param name="secretIdentifier"> The secret url / identifier. </param>
         /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM id for secret. </param>
-        internal SiteRecoveryDiskEncryptionKeyInfo(string secretIdentifier, ResourceIdentifier keyVaultResourceArmId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryDiskEncryptionKeyInfo(string secretIdentifier, ResourceIdentifier keyVaultResourceArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecretIdentifier = secretIdentifier;
             KeyVaultResourceArmId = keyVaultResourceArmId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The secret url / identifier. </summary>

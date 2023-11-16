@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// </summary>
     public partial class ServiceFabricManagedApplicationTypeVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedApplicationTypeVersionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypeVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricManagedApplicationTypeVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedApplicationTypeVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypeVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +36,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="appPackageUri"> The URL to the application package. </param>
-        internal ServiceFabricManagedApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AppPackageUri = appPackageUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypeVersionData"/> for deserialization. </summary>
+        internal ServiceFabricManagedApplicationTypeVersionData()
+        {
         }
 
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>

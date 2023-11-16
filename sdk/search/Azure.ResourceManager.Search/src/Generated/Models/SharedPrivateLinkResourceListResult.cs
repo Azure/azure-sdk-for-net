@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Search;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing a list of Shared Private Link Resources. </summary>
     internal partial class SharedPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceListResult"/>. </summary>
         internal SharedPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The list of Shared Private Link Resources. </param>
         /// <param name="nextLink"> The URL to get the next set of shared private link resources, if there are any. </param>
-        internal SharedPrivateLinkResourceListResult(IReadOnlyList<SharedSearchServicePrivateLinkResourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharedPrivateLinkResourceListResult(IReadOnlyList<SharedSearchServicePrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Shared Private Link Resources. </summary>

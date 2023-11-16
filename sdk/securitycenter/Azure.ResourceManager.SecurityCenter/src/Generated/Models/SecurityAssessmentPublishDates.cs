@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecurityAssessmentPublishDates. </summary>
     public partial class SecurityAssessmentPublishDates
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentPublishDates. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/>. </summary>
         /// <param name="public"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="public"/> is null. </exception>
         public SecurityAssessmentPublishDates(string @public)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Public = @public;
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentPublishDates. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/>. </summary>
         /// <param name="ga"></param>
         /// <param name="public"></param>
-        internal SecurityAssessmentPublishDates(string ga, string @public)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentPublishDates(string ga, string @public, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GA = ga;
             Public = @public;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/> for deserialization. </summary>
+        internal SecurityAssessmentPublishDates()
+        {
         }
 
         /// <summary> Gets or sets the ga. </summary>

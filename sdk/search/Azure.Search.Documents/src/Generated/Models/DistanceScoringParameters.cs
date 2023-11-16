@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Provides parameter values to a distance scoring function. </summary>
     public partial class DistanceScoringParameters
     {
-        /// <summary> Initializes a new instance of DistanceScoringParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DistanceScoringParameters"/>. </summary>
         /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
         /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referencePointParameter"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.Search.Documents.Indexes.Models
 
             ReferencePointParameter = referencePointParameter;
             BoostingDistance = boostingDistance;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DistanceScoringParameters"/>. </summary>
+        /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
+        /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DistanceScoringParameters(string referencePointParameter, double boostingDistance, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ReferencePointParameter = referencePointParameter;
+            BoostingDistance = boostingDistance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DistanceScoringParameters"/> for deserialization. </summary>
+        internal DistanceScoringParameters()
+        {
         }
 
         /// <summary> The name of the parameter passed in search queries to specify the reference location. </summary>

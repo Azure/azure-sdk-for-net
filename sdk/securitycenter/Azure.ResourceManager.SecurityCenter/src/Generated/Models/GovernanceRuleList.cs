@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Page of a governance rules list. </summary>
     internal partial class GovernanceRuleList
     {
-        /// <summary> Initializes a new instance of GovernanceRuleList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleList"/>. </summary>
         internal GovernanceRuleList()
         {
             Value = new ChangeTrackingList<GovernanceRuleData>();
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleList"/>. </summary>
         /// <param name="value"> Collection of governance rules in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal GovernanceRuleList(IReadOnlyList<GovernanceRuleData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceRuleList(IReadOnlyList<GovernanceRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of governance rules in this page. </summary>

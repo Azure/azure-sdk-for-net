@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Pricing information containing the amount and the currency code. </summary>
     public partial class PurchasePrice
     {
-        /// <summary> Initializes a new instance of PurchasePrice. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurchasePrice"/>. </summary>
         public PurchasePrice()
         {
         }
 
-        /// <summary> Initializes a new instance of PurchasePrice. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchasePrice"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
-        internal PurchasePrice(string currencyCode, double? amount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurchasePrice(string currencyCode, double? amount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrencyCode = currencyCode;
             Amount = amount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ISO 4217 3-letter currency code for the currency used by this purchase record. </summary>

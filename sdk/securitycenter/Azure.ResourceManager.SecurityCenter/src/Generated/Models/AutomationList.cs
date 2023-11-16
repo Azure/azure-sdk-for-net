@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security automations response. </summary>
     internal partial class AutomationList
     {
-        /// <summary> Initializes a new instance of AutomationList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationList"/>. </summary>
         /// <param name="value"> The list of security automations under the given scope. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AutomationList(IEnumerable<SecurityAutomationData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutomationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationList"/>. </summary>
         /// <param name="value"> The list of security automations under the given scope. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal AutomationList(IReadOnlyList<SecurityAutomationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationList(IReadOnlyList<SecurityAutomationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationList"/> for deserialization. </summary>
+        internal AutomationList()
+        {
         }
 
         /// <summary> The list of security automations under the given scope. </summary>

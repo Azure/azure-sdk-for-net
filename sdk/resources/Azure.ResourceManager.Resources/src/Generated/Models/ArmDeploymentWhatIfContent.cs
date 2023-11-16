@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment What-if operation parameters. </summary>
     public partial class ArmDeploymentWhatIfContent
     {
-        /// <summary> Initializes a new instance of ArmDeploymentWhatIfContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfContent"/>. </summary>
         /// <param name="properties"> The deployment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ArmDeploymentWhatIfContent(ArmDeploymentWhatIfProperties properties)
@@ -21,6 +25,22 @@ namespace Azure.ResourceManager.Resources.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfContent"/>. </summary>
+        /// <param name="location"> The location to store the deployment data, only required at the tenant and management group scope. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentWhatIfContent(AzureLocation? location, ArmDeploymentWhatIfProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Location = location;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfContent"/> for deserialization. </summary>
+        internal ArmDeploymentWhatIfContent()
+        {
         }
 
         /// <summary> The location to store the deployment data, only required at the tenant and management group scope. </summary>

@@ -5,10 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.MixedReality.RemoteRendering
 {
     /// <summary> Settings used to update the session. </summary>
     public partial class UpdateSessionOptions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSessionOptions"/>. </summary>
+        /// <param name="maxLeaseTimeMinutes"> Update to the time the session will run after it reached the 'Ready' state. It has to be larger than the current value of maxLeaseTimeMinutes and less than 1440. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateSessionOptions(int maxLeaseTimeMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MaxLeaseTimeMinutes = maxLeaseTimeMinutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSessionOptions"/> for deserialization. </summary>
+        internal UpdateSessionOptions()
+        {
+        }
     }
 }

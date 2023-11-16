@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Recovery point tier information. </summary>
     public partial class RecoveryPointTierInformation
     {
-        /// <summary> Initializes a new instance of RecoveryPointTierInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointTierInformation"/>. </summary>
         public RecoveryPointTierInformation()
         {
             ExtendedInfo = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointTierInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointTierInformation"/>. </summary>
         /// <param name="tierType"> Recovery point tier type. </param>
         /// <param name="status"> Recovery point tier status. </param>
         /// <param name="extendedInfo"> Recovery point tier status. </param>
-        internal RecoveryPointTierInformation(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointTierInformation(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TierType = tierType;
             Status = status;
             ExtendedInfo = extendedInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Recovery point tier type. </summary>

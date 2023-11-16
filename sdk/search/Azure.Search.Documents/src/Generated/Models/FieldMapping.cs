@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a mapping between a field in a data source and a target field in an index. </summary>
     public partial class FieldMapping
     {
-        /// <summary> Initializes a new instance of FieldMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FieldMapping"/>. </summary>
         /// <param name="sourceFieldName"> The name of the field in the data source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceFieldName"/> is null. </exception>
         public FieldMapping(string sourceFieldName)
@@ -23,15 +27,22 @@ namespace Azure.Search.Documents.Indexes.Models
             SourceFieldName = sourceFieldName;
         }
 
-        /// <summary> Initializes a new instance of FieldMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldMapping"/>. </summary>
         /// <param name="sourceFieldName"> The name of the field in the data source. </param>
         /// <param name="targetFieldName"> The name of the target field in the index. Same as the source field name by default. </param>
         /// <param name="mappingFunction"> A function to apply to each source field value before indexing. </param>
-        internal FieldMapping(string sourceFieldName, string targetFieldName, FieldMappingFunction mappingFunction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FieldMapping(string sourceFieldName, string targetFieldName, FieldMappingFunction mappingFunction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceFieldName = sourceFieldName;
             TargetFieldName = targetFieldName;
             MappingFunction = mappingFunction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FieldMapping"/> for deserialization. </summary>
+        internal FieldMapping()
+        {
         }
 
         /// <summary> The name of the field in the data source. </summary>

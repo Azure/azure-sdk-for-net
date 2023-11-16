@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class TemplateSpecVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionData"/>. </summary>
         /// <param name="location"> The location of the Template Spec Version. It must match the location of the parent Template Spec. </param>
         public TemplateSpecVersionData(AzureLocation location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Resources
             LinkedTemplates = new ChangeTrackingList<LinkedTemplateArtifact>();
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +43,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="metadata"> The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
         /// <param name="mainTemplate"> The main Azure Resource Manager template content. </param>
         /// <param name="uiFormDefinition"> The Azure Resource Manager template UI definition content. </param>
-        internal TemplateSpecVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IDictionary<string, string> tags, string description, IList<LinkedTemplateArtifact> linkedTemplates, BinaryData metadata, BinaryData mainTemplate, BinaryData uiFormDefinition) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateSpecVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IDictionary<string, string> tags, string description, IList<LinkedTemplateArtifact> linkedTemplates, BinaryData metadata, BinaryData mainTemplate, BinaryData uiFormDefinition, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -49,6 +53,12 @@ namespace Azure.ResourceManager.Resources
             Metadata = metadata;
             MainTemplate = mainTemplate;
             UiFormDefinition = uiFormDefinition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionData"/> for deserialization. </summary>
+        internal TemplateSpecVersionData()
+        {
         }
 
         /// <summary> The location of the Template Spec Version. It must match the location of the parent Template Spec. </summary>

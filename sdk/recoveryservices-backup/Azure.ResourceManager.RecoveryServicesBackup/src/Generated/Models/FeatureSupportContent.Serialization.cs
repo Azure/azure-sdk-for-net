@@ -5,19 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FeatureSupportContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownFeatureSupportRequest))]
+    public partial class FeatureSupportContent : IUtf8JsonSerializable, IJsonModel<FeatureSupportContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureSupportContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FeatureSupportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FeatureSupportContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FeatureSupportContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("featureType"u8);
             writer.WriteStringValue(FeatureType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        FeatureSupportContent IJsonModel<FeatureSupportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFeatureSupportContent(document.RootElement, options);
+        }
+
+        internal static FeatureSupportContent DeserializeFeatureSupportContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("featureType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureBackupGoals": return BackupGoalFeatureSupportContent.DeserializeBackupGoalFeatureSupportContent(element);
+                    case "AzureVMResourceBackup": return VmResourceFeatureSupportContent.DeserializeVmResourceFeatureSupportContent(element);
+                }
+            }
+            return UnknownFeatureSupportRequest.DeserializeUnknownFeatureSupportRequest(element);
+        }
+
+        BinaryData IPersistableModel<FeatureSupportContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FeatureSupportContent IPersistableModel<FeatureSupportContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFeatureSupportContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<FeatureSupportContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

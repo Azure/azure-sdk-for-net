@@ -6,21 +6,132 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultUpgradeDetails : IUtf8JsonSerializable
+    public partial class VaultUpgradeDetails : IUtf8JsonSerializable, IJsonModel<VaultUpgradeDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultUpgradeDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VaultUpgradeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VaultUpgradeDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VaultUpgradeDetails>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OperationId))
+                {
+                    writer.WritePropertyName("operationId"u8);
+                    writer.WriteStringValue(OperationId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTimeUtc"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastUpdatedOn))
+                {
+                    writer.WritePropertyName("lastUpdatedTimeUtc"u8);
+                    writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    writer.WritePropertyName("endTimeUtc"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TriggerType))
+                {
+                    writer.WritePropertyName("triggerType"u8);
+                    writer.WriteStringValue(TriggerType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpgradedResourceId))
+                {
+                    writer.WritePropertyName("upgradedResourceId"u8);
+                    writer.WriteStringValue(UpgradedResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PreviousResourceId))
+                {
+                    writer.WritePropertyName("previousResourceId"u8);
+                    writer.WriteStringValue(PreviousResourceId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VaultUpgradeDetails DeserializeVaultUpgradeDetails(JsonElement element)
+        VaultUpgradeDetails IJsonModel<VaultUpgradeDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVaultUpgradeDetails(document.RootElement, options);
+        }
+
+        internal static VaultUpgradeDetails DeserializeVaultUpgradeDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +145,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<VaultUpgradeTriggerType> triggerType = default;
             Optional<ResourceIdentifier> upgradedResourceId = default;
             Optional<ResourceIdentifier> previousResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -109,8 +222,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     previousResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VaultUpgradeDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(status), message.Value, Optional.ToNullable(triggerType), upgradedResourceId.Value, previousResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VaultUpgradeDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(status), message.Value, Optional.ToNullable(triggerType), upgradedResourceId.Value, previousResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VaultUpgradeDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VaultUpgradeDetails IPersistableModel<VaultUpgradeDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVaultUpgradeDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<VaultUpgradeDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

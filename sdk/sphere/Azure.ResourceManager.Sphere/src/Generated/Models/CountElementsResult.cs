@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sphere.Models
 {
     /// <summary>
@@ -13,7 +16,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class CountElementsResult
     {
-        /// <summary> Initializes a new instance of CountElementsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CountElementsResult"/>. </summary>
         /// <param name="value">
         /// Number of children resources in parent resource.
         /// Serialized Name: CountElementsResponse.value
@@ -21,6 +27,23 @@ namespace Azure.ResourceManager.Sphere.Models
         internal CountElementsResult(int value)
         {
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CountElementsResult"/>. </summary>
+        /// <param name="value">
+        /// Number of children resources in parent resource.
+        /// Serialized Name: CountElementsResponse.value
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CountElementsResult(int value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CountElementsResult"/> for deserialization. </summary>
+        internal CountElementsResult()
+        {
         }
 
         /// <summary>
