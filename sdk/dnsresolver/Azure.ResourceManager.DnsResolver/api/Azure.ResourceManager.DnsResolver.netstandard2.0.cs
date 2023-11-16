@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DnsForwardingRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class DnsForwardingRuleData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>
     {
         public DnsForwardingRuleData(string domainName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer> targetDnsServers) { }
         public Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState? DnsForwardingRuleState { get { throw null; } set { } }
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DnsResolver
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer> TargetDnsServers { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRuleData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRuleData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsForwardingRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -58,13 +63,18 @@ namespace Azure.ResourceManager.DnsResolver
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DnsForwardingRulesetData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DnsForwardingRulesetData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>
     {
         public DnsForwardingRulesetData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> dnsResolverOutboundEndpoints) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> DnsResolverOutboundEndpoints { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsForwardingRulesetResource : Azure.ResourceManager.ArmResource
     {
@@ -109,13 +119,18 @@ namespace Azure.ResourceManager.DnsResolver
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DnsForwardingRulesetVirtualNetworkLinkData : Azure.ResourceManager.Models.ResourceData
+    public partial class DnsForwardingRulesetVirtualNetworkLinkData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>
     {
         public DnsForwardingRulesetVirtualNetworkLinkData(Azure.ResourceManager.Resources.Models.WritableSubResource virtualNetwork) { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsForwardingRulesetVirtualNetworkLinkResource : Azure.ResourceManager.ArmResource
     {
@@ -148,7 +163,7 @@ namespace Azure.ResourceManager.DnsResolver
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DnsResolver.DnsResolverResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.DnsResolverResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DnsResolverData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DnsResolverData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverData>
     {
         public DnsResolverData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.WritableSubResource virtualNetwork) { }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverState? DnsResolverState { get { throw null; } }
@@ -156,6 +171,11 @@ namespace Azure.ResourceManager.DnsResolver
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
+        Azure.ResourceManager.DnsResolver.DnsResolverData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsResolverData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class DnsResolverExtensions
     {
@@ -194,13 +214,18 @@ namespace Azure.ResourceManager.DnsResolver
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DnsResolverInboundEndpointData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DnsResolverInboundEndpointData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>
     {
         public DnsResolverInboundEndpointData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration> ipConfigurations) { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsResolverInboundEndpointResource : Azure.ResourceManager.ArmResource
     {
@@ -239,13 +264,18 @@ namespace Azure.ResourceManager.DnsResolver
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DnsResolverOutboundEndpointData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DnsResolverOutboundEndpointData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>
     {
         public DnsResolverOutboundEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.WritableSubResource subnet) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsResolverOutboundEndpointResource : Azure.ResourceManager.ArmResource
     {
@@ -347,23 +377,38 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? provisioningState = default(Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(Azure.Core.ResourceIdentifier id = null, Azure.Core.ResourceIdentifier virtualNetworkLinkId = null) { throw null; }
     }
-    public partial class DnsForwardingRulePatch
+    public partial class DnsForwardingRulePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch>
     {
         public DnsForwardingRulePatch() { }
         public Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState? DnsForwardingRuleState { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer> TargetDnsServers { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsForwardingRulesetPatch
+    public partial class DnsForwardingRulesetPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch>
     {
         public DnsForwardingRulesetPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> DnsResolverOutboundEndpoints { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsForwardingRulesetVirtualNetworkLinkPatch
+    public partial class DnsForwardingRulesetVirtualNetworkLinkPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch>
     {
         public DnsForwardingRulesetVirtualNetworkLinkPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DnsForwardingRuleState : System.IEquatable<Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState>
@@ -383,20 +428,35 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static bool operator !=(Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState left, Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DnsResolverInboundEndpointPatch
+    public partial class DnsResolverInboundEndpointPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch>
     {
         public DnsResolverInboundEndpointPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsResolverOutboundEndpointPatch
+    public partial class DnsResolverOutboundEndpointPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch>
     {
         public DnsResolverOutboundEndpointPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsResolverPatch
+    public partial class DnsResolverPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch>
     {
         public DnsResolverPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DnsResolverProvisioningState : System.IEquatable<Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState>
@@ -456,23 +516,38 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static bool operator !=(Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod left, Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class InboundEndpointIPConfiguration
+    public partial class InboundEndpointIPConfiguration : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration>
     {
         public InboundEndpointIPConfiguration(Azure.ResourceManager.Resources.Models.WritableSubResource subnet) { }
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TargetDnsServer
+    public partial class TargetDnsServer : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer>
     {
         public TargetDnsServer(System.Net.IPAddress ipAddress) { }
         public System.Net.IPAddress IPAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
+        Azure.ResourceManager.DnsResolver.Models.TargetDnsServer System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.TargetDnsServer System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualNetworkDnsForwardingRuleset
+    public partial class VirtualNetworkDnsForwardingRuleset : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset>
     {
         internal VirtualNetworkDnsForwardingRuleset() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkLinkId { get { throw null; } }
+        Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

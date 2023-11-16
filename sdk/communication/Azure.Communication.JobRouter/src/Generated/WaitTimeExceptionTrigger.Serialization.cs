@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class WaitTimeExceptionTrigger : IUtf8JsonSerializable, IJsonModel<WaitTimeExceptionTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WaitTimeExceptionTrigger>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<WaitTimeExceptionTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<WaitTimeExceptionTrigger>)this).GetWireFormat(options) != "J") && options.Format != "J")

@@ -26,11 +26,16 @@ namespace Azure.ResourceManager.ApiCenter
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApiCenterServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ApiCenterServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterServiceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterServiceData>
     {
         public ApiCenterServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ApiCenter.ApiCenterServiceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApiCenter.ApiCenterServiceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterServiceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterServiceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterServiceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ApiCenterServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -89,13 +94,19 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static bool operator !=(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState left, Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApiCenterServicePatch
+    public partial class ApiCenterServicePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch>
     {
         public ApiCenterServicePatch() { }
         public Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmApiCenterModelFactory
     {
         public static Azure.ResourceManager.ApiCenter.ApiCenterServiceData ApiCenterServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? provisioningState = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch ApiCenterServicePatch(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? provisioningState = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState?)) { throw null; }
     }
 }

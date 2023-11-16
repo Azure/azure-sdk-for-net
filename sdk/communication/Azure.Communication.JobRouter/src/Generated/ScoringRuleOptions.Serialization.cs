@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class ScoringRuleOptions : IUtf8JsonSerializable, IJsonModel<ScoringRuleOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScoringRuleOptions>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<ScoringRuleOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<ScoringRuleOptions>)this).GetWireFormat(options) != "J") && options.Format != "J")

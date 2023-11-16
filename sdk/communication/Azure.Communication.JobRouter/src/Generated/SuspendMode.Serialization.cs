@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class SuspendMode : IUtf8JsonSerializable, IJsonModel<SuspendMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuspendMode>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<SuspendMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<SuspendMode>)this).GetWireFormat(options) != "J") && options.Format != "J")

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataShareAccountData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DataShareAccountData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareAccountData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>
     {
         public DataShareAccountData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.DataShare
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
         public string UserEmail { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.DataShare.DataShareAccountData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareAccountData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataShareAccountResource : Azure.ResourceManager.ArmResource
     {
@@ -84,7 +89,7 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataShareConsumerInvitationData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataShareConsumerInvitationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>
     {
         public DataShareConsumerInvitationData(System.Guid invitationId) { }
         public int? DataSetCount { get { throw null; } }
@@ -102,6 +107,11 @@ namespace Azure.ResourceManager.DataShare
         public string TermsOfUse { get { throw null; } }
         public string UserEmail { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.DataShare.DataShareConsumerInvitationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareConsumerInvitationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataShareConsumerInvitationResource : Azure.ResourceManager.ArmResource
     {
@@ -113,7 +123,7 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataShareData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataShareData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>
     {
         public DataShareData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -123,6 +133,11 @@ namespace Azure.ResourceManager.DataShare
         public string Terms { get { throw null; } set { } }
         public string UserEmail { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.DataShare.DataShareData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class DataShareExtensions
     {
@@ -168,7 +183,7 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareInvitationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareInvitationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataShareInvitationData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataShareInvitationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareInvitationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>
     {
         public DataShareInvitationData() { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
@@ -181,6 +196,11 @@ namespace Azure.ResourceManager.DataShare
         public string TargetObjectId { get { throw null; } set { } }
         public string UserEmail { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.DataShare.DataShareInvitationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareInvitationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataShareInvitationResource : Azure.ResourceManager.ArmResource
     {
@@ -243,9 +263,15 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataShareSynchronizationSettingData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataShareSynchronizationSettingData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public DataShareSynchronizationSettingData() { }
+        Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataShareSynchronizationSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -278,9 +304,15 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareTriggerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataShareTriggerData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataShareTriggerData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareTriggerData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public DataShareTriggerData() { }
+        Azure.ResourceManager.DataShare.DataShareTriggerData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareTriggerData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataShareTriggerResource : Azure.ResourceManager.ArmResource
     {
@@ -311,7 +343,7 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ProviderShareSubscriptionData : Azure.ResourceManager.Models.ResourceData
+    public partial class ProviderShareSubscriptionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>
     {
         public ProviderShareSubscriptionData() { }
         public string ConsumerEmail { get { throw null; } }
@@ -324,6 +356,11 @@ namespace Azure.ResourceManager.DataShare
         public System.DateTimeOffset? SharedOn { get { throw null; } }
         public string ShareSubscriptionObjectId { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus? ShareSubscriptionStatus { get { throw null; } }
+        Azure.ResourceManager.DataShare.ProviderShareSubscriptionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.ProviderShareSubscriptionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProviderShareSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -358,9 +395,15 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ShareDataSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ShareDataSetData : Azure.ResourceManager.Models.ResourceData
+    public partial class ShareDataSetData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetData>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public ShareDataSetData() { }
+        Azure.ResourceManager.DataShare.ShareDataSetData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.ShareDataSetData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ShareDataSetMappingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>, System.Collections.IEnumerable
     {
@@ -379,9 +422,15 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ShareDataSetMappingData : Azure.ResourceManager.Models.ResourceData
+    public partial class ShareDataSetMappingData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public ShareDataSetMappingData() { }
+        Azure.ResourceManager.DataShare.ShareDataSetMappingData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.ShareDataSetMappingData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ShareDataSetMappingResource : Azure.ResourceManager.ArmResource
     {
@@ -428,7 +477,7 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ShareSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ShareSubscriptionData : Azure.ResourceManager.Models.ResourceData
+    public partial class ShareSubscriptionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>
     {
         public ShareSubscriptionData(System.Guid invitationId, Azure.Core.AzureLocation sourceShareLocation) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -446,6 +495,11 @@ namespace Azure.ResourceManager.DataShare
         public Azure.Core.AzureLocation SourceShareLocation { get { throw null; } set { } }
         public string UserEmail { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.DataShare.ShareSubscriptionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.ShareSubscriptionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ShareSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -525,7 +579,7 @@ namespace Azure.ResourceManager.DataShare.Mocking
 }
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class AdlsGen1FileDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class AdlsGen1FileDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet>
     {
         public AdlsGen1FileDataSet(string accountName, string fileName, string folderPath, string resourceGroup, string subscriptionId) { }
         public string AccountName { get { throw null; } set { } }
@@ -534,8 +588,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string FolderPath { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FileDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AdlsGen1FolderDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class AdlsGen1FolderDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet>
     {
         public AdlsGen1FolderDataSet(string accountName, string folderPath, string resourceGroup, string subscriptionId) { }
         public string AccountName { get { throw null; } set { } }
@@ -543,8 +602,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string FolderPath { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen1FolderDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AdlsGen2FileDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class AdlsGen2FileDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet>
     {
         public AdlsGen2FileDataSet(string filePath, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public System.Guid? DataSetId { get { throw null; } }
@@ -553,8 +617,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AdlsGen2FileDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class AdlsGen2FileDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping>
     {
         public AdlsGen2FileDataSetMapping(System.Guid dataSetId, string filePath, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public System.Guid DataSetId { get { throw null; } set { } }
@@ -566,8 +635,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AdlsGen2FileSystemDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class AdlsGen2FileSystemDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet>
     {
         public AdlsGen2FileSystemDataSet(string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public System.Guid? DataSetId { get { throw null; } }
@@ -575,8 +649,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AdlsGen2FileSystemDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class AdlsGen2FileSystemDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping>
     {
         public AdlsGen2FileSystemDataSetMapping(System.Guid dataSetId, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public System.Guid DataSetId { get { throw null; } set { } }
@@ -586,8 +665,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FileSystemDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AdlsGen2FolderDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class AdlsGen2FolderDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet>
     {
         public AdlsGen2FolderDataSet(string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public System.Guid? DataSetId { get { throw null; } }
@@ -596,8 +680,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AdlsGen2FolderDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class AdlsGen2FolderDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping>
     {
         public AdlsGen2FolderDataSetMapping(System.Guid dataSetId, string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public System.Guid DataSetId { get { throw null; } set { } }
@@ -608,6 +697,11 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.AdlsGen2FolderDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmDataShareModelFactory
     {
@@ -657,7 +751,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping SynapseWorkspaceSqlPoolTableDataSetMapping(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid dataSetId = default(System.Guid), Azure.ResourceManager.DataShare.Models.DataSetMappingStatus? dataSetMappingStatus = default(Azure.ResourceManager.DataShare.Models.DataSetMappingStatus?), Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? provisioningState = default(Azure.ResourceManager.DataShare.Models.DataShareProvisioningState?), Azure.Core.ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = null) { throw null; }
         public static Azure.ResourceManager.DataShare.Models.SynchronizationDetails SynchronizationDetails(System.Guid? dataSetId = default(System.Guid?), Azure.ResourceManager.DataShare.Models.ShareDataSetType? dataSetType = default(Azure.ResourceManager.DataShare.Models.ShareDataSetType?), int? durationInMilliSeconds = default(int?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), long? filesRead = default(long?), long? filesWritten = default(long?), string message = null, string name = null, long? rowsCopied = default(long?), long? rowsRead = default(long?), long? sizeRead = default(long?), long? sizeWritten = default(long?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string status = null, long? vCore = default(long?)) { throw null; }
     }
-    public partial class BlobContainerDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class BlobContainerDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSet>
     {
         public BlobContainerDataSet(string containerName, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public string ContainerName { get { throw null; } set { } }
@@ -665,8 +759,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.BlobContainerDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.BlobContainerDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlobContainerDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class BlobContainerDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping>
     {
         public BlobContainerDataSetMapping(string containerName, System.Guid dataSetId, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public string ContainerName { get { throw null; } set { } }
@@ -676,8 +775,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobContainerDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlobDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class BlobDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobDataSet>
     {
         public BlobDataSet(string containerName, string filePath, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public string ContainerName { get { throw null; } set { } }
@@ -686,8 +790,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.BlobDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.BlobDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlobDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class BlobDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobDataSetMapping>
     {
         public BlobDataSetMapping(string containerName, System.Guid dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public string ContainerName { get { throw null; } set { } }
@@ -699,8 +808,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.BlobDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.BlobDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlobFolderDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class BlobFolderDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSet>
     {
         public BlobFolderDataSet(string containerName, string prefix, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public string ContainerName { get { throw null; } set { } }
@@ -709,8 +823,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.BlobFolderDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.BlobFolderDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlobFolderDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class BlobFolderDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping>
     {
         public BlobFolderDataSetMapping(string containerName, System.Guid dataSetId, string prefix, string resourceGroup, string storageAccountName, string subscriptionId) { }
         public string ContainerName { get { throw null; } set { } }
@@ -721,8 +840,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.BlobFolderDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumerSourceDataSet : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumerSourceDataSet : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet>
     {
         public ConsumerSourceDataSet() { }
         public System.Guid? DataSetId { get { throw null; } }
@@ -730,6 +854,11 @@ namespace Azure.ResourceManager.DataShare.Models
         public string DataSetName { get { throw null; } }
         public string DataSetPath { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.ShareDataSetType? DataSetType { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ConsumerSourceDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataSetMappingStatus : System.IEquatable<Azure.ResourceManager.DataShare.Models.DataSetMappingStatus>
@@ -749,12 +878,17 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.DataSetMappingStatus left, Azure.ResourceManager.DataShare.Models.DataSetMappingStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataShareAccountPatch
+    public partial class DataShareAccountPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareAccountPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareAccountPatch>
     {
         public DataShareAccountPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.DataShareAccountPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.DataShareAccountPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareAccountPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareAccountPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareAccountPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataShareEmailRegistration
+    public partial class DataShareEmailRegistration : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>
     {
         public DataShareEmailRegistration() { }
         public string ActivationCode { get { throw null; } set { } }
@@ -762,6 +896,11 @@ namespace Azure.ResourceManager.DataShare.Models
         public string Email { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus? RegistrationStatus { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataShareEmailRegistrationStatus : System.IEquatable<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus>
@@ -820,13 +959,18 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.DataShareKind left, Azure.ResourceManager.DataShare.Models.DataShareKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataShareOperationResult
+    public partial class DataShareOperationResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>
     {
         internal DataShareOperationResult() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareOperationStatus Status { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.DataShareOperationResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.DataShareOperationResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataShareOperationStatus : System.IEquatable<Azure.ResourceManager.DataShare.Models.DataShareOperationStatus>
@@ -907,10 +1051,15 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval left, Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataShareSynchronizeContent
+    public partial class DataShareSynchronizeContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent>
     {
         public DataShareSynchronizeContent() { }
         public Azure.ResourceManager.DataShare.Models.SynchronizationMode? SynchronizationMode { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataShareTriggerStatus : System.IEquatable<Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus>
@@ -931,15 +1080,20 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus left, Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KustoClusterDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class KustoClusterDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSet>
     {
         public KustoClusterDataSet(Azure.Core.ResourceIdentifier kustoClusterResourceId) { }
         public System.Guid? DataSetId { get { throw null; } }
         public Azure.Core.ResourceIdentifier KustoClusterResourceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.KustoClusterDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.KustoClusterDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoClusterDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class KustoClusterDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping>
     {
         public KustoClusterDataSetMapping(System.Guid dataSetId, Azure.Core.ResourceIdentifier kustoClusterResourceId) { }
         public System.Guid DataSetId { get { throw null; } set { } }
@@ -947,16 +1101,26 @@ namespace Azure.ResourceManager.DataShare.Models
         public Azure.Core.ResourceIdentifier KustoClusterResourceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoClusterDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoDatabaseDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class KustoDatabaseDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet>
     {
         public KustoDatabaseDataSet(Azure.Core.ResourceIdentifier kustoDatabaseResourceId) { }
         public System.Guid? DataSetId { get { throw null; } }
         public Azure.Core.ResourceIdentifier KustoDatabaseResourceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoDatabaseDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class KustoDatabaseDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping>
     {
         public KustoDatabaseDataSetMapping(System.Guid dataSetId, Azure.Core.ResourceIdentifier kustoClusterResourceId) { }
         public System.Guid DataSetId { get { throw null; } set { } }
@@ -964,8 +1128,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public Azure.Core.ResourceIdentifier KustoClusterResourceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoDatabaseDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoTableDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class KustoTableDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSet>
     {
         public KustoTableDataSet(Azure.Core.ResourceIdentifier kustoDatabaseResourceId, Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties tableLevelSharingProperties) { }
         public System.Guid? DataSetId { get { throw null; } }
@@ -973,8 +1142,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties TableLevelSharingProperties { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.KustoTableDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.KustoTableDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KustoTableDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class KustoTableDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping>
     {
         public KustoTableDataSetMapping(System.Guid dataSetId, Azure.Core.ResourceIdentifier kustoClusterResourceId) { }
         public System.Guid DataSetId { get { throw null; } set { } }
@@ -982,14 +1156,24 @@ namespace Azure.ResourceManager.DataShare.Models
         public Azure.Core.ResourceIdentifier KustoClusterResourceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.KustoTableDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScheduledSourceSynchronizationSetting : Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting
+    public partial class ScheduledSourceSynchronizationSetting : Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting>
     {
         internal ScheduledSourceSynchronizationSetting() { }
         public Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval? RecurrenceInterval { get { throw null; } }
         public System.DateTimeOffset? SynchronizeOn { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledSourceSynchronizationSetting>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScheduledSynchronizationSetting : Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData
+    public partial class ScheduledSynchronizationSetting : Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting>
     {
         public ScheduledSynchronizationSetting(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval recurrenceInterval, System.DateTimeOffset synchronizeOn) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -997,8 +1181,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval RecurrenceInterval { get { throw null; } set { } }
         public System.DateTimeOffset SynchronizeOn { get { throw null; } set { } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledSynchronizationSetting>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScheduledTrigger : Azure.ResourceManager.DataShare.DataShareTriggerData
+    public partial class ScheduledTrigger : Azure.ResourceManager.DataShare.DataShareTriggerData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledTrigger>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledTrigger>
     {
         public ScheduledTrigger(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval recurrenceInterval, System.DateTimeOffset synchronizeOn) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1008,6 +1197,11 @@ namespace Azure.ResourceManager.DataShare.Models
         public System.DateTimeOffset SynchronizeOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus? TriggerStatus { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.ScheduledTrigger System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ScheduledTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.ScheduledTrigger System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledTrigger>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledTrigger>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ScheduledTrigger>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareDataSetType : System.IEquatable<Azure.ResourceManager.DataShare.Models.ShareDataSetType>
@@ -1059,7 +1253,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus left, Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ShareSubscriptionSynchronization
+    public partial class ShareSubscriptionSynchronization : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>
     {
         public ShareSubscriptionSynchronization(System.Guid synchronizationId) { }
         public int? DurationInMilliSeconds { get { throw null; } }
@@ -1069,8 +1263,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string Status { get { throw null; } }
         public System.Guid SynchronizationId { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.SynchronizationMode? SynchronizationMode { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareSynchronization
+    public partial class ShareSynchronization : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ShareSynchronization>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ShareSynchronization>
     {
         public ShareSynchronization() { }
         public string ConsumerEmail { get { throw null; } set { } }
@@ -1083,12 +1282,23 @@ namespace Azure.ResourceManager.DataShare.Models
         public string Status { get { throw null; } set { } }
         public System.Guid? SynchronizationId { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.SynchronizationMode? SynchronizationMode { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.ShareSynchronization System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ShareSynchronization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.ShareSynchronization>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.ShareSynchronization System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ShareSynchronization>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ShareSynchronization>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.ShareSynchronization>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class SourceShareSynchronizationSetting
+    public abstract partial class SourceShareSynchronizationSetting : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         protected SourceShareSynchronizationSetting() { }
+        Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SqlDBTableDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class SqlDBTableDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet>
     {
         public SqlDBTableDataSet() { }
         public string DatabaseName { get { throw null; } set { } }
@@ -1096,8 +1306,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string SchemaName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SqlServerResourceId { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SqlDBTableDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class SqlDBTableDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping>
     {
         public SqlDBTableDataSetMapping(string databaseName, System.Guid dataSetId, string schemaName, Azure.Core.ResourceIdentifier sqlServerResourceId, string tableName) { }
         public string DatabaseName { get { throw null; } set { } }
@@ -1107,8 +1322,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string SchemaName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SqlServerResourceId { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDBTableDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SqlDWTableDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class SqlDWTableDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet>
     {
         public SqlDWTableDataSet() { }
         public System.Guid? DataSetId { get { throw null; } }
@@ -1116,8 +1336,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public string SchemaName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SqlServerResourceId { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SqlDWTableDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class SqlDWTableDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping>
     {
         public SqlDWTableDataSetMapping(System.Guid dataSetId, string dataWarehouseName, string schemaName, Azure.Core.ResourceIdentifier sqlServerResourceId, string tableName) { }
         public System.Guid DataSetId { get { throw null; } set { } }
@@ -1127,22 +1352,37 @@ namespace Azure.ResourceManager.DataShare.Models
         public string SchemaName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SqlServerResourceId { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SqlDWTableDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseWorkspaceSqlPoolTableDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
+    public partial class SynapseWorkspaceSqlPoolTableDataSet : Azure.ResourceManager.DataShare.ShareDataSetData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet>
     {
         public SynapseWorkspaceSqlPoolTableDataSet(Azure.Core.ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId) { }
         public System.Guid? DataSetId { get { throw null; } }
         public Azure.Core.ResourceIdentifier SynapseWorkspaceSqlPoolTableResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSet>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynapseWorkspaceSqlPoolTableDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData
+    public partial class SynapseWorkspaceSqlPoolTableDataSetMapping : Azure.ResourceManager.DataShare.ShareDataSetMappingData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping>
     {
         public SynapseWorkspaceSqlPoolTableDataSetMapping(System.Guid dataSetId, Azure.Core.ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId) { }
         public System.Guid DataSetId { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.DataSetMappingStatus? DataSetMappingStatus { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SynapseWorkspaceSqlPoolTableResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynapseWorkspaceSqlPoolTableDataSetMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SynchronizationDetails
+    public partial class SynchronizationDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynchronizationDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynchronizationDetails>
     {
         internal SynchronizationDetails() { }
         public System.Guid? DataSetId { get { throw null; } }
@@ -1160,6 +1400,11 @@ namespace Azure.ResourceManager.DataShare.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
         public long? VCore { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.SynchronizationDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynchronizationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.SynchronizationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.SynchronizationDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynchronizationDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynchronizationDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.SynchronizationDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynchronizationMode : System.IEquatable<Azure.ResourceManager.DataShare.Models.SynchronizationMode>
@@ -1179,7 +1424,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.SynchronizationMode left, Azure.ResourceManager.DataShare.Models.SynchronizationMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TableLevelSharingProperties
+    public partial class TableLevelSharingProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties>
     {
         public TableLevelSharingProperties() { }
         public System.Collections.Generic.IList<string> ExternalTablesToExclude { get { throw null; } }
@@ -1188,5 +1433,10 @@ namespace Azure.ResourceManager.DataShare.Models
         public System.Collections.Generic.IList<string> MaterializedViewsToInclude { get { throw null; } }
         public System.Collections.Generic.IList<string> TablesToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> TablesToInclude { get { throw null; } }
+        Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.DataShare.Models.TableLevelSharingProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

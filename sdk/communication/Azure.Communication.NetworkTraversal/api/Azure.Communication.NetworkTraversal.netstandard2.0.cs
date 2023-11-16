@@ -1,12 +1,17 @@
 namespace Azure.Communication.NetworkTraversal
 {
-    public partial class CommunicationIceServer
+    public partial class CommunicationIceServer : System.Net.ClientModel.Core.IJsonModel<Azure.Communication.NetworkTraversal.CommunicationIceServer>, System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.NetworkTraversal.CommunicationIceServer>
     {
         public CommunicationIceServer(System.Collections.Generic.IEnumerable<string> urls, string username, string credential, Azure.Communication.NetworkTraversal.RouteType routeType) { }
         public string Credential { get { throw null; } set { } }
         public Azure.Communication.NetworkTraversal.RouteType RouteType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Urls { get { throw null; } }
         public string Username { get { throw null; } set { } }
+        Azure.Communication.NetworkTraversal.CommunicationIceServer System.Net.ClientModel.Core.IJsonModel<Azure.Communication.NetworkTraversal.CommunicationIceServer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.Communication.NetworkTraversal.CommunicationIceServer>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.NetworkTraversal.CommunicationIceServer System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.NetworkTraversal.CommunicationIceServer>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.NetworkTraversal.CommunicationIceServer>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.NetworkTraversal.CommunicationIceServer>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CommunicationRelayClient
     {
@@ -26,11 +31,16 @@ namespace Azure.Communication.NetworkTraversal
             V2022_03_01_Preview = 1,
         }
     }
-    public partial class CommunicationRelayConfiguration
+    public partial class CommunicationRelayConfiguration : System.Net.ClientModel.Core.IJsonModel<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>, System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>
     {
         public CommunicationRelayConfiguration(System.DateTimeOffset expiresOn, System.Collections.Generic.IEnumerable<Azure.Communication.NetworkTraversal.CommunicationIceServer> iceServers) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.NetworkTraversal.CommunicationIceServer> IceServers { get { throw null; } }
+        Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration System.Net.ClientModel.Core.IJsonModel<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RouteType : System.IEquatable<Azure.Communication.NetworkTraversal.RouteType>

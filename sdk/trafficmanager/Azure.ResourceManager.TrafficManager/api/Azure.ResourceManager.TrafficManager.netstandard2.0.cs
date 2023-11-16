@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.TrafficManager
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData> System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TrafficManagerEndpointData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData
+    public partial class TrafficManagerEndpointData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>
     {
         public TrafficManagerEndpointData() { }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus? AlwaysServe { get { throw null; } set { } }
@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.TrafficManager
         public string Target { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
         public long? Weight { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficManagerEndpointResource : Azure.ResourceManager.ArmResource
     {
@@ -68,10 +73,15 @@ namespace Azure.ResourceManager.TrafficManager
         public static Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class TrafficManagerGeographicHierarchyData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData
+    public partial class TrafficManagerGeographicHierarchyData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>
     {
         public TrafficManagerGeographicHierarchyData() { }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion GeographicHierarchy { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficManagerGeographicHierarchyResource : Azure.ResourceManager.ArmResource
     {
@@ -93,13 +103,18 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Azure.NullableResponse<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource> GetIfExists(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType heatMapType, System.Collections.Generic.IEnumerable<double> topLeft = null, System.Collections.Generic.IEnumerable<double> botRight = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource>> GetIfExistsAsync(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType heatMapType, System.Collections.Generic.IEnumerable<double> topLeft = null, System.Collections.Generic.IEnumerable<double> botRight = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TrafficManagerHeatMapData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData
+    public partial class TrafficManagerHeatMapData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>
     {
         public TrafficManagerHeatMapData() { }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint> Endpoints { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow> TrafficFlows { get { throw null; } }
+        Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficManagerHeatMapResource : Azure.ResourceManager.ArmResource
     {
@@ -128,7 +143,7 @@ namespace Azure.ResourceManager.TrafficManager
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TrafficManagerProfileData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData
+    public partial class TrafficManagerProfileData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>
     {
         public TrafficManagerProfileData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType> AllowedEndpointRecordTypes { get { throw null; } }
@@ -139,6 +154,11 @@ namespace Azure.ResourceManager.TrafficManager
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus? ProfileStatus { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod? TrafficRoutingMethod { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.TrafficManagerProfileData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerProfileData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficManagerProfileResource : Azure.ResourceManager.ArmResource
     {
@@ -166,10 +186,15 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> Update(Azure.ResourceManager.TrafficManager.TrafficManagerProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>> UpdateAsync(Azure.ResourceManager.TrafficManager.TrafficManagerProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TrafficManagerUserMetricData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData
+    public partial class TrafficManagerUserMetricData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>
     {
         public TrafficManagerUserMetricData() { }
         public string Key { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficManagerUserMetricsResource : Azure.ResourceManager.ArmResource
     {
@@ -248,18 +273,28 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig TrafficManagerDnsConfig(string relativeName = null, string fqdn = null, long? ttl = default(long?)) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult TrafficManagerNameAvailabilityResult(string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), bool? isNameAvailable = default(bool?), string unavailableReason = null, string message = null) { throw null; }
     }
-    public partial class ExpectedStatusCodeRangeInfo
+    public partial class ExpectedStatusCodeRangeInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>
     {
         public ExpectedStatusCodeRangeInfo() { }
         public int? Max { get { throw null; } set { } }
         public int? Min { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerDnsConfig
+    public partial class TrafficManagerDnsConfig : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>
     {
         public TrafficManagerDnsConfig() { }
         public string Fqdn { get { throw null; } }
         public string RelativeName { get { throw null; } set { } }
         public long? Ttl { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrafficManagerEndpointAlwaysServeStatus : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus>
@@ -279,11 +314,16 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TrafficManagerEndpointCustomHeaderInfo
+    public partial class TrafficManagerEndpointCustomHeaderInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo>
     {
         public TrafficManagerEndpointCustomHeaderInfo() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrafficManagerEndpointMonitorStatus : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus>
@@ -326,33 +366,53 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TrafficManagerEndpointSubnetInfo
+    public partial class TrafficManagerEndpointSubnetInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>
     {
         public TrafficManagerEndpointSubnetInfo() { }
         public System.Net.IPAddress First { get { throw null; } set { } }
         public System.Net.IPAddress Last { get { throw null; } set { } }
         public int? Scope { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerHeatMapEndpoint
+    public partial class TrafficManagerHeatMapEndpoint : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>
     {
         public TrafficManagerHeatMapEndpoint() { }
         public int? EndpointId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerHeatMapQueryExperience
+    public partial class TrafficManagerHeatMapQueryExperience : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>
     {
         public TrafficManagerHeatMapQueryExperience(int endpointId, int queryCount) { }
         public int EndpointId { get { throw null; } set { } }
         public double? Latency { get { throw null; } set { } }
         public int QueryCount { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerHeatMapTrafficFlow
+    public partial class TrafficManagerHeatMapTrafficFlow : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>
     {
         public TrafficManagerHeatMapTrafficFlow() { }
         public double? Latitude { get { throw null; } set { } }
         public double? Longitude { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience> QueryExperiences { get { throw null; } }
         public System.Net.IPAddress SourceIP { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrafficManagerHeatMapType : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType>
@@ -371,7 +431,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TrafficManagerMonitorConfig
+    public partial class TrafficManagerMonitorConfig : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig>
     {
         public TrafficManagerMonitorConfig() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo> CustomHeaders { get { throw null; } }
@@ -383,12 +443,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol? Protocol { get { throw null; } set { } }
         public long? TimeoutInSeconds { get { throw null; } set { } }
         public long? ToleratedNumberOfFailures { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerMonitorConfigCustomHeaderInfo
+    public partial class TrafficManagerMonitorConfigCustomHeaderInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo>
     {
         public TrafficManagerMonitorConfigCustomHeaderInfo() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrafficManagerMonitorProtocol : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol>
@@ -409,7 +479,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TrafficManagerNameAvailabilityResult
+    public partial class TrafficManagerNameAvailabilityResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>
     {
         internal TrafficManagerNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
@@ -417,6 +487,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public string UnavailableReason { get { throw null; } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrafficManagerProfileMonitorStatus : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus>
@@ -457,35 +532,61 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TrafficManagerProxyResourceData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData
+    public partial class TrafficManagerProxyResourceData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData>
     {
         public TrafficManagerProxyResourceData() { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerRegion
+    public partial class TrafficManagerRegion : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>
     {
         public TrafficManagerRegion() { }
         public string Code { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion> Regions { get { throw null; } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerRelativeDnsNameAvailabilityContent
+    public partial class TrafficManagerRelativeDnsNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent>
     {
         public TrafficManagerRelativeDnsNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerResourceData
+    public partial class TrafficManagerResourceData : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public TrafficManagerResourceData() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerTrackedResourceData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData
+    public partial class TrafficManagerTrackedResourceData : Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData>
     {
         public TrafficManagerTrackedResourceData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrafficRoutingMethod : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod>

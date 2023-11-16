@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -12,12 +13,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
         /// <param name="scheduleAt"> Requested schedule time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleAt"/> is null. </exception>
-        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt) : this(JobMatchingModeKind.ScheduleAndSuspend, scheduleAt)
+        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt) : this(JobMatchingModeKind.ScheduleAndSuspend, new Dictionary<string, BinaryData>(), scheduleAt)
         {
             Argument.AssertNotNull(scheduleAt, nameof(scheduleAt));
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ScheduleAt))

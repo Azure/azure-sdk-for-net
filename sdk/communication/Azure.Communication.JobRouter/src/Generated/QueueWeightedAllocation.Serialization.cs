@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class QueueWeightedAllocation : IUtf8JsonSerializable, IJsonModel<QueueWeightedAllocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueWeightedAllocation>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<QueueWeightedAllocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<QueueWeightedAllocation>)this).GetWireFormat(options) != "J") && options.Format != "J")

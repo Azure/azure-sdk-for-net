@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownWorkerSelectorAttachment))]
     public partial class WorkerSelectorAttachment : IUtf8JsonSerializable, IJsonModel<WorkerSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkerSelectorAttachment>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<WorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<WorkerSelectorAttachment>)this).GetWireFormat(options) != "J") && options.Format != "J")

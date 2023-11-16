@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownRouterRule))]
     public partial class RouterRule : IUtf8JsonSerializable, IJsonModel<RouterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterRule>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<RouterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<RouterRule>)this).GetWireFormat(options) != "J") && options.Format != "J")

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         User = 0,
         System = 1,
     }
-    public partial class ChangeProperties
+    public partial class ChangeProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>
     {
         internal ChangeProperties() { }
         public System.DateTimeOffset? ChangeDetectedOn { get { throw null; } }
@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public System.Collections.Generic.IReadOnlyList<string> InitiatedByList { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange> PropertyChanges { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChangeType : System.IEquatable<Azure.ResourceManager.ChangeAnalysis.Models.ChangeType>
@@ -72,12 +77,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public static bool operator !=(Azure.ResourceManager.ChangeAnalysis.Models.ChangeType left, Azure.ResourceManager.ChangeAnalysis.Models.ChangeType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DetectedChangeData : Azure.ResourceManager.Models.ResourceData
+    public partial class DetectedChangeData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>
     {
         internal DetectedChangeData() { }
         public Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties Properties { get { throw null; } }
+        Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PropertyChange
+    public partial class PropertyChange : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>
     {
         internal PropertyChange() { }
         public Azure.ResourceManager.ChangeAnalysis.Models.ChangeCategory? ChangeCategory { get { throw null; } }
@@ -89,6 +99,11 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel? Level { get { throw null; } }
         public string NewValue { get { throw null; } }
         public string OldValue { get { throw null; } }
+        Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PropertyChangeLevel : System.IEquatable<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel>

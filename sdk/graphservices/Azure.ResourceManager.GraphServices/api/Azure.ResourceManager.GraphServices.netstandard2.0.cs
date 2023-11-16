@@ -37,10 +37,15 @@ namespace Azure.ResourceManager.GraphServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GraphServicesAccountResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class GraphServicesAccountResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>
     {
         public GraphServicesAccountResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties properties) { }
         public Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class GraphServicesExtensions
     {
@@ -80,16 +85,26 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData GraphServicesAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties GraphServicesAccountResourceProperties(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState? provisioningState = default(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState?), string appId = null, string billingPlanId = null) { throw null; }
     }
-    public partial class GraphServicesAccountResourcePatch : Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate
+    public partial class GraphServicesAccountResourcePatch : Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>
     {
         public GraphServicesAccountResourcePatch() { }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GraphServicesAccountResourceProperties
+    public partial class GraphServicesAccountResourceProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>
     {
         public GraphServicesAccountResourceProperties(string appId) { }
         public string AppId { get { throw null; } set { } }
         public string BillingPlanId { get { throw null; } }
         public Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GraphServicesProvisioningState : System.IEquatable<Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState>
@@ -110,9 +125,15 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static bool operator !=(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState left, Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GraphServicesTagUpdate
+    public partial class GraphServicesTagUpdate : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public GraphServicesTagUpdate() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

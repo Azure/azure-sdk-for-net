@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class LongestIdleMode : IUtf8JsonSerializable, IJsonModel<LongestIdleMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongestIdleMode>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<LongestIdleMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<LongestIdleMode>)this).GetWireFormat(options) != "J") && options.Format != "J")

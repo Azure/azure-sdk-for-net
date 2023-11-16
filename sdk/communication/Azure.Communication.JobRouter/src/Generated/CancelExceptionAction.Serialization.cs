@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class CancelExceptionAction : IUtf8JsonSerializable, IJsonModel<CancelExceptionAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CancelExceptionAction>)this).Write(writer, ModelReaderWriterOptions.Wire);
-
         void IJsonModel<CancelExceptionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if ((options.Format != "W" || ((IPersistableModel<CancelExceptionAction>)this).GetWireFormat(options) != "J") && options.Format != "J")

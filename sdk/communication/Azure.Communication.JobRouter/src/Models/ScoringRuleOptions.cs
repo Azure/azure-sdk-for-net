@@ -40,7 +40,7 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public bool? DescendingOrder { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(BatchSize))

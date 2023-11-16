@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.LabServices.LabResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LabData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class LabData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabData>
     {
         public LabData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.LabState? State { get { throw null; } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile VirtualMachineProfile { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.LabData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LabPlanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabPlanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabPlanResource>, System.Collections.IEnumerable
     {
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.LabServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.LabServices.LabPlanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabPlanResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LabPlanData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class LabPlanData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabPlanData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>
     {
         public LabPlanData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> AllowedRegions { get { throw null; } }
@@ -61,6 +66,11 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo SupportInfo { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.LabPlanData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabPlanData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LabPlanResource : Azure.ResourceManager.ArmResource
     {
@@ -148,7 +158,7 @@ namespace Azure.ResourceManager.LabServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.LabServices.LabServicesScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabServicesScheduleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LabServicesScheduleData : Azure.ResourceManager.Models.ResourceData
+    public partial class LabServicesScheduleData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>
     {
         public LabServicesScheduleData() { }
         public System.BinaryData Notes { get { throw null; } set { } }
@@ -157,6 +167,11 @@ namespace Azure.ResourceManager.LabServices
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.DateTimeOffset? StopOn { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.LabServicesScheduleData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabServicesScheduleData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LabServicesScheduleResource : Azure.ResourceManager.ArmResource
     {
@@ -189,7 +204,7 @@ namespace Azure.ResourceManager.LabServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.LabServices.LabUserResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabUserResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LabUserData : Azure.ResourceManager.Models.ResourceData
+    public partial class LabUserData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabUserData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>
     {
         public LabUserData(string email) { }
         public System.TimeSpan? AdditionalUsageQuota { get { throw null; } set { } }
@@ -200,6 +215,11 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabUserRegistrationState? RegistrationState { get { throw null; } }
         public System.TimeSpan? TotalUsage { get { throw null; } }
+        Azure.ResourceManager.LabServices.LabUserData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabUserData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LabUserResource : Azure.ResourceManager.ArmResource
     {
@@ -232,7 +252,7 @@ namespace Azure.ResourceManager.LabServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.LabServices.LabVirtualMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabVirtualMachineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LabVirtualMachineData : Azure.ResourceManager.Models.ResourceData
+    public partial class LabVirtualMachineData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>
     {
         public LabVirtualMachineData() { }
         public string ClaimedByUserId { get { throw null; } }
@@ -240,6 +260,11 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineState? State { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineType? VmType { get { throw null; } }
+        Azure.ResourceManager.LabServices.LabVirtualMachineData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabVirtualMachineData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LabVirtualMachineImageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource>, System.Collections.IEnumerable
     {
@@ -258,7 +283,7 @@ namespace Azure.ResourceManager.LabServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LabVirtualMachineImageData : Azure.ResourceManager.Models.ResourceData
+    public partial class LabVirtualMachineImageData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>
     {
         public LabVirtualMachineImageData() { }
         public string Author { get { throw null; } }
@@ -277,6 +302,11 @@ namespace Azure.ResourceManager.LabServices
         public string Sku { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? TermsStatus { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.LabServices.LabVirtualMachineImageData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabVirtualMachineImageData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LabVirtualMachineImageResource : Azure.ResourceManager.ArmResource
     {
@@ -368,7 +398,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public static Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference LabVirtualMachineImageReference(Azure.Core.ResourceIdentifier id = null, string offer = null, string publisher = null, string sku = null, string version = null, string exactVersion = null) { throw null; }
         public static Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile LabVirtualMachineProfile(Azure.ResourceManager.LabServices.Models.LabVirtualMachineCreateOption createOption = Azure.ResourceManager.LabServices.Models.LabVirtualMachineCreateOption.Image, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference imageReference = null, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageOSType? osType = default(Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageOSType?), Azure.ResourceManager.LabServices.Models.LabServicesSku sku = null, Azure.ResourceManager.LabServices.Models.LabServicesEnableState? additionalCapabilitiesInstallGpuDrivers = default(Azure.ResourceManager.LabServices.Models.LabServicesEnableState?), System.TimeSpan usageQuota = default(System.TimeSpan), Azure.ResourceManager.LabServices.Models.LabServicesEnableState? useSharedPassword = default(Azure.ResourceManager.LabServices.Models.LabServicesEnableState?), Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential adminUser = null, Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential nonAdminUser = null) { throw null; }
     }
-    public partial class AvailableLabServicesSku
+    public partial class AvailableLabServicesSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>
     {
         internal AvailableLabServicesSku() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability> Capabilities { get { throw null; } }
@@ -381,34 +411,59 @@ namespace Azure.ResourceManager.LabServices.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions> Restrictions { get { throw null; } }
         public string Size { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier? Tier { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AvailableLabServicesSkuCapability
+    public partial class AvailableLabServicesSkuCapability : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>
     {
         internal AvailableLabServicesSkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AvailableLabServicesSkuCapacity
+    public partial class AvailableLabServicesSkuCapacity : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>
     {
         internal AvailableLabServicesSkuCapacity() { }
         public long? Default { get { throw null; } }
         public long? Maximum { get { throw null; } }
         public long? Minimum { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType? ScaleType { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AvailableLabServicesSkuCost
+    public partial class AvailableLabServicesSkuCost : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>
     {
         internal AvailableLabServicesSkuCost() { }
         public string ExtendedUnit { get { throw null; } }
         public string MeterId { get { throw null; } }
         public float? Quantity { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AvailableLabServicesSkuRestrictions
+    public partial class AvailableLabServicesSkuRestrictions : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>
     {
         internal AvailableLabServicesSkuRestrictions() { }
         public Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType? LabServicesSkuRestrictionType { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode? ReasonCode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuRestrictions>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AvailableLabServicesSkuTier : System.IEquatable<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier>
@@ -428,7 +483,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public static bool operator !=(Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier left, Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LabAutoShutdownProfile
+    public partial class LabAutoShutdownProfile : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>
     {
         public LabAutoShutdownProfile() { }
         public System.TimeSpan? DisconnectDelay { get { throw null; } set { } }
@@ -437,23 +492,38 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? ShutdownOnDisconnect { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineShutdownOnIdleMode? ShutdownOnIdle { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? ShutdownWhenNotConnected { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabConnectionProfile
+    public partial class LabConnectionProfile : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>
     {
         public LabConnectionProfile() { }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? ClientRdpAccess { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? ClientSshAccess { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? WebRdpAccess { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? WebSshAccess { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabConnectionProfile System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabConnectionProfile System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabConnectionProfile>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabNetworkProfile
+    public partial class LabNetworkProfile : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>
     {
         public LabNetworkProfile() { }
         public Azure.Core.ResourceIdentifier LoadBalancerId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabNetworkProfile System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabNetworkProfile System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabNetworkProfile>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabPatch : Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo
+    public partial class LabPatch : Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPatch>
     {
         public LabPatch() { }
         public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
@@ -464,8 +534,13 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabSecurityProfile SecurityProfile { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile VirtualMachineProfile { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabPlanPatch : Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo
+    public partial class LabPlanPatch : Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>
     {
         public LabPlanPatch() { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> AllowedRegions { get { throw null; } }
@@ -476,16 +551,26 @@ namespace Azure.ResourceManager.LabServices.Models
         public System.Uri LinkedLmsInstance { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo SupportInfo { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabPlanPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabPlanPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabPlanSupportInfo
+    public partial class LabPlanSupportInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>
     {
         public LabPlanSupportInfo() { }
         public string Email { get { throw null; } set { } }
         public string Instructions { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabRosterProfile
+    public partial class LabRosterProfile : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>
     {
         public LabRosterProfile() { }
         public string ActiveDirectoryGroupId { get { throw null; } set { } }
@@ -493,12 +578,22 @@ namespace Azure.ResourceManager.LabServices.Models
         public string LtiClientId { get { throw null; } set { } }
         public string LtiContextId { get { throw null; } set { } }
         public System.Uri LtiRosterEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabRosterProfile System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabRosterProfile System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabRosterProfile>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabSecurityProfile
+    public partial class LabSecurityProfile : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>
     {
         public LabSecurityProfile() { }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? OpenAccess { get { throw null; } set { } }
         public string RegistrationCode { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.LabSecurityProfile System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabSecurityProfile System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabSecurityProfile>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LabServicesDayOfWeek
     {
@@ -515,10 +610,16 @@ namespace Azure.ResourceManager.LabServices.Models
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class LabServicesPatchBaseInfo
+    public partial class LabServicesPatchBaseInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public LabServicesPatchBaseInfo() { }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LabServicesProvisioningState
     {
@@ -534,15 +635,20 @@ namespace Azure.ResourceManager.LabServices.Models
         Daily = 0,
         Weekly = 1,
     }
-    public partial class LabServicesRecurrencePattern
+    public partial class LabServicesRecurrencePattern : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>
     {
         public LabServicesRecurrencePattern(Azure.ResourceManager.LabServices.Models.LabServicesRecurrenceFrequency frequency, System.DateTimeOffset expireOn) { }
         public System.DateTimeOffset ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabServicesRecurrenceFrequency Frequency { get { throw null; } set { } }
         public int? Interval { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.LabServices.Models.LabServicesDayOfWeek> WeekDays { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabServicesSchedulePatch
+    public partial class LabServicesSchedulePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>
     {
         public LabServicesSchedulePatch() { }
         public System.BinaryData Notes { get { throw null; } set { } }
@@ -550,8 +656,13 @@ namespace Azure.ResourceManager.LabServices.Models
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.DateTimeOffset? StopOn { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabServicesSku
+    public partial class LabServicesSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>
     {
         public LabServicesSku(string name) { }
         public int? Capacity { get { throw null; } set { } }
@@ -559,6 +670,11 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabServicesSkuTier? Tier { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabServicesSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabServicesSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LabServicesSkuCapacityScaleType : System.IEquatable<Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType>
@@ -621,7 +737,7 @@ namespace Azure.ResourceManager.LabServices.Models
         Standard = 2,
         Premium = 3,
     }
-    public partial class LabServicesUsage
+    public partial class LabServicesUsage : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>
     {
         internal LabServicesUsage() { }
         public long? CurrentValue { get { throw null; } }
@@ -629,13 +745,23 @@ namespace Azure.ResourceManager.LabServices.Models
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesUsageName Name { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit? Unit { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.LabServicesUsage System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabServicesUsage System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsage>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabServicesUsageName
+    public partial class LabServicesUsageName : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>
     {
         internal LabServicesUsageName() { }
         public string LocalizedValue { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SkuInstances { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.LabServicesUsageName System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabServicesUsageName System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabServicesUsageName>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LabServicesUsageUnit : System.IEquatable<Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit>
@@ -669,22 +795,32 @@ namespace Azure.ResourceManager.LabServices.Models
         Sent = 2,
         Failed = 3,
     }
-    public partial class LabUserInviteRequestContent
+    public partial class LabUserInviteRequestContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>
     {
         public LabUserInviteRequestContent() { }
         public System.BinaryData Text { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabUserPatch
+    public partial class LabUserPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>
     {
         public LabUserPatch() { }
         public System.TimeSpan? AdditionalUsageQuota { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabUserPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabUserPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabUserPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LabUserRegistrationState
     {
         Registered = 0,
         NotRegistered = 1,
     }
-    public partial class LabVirtualMachineConnectionProfile
+    public partial class LabVirtualMachineConnectionProfile : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>
     {
         internal LabVirtualMachineConnectionProfile() { }
         public string AdminUsername { get { throw null; } }
@@ -694,6 +830,11 @@ namespace Azure.ResourceManager.LabServices.Models
         public System.Uri RdpInBrowserUri { get { throw null; } }
         public string SshAuthority { get { throw null; } }
         public System.Uri SshInBrowserUri { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LabVirtualMachineConnectionType
     {
@@ -706,17 +847,27 @@ namespace Azure.ResourceManager.LabServices.Models
         Image = 0,
         TemplateVm = 1,
     }
-    public partial class LabVirtualMachineCredential
+    public partial class LabVirtualMachineCredential : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>
     {
         public LabVirtualMachineCredential(string username) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabVirtualMachineImageContent
+    public partial class LabVirtualMachineImageContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>
     {
         public LabVirtualMachineImageContent() { }
         public Azure.Core.ResourceIdentifier LabVirtualMachineId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LabVirtualMachineImageOSState
     {
@@ -728,12 +879,17 @@ namespace Azure.ResourceManager.LabServices.Models
         Windows = 0,
         Linux = 1,
     }
-    public partial class LabVirtualMachineImagePatch
+    public partial class LabVirtualMachineImagePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>
     {
         public LabVirtualMachineImagePatch() { }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? EnabledState { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabVirtualMachineImageReference
+    public partial class LabVirtualMachineImageReference : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>
     {
         public LabVirtualMachineImageReference() { }
         public string ExactVersion { get { throw null; } }
@@ -742,8 +898,13 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabVirtualMachineProfile
+    public partial class LabVirtualMachineProfile : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>
     {
         public LabVirtualMachineProfile(Azure.ResourceManager.LabServices.Models.LabVirtualMachineCreateOption createOption, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference imageReference, Azure.ResourceManager.LabServices.Models.LabServicesSku sku, System.TimeSpan usageQuota, Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential adminUser) { }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? AdditionalCapabilitiesInstallGpuDrivers { get { throw null; } set { } }
@@ -755,12 +916,22 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.LabServicesSku Sku { get { throw null; } set { } }
         public System.TimeSpan UsageQuota { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? UseSharedPassword { get { throw null; } set { } }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabVirtualMachineResetPasswordContent
+    public partial class LabVirtualMachineResetPasswordContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>
     {
         public LabVirtualMachineResetPasswordContent(string username, string password) { }
         public string Password { get { throw null; } }
         public string Username { get { throw null; } }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LabVirtualMachineShutdownOnIdleMode
     {

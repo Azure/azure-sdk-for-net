@@ -23,9 +23,14 @@ namespace Azure.Communication.AlphaIds
 }
 namespace Azure.Communication.AlphaIds.Models
 {
-    public partial class AlphaIdConfiguration
+    public partial class AlphaIdConfiguration : System.Net.ClientModel.Core.IJsonModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>, System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>
     {
         public AlphaIdConfiguration(bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
+        Azure.Communication.AlphaIds.Models.AlphaIdConfiguration System.Net.ClientModel.Core.IJsonModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.AlphaIds.Models.AlphaIdConfiguration System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.Communication.AlphaIds.Models.AlphaIdConfiguration>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }
