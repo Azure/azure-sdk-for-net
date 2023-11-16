@@ -933,6 +933,12 @@
       ]
     },
     {
+      "filename": "**/sdk/schemaregistry/**/*.cs",
+      "words": [
+        "protobuf"
+      ]
+    },
+    {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
       "words": [
         "reimage",

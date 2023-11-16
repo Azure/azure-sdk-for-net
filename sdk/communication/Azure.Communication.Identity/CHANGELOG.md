@@ -1,8 +1,13 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Features Added
+- Introduction of new scopes for token generation.
+    - `ChatJoin` (Access to Chat APIs but without the authorization to create, delete or update chat threads)
+    - `ChatJoinLimited` (A more limited version of `ChatJoin` that doesn't allow to add or remove participants)
+    - `VoIPJoin` (Access to Calling APIs but without the authorization to start new calls)
+- Added a new API version `ServiceVersion.V2023_10_01` that is now the default API version.
 
 ### Breaking Changes
 
