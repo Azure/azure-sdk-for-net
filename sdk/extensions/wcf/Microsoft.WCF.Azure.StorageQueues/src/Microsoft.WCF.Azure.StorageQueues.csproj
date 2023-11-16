@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  
   <PropertyGroup>
     <RequiredTargetFrameworks>net6.0</RequiredTargetFrameworks>
     <TargetFrameworks>net6.0</TargetFrameworks>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Queues"/>
-    <PackageReference Include="System.ServiceModel.Primitives"/>
+    <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.14.0"/>
+    <PackageReference Include="System.ServiceModel.Primitives" VersionOverride="6.0.0"/>
   </ItemGroup>
 </Project>

@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Azure.CoreWCF.AzureQueueStorage</AssemblyName>
-    <PackageId>Azure.CoreWCF.AzureQueueStorage</PackageId>
+    <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <AssemblyName>Microsoft.CoreWCF.Azure.StorageQueues</AssemblyName>
+    <PackageId>Microsoft.CoreWCF.Azure.StorageQueues</PackageId>
     <RootNamespace />
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Version>1.0.0-beta.0</Version>
@@ -17,7 +18,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.14.0"/>
     <PackageReference Include="Microsoft.Extensions.Http" VersionOverride="6.0.0" />
     <PackageReference Include="System.IO.Pipelines" VersionOverride="6.0.3" />
     <PackageReference Include="CoreWCF.Queue" VersionOverride="1.4.1" />
@@ -41,5 +42,5 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
 </Project>
+

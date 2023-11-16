@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
@@ -17,19 +17,14 @@
   
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Files.Shares" VersionOverride="12.1.0" />
-    <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.14.0"/>
     <PackageReference Include="CoreWCF.Queue" VersionOverride="1.4.1" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" VersionOverride="3.1.13" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" VersionOverride="3.1.32" />
     <PackageReference Include="Microsoft.Extensions.Primitives" VersionOverride="8.0.0-rc.2.23479.6" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="coverlet.collector">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -43,11 +38,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\storage\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
     <ProjectReference Include="..\..\..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
-    <ProjectReference Include="..\src\Azure.CoreWCF.AzureQueueStorage.csproj" />
+    <ProjectReference Include="..\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj" />
   </ItemGroup>
   
   <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
-    <ProjectReference Include="..\..\Microsoft.WCF.Azure.StorageQueues\src\Azure.WCF.AzureQueueStorage.Client.csproj" />
+    <ProjectReference Include="..\..\Microsoft.WCF.Azure.StorageQueues\src\Microsoft.WCF.Azure.StorageQueues.csproj" />
   </ItemGroup>
 
   <ItemGroup>

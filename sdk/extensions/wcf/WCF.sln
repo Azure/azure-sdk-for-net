@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Tests", "..\..\storage\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj", "{282A961B-A80B-4346-AF52-EF5C39F0639C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.CoreWCF.AzureQueueStorage", "Microsoft.CoreWCF.Azure.StorageQueues\src\Azure.CoreWCF.AzureQueueStorage.csproj", "{190C23E4-DA1C-424C-A672-78DB9D171671}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.CoreWCF.Azure.StorageQueues", "Microsoft.CoreWCF.Azure.StorageQueues\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj", "{190C23E4-DA1C-424C-A672-78DB9D171671}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WCF.AzureQueueStorage.Client", "Microsoft.WCF.Azure.StorageQueues\src\Azure.WCF.AzureQueueStorage.Client.csproj", "{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.WCF.Azure.StorageQueues", "Microsoft.WCF.Azure.StorageQueues\src\Microsoft.WCF.Azure.StorageQueues.csproj", "{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.CoreWCF.AzureQueueStorage.Tests", "Microsoft.CoreWCF.Azure.StorageQueues\tests\Azure.CoreWCF.AzureQueueStorage.Tests.csproj", "{F77BE7C6-7D8B-4CBE-9A94-C0B32FA71D5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.CoreWCF.Azure.StorageQueues.Tests", "Microsoft.CoreWCF.Azure.StorageQueues\tests\Microsoft.CoreWCF.Azure.StorageQueues.Tests.csproj", "{F77BE7C6-7D8B-4CBE-9A94-C0B32FA71D5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WCF.AzureQueueStorage.Client.Tests", "Microsoft.WCF.Azure.StorageQueues\tests\Azure.WCF.AzureQueueStorage.Client.Tests.csproj", "{C0A027EC-8F73-4C98-9817-D9A0CE318744}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.WCF.Azure.StorageQueues.Tests", "Microsoft.WCF.Azure.StorageQueues\tests\Microsoft.WCF.Azure.StorageQueues.Tests.csproj", "{C0A027EC-8F73-4C98-9817-D9A0CE318744}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
