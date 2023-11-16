@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateTest()
         {
             var sub = await Client.GetDefaultSubscriptionAsync();
