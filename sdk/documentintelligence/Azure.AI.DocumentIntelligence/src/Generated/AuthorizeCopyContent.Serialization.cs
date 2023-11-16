@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class AuthorizeCopyRequest : IUtf8JsonSerializable
+    public partial class AuthorizeCopyContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

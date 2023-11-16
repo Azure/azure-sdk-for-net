@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to create a composed document model from component document models. </summary>
-    public partial class ComposeDocumentModelRequest
+    public partial class ComposeDocumentModelContent
     {
-        /// <summary> Initializes a new instance of ComposeDocumentModelRequest. </summary>
+        /// <summary> Initializes a new instance of ComposeDocumentModelContent. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="componentModels"> List of component document models to compose. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="componentModels"/> is null. </exception>
-        public ComposeDocumentModelRequest(string modelId, IEnumerable<ComponentDocumentModelDetails> componentModels)
+        public ComposeDocumentModelContent(string modelId, IEnumerable<ComponentDocumentModelDetails> componentModels)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(componentModels, nameof(componentModels));
@@ -29,12 +29,12 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ComposeDocumentModelRequest. </summary>
+        /// <summary> Initializes a new instance of ComposeDocumentModelContent. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="componentModels"> List of component document models to compose. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        internal ComposeDocumentModelRequest(string modelId, string description, IList<ComponentDocumentModelDetails> componentModels, IDictionary<string, string> tags)
+        internal ComposeDocumentModelContent(string modelId, string description, IList<ComponentDocumentModelDetails> componentModels, IDictionary<string, string> tags)
         {
             ModelId = modelId;
             Description = description;

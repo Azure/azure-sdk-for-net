@@ -61,14 +61,14 @@ namespace Azure.AI.DocumentIntelligence.Samples
             var client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:DocumentIntelligenceBadRequest
-            var request = new AnalyzeDocumentRequest()
+            var content = new AnalyzeDocumentContent()
             {
                 UrlSource = new Uri("http://invalid.uri")
             };
 
             try
             {
-                Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", request);
+                Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
             }
             catch (RequestFailedException e)
             {

@@ -10,20 +10,20 @@ using System;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Document analysis parameters. </summary>
-    public partial class AnalyzeDocumentRequest
+    public partial class AnalyzeDocumentContent
     {
-        /// <summary> Initializes a new instance of AnalyzeDocumentRequest. </summary>
-        public AnalyzeDocumentRequest()
+        /// <summary> Initializes a new instance of AnalyzeDocumentContent. </summary>
+        public AnalyzeDocumentContent()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalyzeDocumentRequest. </summary>
+        /// <summary> Initializes a new instance of AnalyzeDocumentContent. </summary>
         /// <param name="urlSource"> Document URL to analyze.  Either urlSource or base64Source must be specified. </param>
         /// <param name="base64Source">
         /// Base64 encoding of the document to analyze.  Either urlSource or base64Source
         /// must be specified.
         /// </param>
-        internal AnalyzeDocumentRequest(Uri urlSource, BinaryData base64Source)
+        internal AnalyzeDocumentContent(Uri urlSource, BinaryData base64Source)
         {
             UrlSource = urlSource;
             Base64Source = base64Source;

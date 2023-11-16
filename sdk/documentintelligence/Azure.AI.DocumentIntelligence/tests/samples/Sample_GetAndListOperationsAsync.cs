@@ -19,12 +19,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             // Build a custom model to make sure that there is at least one operation.
             string modelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
             };
 
-            Operation<DocumentModelDetails> buildOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, request);
+            Operation<DocumentModelDetails> buildOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
 
             #region Snippet:DocumentIntelligenceSampleGetAndListOperations
             // Get an operation by ID.

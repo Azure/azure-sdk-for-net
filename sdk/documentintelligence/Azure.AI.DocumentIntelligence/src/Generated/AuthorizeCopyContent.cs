@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to authorize document model copy. </summary>
-    public partial class AuthorizeCopyRequest
+    public partial class AuthorizeCopyContent
     {
-        /// <summary> Initializes a new instance of AuthorizeCopyRequest. </summary>
+        /// <summary> Initializes a new instance of AuthorizeCopyContent. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public AuthorizeCopyRequest(string modelId)
+        public AuthorizeCopyContent(string modelId)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
 
@@ -25,11 +25,11 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizeCopyRequest. </summary>
+        /// <summary> Initializes a new instance of AuthorizeCopyContent. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        internal AuthorizeCopyRequest(string modelId, string description, IDictionary<string, string> tags)
+        internal AuthorizeCopyContent(string modelId, string description, IDictionary<string, string> tags)
         {
             ModelId = modelId;
             Description = description;

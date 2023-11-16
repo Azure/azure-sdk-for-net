@@ -25,12 +25,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var request = new AnalyzeDocumentRequest()
+            var content = new AnalyzeDocumentContent()
             {
                 UrlSource = uriSource
             };
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", request);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
             AnalyzeResult result = operation.Value;
 
             // To see the list of all the supported fields returned by service and its corresponding types for the

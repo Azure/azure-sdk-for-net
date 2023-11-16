@@ -43,9 +43,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 { "IRS-1040-B", docTypeB }
             };
 
-            var request = new BuildDocumentClassifierRequest(classifierId, docTypes);
+            var content = new BuildDocumentClassifierContent(classifierId, docTypes);
 
-            Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, request);
+            Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
             DocumentClassifierDetails classifier = operation.Value;
 
             Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");

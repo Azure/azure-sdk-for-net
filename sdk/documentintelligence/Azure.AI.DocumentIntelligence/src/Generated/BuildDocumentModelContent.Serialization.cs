@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class ComposeDocumentModelRequest : IUtf8JsonSerializable
+    public partial class BuildDocumentModelContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,13 +22,18 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("componentModels"u8);
-            writer.WriteStartArray();
-            foreach (var item in ComponentModels)
+            writer.WritePropertyName("buildMode"u8);
+            writer.WriteStringValue(BuildMode.ToString());
+            if (Optional.IsDefined(AzureBlobSource))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("azureBlobSource"u8);
+                writer.WriteObjectValue(AzureBlobSource);
             }
-            writer.WriteEndArray();
+            if (Optional.IsDefined(AzureBlobFileListSource))
+            {
+                writer.WritePropertyName("azureBlobFileListSource"u8);
+                writer.WriteObjectValue(AzureBlobFileListSource);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

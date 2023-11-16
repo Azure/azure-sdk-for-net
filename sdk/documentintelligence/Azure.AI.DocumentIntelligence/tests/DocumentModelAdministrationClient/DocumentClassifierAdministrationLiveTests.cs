@@ -38,7 +38,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 { "IRS-1040-B", docTypeB }
             };
 
-            var request = new BuildDocumentClassifierRequest(classifierId, docTypes)
+            var content = new BuildDocumentClassifierContent(classifierId, docTypes)
             {
                 Description = description
             };
@@ -47,7 +47,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.BuildClassifierAsync(WaitUntil.Completed, request);
+                operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
             }
             finally
             {
@@ -95,7 +95,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 { "IRS-1040-B", docTypeB }
             };
 
-            var request = new BuildDocumentClassifierRequest(classifierId, docTypes)
+            var content = new BuildDocumentClassifierContent(classifierId, docTypes)
             {
                 Description = description
             };
@@ -104,7 +104,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.BuildClassifierAsync(WaitUntil.Completed, request);
+                operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
             }
             finally
             {

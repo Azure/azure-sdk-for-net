@@ -30,13 +30,13 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string officeSuppliesModelId = Guid.NewGuid().ToString();
             Uri officeSuppliesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            var officeSuppliesRequest = new BuildDocumentModelRequest(officeSuppliesModelId, DocumentBuildMode.Template)
+            var officeSuppliesContent = new BuildDocumentModelContent(officeSuppliesModelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = new AzureBlobContentSource(officeSuppliesUri),
                 Description = "Purchase order - Office supplies"
             };
 
-            Operation<DocumentModelDetails> officeSuppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesRequest);
+            Operation<DocumentModelDetails> officeSuppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesContent);
             DocumentModelDetails officeSuppliesModel = officeSuppliesOperation.Value;
 
 #if SNIPPET
@@ -46,13 +46,13 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string officeEquipmentModelId = Guid.NewGuid().ToString();
             Uri officeEquipmentUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            var officeEquipmentRequest = new BuildDocumentModelRequest(officeEquipmentModelId, DocumentBuildMode.Template)
+            var officeEquipmentContent = new BuildDocumentModelContent(officeEquipmentModelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = new AzureBlobContentSource(officeEquipmentUri),
                 Description = "Purchase order - Office Equipment"
             };
 
-            Operation<DocumentModelDetails> officeEquipmentOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeEquipmentRequest);
+            Operation<DocumentModelDetails> officeEquipmentOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeEquipmentContent);
             DocumentModelDetails officeEquipmentModel = officeEquipmentOperation.Value;
 
 #if SNIPPET
@@ -62,13 +62,13 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string furnitureModelId = Guid.NewGuid().ToString();
             Uri furnitureUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            var furnitureRequest = new BuildDocumentModelRequest(furnitureModelId, DocumentBuildMode.Template)
+            var furnitureContent = new BuildDocumentModelContent(furnitureModelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = new AzureBlobContentSource(furnitureUri),
                 Description = "Purchase order - Furniture"
             };
 
-            Operation<DocumentModelDetails> furnitureOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, furnitureRequest);
+            Operation<DocumentModelDetails> furnitureOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, furnitureContent);
             DocumentModelDetails furnitureModel = furnitureOperation.Value;
 
 #if SNIPPET
@@ -78,13 +78,13 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string cleaningSuppliesModelId = Guid.NewGuid().ToString();
             Uri cleaningSuppliesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            var cleaningSuppliesRequest = new BuildDocumentModelRequest(cleaningSuppliesModelId, DocumentBuildMode.Template)
+            var cleaningSuppliesContent = new BuildDocumentModelContent(cleaningSuppliesModelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = new AzureBlobContentSource(cleaningSuppliesUri),
                 Description = "Purchase order - Cleaning Supplies"
             };
 
-            Operation<DocumentModelDetails> cleaningSuppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, cleaningSuppliesRequest);
+            Operation<DocumentModelDetails> cleaningSuppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, cleaningSuppliesContent);
             DocumentModelDetails cleaningSuppliesModel = cleaningSuppliesOperation.Value;
             #endregion
 
@@ -101,12 +101,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 new ComponentDocumentModelDetails(furnitureModelId),
                 new ComponentDocumentModelDetails(cleaningSuppliesModelId)
             };
-            var purchaseOrderRequest = new ComposeDocumentModelRequest("", componentModelIds)
+            var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, componentModelIds)
             {
                 Description = "Composed Purchase order"
             };
 
-            Operation<DocumentModelDetails> purchaseOrderOperation = await client.ComposeModelAsync(WaitUntil.Completed, purchaseOrderRequest);
+            Operation<DocumentModelDetails> purchaseOrderOperation = await client.ComposeModelAsync(WaitUntil.Completed, purchaseOrderContent);
             DocumentModelDetails purchaseOrderModel = purchaseOrderOperation.Value;
 
             Console.WriteLine($"Model ID: {purchaseOrderModel.ModelId}");

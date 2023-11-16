@@ -23,12 +23,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var request = new ClassifyDocumentRequest()
+            var content = new ClassifyDocumentContent()
             {
                 UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040)
             };
 
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, request);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -43,12 +43,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var request = new ClassifyDocumentRequest()
+            var content = new ClassifyDocumentContent()
             {
                 UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
             };
 
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, request);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);

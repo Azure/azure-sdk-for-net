@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="AuthorizeModelCopyAsync(AuthorizeCopyRequest,CancellationToken)">
+    <member name="AuthorizeModelCopyAsync(AuthorizeCopyContent,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeModelCopyAsync.
 <code><![CDATA[
@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-AuthorizeCopyRequest authorizeCopyRequest = new AuthorizeCopyRequest("<modelId>");
+AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>");
 Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
 ]]></code>
 This sample shows how to call AuthorizeModelCopyAsync with all parameters.
@@ -18,7 +18,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-AuthorizeCopyRequest authorizeCopyRequest = new AuthorizeCopyRequest("<modelId>")
+AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>")
 {
     Description = "<description>",
     Tags =
@@ -29,7 +29,7 @@ AuthorizeCopyRequest authorizeCopyRequest = new AuthorizeCopyRequest("<modelId>"
 Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
 ]]></code></example>
     </member>
-    <member name="AuthorizeModelCopy(AuthorizeCopyRequest,CancellationToken)">
+    <member name="AuthorizeModelCopy(AuthorizeCopyContent,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeModelCopy.
 <code><![CDATA[
@@ -37,7 +37,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-AuthorizeCopyRequest authorizeCopyRequest = new AuthorizeCopyRequest("<modelId>");
+AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>");
 Response<CopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRequest);
 ]]></code>
 This sample shows how to call AuthorizeModelCopy with all parameters.
@@ -46,7 +46,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-AuthorizeCopyRequest authorizeCopyRequest = new AuthorizeCopyRequest("<modelId>")
+AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>")
 {
     Description = "<description>",
     Tags =
@@ -1113,7 +1113,7 @@ foreach (BinaryData item in client.GetClassifiers(null))
 }
 ]]></code></example>
     </member>
-    <member name="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierRequest,CancellationToken)">
+    <member name="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)">
       <example>
 This sample shows how to call BuildClassifierAsync.
 <code><![CDATA[
@@ -1121,7 +1121,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-BuildDocumentClassifierRequest buildRequest = new BuildDocumentClassifierRequest("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
+BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
 {
     ["key"] = new ClassifierDocumentTypeDetails()
 });
@@ -1134,7 +1134,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-BuildDocumentClassifierRequest buildRequest = new BuildDocumentClassifierRequest("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
+BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
 {
     ["key"] = new ClassifierDocumentTypeDetails
     {
@@ -1153,7 +1153,7 @@ Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsy
 DocumentClassifierDetails responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="BuildClassifier(WaitUntil,BuildDocumentClassifierRequest,CancellationToken)">
+    <member name="BuildClassifier(WaitUntil,BuildDocumentClassifierContent,CancellationToken)">
       <example>
 This sample shows how to call BuildClassifier.
 <code><![CDATA[
@@ -1161,7 +1161,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-BuildDocumentClassifierRequest buildRequest = new BuildDocumentClassifierRequest("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
+BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
 {
     ["key"] = new ClassifierDocumentTypeDetails()
 });
@@ -1174,7 +1174,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-BuildDocumentClassifierRequest buildRequest = new BuildDocumentClassifierRequest("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
+BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
 {
     ["key"] = new ClassifierDocumentTypeDetails
     {

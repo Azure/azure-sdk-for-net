@@ -50,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var containerUrl = new Uri(containerUrlString);
             var source = new AzureBlobContentSource(containerUrl);
 
-            var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = source,
                 Description = description
@@ -60,11 +60,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
             {
                 foreach (var tag in tags)
                 {
-                    request.Tags.Add(tag);
+                    content.Tags.Add(tag);
                 }
             }
 
-            return await DisposableDocumentModel.BuildAsync(client, request);
+            return await DisposableDocumentModel.BuildAsync(client, content);
         }
 
         protected async Task<DisposableDocumentClassifier> BuildDisposableDocumentClassifierAsync(string description = null)
@@ -91,12 +91,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 { "IRS-1040-E", docTypeE }
             };
 
-            var request = new BuildDocumentClassifierRequest(classifierId, docTypes)
+            var content = new BuildDocumentClassifierContent(classifierId, docTypes)
             {
                 Description = description
             };
 
-            return await DisposableDocumentClassifier.BuildAsync(client, request);
+            return await DisposableDocumentClassifier.BuildAsync(client, content);
         }
     }
 }

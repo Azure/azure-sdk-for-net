@@ -10,20 +10,20 @@ using System;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Document classification parameters. </summary>
-    public partial class ClassifyDocumentRequest
+    public partial class ClassifyDocumentContent
     {
-        /// <summary> Initializes a new instance of ClassifyDocumentRequest. </summary>
-        public ClassifyDocumentRequest()
+        /// <summary> Initializes a new instance of ClassifyDocumentContent. </summary>
+        public ClassifyDocumentContent()
         {
         }
 
-        /// <summary> Initializes a new instance of ClassifyDocumentRequest. </summary>
+        /// <summary> Initializes a new instance of ClassifyDocumentContent. </summary>
         /// <param name="urlSource"> Document URL to classify.  Either urlSource or base64Source must be specified. </param>
         /// <param name="base64Source">
         /// Base64 encoding of the document to classify.  Either urlSource or base64Source
         /// must be specified.
         /// </param>
-        internal ClassifyDocumentRequest(Uri urlSource, BinaryData base64Source)
+        internal ClassifyDocumentContent(Uri urlSource, BinaryData base64Source)
         {
             UrlSource = urlSource;
             Base64Source = base64Source;

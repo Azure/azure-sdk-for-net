@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var prefix = "subfolder";
             var source = new AzureBlobContentSource(containerUrl) { Prefix = prefix };
 
-            var request = new BuildDocumentModelRequest(modelId, buildMode)
+            var content = new BuildDocumentModelContent(modelId, buildMode)
             {
                 AzureBlobSource = source,
                 Description = description,
@@ -57,7 +57,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.BuildDocumentModelAsync(WaitUntil.Started, request);
+                operation = await client.BuildDocumentModelAsync(WaitUntil.Started, content);
 
                 await (buildMode == DocumentBuildMode.Neural
                     ? operation.WaitForCompletionAsync(TimeSpan.FromMinutes(1), CancellationToken.None)
@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             // Add a 4-hour tolerance because the model could have been cached before this test.
             Assert.That(model.CreatedDateTime, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
             Assert.That(model.ExpirationDateTime, Is.GreaterThan(model.CreatedDateTime));
-            Assert.That(model.Tags, Is.EquivalentTo(request.Tags));
+            Assert.That(model.Tags, Is.EquivalentTo(content.Tags));
 
             Assert.That(model.AzureBlobSource, Is.Null);
             Assert.That(model.AzureBlobFileListSource, Is.Null);
@@ -136,12 +136,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var prefix = "testfolder"; // folder exists but most training files are missing
             var source = new AzureBlobContentSource(containerUrl) { Prefix = prefix };
 
-            var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = source
             };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, request));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, content));
 
             Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
@@ -161,9 +161,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
 
-            var authorizeCopyRequest = new AuthorizeCopyRequest(modelId, description, tags);
+            var authorizeCopyContent = new AuthorizeCopyContent(modelId, description, tags);
 
-            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
+            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyContent);
 
             Operation<DocumentModelDetails> operation = null;
 
@@ -223,7 +223,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 new ComponentDocumentModelDetails(disposableModel1.ModelId)
             };
 
-            var request = new ComposeDocumentModelRequest(modelId, componentModels)
+            var content = new ComposeDocumentModelContent(modelId, componentModels)
             {
                 Description = description,
                 Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
@@ -233,7 +233,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.ComposeModelAsync(WaitUntil.Completed, request);
+                operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
             }
             finally
             {
@@ -257,7 +257,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             // Add a 4-hour tolerance because the model could have been cached before this test.
             Assert.That(model.CreatedDateTime, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
             Assert.That(model.ExpirationDateTime, Is.GreaterThan(model.CreatedDateTime));
-            Assert.That(model.Tags, Is.EquivalentTo(request.Tags));
+            Assert.That(model.Tags, Is.EquivalentTo(content.Tags));
 
             Assert.That(model.AzureBlobSource, Is.Null);
             Assert.That(model.AzureBlobFileListSource, Is.Null);
@@ -285,9 +285,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 new ComponentDocumentModelDetails("00000000-0000-0000-0000-000000000001")
             };
 
-            var request = new ComposeDocumentModelRequest(modelId, componentModels);
+            var content = new ComposeDocumentModelContent(modelId, componentModels);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeModelAsync(WaitUntil.Started, request));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeModelAsync(WaitUntil.Started, content));
 
             Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
@@ -413,9 +413,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
-            var request = new AuthorizeCopyRequest(modelId);
+            var content = new AuthorizeCopyContent(modelId);
 
-            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(request);
+            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(content);
 
             Assert.That(copyAuthorization.TargetModelId, Is.EqualTo(modelId));
             Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));

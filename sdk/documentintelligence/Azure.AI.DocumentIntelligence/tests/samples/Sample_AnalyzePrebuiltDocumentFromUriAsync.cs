@@ -24,12 +24,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var request = new AnalyzeDocumentRequest()
+            var content = new AnalyzeDocumentContent()
             {
                 UrlSource = uriSource
             };
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", request);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", content);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("Detected key-value pairs:");

@@ -22,9 +22,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public string ModelId => Value.ModelId;
 
-        public static async Task<DisposableDocumentModel> BuildAsync(DocumentModelAdministrationClient client, BuildDocumentModelRequest buildRequest)
+        public static async Task<DisposableDocumentModel> BuildAsync(DocumentModelAdministrationClient client, BuildDocumentModelContent buildContent)
         {
-            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
+            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildContent);
 
             return new DisposableDocumentModel(client, operation);
         }

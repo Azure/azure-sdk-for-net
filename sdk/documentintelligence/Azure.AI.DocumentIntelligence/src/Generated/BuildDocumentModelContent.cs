@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to build a new custom document model. </summary>
-    public partial class BuildDocumentModelRequest
+    public partial class BuildDocumentModelContent
     {
-        /// <summary> Initializes a new instance of BuildDocumentModelRequest. </summary>
+        /// <summary> Initializes a new instance of BuildDocumentModelContent. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public BuildDocumentModelRequest(string modelId, DocumentBuildMode buildMode)
+        public BuildDocumentModelContent(string modelId, DocumentBuildMode buildMode)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
 
@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of BuildDocumentModelRequest. </summary>
+        /// <summary> Initializes a new instance of BuildDocumentModelContent. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        internal BuildDocumentModelRequest(string modelId, string description, DocumentBuildMode buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IDictionary<string, string> tags)
+        internal BuildDocumentModelContent(string modelId, string description, DocumentBuildMode buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IDictionary<string, string> tags)
         {
             ModelId = modelId;
             Description = description;

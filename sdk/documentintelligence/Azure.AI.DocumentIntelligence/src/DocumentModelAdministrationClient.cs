@@ -125,7 +125,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -145,7 +145,7 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBuildDocumentModelRequest(content, context);
+                using HttpMessage message = CreateBuildDocumentModelContent(content, context);
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
                 return new TrainingOperation(internalOperation);
             }
@@ -166,7 +166,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildDocumentModel(WaitUntil,BuildDocumentModelRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -186,7 +186,7 @@ namespace Azure.AI.DocumentIntelligence
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBuildDocumentModelRequest(content, context);
+                using HttpMessage message = CreateBuildDocumentModelContent(content, context);
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
                 return new TrainingOperation(internalOperation);
             }
@@ -207,7 +207,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ComposeModelAsync(WaitUntil,ComposeDocumentModelRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -248,7 +248,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ComposeModel(WaitUntil,ComposeDocumentModelRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -377,7 +377,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -418,7 +418,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildClassifier(WaitUntil,BuildDocumentClassifierRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildClassifier(WaitUntil,BuildDocumentClassifierContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -460,8 +460,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,BuildDocumentModelRequest,CancellationToken)']/*" />
-        public virtual async Task<Operation<DocumentModelDetails>> BuildDocumentModelAsync(WaitUntil waitUntil, BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
+        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> BuildDocumentModelAsync(WaitUntil waitUntil, BuildDocumentModelContent buildRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
@@ -476,8 +476,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,BuildDocumentModelRequest,CancellationToken)']/*" />
-        public virtual Operation<DocumentModelDetails> BuildDocumentModel(WaitUntil waitUntil, BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
+        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> BuildDocumentModel(WaitUntil waitUntil, BuildDocumentModelContent buildRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
@@ -492,8 +492,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,ComposeDocumentModelRequest,CancellationToken)']/*" />
-        public virtual async Task<Operation<DocumentModelDetails>> ComposeModelAsync(WaitUntil waitUntil, ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
+        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> ComposeModelAsync(WaitUntil waitUntil, ComposeDocumentModelContent composeRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(composeRequest, nameof(composeRequest));
 
@@ -508,8 +508,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,ComposeDocumentModelRequest,CancellationToken)']/*" />
-        public virtual Operation<DocumentModelDetails> ComposeModel(WaitUntil waitUntil, ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
+        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> ComposeModel(WaitUntil waitUntil, ComposeDocumentModelContent composeRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(composeRequest, nameof(composeRequest));
 
@@ -573,7 +573,7 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
-        internal HttpMessage CreateBuildDocumentModelRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateBuildDocumentModelContent(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;

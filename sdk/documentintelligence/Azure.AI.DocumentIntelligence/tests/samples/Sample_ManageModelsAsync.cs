@@ -19,12 +19,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             // Build a custom model to make sure that there is at least one custom model.
             string modelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
             };
 
-            await client.BuildDocumentModelAsync(WaitUntil.Completed, request);
+            await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
 
             #region Snippet:DocumentIntelligenceSampleManageModelsAsync
             // Check number of custom models in the Document Intelligence resource, and the maximum number
