@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Pipeline resource type. </summary>
     public partial class PipelineResource : SubResource
     {
-        /// <summary> Initializes a new instance of PipelineResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineResource"/>. </summary>
         public PipelineResource()
         {
             Activities = new ChangeTrackingList<Activity>();
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of PipelineResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineResource"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
         /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineResource(string id, string name, string type, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<object> annotations, IDictionary<string, object> runDimensions, PipelineFolder folder, IDictionary<string, object> additionalProperties) : base(id, name, type, etag)
+        internal PipelineResource(string id, string name, string type, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<object> annotations, IDictionary<string, object> runDimensions, PipelineFolder folder, IDictionary<string, object> additionalProperties) : base(id, name, type, null, etag)
         {
             Description = description;
             Activities = activities;

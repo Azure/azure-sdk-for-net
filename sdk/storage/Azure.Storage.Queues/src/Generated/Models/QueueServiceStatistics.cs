@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Stats for the storage service. </summary>
     public partial class QueueServiceStatistics
     {
-        /// <summary> Initializes a new instance of QueueServiceStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueueServiceStatistics"/>. </summary>
         internal QueueServiceStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of QueueServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueServiceStatistics"/>. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
-        internal QueueServiceStatistics(QueueGeoReplication geoReplication)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueServiceStatistics(QueueGeoReplication geoReplication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GeoReplication = geoReplication;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

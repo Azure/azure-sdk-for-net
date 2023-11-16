@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DocumentDbCollectionSourceConverter))]
-    public partial class DocumentDbCollectionSource : IUtf8JsonSerializable
+    public partial class DocumentDbCollectionSource : IUtf8JsonSerializable, IJsonModel<DocumentDbCollectionSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentDbCollectionSource>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DocumentDbCollectionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentDbCollectionSource>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentDbCollectionSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -64,8 +73,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DocumentDbCollectionSource DeserializeDocumentDbCollectionSource(JsonElement element)
+        DocumentDbCollectionSource IJsonModel<DocumentDbCollectionSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentDbCollectionSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentDbCollectionSource(document.RootElement, options);
+        }
+
+        internal static DocumentDbCollectionSource DeserializeDocumentDbCollectionSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +178,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DocumentDbCollectionSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, nestingSeparator.Value, queryTimeout.Value, additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<DocumentDbCollectionSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentDbCollectionSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentDbCollectionSource IPersistableModel<DocumentDbCollectionSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentDbCollectionSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentDbCollectionSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentDbCollectionSource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class DocumentDbCollectionSourceConverter : JsonConverter<DocumentDbCollectionSource>
         {

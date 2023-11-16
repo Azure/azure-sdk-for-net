@@ -5,16 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AnalyzeTasks
+    internal partial class AnalyzeTasks : IUtf8JsonSerializable, IJsonModel<AnalyzeTasks>
     {
-        internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTasks>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AnalyzeTasks>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AnalyzeTasks>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AnalyzeTasks>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("completed"u8);
+            writer.WriteNumberValue(Completed);
+            writer.WritePropertyName("failed"u8);
+            writer.WriteNumberValue(Failed);
+            writer.WritePropertyName("inProgress"u8);
+            writer.WriteNumberValue(InProgress);
+            writer.WritePropertyName("total"u8);
+            writer.WriteNumberValue(Total);
+            if (Optional.IsCollectionDefined(Items))
+            {
+                writer.WritePropertyName("items"u8);
+                writer.WriteStartArray();
+                foreach (var item in Items)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzeTasks IJsonModel<AnalyzeTasks>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTasks)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTasks(document.RootElement, options);
+        }
+
+        internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +87,8 @@ namespace Azure.AI.TextAnalytics.Models
             int inProgress = default;
             int total = default;
             Optional<IReadOnlyList<AnalyzeTextLROResult>> items = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"u8))
@@ -60,8 +125,38 @@ namespace Azure.AI.TextAnalytics.Models
                     items = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(items));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(items), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalyzeTasks>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTasks)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnalyzeTasks IPersistableModel<AnalyzeTasks>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTasks)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTasks(document.RootElement, options);
+        }
+
+        string IPersistableModel<AnalyzeTasks>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

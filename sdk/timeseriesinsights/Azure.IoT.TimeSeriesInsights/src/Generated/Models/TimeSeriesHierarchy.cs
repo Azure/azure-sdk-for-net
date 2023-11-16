@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -13,7 +14,10 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series hierarchy organizes time series instances into a tree. </summary>
     public partial class TimeSeriesHierarchy
     {
-        /// <summary> Initializes a new instance of TimeSeriesHierarchy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchy"/>. </summary>
         /// <param name="name"> User-given unique name for the type. It is mutable and not null. </param>
         /// <param name="source"> Definition of how time series hierarchy tree levels are created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="source"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.IoT.TimeSeriesInsights
             Source = source;
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesHierarchy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchy"/>. </summary>
         /// <param name="id"> Case-sensitive unique hierarchy identifier. Can be null while creating hierarchy objects and then server generates the id, not null on get and delete operations. </param>
         /// <param name="name"> User-given unique name for the type. It is mutable and not null. </param>
         /// <param name="source"> Definition of how time series hierarchy tree levels are created. </param>
-        internal TimeSeriesHierarchy(string id, string name, TimeSeriesHierarchySource source)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesHierarchy(string id, string name, TimeSeriesHierarchySource source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Source = source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchy"/> for deserialization. </summary>
+        internal TimeSeriesHierarchy()
+        {
         }
 
         /// <summary> Case-sensitive unique hierarchy identifier. Can be null while creating hierarchy objects and then server generates the id, not null on get and delete operations. </summary>

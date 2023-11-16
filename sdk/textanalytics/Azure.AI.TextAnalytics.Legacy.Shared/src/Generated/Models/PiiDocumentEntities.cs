@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The PiiDocumentEntities. </summary>
     internal partial class PiiDocumentEntities
     {
-        /// <summary> Initializes a new instance of PiiDocumentEntities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PiiDocumentEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
@@ -34,19 +37,26 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of PiiDocumentEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiDocumentEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal PiiDocumentEntities(string id, string redactedText, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PiiDocumentEntities(string id, string redactedText, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             RedactedText = redactedText;
             Entities = entities;
             Warnings = warnings;
             Statistics = statistics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PiiDocumentEntities"/> for deserialization. </summary>
+        internal PiiDocumentEntities()
+        {
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>

@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
     internal partial class DocumentStatistics
     {
-        /// <summary> Initializes a new instance of DocumentStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStatistics"/>. </summary>
         /// <param name="charactersCount"> Number of text elements recognized in the document. </param>
         /// <param name="transactionsCount"> Number of transactions for the document. </param>
         internal DocumentStatistics(int charactersCount, int transactionsCount)
         {
             CharactersCount = charactersCount;
             TransactionsCount = transactionsCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStatistics"/>. </summary>
+        /// <param name="charactersCount"> Number of text elements recognized in the document. </param>
+        /// <param name="transactionsCount"> Number of transactions for the document. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentStatistics(int charactersCount, int transactionsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CharactersCount = charactersCount;
+            TransactionsCount = transactionsCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStatistics"/> for deserialization. </summary>
+        internal DocumentStatistics()
+        {
         }
 
         /// <summary> Number of text elements recognized in the document. </summary>

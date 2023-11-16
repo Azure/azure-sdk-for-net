@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> The core properties of ARM resources. </summary>
     public partial class TrafficManagerResourceData
     {
-        /// <summary> Initializes a new instance of TrafficManagerResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerResourceData"/>. </summary>
         public TrafficManagerResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
-        internal TrafficManagerResourceData(ResourceIdentifier id, string name, ResourceType? resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficManagerResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </summary>

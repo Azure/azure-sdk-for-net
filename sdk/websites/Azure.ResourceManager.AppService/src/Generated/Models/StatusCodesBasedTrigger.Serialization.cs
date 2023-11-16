@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StatusCodesBasedTrigger : IUtf8JsonSerializable
+    public partial class StatusCodesBasedTrigger : IUtf8JsonSerializable, IJsonModel<StatusCodesBasedTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatusCodesBasedTrigger>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StatusCodesBasedTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StatusCodesBasedTrigger>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StatusCodesBasedTrigger>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -45,11 +56,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StatusCodesBasedTrigger DeserializeStatusCodesBasedTrigger(JsonElement element)
+        StatusCodesBasedTrigger IJsonModel<StatusCodesBasedTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StatusCodesBasedTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStatusCodesBasedTrigger(document.RootElement, options);
+        }
+
+        internal static StatusCodesBasedTrigger DeserializeStatusCodesBasedTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +100,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int> count = default;
             Optional<string> timeInterval = default;
             Optional<string> path = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -108,8 +150,38 @@ namespace Azure.ResourceManager.AppService.Models
                     path = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StatusCodesBasedTrigger(Optional.ToNullable(status), Optional.ToNullable(subStatus), Optional.ToNullable(win32Status), Optional.ToNullable(count), timeInterval.Value, path.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StatusCodesBasedTrigger(Optional.ToNullable(status), Optional.ToNullable(subStatus), Optional.ToNullable(win32Status), Optional.ToNullable(count), timeInterval.Value, path.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StatusCodesBasedTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StatusCodesBasedTrigger)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StatusCodesBasedTrigger IPersistableModel<StatusCodesBasedTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StatusCodesBasedTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStatusCodesBasedTrigger(document.RootElement, options);
+        }
+
+        string IPersistableModel<StatusCodesBasedTrigger>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

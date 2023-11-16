@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing data source used by the detectors. </summary>
     public partial class DetectorDataSource
     {
-        /// <summary> Initializes a new instance of DetectorDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectorDataSource"/>. </summary>
         public DetectorDataSource()
         {
             Instructions = new ChangeTrackingList<string>();
             DataSourceUri = new ChangeTrackingList<AppServiceNameValuePair>();
         }
 
-        /// <summary> Initializes a new instance of DetectorDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorDataSource"/>. </summary>
         /// <param name="instructions"> Instructions if any for the data source. </param>
         /// <param name="dataSourceUri"> Datasource Uri Links. </param>
-        internal DetectorDataSource(IList<string> instructions, IList<AppServiceNameValuePair> dataSourceUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectorDataSource(IList<string> instructions, IList<AppServiceNameValuePair> dataSourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Instructions = instructions;
             DataSourceUri = dataSourceUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Instructions if any for the data source. </summary>

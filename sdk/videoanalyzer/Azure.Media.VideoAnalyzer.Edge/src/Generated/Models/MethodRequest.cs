@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
@@ -14,13 +17,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class MethodRequest
     {
-        /// <summary> Initializes a new instance of MethodRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MethodRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
-        internal MethodRequest(string methodName, string apiVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MethodRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MethodName = methodName;
             ApiVersion = apiVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Video Analyzer API version. </summary>
         public string ApiVersion { get; set; }

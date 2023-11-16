@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.WebPubSub
     /// </summary>
     public partial class WebPubSubSharedPrivateLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSharedPrivateLinkData"/>. </summary>
         public WebPubSubSharedPrivateLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSharedPrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +37,15 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
-        internal WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, WebPubSubSharedPrivateLinkStatus? status) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, WebPubSubSharedPrivateLinkStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             PrivateLinkResourceId = privateLinkResourceId;
             ProvisioningState = provisioningState;
             RequestMessage = requestMessage;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The ClassificationResult. </summary>
     internal partial class ClassificationResult
     {
-        /// <summary> Initializes a new instance of ClassificationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationResult"/>. </summary>
         /// <param name="category"> Classification type. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the recognized class. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.AI.TextAnalytics.Models
 
             Category = category;
             ConfidenceScore = confidenceScore;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationResult"/>. </summary>
+        /// <param name="category"> Classification type. </param>
+        /// <param name="confidenceScore"> Confidence score between 0 and 1 of the recognized class. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClassificationResult(string category, double confidenceScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Category = category;
+            ConfidenceScore = confidenceScore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationResult"/> for deserialization. </summary>
+        internal ClassificationResult()
+        {
         }
 
         /// <summary> Classification type. </summary>

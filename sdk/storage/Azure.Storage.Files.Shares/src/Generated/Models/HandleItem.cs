@@ -14,7 +14,10 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A listed Azure Storage handle item. </summary>
     internal partial class HandleItem
     {
-        /// <summary> Initializes a new instance of HandleItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HandleItem"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"></param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
@@ -39,7 +42,7 @@ namespace Azure.Storage.Files.Shares.Models
             AccessRightList = new ChangeTrackingList<AccessRight>();
         }
 
-        /// <summary> Initializes a new instance of HandleItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="HandleItem"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"></param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
@@ -49,7 +52,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="openTime"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
         /// <param name="lastReconnectTime"> Time handle was last connected to (UTC). </param>
         /// <param name="accessRightList"></param>
-        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IReadOnlyList<AccessRight> accessRightList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IReadOnlyList<AccessRight> accessRightList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HandleId = handleId;
             Path = path;
@@ -60,6 +64,12 @@ namespace Azure.Storage.Files.Shares.Models
             OpenTime = openTime;
             LastReconnectTime = lastReconnectTime;
             AccessRightList = accessRightList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HandleItem"/> for deserialization. </summary>
+        internal HandleItem()
+        {
         }
 
         /// <summary> XSMB service handle ID. </summary>

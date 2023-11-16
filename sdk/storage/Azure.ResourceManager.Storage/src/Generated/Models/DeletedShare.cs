@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The deleted share to be restored. </summary>
     public partial class DeletedShare
     {
-        /// <summary> Initializes a new instance of DeletedShare. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedShare"/>. </summary>
         /// <param name="deletedShareName"> Required. Identify the name of the deleted share that will be restored. </param>
         /// <param name="deletedShareVersion"> Required. Identify the version of the deleted share that will be restored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShareName"/> or <paramref name="deletedShareVersion"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Storage.Models
 
             DeletedShareName = deletedShareName;
             DeletedShareVersion = deletedShareVersion;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeletedShare"/>. </summary>
+        /// <param name="deletedShareName"> Required. Identify the name of the deleted share that will be restored. </param>
+        /// <param name="deletedShareVersion"> Required. Identify the version of the deleted share that will be restored. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedShare(string deletedShareName, string deletedShareVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DeletedShareName = deletedShareName;
+            DeletedShareVersion = deletedShareVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeletedShare"/> for deserialization. </summary>
+        internal DeletedShare()
+        {
         }
 
         /// <summary> Required. Identify the name of the deleted share that will be restored. </summary>

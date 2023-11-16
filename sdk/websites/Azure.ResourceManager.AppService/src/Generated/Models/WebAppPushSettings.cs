@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Push settings for the App. </summary>
     public partial class WebAppPushSettings : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppPushSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppPushSettings"/>. </summary>
         public WebAppPushSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppPushSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppPushSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,13 +38,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="dynamicTagsJson"> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebAppPushSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isPushEnabled, string tagWhitelistJson, string tagsRequiringAuth, string dynamicTagsJson, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppPushSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isPushEnabled, string tagWhitelistJson, string tagsRequiringAuth, string dynamicTagsJson, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsPushEnabled = isPushEnabled;
             TagWhitelistJson = tagWhitelistJson;
             TagsRequiringAuth = tagsRequiringAuth;
             DynamicTagsJson = dynamicTagsJson;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a flag indicating whether the Push endpoint is enabled. </summary>

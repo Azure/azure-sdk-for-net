@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Properties of a hub. </summary>
     public partial class WebPubSubHubProperties
     {
-        /// <summary> Initializes a new instance of WebPubSubHubProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubProperties"/>. </summary>
         public WebPubSubHubProperties()
         {
             EventHandlers = new ChangeTrackingList<WebPubSubEventHandler>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubProperties"/>. </summary>
         /// <param name="eventHandlers"> Event handler of a hub. </param>
         /// <param name="anonymousConnectPolicy"> The settings for configuring if anonymous connections are allowed for this hub: "allow" or "deny". Default to "deny". </param>
-        internal WebPubSubHubProperties(IList<WebPubSubEventHandler> eventHandlers, string anonymousConnectPolicy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubHubProperties(IList<WebPubSubEventHandler> eventHandlers, string anonymousConnectPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventHandlers = eventHandlers;
             AnonymousConnectPolicy = anonymousConnectPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Event handler of a hub. </summary>

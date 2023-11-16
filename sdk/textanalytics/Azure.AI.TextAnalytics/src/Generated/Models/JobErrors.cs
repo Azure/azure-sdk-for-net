@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The JobErrors. </summary>
     internal partial class JobErrors
     {
-        /// <summary> Initializes a new instance of JobErrors. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobErrors"/>. </summary>
         internal JobErrors()
         {
             Errors = new ChangeTrackingList<Error>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobErrors"/>. </summary>
+        /// <param name="errors"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobErrors(IReadOnlyList<Error> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the errors. </summary>

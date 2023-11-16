@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Describes Storage Resource Usage. </summary>
     public partial class StorageUsage
     {
-        /// <summary> Initializes a new instance of StorageUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageUsage"/>. </summary>
         internal StorageUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageUsage"/>. </summary>
         /// <param name="unit"> Gets the unit of measurement. </param>
         /// <param name="currentValue"> Gets the current count of the allocated resources in the subscription. </param>
         /// <param name="limit"> Gets the maximum count of the resources that can be allocated in the subscription. </param>
         /// <param name="name"> Gets the name of the type of usage. </param>
-        internal StorageUsage(StorageUsageUnit? unit, int? currentValue, int? limit, StorageUsageName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageUsage(StorageUsageUnit? unit, int? currentValue, int? limit, StorageUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the unit of measurement. </summary>

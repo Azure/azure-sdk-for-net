@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Inbound Environment Endpoints. </summary>
     internal partial class InboundEnvironmentEndpointListResult
     {
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpointListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpointListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal InboundEnvironmentEndpointListResult(IEnumerable<InboundEnvironmentEndpoint> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpointListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal InboundEnvironmentEndpointListResult(IReadOnlyList<InboundEnvironmentEndpoint> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InboundEnvironmentEndpointListResult(IReadOnlyList<InboundEnvironmentEndpoint> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpointListResult"/> for deserialization. </summary>
+        internal InboundEnvironmentEndpointListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The UnknownNamedPolygonBase. </summary>
     internal partial class UnknownNamedPolygonBase : NamedPolygonBase
     {
-        /// <summary> Initializes a new instance of UnknownNamedPolygonBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownNamedPolygonBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="name"> Polygon name. Must be unique within the node. </param>
-        internal UnknownNamedPolygonBase(string type, string name) : base(type, name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNamedPolygonBase(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, name, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownNamedPolygonBase"/> for deserialization. </summary>
+        internal UnknownNamedPolygonBase()
+        {
         }
     }
 }

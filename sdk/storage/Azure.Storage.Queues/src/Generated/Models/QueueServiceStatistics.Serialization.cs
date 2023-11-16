@@ -5,20 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueServiceStatistics
+    public partial class QueueServiceStatistics : IXmlSerializable, IPersistableModel<QueueServiceStatistics>
     {
-        internal static QueueServiceStatistics DeserializeQueueServiceStatistics(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "StorageServiceStats");
+            if (Optional.IsDefined(GeoReplication))
+            {
+                writer.WriteObjectValue(GeoReplication, "GeoReplication");
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static QueueServiceStatistics DeserializeQueueServiceStatistics(XElement element, ModelReaderWriterOptions options = null)
         {
             QueueGeoReplication geoReplication = default;
             if (element.Element("GeoReplication") is XElement geoReplicationElement)
             {
                 geoReplication = QueueGeoReplication.DeserializeQueueGeoReplication(geoReplicationElement);
             }
-            return new QueueServiceStatistics(geoReplication);
+            return new QueueServiceStatistics(geoReplication, default);
         }
+
+        BinaryData IPersistableModel<QueueServiceStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<QueueServiceStatistics>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueServiceStatistics IPersistableModel<QueueServiceStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueueServiceStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeQueueServiceStatistics(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<QueueServiceStatistics>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

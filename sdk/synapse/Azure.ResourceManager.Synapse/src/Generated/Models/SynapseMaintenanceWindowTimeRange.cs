@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Maintenance window time range. </summary>
     public partial class SynapseMaintenanceWindowTimeRange
     {
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowTimeRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseMaintenanceWindowTimeRange"/>. </summary>
         public SynapseMaintenanceWindowTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseMaintenanceWindowTimeRange"/>. </summary>
         /// <param name="dayOfWeek"> Day of maintenance window. </param>
         /// <param name="startOn"> Start time minutes offset from 12am. </param>
         /// <param name="duration"> Duration of maintenance window in minutes. </param>
-        internal SynapseMaintenanceWindowTimeRange(SynapseDayOfWeek? dayOfWeek, TimeSpan? startOn, TimeSpan? duration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseMaintenanceWindowTimeRange(SynapseDayOfWeek? dayOfWeek, TimeSpan? startOn, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DayOfWeek = dayOfWeek;
             StartOn = startOn;
             Duration = duration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Day of maintenance window. </summary>

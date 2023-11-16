@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// </summary>
     public partial class SqlVmData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SqlVmData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SqlVmData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="serverConfigurationsManagementSettings"> SQL Server configuration management settings. </param>
         /// <param name="storageConfigurationSettings"> Storage Configuration Settings. </param>
         /// <param name="assessmentSettings"> Assessment Settings. </param>
-        internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, SqlImageSku? sqlImageSku, ResourceIdentifier sqlVmGroupResourceId, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials, IPAddress windowsServerFailoverClusterStaticIP, SqlVmAutoPatchingSettings autoPatchingSettings, SqlVmAutoBackupSettings autoBackupSettings, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings, SqlVmStorageConfigurationSettings storageConfigurationSettings, SqlVmAssessmentSettings assessmentSettings) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, SqlImageSku? sqlImageSku, ResourceIdentifier sqlVmGroupResourceId, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials, IPAddress windowsServerFailoverClusterStaticIP, SqlVmAutoPatchingSettings autoPatchingSettings, SqlVmAutoBackupSettings autoBackupSettings, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings, SqlVmStorageConfigurationSettings storageConfigurationSettings, SqlVmAssessmentSettings assessmentSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             VirtualMachineResourceId = virtualMachineResourceId;
@@ -66,6 +71,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             ServerConfigurationsManagementSettings = serverConfigurationsManagementSettings;
             StorageConfigurationSettings = storageConfigurationSettings;
             AssessmentSettings = assessmentSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmData"/> for deserialization. </summary>
+        internal SqlVmData()
+        {
         }
 
         /// <summary> Azure Active Directory identity of the server. Current supported identity types: None, SystemAssigned. </summary>

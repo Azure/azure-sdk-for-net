@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionTargetDatabaseTypePropertiesConverter))]
-    public partial class LinkConnectionTargetDatabaseTypeProperties : IUtf8JsonSerializable
+    public partial class LinkConnectionTargetDatabaseTypeProperties : IUtf8JsonSerializable, IJsonModel<LinkConnectionTargetDatabaseTypeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkConnectionTargetDatabaseTypeProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LinkConnectionTargetDatabaseTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LinkConnectionTargetDatabaseTypeProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LinkConnectionTargetDatabaseTypeProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CrossTableTransaction))
             {
@@ -33,11 +43,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("actionOnExistingTargetTable"u8);
                 writer.WriteStringValue(ActionOnExistingTargetTable.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkConnectionTargetDatabaseTypeProperties DeserializeLinkConnectionTargetDatabaseTypeProperties(JsonElement element)
+        LinkConnectionTargetDatabaseTypeProperties IJsonModel<LinkConnectionTargetDatabaseTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkConnectionTargetDatabaseTypeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkConnectionTargetDatabaseTypeProperties(document.RootElement, options);
+        }
+
+        internal static LinkConnectionTargetDatabaseTypeProperties DeserializeLinkConnectionTargetDatabaseTypeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +84,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<bool> crossTableTransaction = default;
             Optional<bool> dropExistingTargetTableOnStart = default;
             Optional<ActionOnExistingTargetTable> actionOnExistingTargetTable = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crossTableTransaction"u8))
@@ -74,9 +115,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     actionOnExistingTargetTable = new ActionOnExistingTargetTable(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkConnectionTargetDatabaseTypeProperties(Optional.ToNullable(crossTableTransaction), Optional.ToNullable(dropExistingTargetTableOnStart), Optional.ToNullable(actionOnExistingTargetTable));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkConnectionTargetDatabaseTypeProperties(Optional.ToNullable(crossTableTransaction), Optional.ToNullable(dropExistingTargetTableOnStart), Optional.ToNullable(actionOnExistingTargetTable), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkConnectionTargetDatabaseTypeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkConnectionTargetDatabaseTypeProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkConnectionTargetDatabaseTypeProperties IPersistableModel<LinkConnectionTargetDatabaseTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkConnectionTargetDatabaseTypeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkConnectionTargetDatabaseTypeProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<LinkConnectionTargetDatabaseTypeProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class LinkConnectionTargetDatabaseTypePropertiesConverter : JsonConverter<LinkConnectionTargetDatabaseTypeProperties>
         {

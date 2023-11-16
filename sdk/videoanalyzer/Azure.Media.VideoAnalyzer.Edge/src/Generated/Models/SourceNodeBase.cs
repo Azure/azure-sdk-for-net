@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -17,7 +18,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class SourceNodeBase
     {
-        /// <summary> Initializes a new instance of SourceNodeBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected SourceNodeBase(string name)
@@ -27,13 +31,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SourceNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
-        internal SourceNodeBase(string type, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceNodeBase(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/> for deserialization. </summary>
+        internal SourceNodeBase()
+        {
         }
 
         /// <summary> Type discriminator for the derived types. </summary>

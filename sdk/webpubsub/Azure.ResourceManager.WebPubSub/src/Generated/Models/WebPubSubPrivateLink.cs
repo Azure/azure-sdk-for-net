@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Private link resource. </summary>
     public partial class WebPubSubPrivateLink : ResourceData
     {
-        /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubPrivateLink"/>. </summary>
         public WebPubSubPrivateLink()
         {
             RequiredMembers = new ChangeTrackingList<string>();
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             ShareablePrivateLinkTypes = new ChangeTrackingList<ShareablePrivateLinkType>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubPrivateLink"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +35,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>
         /// <param name="shareablePrivateLinkTypes"> The list of resources that are onboarded to private link service. </param>
-        internal WebPubSubPrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkType> shareablePrivateLinkTypes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubPrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkType> shareablePrivateLinkTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
             ShareablePrivateLinkTypes = shareablePrivateLinkTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Group Id of the private link resource. </summary>

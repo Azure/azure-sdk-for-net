@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     /// <summary> Properties of a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpointProperties
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointProperties"/>. </summary>
         public ManagedPrivateEndpointProperties()
         {
             Fqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointProperties"/>. </summary>
         /// <param name="name"> The name of managed private endpoint. </param>
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
@@ -28,7 +32,8 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <param name="isReserved"> Denotes whether the managed private endpoint is reserved. </param>
         /// <param name="fqdns"> List of fully qualified domain names. </param>
         /// <param name="isCompliant"> Denotes whether the managed private endpoint is compliant. </param>
-        internal ManagedPrivateEndpointProperties(string name, string privateLinkResourceId, string groupId, string provisioningState, ManagedPrivateEndpointConnectionState connectionState, bool? isReserved, IList<string> fqdns, bool? isCompliant)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedPrivateEndpointProperties(string name, string privateLinkResourceId, string groupId, string provisioningState, ManagedPrivateEndpointConnectionState connectionState, bool? isReserved, IList<string> fqdns, bool? isCompliant, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PrivateLinkResourceId = privateLinkResourceId;
@@ -38,6 +43,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             IsReserved = isReserved;
             Fqdns = fqdns;
             IsCompliant = isCompliant;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of managed private endpoint. </summary>

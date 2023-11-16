@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list Kusto data connection validation result. </summary>
     public partial class SynapseDataConnectionValidationListResult
     {
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidationListResult"/>. </summary>
         internal SynapseDataConnectionValidationListResult()
         {
             Value = new ChangeTrackingList<SynapseDataConnectionValidationResult>();
         }
 
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidationListResult"/>. </summary>
         /// <param name="value"> The list of Kusto data connection validation errors. </param>
-        internal SynapseDataConnectionValidationListResult(IReadOnlyList<SynapseDataConnectionValidationResult> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataConnectionValidationListResult(IReadOnlyList<SynapseDataConnectionValidationResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Kusto data connection validation errors. </summary>

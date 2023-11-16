@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Configure assessment for databases in your SQL virtual machine. </summary>
     public partial class SqlVmAssessmentSettings
     {
-        /// <summary> Initializes a new instance of SqlVmAssessmentSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmAssessmentSettings"/>. </summary>
         public SqlVmAssessmentSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmAssessmentSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAssessmentSettings"/>. </summary>
         /// <param name="isEnabled"> Enable or disable assessment feature on SQL virtual machine. </param>
         /// <param name="runImmediately"> Run assessment immediately on SQL virtual machine. </param>
         /// <param name="schedule"> Schedule for Assessment. </param>
-        internal SqlVmAssessmentSettings(bool? isEnabled, bool? runImmediately, SqlVmAssessmentSchedule schedule)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmAssessmentSettings(bool? isEnabled, bool? runImmediately, SqlVmAssessmentSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             RunImmediately = runImmediately;
             Schedule = schedule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable or disable assessment feature on SQL virtual machine. </summary>

@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The QueryTableStatusRequest. </summary>
     public partial class QueryTableStatusRequest
     {
-        /// <summary> Initializes a new instance of QueryTableStatusRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryTableStatusRequest"/>. </summary>
         public QueryTableStatusRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryTableStatusRequest"/>. </summary>
+        /// <param name="maxSegmentCount"> Max segment count to query table status. </param>
+        /// <param name="continuationToken"> Continuation token to query table status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryTableStatusRequest(int? maxSegmentCount, object continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MaxSegmentCount = maxSegmentCount;
+            ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Max segment count to query table status. </summary>

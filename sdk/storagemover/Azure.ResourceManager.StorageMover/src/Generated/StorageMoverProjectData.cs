@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class StorageMoverProjectData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageMoverProjectData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverProjectData"/>. </summary>
         public StorageMoverProjectData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMoverProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> A description for the Project. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal StorageMoverProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A description for the Project. </summary>

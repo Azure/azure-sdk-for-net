@@ -16,7 +16,10 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The SentenceSentiment. </summary>
     internal readonly partial struct SentenceSentimentInternal
     {
-        /// <summary> Initializes a new instance of SentenceSentimentInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SentenceSentimentInternal"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
@@ -42,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Models
             Assessments = assessments.ToList();
         }
 
-        /// <summary> Initializes a new instance of SentenceSentimentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceSentimentInternal"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
@@ -50,7 +53,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the sentence. </param>
         /// <param name="targets"> The array of sentence targets for the sentence. </param>
         /// <param name="assessments"> The array of assessments for the sentence. </param>
-        internal SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IReadOnlyList<SentenceTarget> targets, IReadOnlyList<SentenceAssessment> assessments)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IReadOnlyList<SentenceTarget> targets, IReadOnlyList<SentenceAssessment> assessments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Sentiment = sentiment;
@@ -59,6 +63,12 @@ namespace Azure.AI.TextAnalytics.Models
             Length = length;
             Targets = targets;
             Assessments = assessments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentenceSentimentInternal"/> for deserialization. </summary>
+        public SentenceSentimentInternal()
+        {
         }
     }
 }

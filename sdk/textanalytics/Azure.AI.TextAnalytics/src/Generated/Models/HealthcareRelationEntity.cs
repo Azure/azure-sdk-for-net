@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The HealthcareRelationEntity. </summary>
     internal partial class HealthcareRelationEntity
     {
-        /// <summary> Initializes a new instance of HealthcareRelationEntity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelationEntity"/>. </summary>
         /// <param name="ref"> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </param>
         /// <param name="role"> Role of entity in the relationship. For example: 'CD20-positive diffuse large B-cell lymphoma' has the following entities with their roles in parenthesis:  CD20 (GeneOrProtein), Positive (Expression), diffuse large B-cell lymphoma (Diagnosis). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> or <paramref name="role"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.AI.TextAnalytics.Models
 
             Ref = @ref;
             Role = role;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelationEntity"/>. </summary>
+        /// <param name="ref"> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </param>
+        /// <param name="role"> Role of entity in the relationship. For example: 'CD20-positive diffuse large B-cell lymphoma' has the following entities with their roles in parenthesis:  CD20 (GeneOrProtein), Positive (Expression), diffuse large B-cell lymphoma (Diagnosis). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareRelationEntity(string @ref, string role, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Ref = @ref;
+            Role = role;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelationEntity"/> for deserialization. </summary>
+        internal HealthcareRelationEntity()
+        {
         }
 
         /// <summary> Reference link object, using a JSON pointer RFC 6901 (URI Fragment Identifier Representation), pointing to the entity . </summary>

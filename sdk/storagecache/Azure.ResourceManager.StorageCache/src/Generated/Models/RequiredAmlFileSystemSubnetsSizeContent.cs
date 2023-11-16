@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Information required to get the number of available IP addresses a subnet should have that will be used in AML file system create. </summary>
     public partial class RequiredAmlFileSystemSubnetsSizeContent
     {
-        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSizeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSizeContent"/>. </summary>
         public RequiredAmlFileSystemSubnetsSizeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSizeContent"/>. </summary>
+        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. </param>
+        /// <param name="sku"> SKU for the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequiredAmlFileSystemSubnetsSizeContent(float? storageCapacityTiB, StorageCacheSkuName sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StorageCapacityTiB = storageCapacityTiB;
+            Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The size of the AML file system, in TiB. </summary>

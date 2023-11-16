@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection. </summary>
     public partial class HybridConnectionKey : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridConnectionKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionKey"/>. </summary>
         public HybridConnectionKey()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionKey"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,11 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="sendKeyName"> The name of the send key. </param>
         /// <param name="sendKeyValue"> The value of the send key. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sendKeyName, string sendKeyValue, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sendKeyName, string sendKeyValue, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SendKeyName = sendKeyName;
             SendKeyValue = sendKeyValue;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the send key. </summary>

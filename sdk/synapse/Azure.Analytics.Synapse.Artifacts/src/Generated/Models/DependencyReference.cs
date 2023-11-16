@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class DependencyReference
     {
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         public DependencyReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         /// <param name="type"> The type of dependency reference. </param>
-        internal DependencyReference(string type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DependencyReference(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of dependency reference. </summary>

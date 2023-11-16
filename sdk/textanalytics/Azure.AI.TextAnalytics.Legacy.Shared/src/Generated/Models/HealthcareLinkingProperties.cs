@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The HealthcareLinkingProperties. </summary>
     internal partial class HealthcareLinkingProperties
     {
-        /// <summary> Initializes a new instance of HealthcareLinkingProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareLinkingProperties"/>. </summary>
         internal HealthcareLinkingProperties()
         {
             Links = new ChangeTrackingList<HealthcareEntityLink>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareLinkingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareLinkingProperties"/>. </summary>
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        internal HealthcareLinkingProperties(HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareLinkingProperties(HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Assertion = assertion;
             Name = name;
             Links = links;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the assertion. </summary>

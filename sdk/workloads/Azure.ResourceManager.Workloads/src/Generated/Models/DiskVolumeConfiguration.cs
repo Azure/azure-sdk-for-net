@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The disk configuration required for the selected volume. </summary>
     public partial class DiskVolumeConfiguration
     {
-        /// <summary> Initializes a new instance of DiskVolumeConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskVolumeConfiguration"/>. </summary>
         public DiskVolumeConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskVolumeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskVolumeConfiguration"/>. </summary>
         /// <param name="count"> The total number of disks required for the concerned volume. </param>
         /// <param name="sizeInGB"> The disk size in GB. </param>
         /// <param name="sku"> The disk SKU details. </param>
-        internal DiskVolumeConfiguration(long? count, long? sizeInGB, SapDiskSku sku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskVolumeConfiguration(long? count, long? sizeInGB, SapDiskSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             SizeInGB = sizeInGB;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The total number of disks required for the concerned volume. </summary>

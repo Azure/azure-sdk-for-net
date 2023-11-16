@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The KqlScript. </summary>
     public partial class KqlScript
     {
-        /// <summary> Initializes a new instance of KqlScript. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KqlScript"/>. </summary>
         public KqlScript()
         {
         }
 
-        /// <summary> Initializes a new instance of KqlScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScript"/>. </summary>
         /// <param name="content"></param>
-        internal KqlScript(KqlScriptContent content)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KqlScript(KqlScriptContent content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the content. </summary>

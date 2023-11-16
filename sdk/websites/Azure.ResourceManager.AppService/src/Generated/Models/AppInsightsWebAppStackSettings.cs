@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App Insights Web App stack settings. </summary>
     public partial class AppInsightsWebAppStackSettings
     {
-        /// <summary> Initializes a new instance of AppInsightsWebAppStackSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppInsightsWebAppStackSettings"/>. </summary>
         internal AppInsightsWebAppStackSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AppInsightsWebAppStackSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInsightsWebAppStackSettings"/>. </summary>
         /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDefaultOff"> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal AppInsightsWebAppStackSettings(bool? isSupported, bool? isDefaultOff)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppInsightsWebAppStackSettings(bool? isSupported, bool? isDefaultOff, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsSupported = isSupported;
             IsDefaultOff = isDefaultOff;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

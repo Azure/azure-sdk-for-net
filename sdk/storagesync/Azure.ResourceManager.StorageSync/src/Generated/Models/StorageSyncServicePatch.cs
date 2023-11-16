@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Parameters for updating an Storage sync service. </summary>
     public partial class StorageSyncServicePatch
     {
-        /// <summary> Initializes a new instance of StorageSyncServicePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServicePatch"/>. </summary>
         public StorageSyncServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServicePatch"/>. </summary>
+        /// <param name="tags"> The user-specified tags associated with the storage sync service. </param>
+        /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServicePatch(IDictionary<string, string> tags, IncomingTrafficPolicy? incomingTrafficPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            IncomingTrafficPolicy = incomingTrafficPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The user-specified tags associated with the storage sync service. </summary>

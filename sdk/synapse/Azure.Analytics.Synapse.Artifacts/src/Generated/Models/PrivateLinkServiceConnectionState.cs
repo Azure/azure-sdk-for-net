@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Connection state details of the private endpoint. </summary>
     public partial class PrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnectionState"/>. </summary>
         public PrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        internal PrivateLinkServiceConnectionState(string status, string description, string actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkServiceConnectionState(string status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private link service connection status. </summary>

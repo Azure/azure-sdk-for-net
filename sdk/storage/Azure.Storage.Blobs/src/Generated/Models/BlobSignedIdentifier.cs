@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,6 +14,20 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> signed identifier. </summary>
     public partial class BlobSignedIdentifier
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobSignedIdentifier"/>. </summary>
+        /// <param name="id"> a unique id. </param>
+        /// <param name="accessPolicy"> An Access policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobSignedIdentifier(string id, BlobAccessPolicy accessPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            AccessPolicy = accessPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> a unique id. </summary>
         public string Id { get; set; }
         /// <summary> An Access policy. </summary>

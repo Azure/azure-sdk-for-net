@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Data.Tables.Models
     /// <summary> The properties for the table query response. </summary>
     internal partial class TableQueryResponse
     {
-        /// <summary> Initializes a new instance of TableQueryResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableQueryResponse"/>. </summary>
         internal TableQueryResponse()
         {
             Value = new ChangeTrackingList<TableItem>();
         }
 
-        /// <summary> Initializes a new instance of TableQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableQueryResponse"/>. </summary>
         /// <param name="odataMetadata"> The metadata response of the table. </param>
         /// <param name="value"> List of tables. </param>
-        internal TableQueryResponse(string odataMetadata, IReadOnlyList<TableItem> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableQueryResponse(string odataMetadata, IReadOnlyList<TableItem> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataMetadata = odataMetadata;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The metadata response of the table. </summary>

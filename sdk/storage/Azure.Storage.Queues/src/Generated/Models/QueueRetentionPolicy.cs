@@ -5,18 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> the retention policy. </summary>
     public partial class QueueRetentionPolicy
     {
-        /// <summary> Initializes a new instance of QueueRetentionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueueRetentionPolicy"/>. </summary>
         /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
         /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
-        internal QueueRetentionPolicy(bool enabled, int? days)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueRetentionPolicy(bool enabled, int? days, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Days = days;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether a retention policy is enabled for the storage service. </summary>

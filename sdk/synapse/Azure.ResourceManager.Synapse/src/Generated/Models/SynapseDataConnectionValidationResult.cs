@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The result returned from a data connection validation request. </summary>
     public partial class SynapseDataConnectionValidationResult
     {
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidationResult"/>. </summary>
         internal SynapseDataConnectionValidationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidationResult"/>. </summary>
         /// <param name="errorMessage"> A message which indicates a problem in data connection validation. </param>
-        internal SynapseDataConnectionValidationResult(string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataConnectionValidationResult(string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A message which indicates a problem in data connection validation. </summary>

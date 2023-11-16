@@ -15,7 +15,10 @@ namespace Azure.AI.Translation.Text
     /// <summary> Properties ot the source dictionary language. </summary>
     public partial class SourceDictionaryLanguage
     {
-        /// <summary> Initializes a new instance of SourceDictionaryLanguage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
@@ -32,19 +35,27 @@ namespace Azure.AI.Translation.Text
             NativeName = nativeName;
             Dir = dir;
             Translations = translations.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SourceDictionaryLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="translations"> List of languages with alterative translations and examples for the query expressed in the source language. </param>
-        internal SourceDictionaryLanguage(string name, string nativeName, string dir, IReadOnlyList<TargetDictionaryLanguage> translations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceDictionaryLanguage(string name, string nativeName, string dir, IReadOnlyList<TargetDictionaryLanguage> translations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             NativeName = nativeName;
             Dir = dir;
             Translations = translations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceDictionaryLanguage"/> for deserialization. </summary>
+        internal SourceDictionaryLanguage()
+        {
         }
 
         /// <summary> Display name of the language in the locale requested via Accept-Language header. </summary>

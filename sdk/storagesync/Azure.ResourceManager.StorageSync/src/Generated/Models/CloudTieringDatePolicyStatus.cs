@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Status of the date policy. </summary>
     public partial class CloudTieringDatePolicyStatus
     {
-        /// <summary> Initializes a new instance of CloudTieringDatePolicyStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudTieringDatePolicyStatus"/>. </summary>
         internal CloudTieringDatePolicyStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringDatePolicyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringDatePolicyStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="tieredFilesMostRecentAccessTimestamp"> Most recent access time of tiered files. </param>
-        internal CloudTieringDatePolicyStatus(DateTimeOffset? lastUpdatedOn, DateTimeOffset? tieredFilesMostRecentAccessTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudTieringDatePolicyStatus(DateTimeOffset? lastUpdatedOn, DateTimeOffset? tieredFilesMostRecentAccessTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             TieredFilesMostRecentAccessTimestamp = tieredFilesMostRecentAccessTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Last updated timestamp. </summary>

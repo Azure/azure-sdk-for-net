@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
     public partial class AppServiceIdentityProviders
     {
-        /// <summary> Initializes a new instance of AppServiceIdentityProviders. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceIdentityProviders"/>. </summary>
         public AppServiceIdentityProviders()
         {
             CustomOpenIdConnectProviders = new ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceIdentityProviders. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceIdentityProviders"/>. </summary>
         /// <param name="azureActiveDirectory"> The configuration settings of the Azure Active directory provider. </param>
         /// <param name="facebook"> The configuration settings of the Facebook provider. </param>
         /// <param name="gitHub"> The configuration settings of the GitHub provider. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
         /// </param>
-        internal AppServiceIdentityProviders(AppServiceAadProvider azureActiveDirectory, AppServiceFacebookProvider facebook, AppServiceGitHubProvider gitHub, AppServiceGoogleProvider google, LegacyMicrosoftAccount legacyMicrosoftAccount, AppServiceTwitterProvider twitter, AppServiceAppleProvider apple, AppServiceStaticWebAppsProvider azureStaticWebApps, IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceIdentityProviders(AppServiceAadProvider azureActiveDirectory, AppServiceFacebookProvider facebook, AppServiceGitHubProvider gitHub, AppServiceGoogleProvider google, LegacyMicrosoftAccount legacyMicrosoftAccount, AppServiceTwitterProvider twitter, AppServiceAppleProvider apple, AppServiceStaticWebAppsProvider azureStaticWebApps, IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureActiveDirectory = azureActiveDirectory;
             Facebook = facebook;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             Apple = apple;
             AzureStaticWebApps = azureStaticWebApps;
             CustomOpenIdConnectProviders = customOpenIdConnectProviders;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The configuration settings of the Azure Active directory provider. </summary>

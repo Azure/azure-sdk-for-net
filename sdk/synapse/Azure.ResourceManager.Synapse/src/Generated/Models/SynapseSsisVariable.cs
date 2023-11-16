@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Ssis variable. </summary>
     public partial class SynapseSsisVariable
     {
-        /// <summary> Initializes a new instance of SynapseSsisVariable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisVariable"/>. </summary>
         internal SynapseSsisVariable()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisVariable"/>. </summary>
         /// <param name="id"> Variable id. </param>
         /// <param name="name"> Variable name. </param>
         /// <param name="description"> Variable description. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="isSensitive"> Whether variable is sensitive. </param>
         /// <param name="value"> Variable value. </param>
         /// <param name="sensitiveValue"> Variable sensitive value. </param>
-        internal SynapseSsisVariable(long? id, string name, string description, string dataType, bool? isSensitive, string value, string sensitiveValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSsisVariable(long? id, string name, string description, string dataType, bool? isSensitive, string value, string sensitiveValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.Synapse.Models
             IsSensitive = isSensitive;
             Value = value;
             SensitiveValue = sensitiveValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Variable id. </summary>

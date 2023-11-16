@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseDynamicExecutorAllocation : IUtf8JsonSerializable
+    public partial class SynapseDynamicExecutorAllocation : IUtf8JsonSerializable, IJsonModel<SynapseDynamicExecutorAllocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDynamicExecutorAllocation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SynapseDynamicExecutorAllocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SynapseDynamicExecutorAllocation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SynapseDynamicExecutorAllocation>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("maxExecutors"u8);
                 writer.WriteNumberValue(MaxExecutors.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseDynamicExecutorAllocation DeserializeSynapseDynamicExecutorAllocation(JsonElement element)
+        SynapseDynamicExecutorAllocation IJsonModel<SynapseDynamicExecutorAllocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseDynamicExecutorAllocation(document.RootElement, options);
+        }
+
+        internal static SynapseDynamicExecutorAllocation DeserializeSynapseDynamicExecutorAllocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<bool> enabled = default;
             Optional<int> minExecutors = default;
             Optional<int> maxExecutors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,8 +113,38 @@ namespace Azure.ResourceManager.Synapse.Models
                     maxExecutors = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseDynamicExecutorAllocation(Optional.ToNullable(enabled), Optional.ToNullable(minExecutors), Optional.ToNullable(maxExecutors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseDynamicExecutorAllocation(Optional.ToNullable(enabled), Optional.ToNullable(minExecutors), Optional.ToNullable(maxExecutors), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseDynamicExecutorAllocation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseDynamicExecutorAllocation IPersistableModel<SynapseDynamicExecutorAllocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseDynamicExecutorAllocation(document.RootElement, options);
+        }
+
+        string IPersistableModel<SynapseDynamicExecutorAllocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

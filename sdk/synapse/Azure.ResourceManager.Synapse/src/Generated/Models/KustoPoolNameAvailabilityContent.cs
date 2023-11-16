@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The object sent for a kusto pool check name availability request. </summary>
     public partial class KustoPoolNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Kusto Pool name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolNameAvailabilityContent(string name)
@@ -22,6 +26,22 @@ namespace Azure.ResourceManager.Synapse.Models
 
             Name = name;
             ResourceType = KustoPoolType.MicrosoftSynapseWorkspacesKustoPools;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Kusto Pool name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPoolNameAvailabilityContent(string name, KustoPoolType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolNameAvailabilityContent"/> for deserialization. </summary>
+        internal KustoPoolNameAvailabilityContent()
+        {
         }
 
         /// <summary> Kusto Pool name. </summary>

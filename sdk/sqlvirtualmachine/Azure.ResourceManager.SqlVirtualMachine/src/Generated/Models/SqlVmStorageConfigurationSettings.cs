@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Storage Configurations for SQL Data, Log and TempDb. </summary>
     public partial class SqlVmStorageConfigurationSettings
     {
-        /// <summary> Initializes a new instance of SqlVmStorageConfigurationSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmStorageConfigurationSettings"/>. </summary>
         public SqlVmStorageConfigurationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmStorageConfigurationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmStorageConfigurationSettings"/>. </summary>
         /// <param name="sqlDataSettings"> SQL Server Data Storage Settings. </param>
         /// <param name="sqlLogSettings"> SQL Server Log Storage Settings. </param>
         /// <param name="sqlTempDBSettings"> SQL Server TempDb Storage Settings. </param>
         /// <param name="isSqlSystemDBOnDataDisk"> SQL Server SystemDb Storage on DataPool if true. </param>
         /// <param name="diskConfigurationType"> Disk configuration to apply to SQL Server. </param>
         /// <param name="storageWorkloadType"> Storage workload type. </param>
-        internal SqlVmStorageConfigurationSettings(SqlStorageSettings sqlDataSettings, SqlStorageSettings sqlLogSettings, SqlTempDBSettings sqlTempDBSettings, bool? isSqlSystemDBOnDataDisk, SqlVmDiskConfigurationType? diskConfigurationType, SqlVmStorageWorkloadType? storageWorkloadType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmStorageConfigurationSettings(SqlStorageSettings sqlDataSettings, SqlStorageSettings sqlLogSettings, SqlTempDBSettings sqlTempDBSettings, bool? isSqlSystemDBOnDataDisk, SqlVmDiskConfigurationType? diskConfigurationType, SqlVmStorageWorkloadType? storageWorkloadType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SqlDataSettings = sqlDataSettings;
             SqlLogSettings = sqlLogSettings;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             IsSqlSystemDBOnDataDisk = isSqlSystemDBOnDataDisk;
             DiskConfigurationType = diskConfigurationType;
             StorageWorkloadType = storageWorkloadType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SQL Server Data Storage Settings. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -12,13 +13,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The UnknownSinkNodeBase. </summary>
     internal partial class UnknownSinkNodeBase : SinkNodeBase
     {
-        /// <summary> Initializes a new instance of UnknownSinkNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSinkNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        internal UnknownSinkNodeBase(string type, string name, IList<NodeInput> inputs) : base(type, name, inputs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSinkNodeBase(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, name, inputs, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSinkNodeBase"/> for deserialization. </summary>
+        internal UnknownSinkNodeBase()
+        {
         }
     }
 }

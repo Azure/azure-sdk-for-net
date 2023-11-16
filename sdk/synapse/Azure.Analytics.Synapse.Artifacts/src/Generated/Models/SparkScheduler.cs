@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The SparkScheduler. </summary>
     public partial class SparkScheduler
     {
-        /// <summary> Initializes a new instance of SparkScheduler. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkScheduler"/>. </summary>
         internal SparkScheduler()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkScheduler. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkScheduler"/>. </summary>
         /// <param name="submittedAt"></param>
         /// <param name="scheduledAt"></param>
         /// <param name="endedAt"></param>
         /// <param name="cancellationRequestedAt"></param>
         /// <param name="currentState"></param>
-        internal SparkScheduler(DateTimeOffset? submittedAt, DateTimeOffset? scheduledAt, DateTimeOffset? endedAt, DateTimeOffset? cancellationRequestedAt, SchedulerCurrentState? currentState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkScheduler(DateTimeOffset? submittedAt, DateTimeOffset? scheduledAt, DateTimeOffset? endedAt, DateTimeOffset? cancellationRequestedAt, SchedulerCurrentState? currentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubmittedAt = submittedAt;
             ScheduledAt = scheduledAt;
             EndedAt = endedAt;
             CancellationRequestedAt = cancellationRequestedAt;
             CurrentState = currentState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the submitted at. </summary>

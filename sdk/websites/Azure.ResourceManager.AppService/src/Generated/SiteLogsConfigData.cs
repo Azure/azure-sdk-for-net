@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteLogsConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         public SiteLogsConfigData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +37,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
         /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
             IsFailedRequestsTracing = isFailedRequestsTracing;
             IsDetailedErrorMessages = isDetailedErrorMessages;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application logs configuration. </summary>

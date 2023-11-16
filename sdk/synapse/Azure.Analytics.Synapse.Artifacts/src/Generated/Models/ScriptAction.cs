@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Custom script action to run on HDI ondemand cluster once it's up. </summary>
     public partial class ScriptAction
     {
-        /// <summary> Initializes a new instance of ScriptAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptAction"/>. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
@@ -29,17 +33,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Roles = roles;
         }
 
-        /// <summary> Initializes a new instance of ScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptAction"/>. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
         /// <param name="parameters"> The parameters for the script action. </param>
-        internal ScriptAction(string name, string uri, object roles, string parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptAction(string name, string uri, object roles, string parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Uri = uri;
             Roles = roles;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptAction"/> for deserialization. </summary>
+        internal ScriptAction()
+        {
         }
 
         /// <summary> The user provided name of the script action. </summary>

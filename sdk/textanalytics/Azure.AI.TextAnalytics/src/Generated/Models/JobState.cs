@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The JobState. </summary>
     internal partial class JobState
     {
-        /// <summary> Initializes a new instance of JobState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdatedDateTime"></param>
@@ -32,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             Errors = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of JobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobState"/>. </summary>
         /// <param name="displayName"></param>
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
@@ -41,7 +44,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="status"></param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
-        internal JobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, IReadOnlyList<Error> errors, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             CreatedDateTime = createdDateTime;
@@ -51,6 +55,12 @@ namespace Azure.AI.TextAnalytics.Models
             Status = status;
             Errors = errors;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobState"/> for deserialization. </summary>
+        internal JobState()
+        {
         }
 
         /// <summary> Gets the display name. </summary>

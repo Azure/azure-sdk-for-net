@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of an App Service Environment. </summary>
     public partial class AppServiceEnvironmentProperties
     {
-        /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentProperties"/>. </summary>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public AppServiceEnvironmentProperties(AppServiceVirtualNetworkProfile virtualNetwork)
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -64,6 +68,12 @@ namespace Azure.ResourceManager.AppService.Models
             HasLinuxWorkers = hasLinuxWorkers;
             DedicatedHostCount = dedicatedHostCount;
             IsZoneRedundant = isZoneRedundant;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentProperties"/> for deserialization. </summary>
+        internal AppServiceEnvironmentProperties()
+        {
         }
 
         /// <summary> Provisioning state of the App Service Environment. </summary>

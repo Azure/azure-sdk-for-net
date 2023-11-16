@@ -5,14 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Parameters for updating an Server Endpoint. </summary>
     public partial class StorageSyncServerEndpointPatch
     {
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointPatch"/>. </summary>
         public StorageSyncServerEndpointPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointPatch"/>. </summary>
+        /// <param name="cloudTiering"> Cloud Tiering. </param>
+        /// <param name="volumeFreeSpacePercent"> Level of free space to be maintained by Cloud Tiering if it is enabled. </param>
+        /// <param name="tierFilesOlderThanDays"> Tier files older than days. </param>
+        /// <param name="offlineDataTransfer"> Offline data transfer. </param>
+        /// <param name="offlineDataTransferShareName"> Offline data transfer share name. </param>
+        /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServerEndpointPatch(StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, StorageSyncFeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, LocalCacheMode? localCacheMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CloudTiering = cloudTiering;
+            VolumeFreeSpacePercent = volumeFreeSpacePercent;
+            TierFilesOlderThanDays = tierFilesOlderThanDays;
+            OfflineDataTransfer = offlineDataTransfer;
+            OfflineDataTransferShareName = offlineDataTransferShareName;
+            LocalCacheMode = localCacheMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Cloud Tiering. </summary>

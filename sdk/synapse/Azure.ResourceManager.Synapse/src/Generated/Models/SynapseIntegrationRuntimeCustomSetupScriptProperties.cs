@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeCustomSetupScriptProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeCustomSetupScriptProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         public SynapseIntegrationRuntimeCustomSetupScriptProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeCustomSetupScriptProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
         /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
-        internal SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, SynapseSecureString sasToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, SynapseSecureString sasToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobContainerUri = blobContainerUri;
             SasToken = sasToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URI of the Azure blob container that contains the custom setup script. </summary>

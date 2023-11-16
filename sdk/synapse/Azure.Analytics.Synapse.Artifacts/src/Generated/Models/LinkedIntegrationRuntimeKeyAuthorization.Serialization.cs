@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,26 +16,64 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkedIntegrationRuntimeKeyAuthorizationConverter))]
-    public partial class LinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable
+    public partial class LinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable, IJsonModel<LinkedIntegrationRuntimeKeyAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedIntegrationRuntimeKeyAuthorization>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LinkedIntegrationRuntimeKeyAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LinkedIntegrationRuntimeKeyAuthorization>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LinkedIntegrationRuntimeKeyAuthorization>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteObjectValue(Key);
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkedIntegrationRuntimeKeyAuthorization DeserializeLinkedIntegrationRuntimeKeyAuthorization(JsonElement element)
+        LinkedIntegrationRuntimeKeyAuthorization IJsonModel<LinkedIntegrationRuntimeKeyAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeKeyAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkedIntegrationRuntimeKeyAuthorization(document.RootElement, options);
+        }
+
+        internal static LinkedIntegrationRuntimeKeyAuthorization DeserializeLinkedIntegrationRuntimeKeyAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SecureString key = default;
             string authorizationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -45,9 +86,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     authorizationType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkedIntegrationRuntimeKeyAuthorization(authorizationType, key);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkedIntegrationRuntimeKeyAuthorization(authorizationType, serializedAdditionalRawData, key);
         }
+
+        BinaryData IPersistableModel<LinkedIntegrationRuntimeKeyAuthorization>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeKeyAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkedIntegrationRuntimeKeyAuthorization IPersistableModel<LinkedIntegrationRuntimeKeyAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeKeyAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkedIntegrationRuntimeKeyAuthorization(document.RootElement, options);
+        }
+
+        string IPersistableModel<LinkedIntegrationRuntimeKeyAuthorization>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class LinkedIntegrationRuntimeKeyAuthorizationConverter : JsonConverter<LinkedIntegrationRuntimeKeyAuthorization>
         {

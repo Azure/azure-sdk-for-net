@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> A definition of a single property that can be used in time series ID properties defined during environment creation. </summary>
     public partial class TimeSeriesIdProperty
     {
-        /// <summary> Initializes a new instance of TimeSeriesIdProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesIdProperty"/>. </summary>
         internal TimeSeriesIdProperty()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesIdProperty"/>. </summary>
+        /// <param name="name"> The name of the property. </param>
+        /// <param name="type"> The type of the property. Currently, only "String" is supported. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesIdProperty(string name, TimeSeriesIdPropertyType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the property. </summary>

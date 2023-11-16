@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class PostRestoreContent : IUtf8JsonSerializable
+    public partial class PostRestoreContent : IUtf8JsonSerializable, IJsonModel<PostRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostRestoreContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PostRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PostRestoreContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PostRestoreContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Partition))
             {
@@ -60,7 +71,145 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PostRestoreContent IJsonModel<PostRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostRestoreContent(document.RootElement, options);
+        }
+
+        internal static PostRestoreContent DeserializePostRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> partition = default;
+            Optional<string> replicaGroup = default;
+            Optional<string> requestId = default;
+            Optional<Uri> azureFileShareUri = default;
+            Optional<string> status = default;
+            Optional<Uri> sourceAzureFileShareUri = default;
+            Optional<string> failedFileList = default;
+            Optional<IList<RestoreFileSpec>> restoreFileSpec = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("partition"u8))
+                {
+                    partition = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("replicaGroup"u8))
+                {
+                    replicaGroup = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("requestId"u8))
+                {
+                    requestId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("azureFileShareUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureFileShareUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceAzureFileShareUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceAzureFileShareUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("failedFileList"u8))
+                {
+                    failedFileList = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restoreFileSpec"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RestoreFileSpec> array = new List<RestoreFileSpec>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item));
+                    }
+                    restoreFileSpec = array;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostRestoreContent(partition.Value, replicaGroup.Value, requestId.Value, azureFileShareUri.Value, status.Value, sourceAzureFileShareUri.Value, failedFileList.Value, Optional.ToList(restoreFileSpec), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PostRestoreContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PostRestoreContent IPersistableModel<PostRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePostRestoreContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<PostRestoreContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

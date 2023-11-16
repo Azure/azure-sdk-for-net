@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,14 +15,17 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A class that describes the reason for a validation failure. </summary>
     public partial class VirtualNetworkValidationFailureDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkValidationFailureDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkValidationFailureDetails"/>. </summary>
         public VirtualNetworkValidationFailureDetails()
         {
             FailedTests = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
             Warnings = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkValidationFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkValidationFailureDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,13 +35,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="failedTests"> A list of tests that failed in the validation. </param>
         /// <param name="warnings"> A list of warnings generated during validation. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal VirtualNetworkValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, bool? isFailed, IList<VirtualNetworkValidationTestFailure> failedTests, IList<VirtualNetworkValidationTestFailure> warnings, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, bool? isFailed, IList<VirtualNetworkValidationTestFailure> failedTests, IList<VirtualNetworkValidationTestFailure> warnings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Message = message;
             IsFailed = isFailed;
             FailedTests = failedTests;
             Warnings = warnings;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Text describing the validation outcome. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The result of the query compilation request. </summary>
     public partial class StreamAnalyticsQueryCompilationResult
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryCompilationResult"/>. </summary>
         internal StreamAnalyticsQueryCompilationResult()
         {
             Errors = new ChangeTrackingList<StreamAnalyticsQueryCompilationError>();
@@ -23,19 +27,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Functions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryCompilationResult"/>. </summary>
         /// <param name="errors"> Error messages produced by the compiler. </param>
         /// <param name="warnings"> Warning messages produced by the compiler. </param>
         /// <param name="inputs"> All input names used by the query. </param>
         /// <param name="outputs"> All output names used by the query. </param>
         /// <param name="functions"> All function names used by the query. </param>
-        internal StreamAnalyticsQueryCompilationResult(IReadOnlyList<StreamAnalyticsQueryCompilationError> errors, IReadOnlyList<string> warnings, IReadOnlyList<string> inputs, IReadOnlyList<string> outputs, IReadOnlyList<string> functions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsQueryCompilationResult(IReadOnlyList<StreamAnalyticsQueryCompilationError> errors, IReadOnlyList<string> warnings, IReadOnlyList<string> inputs, IReadOnlyList<string> outputs, IReadOnlyList<string> functions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Warnings = warnings;
             Inputs = inputs;
             Outputs = outputs;
             Functions = functions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error messages produced by the compiler. </summary>

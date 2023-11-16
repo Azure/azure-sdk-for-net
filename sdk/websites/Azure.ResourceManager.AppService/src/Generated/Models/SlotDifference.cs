@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A setting difference between two deployment slots of an app. </summary>
     public partial class SlotDifference : ResourceData
     {
-        /// <summary> Initializes a new instance of SlotDifference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SlotDifference"/>. </summary>
         public SlotDifference()
         {
         }
 
-        /// <summary> Initializes a new instance of SlotDifference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotDifference"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +36,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="valueInTargetSlot"> Value of the setting in the target slot. </param>
         /// <param name="description"> Description of the setting difference. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Level = level;
             SettingType = settingType;
@@ -41,6 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
             ValueInTargetSlot = valueInTargetSlot;
             Description = description;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Level of the difference: Information, Warning or Error. </summary>

@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Trigger Rollover Request. </summary>
     public partial class TriggerRolloverContent
     {
-        /// <summary> Initializes a new instance of TriggerRolloverContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggerRolloverContent"/>. </summary>
         public TriggerRolloverContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerRolloverContent"/>. </summary>
+        /// <param name="serverCertificate"> Certificate Data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerRolloverContent(BinaryData serverCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ServerCertificate = serverCertificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

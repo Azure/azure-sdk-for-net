@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StorageMover;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> List of Endpoints. </summary>
     internal partial class EndpointList
     {
-        /// <summary> Initializes a new instance of EndpointList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointList"/>. </summary>
         internal EndpointList()
         {
             Value = new ChangeTrackingList<StorageMoverEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of EndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
-        internal EndpointList(IReadOnlyList<StorageMoverEndpointData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointList(IReadOnlyList<StorageMoverEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

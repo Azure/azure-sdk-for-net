@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class DetectorDefinitionResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DetectorDefinitionResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectorDefinitionResourceData"/>. </summary>
         public DetectorDefinitionResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of DetectorDefinitionResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorDefinitionResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,13 +36,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="rank"> Detector Rank. </param>
         /// <param name="isEnabled"> Flag representing whether detector is enabled or not. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal DetectorDefinitionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, double? rank, bool? isEnabled, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectorDefinitionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, double? rank, bool? isEnabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
             Rank = rank;
             IsEnabled = isEnabled;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name of the detector. </summary>

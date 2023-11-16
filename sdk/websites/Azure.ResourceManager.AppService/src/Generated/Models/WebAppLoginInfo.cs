@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
     public partial class WebAppLoginInfo
     {
-        /// <summary> Initializes a new instance of WebAppLoginInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppLoginInfo"/>. </summary>
         public WebAppLoginInfo()
         {
             AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WebAppLoginInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppLoginInfo"/>. </summary>
         /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
         /// <param name="tokenStore"> The configuration settings of the token store. </param>
         /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="cookieExpiration"> The configuration settings of the session cookie's expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
-        internal WebAppLoginInfo(LoginRoutes routes, AppServiceTokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, WebAppCookieExpiration cookieExpiration, LoginFlowNonceSettings nonce)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppLoginInfo(LoginRoutes routes, AppServiceTokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, WebAppCookieExpiration cookieExpiration, LoginFlowNonceSettings nonce, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Routes = routes;
             TokenStore = tokenStore;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
             CookieExpiration = cookieExpiration;
             Nonce = nonce;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>

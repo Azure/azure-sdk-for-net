@@ -5,16 +5,95 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class DiskPoolZoneInfo
+    public partial class DiskPoolZoneInfo : IUtf8JsonSerializable, IJsonModel<DiskPoolZoneInfo>
     {
-        internal static DiskPoolZoneInfo DeserializeDiskPoolZoneInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolZoneInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DiskPoolZoneInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DiskPoolZoneInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DiskPoolZoneInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(AvailabilityZones))
+                {
+                    writer.WritePropertyName("availabilityZones"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AvailabilityZones)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(AdditionalCapabilities))
+                {
+                    writer.WritePropertyName("additionalCapabilities"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AdditionalCapabilities)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    writer.WritePropertyName("sku"u8);
+                    writer.WriteObjectValue(Sku);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DiskPoolZoneInfo IJsonModel<DiskPoolZoneInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiskPoolZoneInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskPoolZoneInfo(document.RootElement, options);
+        }
+
+        internal static DiskPoolZoneInfo DeserializeDiskPoolZoneInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +101,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             Optional<IReadOnlyList<string>> availabilityZones = default;
             Optional<IReadOnlyList<string>> additionalCapabilities = default;
             Optional<StoragePoolSku> sku = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityZones"u8))
@@ -61,8 +142,38 @@ namespace Azure.ResourceManager.StoragePool.Models
                     sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiskPoolZoneInfo(Optional.ToList(availabilityZones), Optional.ToList(additionalCapabilities), sku.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DiskPoolZoneInfo(Optional.ToList(availabilityZones), Optional.ToList(additionalCapabilities), sku.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiskPoolZoneInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiskPoolZoneInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DiskPoolZoneInfo IPersistableModel<DiskPoolZoneInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiskPoolZoneInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDiskPoolZoneInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<DiskPoolZoneInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

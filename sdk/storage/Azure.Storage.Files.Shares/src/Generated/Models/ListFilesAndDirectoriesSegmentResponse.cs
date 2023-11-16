@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> An enumeration of directories and files. </summary>
     internal partial class ListFilesAndDirectoriesSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListFilesAndDirectoriesSegmentResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListFilesAndDirectoriesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="shareName"></param>
         /// <param name="directoryPath"></param>
@@ -38,7 +42,7 @@ namespace Azure.Storage.Files.Shares.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of ListFilesAndDirectoriesSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListFilesAndDirectoriesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="shareName"></param>
         /// <param name="shareSnapshot"></param>
@@ -50,7 +54,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
         /// <param name="nextMarker"></param>
         /// <param name="directoryId"></param>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, bool? encoded, string directoryPath, StringEncoded prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, bool? encoded, string directoryPath, StringEncoded prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;
@@ -63,6 +68,12 @@ namespace Azure.Storage.Files.Shares.Models
             Segment = segment;
             NextMarker = nextMarker;
             DirectoryId = directoryId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListFilesAndDirectoriesSegmentResponse"/> for deserialization. </summary>
+        internal ListFilesAndDirectoriesSegmentResponse()
+        {
         }
 
         /// <summary> Gets the service endpoint. </summary>

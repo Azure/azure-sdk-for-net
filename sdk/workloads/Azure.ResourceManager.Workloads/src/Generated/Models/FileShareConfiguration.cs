@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class FileShareConfiguration
     {
-        /// <summary> Initializes a new instance of FileShareConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileShareConfiguration"/>. </summary>
         protected FileShareConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config. </param>
-        internal FileShareConfiguration(ConfigurationType configurationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileShareConfiguration(ConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of file share config. </summary>

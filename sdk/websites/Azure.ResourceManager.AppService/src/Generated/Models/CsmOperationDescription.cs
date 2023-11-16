@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of an operation available for Microsoft.Web resource provider. </summary>
     public partial class CsmOperationDescription
     {
-        /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescription"/>. </summary>
         internal CsmOperationDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescription"/>. </summary>
         /// <param name="name"></param>
         /// <param name="isDataAction"></param>
         /// <param name="display"> Meta data about operation used for display in portal. </param>
         /// <param name="origin"></param>
         /// <param name="properties"> Properties available for a Microsoft.Web resource provider operation. </param>
-        internal CsmOperationDescription(string name, bool? isDataAction, CsmOperationDisplay display, string origin, CsmOperationDescriptionProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CsmOperationDescription(string name, bool? isDataAction, CsmOperationDisplay display, string origin, CsmOperationDescriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

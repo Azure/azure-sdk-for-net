@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Synapse.Models
     /// </summary>
     public abstract partial class SynapseCustomSetupBase
     {
-        /// <summary> Initializes a new instance of SynapseCustomSetupBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseCustomSetupBase"/>. </summary>
         protected SynapseCustomSetupBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseCustomSetupBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseCustomSetupBase"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
-        internal SynapseCustomSetupBase(string customSetupBaseType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseCustomSetupBase(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomSetupBaseType = customSetupBaseType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of custom setup. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the HA software configuration. </summary>
     public partial class HighAvailabilitySoftwareConfiguration
     {
-        /// <summary> Initializes a new instance of HighAvailabilitySoftwareConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HighAvailabilitySoftwareConfiguration"/>. </summary>
         /// <param name="fencingClientId"> The fencing client id. </param>
         /// <param name="fencingClientPassword"> The fencing client id secret/password. The secret should never expire. This will be used pacemaker to start/stop the cluster VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fencingClientId"/> or <paramref name="fencingClientPassword"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Workloads.Models
 
             FencingClientId = fencingClientId;
             FencingClientPassword = fencingClientPassword;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HighAvailabilitySoftwareConfiguration"/>. </summary>
+        /// <param name="fencingClientId"> The fencing client id. </param>
+        /// <param name="fencingClientPassword"> The fencing client id secret/password. The secret should never expire. This will be used pacemaker to start/stop the cluster VMs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HighAvailabilitySoftwareConfiguration(string fencingClientId, string fencingClientPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FencingClientId = fencingClientId;
+            FencingClientPassword = fencingClientPassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HighAvailabilitySoftwareConfiguration"/> for deserialization. </summary>
+        internal HighAvailabilitySoftwareConfiguration()
+        {
         }
 
         /// <summary> The fencing client id. </summary>

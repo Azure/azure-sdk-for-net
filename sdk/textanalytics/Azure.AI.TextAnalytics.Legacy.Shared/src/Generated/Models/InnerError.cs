@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The InnerError. </summary>
     internal partial class InnerError
     {
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
@@ -28,19 +31,26 @@ namespace Azure.AI.TextAnalytics.Legacy
             Details = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> Inner error contains more specific information. </param>
-        internal InnerError(InnerErrorCodeValue code, string message, IReadOnlyDictionary<string, string> details, string target, InnerError innererror)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InnerError(InnerErrorCodeValue code, string message, IReadOnlyDictionary<string, string> details, string target, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Details = details;
             Target = target;
             Innererror = innererror;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InnerError"/> for deserialization. </summary>
+        internal InnerError()
+        {
         }
 
         /// <summary> Error code. </summary>

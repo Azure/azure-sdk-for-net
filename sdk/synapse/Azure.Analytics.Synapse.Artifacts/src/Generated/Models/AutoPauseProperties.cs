@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Auto-pausing properties of a Big Data pool powered by Apache Spark. </summary>
     public partial class AutoPauseProperties
     {
-        /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoPauseProperties"/>. </summary>
         public AutoPauseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoPauseProperties"/>. </summary>
         /// <param name="delayInMinutes"> Number of minutes of idle time before the Big Data pool is automatically paused. </param>
         /// <param name="enabled"> Whether auto-pausing is enabled for the Big Data pool. </param>
-        internal AutoPauseProperties(int? delayInMinutes, bool? enabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoPauseProperties(int? delayInMinutes, bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DelayInMinutes = delayInMinutes;
             Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of minutes of idle time before the Big Data pool is automatically paused. </summary>

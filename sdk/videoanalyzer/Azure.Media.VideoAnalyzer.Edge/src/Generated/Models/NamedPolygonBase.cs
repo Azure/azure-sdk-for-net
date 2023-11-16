@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -17,7 +18,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class NamedPolygonBase
     {
-        /// <summary> Initializes a new instance of NamedPolygonBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamedPolygonBase"/>. </summary>
         /// <param name="name"> Polygon name. Must be unique within the node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected NamedPolygonBase(string name)
@@ -27,13 +31,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of NamedPolygonBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedPolygonBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="name"> Polygon name. Must be unique within the node. </param>
-        internal NamedPolygonBase(string type, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamedPolygonBase(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamedPolygonBase"/> for deserialization. </summary>
+        internal NamedPolygonBase()
+        {
         }
 
         /// <summary> The Type discriminator for the derived types. </summary>

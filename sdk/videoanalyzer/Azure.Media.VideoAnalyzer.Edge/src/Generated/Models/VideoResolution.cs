@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The Video resolution. </summary>
     public partial class VideoResolution
     {
-        /// <summary> Initializes a new instance of VideoResolution. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VideoResolution"/>. </summary>
         public VideoResolution()
         {
         }
 
-        /// <summary> Initializes a new instance of VideoResolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoResolution"/>. </summary>
         /// <param name="width"> The number of columns of the Video image. </param>
         /// <param name="height"> The number of lines of the Video image. </param>
-        internal VideoResolution(float? width, float? height)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VideoResolution(float? width, float? height, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Width = width;
             Height = height;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of columns of the Video image. </summary>

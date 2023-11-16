@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmStorageConfigurationSettings : IUtf8JsonSerializable
+    public partial class SqlVmStorageConfigurationSettings : IUtf8JsonSerializable, IJsonModel<SqlVmStorageConfigurationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmStorageConfigurationSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlVmStorageConfigurationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlVmStorageConfigurationSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlVmStorageConfigurationSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlDataSettings))
             {
@@ -45,11 +56,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("storageWorkloadType"u8);
                 writer.WriteStringValue(StorageWorkloadType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmStorageConfigurationSettings DeserializeSqlVmStorageConfigurationSettings(JsonElement element)
+        SqlVmStorageConfigurationSettings IJsonModel<SqlVmStorageConfigurationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmStorageConfigurationSettings(document.RootElement, options);
+        }
+
+        internal static SqlVmStorageConfigurationSettings DeserializeSqlVmStorageConfigurationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +100,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<bool> sqlSystemDBOnDataDisk = default;
             Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
             Optional<SqlVmStorageWorkloadType> storageWorkloadType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlDataSettings"u8))
@@ -116,8 +158,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     storageWorkloadType = new SqlVmStorageWorkloadType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlVmStorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlVmStorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlVmStorageConfigurationSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlVmStorageConfigurationSettings IPersistableModel<SqlVmStorageConfigurationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlVmStorageConfigurationSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlVmStorageConfigurationSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

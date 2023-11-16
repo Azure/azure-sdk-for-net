@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkBatchJob. </summary>
     public partial class SparkBatchJob
     {
-        /// <summary> Initializes a new instance of SparkBatchJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJob"/>. </summary>
         /// <param name="id"> The session Id. </param>
         internal SparkBatchJob(int id)
         {
@@ -24,7 +28,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             LogLines = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SparkBatchJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJob"/>. </summary>
         /// <param name="livyInfo"></param>
         /// <param name="name"> The batch name. </param>
         /// <param name="workspaceName"> The workspace name. </param>
@@ -43,7 +47,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="appInfo"> The detailed application info. </param>
         /// <param name="state"> The batch state. </param>
         /// <param name="logLines"> The log lines. </param>
-        internal SparkBatchJob(SparkBatchJobState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkBatchJobResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, LivyStates? state, IReadOnlyList<string> logLines)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkBatchJob(SparkBatchJobState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkBatchJobResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, LivyStates? state, IReadOnlyList<string> logLines, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LivyInfo = livyInfo;
             Name = name;
@@ -63,6 +68,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             AppInfo = appInfo;
             State = state;
             LogLines = logLines;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJob"/> for deserialization. </summary>
+        internal SparkBatchJob()
+        {
         }
 
         /// <summary> Gets the livy info. </summary>

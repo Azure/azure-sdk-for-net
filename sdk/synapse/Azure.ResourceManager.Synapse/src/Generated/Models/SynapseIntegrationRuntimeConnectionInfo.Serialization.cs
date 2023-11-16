@@ -7,15 +7,111 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeConnectionInfo
+    public partial class SynapseIntegrationRuntimeConnectionInfo : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeConnectionInfo>
     {
-        internal static SynapseIntegrationRuntimeConnectionInfo DeserializeSynapseIntegrationRuntimeConnectionInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeConnectionInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SynapseIntegrationRuntimeConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SynapseIntegrationRuntimeConnectionInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SynapseIntegrationRuntimeConnectionInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceToken))
+                {
+                    writer.WritePropertyName("serviceToken"u8);
+                    writer.WriteStringValue(ServiceToken);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IdentityCertThumbprint))
+                {
+                    writer.WritePropertyName("identityCertThumbprint"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(IdentityCertThumbprint);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(IdentityCertThumbprint))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HostServiceUri))
+                {
+                    writer.WritePropertyName("hostServiceUri"u8);
+                    writer.WriteStringValue(HostServiceUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublicKey))
+                {
+                    writer.WritePropertyName("publicKey"u8);
+                    writer.WriteStringValue(PublicKey);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsIdentityCertExprired))
+                {
+                    writer.WritePropertyName("isIdentityCertExprired"u8);
+                    writer.WriteBooleanValue(IsIdentityCertExprired.Value);
+                }
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        SynapseIntegrationRuntimeConnectionInfo IJsonModel<SynapseIntegrationRuntimeConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeConnectionInfo(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeConnectionInfo DeserializeSynapseIntegrationRuntimeConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,5 +173,30 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeConnectionInfo(serviceToken.Value, identityCertThumbprint.Value, hostServiceUri.Value, version.Value, publicKey.Value, Optional.ToNullable(isIdentityCertExprired), additionalProperties);
         }
+
+        BinaryData IPersistableModel<SynapseIntegrationRuntimeConnectionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseIntegrationRuntimeConnectionInfo IPersistableModel<SynapseIntegrationRuntimeConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeConnectionInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<SynapseIntegrationRuntimeConnectionInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

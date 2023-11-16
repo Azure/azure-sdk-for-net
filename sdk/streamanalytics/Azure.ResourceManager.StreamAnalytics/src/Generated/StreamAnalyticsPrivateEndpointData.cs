@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,22 +20,27 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamAnalyticsPrivateEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointData"/>. </summary>
         public StreamAnalyticsPrivateEndpointData()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties associated with a private endpoint. </param>
         /// <param name="etag"> Unique opaque string (generally a GUID) that represents the metadata state of the resource (private endpoint) and changes whenever the resource is updated. Required on PUT (CreateOrUpdate) requests. </param>
-        internal StreamAnalyticsPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StreamAnalyticsPrivateEndpointProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StreamAnalyticsPrivateEndpointProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The properties associated with a private endpoint. </summary>

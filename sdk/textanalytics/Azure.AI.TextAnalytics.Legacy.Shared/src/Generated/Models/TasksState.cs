@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The TasksState. </summary>
     internal partial class TasksState
     {
-        /// <summary> Initializes a new instance of TasksState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TasksState"/>. </summary>
         /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         internal TasksState(TasksStateTasks tasks)
@@ -22,6 +26,20 @@ namespace Azure.AI.TextAnalytics.Legacy
             Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TasksState"/>. </summary>
+        /// <param name="tasks"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TasksState(TasksStateTasks tasks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tasks = tasks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TasksState"/> for deserialization. </summary>
+        internal TasksState()
+        {
         }
 
         /// <summary> Gets the tasks. </summary>

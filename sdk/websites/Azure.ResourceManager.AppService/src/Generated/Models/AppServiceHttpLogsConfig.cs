@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Http logs configuration. </summary>
     public partial class AppServiceHttpLogsConfig
     {
-        /// <summary> Initializes a new instance of AppServiceHttpLogsConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceHttpLogsConfig"/>. </summary>
         public AppServiceHttpLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceHttpLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceHttpLogsConfig"/>. </summary>
         /// <param name="fileSystem"> Http logs to file system configuration. </param>
         /// <param name="azureBlobStorage"> Http logs to azure blob storage configuration. </param>
-        internal AppServiceHttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AppServiceBlobStorageHttpLogsConfig azureBlobStorage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceHttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AppServiceBlobStorageHttpLogsConfig azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileSystem = fileSystem;
             AzureBlobStorage = azureBlobStorage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Http logs to file system configuration. </summary>

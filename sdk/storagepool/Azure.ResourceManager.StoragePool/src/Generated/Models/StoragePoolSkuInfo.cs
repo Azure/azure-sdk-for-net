@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Resource SKU Details. </summary>
     public partial class StoragePoolSkuInfo
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuInfo"/>. </summary>
         internal StoragePoolSkuInfo()
         {
             Capabilities = new ChangeTrackingList<StoragePoolSkuCapability>();
             Restrictions = new ChangeTrackingList<StoragePoolSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuInfo"/>. </summary>
         /// <param name="apiVersion"> StoragePool RP API version. </param>
         /// <param name="resourceType"> StoragePool resource type. </param>
         /// <param name="capabilities"> List of additional capabilities for StoragePool resource. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="name"> Sku name. </param>
         /// <param name="tier"> Sku tier. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal StoragePoolSkuInfo(string apiVersion, string resourceType, IReadOnlyList<StoragePoolSkuCapability> capabilities, StoragePoolSkuLocationInfo locationInfo, string name, string tier, IReadOnlyList<StoragePoolSkuRestrictions> restrictions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePoolSkuInfo(string apiVersion, string resourceType, IReadOnlyList<StoragePoolSkuCapability> capabilities, StoragePoolSkuLocationInfo locationInfo, string name, string tier, IReadOnlyList<StoragePoolSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApiVersion = apiVersion;
             ResourceType = resourceType;
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Name = name;
             Tier = tier;
             Restrictions = restrictions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> StoragePool RP API version. </summary>

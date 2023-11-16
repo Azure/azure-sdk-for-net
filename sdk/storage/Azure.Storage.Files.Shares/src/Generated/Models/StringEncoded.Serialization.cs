@@ -5,13 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class StringEncoded
+    internal partial class StringEncoded : IXmlSerializable, IPersistableModel<StringEncoded>
     {
-        internal static StringEncoded DeserializeStringEncoded(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "StringEncoded");
+            if (Optional.IsDefined(Encoded))
+            {
+                writer.WriteStartAttribute("Encoded");
+                writer.WriteValue(Encoded.Value);
+                writer.WriteEndAttribute();
+            }
+            writer.WriteValue(Content);
+            writer.WriteEndElement();
+        }
+
+        internal static StringEncoded DeserializeStringEncoded(XElement element, ModelReaderWriterOptions options = null)
         {
             bool? encoded = default;
             string content = default;
@@ -20,7 +39,43 @@ namespace Azure.Storage.Files.Shares.Models
                 encoded = (bool?)encodedAttribute;
             }
             content = (string)element;
-            return new StringEncoded(encoded, content);
+            return new StringEncoded(encoded, content, default);
         }
+
+        BinaryData IPersistableModel<StringEncoded>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<StringEncoded>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        StringEncoded IPersistableModel<StringEncoded>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StringEncoded)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeStringEncoded(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<StringEncoded>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

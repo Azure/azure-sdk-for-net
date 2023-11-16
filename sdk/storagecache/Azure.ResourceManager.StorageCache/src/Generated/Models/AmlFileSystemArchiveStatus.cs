@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> The status of the archive. </summary>
     public partial class AmlFileSystemArchiveStatus
     {
-        /// <summary> Initializes a new instance of AmlFileSystemArchiveStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemArchiveStatus"/>. </summary>
         internal AmlFileSystemArchiveStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemArchiveStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemArchiveStatus"/>. </summary>
         /// <param name="state"> The state of the archive operation. </param>
         /// <param name="lastCompletionOn"> The time of the last completed archive operation. </param>
         /// <param name="lastStartedOn"> The time the latest archive operation started. </param>
         /// <param name="percentComplete"> The completion percentage of the archive operation. </param>
         /// <param name="errorCode"> Server-defined error code for the archive operation. </param>
         /// <param name="errorMessage"> Server-defined error message for the archive operation. </param>
-        internal AmlFileSystemArchiveStatus(ArchiveStatusType? state, DateTimeOffset? lastCompletionOn, DateTimeOffset? lastStartedOn, int? percentComplete, string errorCode, string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemArchiveStatus(ArchiveStatusType? state, DateTimeOffset? lastCompletionOn, DateTimeOffset? lastStartedOn, int? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             LastCompletionOn = lastCompletionOn;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             PercentComplete = percentComplete;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the archive operation. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Additional information for technical support ticket. </summary>
     internal partial class TechnicalTicketDetails
     {
-        /// <summary> Initializes a new instance of TechnicalTicketDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TechnicalTicketDetails"/>. </summary>
         public TechnicalTicketDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TechnicalTicketDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TechnicalTicketDetails"/>. </summary>
         /// <param name="resourceId"> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </param>
-        internal TechnicalTicketDetails(ResourceIdentifier resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TechnicalTicketDetails(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </summary>

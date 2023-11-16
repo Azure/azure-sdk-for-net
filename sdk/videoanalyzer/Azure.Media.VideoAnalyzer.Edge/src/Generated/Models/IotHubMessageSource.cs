@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> IoT Hub Message source allows for the pipeline to consume messages from the IoT Edge Hub. Messages can be routed from other IoT modules via routes declared in the IoT Edge deployment manifest. </summary>
     public partial class IotHubMessageSource : SourceNodeBase
     {
-        /// <summary> Initializes a new instance of IotHubMessageSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSource"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public IotHubMessageSource(string name) : base(name)
@@ -23,14 +24,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.IotHubMessageSource";
         }
 
-        /// <summary> Initializes a new instance of IotHubMessageSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSource"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hubInputName"> Name of the IoT Edge Hub input from which messages will be consumed. </param>
-        internal IotHubMessageSource(string type, string name, string hubInputName) : base(type, name)
+        internal IotHubMessageSource(string type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string hubInputName) : base(type, name, serializedAdditionalRawData)
         {
             HubInputName = hubInputName;
             Type = type ?? "#Microsoft.VideoAnalyzer.IotHubMessageSource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSource"/> for deserialization. </summary>
+        internal IotHubMessageSource()
+        {
         }
 
         /// <summary> Name of the IoT Edge Hub input from which messages will be consumed. </summary>

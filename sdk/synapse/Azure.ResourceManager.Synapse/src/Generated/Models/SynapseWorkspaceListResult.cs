@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> List of workspaces. </summary>
     internal partial class SynapseWorkspaceListResult
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceListResult"/>. </summary>
         internal SynapseWorkspaceListResult()
         {
             Value = new ChangeTrackingList<SynapseWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of workspaces. </param>
-        internal SynapseWorkspaceListResult(string nextLink, IReadOnlyList<SynapseWorkspaceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseWorkspaceListResult(string nextLink, IReadOnlyList<SynapseWorkspaceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Link to the next page of results. </summary>

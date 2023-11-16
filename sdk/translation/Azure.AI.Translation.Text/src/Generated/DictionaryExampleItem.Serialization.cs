@@ -5,16 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class DictionaryExampleItem
+    public partial class DictionaryExampleItem : IUtf8JsonSerializable, IJsonModel<DictionaryExampleItem>
     {
-        internal static DictionaryExampleItem DeserializeDictionaryExampleItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DictionaryExampleItem>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DictionaryExampleItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DictionaryExampleItem>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DictionaryExampleItem>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("normalizedSource"u8);
+            writer.WriteStringValue(NormalizedSource);
+            writer.WritePropertyName("normalizedTarget"u8);
+            writer.WriteStringValue(NormalizedTarget);
+            writer.WritePropertyName("examples"u8);
+            writer.WriteStartArray();
+            foreach (var item in Examples)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DictionaryExampleItem IJsonModel<DictionaryExampleItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DictionaryExampleItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDictionaryExampleItem(document.RootElement, options);
+        }
+
+        internal static DictionaryExampleItem DeserializeDictionaryExampleItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +79,8 @@ namespace Azure.AI.Translation.Text
             string normalizedSource = default;
             string normalizedTarget = default;
             IReadOnlyList<DictionaryExample> examples = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("normalizedSource"u8))
@@ -44,16 +103,54 @@ namespace Azure.AI.Translation.Text
                     examples = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DictionaryExampleItem(normalizedSource, normalizedTarget, examples);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DictionaryExampleItem(normalizedSource, normalizedTarget, examples, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DictionaryExampleItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DictionaryExampleItem)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DictionaryExampleItem IPersistableModel<DictionaryExampleItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DictionaryExampleItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDictionaryExampleItem(document.RootElement, options);
+        }
+
+        string IPersistableModel<DictionaryExampleItem>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DictionaryExampleItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDictionaryExampleItem(document.RootElement);
+            return DeserializeDictionaryExampleItem(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

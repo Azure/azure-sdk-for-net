@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The StorageMoverAgentPropertiesErrorDetails. </summary>
     public partial class StorageMoverAgentPropertiesErrorDetails
     {
-        /// <summary> Initializes a new instance of StorageMoverAgentPropertiesErrorDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPropertiesErrorDetails"/>. </summary>
         internal StorageMoverAgentPropertiesErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMoverAgentPropertiesErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPropertiesErrorDetails"/>. </summary>
         /// <param name="code"> Error code reported by Agent. </param>
         /// <param name="message"> Expanded description of reported error code. </param>
-        internal StorageMoverAgentPropertiesErrorDetails(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverAgentPropertiesErrorDetails(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code reported by Agent. </summary>

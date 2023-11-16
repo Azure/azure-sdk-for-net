@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Performance monitor sample in a set. </summary>
     public partial class PerfMonSample
     {
-        /// <summary> Initializes a new instance of PerfMonSample. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PerfMonSample"/>. </summary>
         internal PerfMonSample()
         {
         }
 
-        /// <summary> Initializes a new instance of PerfMonSample. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerfMonSample"/>. </summary>
         /// <param name="time"> Point in time for which counter was measured. </param>
         /// <param name="instanceName"> Name of the server on which the measurement is made. </param>
         /// <param name="value"> Value of counter at a certain time. </param>
-        internal PerfMonSample(DateTimeOffset? time, string instanceName, double? value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PerfMonSample(DateTimeOffset? time, string instanceName, double? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Time = time;
             InstanceName = instanceName;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Point in time for which counter was measured. </summary>

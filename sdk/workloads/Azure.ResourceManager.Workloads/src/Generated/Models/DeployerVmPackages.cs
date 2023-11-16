@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the url and storage account ID where deployer VM packages are uploaded. </summary>
     public partial class DeployerVmPackages
     {
-        /// <summary> Initializes a new instance of DeployerVmPackages. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeployerVmPackages"/>. </summary>
         public DeployerVmPackages()
         {
         }
 
-        /// <summary> Initializes a new instance of DeployerVmPackages. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeployerVmPackages"/>. </summary>
         /// <param name="packageUri"> The URL to the deployer VM packages file. </param>
         /// <param name="storageAccountId"> The deployer VM packages storage account id. </param>
-        internal DeployerVmPackages(Uri packageUri, string storageAccountId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeployerVmPackages(Uri packageUri, string storageAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackageUri = packageUri;
             StorageAccountId = storageAccountId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL to the deployer VM packages file. </summary>

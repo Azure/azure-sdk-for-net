@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> A resource SKU capability. </summary>
     public partial class StorageCacheSkuCapability
     {
-        /// <summary> Initializes a new instance of StorageCacheSkuCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSkuCapability"/>. </summary>
         internal StorageCacheSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSkuCapability"/>. </summary>
         /// <param name="name"> Name of a capability, such as ops/sec. </param>
         /// <param name="value"> Quantity, if the capability is measured by quantity. </param>
-        internal StorageCacheSkuCapability(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheSkuCapability(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of a capability, such as ops/sec. </summary>

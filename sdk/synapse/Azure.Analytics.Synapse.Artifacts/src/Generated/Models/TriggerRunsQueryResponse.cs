@@ -15,7 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of trigger runs. </summary>
     public partial class TriggerRunsQueryResponse
     {
-        /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggerRunsQueryResponse"/>. </summary>
         /// <param name="value"> List of trigger runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggerRunsQueryResponse(IEnumerable<TriggerRun> value)
@@ -25,13 +28,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerRunsQueryResponse"/>. </summary>
         /// <param name="value"> List of trigger runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        internal TriggerRunsQueryResponse(IReadOnlyList<TriggerRun> value, string continuationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerRunsQueryResponse(IReadOnlyList<TriggerRun> value, string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerRunsQueryResponse"/> for deserialization. </summary>
+        internal TriggerRunsQueryResponse()
+        {
         }
 
         /// <summary> List of trigger runs. </summary>

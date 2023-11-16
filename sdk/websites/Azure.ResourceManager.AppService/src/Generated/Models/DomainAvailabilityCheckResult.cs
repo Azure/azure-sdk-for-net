@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Domain availability check result. </summary>
     public partial class DomainAvailabilityCheckResult
     {
-        /// <summary> Initializes a new instance of DomainAvailabilityCheckResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainAvailabilityCheckResult"/>. </summary>
         internal DomainAvailabilityCheckResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainAvailabilityCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainAvailabilityCheckResult"/>. </summary>
         /// <param name="name"> Name of the domain. </param>
         /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="domainType"> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </param>
-        internal DomainAvailabilityCheckResult(string name, bool? isAvailable, AppServiceDomainType? domainType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainAvailabilityCheckResult(string name, bool? isAvailable, AppServiceDomainType? domainType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IsAvailable = isAvailable;
             DomainType = domainType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the domain. </summary>

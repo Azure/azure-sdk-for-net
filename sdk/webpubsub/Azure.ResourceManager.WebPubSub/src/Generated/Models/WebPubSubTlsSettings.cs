@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> TLS settings for the resource. </summary>
     internal partial class WebPubSubTlsSettings
     {
-        /// <summary> Initializes a new instance of WebPubSubTlsSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubTlsSettings"/>. </summary>
         public WebPubSubTlsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubTlsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubTlsSettings"/>. </summary>
         /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. </param>
-        internal WebPubSubTlsSettings(bool? isClientCertEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubTlsSettings(bool? isClientCertEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsClientCertEnabled = isClientCertEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>

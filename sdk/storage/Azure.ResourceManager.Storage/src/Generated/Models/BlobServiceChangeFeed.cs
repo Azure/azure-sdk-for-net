@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The blob service properties for change feed events. </summary>
     public partial class BlobServiceChangeFeed
     {
-        /// <summary> Initializes a new instance of BlobServiceChangeFeed. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobServiceChangeFeed"/>. </summary>
         public BlobServiceChangeFeed()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobServiceChangeFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceChangeFeed"/>. </summary>
         /// <param name="isEnabled"> Indicates whether change feed event logging is enabled for the Blob service. </param>
         /// <param name="retentionInDays"> Indicates the duration of changeFeed retention in days. Minimum value is 1 day and maximum value is 146000 days (400 years). A null value indicates an infinite retention of the change feed. </param>
-        internal BlobServiceChangeFeed(bool? isEnabled, int? retentionInDays)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobServiceChangeFeed(bool? isEnabled, int? retentionInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             RetentionInDays = retentionInDays;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether change feed event logging is enabled for the Blob service. </summary>
