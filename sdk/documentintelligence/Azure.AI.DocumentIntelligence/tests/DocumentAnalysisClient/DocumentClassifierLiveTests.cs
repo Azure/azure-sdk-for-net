@@ -19,16 +19,16 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [RecordedTest]
         public async Task ClassifyDocumentWithUrlSource()
         {
-            var client = CreateDocumentAnalysisClient();
+            var client = CreateDocumentIntelligenceClient();
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var request = new ClassifyDocumentRequest()
+            var content = new ClassifyDocumentContent()
             {
                 UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040)
             };
 
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, request);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -39,16 +39,16 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [RecordedTest]
         public async Task ClassifyDocumentCanParseBlankPage()
         {
-            var client = CreateDocumentAnalysisClient();
+            var client = CreateDocumentIntelligenceClient();
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var request = new ClassifyDocumentRequest()
+            var content = new ClassifyDocumentContent()
             {
                 UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
             };
 
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, request);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);

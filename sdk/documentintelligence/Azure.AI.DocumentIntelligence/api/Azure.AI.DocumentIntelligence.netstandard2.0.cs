@@ -70,9 +70,9 @@ namespace Azure.AI.DocumentIntelligence
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentField> Fields { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get { throw null; } }
     }
-    public partial class AnalyzeDocumentRequest
+    public partial class AnalyzeDocumentContent
     {
-        public AnalyzeDocumentRequest() { }
+        public AnalyzeDocumentContent() { }
         public System.BinaryData Base64Source { get { throw null; } set { } }
         public System.Uri UrlSource { get { throw null; } set { } }
     }
@@ -95,9 +95,9 @@ namespace Azure.AI.DocumentIntelligence
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentStyle> Styles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentTable> Tables { get { throw null; } }
     }
-    public partial class AuthorizeCopyRequest
+    public partial class AuthorizeCopyContent
     {
-        public AuthorizeCopyRequest(string modelId) { }
+        public AuthorizeCopyContent(string modelId) { }
         public string Description { get { throw null; } set { } }
         public string ModelId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -128,16 +128,16 @@ namespace Azure.AI.DocumentIntelligence
         public int PageNumber { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<float> Polygon { get { throw null; } }
     }
-    public partial class BuildDocumentClassifierRequest
+    public partial class BuildDocumentClassifierContent
     {
-        public BuildDocumentClassifierRequest(string classifierId, System.Collections.Generic.IDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> docTypes) { }
+        public BuildDocumentClassifierContent(string classifierId, System.Collections.Generic.IDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> docTypes) { }
         public string ClassifierId { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> DocTypes { get { throw null; } }
     }
-    public partial class BuildDocumentModelRequest
+    public partial class BuildDocumentModelContent
     {
-        public BuildDocumentModelRequest(string modelId, Azure.AI.DocumentIntelligence.DocumentBuildMode buildMode) { }
+        public BuildDocumentModelContent(string modelId, Azure.AI.DocumentIntelligence.DocumentBuildMode buildMode) { }
         public Azure.AI.DocumentIntelligence.AzureBlobFileListContentSource AzureBlobFileListSource { get { throw null; } set { } }
         public Azure.AI.DocumentIntelligence.AzureBlobContentSource AzureBlobSource { get { throw null; } set { } }
         public Azure.AI.DocumentIntelligence.DocumentBuildMode BuildMode { get { throw null; } }
@@ -152,9 +152,9 @@ namespace Azure.AI.DocumentIntelligence
         public Azure.AI.DocumentIntelligence.AzureBlobContentSource AzureBlobSource { get { throw null; } set { } }
         public Azure.AI.DocumentIntelligence.ContentSourceKind? SourceKind { get { throw null; } set { } }
     }
-    public partial class ClassifyDocumentRequest
+    public partial class ClassifyDocumentContent
     {
-        public ClassifyDocumentRequest() { }
+        public ClassifyDocumentContent() { }
         public System.BinaryData Base64Source { get { throw null; } set { } }
         public System.Uri UrlSource { get { throw null; } set { } }
     }
@@ -163,9 +163,9 @@ namespace Azure.AI.DocumentIntelligence
         public ComponentDocumentModelDetails(string modelId) { }
         public string ModelId { get { throw null; } }
     }
-    public partial class ComposeDocumentModelRequest
+    public partial class ComposeDocumentModelContent
     {
-        public ComposeDocumentModelRequest(string modelId, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.ComponentDocumentModelDetails> componentModels) { }
+        public ComposeDocumentModelContent(string modelId, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.ComponentDocumentModelDetails> componentModels) { }
         public System.Collections.Generic.IList<Azure.AI.DocumentIntelligence.ComponentDocumentModelDetails> ComponentModels { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string ModelId { get { throw null; } }
@@ -231,23 +231,6 @@ namespace Azure.AI.DocumentIntelligence
         internal CustomDocumentModelsDetails() { }
         public int Count { get { throw null; } }
         public int Limit { get { throw null; } }
-    }
-    public partial class DocumentAnalysisClient
-    {
-        protected DocumentAnalysisClient() { }
-        public DocumentAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public DocumentAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
-        public DocumentAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public DocumentAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentRequest analyzeRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.ContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.ContentFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> AnalyzeDocumentAsync(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentRequest analyzeRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.ContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.ContentFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeDocumentAsync(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> ClassifyDocument(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentRequest classifyRequest, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), Azure.AI.DocumentIntelligence.SplitMode? split = default(Azure.AI.DocumentIntelligence.SplitMode?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> ClassifyDocument(Azure.WaitUntil waitUntil, string classifierId, Azure.Core.RequestContent content, string stringIndexType = null, string split = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentRequest classifyRequest, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), Azure.AI.DocumentIntelligence.SplitMode? split = default(Azure.AI.DocumentIntelligence.SplitMode?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.Core.RequestContent content, string stringIndexType = null, string split = null, Azure.RequestContext context = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DocumentAnalysisFeature : System.IEquatable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature>
@@ -461,6 +444,84 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator !=(Azure.AI.DocumentIntelligence.DocumentFormulaKind left, Azure.AI.DocumentIntelligence.DocumentFormulaKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DocumentIntelligenceAdministrationClient
+    {
+        protected DocumentIntelligenceAdministrationClient() { }
+        public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
+        public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response<Azure.AI.DocumentIntelligence.CopyAuthorization> AuthorizeModelCopy(Azure.AI.DocumentIntelligence.AuthorizeCopyContent authorizeCopyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response AuthorizeModelCopy(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.CopyAuthorization>> AuthorizeModelCopyAsync(Azure.AI.DocumentIntelligence.AuthorizeCopyContent authorizeCopyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AuthorizeModelCopyAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.DocumentClassifierDetails> BuildClassifier(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.BuildDocumentClassifierContent buildRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> BuildClassifier(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.DocumentClassifierDetails>> BuildClassifierAsync(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.BuildDocumentClassifierContent buildRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> BuildClassifierAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails> BuildDocumentModel(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.BuildDocumentModelContent buildRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> BuildDocumentModel(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails>> BuildDocumentModelAsync(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.BuildDocumentModelContent buildRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> BuildDocumentModelAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails> ComposeModel(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.ComposeDocumentModelContent composeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> ComposeModel(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails>> ComposeModelAsync(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.ComposeDocumentModelContent composeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ComposeModelAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails> CopyModelTo(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.CopyAuthorization copyToRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CopyModelTo(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails>> CopyModelToAsync(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.CopyAuthorization copyToRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CopyModelToAsync(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteClassifier(string classifierId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteClassifierAsync(string classifierId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteModel(string modelId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteModelAsync(string modelId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetClassifier(string classifierId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifier(string classifierId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassifierAsync(string classifierId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.DocumentClassifierDetails>> GetClassifierAsync(string classifierId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetClassifiers(Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifiers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetClassifiersAsync(Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifiersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetModel(string modelId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModel(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetModelAsync(string modelId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.DocumentModelDetails>> GetModelAsync(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetModels(Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModels(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetModelsAsync(Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModelsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetOperation(string operationId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.DocumentIntelligence.OperationDetails> GetOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationAsync(string operationId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.OperationDetails>> GetOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetOperations(Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.DocumentIntelligence.OperationDetails> GetOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationsAsync(Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.DocumentIntelligence.OperationDetails> GetOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetResourceInfo(Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.DocumentIntelligence.ResourceDetails> GetResourceInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceInfoAsync(Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.ResourceDetails>> GetResourceInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DocumentIntelligenceClient
+    {
+        protected DocumentIntelligenceClient() { }
+        public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
+        public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentContent analyzeRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.ContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.ContentFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> AnalyzeDocumentAsync(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentContent analyzeRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.ContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.ContentFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeDocumentAsync(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> ClassifyDocument(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentContent classifyRequest, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), Azure.AI.DocumentIntelligence.SplitMode? split = default(Azure.AI.DocumentIntelligence.SplitMode?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> ClassifyDocument(Azure.WaitUntil waitUntil, string classifierId, Azure.Core.RequestContent content, string stringIndexType = null, string split = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentContent classifyRequest, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), Azure.AI.DocumentIntelligence.SplitMode? split = default(Azure.AI.DocumentIntelligence.SplitMode?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.Core.RequestContent content, string stringIndexType = null, string split = null, Azure.RequestContext context = null) { throw null; }
+    }
     public partial class DocumentIntelligenceError
     {
         internal DocumentIntelligenceError() { }
@@ -512,67 +573,6 @@ namespace Azure.AI.DocumentIntelligence
         public System.Collections.Generic.IReadOnlyList<string> Elements { get { throw null; } }
         public int Level { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get { throw null; } }
-    }
-    public partial class DocumentModelAdministrationClient
-    {
-        protected DocumentModelAdministrationClient() { }
-        public DocumentModelAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public DocumentModelAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
-        public DocumentModelAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public DocumentModelAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.DocumentIntelligence.CopyAuthorization> AuthorizeModelCopy(Azure.AI.DocumentIntelligence.AuthorizeCopyRequest authorizeCopyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response AuthorizeModelCopy(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.CopyAuthorization>> AuthorizeModelCopyAsync(Azure.AI.DocumentIntelligence.AuthorizeCopyRequest authorizeCopyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AuthorizeModelCopyAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.DocumentClassifierDetails> BuildClassifier(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.BuildDocumentClassifierRequest buildRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> BuildClassifier(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.DocumentClassifierDetails>> BuildClassifierAsync(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.BuildDocumentClassifierRequest buildRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> BuildClassifierAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails> BuildDocumentModel(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.BuildDocumentModelRequest buildRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> BuildDocumentModel(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails>> BuildDocumentModelAsync(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.BuildDocumentModelRequest buildRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> BuildDocumentModelAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails> ComposeModel(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.ComposeDocumentModelRequest composeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> ComposeModel(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails>> ComposeModelAsync(Azure.WaitUntil waitUntil, Azure.AI.DocumentIntelligence.ComposeDocumentModelRequest composeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ComposeModelAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails> CopyModelTo(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.CopyAuthorization copyToRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> CopyModelTo(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.DocumentModelDetails>> CopyModelToAsync(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.CopyAuthorization copyToRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CopyModelToAsync(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteClassifier(string classifierId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteClassifierAsync(string classifierId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteModel(string modelId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteModelAsync(string modelId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetClassifier(string classifierId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifier(string classifierId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassifierAsync(string classifierId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.DocumentClassifierDetails>> GetClassifierAsync(string classifierId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetClassifiers(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifiers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetClassifiersAsync(Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.DocumentIntelligence.DocumentClassifierDetails> GetClassifiersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetModel(string modelId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModel(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetModelAsync(string modelId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.DocumentModelDetails>> GetModelAsync(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetModels(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModels(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetModelsAsync(Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.DocumentIntelligence.DocumentModelDetails> GetModelsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetOperation(string operationId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.DocumentIntelligence.OperationDetails> GetOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationAsync(string operationId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.OperationDetails>> GetOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetOperations(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.DocumentIntelligence.OperationDetails> GetOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationsAsync(Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.DocumentIntelligence.OperationDetails> GetOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetResourceInfo(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.DocumentIntelligence.ResourceDetails> GetResourceInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceInfoAsync(Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.ResourceDetails>> GetResourceInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DocumentModelBuildOperationDetails : Azure.AI.DocumentIntelligence.OperationDetails
     {
@@ -929,11 +929,11 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AIDocumentIntelligenceClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentAnalysisClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentAnalysisClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentAnalysisClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentModelAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentModelAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentModelAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentModelAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentModelAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentModelAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

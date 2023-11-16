@@ -21,36 +21,36 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         protected string ServiceVersionString { get; } = "2023-10-31-preview";
 
-        protected DocumentAnalysisClient CreateDocumentAnalysisClient()
+        protected DocumentIntelligenceClient CreateDocumentIntelligenceClient()
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
 
-            var nonInstrumentedClient = new DocumentAnalysisClient(endpoint, credential, options);
+            var nonInstrumentedClient = new DocumentIntelligenceClient(endpoint, credential, options);
 
             return InstrumentClient(nonInstrumentedClient);
         }
 
-        protected DocumentModelAdministrationClient CreateDocumentModelAdministrationClient()
+        protected DocumentIntelligenceAdministrationClient CreateDocumentIntelligenceAdministrationClient()
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
 
-            var nonInstrumentedClient = new DocumentModelAdministrationClient(endpoint, credential, options);
+            var nonInstrumentedClient = new DocumentIntelligenceAdministrationClient(endpoint, credential, options);
 
             return InstrumentClient(nonInstrumentedClient);
         }
 
         protected async Task<DisposableDocumentModel> BuildDisposableDocumentModelAsync(string containerUrlString, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
             var containerUrl = new Uri(containerUrlString);
             var source = new AzureBlobContentSource(containerUrl);
 
-            var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = source,
                 Description = description
@@ -60,16 +60,16 @@ namespace Azure.AI.DocumentIntelligence.Tests
             {
                 foreach (var tag in tags)
                 {
-                    request.Tags.Add(tag);
+                    content.Tags.Add(tag);
                 }
             }
 
-            return await DisposableDocumentModel.BuildAsync(client, request);
+            return await DisposableDocumentModel.BuildAsync(client, content);
         }
 
         protected async Task<DisposableDocumentClassifier> BuildDisposableDocumentClassifierAsync(string description = null)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
             var sourceA = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-A/train" };
@@ -91,12 +91,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 { "IRS-1040-E", docTypeE }
             };
 
-            var request = new BuildDocumentClassifierRequest(classifierId, docTypes)
+            var content = new BuildDocumentClassifierContent(classifierId, docTypes)
             {
                 Description = description
             };
 
-            return await DisposableDocumentClassifier.BuildAsync(client, request);
+            return await DisposableDocumentClassifier.BuildAsync(client, content);
         }
     }
 }

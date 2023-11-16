@@ -25,13 +25,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [TestCase(WaitUntil.Completed)]
         public async Task BuildDocumentModelOperationCanParseOperationId(WaitUntil waitUntil)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
 
             var containerUrl = new Uri(TestEnvironment.BlobContainerSasUrl);
             var source = new AzureBlobContentSource(containerUrl);
 
-            var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
             {
                 AzureBlobSource = source
             };
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.BuildDocumentModelAsync(waitUntil, request);
+                operation = await client.BuildDocumentModelAsync(waitUntil, content);
 
                 operationId = operation.Id;
 
@@ -65,14 +65,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [TestCase(WaitUntil.Completed)]
         public async Task CopyModelToOperationCanParseOperationId(WaitUntil waitUntil)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
 
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
 
-            var authorizeCopyRequest = new AuthorizeCopyRequest(modelId);
+            var authorizeCopyContent = new AuthorizeCopyContent(modelId);
 
-            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
+            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyContent);
 
             Operation<DocumentModelDetails> operation = null;
             string operationId;
@@ -103,7 +103,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [TestCase(WaitUntil.Completed)]
         public async Task ComposeModelOperationCanParseOperationId(WaitUntil waitUntil)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
 
             // Note: this will fail once we implement model caching. We'll need to set different containers to make it work.
@@ -116,14 +116,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 new ComponentDocumentModelDetails(disposableModel1.ModelId)
             };
 
-            var request = new ComposeDocumentModelRequest(modelId, componentModels);
+            var content = new ComposeDocumentModelContent(modelId, componentModels);
 
             Operation<DocumentModelDetails> operation = null;
             string operationId;
 
             try
             {
-                operation = await client.ComposeModelAsync(waitUntil, request);
+                operation = await client.ComposeModelAsync(waitUntil, content);
 
                 operationId = operation.Id;
 
@@ -147,7 +147,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [TestCase(WaitUntil.Completed)]
         public async Task BuildClassifierOperationCanParseOperationId(WaitUntil waitUntil)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
 
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
@@ -161,14 +161,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 { "IRS-1040-B", docTypeB }
             };
 
-            var request = new BuildDocumentClassifierRequest(classifierId, docTypes);
+            var content = new BuildDocumentClassifierContent(classifierId, docTypes);
 
             Operation<DocumentClassifierDetails> operation = null;
             string operationId;
 
             try
             {
-                operation = await client.BuildClassifierAsync(waitUntil, request);
+                operation = await client.BuildClassifierAsync(waitUntil, content);
 
                 operationId = operation.Id;
 
