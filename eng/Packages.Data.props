@@ -298,7 +298,6 @@
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
     <PackageReference Update="xunit" Version="2.4.2" />
   </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
   </ItemGroup>
