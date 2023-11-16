@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -34,12 +35,12 @@ namespace Azure.Communication.JobRouter
         /// <param name="expiresAfter"> Describes how long the attached worker selector is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator, TimeSpan? expiresAfter = default)
-            : this(WorkerSelectorAttachmentKind.PassThrough, key, labelOperator, expiresAfter?.TotalSeconds)
+            : this(WorkerSelectorAttachmentKind.PassThrough, new Dictionary<string, BinaryData>(), key, labelOperator, expiresAfter?.TotalSeconds)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);

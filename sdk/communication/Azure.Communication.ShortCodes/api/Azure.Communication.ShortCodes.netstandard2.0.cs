@@ -53,7 +53,7 @@ namespace Azure.Communication.ShortCodes.Models
     {
         public static Azure.Communication.ShortCodes.Models.ShortCode ShortCode(string number = null, Azure.Communication.ShortCodes.Models.NumberType? numberType = default(Azure.Communication.ShortCodes.Models.NumberType?), string countryCode = null, System.Collections.Generic.IEnumerable<string> programBriefIds = null, System.DateTimeOffset? purchaseDate = default(System.DateTimeOffset?)) { throw null; }
     }
-    public partial class CompanyInformation
+    public partial class CompanyInformation : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.CompanyInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.CompanyInformation>
     {
         public CompanyInformation() { }
         public string Address { get { throw null; } set { } }
@@ -61,19 +61,34 @@ namespace Azure.Communication.ShortCodes.Models
         public Azure.Communication.ShortCodes.Models.CustomerCareInformation CustomerCareInformation { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Uri Url { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.CompanyInformation System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.CompanyInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.CompanyInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.CompanyInformation System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.CompanyInformation>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.CompanyInformation>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.CompanyInformation>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContactInformation
+    public partial class ContactInformation : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ContactInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ContactInformation>
     {
         public ContactInformation() { }
         public string Email { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.ContactInformation System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ContactInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ContactInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.ContactInformation System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ContactInformation>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ContactInformation>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ContactInformation>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomerCareInformation
+    public partial class CustomerCareInformation : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.CustomerCareInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.CustomerCareInformation>
     {
         public CustomerCareInformation() { }
         public string Email { get { throw null; } set { } }
         public string TollFreeNumber { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.CustomerCareInformation System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.CustomerCareInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.CustomerCareInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.CustomerCareInformation System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.CustomerCareInformation>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.CustomerCareInformation>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.CustomerCareInformation>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessageContentCategory : System.IEquatable<Azure.Communication.ShortCodes.Models.MessageContentCategory>
@@ -132,7 +147,7 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator !=(Azure.Communication.ShortCodes.Models.MessageContentCategory left, Azure.Communication.ShortCodes.Models.MessageContentCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MessageDetails
+    public partial class MessageDetails : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageDetails>
     {
         public MessageDetails() { }
         public string ConfirmationMessage { get { throw null; } set { } }
@@ -144,6 +159,11 @@ namespace Azure.Communication.ShortCodes.Models
         public Azure.Communication.ShortCodes.Models.MessageRecurrence? Recurrence { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.ShortCodes.Models.MessageProtocol> SupportedProtocols { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.ShortCodes.Models.UseCase> UseCases { get { throw null; } }
+        Azure.Communication.ShortCodes.Models.MessageDetails System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.MessageDetails System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageDetails>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageDetails>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageDetails>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessageDirection : System.IEquatable<Azure.Communication.ShortCodes.Models.MessageDirection>
@@ -181,16 +201,26 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator !=(Azure.Communication.ShortCodes.Models.MessageDirectionality left, Azure.Communication.ShortCodes.Models.MessageDirectionality right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MessageExample
+    public partial class MessageExample : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageExample>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageExample>
     {
         public MessageExample() { }
         public Azure.Communication.ShortCodes.Models.MessageDirection? Direction { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.MessageExample System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageExample>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageExample>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.MessageExample System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageExample>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageExample>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageExample>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MessageExampleSequence
+    public partial class MessageExampleSequence : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageExampleSequence>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageExampleSequence>
     {
         public MessageExampleSequence() { }
         public System.Collections.Generic.IList<Azure.Communication.ShortCodes.Models.MessageExample> Messages { get { throw null; } }
+        Azure.Communication.ShortCodes.Models.MessageExampleSequence System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageExampleSequence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.MessageExampleSequence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.MessageExampleSequence System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageExampleSequence>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageExampleSequence>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.MessageExampleSequence>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessageProtocol : System.IEquatable<Azure.Communication.ShortCodes.Models.MessageProtocol>
@@ -268,7 +298,7 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator !=(Azure.Communication.ShortCodes.Models.ProgramBriefStatus left, Azure.Communication.ShortCodes.Models.ProgramBriefStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProgramDetails
+    public partial class ProgramDetails : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ProgramDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ProgramDetails>
     {
         public ProgramDetails() { }
         public string Description { get { throw null; } set { } }
@@ -283,6 +313,11 @@ namespace Azure.Communication.ShortCodes.Models
         public System.Uri SignUpUrl { get { throw null; } set { } }
         public System.Uri TermsOfServiceUrl { get { throw null; } set { } }
         public System.Uri Url { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.ProgramDetails System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ProgramDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ProgramDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.ProgramDetails System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ProgramDetails>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ProgramDetails>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ProgramDetails>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProgramSignUpType : System.IEquatable<Azure.Communication.ShortCodes.Models.ProgramSignUpType>
@@ -304,13 +339,18 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator !=(Azure.Communication.ShortCodes.Models.ProgramSignUpType left, Azure.Communication.ShortCodes.Models.ProgramSignUpType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReviewNote
+    public partial class ReviewNote : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ReviewNote>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ReviewNote>
     {
         public ReviewNote() { }
         public System.DateTimeOffset? Date { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.ReviewNote System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ReviewNote>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ReviewNote>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.ReviewNote System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ReviewNote>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ReviewNote>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ReviewNote>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShortCode
+    public partial class ShortCode : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ShortCode>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ShortCode>
     {
         internal ShortCode() { }
         public string CountryCode { get { throw null; } }
@@ -318,15 +358,25 @@ namespace Azure.Communication.ShortCodes.Models
         public Azure.Communication.ShortCodes.Models.NumberType? NumberType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ProgramBriefIds { get { throw null; } }
         public System.DateTimeOffset? PurchaseDate { get { throw null; } }
+        Azure.Communication.ShortCodes.Models.ShortCode System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ShortCode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ShortCode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.ShortCode System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ShortCode>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ShortCode>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ShortCode>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShortCodeCost
+    public partial class ShortCodeCost : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ShortCodeCost>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ShortCodeCost>
     {
         public ShortCodeCost(double amount, string currencyCode, Azure.Communication.ShortCodes.Models.BillingFrequency billingFrequency) { }
         public double Amount { get { throw null; } set { } }
         public Azure.Communication.ShortCodes.Models.BillingFrequency BillingFrequency { get { throw null; } set { } }
         public string CurrencyCode { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.ShortCodeCost System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ShortCodeCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.ShortCodeCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.ShortCodeCost System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ShortCodeCost>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ShortCodeCost>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.ShortCodeCost>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficDetails
+    public partial class TrafficDetails : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.TrafficDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.TrafficDetails>
     {
         public TrafficDetails() { }
         public int? EstimatedRampUpTimeInDays { get { throw null; } set { } }
@@ -335,14 +385,24 @@ namespace Azure.Communication.ShortCodes.Models
         public int? MonthlyAverageMessagesToUser { get { throw null; } set { } }
         public string SpikeDetails { get { throw null; } set { } }
         public int? TotalMonthlyVolume { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.TrafficDetails System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.TrafficDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.TrafficDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.TrafficDetails System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.TrafficDetails>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.TrafficDetails>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.TrafficDetails>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UseCase
+    public partial class UseCase : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.UseCase>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.UseCase>
     {
         public UseCase() { }
         public Azure.Communication.ShortCodes.Models.MessageContentCategory? ContentCategory { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.ShortCodes.Models.MessageExampleSequence> Examples { get { throw null; } }
+        Azure.Communication.ShortCodes.Models.UseCase System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.UseCase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.UseCase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.UseCase System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.UseCase>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.UseCase>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.UseCase>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class USProgramBrief
+    public partial class USProgramBrief : System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.USProgramBrief>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.USProgramBrief>
     {
         public USProgramBrief(System.Guid id) { }
         public Azure.Communication.ShortCodes.Models.CompanyInformation CompanyInformation { get { throw null; } set { } }
@@ -356,5 +416,10 @@ namespace Azure.Communication.ShortCodes.Models
         public System.DateTimeOffset? StatusUpdatedDate { get { throw null; } set { } }
         public System.DateTimeOffset? SubmissionDate { get { throw null; } set { } }
         public Azure.Communication.ShortCodes.Models.TrafficDetails TrafficDetails { get { throw null; } set { } }
+        Azure.Communication.ShortCodes.Models.USProgramBrief System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.USProgramBrief>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ShortCodes.Models.USProgramBrief>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.ShortCodes.Models.USProgramBrief System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.USProgramBrief>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.USProgramBrief>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ShortCodes.Models.USProgramBrief>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

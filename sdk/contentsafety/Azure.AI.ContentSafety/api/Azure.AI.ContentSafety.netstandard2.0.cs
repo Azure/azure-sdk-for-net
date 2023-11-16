@@ -1,49 +1,77 @@
 namespace Azure.AI.ContentSafety
 {
-    public partial class AddBlockItemsOptions
+    public partial class AddBlockItemsOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AddBlockItemsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddBlockItemsOptions>
     {
         public AddBlockItemsOptions(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlockItemInfo> blockItems) { }
         public System.Collections.Generic.IList<Azure.AI.ContentSafety.TextBlockItemInfo> BlockItems { get { throw null; } }
+        Azure.AI.ContentSafety.AddBlockItemsOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AddBlockItemsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AddBlockItemsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AddBlockItemsOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddBlockItemsOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddBlockItemsOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddBlockItemsOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AddBlockItemsResult
+    public partial class AddBlockItemsResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AddBlockItemsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddBlockItemsResult>
     {
         internal AddBlockItemsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.ContentSafety.TextBlockItem> Value { get { throw null; } }
+        Azure.AI.ContentSafety.AddBlockItemsResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AddBlockItemsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AddBlockItemsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AddBlockItemsResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddBlockItemsResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddBlockItemsResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AddBlockItemsResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class AIContentSafetyModelFactory
     {
         public static Azure.AI.ContentSafety.AddBlockItemsResult AddBlockItemsResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlockItem> value = null) { throw null; }
+        public static Azure.AI.ContentSafety.AnalyzeImageOptions AnalyzeImageOptions(Azure.AI.ContentSafety.ContentSafetyImageData image = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.ImageCategory> categories = null) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeImageResult AnalyzeImageResult(Azure.AI.ContentSafety.ImageAnalyzeSeverityResult hateResult = null, Azure.AI.ContentSafety.ImageAnalyzeSeverityResult selfHarmResult = null, Azure.AI.ContentSafety.ImageAnalyzeSeverityResult sexualResult = null, Azure.AI.ContentSafety.ImageAnalyzeSeverityResult violenceResult = null) { throw null; }
+        public static Azure.AI.ContentSafety.AnalyzeTextOptions AnalyzeTextOptions(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextCategory> categories = null, System.Collections.Generic.IEnumerable<string> blocklistNames = null, bool? breakByBlocklists = default(bool?)) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeTextResult AnalyzeTextResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistMatchResult> blocklistsMatchResults = null, Azure.AI.ContentSafety.TextAnalyzeSeverityResult hateResult = null, Azure.AI.ContentSafety.TextAnalyzeSeverityResult selfHarmResult = null, Azure.AI.ContentSafety.TextAnalyzeSeverityResult sexualResult = null, Azure.AI.ContentSafety.TextAnalyzeSeverityResult violenceResult = null) { throw null; }
         public static Azure.AI.ContentSafety.ImageAnalyzeSeverityResult ImageAnalyzeSeverityResult(Azure.AI.ContentSafety.ImageCategory category = default(Azure.AI.ContentSafety.ImageCategory), int severity = 0) { throw null; }
         public static Azure.AI.ContentSafety.TextAnalyzeSeverityResult TextAnalyzeSeverityResult(Azure.AI.ContentSafety.TextCategory category = default(Azure.AI.ContentSafety.TextCategory), int severity = 0) { throw null; }
         public static Azure.AI.ContentSafety.TextBlockItem TextBlockItem(string blockItemId = null, string description = null, string text = null) { throw null; }
+        public static Azure.AI.ContentSafety.TextBlockItemInfo TextBlockItemInfo(string description = null, string text = null) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklist TextBlocklist(string blocklistName = null, string description = null) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklistMatchResult TextBlocklistMatchResult(string blocklistName = null, string blockItemId = null, string blockItemText = null, int offset = 0, int length = 0) { throw null; }
     }
-    public partial class AnalyzeImageOptions
+    public partial class AnalyzeImageOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeImageOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageOptions>
     {
         public AnalyzeImageOptions(Azure.AI.ContentSafety.ContentSafetyImageData image) { }
         public System.Collections.Generic.IList<Azure.AI.ContentSafety.ImageCategory> Categories { get { throw null; } }
         public Azure.AI.ContentSafety.ContentSafetyImageData Image { get { throw null; } }
+        Azure.AI.ContentSafety.AnalyzeImageOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeImageOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeImageOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AnalyzeImageOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AnalyzeImageResult
+    public partial class AnalyzeImageResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeImageResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageResult>
     {
         internal AnalyzeImageResult() { }
         public Azure.AI.ContentSafety.ImageAnalyzeSeverityResult HateResult { get { throw null; } }
         public Azure.AI.ContentSafety.ImageAnalyzeSeverityResult SelfHarmResult { get { throw null; } }
         public Azure.AI.ContentSafety.ImageAnalyzeSeverityResult SexualResult { get { throw null; } }
         public Azure.AI.ContentSafety.ImageAnalyzeSeverityResult ViolenceResult { get { throw null; } }
+        Azure.AI.ContentSafety.AnalyzeImageResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeImageResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeImageResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AnalyzeImageResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AnalyzeTextOptions
+    public partial class AnalyzeTextOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextOptions>
     {
         public AnalyzeTextOptions(string text) { }
         public System.Collections.Generic.IList<string> BlocklistNames { get { throw null; } }
         public bool? BreakByBlocklists { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.ContentSafety.TextCategory> Categories { get { throw null; } }
         public string Text { get { throw null; } }
+        Azure.AI.ContentSafety.AnalyzeTextOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AnalyzeTextOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AnalyzeTextResult
+    public partial class AnalyzeTextResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>
     {
         internal AnalyzeTextResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.ContentSafety.TextBlocklistMatchResult> BlocklistsMatchResults { get { throw null; } }
@@ -51,6 +79,11 @@ namespace Azure.AI.ContentSafety
         public Azure.AI.ContentSafety.TextAnalyzeSeverityResult SelfHarmResult { get { throw null; } }
         public Azure.AI.ContentSafety.TextAnalyzeSeverityResult SexualResult { get { throw null; } }
         public Azure.AI.ContentSafety.TextAnalyzeSeverityResult ViolenceResult { get { throw null; } }
+        Azure.AI.ContentSafety.AnalyzeTextResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AnalyzeTextResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ContentSafetyClient
     {
@@ -103,17 +136,27 @@ namespace Azure.AI.ContentSafety
             V2023_04_30_Preview = 1,
         }
     }
-    public partial class ContentSafetyImageData
+    public partial class ContentSafetyImageData : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ContentSafetyImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ContentSafetyImageData>
     {
         public ContentSafetyImageData() { }
         public System.Uri BlobUrl { get { throw null; } set { } }
         public System.BinaryData Content { get { throw null; } set { } }
+        Azure.AI.ContentSafety.ContentSafetyImageData System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ContentSafetyImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ContentSafetyImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ContentSafetyImageData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ContentSafetyImageData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ContentSafetyImageData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ContentSafetyImageData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ImageAnalyzeSeverityResult
+    public partial class ImageAnalyzeSeverityResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ImageAnalyzeSeverityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ImageAnalyzeSeverityResult>
     {
         internal ImageAnalyzeSeverityResult() { }
         public Azure.AI.ContentSafety.ImageCategory Category { get { throw null; } }
         public int Severity { get { throw null; } }
+        Azure.AI.ContentSafety.ImageAnalyzeSeverityResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ImageAnalyzeSeverityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ImageAnalyzeSeverityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ImageAnalyzeSeverityResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ImageAnalyzeSeverityResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ImageAnalyzeSeverityResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ImageAnalyzeSeverityResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImageCategory : System.IEquatable<Azure.AI.ContentSafety.ImageCategory>
@@ -135,37 +178,62 @@ namespace Azure.AI.ContentSafety
         public static bool operator !=(Azure.AI.ContentSafety.ImageCategory left, Azure.AI.ContentSafety.ImageCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RemoveBlockItemsOptions
+    public partial class RemoveBlockItemsOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.RemoveBlockItemsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.RemoveBlockItemsOptions>
     {
         public RemoveBlockItemsOptions(System.Collections.Generic.IEnumerable<string> blockItemIds) { }
         public System.Collections.Generic.IList<string> BlockItemIds { get { throw null; } }
+        Azure.AI.ContentSafety.RemoveBlockItemsOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.RemoveBlockItemsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.RemoveBlockItemsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.RemoveBlockItemsOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.RemoveBlockItemsOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.RemoveBlockItemsOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.RemoveBlockItemsOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TextAnalyzeSeverityResult
+    public partial class TextAnalyzeSeverityResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextAnalyzeSeverityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextAnalyzeSeverityResult>
     {
         internal TextAnalyzeSeverityResult() { }
         public Azure.AI.ContentSafety.TextCategory Category { get { throw null; } }
         public int Severity { get { throw null; } }
+        Azure.AI.ContentSafety.TextAnalyzeSeverityResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextAnalyzeSeverityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextAnalyzeSeverityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.TextAnalyzeSeverityResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextAnalyzeSeverityResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextAnalyzeSeverityResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextAnalyzeSeverityResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TextBlockItem
+    public partial class TextBlockItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlockItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlockItem>
     {
         internal TextBlockItem() { }
         public string BlockItemId { get { throw null; } }
         public string Description { get { throw null; } }
         public string Text { get { throw null; } }
+        Azure.AI.ContentSafety.TextBlockItem System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlockItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlockItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.TextBlockItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlockItem>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlockItem>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlockItem>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TextBlockItemInfo
+    public partial class TextBlockItemInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlockItemInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlockItemInfo>
     {
         public TextBlockItemInfo(string text) { }
         public string Description { get { throw null; } set { } }
         public string Text { get { throw null; } }
+        Azure.AI.ContentSafety.TextBlockItemInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlockItemInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlockItemInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.TextBlockItemInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlockItemInfo>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlockItemInfo>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlockItemInfo>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TextBlocklist
+    public partial class TextBlocklist : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlocklist>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklist>
     {
         internal TextBlocklist() { }
         public string BlocklistName { get { throw null; } }
         public string Description { get { throw null; } }
+        Azure.AI.ContentSafety.TextBlocklist System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlocklist>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlocklist>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.TextBlocklist System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklist>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklist>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklist>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TextBlocklistMatchResult
+    public partial class TextBlocklistMatchResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlocklistMatchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklistMatchResult>
     {
         internal TextBlocklistMatchResult() { }
         public string BlockItemId { get { throw null; } }
@@ -173,6 +241,11 @@ namespace Azure.AI.ContentSafety
         public string BlocklistName { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
+        Azure.AI.ContentSafety.TextBlocklistMatchResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlocklistMatchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlocklistMatchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.TextBlocklistMatchResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklistMatchResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklistMatchResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklistMatchResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TextCategory : System.IEquatable<Azure.AI.ContentSafety.TextCategory>

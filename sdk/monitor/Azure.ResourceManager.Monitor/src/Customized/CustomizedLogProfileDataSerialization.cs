@@ -3,7 +3,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.ClientModel;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -18,8 +20,14 @@ namespace Azure.ResourceManager.Monitor
     {
         // this customization method is here to fix the deserialization issue for some non-nullable properties
         // they will return as nullable in the service response
-        internal static LogProfileData DeserializeLogProfileData(JsonElement element)
+        internal static LogProfileData DeserializeLogProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -31,14 +39,14 @@ namespace Azure.ResourceManager.Monitor
             IList<AzureLocation> locations = default;
             IList<string> categories = default;
             RetentionPolicy retentionPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        // change this to nullable since the service might send null value for tags in the response
-                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -49,47 +57,44 @@ namespace Azure.ResourceManager.Monitor
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    // enclosing this deserialization in this if since the service might return null value for this property
-                    // and we cannot resolve this using a directive since this property is inherited from base type ResourceData
-                    if (property.Value.ValueKind != JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        location = new AzureLocation(property.Value.GetString());
+                        continue;
                     }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    // enclosing this deserialization in this if since the service might return null value for this property
-                    // and we cannot resolve this using a directive since this property is inherited from base type ResourceData
-                    if (property.Value.ValueKind != JsonValueKind.Null)
-                    {
-                        type = new ResourceType(property.Value.GetString());
-                    }
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccountId"))
+                        if (property0.NameEquals("storageAccountId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                             storageAccountId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serviceBusRuleId"))
+                        if (property0.NameEquals("serviceBusRuleId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
                             serviceBusRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("locations"))
+                        if (property0.NameEquals("locations"u8))
                         {
                             List<AzureLocation> array = new List<AzureLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
@@ -128,7 +133,7 @@ namespace Azure.ResourceManager.Monitor
                             locations = array;
                             continue;
                         }
-                        if (property0.NameEquals("categories"))
+                        if (property0.NameEquals("categories"u8))
                         {
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
@@ -138,7 +143,7 @@ namespace Azure.ResourceManager.Monitor
                             categories = array;
                             continue;
                         }
-                        if (property0.NameEquals("retentionPolicy"))
+                        if (property0.NameEquals("retentionPolicy"u8))
                         {
                             retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property0.Value);
                             continue;
@@ -146,8 +151,13 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy, serializedAdditionalRawData);
         }
     }
 }

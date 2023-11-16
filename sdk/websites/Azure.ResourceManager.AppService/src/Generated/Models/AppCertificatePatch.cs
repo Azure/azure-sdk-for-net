@@ -138,8 +138,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string PublicKeyHash { get; }
         /// <summary> Specification for the App Service Environment to use for the certificate. </summary>
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; }
-        /// <summary> Key Vault Csm resource Id. </summary>
-        public ResourceIdentifier KeyVaultId { get; set; }
         /// <summary> Key Vault secret name. </summary>
         public string KeyVaultSecretName { get; set; }
         /// <summary> Status of the Key Vault secret. </summary>

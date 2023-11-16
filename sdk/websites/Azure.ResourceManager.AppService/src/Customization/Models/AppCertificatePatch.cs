@@ -3,11 +3,34 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppCertificatePatch
     {
+        /// <summary> Key Vault Csm resource Id. </summary>
+        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(ReadKeyVaultId))]
+        public ResourceIdentifier KeyVaultId { get; set; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadKeyVaultId(JsonProperty property, ref Optional<ResourceIdentifier> keyVaultId)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            var idString = property.Value.GetString();
+
+            if (idString.Length == 0)
+            {
+                return;
+            }
+            keyVaultId = new ResourceIdentifier(idString);
+        }
+
         /// <summary>
         /// Certificate thumbprint.
         /// <para>

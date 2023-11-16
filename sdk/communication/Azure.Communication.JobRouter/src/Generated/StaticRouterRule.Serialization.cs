@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
 {
     public partial class StaticRouterRule : IUtf8JsonSerializable, IJsonModel<StaticRouterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticRouterRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<StaticRouterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticRouterRule>)this).GetFormatFromOptions(options) : options.Format;

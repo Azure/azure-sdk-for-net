@@ -417,11 +417,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("keyVaultId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyVaultId = new ResourceIdentifier(property0.Value.GetString());
+                            ReadKeyVaultId(property0, ref keyVaultId);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultSecretName"u8))

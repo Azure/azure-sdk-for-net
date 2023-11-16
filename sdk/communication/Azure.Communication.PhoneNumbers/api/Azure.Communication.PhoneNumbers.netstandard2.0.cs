@@ -17,16 +17,26 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator !=(Azure.Communication.PhoneNumbers.BillingFrequency left, Azure.Communication.PhoneNumbers.BillingFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PhoneNumberAdministrativeDivision
+    public partial class PhoneNumberAdministrativeDivision : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision>
     {
         internal PhoneNumberAdministrativeDivision() { }
         public string AbbreviatedName { get { throw null; } }
         public string LocalizedName { get { throw null; } }
+        Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PhoneNumberAreaCode
+    public partial class PhoneNumberAreaCode : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode>
     {
         internal PhoneNumberAreaCode() { }
         public string AreaCode { get { throw null; } }
+        Azure.Communication.PhoneNumbers.PhoneNumberAreaCode System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PhoneNumberAreaCode System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberAssignmentType : System.IEquatable<Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType>
@@ -46,11 +56,16 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator !=(Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType left, Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PhoneNumberCapabilities
+    public partial class PhoneNumberCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCapabilities>
     {
         public PhoneNumberCapabilities(Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType calling, Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType sms) { }
         public Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType Calling { get { throw null; } set { } }
         public Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType Sms { get { throw null; } set { } }
+        Azure.Communication.PhoneNumbers.PhoneNumberCapabilities System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PhoneNumberCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCapabilities>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCapabilities>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCapabilities>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberCapabilityType : System.IEquatable<Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType>
@@ -72,32 +87,52 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator !=(Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType left, Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PhoneNumberCost
+    public partial class PhoneNumberCost : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCost>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCost>
     {
         internal PhoneNumberCost() { }
         public double Amount { get { throw null; } }
         public Azure.Communication.PhoneNumbers.BillingFrequency BillingFrequency { get { throw null; } }
         public string IsoCurrencySymbol { get { throw null; } }
+        Azure.Communication.PhoneNumbers.PhoneNumberCost System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PhoneNumberCost System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCost>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCost>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCost>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PhoneNumberCountry
+    public partial class PhoneNumberCountry : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCountry>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCountry>
     {
         internal PhoneNumberCountry() { }
         public string CountryCode { get { throw null; } }
         public string LocalizedName { get { throw null; } }
+        Azure.Communication.PhoneNumbers.PhoneNumberCountry System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCountry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberCountry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PhoneNumberCountry System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCountry>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCountry>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberCountry>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PhoneNumberLocality
+    public partial class PhoneNumberLocality : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberLocality>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberLocality>
     {
         internal PhoneNumberLocality() { }
         public Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision AdministrativeDivision { get { throw null; } }
         public string LocalizedName { get { throw null; } }
+        Azure.Communication.PhoneNumbers.PhoneNumberLocality System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberLocality>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberLocality>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PhoneNumberLocality System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberLocality>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberLocality>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberLocality>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PhoneNumberOffering
+    public partial class PhoneNumberOffering : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberOffering>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberOffering>
     {
         internal PhoneNumberOffering() { }
         public Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType? AssignmentType { get { throw null; } }
         public Azure.Communication.PhoneNumbers.PhoneNumberCapabilities AvailableCapabilities { get { throw null; } }
         public Azure.Communication.PhoneNumbers.PhoneNumberCost Cost { get { throw null; } }
         public Azure.Communication.PhoneNumbers.PhoneNumberType? PhoneNumberType { get { throw null; } }
+        Azure.Communication.PhoneNumbers.PhoneNumberOffering System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberOffering>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberOffering>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PhoneNumberOffering System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberOffering>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberOffering>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberOffering>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PhoneNumbersClient
     {
@@ -150,7 +185,7 @@ namespace Azure.Communication.PhoneNumbers
         public string Locality { get { throw null; } set { } }
         public int? Quantity { get { throw null; } set { } }
     }
-    public partial class PhoneNumberSearchResult
+    public partial class PhoneNumberSearchResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberSearchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberSearchResult>
     {
         internal PhoneNumberSearchResult() { }
         public Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType AssignmentType { get { throw null; } }
@@ -162,6 +197,11 @@ namespace Azure.Communication.PhoneNumbers
         public Azure.Communication.PhoneNumbers.PhoneNumberType PhoneNumberType { get { throw null; } }
         public System.DateTimeOffset SearchExpiresOn { get { throw null; } }
         public string SearchId { get { throw null; } }
+        Azure.Communication.PhoneNumbers.PhoneNumberSearchResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberSearchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PhoneNumberSearchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PhoneNumberSearchResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberSearchResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberSearchResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PhoneNumberSearchResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberSearchResultError : System.IEquatable<Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError>
@@ -228,7 +268,7 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator !=(Azure.Communication.PhoneNumbers.PhoneNumberType left, Azure.Communication.PhoneNumbers.PhoneNumberType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PurchasedPhoneNumber
+    public partial class PurchasedPhoneNumber : System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber>
     {
         internal PurchasedPhoneNumber() { }
         public Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType AssignmentType { get { throw null; } }
@@ -239,6 +279,11 @@ namespace Azure.Communication.PhoneNumbers
         public string PhoneNumber { get { throw null; } }
         public Azure.Communication.PhoneNumbers.PhoneNumberType PhoneNumberType { get { throw null; } }
         public System.DateTimeOffset PurchaseDate { get { throw null; } }
+        Azure.Communication.PhoneNumbers.PurchasedPhoneNumber System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Communication.PhoneNumbers.PurchasedPhoneNumber System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PurchasePhoneNumbersOperation : Azure.Operation
     {

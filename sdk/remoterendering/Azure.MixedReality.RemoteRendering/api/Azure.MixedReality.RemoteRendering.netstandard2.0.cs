@@ -1,6 +1,6 @@
 namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class AssetConversion
+    public partial class AssetConversion : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversion>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversion>
     {
         internal AssetConversion() { }
         public string ConversionId { get { throw null; } }
@@ -9,14 +9,24 @@ namespace Azure.MixedReality.RemoteRendering
         public Azure.MixedReality.RemoteRendering.AssetConversionOptions Options { get { throw null; } }
         public Azure.MixedReality.RemoteRendering.AssetConversionOutput Output { get { throw null; } }
         public Azure.MixedReality.RemoteRendering.AssetConversionStatus Status { get { throw null; } }
+        Azure.MixedReality.RemoteRendering.AssetConversion System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.AssetConversion System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversion>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversion>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversion>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AssetConversionInputOptions
+    public partial class AssetConversionInputOptions : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionInputOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionInputOptions>
     {
         public AssetConversionInputOptions(System.Uri storageContainerUri, string relativeInputAssetPath) { }
         public string BlobPrefix { get { throw null; } set { } }
         public string RelativeInputAssetPath { get { throw null; } }
         public string StorageContainerReadListSas { get { throw null; } set { } }
         public System.Uri StorageContainerUri { get { throw null; } }
+        Azure.MixedReality.RemoteRendering.AssetConversionInputOptions System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionInputOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionInputOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.AssetConversionInputOptions System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionInputOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionInputOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionInputOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AssetConversionOperation : Azure.Operation<Azure.MixedReality.RemoteRendering.AssetConversion>
     {
@@ -32,24 +42,39 @@ namespace Azure.MixedReality.RemoteRendering
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.MixedReality.RemoteRendering.AssetConversion>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.MixedReality.RemoteRendering.AssetConversion>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AssetConversionOptions
+    public partial class AssetConversionOptions : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOptions>
     {
         public AssetConversionOptions(Azure.MixedReality.RemoteRendering.AssetConversionInputOptions inputOptions, Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions outputOptions) { }
         public Azure.MixedReality.RemoteRendering.AssetConversionInputOptions InputOptions { get { throw null; } }
         public Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions OutputOptions { get { throw null; } }
+        Azure.MixedReality.RemoteRendering.AssetConversionOptions System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.AssetConversionOptions System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AssetConversionOutput
+    public partial class AssetConversionOutput : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOutput>
     {
         internal AssetConversionOutput() { }
         public string OutputAssetUri { get { throw null; } }
+        Azure.MixedReality.RemoteRendering.AssetConversionOutput System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.AssetConversionOutput System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOutput>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOutput>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOutput>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AssetConversionOutputOptions
+    public partial class AssetConversionOutputOptions : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions>
     {
         public AssetConversionOutputOptions(System.Uri storageContainerUri) { }
         public string BlobPrefix { get { throw null; } set { } }
         public string OutputAssetFilename { get { throw null; } set { } }
         public System.Uri StorageContainerUri { get { throw null; } }
         public string StorageContainerWriteSas { get { throw null; } set { } }
+        Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.AssetConversionOutputOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssetConversionStatus : System.IEquatable<Azure.MixedReality.RemoteRendering.AssetConversionStatus>
@@ -112,7 +137,7 @@ namespace Azure.MixedReality.RemoteRendering
         public static Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError RemoteRenderingServiceError(string code, string message, System.Collections.Generic.IReadOnlyList<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError> details, string target, Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError innerError) { throw null; }
         public static Azure.MixedReality.RemoteRendering.RenderingSession RenderingSession(string sessionId, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string host, int? maxLeaseTimeMinutes, Azure.MixedReality.RemoteRendering.RenderingServerSize size, Azure.MixedReality.RemoteRendering.RenderingSessionStatus status, float? teraflops, Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError error, System.DateTimeOffset? createdOn) { throw null; }
     }
-    public partial class RemoteRenderingServiceError
+    public partial class RemoteRenderingServiceError : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError>
     {
         internal RemoteRenderingServiceError() { }
         public string Code { get { throw null; } }
@@ -120,6 +145,11 @@ namespace Azure.MixedReality.RemoteRendering
         public Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError InnerError { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
+        Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RenderingServerSize : System.IEquatable<Azure.MixedReality.RemoteRendering.RenderingServerSize>
@@ -139,7 +169,7 @@ namespace Azure.MixedReality.RemoteRendering
         public static bool operator !=(Azure.MixedReality.RemoteRendering.RenderingServerSize left, Azure.MixedReality.RemoteRendering.RenderingServerSize right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RenderingSession
+    public partial class RenderingSession : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RenderingSession>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RenderingSession>
     {
         internal RenderingSession() { }
         public int? ArrInspectorPort { get { throw null; } }
@@ -153,12 +183,22 @@ namespace Azure.MixedReality.RemoteRendering
         public Azure.MixedReality.RemoteRendering.RenderingServerSize Size { get { throw null; } }
         public Azure.MixedReality.RemoteRendering.RenderingSessionStatus Status { get { throw null; } }
         public float? Teraflops { get { throw null; } }
+        Azure.MixedReality.RemoteRendering.RenderingSession System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RenderingSession>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RenderingSession>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.RenderingSession System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RenderingSession>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RenderingSession>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RenderingSession>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RenderingSessionOptions
+    public partial class RenderingSessionOptions : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RenderingSessionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RenderingSessionOptions>
     {
         public RenderingSessionOptions(System.TimeSpan maxLeaseTime, Azure.MixedReality.RemoteRendering.RenderingServerSize size) { }
         public System.TimeSpan MaxLeaseTime { get { throw null; } }
         public Azure.MixedReality.RemoteRendering.RenderingServerSize Size { get { throw null; } }
+        Azure.MixedReality.RemoteRendering.RenderingSessionOptions System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RenderingSessionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.RenderingSessionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.RenderingSessionOptions System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RenderingSessionOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RenderingSessionOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.RenderingSessionOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RenderingSessionStatus : System.IEquatable<Azure.MixedReality.RemoteRendering.RenderingSessionStatus>
@@ -195,9 +235,14 @@ namespace Azure.MixedReality.RemoteRendering
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.MixedReality.RemoteRendering.RenderingSession>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.MixedReality.RemoteRendering.RenderingSession>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class UpdateSessionOptions
+    public partial class UpdateSessionOptions : System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.UpdateSessionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.UpdateSessionOptions>
     {
         public UpdateSessionOptions(System.TimeSpan maxLeaseTime) { }
         public System.TimeSpan MaxLeaseTime { get { throw null; } }
+        Azure.MixedReality.RemoteRendering.UpdateSessionOptions System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.UpdateSessionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.MixedReality.RemoteRendering.UpdateSessionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.MixedReality.RemoteRendering.UpdateSessionOptions System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.UpdateSessionOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.UpdateSessionOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.MixedReality.RemoteRendering.UpdateSessionOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

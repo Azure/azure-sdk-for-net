@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -74,7 +73,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (ApplicationId != null || ApplicationSecret != null)
                 {
-                    return new AzureActiveDirectoryApplicationCredentials(ApplicationId, ApplicationSecret);
+                    return new AzureActiveDirectoryApplicationCredentials(ApplicationId)
+                    {
+                        ApplicationSecret = ApplicationSecret
+                    };
                 }
 
                 return null;

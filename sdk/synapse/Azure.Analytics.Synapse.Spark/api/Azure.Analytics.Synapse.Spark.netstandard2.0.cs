@@ -94,6 +94,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJob SparkBatchJob(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, Azure.Analytics.Synapse.Spark.Models.SparkJobType? jobType = default(Azure.Analytics.Synapse.Spark.Models.SparkJobType?), Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType? result = default(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType?), Azure.Analytics.Synapse.Spark.Models.SparkScheduler scheduler = null, Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin plugin = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Spark.Models.SparkServiceError> errors = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int id = 0, string appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> appInfo = null, Azure.Analytics.Synapse.Spark.Models.LivyStates? state = default(Azure.Analytics.Synapse.Spark.Models.LivyStates?), System.Collections.Generic.IEnumerable<string> logLines = null) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection SparkBatchJobCollection(int from = 0, int total = 0, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob> sessions = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions SparkBatchJobOptions(System.Collections.Generic.IDictionary<string, string> tags = null, string artifactId = null, string name = null, string file = null, string className = null, System.Collections.Generic.IEnumerable<string> arguments = null, System.Collections.Generic.IEnumerable<string> jars = null, System.Collections.Generic.IEnumerable<string> pythonFiles = null, System.Collections.Generic.IEnumerable<string> files = null, System.Collections.Generic.IEnumerable<string> archives = null, System.Collections.Generic.IDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = default(int?), string executorMemory = null, int? executorCores = default(int?), int? executorCount = default(int?)) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState SparkBatchJobState(System.DateTimeOffset? notStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? startingAt = default(System.DateTimeOffset?), System.DateTimeOffset? runningAt = default(System.DateTimeOffset?), System.DateTimeOffset? deadAt = default(System.DateTimeOffset?), System.DateTimeOffset? successAt = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedAt = default(System.DateTimeOffset?), System.DateTimeOffset? recoveringAt = default(System.DateTimeOffset?), string currentState = null, Azure.Analytics.Synapse.Spark.Models.SparkRequest jobCreationRequest = null) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkRequest SparkRequest(string name = null, string file = null, string className = null, System.Collections.Generic.IEnumerable<string> arguments = null, System.Collections.Generic.IEnumerable<string> jars = null, System.Collections.Generic.IEnumerable<string> pythonFiles = null, System.Collections.Generic.IEnumerable<string> files = null, System.Collections.Generic.IEnumerable<string> archives = null, System.Collections.Generic.IReadOnlyDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = default(int?), string executorMemory = null, int? executorCores = default(int?), int? executorCount = default(int?)) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkScheduler SparkScheduler(System.DateTimeOffset? submittedAt = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancellationRequestedAt = default(System.DateTimeOffset?), Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState? currentState = default(Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState?)) { throw null; }
@@ -101,6 +102,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin SparkServicePlugin(System.DateTimeOffset? preparationStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? resourceAcquisitionStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? submissionStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? monitoringStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cleanupStartedAt = default(System.DateTimeOffset?), Azure.Analytics.Synapse.Spark.Models.PluginCurrentState? currentState = default(Azure.Analytics.Synapse.Spark.Models.PluginCurrentState?)) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkSession SparkSession(Azure.Analytics.Synapse.Spark.Models.SparkSessionState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, Azure.Analytics.Synapse.Spark.Models.SparkJobType? jobType = default(Azure.Analytics.Synapse.Spark.Models.SparkJobType?), Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType? result = default(Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType?), Azure.Analytics.Synapse.Spark.Models.SparkScheduler scheduler = null, Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin plugin = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Spark.Models.SparkServiceError> errors = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int id = 0, string appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> appInfo = null, Azure.Analytics.Synapse.Spark.Models.LivyStates? state = default(Azure.Analytics.Synapse.Spark.Models.LivyStates?), System.Collections.Generic.IEnumerable<string> logLines = null) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection SparkSessionCollection(int from = 0, int total = 0, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Spark.Models.SparkSession> sessions = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions SparkSessionOptions(System.Collections.Generic.IDictionary<string, string> tags = null, string artifactId = null, string name = null, string file = null, string className = null, System.Collections.Generic.IEnumerable<string> arguments = null, System.Collections.Generic.IEnumerable<string> jars = null, System.Collections.Generic.IEnumerable<string> pythonFiles = null, System.Collections.Generic.IEnumerable<string> files = null, System.Collections.Generic.IEnumerable<string> archives = null, System.Collections.Generic.IDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = default(int?), string executorMemory = null, int? executorCores = default(int?), int? executorCount = default(int?)) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkSessionState SparkSessionState(System.DateTimeOffset? notStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? startingAt = default(System.DateTimeOffset?), System.DateTimeOffset? idleAt = default(System.DateTimeOffset?), System.DateTimeOffset? deadAt = default(System.DateTimeOffset?), System.DateTimeOffset? shuttingDownAt = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedAt = default(System.DateTimeOffset?), System.DateTimeOffset? recoveringAt = default(System.DateTimeOffset?), System.DateTimeOffset? busyAt = default(System.DateTimeOffset?), System.DateTimeOffset? errorAt = default(System.DateTimeOffset?), string currentState = null, Azure.Analytics.Synapse.Spark.Models.SparkRequest jobCreationRequest = null) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatement SparkStatement(int id = 0, string code = null, Azure.Analytics.Synapse.Spark.Models.LivyStatementStates? state = default(Azure.Analytics.Synapse.Spark.Models.LivyStatementStates?), Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput output = null) { throw null; }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult SparkStatementCancellationResult(string message = null) { throw null; }
@@ -198,7 +200,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator !=(Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState left, Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SparkBatchJob
+    public partial class SparkBatchJob : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>
     {
         internal SparkBatchJob() { }
         public string AppId { get { throw null; } }
@@ -219,15 +221,25 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public string SubmitterName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string WorkspaceName { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkBatchJob System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkBatchJob System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkBatchJobCollection
+    public partial class SparkBatchJobCollection : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection>
     {
         internal SparkBatchJobCollection() { }
         public int From { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob> Sessions { get { throw null; } }
         public int Total { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkBatchJobOptions
+    public partial class SparkBatchJobOptions : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions>
     {
         public SparkBatchJobOptions(string name, string file) { }
         public SparkBatchJobOptions(string name, string file, Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType creationCompletionType = Azure.Analytics.Synapse.Spark.Models.SparkBatchOperationCompletionType.JobSubmission) { }
@@ -248,6 +260,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IList<string> PythonFiles { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SparkBatchJobResultType : System.IEquatable<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType>
@@ -269,7 +286,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator !=(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType left, Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SparkBatchJobState
+    public partial class SparkBatchJobState : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState>
     {
         internal SparkBatchJobState() { }
         public string CurrentState { get { throw null; } }
@@ -281,6 +298,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public System.DateTimeOffset? StartingAt { get { throw null; } }
         public System.DateTimeOffset? SuccessAt { get { throw null; } }
         public System.DateTimeOffset? TerminatedAt { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SparkBatchOperationCompletionType
     {
@@ -325,7 +347,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator !=(Azure.Analytics.Synapse.Spark.Models.SparkJobType left, Azure.Analytics.Synapse.Spark.Models.SparkJobType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SparkRequest
+    public partial class SparkRequest : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkRequest>
     {
         internal SparkRequest() { }
         public System.Collections.Generic.IReadOnlyList<string> Archives { get { throw null; } }
@@ -342,8 +364,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public System.Collections.Generic.IReadOnlyList<string> Jars { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> PythonFiles { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkRequest System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkRequest System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkRequest>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkRequest>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkRequest>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkScheduler
+    public partial class SparkScheduler : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkScheduler>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkScheduler>
     {
         internal SparkScheduler() { }
         public System.DateTimeOffset? CancellationRequestedAt { get { throw null; } }
@@ -351,15 +378,25 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public System.DateTimeOffset? EndedAt { get { throw null; } }
         public System.DateTimeOffset? ScheduledAt { get { throw null; } }
         public System.DateTimeOffset? SubmittedAt { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkScheduler System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkScheduler>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkScheduler>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkScheduler System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkScheduler>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkScheduler>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkScheduler>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkServiceError
+    public partial class SparkServiceError : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkServiceError>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkServiceError>
     {
         internal SparkServiceError() { }
         public string ErrorCode { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.Analytics.Synapse.Spark.Models.SparkErrorSource? Source { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkServiceError System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkServiceError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkServiceError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkServiceError System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkServiceError>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkServiceError>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkServiceError>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkServicePlugin
+    public partial class SparkServicePlugin : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin>
     {
         internal SparkServicePlugin() { }
         public System.DateTimeOffset? CleanupStartedAt { get { throw null; } }
@@ -368,8 +405,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public System.DateTimeOffset? PreparationStartedAt { get { throw null; } }
         public System.DateTimeOffset? ResourceAcquisitionStartedAt { get { throw null; } }
         public System.DateTimeOffset? SubmissionStartedAt { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkSession
+    public partial class SparkSession : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSession>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSession>
     {
         internal SparkSession() { }
         public string AppId { get { throw null; } }
@@ -390,15 +432,25 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public string SubmitterName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string WorkspaceName { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkSession System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSession>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSession>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkSession System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSession>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSession>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSession>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkSessionCollection
+    public partial class SparkSessionCollection : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection>
     {
         internal SparkSessionCollection() { }
         public int From { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Spark.Models.SparkSession> Sessions { get { throw null; } }
         public int Total { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkSessionOptions
+    public partial class SparkSessionOptions : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions>
     {
         public SparkSessionOptions(string name) { }
         public System.Collections.Generic.IList<string> Archives { get { throw null; } }
@@ -417,6 +469,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IList<string> PythonFiles { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SparkSessionResultType : System.IEquatable<Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType>
@@ -438,7 +495,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator !=(Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType left, Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SparkSessionState
+    public partial class SparkSessionState : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionState>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionState>
     {
         internal SparkSessionState() { }
         public System.DateTimeOffset? BusyAt { get { throw null; } }
@@ -452,25 +509,45 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public System.DateTimeOffset? ShuttingDownAt { get { throw null; } }
         public System.DateTimeOffset? StartingAt { get { throw null; } }
         public System.DateTimeOffset? TerminatedAt { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkSessionState System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkSessionState System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionState>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionState>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkSessionState>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkStatement
+    public partial class SparkStatement : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatement>
     {
         internal SparkStatement() { }
         public string Code { get { throw null; } }
         public int Id { get { throw null; } }
         public Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput Output { get { throw null; } }
         public Azure.Analytics.Synapse.Spark.Models.LivyStatementStates? State { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatement System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatement System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatement>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatement>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatement>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkStatementCancellationResult
+    public partial class SparkStatementCancellationResult : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult>
     {
         internal SparkStatementCancellationResult() { }
         public string Message { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkStatementCollection
+    public partial class SparkStatementCollection : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection>
     {
         internal SparkStatementCollection() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Spark.Models.SparkStatement> Statements { get { throw null; } }
         public int Total { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SparkStatementLanguageType : System.IEquatable<Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType>
@@ -492,13 +569,18 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator !=(Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType left, Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SparkStatementOptions
+    public partial class SparkStatementOptions : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions>
     {
         public SparkStatementOptions() { }
         public string Code { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType? Kind { get { throw null; } set { } }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SparkStatementOutput
+    public partial class SparkStatementOutput : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput>
     {
         internal SparkStatementOutput() { }
         public object Data { get { throw null; } }
@@ -507,5 +589,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public int ExecutionCount { get { throw null; } }
         public string Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Traceback { get { throw null; } }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

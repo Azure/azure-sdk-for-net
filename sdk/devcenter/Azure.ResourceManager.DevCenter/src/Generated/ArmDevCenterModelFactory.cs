@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             operations ??= new List<OperationStatusResult>();
 
-            return new DevCenterOperationStatus(id, name, status, percentComplete, startOn, endOn, operations?.ToList(), error, serializedAdditionalRawData: null, resourceId, properties);
+            return new DevCenterOperationStatus(id, name, status, percentComplete, startOn, endOn, operations?.ToList(), error, resourceId, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterUsage"/>. </summary>

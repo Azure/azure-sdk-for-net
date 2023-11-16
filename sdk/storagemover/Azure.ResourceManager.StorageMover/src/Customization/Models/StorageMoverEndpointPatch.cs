@@ -21,8 +21,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             set
             {
                 if (Properties is null)
-                    Properties = new UnknownEndpointBaseUpdateProperties();
-                Properties.Description = value;
+                    Properties = new UnknownEndpointBaseUpdateProperties("Unknown", value, serializedAdditionalRawData: null);
+                else
+                    Properties.Description = value;
             }
         }
     }

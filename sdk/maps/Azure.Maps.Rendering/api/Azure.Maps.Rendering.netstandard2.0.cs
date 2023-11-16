@@ -1,10 +1,15 @@
 namespace Azure.Maps.Rendering
 {
-    public partial class CopyrightCaption
+    public partial class CopyrightCaption : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.CopyrightCaption>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.CopyrightCaption>
     {
         internal CopyrightCaption() { }
         public string Copyright { get { throw null; } }
         public string FormatVersion { get { throw null; } }
+        Azure.Maps.Rendering.CopyrightCaption System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.CopyrightCaption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.CopyrightCaption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Rendering.CopyrightCaption System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.CopyrightCaption>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.CopyrightCaption>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.CopyrightCaption>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class GetMapStaticImageOptions
     {
@@ -161,7 +166,7 @@ namespace Azure.Maps.Rendering
         public static bool operator !=(Azure.Maps.Rendering.MapTileScheme left, Azure.Maps.Rendering.MapTileScheme right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MapTileSet
+    public partial class MapTileSet : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.MapTileSet>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.MapTileSet>
     {
         internal MapTileSet() { }
         public Azure.Core.GeoJson.GeoBoundingBox? BoundingBox { get { throw null; } }
@@ -177,6 +182,11 @@ namespace Azure.Maps.Rendering
         public string TileSetDescription { get { throw null; } }
         public string TileSetName { get { throw null; } }
         public string TileSetVersion { get { throw null; } }
+        Azure.Maps.Rendering.MapTileSet System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.MapTileSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.MapTileSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Rendering.MapTileSet System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.MapTileSet>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.MapTileSet>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.MapTileSet>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MapTileSetId : System.IEquatable<Azure.Maps.Rendering.MapTileSetId>
@@ -238,24 +248,39 @@ namespace Azure.Maps.Rendering
     {
         public PushpinPosition(double longitude, double latitude, string? label = null) { }
     }
-    public partial class RegionalCopyright
+    public partial class RegionalCopyright : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RegionalCopyright>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RegionalCopyright>
     {
         internal RegionalCopyright() { }
         public System.Collections.Generic.IReadOnlyList<string> Copyrights { get { throw null; } }
         public Azure.Maps.Rendering.RegionalCopyrightCountry Country { get { throw null; } }
+        Azure.Maps.Rendering.RegionalCopyright System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RegionalCopyright>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RegionalCopyright>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Rendering.RegionalCopyright System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RegionalCopyright>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RegionalCopyright>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RegionalCopyright>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RegionalCopyrightCountry
+    public partial class RegionalCopyrightCountry : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RegionalCopyrightCountry>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RegionalCopyrightCountry>
     {
         internal RegionalCopyrightCountry() { }
         public string Iso3 { get { throw null; } }
         public string Label { get { throw null; } }
+        Azure.Maps.Rendering.RegionalCopyrightCountry System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RegionalCopyrightCountry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RegionalCopyrightCountry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Rendering.RegionalCopyrightCountry System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RegionalCopyrightCountry>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RegionalCopyrightCountry>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RegionalCopyrightCountry>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RenderCopyright
+    public partial class RenderCopyright : System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RenderCopyright>, System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RenderCopyright>
     {
         internal RenderCopyright() { }
         public string FormatVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> GeneralCopyrights { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Rendering.RegionalCopyright> RegionalCopyrights { get { throw null; } }
+        Azure.Maps.Rendering.RenderCopyright System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RenderCopyright>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Maps.Rendering.RenderCopyright>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.Maps.Rendering.RenderCopyright System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RenderCopyright>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RenderCopyright>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Maps.Rendering.RenderCopyright>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RenderingLanguage : System.IEquatable<Azure.Maps.Rendering.RenderingLanguage>

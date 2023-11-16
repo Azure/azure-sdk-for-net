@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventGrid
             properties ??= new Dictionary<string, object>();
             participants ??= new List<AcsChatThreadParticipantProperties>();
 
-            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), participants?.ToList());
+            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData: null, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), participants?.ToList());
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier)
         {
-            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, new Dictionary<string, string>());
+            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, new Dictionary<string, string>(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedPerUserEventData. </summary>
@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventGrid
         {
             properties ??= new Dictionary<string, object>();
 
-            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, new Dictionary<string, string>(), properties);
+            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData: null, createTime, version, editedByCommunicationIdentifier, editTime, new Dictionary<string, string>(), properties);
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedEventData. </summary>
@@ -171,7 +171,7 @@ namespace Azure.Messaging.EventGrid
         {
             properties ??= new Dictionary<string, object>();
 
-            return new AcsChatThreadPropertiesUpdatedEventData(transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, properties, new Dictionary<string, string>());
+            return new AcsChatThreadPropertiesUpdatedEventData(transactionId, threadId, serializedAdditionalRawData: null, createTime, version, editedByCommunicationIdentifier, editTime, properties, new Dictionary<string, string>());
         }
 
         /// <summary> Initializes new instance of AcsSmsDeliveryReportReceivedEventData class. </summary>
@@ -214,7 +214,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceWriteSuccessEventData"/> instance for mocking. </returns>
         public static ResourceWriteSuccessEventData ResourceWriteSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceWriteSuccessEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of ResourceWriteFailureEventData class. </summary>
@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceWriteFailureEventData"/> instance for mocking. </returns>
         public static ResourceWriteFailureEventData ResourceWriteFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceWriteFailureEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of ResourceWriteCancelEventData class. </summary>
@@ -250,7 +250,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceWriteCancelEventData"/> instance for mocking. </returns>
         public static ResourceWriteCancelEventData ResourceWriteCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceWriteCancelEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of ResourceDeleteSuccessEventData class. </summary>
@@ -268,7 +268,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceDeleteSuccessEventData"/> instance for mocking. </returns>
         public static ResourceDeleteSuccessEventData ResourceDeleteSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceDeleteSuccessEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of ResourceDeleteFailureEventData class. </summary>
@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceDeleteFailureEventData"/> instance for mocking. </returns>
         public static ResourceDeleteFailureEventData ResourceDeleteFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceDeleteFailureEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of ResourceDeleteCancelEventData class. </summary>
@@ -304,7 +304,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceDeleteCancelEventData"/> instance for mocking. </returns>
         public static ResourceDeleteCancelEventData ResourceDeleteCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceDeleteCancelEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of ResourceActionSuccessEventData class. </summary>
@@ -322,7 +322,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceActionSuccessEventData"/> instance for mocking. </returns>
         public static ResourceActionSuccessEventData ResourceActionSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceActionSuccessEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of ResourceActionFailureEventData class. </summary>
@@ -340,7 +340,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceActionFailureEventData"/> instance for mocking. </returns>
         public static ResourceActionFailureEventData ResourceActionFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceActionFailureEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of ResourceActionCancelEventData class. </summary>
@@ -358,7 +358,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceActionCancelEventData"/> instance for mocking. </returns>
         public static ResourceActionCancelEventData ResourceActionCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
-            return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+            return new ResourceActionCancelEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes new instance of SubscriptionValidationResponse class. </summary>
@@ -367,7 +367,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = default)
         {
-            return new(validationResponse);
+            return new SubscriptionValidationResponse(validationResponse, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageReceivedEventData. </summary>
@@ -482,7 +482,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.MediaLiveEventIngestHeartbeatEventData"/> instance for mocking. </returns>
         public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, string transcriptionLanguage = null, string transcriptionState = null, long? bitrate = null, long? incomingBitrate = null, int? ingestDriftValue = null, DateTimeOffset? lastFragmentArrivalTime = null, string lastTimestamp = null, string timescale = null, long? overlapCount = null, long? discontinuityCount = null, long? nonincreasingCount = null, bool? unexpectedBitrate = null, string state = null, bool? healthy = null)
         {
-            return new MediaLiveEventIngestHeartbeatEventData(trackType, trackName, transcriptionLanguage, transcriptionState, bitrate, incomingBitrate, ingestDriftValue == null ? Constants.MediaEvents.NotApplicable : ingestDriftValue.Value.ToString(CultureInfo.InvariantCulture), lastFragmentArrivalTime, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
+            return new MediaLiveEventIngestHeartbeatEventData(trackType, trackName, transcriptionLanguage, transcriptionState, bitrate, incomingBitrate, ingestDriftValue == null ? Constants.MediaEvents.NotApplicable : ingestDriftValue.Value.ToString(CultureInfo.InvariantCulture), lastFragmentArrivalTime, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
@@ -529,7 +529,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData()
         {
-            return new AcsRecordingFileStatusUpdatedEventData(null, null, null, null, null, null, null);
+            return new AcsRecordingFileStatusUpdatedEventData(null, null, null, null, null, null, null, null);
         }
 
         /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>
@@ -580,7 +580,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.ResourceHttpRequest"/> instance for mocking. </returns>
         public static ResourceHttpRequest ResourceHttpRequest(string clientRequestId = null, string clientIpAddress = null, RequestMethod? method = null, string url = null)
         {
-            return new ResourceHttpRequest(clientRequestId, clientIpAddress, method?.Method, url);
+            return new ResourceHttpRequest(clientRequestId, clientIpAddress, method?.Method, url, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of StorageDirectoryDeletedEventData. </summary>
@@ -595,7 +595,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.StorageDirectoryDeletedEventData"/> instance for mocking. </returns>
         public static StorageDirectoryDeletedEventData StorageDirectoryDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string url = null, bool? recursive = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
-            return new StorageDirectoryDeletedEventData(api, clientRequestId, requestId, url, recursive?.ToString(), sequencer, identity, storageDiagnostics);
+            return new StorageDirectoryDeletedEventData(api, clientRequestId, requestId, url, recursive?.ToString(), sequencer, identity, storageDiagnostics, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of AcsEmailDeliveryReportReceivedEventData. </summary>
@@ -608,7 +608,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, DateTimeOffset? deliveryAttemptTimestamp = null)
         {
-            return new AcsEmailDeliveryReportReceivedEventData(sender, recipient, messageId, status, default, deliveryAttemptTimestamp);
+            return new AcsEmailDeliveryReportReceivedEventData(sender, recipient, messageId, status, default, deliveryAttemptTimestamp, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of HealthcareDicomImageCreatedEventData. </summary>
@@ -621,7 +621,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
         {
-            return new HealthcareDicomImageCreatedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
+            return new HealthcareDicomImageCreatedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of HealthcareDicomImageDeletedEventData. </summary>
@@ -634,7 +634,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
         {
-            return new HealthcareDicomImageDeletedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
+            return new HealthcareDicomImageDeletedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of AcsEmailEngagementTrackingReportReceivedEventData. </summary>
@@ -648,7 +648,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender, string messageId, DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, AcsUserEngagement? engagement)
         {
-            return new AcsEmailEngagementTrackingReportReceivedEventData(sender, null, messageId, userActionTimestamp, engagementContext, userAgent, engagement);
+            return new AcsEmailEngagementTrackingReportReceivedEventData(sender, null, messageId, userActionTimestamp, engagementContext, userAgent, engagement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
@@ -671,9 +671,9 @@ namespace Azure.Messaging.EventGrid
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
             requestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
-            Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus? status = jobStatus.HasValue ? new Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus(jobStatus.ToString()) : null;
+            SystemEvents.AcsRouterJobStatus? status = jobStatus.HasValue ? new SystemEvents.AcsRouterJobStatus(jobStatus.ToString()) : null;
 
-            return new AcsRouterJobReceivedEventData(jobId, channelReference, channelId, queueId, labels, tags, status, classificationPolicyId, priority, requestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
+            return new AcsRouterJobReceivedEventData(jobId, channelReference, channelId, serializedAdditionalRawData: null, queueId, labels, tags, status, classificationPolicyId, priority, requestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
         }
 
         /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
@@ -691,7 +691,7 @@ namespace Azure.Messaging.EventGrid
             properties ??= new Dictionary<string, object>();
 
             return new ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location,
-                new Dictionary<string, string>(), properties)
+                new Dictionary<string, string>(), properties, serializedAdditionalRawData: null)
             {
                 Tags = tags
             };

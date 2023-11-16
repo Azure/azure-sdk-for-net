@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Quantum
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class QuantumWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class QuantumWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.QuantumWorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.QuantumWorkspaceData>
     {
         public QuantumWorkspaceData(Azure.Core.AzureLocation location) { }
         public System.Uri EndpointUri { get { throw null; } }
@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Quantum
         public Azure.ResourceManager.Quantum.Models.ProvisioningStatus? ProvisioningState { get { throw null; } }
         public string StorageAccount { get { throw null; } set { } }
         public Azure.ResourceManager.Quantum.Models.UsableStatus? Usable { get { throw null; } }
+        Azure.ResourceManager.Quantum.QuantumWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.QuantumWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.QuantumWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.QuantumWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.QuantumWorkspaceData>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.QuantumWorkspaceData>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.QuantumWorkspaceData>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class QuantumWorkspaceResource : Azure.ResourceManager.ArmResource
     {
@@ -102,32 +107,52 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Azure.ResourceManager.Quantum.Models.SkuDescription SkuDescription(string id = null, string name = null, string version = null, string description = null, System.Uri restrictedAccessUri = null, bool? autoAdd = default(bool?), System.Collections.Generic.IEnumerable<string> targets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.Models.QuotaDimension> quotaDimensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quantum.Models.PricingDetail> pricingDetails = null) { throw null; }
         public static Azure.ResourceManager.Quantum.Models.TargetDescription TargetDescription(string id = null, string name = null, string description = null, System.Collections.Generic.IEnumerable<string> acceptedDataFormats = null, System.Collections.Generic.IEnumerable<string> acceptedContentEncodings = null) { throw null; }
     }
-    public partial class CheckNameAvailabilityContent
+    public partial class CheckNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent>
     {
         public CheckNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CheckNameAvailabilityResult
+    public partial class CheckNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>
     {
         internal CheckNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PricingDetail
+    public partial class PricingDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.PricingDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.PricingDetail>
     {
         internal PricingDetail() { }
         public string Id { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.PricingDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.PricingDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.PricingDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.PricingDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.PricingDetail>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.PricingDetail>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.PricingDetail>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PricingDimension
+    public partial class PricingDimension : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.PricingDimension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.PricingDimension>
     {
         internal PricingDimension() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.PricingDimension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.PricingDimension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.PricingDimension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.PricingDimension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.PricingDimension>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.PricingDimension>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.PricingDimension>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Provider
+    public partial class Provider : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.Provider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.Provider>
     {
         public Provider() { }
         public string ApplicationName { get { throw null; } set { } }
@@ -136,15 +161,25 @@ namespace Azure.ResourceManager.Quantum.Models
         public string ProviderSku { get { throw null; } set { } }
         public Azure.ResourceManager.Quantum.Models.Status? ProvisioningState { get { throw null; } set { } }
         public string ResourceUsageId { get { throw null; } set { } }
+        Azure.ResourceManager.Quantum.Models.Provider System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.Provider>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.Provider>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.Provider System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.Provider>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.Provider>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.Provider>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderDescription
+    public partial class ProviderDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderDescription>
     {
         internal ProviderDescription() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Quantum.Models.ProviderProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.ProviderDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.ProviderDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderDescription>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderDescription>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderDescription>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderProperties
+    public partial class ProviderProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderProperties>
     {
         internal ProviderProperties() { }
         public Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad Aad { get { throw null; } }
@@ -157,18 +192,33 @@ namespace Azure.ResourceManager.Quantum.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.QuotaDimension> QuotaDimensions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.SkuDescription> Skus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quantum.Models.TargetDescription> Targets { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.ProviderProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.ProviderProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderProperties>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderProperties>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderProperties>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderPropertiesAad
+    public partial class ProviderPropertiesAad : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad>
     {
         internal ProviderPropertiesAad() { }
         public string ApplicationId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesAad>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderPropertiesManagedApplication
+    public partial class ProviderPropertiesManagedApplication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication>
     {
         internal ProviderPropertiesManagedApplication() { }
         public string OfferId { get { throw null; } }
         public string PublisherId { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.ProviderPropertiesManagedApplication>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningStatus : System.IEquatable<Azure.ResourceManager.Quantum.Models.ProvisioningStatus>
@@ -192,12 +242,17 @@ namespace Azure.ResourceManager.Quantum.Models
         public static bool operator !=(Azure.ResourceManager.Quantum.Models.ProvisioningStatus left, Azure.ResourceManager.Quantum.Models.ProvisioningStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QuantumWorkspacePatch
+    public partial class QuantumWorkspacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch>
     {
         public QuantumWorkspacePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.QuantumWorkspacePatch>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QuotaDimension
+    public partial class QuotaDimension : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.QuotaDimension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.QuotaDimension>
     {
         internal QuotaDimension() { }
         public string Description { get { throw null; } }
@@ -208,8 +263,13 @@ namespace Azure.ResourceManager.Quantum.Models
         public string Scope { get { throw null; } }
         public string Unit { get { throw null; } }
         public string UnitPlural { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.QuotaDimension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.QuotaDimension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.QuotaDimension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.QuotaDimension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.QuotaDimension>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.QuotaDimension>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.QuotaDimension>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SkuDescription
+    public partial class SkuDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.SkuDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.SkuDescription>
     {
         internal SkuDescription() { }
         public bool? AutoAdd { get { throw null; } }
@@ -221,6 +281,11 @@ namespace Azure.ResourceManager.Quantum.Models
         public System.Uri RestrictedAccessUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Targets { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.SkuDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.SkuDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.SkuDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.SkuDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.SkuDescription>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.SkuDescription>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.SkuDescription>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.Quantum.Models.Status>
@@ -244,7 +309,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static bool operator !=(Azure.ResourceManager.Quantum.Models.Status left, Azure.ResourceManager.Quantum.Models.Status right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TargetDescription
+    public partial class TargetDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.TargetDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.TargetDescription>
     {
         internal TargetDescription() { }
         public System.Collections.Generic.IReadOnlyList<string> AcceptedContentEncodings { get { throw null; } }
@@ -252,6 +317,11 @@ namespace Azure.ResourceManager.Quantum.Models
         public string Description { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Quantum.Models.TargetDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.TargetDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quantum.Models.TargetDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quantum.Models.TargetDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.TargetDescription>.Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.TargetDescription>.GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quantum.Models.TargetDescription>.Write(System.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UsableStatus : System.IEquatable<Azure.ResourceManager.Quantum.Models.UsableStatus>
