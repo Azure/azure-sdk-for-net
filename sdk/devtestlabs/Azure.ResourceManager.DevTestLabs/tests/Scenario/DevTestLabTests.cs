@@ -30,14 +30,12 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public void CreateOrUpdate()
         {
             ValidateDevTestLab(TestDevTestLab.Data, _labName);
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task Exist()
         {
             var flag = await _devTestLabCollections.ExistsAsync(_labName);
@@ -45,7 +43,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task Get()
         {
             var getlab = await _devTestLabCollections.GetAsync(_labName);
@@ -53,7 +50,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task GetAll()
         {
             var first = (await _devTestLabCollections.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
@@ -61,7 +57,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task Delete()
         {
             await DeleteAllLocks(TestResourceGroup);
@@ -73,7 +68,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);

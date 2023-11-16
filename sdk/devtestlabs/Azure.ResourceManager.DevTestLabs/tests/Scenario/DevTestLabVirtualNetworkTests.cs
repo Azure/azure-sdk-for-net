@@ -38,14 +38,12 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public void CreateOrUpdate()
         {
             ValidateDevTestLabVirtualNetwork(_dtlVnet.Data, _dtlVnetName);
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task Exist()
         {
             var flag = await _dtlVnetCollection.ExistsAsync(_dtlVnetName);
@@ -53,7 +51,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task Get()
         {
             var getdtlVnet = await _dtlVnetCollection.GetAsync(_dtlVnetName);
@@ -61,7 +58,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task GetAll()
         {
             var first = (await _dtlVnetCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
@@ -69,7 +65,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task Delete()
         {
             await _dtlVnet.DeleteAsync(WaitUntil.Completed);

@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
         }
 
         [RecordedTest]
-        [Ignore("Restore after Azure.ResourceManager 1.9.0 get released.")]
         public async Task CreateTest()
         {
             var sub = await Client.GetDefaultSubscriptionAsync();
