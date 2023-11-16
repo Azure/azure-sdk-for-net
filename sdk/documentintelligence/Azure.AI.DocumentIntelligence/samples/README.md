@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- document-intelligence
+- azure-form-recognizer
 name: Azure Document Intelligence samples for .NET
 description: Samples for the Azure.AI.DocumentIntelligence client library
 ---
