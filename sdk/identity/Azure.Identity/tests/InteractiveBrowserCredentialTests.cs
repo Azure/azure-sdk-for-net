@@ -267,6 +267,8 @@ namespace Azure.Identity.Tests
                 _beforeBuildClient = beforeBuildClient;
             }
 
+            public bool IsProofOfPossessionRequired { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
             Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient { get { return _beforeBuildClient; } }
         }
 

@@ -16,11 +16,6 @@ namespace Azure.Identity
     /// For more information on the device code authentication flow see https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow.
     /// </summary>
     public class DeviceCodeCredential : TokenCredential
-#if PREVIEW_FEATURE_FLAG
-    , IPopTokenCredential
-#else
-
-#endif
     {
         private readonly string _tenantId;
         internal readonly string[] AdditionallyAllowedTenantIds;
@@ -168,7 +163,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(false, requestContext, null, cancellationToken).EnsureCompleted();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -181,33 +176,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await GetTokenImplAsync(true, requestContext, null, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Obtains a token for a user account, authenticating them through the device code authentication flow. Acquired tokens are cached
-        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
-        /// to optimize cache effectiveness.
-        /// </summary>
-        /// <param name="requestContext">The details of the authentication request.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public AccessToken GetToken(PopTokenRequestContext requestContext, CancellationToken cancellationToken = default)
-        {
-            return GetTokenImplAsync(false, requestContext.ToTokenRequestContext(), requestContext.ProofOfPossessionNonce, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// Obtains a token for a user account, authenticating them through the device code authentication flow. Acquired tokens are cached
-        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
-        /// to optimize cache effectiveness.
-        /// </summary>
-        /// <param name="requestContext">The details of the authentication request.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public async ValueTask<AccessToken> GetTokenAsync(PopTokenRequestContext requestContext, CancellationToken cancellationToken = default)
-        {
-            return await GetTokenImplAsync(true, requestContext.ToTokenRequestContext(), requestContext.ProofOfPossessionNonce, cancellationToken).ConfigureAwait(false);
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
         internal static Task DefaultDeviceCodeHandler(DeviceCodeInfo deviceCodeInfo, CancellationToken cancellationToken)
@@ -235,7 +204,7 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, string nonce, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(DeviceCodeCredential)}.{nameof(GetToken)}", requestContext);
 

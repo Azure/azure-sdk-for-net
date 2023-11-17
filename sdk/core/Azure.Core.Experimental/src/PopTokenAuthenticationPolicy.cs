@@ -45,12 +45,12 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            var context = _popNonce switch
+            if (_popNonce is not null)
             {
-                null => new PopTokenRequestContext(_scopes, message.Request.ClientRequestId),
-                _ => new PopTokenRequestContext(_scopes, message.Request.ClientRequestId, proofOfPossessionNonce: _popNonce)
-            };
-            return AuthenticateAndAuthorizeRequestAsync(message, context);
+                var context = new PopTokenRequestContext(_scopes, message.Request.ClientRequestId, proofOfPossessionNonce: _popNonce, request: message.Request);
+                return AuthenticateAndAuthorizeRequestAsync(message, context);
+            }
+            return default;
         }
 
         /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequest(Azure.Core.HttpMessage)" />
@@ -79,7 +79,8 @@ namespace Azure.Core.Pipeline
         /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
-        protected virtual ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message) => default;
+        protected virtual async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message) =>
+            await AuthorizeRequestOnChallengeAsyncInternal(message, true).ConfigureAwait(false);
 
         /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
@@ -87,7 +88,8 @@ namespace Azure.Core.Pipeline
         /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
-        protected virtual bool AuthorizeRequestOnChallenge(HttpMessage message) => false;
+        protected virtual bool AuthorizeRequestOnChallenge(HttpMessage message) =>
+            AuthorizeRequestOnChallengeAsyncInternal(message, false).EnsureCompleted();
 
         private async ValueTask AuthenticateAndAuthorizeRequestInternal(HttpMessage message, PopTokenRequestContext context, bool async)
         {
@@ -168,6 +170,26 @@ namespace Azure.Core.Pipeline
 
                 return;
             }
+        }
+
+        private async ValueTask<bool> AuthorizeRequestOnChallengeAsyncInternal(HttpMessage message, bool async)
+        {
+            _popNonce = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "PoP", "nonce");
+            if (_popNonce is null)
+            {
+                return false;
+            }
+            var context = new PopTokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, proofOfPossessionNonce: _popNonce, request: message.Request);
+            if (async)
+            {
+                await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
+            }
+            else
+            {
+                AuthenticateAndAuthorizeRequest(message, context);
+            }
+
+            return true;
         }
     }
 }

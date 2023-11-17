@@ -16,7 +16,7 @@ namespace Azure.Identity
         private string _tenantId;
 
         /// <summary>
-        /// Prevents the <see cref="DeviceCodeCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="DeviceCodeCredential.GetToken(Core.PopTokenRequestContext, CancellationToken)"/> and <see cref="DeviceCodeCredential.GetTokenAsync(Core.PopTokenRequestContext, CancellationToken)"/> in the case that
+        /// Prevents the <see cref="DeviceCodeCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="DeviceCodeCredential.GetToken"/> and <see cref="DeviceCodeCredential.GetTokenAsync"/> in the case that
         /// user interaction is necessary. The application is responsible for handling this exception, and calling <see cref="DeviceCodeCredential.Authenticate(CancellationToken)"/> or <see cref="DeviceCodeCredential.AuthenticateAsync(CancellationToken)"/> to authenticate the user interactively.
         /// </summary>
         public bool DisableAutomaticAuthentication { get; set; }

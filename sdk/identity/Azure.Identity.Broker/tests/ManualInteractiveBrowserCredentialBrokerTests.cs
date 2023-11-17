@@ -34,6 +34,17 @@ namespace Azure.Identity.Broker.Tests
         }
 
         [Test]
+        public async Task GetPopToken()
+        {
+            IntPtr parentWindowHandle = GetForegroundWindow();
+
+            var client = new PopTestClient(new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsProofOfPossessionRequired = true }));
+            var response = await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(200, response.Status);
+        }
+
+        [Test]
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public void AuthenticateWithBrokerAsyncWithSTA([Values(true, false)] bool isAsync)
         {

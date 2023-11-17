@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Net.Http;
+
 namespace Azure.Core
 {
     /// <summary>
@@ -13,67 +16,12 @@ namespace Azure.Core
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
-        public PopTokenRequestContext(string[] scopes, string? parentRequestId)
-        {
-            Scopes = scopes;
-            ParentRequestId = parentRequestId;
-        }
-
-        /// <summary>
-        /// Creates a new TokenRequest with the specified scopes.
-        /// </summary>
-        /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
-        /// <param name="claims">Additional claims to be included in the token.</param>
-        public PopTokenRequestContext(string[] scopes, string? parentRequestId, string? claims)
-        {
-            Scopes = scopes;
-            ParentRequestId = parentRequestId;
-            Claims = claims;
-        }
-
-        /// <summary>
-        /// Creates a new TokenRequest with the specified scopes.
-        /// </summary>
-        /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
-        /// <param name="claims">Additional claims to be included in the token.</param>
-        /// <param name="tenantId"> The tenantId to be included in the token request. </param>
-        public PopTokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId)
-        {
-            Scopes = scopes;
-            ParentRequestId = parentRequestId;
-            Claims = claims;
-            TenantId = tenantId;
-        }
-
-        /// <summary>
-        /// Creates a new TokenRequest with the specified scopes.
-        /// </summary>
-        /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
-        /// <param name="claims">Additional claims to be included in the token.</param>
-        /// <param name="tenantId"> The tenantId to be included in the token request.</param>
-        /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
-        public PopTokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId, bool isCaeEnabled)
-        {
-            Scopes = scopes;
-            ParentRequestId = parentRequestId;
-            Claims = claims;
-            TenantId = tenantId;
-            IsCaeEnabled = isCaeEnabled;
-        }
-
-        /// <summary>
-        /// Creates a new TokenRequest with the specified scopes.
-        /// </summary>
-        /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
         /// <param name="proofOfPossessionNonce">The nonce value required for Pop token requests.</param>
-        public PopTokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, string? proofOfPossessionNonce = default)
+        /// <param name="request"></param>
+        public PopTokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, string? proofOfPossessionNonce = default, Request? request = default)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
@@ -81,6 +29,7 @@ namespace Azure.Core
             TenantId = tenantId;
             IsCaeEnabled = isCaeEnabled;
             ProofOfPossessionNonce = proofOfPossessionNonce;
+            _request = request;
         }
 
         /// <summary>
@@ -91,6 +40,23 @@ namespace Azure.Core
         {
             return new TokenRequestContext(Scopes, ParentRequestId, Claims, TenantId, IsCaeEnabled);
         }
+
+        /// <summary>
+        /// Creates a new PopTokenRequestContext from a TokenRequestContext.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static PopTokenRequestContext FromTokenRequestContext(TokenRequestContext context, Request? request = default)
+        {
+            return new PopTokenRequestContext(context.Scopes, context.ParentRequestId, context.Claims, context.TenantId, context.IsCaeEnabled, default, request);
+        }
+
+        /// <summary>
+        /// Creates a new TokenRequestContext from this instance.
+        /// </summary>
+        /// <param name="context"></param>
+        public static implicit operator TokenRequestContext(PopTokenRequestContext context) => context.ToTokenRequestContext();
 
         /// <summary>
         /// The scopes required for the token.
@@ -126,5 +92,17 @@ namespace Azure.Core
         ///
         /// </summary>
         public string? ProofOfPossessionNonce { get; }
+
+        private readonly Request? _request;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public HttpMethod? HttpMethod => new(_request!.Method.ToString());
+
+        /// <summary>
+        ///
+        /// </summary>
+        public Uri? Uri => _request?.Uri.ToUri();
     }
 }
