@@ -8,27 +8,26 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Options for creating a router worker.
+    /// Options for creating a worker.
     /// </summary>
     public class CreateWorkerOptions
     {
         /// <summary>
-        /// Public constructor.
+        /// Initializes a new instance of CreateWorkerOptions.
         /// </summary>
-        /// <param name="workerId"> Id of the job. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="capacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         public CreateWorkerOptions(string workerId, int capacity)
         {
             Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
-            Argument.AssertNotNull(capacity, nameof(capacity));
 
             WorkerId = workerId;
             Capacity = capacity;
         }
 
         /// <summary>
-        /// Unique key that identifies this worker.
+        /// Id of a worker.
         /// </summary>
         public string WorkerId { get; }
 
@@ -37,7 +36,7 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public int Capacity { get; }
 
-        /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
+        /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
         public bool AvailableForOffers { get; set; }
 
         /// <summary>
@@ -50,10 +49,10 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
+        /// <summary> Collection of channel(s) this worker can handle and their impact on the workers capacity. </summary>
         public IList<RouterChannel> Channels { get; } = new List<RouterChannel>();
 
-        /// <summary> The queue(s) that this worker can receive work from. </summary>
+        /// <summary> Collection of queue(s) that this worker can receive work from. </summary>
         public IList<string> Queues { get; } = new List<string>();
 
         /// <summary>

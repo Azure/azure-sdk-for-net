@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 5.13.4 (2023-11-09)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.
+  Identity`.
+
 ## 5.13.3 (2023-10-20)
 
 ### Bugs Fixed

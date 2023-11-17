@@ -123,7 +123,7 @@ Value = BinaryData.FromString("\"-LC\""),
                 {
                     ["assignedBy"] = "Foo Bar"
                 }),
-                EnforcementMode = new EnforcementMode("Default"),
+                EnforcementMode = EnforcementMode.Default,
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -186,7 +186,7 @@ Value = BinaryData.FromString("\"-LC\""),
                 {
                     ["assignedBy"] = "Foo Bar"
                 }),
-                EnforcementMode = new EnforcementMode("Default"),
+                EnforcementMode = EnforcementMode.Default,
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;

@@ -52,6 +52,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality is off without feature flag.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerActivitySourceDisabled()
+        {
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            var fakeConnection = new MockConnection("SomeName", "endpoint");
+            var transportMock = new Mock<TransportProducer>();
+
+            transportMock
+                .Setup(m => m.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
+            await producer.SendAsync(new[] { new EventData(ReadOnlyMemory<byte>.Empty) });
+
+            Assert.IsEmpty(testListener.Activities);
+        }
+
+        /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
         ///   class.
         /// </summary>
@@ -367,6 +388,30 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(links[i].Context.TraceId, Is.EqualTo(expectedLinks[i].Context.TraceId), "The trace ids should be the same.");
                 Assert.That(links[i].Context.SpanId, Is.EqualTo(expectedLinks[i].Context.SpanId), "The span ids should be the same.");
             }
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality is off without feature flag.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProcessorActivitySourceDisabled()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            var eventBatch = new List<EventData>
+            {
+                new EventData(new BinaryData(Array.Empty<byte>()))
+            };
+
+            await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            Assert.IsEmpty(testListener.Activities);
         }
 
         /// <summary>
