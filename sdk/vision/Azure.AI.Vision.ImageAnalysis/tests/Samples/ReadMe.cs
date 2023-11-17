@@ -9,25 +9,8 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.ImageAnalysis.Tests
 {
-    public class ReadMe : SamplesBase<ImageAnalysisTestEnvironment>
+    public class ReadMe : ImageAnalysisSampleBase
     {
-        public ImageAnalysisClient ImageAnalysisAuth()
-        {
-            #region Snippet:ImageAnalysisAuth
-            string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
-            string key = Environment.GetEnvironmentVariable("VISION_KEY");
-
-#if !SNIPPET
-            endpoint = TestEnvironment.Endpoint;
-            key = TestEnvironment.CogServicesVisionKey;
-#endif
-            // Create an Image Analysis client.
-            ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
-            #endregion
-
-            return client;
-        }
-
         [TestCase]
         public void ImageAnalysisGenerateCaptionFromFile()
         {
@@ -39,7 +22,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Get a caption for the image. This will be a synchronously (blocking) call.
             ImageAnalysisResult result = client.Analyze(
-                new BinaryData(stream),
+                BinaryData.FromStream(stream),
                 VisualFeatures.Caption,
                 new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
 
@@ -80,7 +63,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Extract text (OCR) from an image stream. This will be a synchronously (blocking) call.
             ImageAnalysisResult result = client.Analyze(
-                new BinaryData(stream),
+                BinaryData.FromStream(stream),
                 VisualFeatures.Read);
 
             // Print text (OCR) analysis results to the console

@@ -19,7 +19,6 @@ Use the Image Analysis client library to:
 
 ### Prerequisites
 
-* [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/) or later.
 * An [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 * A [Computer Vision resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesComputerVision) in your Azure subscription.
   * You will need the key and endpoint from this resource to authenticate against the service.
@@ -64,9 +63,9 @@ For more information about these features, see [Image Analysis overview][image_a
 
 ### Analyze from image buffer or URL
 
-The `ImageAnalysisClient` has two methods `Analyze` and `Analyze`:
-* `Analyze`: Analyze an image from an input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object. The client will upload the image to the service as part of the REST request. 
-* `Analyze`: Analyze an image from a publicly-accessible URL, via the `Uri` object. The client will send the image URL to the service. The service will download the image.
+The `ImageAnalysisClient` a method `Analyze` that has two overloads:
+* `Analyze (BianryData ...`: Analyze an image from an input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object. The client will upload the image to the service as part of the REST request. 
+* `Analyze (Uri ...)`: Analyze an image from a publicly-accessible URL, via the `Uri` object. The client will send the image URL to the service. The service will download the image.
 
 The examples below show how to do both. The `Analyze` examples populate the input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object by loading an image from a file on disk.
 
@@ -104,7 +103,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 
 // Get a caption for the image. This will be a synchronously (blocking) call.
 ImageAnalysisResult result = client.Analyze(
-    new BinaryData(stream),
+    BinaryData.FromStream(stream),
     VisualFeatures.Caption,
     new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
 
@@ -141,7 +140,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 
 // Extract text (OCR) from an image stream. This will be a synchronously (blocking) call.
 ImageAnalysisResult result = client.Analyze(
-    new BinaryData(stream),
+    BinaryData.FromStream(stream),
     VisualFeatures.Read);
 
 // Print text (OCR) analysis results to the console
@@ -229,6 +228,7 @@ catch (RequestFailedException e)
     }
 }
 ```
+You can learn more about how to enable SDK logging [here](https://learn.microsoft.com/dotnet/azure/sdk/logging).
 
 ## Next steps
 
