@@ -11,37 +11,37 @@ using Azure;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AnalyzeImageResult
+    public partial class AddOrUpdateTextBlocklistItemsResult
     {
-        internal static AnalyzeImageResult DeserializeAnalyzeImageResult(JsonElement element)
+        internal static AddOrUpdateTextBlocklistItemsResult DeserializeAddOrUpdateTextBlocklistItemsResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<ImageCategoriesAnalysis> categoriesAnalysis = default;
+            IReadOnlyList<TextBlocklistItem> blocklistItems = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("categoriesAnalysis"u8))
+                if (property.NameEquals("blocklistItems"u8))
                 {
-                    List<ImageCategoriesAnalysis> array = new List<ImageCategoriesAnalysis>();
+                    List<TextBlocklistItem> array = new List<TextBlocklistItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageCategoriesAnalysis.DeserializeImageCategoriesAnalysis(item));
+                        array.Add(TextBlocklistItem.DeserializeTextBlocklistItem(item));
                     }
-                    categoriesAnalysis = array;
+                    blocklistItems = array;
                     continue;
                 }
             }
-            return new AnalyzeImageResult(categoriesAnalysis);
+            return new AddOrUpdateTextBlocklistItemsResult(blocklistItems);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AnalyzeImageResult FromResponse(Response response)
+        internal static AddOrUpdateTextBlocklistItemsResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAnalyzeImageResult(document.RootElement);
+            return DeserializeAddOrUpdateTextBlocklistItemsResult(document.RootElement);
         }
     }
 }
