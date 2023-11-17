@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> and their operations.
-    /// Each <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> in the collection will belong to the same instance of <see cref="DnsForwardingRulesetResource" />.
-    /// To get a <see cref="DnsForwardingRulesetVirtualNetworkLinkCollection" /> instance call the GetDnsForwardingRulesetVirtualNetworkLinks method from an instance of <see cref="DnsForwardingRulesetResource" />.
+    /// A class representing a collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> and their operations.
+    /// Each <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> in the collection will belong to the same instance of <see cref="DnsForwardingRulesetResource"/>.
+    /// To get a <see cref="DnsForwardingRulesetVirtualNetworkLinkCollection"/> instance call the GetDnsForwardingRulesetVirtualNetworkLinks method from an instance of <see cref="DnsForwardingRulesetResource"/>.
     /// </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkCollection : ArmCollection, IEnumerable<DnsForwardingRulesetVirtualNetworkLinkResource>, IAsyncEnumerable<DnsForwardingRulesetVirtualNetworkLinkResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsForwardingRulesetVirtualNetworkLinkResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsForwardingRulesetVirtualNetworkLinkResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateLinkResource" /> and their operations.
-    /// Each <see cref="PrivateLinkResource" /> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource" />.
-    /// To get a <see cref="PrivateLinkCollection" /> instance call the GetPrivateLinks method from an instance of <see cref="DeviceUpdateAccountResource" />.
+    /// A class representing a collection of <see cref="PrivateLinkResource"/> and their operations.
+    /// Each <see cref="PrivateLinkResource"/> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource"/>.
+    /// To get a <see cref="PrivateLinkCollection"/> instance call the GetPrivateLinks method from an instance of <see cref="DeviceUpdateAccountResource"/>.
     /// </summary>
     public partial class PrivateLinkCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkPrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkPrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

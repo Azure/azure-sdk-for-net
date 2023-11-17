@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ElasticMonitorResource" /> and their operations.
-    /// Each <see cref="ElasticMonitorResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="ElasticMonitorResourceCollection" /> instance call the GetElasticMonitorResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ElasticMonitorResource"/> and their operations.
+    /// Each <see cref="ElasticMonitorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ElasticMonitorResourceCollection"/> instance call the GetElasticMonitorResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ElasticMonitorResourceCollection : ArmCollection, IEnumerable<ElasticMonitorResource>, IAsyncEnumerable<ElasticMonitorResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
