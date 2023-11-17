@@ -250,12 +250,15 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="MonitorMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(scope, metricnamespace);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
         }
@@ -273,12 +276,15 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(scope, metricnamespace);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
         }
@@ -296,12 +302,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="MonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             options ??= new ArmResourceGetMonitorMetricsOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(scope, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
@@ -321,12 +329,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorMetric> GetMonitorMetrics(ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             options ??= new ArmResourceGetMonitorMetricsOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(scope, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
@@ -346,12 +356,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="MonitorSingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(scope, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
@@ -371,12 +383,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorSingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(scope, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
@@ -396,12 +410,15 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="MonitorMetricNamespace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(scope, startTime);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
@@ -419,12 +436,15 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorMetricNamespace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(scope, startTime);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
