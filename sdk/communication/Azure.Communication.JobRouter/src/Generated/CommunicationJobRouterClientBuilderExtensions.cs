@@ -16,7 +16,7 @@ namespace Azure.Communication.JobRouter.Models
     {
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Uri to use. </param>
+        /// <param name="endpoint"> Uri of your Communication resource. </param>
         public static IAzureClientBuilder<JobRouterAdministrationClient, JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Uri to use. </param>
+        /// <param name="endpoint"> Uri of your Communication resource. </param>
         public static IAzureClientBuilder<JobRouterClient, JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {

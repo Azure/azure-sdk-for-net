@@ -252,6 +252,22 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             {
+                #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
+                // List all secrets asynchronously.
+                await foreach (SecretProperties item in client.GetPropertiesOfSecretVersionsAsync("secret-name"))
+                {
+                    KeyVaultSecret secret = await client.GetSecretAsync(item.Name, item.Version);
+                }
+
+                // List all secrets synchronously.
+                foreach (SecretProperties item in client.GetPropertiesOfSecretVersions("secret-name"))
+                {
+                    KeyVaultSecret secret = client.GetSecret(item.Name, item.Version);
+                }
+                #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
+            }
+
+            {
                 #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_DeleteSecret
                 // Delete the secret.
                 DeleteSecretOperation deleteOperation = await client.StartDeleteSecretAsync("secret-name");

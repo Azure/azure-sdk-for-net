@@ -12,62 +12,62 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="DocumentAnalysisClient"/>, <see cref="DocumentModelAdministrationClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="DocumentIntelligenceClient"/>, <see cref="DocumentIntelligenceAdministrationClient"/> to client builder. </summary>
     public static partial class AIDocumentIntelligenceClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="DocumentAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<DocumentAnalysisClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<DocumentIntelligenceClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<DocumentAnalysisClient, AzureAIDocumentIntelligenceClientOptions>((options) => new DocumentAnalysisClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<DocumentIntelligenceClient, AzureAIDocumentIntelligenceClientOptions>((options) => new DocumentIntelligenceClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
-        public static IAzureClientBuilder<DocumentAnalysisClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<DocumentIntelligenceClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<DocumentAnalysisClient, AzureAIDocumentIntelligenceClientOptions>((options, cred) => new DocumentAnalysisClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<DocumentIntelligenceClient, AzureAIDocumentIntelligenceClientOptions>((options, cred) => new DocumentIntelligenceClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentModelAdministrationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<DocumentModelAdministrationClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentModelAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<DocumentModelAdministrationClient, AzureAIDocumentIntelligenceClientOptions>((options) => new DocumentModelAdministrationClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<DocumentIntelligenceAdministrationClient, AzureAIDocumentIntelligenceClientOptions>((options) => new DocumentIntelligenceAdministrationClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentModelAdministrationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
-        public static IAzureClientBuilder<DocumentModelAdministrationClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentModelAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<DocumentModelAdministrationClient, AzureAIDocumentIntelligenceClientOptions>((options, cred) => new DocumentModelAdministrationClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<DocumentIntelligenceAdministrationClient, AzureAIDocumentIntelligenceClientOptions>((options, cred) => new DocumentIntelligenceAdministrationClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<DocumentAnalysisClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<DocumentIntelligenceClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<DocumentAnalysisClient, AzureAIDocumentIntelligenceClientOptions>(configuration);
+            return builder.RegisterClientFactory<DocumentIntelligenceClient, AzureAIDocumentIntelligenceClientOptions>(configuration);
         }
-        /// <summary> Registers a <see cref="DocumentModelAdministrationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<DocumentModelAdministrationClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentModelAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<DocumentModelAdministrationClient, AzureAIDocumentIntelligenceClientOptions>(configuration);
+            return builder.RegisterClientFactory<DocumentIntelligenceAdministrationClient, AzureAIDocumentIntelligenceClientOptions>(configuration);
         }
     }
 }

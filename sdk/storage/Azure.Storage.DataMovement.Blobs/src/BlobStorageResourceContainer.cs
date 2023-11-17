@@ -142,8 +142,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.BlobOptions?.HttpHeaders,
                 _options?.BlobOptions?.AccessTier,
                 _options?.BlobOptions?.Metadata,
-                _options?.BlobOptions?.Tags,
-                default); // TODO: Update when we support encryption scopes
+                _options?.BlobOptions?.Tags);
         }
 
         private string ApplyOptionalPrefix(string path)

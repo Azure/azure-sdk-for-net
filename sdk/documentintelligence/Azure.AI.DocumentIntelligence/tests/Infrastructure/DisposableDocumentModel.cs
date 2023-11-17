@@ -8,9 +8,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 {
     public class DisposableDocumentModel : IAsyncDisposable
     {
-        private readonly DocumentModelAdministrationClient _client;
+        private readonly DocumentIntelligenceAdministrationClient _client;
 
-        private DisposableDocumentModel(DocumentModelAdministrationClient client, Operation<DocumentModelDetails> operation)
+        private DisposableDocumentModel(DocumentIntelligenceAdministrationClient client, Operation<DocumentModelDetails> operation)
         {
             _client = client;
             Operation = operation;
@@ -22,9 +22,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public string ModelId => Value.ModelId;
 
-        public static async Task<DisposableDocumentModel> BuildAsync(DocumentModelAdministrationClient client, BuildDocumentModelRequest buildRequest)
+        public static async Task<DisposableDocumentModel> BuildAsync(DocumentIntelligenceAdministrationClient client, BuildDocumentModelContent buildContent)
         {
-            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
+            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildContent);
 
             return new DisposableDocumentModel(client, operation);
         }

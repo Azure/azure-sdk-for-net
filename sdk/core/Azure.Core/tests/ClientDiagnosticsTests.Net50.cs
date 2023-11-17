@@ -125,6 +125,34 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
         }
 
+        [Test]
+        [NonParallelizable]
+        public void DuplicateTagsAreUpdatedActivitySource()
+        {
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.AddAttribute("key1", "value1");
+            scope.AddAttribute("key1", "value2");
+
+            scope.Start();
+            scope.AddAttribute("key2", "value1");
+            scope.AddAttribute("key2", "value2");
+
+            scope.Dispose();
+
+            Assert.AreEqual(1, activityListener.Activities.Count);
+            var activity = activityListener.Activities.Dequeue();
+
+            var key1 = activity.TagObjects.Where(kvp => kvp.Key == "key1").ToList();
+            var key2 = activity.TagObjects.Where(kvp => kvp.Key == "key2").ToList();
+            Assert.AreEqual(1, key1.Count);
+            Assert.AreEqual(1, key2.Count);
+            Assert.AreEqual("value2", key1.Single().Value);
+            Assert.AreEqual("value2", key2.Single().Value);
+        }
+
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
@@ -176,7 +204,7 @@ namespace Azure.Core.Tests
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (ActivityKind)kind);
             scope.Start();
 
-            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (ActivityKind)kind);
+            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", ActivityKind.Client);
             nestedScope.Start();
             if (expectSuppression)
             {
@@ -199,7 +227,7 @@ namespace Azure.Core.Tests
         [TestCase(ActivityKind.Producer, false)]
         [TestCase(ActivityKind.Consumer, false)]
         [NonParallelizable]
-        public void NestedClientActivitiesSuppressionActivitySource(int kind, bool expectSuppression)
+        public void NestedInternalActivitiesSuppressionActivitySource(int kind, bool expectSuppression)
         {
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
@@ -208,7 +236,7 @@ namespace Azure.Core.Tests
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (ActivityKind)kind);
             scope.Start();
 
-            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (ActivityKind)kind);
+            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", ActivityKind.Internal);
             nestedScope.Start();
             if (expectSuppression)
             {
@@ -224,12 +252,12 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
         }
 
-        [TestCase(true, true, true)]
-        [TestCase(true, false, false)]
-        [TestCase(false, true, true)]
-        [TestCase(false, false, false)]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
         [NonParallelizable]
-        public void NestedActivitiesSuppressionConfiguration(bool suppressOuter, bool suppressNested, bool expectSuppression)
+        public void NestedActivitiesSuppressionConfiguration(bool suppressOuter, bool suppressNested)
         {
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, suppressOuter, true);
@@ -241,7 +269,7 @@ namespace Azure.Core.Tests
             DiagnosticScope nestedScope = clientDiagnostics2.CreateScope("ClientName.NestedActivityName");
             nestedScope.Start();
 
-            if (expectSuppression)
+            if (suppressOuter && suppressNested)
             {
                 Assert.IsFalse(nestedScope.IsEnabled);
                 Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);

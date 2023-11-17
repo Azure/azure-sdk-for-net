@@ -205,5 +205,13 @@ namespace Azure.AI.DocumentIntelligence
             }
             return new AnalyzeResult(apiVersion, modelId, stringIndexType, Optional.ToNullable(contentFormat), content, pages, Optional.ToList(paragraphs), Optional.ToList(tables), Optional.ToList(figures), Optional.ToList(lists), Optional.ToList(sections), Optional.ToList(keyValuePairs), Optional.ToList(styles), Optional.ToList(languages), Optional.ToList(documents));
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnalyzeResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeResult(document.RootElement);
+        }
     }
 }

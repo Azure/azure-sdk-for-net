@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// A RouterRule that resolves a collection of worker selectors to attach
+        /// A RouterRule that resolves a collection of worker selectors to attach.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>
