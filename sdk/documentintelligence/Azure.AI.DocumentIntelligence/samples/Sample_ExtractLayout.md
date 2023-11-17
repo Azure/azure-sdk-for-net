@@ -1,6 +1,6 @@
-# Analyze with the prebuilt general document model
+# Extract the layout of a document
 
-This sample demonstrates how to analyze key-value pairs, tables, and selection marks from documents using the prebuilt general document model.
+This sample demonstrates how to extract text, paragraphs, styles, table structures, and selection marks, along with their bounding region coordinates from documents.
 
 To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
@@ -16,11 +16,11 @@ string apiKey = "<apiKey>";
 var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
-## Use the prebuilt general document model to analyze a document from a URI
+## Extract the layout of a document from a URI
 
-To analyze a given file at a URI, use the `AnalyzeDocument` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To extract the layout from a given file at a URI, use the `AnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
-```C# Snippet:DocumentIntelligenceAnalyzePrebuiltDocumentFromUriAsync
+```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
 var content = new AnalyzeDocumentContent()
@@ -28,21 +28,8 @@ var content = new AnalyzeDocumentContent()
     UrlSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content);
 AnalyzeResult result = operation.Value;
-
-Console.WriteLine("Detected key-value pairs:");
-foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
-{
-    if (kvp.Value == null)
-    {
-        Console.WriteLine($"  Found key '{kvp.Key.Content}' with no value");
-    }
-    else
-    {
-        Console.WriteLine($"  Found key '{kvp.Key.Content}' with value '{kvp.Value.Content}'");
-    }
-}
 
 foreach (DocumentPage page in result.Pages)
 {
@@ -52,6 +39,7 @@ foreach (DocumentPage page in result.Pages)
     for (int i = 0; i < page.Lines.Count; i++)
     {
         DocumentLine line = page.Lines[i];
+
         Console.WriteLine($"  Line {i}:");
         Console.WriteLine($"    Content: '{line.Content}'");
 
@@ -81,16 +69,47 @@ foreach (DocumentPage page in result.Pages)
     }
 }
 
-Console.WriteLine("Detected tables:");
+for (int i = 0; i < result.Paragraphs.Count; i++)
+{
+    DocumentParagraph paragraph = result.Paragraphs[i];
+
+    Console.WriteLine($"Paragraph {i}:");
+    Console.WriteLine($"  Content: {paragraph.Content}");
+
+    if (paragraph.Role != null)
+    {
+        Console.WriteLine($"  Role: {paragraph.Role}");
+    }
+}
+
+foreach (DocumentStyle style in result.Styles)
+{
+    // Check the style and style confidence to see if text is handwritten.
+    // Note that value '0.8' is used as an example.
+
+    bool isHandwritten = style.IsHandwritten.HasValue && style.IsHandwritten == true;
+
+    if (isHandwritten && style.Confidence > 0.8)
+    {
+        Console.WriteLine($"Handwritten content found:");
+
+        foreach (DocumentSpan span in style.Spans)
+        {
+            var handwrittenContent = result.Content.Substring(span.Offset, span.Length);
+            Console.WriteLine($"  {handwrittenContent}");
+        }
+    }
+}
+
 for (int i = 0; i < result.Tables.Count; i++)
 {
     DocumentTable table = result.Tables[i];
 
-    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+    Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
 
     foreach (DocumentTableCell cell in table.Cells)
     {
-        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) is a '{cell.Kind}' with content: '{cell.Content}'");
+        Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) is a '{cell.Kind}' with content: {cell.Content}");
     }
 }
 ```
