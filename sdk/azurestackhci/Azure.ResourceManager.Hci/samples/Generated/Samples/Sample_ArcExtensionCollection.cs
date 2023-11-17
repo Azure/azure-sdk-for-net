@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcExtensionCollection collection = arcSetting.GetArcExtensions();
 
             // invoke the operation and iterate over the result
-            foreach (ArcExtensionResource item in collection)
+            await foreach (ArcExtensionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // invoke the operation
             string extensionName = "MicrosoftMonitoringAgent";
-            ArcExtensionResource result = collection.GetAsync(extensionName);
+            ArcExtensionResource result = await collection.GetAsync(extensionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // invoke the operation
             string extensionName = "MicrosoftMonitoringAgent";
-            bool result = collection.ExistsAsync(extensionName).Result;
+            bool result = await collection.ExistsAsync(extensionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

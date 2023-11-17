@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcSettingResource arcSetting = client.GetArcSettingResource(arcSettingResourceId);
 
             // invoke the operation
-            ArcSettingResource result = arcSetting.GetAsync().Result;
+            ArcSettingResource result = await arcSetting.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Samples
                     ["enabled"] = "true"
                 }),
             };
-            ArcSettingResource result = arcSetting.UpdateAsync(patch).Result;
+            ArcSettingResource result = await arcSetting.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcSettingResource arcSetting = client.GetArcSettingResource(arcSettingResourceId);
 
             // invoke the operation
-            ArcPasswordCredential result = arcSetting.GeneratePasswordAsync().Result;
+            ArcPasswordCredential result = await arcSetting.GeneratePasswordAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcSettingResource arcSetting = client.GetArcSettingResource(arcSettingResourceId);
 
             // invoke the operation
-            ArmOperation<ArcIdentityResult> lro = arcSetting.CreateIdentityAsync(WaitUntil.Completed).Result;
+            ArmOperation<ArcIdentityResult> lro = await arcSetting.CreateIdentityAsync(WaitUntil.Completed);
             ArcIdentityResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

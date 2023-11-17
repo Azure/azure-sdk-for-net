@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcSettingCollection collection = hciCluster.GetArcSettings();
 
             // invoke the operation and iterate over the result
-            foreach (ArcSettingResource item in collection)
+            await foreach (ArcSettingResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // invoke the operation
             string arcSettingName = "default";
-            ArcSettingResource result = collection.GetAsync(arcSettingName).Result;
+            ArcSettingResource result = await collection.GetAsync(arcSettingName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // invoke the operation
             string arcSettingName = "default";
-            bool result = collection.ExistsAsync(arcSettingName).Result;
+            bool result = await collection.ExistsAsync(arcSettingName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             string arcSettingName = "default";
             ArcSettingData data = new ArcSettingData();
-            ArmOperation<ArcSettingResource> lro = collection.CreateOrUpdateAsync(WaitUntil.Completed, arcSettingName, data).Result;
+            ArmOperation<ArcSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, arcSettingName, data);
             ArcSettingResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

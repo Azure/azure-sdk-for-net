@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation
-            HciClusterResource result = hciCluster.GetAsync().Result;
+            HciClusterResource result = await hciCluster.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Hci.Samples
             {
                 SoftwareAssuranceIntent = SoftwareAssuranceIntent.Enable,
             };
-            ArmOperation<HciClusterResource> lro = hciCluster.ExtendSoftwareAssuranceBenefitAsync(WaitUntil.Completed, content).Result;
+            ArmOperation<HciClusterResource> lro = await hciCluster.ExtendSoftwareAssuranceBenefitAsync(WaitUntil.Completed, content);
             HciClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
