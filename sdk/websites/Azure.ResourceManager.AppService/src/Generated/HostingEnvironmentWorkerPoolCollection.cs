@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HostingEnvironmentWorkerPoolResource" /> and their operations.
-    /// Each <see cref="HostingEnvironmentWorkerPoolResource" /> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource" />.
-    /// To get a <see cref="HostingEnvironmentWorkerPoolCollection" /> instance call the GetHostingEnvironmentWorkerPools method from an instance of <see cref="AppServiceEnvironmentResource" />.
+    /// A class representing a collection of <see cref="HostingEnvironmentWorkerPoolResource"/> and their operations.
+    /// Each <see cref="HostingEnvironmentWorkerPoolResource"/> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource"/>.
+    /// To get a <see cref="HostingEnvironmentWorkerPoolCollection"/> instance call the GetHostingEnvironmentWorkerPools method from an instance of <see cref="AppServiceEnvironmentResource"/>.
     /// </summary>
     public partial class HostingEnvironmentWorkerPoolCollection : ArmCollection, IEnumerable<HostingEnvironmentWorkerPoolResource>, IAsyncEnumerable<HostingEnvironmentWorkerPoolResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HostingEnvironmentWorkerPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HostingEnvironmentWorkerPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostingEnvironmentWorkerPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HostingEnvironmentWorkerPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HostingEnvironmentWorkerPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostingEnvironmentWorkerPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

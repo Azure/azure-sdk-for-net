@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SapMonitorResource" /> and their operations.
-    /// Each <see cref="SapMonitorResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SapMonitorCollection" /> instance call the GetSapMonitors method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SapMonitorResource"/> and their operations.
+    /// Each <see cref="SapMonitorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SapMonitorCollection"/> instance call the GetSapMonitors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SapMonitorCollection : ArmCollection, IEnumerable<SapMonitorResource>, IAsyncEnumerable<SapMonitorResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SapMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapMonitormonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapMonitormonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

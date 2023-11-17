@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotDeploymentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetSiteSlotDeployment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotDeploymentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetSiteSlotDeployment method.
     /// </summary>
     public partial class SiteSlotDeploymentResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotDeploymentResource(ArmClient client, WebAppDeploymentData data) : this(client, data.Id)

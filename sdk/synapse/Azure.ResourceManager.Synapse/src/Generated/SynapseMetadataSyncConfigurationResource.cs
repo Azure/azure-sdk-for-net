@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseMetadataSyncConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseMetadataSyncConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseMetadataSyncConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseMetadataSyncConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseMetadataSyncConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseMetadataSyncConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseMetadataSyncConfiguration method.
     /// </summary>
     public partial class SynapseMetadataSyncConfigurationResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseMetadataSyncConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseMetadataSyncConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseMetadataSyncConfigurationResource(ArmClient client, SynapseMetadataSyncConfigurationData data) : this(client, data.Id)

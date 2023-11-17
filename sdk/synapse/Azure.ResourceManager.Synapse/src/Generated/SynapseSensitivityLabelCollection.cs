@@ -18,9 +18,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseSensitivityLabelResource" /> and their operations.
-    /// Each <see cref="SynapseSensitivityLabelResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolColumnResource" />.
-    /// To get a <see cref="SynapseSensitivityLabelCollection" /> instance call the GetSynapseSensitivityLabels method from an instance of <see cref="SynapseSqlPoolColumnResource" />.
+    /// A class representing a collection of <see cref="SynapseSensitivityLabelResource"/> and their operations.
+    /// Each <see cref="SynapseSensitivityLabelResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolColumnResource"/>.
+    /// To get a <see cref="SynapseSensitivityLabelCollection"/> instance call the GetSynapseSensitivityLabels method from an instance of <see cref="SynapseSqlPoolColumnResource"/>.
     /// </summary>
     public partial class SynapseSensitivityLabelCollection : ArmCollection
     {
