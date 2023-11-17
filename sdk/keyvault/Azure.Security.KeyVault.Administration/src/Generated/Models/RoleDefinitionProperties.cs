@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Security.KeyVault.Administration;
@@ -14,11 +15,60 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role definition properties. </summary>
     internal partial class RoleDefinitionProperties
     {
-        /// <summary> Initializes a new instance of RoleDefinitionProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
         public RoleDefinitionProperties()
         {
             Permissions = new ChangeTrackingList<KeyVaultPermission>();
             AssignableScopes = new ChangeTrackingList<KeyVaultRoleScope>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
+        /// <param name="roleName"> The role name. </param>
+        /// <param name="description"> The role definition description. </param>
+        /// <param name="roleType"> The role type. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="assignableScopes"> Role definition assignable scopes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleDefinitionProperties(string roleName, string description, KeyVaultRoleType? roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RoleName = roleName;
+            Description = description;
+            RoleType = roleType;
+            Permissions = permissions;
+            AssignableScopes = assignableScopes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role name. </summary>

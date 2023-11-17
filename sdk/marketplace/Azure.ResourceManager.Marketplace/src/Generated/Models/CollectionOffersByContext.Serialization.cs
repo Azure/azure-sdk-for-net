@@ -5,22 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class CollectionOffersByContext
+    public partial class CollectionOffersByContext : IUtf8JsonSerializable, IJsonModel<CollectionOffersByContext>
     {
-        internal static CollectionOffersByContext DeserializeCollectionOffersByContext(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectionOffersByContext>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CollectionOffersByContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CollectionOffersByContext>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CollectionOffersByContext>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Context))
+                {
+                    writer.WritePropertyName("context"u8);
+                    writer.WriteStringValue(Context);
+                }
+            }
+            writer.WritePropertyName("offers"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CollectionOffersByContext IJsonModel<CollectionOffersByContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CollectionOffersByContext)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCollectionOffersByContext(document.RootElement, options);
+        }
+
+        internal static CollectionOffersByContext DeserializeCollectionOffersByContext(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> context = default;
             Optional<IReadOnlyList<PrivateStoreOfferResult>> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("context"u8))
@@ -54,8 +122,38 @@ namespace Azure.ResourceManager.Marketplace.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CollectionOffersByContext(context.Value, Optional.ToList(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CollectionOffersByContext(context.Value, Optional.ToList(value), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CollectionOffersByContext>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CollectionOffersByContext)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CollectionOffersByContext IPersistableModel<CollectionOffersByContext>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CollectionOffersByContext)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCollectionOffersByContext(document.RootElement, options);
+        }
+
+        string IPersistableModel<CollectionOffersByContext>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

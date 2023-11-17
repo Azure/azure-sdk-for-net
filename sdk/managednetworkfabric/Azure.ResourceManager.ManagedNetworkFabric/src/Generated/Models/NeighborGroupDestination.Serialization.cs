@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NeighborGroupDestination : IUtf8JsonSerializable
+    public partial class NeighborGroupDestination : IUtf8JsonSerializable, IJsonModel<NeighborGroupDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeighborGroupDestination>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NeighborGroupDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NeighborGroupDestination>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NeighborGroupDestination>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPv4Addresses))
             {
@@ -42,17 +52,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NeighborGroupDestination DeserializeNeighborGroupDestination(JsonElement element)
+        NeighborGroupDestination IJsonModel<NeighborGroupDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNeighborGroupDestination(document.RootElement, options);
+        }
+
+        internal static NeighborGroupDestination DeserializeNeighborGroupDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<IPAddress>> ipv4Addresses = default;
             Optional<IList<string>> ipv6Addresses = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Addresses"u8))
@@ -90,8 +131,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv6Addresses = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NeighborGroupDestination(Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NeighborGroupDestination(Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NeighborGroupDestination>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NeighborGroupDestination IPersistableModel<NeighborGroupDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNeighborGroupDestination(document.RootElement, options);
+        }
+
+        string IPersistableModel<NeighborGroupDestination>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

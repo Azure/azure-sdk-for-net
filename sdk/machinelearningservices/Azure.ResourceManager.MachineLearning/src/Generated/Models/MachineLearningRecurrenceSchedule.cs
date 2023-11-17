@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningRecurrenceSchedule. </summary>
     public partial class MachineLearningRecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of MachineLearningRecurrenceSchedule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceSchedule"/>. </summary>
         /// <param name="hours"> [Required] List of hours for the schedule. </param>
         /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
@@ -30,17 +62,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             WeekDays = new ChangeTrackingList<MachineLearningDayOfWeek>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceSchedule"/>. </summary>
         /// <param name="hours"> [Required] List of hours for the schedule. </param>
         /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
         /// <param name="monthDays"> List of month days for the schedule. </param>
         /// <param name="weekDays"> List of days for the schedule. </param>
-        internal MachineLearningRecurrenceSchedule(IList<int> hours, IList<int> minutes, IList<int> monthDays, IList<MachineLearningDayOfWeek> weekDays)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningRecurrenceSchedule(IList<int> hours, IList<int> minutes, IList<int> monthDays, IList<MachineLearningDayOfWeek> weekDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hours = hours;
             Minutes = minutes;
             MonthDays = monthDays;
             WeekDays = weekDays;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceSchedule"/> for deserialization. </summary>
+        internal MachineLearningRecurrenceSchedule()
+        {
         }
 
         /// <summary> [Required] List of hours for the schedule. </summary>

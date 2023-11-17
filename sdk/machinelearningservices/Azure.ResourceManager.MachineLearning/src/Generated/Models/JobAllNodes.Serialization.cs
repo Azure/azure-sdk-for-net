@@ -5,28 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class JobAllNodes : IUtf8JsonSerializable
+    public partial class JobAllNodes : IUtf8JsonSerializable, IJsonModel<JobAllNodes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobAllNodes>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<JobAllNodes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<JobAllNodes>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<JobAllNodes>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("nodesValueType"u8);
             writer.WriteStringValue(NodesValueType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobAllNodes DeserializeJobAllNodes(JsonElement element)
+        JobAllNodes IJsonModel<JobAllNodes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobAllNodes)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobAllNodes(document.RootElement, options);
+        }
+
+        internal static JobAllNodes DeserializeJobAllNodes(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             NodesValueType nodesValueType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodesValueType"u8))
@@ -34,8 +76,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     nodesValueType = new NodesValueType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobAllNodes(nodesValueType);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JobAllNodes(nodesValueType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JobAllNodes>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobAllNodes)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JobAllNodes IPersistableModel<JobAllNodes>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobAllNodes)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJobAllNodes(document.RootElement, options);
+        }
+
+        string IPersistableModel<JobAllNodes>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

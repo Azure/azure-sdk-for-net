@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class TopNGroupScope : IUtf8JsonSerializable
+    public partial class TopNGroupScope : IUtf8JsonSerializable, IJsonModel<TopNGroupScope>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopNGroupScope>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TopNGroupScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TopNGroupScope>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TopNGroupScope>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("top"u8);
             writer.WriteNumberValue(Top);
@@ -21,11 +32,40 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteNumberValue(Period);
             writer.WritePropertyName("minTopCount"u8);
             writer.WriteNumberValue(MinimumTopCount);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TopNGroupScope DeserializeTopNGroupScope(JsonElement element)
+        TopNGroupScope IJsonModel<TopNGroupScope>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TopNGroupScope)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTopNGroupScope(document.RootElement, options);
+        }
+
+        internal static TopNGroupScope DeserializeTopNGroupScope(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +73,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             int top = default;
             int period = default;
             int minTopCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("top"u8))
@@ -50,8 +92,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                     minTopCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TopNGroupScope(top, period, minTopCount);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TopNGroupScope(top, period, minTopCount, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TopNGroupScope>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TopNGroupScope)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TopNGroupScope IPersistableModel<TopNGroupScope>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TopNGroupScope)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTopNGroupScope(document.RootElement, options);
+        }
+
+        string IPersistableModel<TopNGroupScope>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,12 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The AS2 agreement validation settings. </summary>
     public partial class AS2ValidationSettings
     {
-        /// <summary> Initializes a new instance of AS2ValidationSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AS2ValidationSettings"/>. </summary>
         /// <param name="overrideMessageProperties"> The value indicating whether to override incoming message properties with those in agreement. </param>
         /// <param name="encryptMessage"> The value indicating whether the message has to be encrypted. </param>
         /// <param name="signMessage"> The value indicating whether the message has to be signed. </param>
@@ -33,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
             EncryptionAlgorithm = encryptionAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of AS2ValidationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2ValidationSettings"/>. </summary>
         /// <param name="overrideMessageProperties"> The value indicating whether to override incoming message properties with those in agreement. </param>
         /// <param name="encryptMessage"> The value indicating whether the message has to be encrypted. </param>
         /// <param name="signMessage"> The value indicating whether the message has to be signed. </param>
@@ -44,7 +79,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="checkCertificateRevocationListOnReceive"> The value indicating whether to check for certificate revocation list on receive. </param>
         /// <param name="encryptionAlgorithm"> The encryption algorithm. </param>
         /// <param name="signingAlgorithm"> The signing algorithm. </param>
-        internal AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, AS2EncryptionAlgorithm encryptionAlgorithm, AS2SigningAlgorithm? signingAlgorithm)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, AS2EncryptionAlgorithm encryptionAlgorithm, AS2SigningAlgorithm? signingAlgorithm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OverrideMessageProperties = overrideMessageProperties;
             EncryptMessage = encryptMessage;
@@ -56,6 +92,12 @@ namespace Azure.ResourceManager.Logic.Models
             CheckCertificateRevocationListOnReceive = checkCertificateRevocationListOnReceive;
             EncryptionAlgorithm = encryptionAlgorithm;
             SigningAlgorithm = signingAlgorithm;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2ValidationSettings"/> for deserialization. </summary>
+        internal AS2ValidationSettings()
+        {
         }
 
         /// <summary> The value indicating whether to override incoming message properties with those in agreement. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A rule governing the accessibility of a managed HSM pool from a specific IP address or IP range. </summary>
     public partial class ManagedHsmIPRule
     {
-        /// <summary> Initializes a new instance of ManagedHsmIPRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmIPRule"/>. </summary>
         /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressRange"/> is null. </exception>
         public ManagedHsmIPRule(string addressRange)
@@ -21,6 +54,20 @@ namespace Azure.ResourceManager.KeyVault.Models
             Argument.AssertNotNull(addressRange, nameof(addressRange));
 
             AddressRange = addressRange;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmIPRule"/>. </summary>
+        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHsmIPRule(string addressRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AddressRange = addressRange;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmIPRule"/> for deserialization. </summary>
+        internal ManagedHsmIPRule()
+        {
         }
 
         /// <summary> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </summary>

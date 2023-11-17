@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of IP Extended Community Rules. </summary>
     public partial class IPExtendedCommunityRule
     {
-        /// <summary> Initializes a new instance of IPExtendedCommunityRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="routeTargets"> Route Target List.The expected formats are ASN(plain):NN &gt;&gt; example 4294967294:50, ASN.ASN:NN &gt;&gt; example 65533.65333:40, IP-address:NN &gt;&gt; example 10.10.10.10:65535. The possible values of ASN,NN are in range of 0-65535, ASN(plain) is in range of 0-4294967295. </param>
@@ -29,15 +61,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             RouteTargets = routeTargets.ToList();
         }
 
-        /// <summary> Initializes a new instance of IPExtendedCommunityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="routeTargets"> Route Target List.The expected formats are ASN(plain):NN &gt;&gt; example 4294967294:50, ASN.ASN:NN &gt;&gt; example 65533.65333:40, IP-address:NN &gt;&gt; example 10.10.10.10:65535. The possible values of ASN,NN are in range of 0-65535, ASN(plain) is in range of 0-4294967295. </param>
-        internal IPExtendedCommunityRule(CommunityActionType action, long sequenceNumber, IList<string> routeTargets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPExtendedCommunityRule(CommunityActionType action, long sequenceNumber, IList<string> routeTargets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             SequenceNumber = sequenceNumber;
             RouteTargets = routeTargets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityRule"/> for deserialization. </summary>
+        internal IPExtendedCommunityRule()
+        {
         }
 
         /// <summary> Action to be taken on the configuration. Example: Permit | Deny. </summary>

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFunctionDefinitionGroupRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFunctionDefinitionGroupRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFunctionDefinitionGroupResource(Client, NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(e)), _networkFunctionDefinitionGroupClientDiagnostics, Pipeline, "NetworkFunctionDefinitionGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFunctionDefinitionGroupResource(Client, NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(e)), _networkFunctionDefinitionGroupClientDiagnostics, Pipeline, "NetworkFunctionDefinitionGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFunctionDefinitionGroupRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFunctionDefinitionGroupRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFunctionDefinitionGroupResource(Client, NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(e)), _networkFunctionDefinitionGroupClientDiagnostics, Pipeline, "NetworkFunctionDefinitionGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFunctionDefinitionGroupResource(Client, NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(e)), _networkFunctionDefinitionGroupClientDiagnostics, Pipeline, "NetworkFunctionDefinitionGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

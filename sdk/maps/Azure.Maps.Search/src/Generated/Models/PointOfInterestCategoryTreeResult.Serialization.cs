@@ -5,21 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class PointOfInterestCategoryTreeResult
+    public partial class PointOfInterestCategoryTreeResult : IUtf8JsonSerializable, IJsonModel<PointOfInterestCategoryTreeResult>
     {
-        internal static PointOfInterestCategoryTreeResult DeserializePointOfInterestCategoryTreeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PointOfInterestCategoryTreeResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PointOfInterestCategoryTreeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PointOfInterestCategoryTreeResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PointOfInterestCategoryTreeResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Categories))
+                {
+                    writer.WritePropertyName("poiCategories"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Categories)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PointOfInterestCategoryTreeResult IJsonModel<PointOfInterestCategoryTreeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterestCategoryTreeResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePointOfInterestCategoryTreeResult(document.RootElement, options);
+        }
+
+        internal static PointOfInterestCategoryTreeResult DeserializePointOfInterestCategoryTreeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<PointOfInterestCategory>> poiCategories = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("poiCategories"u8))
@@ -36,8 +96,38 @@ namespace Azure.Maps.Search.Models
                     poiCategories = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PointOfInterestCategoryTreeResult(Optional.ToList(poiCategories));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PointOfInterestCategoryTreeResult(Optional.ToList(poiCategories), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PointOfInterestCategoryTreeResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterestCategoryTreeResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PointOfInterestCategoryTreeResult IPersistableModel<PointOfInterestCategoryTreeResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterestCategoryTreeResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePointOfInterestCategoryTreeResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<PointOfInterestCategoryTreeResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

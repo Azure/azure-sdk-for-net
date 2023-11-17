@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRecurrenceScheduleOccurrence : IUtf8JsonSerializable
+    public partial class LogicWorkflowRecurrenceScheduleOccurrence : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRecurrenceScheduleOccurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRecurrenceScheduleOccurrence>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LogicWorkflowRecurrenceScheduleOccurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LogicWorkflowRecurrenceScheduleOccurrence>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LogicWorkflowRecurrenceScheduleOccurrence>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Day))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowRecurrenceScheduleOccurrence DeserializeLogicWorkflowRecurrenceScheduleOccurrence(JsonElement element)
+        LogicWorkflowRecurrenceScheduleOccurrence IJsonModel<LogicWorkflowRecurrenceScheduleOccurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowRecurrenceScheduleOccurrence(document.RootElement, options);
+        }
+
+        internal static LogicWorkflowRecurrenceScheduleOccurrence DeserializeLogicWorkflowRecurrenceScheduleOccurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<LogicWorkflowDayOfWeek> day = default;
             Optional<int> occurrence = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("day"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.Logic.Models
                     occurrence = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicWorkflowRecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogicWorkflowRecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicWorkflowRecurrenceScheduleOccurrence>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LogicWorkflowRecurrenceScheduleOccurrence IPersistableModel<LogicWorkflowRecurrenceScheduleOccurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowRecurrenceScheduleOccurrence(document.RootElement, options);
+        }
+
+        string IPersistableModel<LogicWorkflowRecurrenceScheduleOccurrence>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class CategoricalDataQualityMetricThreshold : IUtf8JsonSerializable
+    public partial class CategoricalDataQualityMetricThreshold : IUtf8JsonSerializable, IJsonModel<CategoricalDataQualityMetricThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CategoricalDataQualityMetricThreshold>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CategoricalDataQualityMetricThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CategoricalDataQualityMetricThreshold>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CategoricalDataQualityMetricThreshold>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("metric"u8);
             writer.WriteStringValue(Metric.ToString());
@@ -31,11 +42,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("threshold");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CategoricalDataQualityMetricThreshold DeserializeCategoricalDataQualityMetricThreshold(JsonElement element)
+        CategoricalDataQualityMetricThreshold IJsonModel<CategoricalDataQualityMetricThreshold>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CategoricalDataQualityMetricThreshold)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCategoricalDataQualityMetricThreshold(document.RootElement, options);
+        }
+
+        internal static CategoricalDataQualityMetricThreshold DeserializeCategoricalDataQualityMetricThreshold(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +83,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CategoricalDataQualityMetric metric = default;
             MonitoringFeatureDataType dataType = default;
             Optional<MonitoringThreshold> threshold = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metric"u8))
@@ -65,8 +107,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CategoricalDataQualityMetricThreshold(dataType, threshold.Value, metric);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CategoricalDataQualityMetricThreshold(dataType, threshold.Value, serializedAdditionalRawData, metric);
         }
+
+        BinaryData IPersistableModel<CategoricalDataQualityMetricThreshold>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CategoricalDataQualityMetricThreshold)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CategoricalDataQualityMetricThreshold IPersistableModel<CategoricalDataQualityMetricThreshold>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CategoricalDataQualityMetricThreshold)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCategoricalDataQualityMetricThreshold(document.RootElement, options);
+        }
+
+        string IPersistableModel<CategoricalDataQualityMetricThreshold>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

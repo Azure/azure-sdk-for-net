@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Kubernetes.Models;
@@ -14,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    public partial class ConnectedClusterData : IUtf8JsonSerializable
+    public partial class ConnectedClusterData : IUtf8JsonSerializable, IJsonModel<ConnectedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedClusterData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConnectedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectedClusterData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectedClusterData>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
             JsonSerializer.Serialize(writer, Identity);
@@ -34,10 +43,65 @@ namespace Azure.ResourceManager.Kubernetes
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("agentPublicKeyCertificate"u8);
             writer.WriteStringValue(AgentPublicKeyCertificate);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KubernetesVersion))
+                {
+                    writer.WritePropertyName("kubernetesVersion"u8);
+                    writer.WriteStringValue(KubernetesVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalNodeCount))
+                {
+                    writer.WritePropertyName("totalNodeCount"u8);
+                    writer.WriteNumberValue(TotalNodeCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalCoreCount))
+                {
+                    writer.WritePropertyName("totalCoreCount"u8);
+                    writer.WriteNumberValue(TotalCoreCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AgentVersion))
+                {
+                    writer.WritePropertyName("agentVersion"u8);
+                    writer.WriteStringValue(AgentVersion);
+                }
+            }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -53,6 +117,38 @@ namespace Azure.ResourceManager.Kubernetes
                 writer.WritePropertyName("infrastructure"u8);
                 writer.WriteStringValue(Infrastructure);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Offering))
+                {
+                    writer.WritePropertyName("offering"u8);
+                    writer.WriteStringValue(Offering);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
+                {
+                    writer.WritePropertyName("managedIdentityCertificateExpirationTime"u8);
+                    writer.WriteStringValue(ManagedIdentityCertificateExpirationOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastConnectivityOn))
+                {
+                    writer.WritePropertyName("lastConnectivityTime"u8);
+                    writer.WriteStringValue(LastConnectivityOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConnectivityStatus))
+                {
+                    writer.WritePropertyName("connectivityStatus"u8);
+                    writer.WriteStringValue(ConnectivityStatus.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(PrivateLinkState))
             {
                 writer.WritePropertyName("privateLinkState"u8);
@@ -64,11 +160,40 @@ namespace Azure.ResourceManager.Kubernetes
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element)
+        ConnectedClusterData IJsonModel<ConnectedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectedClusterData(document.RootElement, options);
+        }
+
+        internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +219,8 @@ namespace Azure.ResourceManager.Kubernetes
             Optional<ConnectivityStatus> connectivityStatus = default;
             Optional<PrivateLinkState> privateLinkState = default;
             Optional<string> privateLinkScopeResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -254,8 +381,38 @@ namespace Azure.ResourceManager.Kubernetes
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Optional.ToNullable(totalNodeCount), Optional.ToNullable(totalCoreCount), agentVersion.Value, Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), Optional.ToNullable(connectivityStatus), Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Optional.ToNullable(totalNodeCount), Optional.ToNullable(totalCoreCount), agentVersion.Value, Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), Optional.ToNullable(connectivityStatus), Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectedClusterData IPersistableModel<ConnectedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectedClusterData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectedClusterData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

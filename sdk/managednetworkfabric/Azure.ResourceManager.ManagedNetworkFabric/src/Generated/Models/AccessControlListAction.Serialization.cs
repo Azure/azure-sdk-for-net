@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class AccessControlListAction : IUtf8JsonSerializable
+    public partial class AccessControlListAction : IUtf8JsonSerializable, IJsonModel<AccessControlListAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListAction>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AccessControlListAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AccessControlListAction>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AccessControlListAction>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AclActionType))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("counterName"u8);
                 writer.WriteStringValue(CounterName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AccessControlListAction DeserializeAccessControlListAction(JsonElement element)
+        AccessControlListAction IJsonModel<AccessControlListAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AccessControlListAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAccessControlListAction(document.RootElement, options);
+        }
+
+        internal static AccessControlListAction DeserializeAccessControlListAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AclActionType> type = default;
             Optional<string> counterName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -52,8 +94,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     counterName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AccessControlListAction(Optional.ToNullable(type), counterName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AccessControlListAction(Optional.ToNullable(type), counterName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AccessControlListAction>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AccessControlListAction)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AccessControlListAction IPersistableModel<AccessControlListAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AccessControlListAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAccessControlListAction(document.RootElement, options);
+        }
+
+        string IPersistableModel<AccessControlListAction>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

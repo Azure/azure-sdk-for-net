@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactManifestRestClient.CreateListByArtifactStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _artifactManifestRestClient.CreateListByArtifactStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArtifactManifestResource(Client, ArtifactManifestData.DeserializeArtifactManifestData(e)), _artifactManifestClientDiagnostics, Pipeline, "ArtifactManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ArtifactManifestResource(Client, ArtifactManifestData.DeserializeArtifactManifestData(e)), _artifactManifestClientDiagnostics, Pipeline, "ArtifactManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactManifestRestClient.CreateListByArtifactStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _artifactManifestRestClient.CreateListByArtifactStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArtifactManifestResource(Client, ArtifactManifestData.DeserializeArtifactManifestData(e)), _artifactManifestClientDiagnostics, Pipeline, "ArtifactManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ArtifactManifestResource(Client, ArtifactManifestData.DeserializeArtifactManifestData(e)), _artifactManifestClientDiagnostics, Pipeline, "ArtifactManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

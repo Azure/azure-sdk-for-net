@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,5 +14,76 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IncidentResult. </summary>
     public partial class AnomalyIncident
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyIncident"/>. </summary>
+        /// <param name="dataFeedId">
+        /// data feed unique id
+        ///
+        /// only return for alerting anomaly result
+        /// </param>
+        /// <param name="metricId">
+        /// metric unique id
+        ///
+        /// only return for alerting incident result
+        /// </param>
+        /// <param name="detectionConfigurationId">
+        /// anomaly detection configuration unique id
+        ///
+        /// only return for alerting incident result
+        /// </param>
+        /// <param name="id"> incident id. </param>
+        /// <param name="startedOn"> incident start time. </param>
+        /// <param name="lastDetectedOn"> incident last time. </param>
+        /// <param name="rootNode"></param>
+        /// <param name="property"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startedOn, DateTimeOffset lastDetectedOn, SeriesIdentity rootNode, IncidentProperty property, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DataFeedId = dataFeedId;
+            MetricId = metricId;
+            DetectionConfigurationId = detectionConfigurationId;
+            Id = id;
+            StartedOn = startedOn;
+            LastDetectedOn = lastDetectedOn;
+            RootNode = rootNode;
+            Property = property;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyIncident"/> for deserialization. </summary>
+        internal AnomalyIncident()
+        {
+        }
     }
 }

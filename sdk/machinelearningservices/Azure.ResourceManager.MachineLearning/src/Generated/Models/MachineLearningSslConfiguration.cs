@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ssl configuration for scoring. </summary>
     public partial class MachineLearningSslConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningSslConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfiguration"/>. </summary>
         public MachineLearningSslConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSslConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfiguration"/>. </summary>
         /// <param name="status"> Enable or disable ssl for scoring. </param>
         /// <param name="cert"> Cert data. </param>
         /// <param name="key"> Key data. </param>
         /// <param name="cname"> CNAME of the cert. </param>
         /// <param name="leafDomainLabel"> Leaf domain label of public endpoint. </param>
         /// <param name="overwriteExistingDomain"> Indicates whether to overwrite existing domain label. </param>
-        internal MachineLearningSslConfiguration(MachineLearningSslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSslConfiguration(MachineLearningSslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Cert = cert;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Cname = cname;
             LeafDomainLabel = leafDomainLabel;
             OverwriteExistingDomain = overwriteExistingDomain;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable or disable ssl for scoring. </summary>

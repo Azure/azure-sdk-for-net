@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Option B configuration to be used for Management VPN. </summary>
     public partial class OptionBProperties
     {
-        /// <summary> Initializes a new instance of OptionBProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OptionBProperties"/>. </summary>
         public OptionBProperties()
         {
             ImportRouteTargets = new ChangeTrackingList<string>();
             ExportRouteTargets = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OptionBProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionBProperties"/>. </summary>
         /// <param name="importRouteTargets"> Route Targets to be applied for incoming routes into CE. This is for backward compatibility. </param>
         /// <param name="exportRouteTargets"> Route Targets to be applied for outgoing routes from CE. This is for backward compatibility. </param>
         /// <param name="routeTargets"> Route Targets to be applied. </param>
-        internal OptionBProperties(IList<string> importRouteTargets, IList<string> exportRouteTargets, RouteTargetInformation routeTargets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OptionBProperties(IList<string> importRouteTargets, IList<string> exportRouteTargets, RouteTargetInformation routeTargets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImportRouteTargets = importRouteTargets;
             ExportRouteTargets = exportRouteTargets;
             RouteTargets = routeTargets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Route Targets to be applied for incoming routes into CE. This is for backward compatibility. </summary>

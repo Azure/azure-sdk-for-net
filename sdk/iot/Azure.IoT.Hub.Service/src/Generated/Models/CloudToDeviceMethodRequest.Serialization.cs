@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class CloudToDeviceMethodRequest : IUtf8JsonSerializable
+    public partial class CloudToDeviceMethodRequest : IUtf8JsonSerializable, IJsonModel<CloudToDeviceMethodRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudToDeviceMethodRequest>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CloudToDeviceMethodRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CloudToDeviceMethodRequest>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CloudToDeviceMethodRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MethodName))
             {
@@ -35,11 +46,40 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("connectTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ConnectTimeoutInSeconds.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudToDeviceMethodRequest DeserializeCloudToDeviceMethodRequest(JsonElement element)
+        CloudToDeviceMethodRequest IJsonModel<CloudToDeviceMethodRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudToDeviceMethodRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudToDeviceMethodRequest(document.RootElement, options);
+        }
+
+        internal static CloudToDeviceMethodRequest DeserializeCloudToDeviceMethodRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<object> payload = default;
             Optional<int> responseTimeoutInSeconds = default;
             Optional<int> connectTimeoutInSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"u8))
@@ -82,8 +124,38 @@ namespace Azure.IoT.Hub.Service.Models
                     connectTimeoutInSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudToDeviceMethodRequest(methodName.Value, payload.Value, Optional.ToNullable(responseTimeoutInSeconds), Optional.ToNullable(connectTimeoutInSeconds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudToDeviceMethodRequest(methodName.Value, payload.Value, Optional.ToNullable(responseTimeoutInSeconds), Optional.ToNullable(connectTimeoutInSeconds), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudToDeviceMethodRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudToDeviceMethodRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CloudToDeviceMethodRequest IPersistableModel<CloudToDeviceMethodRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudToDeviceMethodRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCloudToDeviceMethodRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<CloudToDeviceMethodRequest>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

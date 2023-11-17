@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The DataCollector. </summary>
     public partial class DataCollector
     {
-        /// <summary> Initializes a new instance of DataCollector. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollector"/>. </summary>
         /// <param name="collections">
         /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
         /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
@@ -27,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Collections = collections;
         }
 
-        /// <summary> Initializes a new instance of DataCollector. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollector"/>. </summary>
         /// <param name="collections">
         /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
         /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
@@ -39,11 +71,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
         /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
         /// </param>
-        internal DataCollector(IDictionary<string, DataCollectionConfiguration> collections, RequestLogging requestLogging, RollingRateType? rollingRate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollector(IDictionary<string, DataCollectionConfiguration> collections, RequestLogging requestLogging, RollingRateType? rollingRate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Collections = collections;
             RequestLogging = requestLogging;
             RollingRate = rollingRate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataCollector"/> for deserialization. </summary>
+        internal DataCollector()
+        {
         }
 
         /// <summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ArmResourceDefinitionResourceElementTemplateDetails : IUtf8JsonSerializable
+    public partial class ArmResourceDefinitionResourceElementTemplateDetails : IUtf8JsonSerializable, IJsonModel<ArmResourceDefinitionResourceElementTemplateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmResourceDefinitionResourceElementTemplateDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ArmResourceDefinitionResourceElementTemplateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ArmResourceDefinitionResourceElementTemplateDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ArmResourceDefinitionResourceElementTemplateDetails>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Configuration))
             {
@@ -32,11 +43,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmResourceDefinitionResourceElementTemplateDetails DeserializeArmResourceDefinitionResourceElementTemplateDetails(JsonElement element)
+        ArmResourceDefinitionResourceElementTemplateDetails IJsonModel<ArmResourceDefinitionResourceElementTemplateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplateDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmResourceDefinitionResourceElementTemplateDetails(document.RootElement, options);
+        }
+
+        internal static ArmResourceDefinitionResourceElementTemplateDetails DeserializeArmResourceDefinitionResourceElementTemplateDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +85,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> name = default;
             Type type = default;
             Optional<DependsOnProfile> dependsOnProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configuration"u8))
@@ -75,8 +117,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArmResourceDefinitionResourceElementTemplateDetails(name.Value, type, dependsOnProfile.Value, configuration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArmResourceDefinitionResourceElementTemplateDetails(name.Value, type, dependsOnProfile.Value, serializedAdditionalRawData, configuration.Value);
         }
+
+        BinaryData IPersistableModel<ArmResourceDefinitionResourceElementTemplateDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplateDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ArmResourceDefinitionResourceElementTemplateDetails IPersistableModel<ArmResourceDefinitionResourceElementTemplateDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplateDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeArmResourceDefinitionResourceElementTemplateDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<ArmResourceDefinitionResourceElementTemplateDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

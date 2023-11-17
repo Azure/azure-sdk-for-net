@@ -5,21 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class SeverityFilterCondition : IUtf8JsonSerializable
+    internal partial class SeverityFilterCondition : IUtf8JsonSerializable, IJsonModel<SeverityFilterCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SeverityFilterCondition>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SeverityFilterCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SeverityFilterCondition>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SeverityFilterCondition>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("min"u8);
             writer.WriteStringValue(Min.ToString());
             writer.WritePropertyName("max"u8);
             writer.WriteStringValue(Max.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SeverityFilterCondition IJsonModel<SeverityFilterCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SeverityFilterCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSeverityFilterCondition(document.RootElement, options);
+        }
+
+        internal static SeverityFilterCondition DeserializeSeverityFilterCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AnomalySeverity min = default;
+            AnomalySeverity max = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("min"u8))
+                {
+                    min = new AnomalySeverity(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("max"u8))
+                {
+                    max = new AnomalySeverity(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SeverityFilterCondition(min, max, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SeverityFilterCondition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SeverityFilterCondition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SeverityFilterCondition IPersistableModel<SeverityFilterCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SeverityFilterCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSeverityFilterCondition(document.RootElement, options);
+        }
+
+        string IPersistableModel<SeverityFilterCondition>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

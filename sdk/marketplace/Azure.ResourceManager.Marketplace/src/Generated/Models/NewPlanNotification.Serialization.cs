@@ -7,15 +7,94 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class NewPlanNotification
+    public partial class NewPlanNotification : IUtf8JsonSerializable, IJsonModel<NewPlanNotification>
     {
-        internal static NewPlanNotification DeserializeNewPlanNotification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewPlanNotification>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NewPlanNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NewPlanNotification>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NewPlanNotification>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OfferId))
+            {
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(IsFuturePlansEnabled))
+            {
+                writer.WritePropertyName("isFuturePlansEnabled"u8);
+                writer.WriteBooleanValue(IsFuturePlansEnabled.Value);
+            }
+            if (Optional.IsDefined(MessageCode))
+            {
+                writer.WritePropertyName("messageCode"u8);
+                writer.WriteNumberValue(MessageCode.Value);
+            }
+            if (Optional.IsDefined(IconUri))
+            {
+                writer.WritePropertyName("icon"u8);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(Plans))
+            {
+                writer.WritePropertyName("plans"u8);
+                writer.WriteStartArray();
+                foreach (var item in Plans)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NewPlanNotification IJsonModel<NewPlanNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NewPlanNotification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewPlanNotification(document.RootElement, options);
+        }
+
+        internal static NewPlanNotification DeserializeNewPlanNotification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +105,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<long> messageCode = default;
             Optional<Uri> icon = default;
             Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerId"u8))
@@ -79,8 +160,38 @@ namespace Azure.ResourceManager.Marketplace.Models
                     plans = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NewPlanNotification(offerId.Value, displayName.Value, Optional.ToNullable(isFuturePlansEnabled), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NewPlanNotification(offerId.Value, displayName.Value, Optional.ToNullable(isFuturePlansEnabled), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NewPlanNotification>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NewPlanNotification)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NewPlanNotification IPersistableModel<NewPlanNotification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NewPlanNotification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNewPlanNotification(document.RootElement, options);
+        }
+
+        string IPersistableModel<NewPlanNotification>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,22 +5,89 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class BulkCollectionsActionResult
+    public partial class BulkCollectionsActionResult : IUtf8JsonSerializable, IJsonModel<BulkCollectionsActionResult>
     {
-        internal static BulkCollectionsActionResult DeserializeBulkCollectionsActionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BulkCollectionsActionResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BulkCollectionsActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BulkCollectionsActionResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BulkCollectionsActionResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Succeeded))
+            {
+                writer.WritePropertyName("succeeded"u8);
+                writer.WriteStartArray();
+                foreach (var item in Succeeded)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Failed))
+            {
+                writer.WritePropertyName("failed"u8);
+                writer.WriteStartArray();
+                foreach (var item in Failed)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BulkCollectionsActionResult IJsonModel<BulkCollectionsActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BulkCollectionsActionResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBulkCollectionsActionResult(document.RootElement, options);
+        }
+
+        internal static BulkCollectionsActionResult DeserializeBulkCollectionsActionResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<PrivateStoreCollectionDetails>> succeeded = default;
             Optional<IReadOnlyList<PrivateStoreCollectionDetails>> failed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeeded"u8))
@@ -51,8 +118,38 @@ namespace Azure.ResourceManager.Marketplace.Models
                     failed = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BulkCollectionsActionResult(Optional.ToList(succeeded), Optional.ToList(failed));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BulkCollectionsActionResult(Optional.ToList(succeeded), Optional.ToList(failed), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BulkCollectionsActionResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BulkCollectionsActionResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BulkCollectionsActionResult IPersistableModel<BulkCollectionsActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BulkCollectionsActionResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBulkCollectionsActionResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<BulkCollectionsActionResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
