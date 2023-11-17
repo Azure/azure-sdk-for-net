@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
+    [NonParallelizable]
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
         private string _accessKey;
