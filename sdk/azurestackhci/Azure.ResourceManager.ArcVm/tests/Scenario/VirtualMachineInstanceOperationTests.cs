@@ -24,7 +24,9 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task GetDelete()
+        // Test is live only because it consistently exceeds the global ten seconds timeout.
+        [LiveOnly]
+        public async Task VirtualHardDiskGetDelete()
         {
             var virtualMachineInstance = await CreateVirtualMachineInstanceAsync();
 

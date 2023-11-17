@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         // Gallery image download is very expensive and can take time depending on network speed.
-        // So before running live / record please make sure the test region have the capacity for create a new one.
-        //[PlaybackOnly("Live test for gallery image is not necessary")]
+        // Test is live only because it consistently exceeds the global ten seconds timeout.
+        [LiveOnly]
         [RecordedTest]
-        public async Task GetDelete()
+        public async Task GalleryImageGetDelete()
         {
             var galleryImage = await CreateGalleryImageAsync();
 
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ArcVm.Tests
         [TestCase(null)]
         [TestCase(true)]
         // Gallery image download is very expensive and can take time depending on network speed.
-        // So before running live / record please make sure the test region have the capacity for create a new one.
-        //[PlaybackOnly("Live test for gallery image is not necessary")]
+        // Test is live only because it consistently exceeds the global ten seconds timeout.
+        [LiveOnly]
         [RecordedTest]
-        public async Task SetTags(bool? useTagResource)
+        public async Task GalleryImageSetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             var galleryImage = await CreateGalleryImageAsync();

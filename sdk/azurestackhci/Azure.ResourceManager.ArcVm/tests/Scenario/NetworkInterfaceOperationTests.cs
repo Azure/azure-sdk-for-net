@@ -24,7 +24,9 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task GetDelete()
+        // Test is live only because it consistently exceeds the global ten seconds timeout.
+        [LiveOnly]
+        public async Task NetworkInterfaceGetDelete()
         {
             // create a logicalnetwork as prerequisite
             var logicalNetwork = await CreateLogicalNetworkAsync();
@@ -50,7 +52,9 @@ namespace Azure.ResourceManager.ArcVm.Tests
         [TestCase(null)]
         [TestCase(true)]
         [RecordedTest]
-        public async Task SetTags(bool? useTagResource)
+        // Test is live only because it consistently exceeds the global ten seconds timeout.
+        [LiveOnly]
+        public async Task NetworkInterfaceSetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
 

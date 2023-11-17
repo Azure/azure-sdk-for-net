@@ -23,7 +23,9 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateGetList()
+        // Test is live only because it consistently exceeds the global ten seconds timeout.
+        [LiveOnly]
+        public async Task NetworkInterfaceCreateGetList()
         {
             var networkInterfaceCollection = ResourceGroup.GetNetworkInterfaces();
 

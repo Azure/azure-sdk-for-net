@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateGetList()
+        public async Task StorageContainerCreateGetList()
         {
             var testPath = "C:\\ClusterStorage\\Volume1\\sc-dotnet-test";
             var storageContainerCollection = ResourceGroup.GetStorageContainers();

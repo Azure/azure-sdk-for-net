@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateGetList()
+        public async Task LogicalNetworkCreateGetList()
         {
             var vmSwitchName = "testswitch";
             var logicalNetworkCollection = ResourceGroup.GetLogicalNetworks();

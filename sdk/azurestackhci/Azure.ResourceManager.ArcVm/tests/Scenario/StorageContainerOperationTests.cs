@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task GetDelete()
+        public async Task StorageContainerGetDelete()
         {
             var storageContainer = await CreateStorageContainerAsync();
             var testPath = "C:\\ClusterStorage\\Volume1\\sc-dotnet-test";
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
         [TestCase(null)]
         [TestCase(true)]
         [RecordedTest]
-        public async Task SetTags(bool? useTagResource)
+        public async Task StorageContainerSetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             var storageContainer = await CreateStorageContainerAsync();

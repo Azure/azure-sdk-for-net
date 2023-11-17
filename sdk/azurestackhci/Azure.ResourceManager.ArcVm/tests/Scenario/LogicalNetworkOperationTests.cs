@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task GetDelete()
+        public async Task LogicalNetworkGetDelete()
         {
             var logicalNetwork = await CreateLogicalNetworkAsync();
             var vmSwitchName = "testswitch";
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
         [TestCase(null)]
         [TestCase(true)]
         [RecordedTest]
-        public async Task SetTags(bool? useTagResource)
+        public async Task LogicalNetworkSetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             var logicalNetwork = await CreateLogicalNetworkAsync();

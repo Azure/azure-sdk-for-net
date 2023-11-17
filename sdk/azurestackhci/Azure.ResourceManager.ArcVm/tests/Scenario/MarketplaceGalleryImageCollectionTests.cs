@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase]
         // Marketplace gallery image download is very expensive and can take time depending on network speed.
-        // So before running live / record please make sure the test region have the capacity for create a new one.
-        //[PlaybackOnly("Live test for marketplace gallery image is not necessary")]
+        // Test is live only because it consistently exceeds the global ten seconds timeout.
+        [LiveOnly]
         [RecordedTest]
-        public async Task CreateGetList()
+        public async Task MarketplaceGalleryImageCreateGetList()
         {
             var location = AzureLocation.EastUS;
 
