@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkItemConfiguration
+    public partial class WorkItemConfiguration : IUtf8JsonSerializable, IJsonModel<WorkItemConfiguration>
     {
-        internal static WorkItemConfiguration DeserializeWorkItemConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkItemConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WorkItemConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WorkItemConfiguration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WorkItemConfiguration>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectorId))
+            {
+                writer.WritePropertyName("ConnectorId"u8);
+                writer.WriteStringValue(ConnectorId);
+            }
+            if (Optional.IsDefined(ConfigDisplayName))
+            {
+                writer.WritePropertyName("ConfigDisplayName"u8);
+                writer.WriteStringValue(ConfigDisplayName);
+            }
+            if (Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("IsDefault"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("Id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ConfigProperties))
+            {
+                writer.WritePropertyName("ConfigProperties"u8);
+                writer.WriteStringValue(ConfigProperties);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WorkItemConfiguration IJsonModel<WorkItemConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkItemConfiguration(document.RootElement, options);
+        }
+
+        internal static WorkItemConfiguration DeserializeWorkItemConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<bool> isDefault = default;
             Optional<string> id = default;
             Optional<string> configProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ConnectorId"u8))
@@ -54,8 +127,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     configProperties = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkItemConfiguration(connectorId.Value, configDisplayName.Value, Optional.ToNullable(isDefault), id.Value, configProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkItemConfiguration(connectorId.Value, configDisplayName.Value, Optional.ToNullable(isDefault), id.Value, configProperties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkItemConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WorkItemConfiguration IPersistableModel<WorkItemConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWorkItemConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<WorkItemConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

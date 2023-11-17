@@ -6,15 +6,172 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciClusterNode
+    public partial class HciClusterNode : IUtf8JsonSerializable, IJsonModel<HciClusterNode>
     {
-        internal static HciClusterNode DeserializeHciClusterNode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HciClusterNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HciClusterNode>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteNumberValue(Id.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(WindowsServerSubscription))
+                {
+                    writer.WritePropertyName("windowsServerSubscription"u8);
+                    writer.WriteStringValue(WindowsServerSubscription.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NodeType))
+                {
+                    writer.WritePropertyName("nodeType"u8);
+                    writer.WriteStringValue(NodeType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EhcResourceId))
+                {
+                    writer.WritePropertyName("ehcResourceId"u8);
+                    writer.WriteStringValue(EhcResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Manufacturer))
+                {
+                    writer.WritePropertyName("manufacturer"u8);
+                    writer.WriteStringValue(Manufacturer);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Model))
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(Model);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSName))
+                {
+                    writer.WritePropertyName("osName"u8);
+                    writer.WriteStringValue(OSName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSVersion))
+                {
+                    writer.WritePropertyName("osVersion"u8);
+                    writer.WriteStringValue(OSVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSDisplayVersion))
+                {
+                    writer.WritePropertyName("osDisplayVersion"u8);
+                    writer.WriteStringValue(OSDisplayVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SerialNumber))
+                {
+                    writer.WritePropertyName("serialNumber"u8);
+                    writer.WriteStringValue(SerialNumber);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CoreCount))
+                {
+                    writer.WritePropertyName("coreCount"u8);
+                    writer.WriteNumberValue(CoreCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MemoryInGiB))
+                {
+                    writer.WritePropertyName("memoryInGiB"u8);
+                    writer.WriteNumberValue(MemoryInGiB.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastLicensingTimestamp))
+                {
+                    writer.WritePropertyName("lastLicensingTimestamp"u8);
+                    writer.WriteStringValue(LastLicensingTimestamp.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HciClusterNode IJsonModel<HciClusterNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciClusterNode(document.RootElement, options);
+        }
+
+        internal static HciClusterNode DeserializeHciClusterNode(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +190,8 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<float> coreCount = default;
             Optional<float> memoryInGiB = default;
             Optional<DateTimeOffset> lastLicensingTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -129,8 +288,38 @@ namespace Azure.ResourceManager.Hci.Models
                     lastLicensingTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HciClusterNode>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HciClusterNode IPersistableModel<HciClusterNode>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHciClusterNode(document.RootElement, options);
+        }
+
+        string IPersistableModel<HciClusterNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

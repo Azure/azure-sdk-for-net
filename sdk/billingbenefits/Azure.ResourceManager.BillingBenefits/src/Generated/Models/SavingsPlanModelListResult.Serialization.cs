@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +15,86 @@ using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    internal partial class SavingsPlanModelListResult
+    internal partial class SavingsPlanModelListResult : IUtf8JsonSerializable, IJsonModel<SavingsPlanModelListResult>
     {
-        internal static SavingsPlanModelListResult DeserializeSavingsPlanModelListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanModelListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SavingsPlanModelListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SavingsPlanModelListResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SavingsPlanModelListResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Value))
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Value)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NextLink))
+                {
+                    writer.WritePropertyName("nextLink"u8);
+                    writer.WriteStringValue(NextLink);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(AdditionalProperties))
+                {
+                    writer.WritePropertyName("additionalProperties"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AdditionalProperties)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SavingsPlanModelListResult IJsonModel<SavingsPlanModelListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanModelListResult(document.RootElement, options);
+        }
+
+        internal static SavingsPlanModelListResult DeserializeSavingsPlanModelListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +102,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<IReadOnlyList<BillingBenefitsSavingsPlanData>> value = default;
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<SavingsPlanSummary>> additionalProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -58,8 +139,38 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalProperties = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SavingsPlanModelListResult(Optional.ToList(value), nextLink.Value, Optional.ToList(additionalProperties));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SavingsPlanModelListResult(Optional.ToList(value), nextLink.Value, Optional.ToList(additionalProperties), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SavingsPlanModelListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SavingsPlanModelListResult IPersistableModel<SavingsPlanModelListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSavingsPlanModelListResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<SavingsPlanModelListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

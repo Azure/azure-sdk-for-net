@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmFamilyCoreQuota
+    public partial class BatchVmFamilyCoreQuota : IUtf8JsonSerializable, IJsonModel<BatchVmFamilyCoreQuota>
     {
-        internal static BatchVmFamilyCoreQuota DeserializeBatchVmFamilyCoreQuota(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchVmFamilyCoreQuota>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchVmFamilyCoreQuota>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BatchVmFamilyCoreQuota>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BatchVmFamilyCoreQuota>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CoreQuota))
+                {
+                    writer.WritePropertyName("coreQuota"u8);
+                    writer.WriteNumberValue(CoreQuota.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BatchVmFamilyCoreQuota IJsonModel<BatchVmFamilyCoreQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchVmFamilyCoreQuota)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchVmFamilyCoreQuota(document.RootElement, options);
+        }
+
+        internal static BatchVmFamilyCoreQuota DeserializeBatchVmFamilyCoreQuota(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<int> coreQuota = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -36,8 +100,38 @@ namespace Azure.ResourceManager.Batch.Models
                     coreQuota = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchVmFamilyCoreQuota(name.Value, Optional.ToNullable(coreQuota));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchVmFamilyCoreQuota(name.Value, Optional.ToNullable(coreQuota), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchVmFamilyCoreQuota>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchVmFamilyCoreQuota)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BatchVmFamilyCoreQuota IPersistableModel<BatchVmFamilyCoreQuota>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchVmFamilyCoreQuota)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBatchVmFamilyCoreQuota(document.RootElement, options);
+        }
+
+        string IPersistableModel<BatchVmFamilyCoreQuota>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

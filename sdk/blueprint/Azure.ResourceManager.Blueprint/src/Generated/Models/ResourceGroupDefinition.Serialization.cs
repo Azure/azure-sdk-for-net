@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class ResourceGroupDefinition : IUtf8JsonSerializable
+    public partial class ResourceGroupDefinition : IUtf8JsonSerializable, IJsonModel<ResourceGroupDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGroupDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceGroupDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ResourceGroupDefinition>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ResourceGroupDefinition>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -65,11 +75,40 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStringValue(StrongType);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceGroupDefinition DeserializeResourceGroupDefinition(JsonElement element)
+        ResourceGroupDefinition IJsonModel<ResourceGroupDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceGroupDefinition(document.RootElement, options);
+        }
+
+        internal static ResourceGroupDefinition DeserializeResourceGroupDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -81,6 +120,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> strongType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -152,8 +193,38 @@ namespace Azure.ResourceManager.Blueprint.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), Optional.ToList(dependsOn), Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), Optional.ToList(dependsOn), Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceGroupDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourceGroupDefinition IPersistableModel<ResourceGroupDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourceGroupDefinition(document.RootElement, options);
+        }
+
+        string IPersistableModel<ResourceGroupDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

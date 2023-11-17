@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class DialogStateResponseInternal
+    internal partial class DialogStateResponseInternal : IUtf8JsonSerializable, IJsonModel<DialogStateResponseInternal>
     {
-        internal static DialogStateResponseInternal DeserializeDialogStateResponseInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DialogStateResponseInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DialogStateResponseInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DialogStateResponseInternal>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DialogStateResponseInternal>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DialogId))
+            {
+                writer.WritePropertyName("dialogId"u8);
+                writer.WriteStringValue(DialogId);
+            }
+            if (Optional.IsDefined(DialogOptions))
+            {
+                writer.WritePropertyName("dialogOptions"u8);
+                writer.WriteObjectValue(DialogOptions);
+            }
+            if (Optional.IsDefined(DialogInputType))
+            {
+                writer.WritePropertyName("dialogInputType"u8);
+                writer.WriteStringValue(DialogInputType.Value.ToString());
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DialogStateResponseInternal IJsonModel<DialogStateResponseInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DialogStateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDialogStateResponseInternal(document.RootElement, options);
+        }
+
+        internal static DialogStateResponseInternal DeserializeDialogStateResponseInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.Communication.CallAutomation
             Optional<DialogOptionsInternal> dialogOptions = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> operationContext = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dialogId"u8))
@@ -52,8 +120,38 @@ namespace Azure.Communication.CallAutomation
                     operationContext = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DialogStateResponseInternal(dialogId.Value, dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DialogStateResponseInternal(dialogId.Value, dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DialogStateResponseInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DialogStateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DialogStateResponseInternal IPersistableModel<DialogStateResponseInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DialogStateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDialogStateResponseInternal(document.RootElement, options);
+        }
+
+        string IPersistableModel<DialogStateResponseInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

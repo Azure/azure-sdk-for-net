@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _arcExtensionExtensionsRestClient.CreateListByArcSettingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcExtensionExtensionsRestClient.CreateListByArcSettingNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArcExtensionResource(Client, ArcExtensionData.DeserializeArcExtensionData(e)), _arcExtensionExtensionsClientDiagnostics, Pipeline, "ArcExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ArcExtensionResource(Client, ArcExtensionData.DeserializeArcExtensionData(e)), _arcExtensionExtensionsClientDiagnostics, Pipeline, "ArcExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _arcExtensionExtensionsRestClient.CreateListByArcSettingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcExtensionExtensionsRestClient.CreateListByArcSettingNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArcExtensionResource(Client, ArcExtensionData.DeserializeArcExtensionData(e)), _arcExtensionExtensionsClientDiagnostics, Pipeline, "ArcExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ArcExtensionResource(Client, ArcExtensionData.DeserializeArcExtensionData(e)), _arcExtensionExtensionsClientDiagnostics, Pipeline, "ArcExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

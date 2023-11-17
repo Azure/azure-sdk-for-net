@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a discrete action. </summary>
     public partial class DiscreteAction : Action
     {
-        /// <summary> Initializes a new instance of DiscreteAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscreteAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
@@ -31,16 +31,22 @@ namespace Azure.ResourceManager.Chaos.Models
             ActionType = "discrete";
         }
 
-        /// <summary> Initializes a new instance of DiscreteAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscreteAction"/>. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
-        internal DiscreteAction(string actionType, string name, IList<KeyValuePair> parameters, string selectorId) : base(actionType, name)
+        internal DiscreteAction(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<KeyValuePair> parameters, string selectorId) : base(actionType, name, serializedAdditionalRawData)
         {
             Parameters = parameters;
             SelectorId = selectorId;
             ActionType = actionType ?? "discrete";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiscreteAction"/> for deserialization. </summary>
+        internal DiscreteAction()
+        {
         }
 
         /// <summary> List of key value pairs. </summary>

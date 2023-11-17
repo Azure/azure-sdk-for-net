@@ -6,27 +6,84 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class PaymentMethodLogo : IUtf8JsonSerializable
+    public partial class PaymentMethodLogo : IUtf8JsonSerializable, IJsonModel<PaymentMethodLogo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentMethodLogo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PaymentMethodLogo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PaymentMethodLogo>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PaymentMethodLogo>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MimeType))
+                {
+                    writer.WritePropertyName("mimeType"u8);
+                    writer.WriteStringValue(MimeType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    writer.WritePropertyName("url"u8);
+                    writer.WriteStringValue(Uri.AbsoluteUri);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PaymentMethodLogo DeserializePaymentMethodLogo(JsonElement element)
+        PaymentMethodLogo IJsonModel<PaymentMethodLogo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePaymentMethodLogo(document.RootElement, options);
+        }
+
+        internal static PaymentMethodLogo DeserializePaymentMethodLogo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> mimeType = default;
             Optional<Uri> url = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mimeType"u8))
@@ -43,8 +100,38 @@ namespace Azure.ResourceManager.Billing.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PaymentMethodLogo(mimeType.Value, url.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PaymentMethodLogo(mimeType.Value, url.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PaymentMethodLogo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PaymentMethodLogo IPersistableModel<PaymentMethodLogo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePaymentMethodLogo(document.RootElement, options);
+        }
+
+        string IPersistableModel<PaymentMethodLogo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

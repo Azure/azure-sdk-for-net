@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class HealthProbeSettings : IUtf8JsonSerializable
+    public partial class HealthProbeSettings : IUtf8JsonSerializable, IJsonModel<HealthProbeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthProbeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HealthProbeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HealthProbeSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HealthProbeSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProbePath))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("probeIntervalInSeconds"u8);
                 writer.WriteNumberValue(ProbeIntervalInSeconds.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthProbeSettings DeserializeHealthProbeSettings(JsonElement element)
+        HealthProbeSettings IJsonModel<HealthProbeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthProbeSettings(document.RootElement, options);
+        }
+
+        internal static HealthProbeSettings DeserializeHealthProbeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<HealthProbeRequestType> probeRequestType = default;
             Optional<HealthProbeProtocol> probeProtocol = default;
             Optional<int> probeIntervalInSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("probePath"u8))
@@ -82,8 +124,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     probeIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthProbeSettings(probePath.Value, Optional.ToNullable(probeRequestType), Optional.ToNullable(probeProtocol), Optional.ToNullable(probeIntervalInSeconds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthProbeSettings(probePath.Value, Optional.ToNullable(probeRequestType), Optional.ToNullable(probeProtocol), Optional.ToNullable(probeIntervalInSeconds), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HealthProbeSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HealthProbeSettings IPersistableModel<HealthProbeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHealthProbeSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<HealthProbeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

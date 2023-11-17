@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,18 +16,56 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class UpdateData : IUtf8JsonSerializable
+    public partial class UpdateData : IUtf8JsonSerializable, IJsonModel<UpdateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UpdateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UpdateData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UpdateData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(InstalledOn))
             {
                 writer.WritePropertyName("installedDate"u8);
@@ -145,11 +185,40 @@ namespace Azure.ResourceManager.Hci
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UpdateData DeserializeUpdateData(JsonElement element)
+        UpdateData IJsonModel<UpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateData(document.RootElement, options);
+        }
+
+        internal static UpdateData DeserializeUpdateData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -180,6 +249,8 @@ namespace Azure.ResourceManager.Hci
             Optional<string> additionalProperties = default;
             Optional<float> progressPercentage = default;
             Optional<string> notifyMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -407,8 +478,38 @@ namespace Azure.ResourceManager.Hci
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpdateData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(installedDate), description.Value, Optional.ToNullable(state), Optional.ToList(prerequisites), Optional.ToList(componentVersions), Optional.ToNullable(rebootRequired), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), packagePath.Value, Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Optional.ToNullable(progressPercentage), notifyMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpdateData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(installedDate), description.Value, Optional.ToNullable(state), Optional.ToList(prerequisites), Optional.ToList(componentVersions), Optional.ToNullable(rebootRequired), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), packagePath.Value, Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Optional.ToNullable(progressPercentage), notifyMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UpdateData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UpdateData IPersistableModel<UpdateData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUpdateData(document.RootElement, options);
+        }
+
+        string IPersistableModel<UpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

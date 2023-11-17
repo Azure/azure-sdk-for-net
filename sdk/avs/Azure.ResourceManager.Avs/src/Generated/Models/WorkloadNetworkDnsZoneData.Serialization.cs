@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -14,11 +17,41 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class WorkloadNetworkDnsZoneData : IUtf8JsonSerializable
+    public partial class WorkloadNetworkDnsZoneData : IUtf8JsonSerializable, IJsonModel<WorkloadNetworkDnsZoneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkDnsZoneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WorkloadNetworkDnsZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WorkloadNetworkDnsZoneData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WorkloadNetworkDnsZoneData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -61,17 +94,54 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("dnsServices"u8);
                 writer.WriteNumberValue(DnsServices.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadNetworkDnsZoneData DeserializeWorkloadNetworkDnsZoneData(JsonElement element)
+        WorkloadNetworkDnsZoneData IJsonModel<WorkloadNetworkDnsZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadNetworkDnsZoneData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadNetworkDnsZoneData(document.RootElement, options);
+        }
+
+        internal static WorkloadNetworkDnsZoneData DeserializeWorkloadNetworkDnsZoneData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +157,8 @@ namespace Azure.ResourceManager.Avs
             Optional<long> dnsServices = default;
             Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
             Optional<long> revision = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -201,8 +273,38 @@ namespace Azure.ResourceManager.Avs
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkloadNetworkDnsZoneData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(domain), Optional.ToList(dnsServerIPs), sourceIP.Value, Optional.ToNullable(dnsServices), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkloadNetworkDnsZoneData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(domain), Optional.ToList(dnsServerIPs), sourceIP.Value, Optional.ToNullable(dnsServices), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkloadNetworkDnsZoneData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadNetworkDnsZoneData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WorkloadNetworkDnsZoneData IPersistableModel<WorkloadNetworkDnsZoneData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadNetworkDnsZoneData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWorkloadNetworkDnsZoneData(document.RootElement, options);
+        }
+
+        string IPersistableModel<WorkloadNetworkDnsZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

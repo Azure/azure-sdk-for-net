@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountDeploymentProperties : IUtf8JsonSerializable
+    public partial class CognitiveServicesAccountDeploymentProperties : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CognitiveServicesAccountDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CognitiveServicesAccountDeploymentProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
@@ -26,21 +44,85 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Capabilities))
+                {
+                    writer.WritePropertyName("capabilities"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Capabilities)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
             if (Optional.IsDefined(RaiPolicyName))
             {
                 writer.WritePropertyName("raiPolicyName"u8);
                 writer.WriteStringValue(RaiPolicyName);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CallRateLimit))
+                {
+                    writer.WritePropertyName("callRateLimit"u8);
+                    writer.WriteObjectValue(CallRateLimit);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(RateLimits))
+                {
+                    writer.WritePropertyName("rateLimits"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in RateLimits)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (Optional.IsDefined(VersionUpgradeOption))
             {
                 writer.WritePropertyName("versionUpgradeOption"u8);
                 writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CognitiveServicesAccountDeploymentProperties DeserializeCognitiveServicesAccountDeploymentProperties(JsonElement element)
+        CognitiveServicesAccountDeploymentProperties IJsonModel<CognitiveServicesAccountDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesAccountDeploymentProperties(document.RootElement, options);
+        }
+
+        internal static CognitiveServicesAccountDeploymentProperties DeserializeCognitiveServicesAccountDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +135,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rateLimits = default;
             Optional<DeploymentModelVersionUpgradeOption> versionUpgradeOption = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -133,8 +217,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     versionUpgradeOption = new DeploymentModelVersionUpgradeOption(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, Optional.ToList(rateLimits), Optional.ToNullable(versionUpgradeOption));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, Optional.ToList(rateLimits), Optional.ToNullable(versionUpgradeOption), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CognitiveServicesAccountDeploymentProperties IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCognitiveServicesAccountDeploymentProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<CognitiveServicesAccountDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

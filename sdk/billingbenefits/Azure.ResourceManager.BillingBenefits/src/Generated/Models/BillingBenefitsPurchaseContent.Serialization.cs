@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class BillingBenefitsPurchaseContent : IUtf8JsonSerializable
+    public partial class BillingBenefitsPurchaseContent : IUtf8JsonSerializable, IJsonModel<BillingBenefitsPurchaseContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsPurchaseContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BillingBenefitsPurchaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BillingBenefitsPurchaseContent>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BillingBenefitsPurchaseContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -53,6 +63,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EffectOn))
+                {
+                    writer.WritePropertyName("effectiveDateTime"u8);
+                    writer.WriteStringValue(EffectOn.Value, "O");
+                }
+            }
             if (Optional.IsDefined(IsRenewed))
             {
                 writer.WritePropertyName("renew"u8);
@@ -64,11 +82,40 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BillingBenefitsPurchaseContent DeserializeBillingBenefitsPurchaseContent(JsonElement element)
+        BillingBenefitsPurchaseContent IJsonModel<BillingBenefitsPurchaseContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingBenefitsPurchaseContent(document.RootElement, options);
+        }
+
+        internal static BillingBenefitsPurchaseContent DeserializeBillingBenefitsPurchaseContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,6 +130,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<DateTimeOffset> effectiveDateTime = default;
             Optional<bool> renew = default;
             Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -183,8 +232,38 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BillingBenefitsPurchaseContent(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(renew), appliedScopeProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BillingBenefitsPurchaseContent(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(renew), appliedScopeProperties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BillingBenefitsPurchaseContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BillingBenefitsPurchaseContent IPersistableModel<BillingBenefitsPurchaseContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBillingBenefitsPurchaseContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<BillingBenefitsPurchaseContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

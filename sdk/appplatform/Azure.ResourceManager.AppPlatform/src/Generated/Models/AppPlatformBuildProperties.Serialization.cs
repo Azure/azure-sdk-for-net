@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +15,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBuildProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBuildProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBuildProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformBuildProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppPlatformBuildProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppPlatformBuildProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RelativePath))
             {
@@ -32,6 +42,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("agentPool"u8);
                 writer.WriteStringValue(AgentPool);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(Env))
             {
                 writer.WritePropertyName("env"u8);
@@ -43,16 +61,53 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TriggeredBuildResult))
+                {
+                    writer.WritePropertyName("triggeredBuildResult"u8);
+                    JsonSerializer.Serialize(writer, TriggeredBuildResult);
+                }
+            }
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformBuildProperties DeserializeAppPlatformBuildProperties(JsonElement element)
+        AppPlatformBuildProperties IJsonModel<AppPlatformBuildProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformBuildProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformBuildProperties DeserializeAppPlatformBuildProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +119,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IDictionary<string, string>> env = default;
             Optional<SubResource> triggeredBuildResult = default;
             Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relativePath"u8))
@@ -122,8 +179,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     resourceRequests = AppPlatformBuildResourceRequirements.DeserializeAppPlatformBuildResourceRequirements(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformBuildProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppPlatformBuildProperties IPersistableModel<AppPlatformBuildProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppPlatformBuildProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppPlatformBuildProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

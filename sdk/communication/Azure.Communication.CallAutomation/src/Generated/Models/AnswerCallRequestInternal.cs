@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,39 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for answering the call. </summary>
     internal partial class AnswerCallRequestInternal
     {
-        /// <summary> Initializes a new instance of AnswerCallRequestInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
@@ -25,6 +58,32 @@ namespace Azure.Communication.CallAutomation
 
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
+        /// <param name="incomingCallContext"> The context associated with the call. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
+        /// <param name="azureCognitiveServicesEndpointUrl"> The endpoint URL of the Azure Cognitive Services resource attached. </param>
+        /// <param name="answeredByIdentifier"> The identifier of the call automation entity which answers the call. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, string azureCognitiveServicesEndpointUrl, CommunicationUserIdentifierModel answeredByIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IncomingCallContext = incomingCallContext;
+            CallbackUri = callbackUri;
+            OperationContext = operationContext;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
+            TranscriptionConfiguration = transcriptionConfiguration;
+            AzureCognitiveServicesEndpointUrl = azureCognitiveServicesEndpointUrl;
+            AnsweredByIdentifier = answeredByIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/> for deserialization. </summary>
+        internal AnswerCallRequestInternal()
+        {
         }
 
         /// <summary> The context associated with the call. </summary>

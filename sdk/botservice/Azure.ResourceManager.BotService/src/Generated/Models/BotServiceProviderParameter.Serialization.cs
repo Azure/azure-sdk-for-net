@@ -6,15 +6,116 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotServiceProviderParameter
+    public partial class BotServiceProviderParameter : IUtf8JsonSerializable, IJsonModel<BotServiceProviderParameter>
     {
-        internal static BotServiceProviderParameter DeserializeBotServiceProviderParameter(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServiceProviderParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BotServiceProviderParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BotServiceProviderParameter>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BotServiceProviderParameter>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceProviderParameterType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ServiceProviderParameterType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HelpUri))
+                {
+                    writer.WritePropertyName("helpUrl"u8);
+                    writer.WriteStringValue(HelpUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Default))
+                {
+                    writer.WritePropertyName("default"u8);
+                    writer.WriteStringValue(Default);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Metadata))
+                {
+                    writer.WritePropertyName("metadata"u8);
+                    writer.WriteObjectValue(Metadata);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BotServiceProviderParameter IJsonModel<BotServiceProviderParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBotServiceProviderParameter(document.RootElement, options);
+        }
+
+        internal static BotServiceProviderParameter DeserializeBotServiceProviderParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +127,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<Uri> helpUrl = default;
             Optional<string> @default = default;
             Optional<ServiceProviderParameterMetadata> metadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -71,8 +174,38 @@ namespace Azure.ResourceManager.BotService.Models
                     metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BotServiceProviderParameter(name.Value, type.Value, displayName.Value, description.Value, helpUrl.Value, @default.Value, metadata.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BotServiceProviderParameter(name.Value, type.Value, displayName.Value, description.Value, helpUrl.Value, @default.Value, metadata.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BotServiceProviderParameter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BotServiceProviderParameter IPersistableModel<BotServiceProviderParameter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBotServiceProviderParameter(document.RootElement, options);
+        }
+
+        string IPersistableModel<BotServiceProviderParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

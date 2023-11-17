@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> The UnknownFilter. </summary>
     internal partial class UnknownFilter : Filter
     {
-        /// <summary> Initializes a new instance of UnknownFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFilter"/>. </summary>
         /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
-        internal UnknownFilter(FilterType filterType) : base(filterType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFilter(FilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(filterType, serializedAdditionalRawData)
         {
             FilterType = filterType;
         }

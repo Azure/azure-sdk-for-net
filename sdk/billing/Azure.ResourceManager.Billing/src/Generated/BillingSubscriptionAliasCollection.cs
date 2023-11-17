@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(_billingAccountName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(_billingAccountName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

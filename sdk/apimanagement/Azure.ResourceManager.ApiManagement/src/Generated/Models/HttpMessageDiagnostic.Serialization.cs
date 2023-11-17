@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class HttpMessageDiagnostic : IUtf8JsonSerializable
+    public partial class HttpMessageDiagnostic : IUtf8JsonSerializable, IJsonModel<HttpMessageDiagnostic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpMessageDiagnostic>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HttpMessageDiagnostic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HttpMessageDiagnostic>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HttpMessageDiagnostic>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Headers))
             {
@@ -36,11 +46,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("dataMasking"u8);
                 writer.WriteObjectValue(DataMasking);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HttpMessageDiagnostic DeserializeHttpMessageDiagnostic(JsonElement element)
+        HttpMessageDiagnostic IJsonModel<HttpMessageDiagnostic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpMessageDiagnostic(document.RootElement, options);
+        }
+
+        internal static HttpMessageDiagnostic DeserializeHttpMessageDiagnostic(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +87,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IList<string>> headers = default;
             Optional<BodyDiagnosticSettings> body = default;
             Optional<DataMasking> dataMasking = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headers"u8))
@@ -82,8 +123,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     dataMasking = DataMasking.DeserializeDataMasking(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HttpMessageDiagnostic(Optional.ToList(headers), body.Value, dataMasking.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HttpMessageDiagnostic(Optional.ToList(headers), body.Value, dataMasking.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HttpMessageDiagnostic>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HttpMessageDiagnostic IPersistableModel<HttpMessageDiagnostic>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHttpMessageDiagnostic(document.RootElement, options);
+        }
+
+        string IPersistableModel<HttpMessageDiagnostic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

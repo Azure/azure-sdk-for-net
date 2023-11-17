@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Update specific properties of the software update configuration. </summary>
     public partial class SoftwareUpdateConfigurationSpecificProperties
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationSpecificProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationSpecificProperties"/>. </summary>
         /// <param name="operatingSystem"> operating system of target machines. </param>
         public SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType operatingSystem)
         {
@@ -23,7 +55,7 @@ namespace Azure.ResourceManager.Automation.Models
             NonAzureComputerNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationSpecificProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationSpecificProperties"/>. </summary>
         /// <param name="operatingSystem"> operating system of target machines. </param>
         /// <param name="windows"> Windows specific update configuration. </param>
         /// <param name="linux"> Linux specific update configuration. </param>
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="azureVirtualMachines"> List of azure resource Ids for azure virtual machines targeted by the software update configuration. </param>
         /// <param name="nonAzureComputerNames"> List of names of non-azure machines targeted by the software update configuration. </param>
         /// <param name="targets"> Group targets for the software update configuration. </param>
-        internal SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType operatingSystem, WindowsUpdateConfigurationProperties windows, LinuxUpdateConfigurationProperties linux, TimeSpan? duration, IList<string> azureVirtualMachines, IList<string> nonAzureComputerNames, SoftwareUpdateConfigurationTargetProperties targets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType operatingSystem, WindowsUpdateConfigurationProperties windows, LinuxUpdateConfigurationProperties linux, TimeSpan? duration, IList<string> azureVirtualMachines, IList<string> nonAzureComputerNames, SoftwareUpdateConfigurationTargetProperties targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperatingSystem = operatingSystem;
             Windows = windows;
@@ -40,6 +73,12 @@ namespace Azure.ResourceManager.Automation.Models
             AzureVirtualMachines = azureVirtualMachines;
             NonAzureComputerNames = nonAzureComputerNames;
             Targets = targets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationSpecificProperties"/> for deserialization. </summary>
+        internal SoftwareUpdateConfigurationSpecificProperties()
+        {
         }
 
         /// <summary> operating system of target machines. </summary>

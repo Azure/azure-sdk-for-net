@@ -5,21 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ExpressRouteCircuit : IUtf8JsonSerializable
+    public partial class ExpressRouteCircuit : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuit>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuit>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExpressRouteCircuit>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExpressRouteCircuit>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExpressRouteCircuit>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrimarySubnet))
+                {
+                    writer.WritePropertyName("primarySubnet"u8);
+                    writer.WriteStringValue(PrimarySubnet);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SecondarySubnet))
+                {
+                    writer.WritePropertyName("secondarySubnet"u8);
+                    writer.WriteStringValue(SecondarySubnet);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExpressRouteId))
+                {
+                    writer.WritePropertyName("expressRouteID"u8);
+                    writer.WriteStringValue(ExpressRouteId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExpressRoutePrivatePeeringId))
+                {
+                    writer.WritePropertyName("expressRoutePrivatePeeringID"u8);
+                    writer.WriteStringValue(ExpressRoutePrivatePeeringId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteCircuit DeserializeExpressRouteCircuit(JsonElement element)
+        ExpressRouteCircuit IJsonModel<ExpressRouteCircuit>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteCircuit(document.RootElement, options);
+        }
+
+        internal static ExpressRouteCircuit DeserializeExpressRouteCircuit(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +100,8 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> secondarySubnet = default;
             Optional<ResourceIdentifier> expressRouteId = default;
             Optional<ResourceIdentifier> expressRoutePrivatePeeringId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primarySubnet"u8))
@@ -58,8 +132,38 @@ namespace Azure.ResourceManager.Avs.Models
                     expressRoutePrivatePeeringId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExpressRouteCircuit(primarySubnet.Value, secondarySubnet.Value, expressRouteId.Value, expressRoutePrivatePeeringId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExpressRouteCircuit(primarySubnet.Value, secondarySubnet.Value, expressRouteId.Value, expressRoutePrivatePeeringId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExpressRouteCircuit>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExpressRouteCircuit IPersistableModel<ExpressRouteCircuit>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExpressRouteCircuit(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExpressRouteCircuit>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

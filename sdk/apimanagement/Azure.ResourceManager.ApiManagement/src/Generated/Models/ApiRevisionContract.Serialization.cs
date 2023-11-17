@@ -6,15 +6,124 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiRevisionContract
+    public partial class ApiRevisionContract : IUtf8JsonSerializable, IJsonModel<ApiRevisionContract>
     {
-        internal static ApiRevisionContract DeserializeApiRevisionContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiRevisionContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiRevisionContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ApiRevisionContract>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ApiRevisionContract>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ApiId))
+                {
+                    writer.WritePropertyName("apiId"u8);
+                    writer.WriteStringValue(ApiId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ApiRevision))
+                {
+                    writer.WritePropertyName("apiRevision"u8);
+                    writer.WriteStringValue(ApiRevision);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdDateTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdatedOn))
+                {
+                    writer.WritePropertyName("updatedDateTime"u8);
+                    writer.WriteStringValue(UpdatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrivateUriString))
+                {
+                    writer.WritePropertyName("privateUrl"u8);
+                    writer.WriteStringValue(PrivateUriString);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsOnline))
+                {
+                    writer.WritePropertyName("isOnline"u8);
+                    writer.WriteBooleanValue(IsOnline.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsCurrent))
+                {
+                    writer.WritePropertyName("isCurrent"u8);
+                    writer.WriteBooleanValue(IsCurrent.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApiRevisionContract IJsonModel<ApiRevisionContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiRevisionContract(document.RootElement, options);
+        }
+
+        internal static ApiRevisionContract DeserializeApiRevisionContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +136,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> privateUri = default;
             Optional<bool> isOnline = default;
             Optional<bool> isCurrent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiId"u8))
@@ -85,8 +196,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isCurrent = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiRevisionContract(apiId.Value, apiRevision.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), description.Value, privateUri.Value, Optional.ToNullable(isOnline), Optional.ToNullable(isCurrent));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiRevisionContract(apiId.Value, apiRevision.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), description.Value, privateUri.Value, Optional.ToNullable(isOnline), Optional.ToNullable(isCurrent), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApiRevisionContract>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApiRevisionContract IPersistableModel<ApiRevisionContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApiRevisionContract(document.RootElement, options);
+        }
+
+        string IPersistableModel<ApiRevisionContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

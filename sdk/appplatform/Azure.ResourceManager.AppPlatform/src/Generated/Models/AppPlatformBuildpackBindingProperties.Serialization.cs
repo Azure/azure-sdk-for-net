@@ -5,31 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildpackBindingProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBuildpackBindingProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBuildpackBindingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBuildpackBindingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformBuildpackBindingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppPlatformBuildpackBindingProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppPlatformBuildpackBindingProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BindingType))
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(LaunchProperties))
             {
                 writer.WritePropertyName("launchProperties"u8);
                 writer.WriteObjectValue(LaunchProperties);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformBuildpackBindingProperties DeserializeAppPlatformBuildpackBindingProperties(JsonElement element)
+        AppPlatformBuildpackBindingProperties IJsonModel<AppPlatformBuildpackBindingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildpackBindingProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformBuildpackBindingProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformBuildpackBindingProperties DeserializeAppPlatformBuildpackBindingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +85,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<BuildpackBindingType> bindingType = default;
             Optional<BuildpackBindingProvisioningState> provisioningState = default;
             Optional<BuildpackBindingLaunchProperties> launchProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bindingType"u8))
@@ -66,8 +116,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     launchProperties = BuildpackBindingLaunchProperties.DeserializeBuildpackBindingLaunchProperties(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformBuildpackBindingProperties(Optional.ToNullable(bindingType), Optional.ToNullable(provisioningState), launchProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformBuildpackBindingProperties(Optional.ToNullable(bindingType), Optional.ToNullable(provisioningState), launchProperties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformBuildpackBindingProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildpackBindingProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppPlatformBuildpackBindingProperties IPersistableModel<AppPlatformBuildpackBindingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildpackBindingProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppPlatformBuildpackBindingProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppPlatformBuildpackBindingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

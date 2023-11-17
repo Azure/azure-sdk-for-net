@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _publishedBlueprintRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publishedBlueprintRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublishedBlueprintResource(Client, PublishedBlueprintData.DeserializePublishedBlueprintData(e)), _publishedBlueprintClientDiagnostics, Pipeline, "BlueprintResource.GetPublishedBlueprints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PublishedBlueprintResource(Client, PublishedBlueprintData.DeserializePublishedBlueprintData(e)), _publishedBlueprintClientDiagnostics, Pipeline, "BlueprintResource.GetPublishedBlueprints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _publishedBlueprintRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publishedBlueprintRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublishedBlueprintResource(Client, PublishedBlueprintData.DeserializePublishedBlueprintData(e)), _publishedBlueprintClientDiagnostics, Pipeline, "BlueprintResource.GetPublishedBlueprints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PublishedBlueprintResource(Client, PublishedBlueprintData.DeserializePublishedBlueprintData(e)), _publishedBlueprintClientDiagnostics, Pipeline, "BlueprintResource.GetPublishedBlueprints", "value", "nextLink", cancellationToken);
         }
     }
 }

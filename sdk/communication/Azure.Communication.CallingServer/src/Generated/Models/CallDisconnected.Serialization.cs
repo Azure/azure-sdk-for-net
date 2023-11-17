@@ -5,15 +5,125 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallDisconnected
+    public partial class CallDisconnected : IUtf8JsonSerializable, IJsonModel<CallDisconnected>
     {
-        internal static CallDisconnected DeserializeCallDisconnected(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CallDisconnected>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CallDisconnected>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CallDisconnected>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CallDisconnected>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EventSource))
+                {
+                    writer.WritePropertyName("eventSource"u8);
+                    writer.WriteStringValue(EventSource);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OperationContext))
+                {
+                    writer.WritePropertyName("operationContext"u8);
+                    writer.WriteStringValue(OperationContext);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResultInformation))
+                {
+                    writer.WritePropertyName("resultInformation"u8);
+                    writer.WriteObjectValue(ResultInformation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CallConnectionId))
+                {
+                    writer.WritePropertyName("callConnectionId"u8);
+                    writer.WriteStringValue(CallConnectionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServerCallId))
+                {
+                    writer.WritePropertyName("serverCallId"u8);
+                    writer.WriteStringValue(ServerCallId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CorrelationId))
+                {
+                    writer.WritePropertyName("correlationId"u8);
+                    writer.WriteStringValue(CorrelationId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublicEventType))
+                {
+                    writer.WritePropertyName("publicEventType"u8);
+                    writer.WriteStringValue(PublicEventType);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CallDisconnected IJsonModel<CallDisconnected>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CallDisconnected)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCallDisconnected(document.RootElement, options);
+        }
+
+        internal static CallDisconnected DeserializeCallDisconnected(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +136,8 @@ namespace Azure.Communication.CallingServer
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             Optional<string> publicEventType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"u8))
@@ -72,8 +184,38 @@ namespace Azure.Communication.CallingServer
                     publicEventType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CallDisconnected(eventSource.Value, version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CallDisconnected(eventSource.Value, version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CallDisconnected>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CallDisconnected)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CallDisconnected IPersistableModel<CallDisconnected>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CallDisconnected)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCallDisconnected(document.RootElement, options);
+        }
+
+        string IPersistableModel<CallDisconnected>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

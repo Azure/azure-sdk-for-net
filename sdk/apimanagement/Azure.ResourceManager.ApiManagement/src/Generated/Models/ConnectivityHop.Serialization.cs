@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -12,10 +15,110 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ConnectivityHop
+    public partial class ConnectivityHop : IUtf8JsonSerializable, IJsonModel<ConnectivityHop>
     {
-        internal static ConnectivityHop DeserializeConnectivityHop(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityHop>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectivityHop>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectivityHop>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectivityHop>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConnectivityHopType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ConnectivityHopType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Address))
+                {
+                    writer.WritePropertyName("address"u8);
+                    writer.WriteStringValue(Address.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceId))
+                {
+                    writer.WritePropertyName("resourceId"u8);
+                    writer.WriteStringValue(ResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NextHopIds))
+                {
+                    writer.WritePropertyName("nextHopIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NextHopIds)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Issues))
+                {
+                    writer.WritePropertyName("issues"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Issues)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectivityHop IJsonModel<ConnectivityHop>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityHop)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityHop(document.RootElement, options);
+        }
+
+        internal static ConnectivityHop DeserializeConnectivityHop(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +129,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ResourceIdentifier> resourceId = default;
             Optional<IReadOnlyList<string>> nextHopIds = default;
             Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -84,8 +189,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     issues = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(issues));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(issues), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectivityHop>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityHop)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectivityHop IPersistableModel<ConnectivityHop>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityHop)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectivityHop(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectivityHop>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

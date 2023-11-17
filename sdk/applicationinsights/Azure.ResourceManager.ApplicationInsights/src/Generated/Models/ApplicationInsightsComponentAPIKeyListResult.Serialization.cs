@@ -5,20 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    internal partial class ApplicationInsightsComponentAPIKeyListResult
+    internal partial class ApplicationInsightsComponentAPIKeyListResult : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentAPIKeyListResult>
     {
-        internal static ApplicationInsightsComponentAPIKeyListResult DeserializeApplicationInsightsComponentAPIKeyListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentAPIKeyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationInsightsComponentAPIKeyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ApplicationInsightsComponentAPIKeyListResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ApplicationInsightsComponentAPIKeyListResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApplicationInsightsComponentAPIKeyListResult IJsonModel<ApplicationInsightsComponentAPIKeyListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAPIKeyListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentAPIKeyListResult(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentAPIKeyListResult DeserializeApplicationInsightsComponentAPIKeyListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ApplicationInsightsComponentAPIKey> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -31,8 +86,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationInsightsComponentAPIKeyListResult(value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationInsightsComponentAPIKeyListResult(value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationInsightsComponentAPIKeyListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAPIKeyListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApplicationInsightsComponentAPIKeyListResult IPersistableModel<ApplicationInsightsComponentAPIKeyListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAPIKeyListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentAPIKeyListResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<ApplicationInsightsComponentAPIKeyListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

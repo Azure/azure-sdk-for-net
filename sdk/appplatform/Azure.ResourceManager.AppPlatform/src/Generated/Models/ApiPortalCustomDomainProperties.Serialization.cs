@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class ApiPortalCustomDomainProperties : IUtf8JsonSerializable
+    internal partial class ApiPortalCustomDomainProperties : IUtf8JsonSerializable, IJsonModel<ApiPortalCustomDomainProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiPortalCustomDomainProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiPortalCustomDomainProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ApiPortalCustomDomainProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ApiPortalCustomDomainProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiPortalCustomDomainProperties DeserializeApiPortalCustomDomainProperties(JsonElement element)
+        ApiPortalCustomDomainProperties IJsonModel<ApiPortalCustomDomainProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiPortalCustomDomainProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiPortalCustomDomainProperties(document.RootElement, options);
+        }
+
+        internal static ApiPortalCustomDomainProperties DeserializeApiPortalCustomDomainProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> thumbprint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thumbprint"u8))
@@ -37,8 +79,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     thumbprint = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiPortalCustomDomainProperties(thumbprint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiPortalCustomDomainProperties(thumbprint.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApiPortalCustomDomainProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiPortalCustomDomainProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApiPortalCustomDomainProperties IPersistableModel<ApiPortalCustomDomainProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiPortalCustomDomainProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApiPortalCustomDomainProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ApiPortalCustomDomainProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

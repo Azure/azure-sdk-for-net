@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class GetBotServiceQnAMakerEndpointKeyResult
+    public partial class GetBotServiceQnAMakerEndpointKeyResult : IUtf8JsonSerializable, IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>
     {
-        internal static GetBotServiceQnAMakerEndpointKeyResult DeserializeGetBotServiceQnAMakerEndpointKeyResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrimaryEndpointKey))
+            {
+                writer.WritePropertyName("primaryEndpointKey"u8);
+                writer.WriteStringValue(PrimaryEndpointKey);
+            }
+            if (Optional.IsDefined(SecondaryEndpointKey))
+            {
+                writer.WritePropertyName("secondaryEndpointKey"u8);
+                writer.WriteStringValue(SecondaryEndpointKey);
+            }
+            if (Optional.IsDefined(InstalledVersion))
+            {
+                writer.WritePropertyName("installedVersion"u8);
+                writer.WriteStringValue(InstalledVersion);
+            }
+            if (Optional.IsDefined(LastStableVersion))
+            {
+                writer.WritePropertyName("lastStableVersion"u8);
+                writer.WriteStringValue(LastStableVersion);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GetBotServiceQnAMakerEndpointKeyResult IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement, options);
+        }
+
+        internal static GetBotServiceQnAMakerEndpointKeyResult DeserializeGetBotServiceQnAMakerEndpointKeyResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> secondaryEndpointKey = default;
             Optional<string> installedVersion = default;
             Optional<string> lastStableVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryEndpointKey"u8))
@@ -44,8 +112,38 @@ namespace Azure.ResourceManager.BotService.Models
                     lastStableVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey.Value, secondaryEndpointKey.Value, installedVersion.Value, lastStableVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey.Value, secondaryEndpointKey.Value, installedVersion.Value, lastStableVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GetBotServiceQnAMakerEndpointKeyResult IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

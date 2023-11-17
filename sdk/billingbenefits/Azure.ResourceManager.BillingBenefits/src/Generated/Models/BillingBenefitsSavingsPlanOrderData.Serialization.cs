@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,13 +16,43 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    public partial class BillingBenefitsSavingsPlanOrderData : IUtf8JsonSerializable
+    public partial class BillingBenefitsSavingsPlanOrderData : IUtf8JsonSerializable, IJsonModel<BillingBenefitsSavingsPlanOrderData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsSavingsPlanOrderData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BillingBenefitsSavingsPlanOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BillingBenefitsSavingsPlanOrderData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BillingBenefitsSavingsPlanOrderData>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -28,10 +60,42 @@ namespace Azure.ResourceManager.BillingBenefits
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(BillingScopeId))
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingProfileId))
+                {
+                    writer.WritePropertyName("billingProfileId"u8);
+                    writer.WriteStringValue(BillingProfileId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CustomerId))
+                {
+                    writer.WritePropertyName("customerId"u8);
+                    writer.WriteStringValue(CustomerId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingAccountId))
+                {
+                    writer.WritePropertyName("billingAccountId"u8);
+                    writer.WriteStringValue(BillingAccountId);
+                }
             }
             if (Optional.IsDefined(Term))
             {
@@ -42,6 +106,14 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExpireOn))
+                {
+                    writer.WritePropertyName("expiryDateTime"u8);
+                    writer.WriteStringValue(ExpireOn.Value, "O");
+                }
             }
             if (Optional.IsDefined(BenefitStartOn))
             {
@@ -63,12 +135,49 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExtendedStatusInfo))
+                {
+                    writer.WritePropertyName("extendedStatusInfo"u8);
+                    writer.WriteObjectValue(ExtendedStatusInfo);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BillingBenefitsSavingsPlanOrderData DeserializeBillingBenefitsSavingsPlanOrderData(JsonElement element)
+        BillingBenefitsSavingsPlanOrderData IJsonModel<BillingBenefitsSavingsPlanOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingBenefitsSavingsPlanOrderData(document.RootElement, options);
+        }
+
+        internal static BillingBenefitsSavingsPlanOrderData DeserializeBillingBenefitsSavingsPlanOrderData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +200,8 @@ namespace Azure.ResourceManager.BillingBenefits
             Optional<BillingPlanInformation> planInformation = default;
             Optional<IList<string>> savingsPlans = default;
             Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -248,8 +359,38 @@ namespace Azure.ResourceManager.BillingBenefits
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), planInformation.Value, Optional.ToList(savingsPlans), extendedStatusInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), planInformation.Value, Optional.ToList(savingsPlans), extendedStatusInfo.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BillingBenefitsSavingsPlanOrderData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBillingBenefitsSavingsPlanOrderData(document.RootElement, options);
+        }
+
+        string IPersistableModel<BillingBenefitsSavingsPlanOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

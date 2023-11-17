@@ -61,10 +61,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<LiveTokenResponse>> GetLiveTokenAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
             scope0.Start();
             try
@@ -92,10 +95,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<LiveTokenResponse> GetLiveToken(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
             scope0.Start();
             try

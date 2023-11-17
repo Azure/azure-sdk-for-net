@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchBlobFileSystemConfiguration : IUtf8JsonSerializable
+    public partial class BatchBlobFileSystemConfiguration : IUtf8JsonSerializable, IJsonModel<BatchBlobFileSystemConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchBlobFileSystemConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchBlobFileSystemConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BatchBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BatchBlobFileSystemConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
@@ -41,11 +52,40 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchBlobFileSystemConfiguration DeserializeBatchBlobFileSystemConfiguration(JsonElement element)
+        BatchBlobFileSystemConfiguration IJsonModel<BatchBlobFileSystemConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchBlobFileSystemConfiguration(document.RootElement, options);
+        }
+
+        internal static BatchBlobFileSystemConfiguration DeserializeBatchBlobFileSystemConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +97,8 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> blobfuseOptions = default;
             string relativeMountPath = default;
             Optional<ComputeNodeIdentityReference> identityReference = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -98,8 +140,38 @@ namespace Azure.ResourceManager.Batch.Models
                     identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchBlobFileSystemConfiguration(accountName, containerName, accountKey.Value, sasKey.Value, blobfuseOptions.Value, relativeMountPath, identityReference.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchBlobFileSystemConfiguration(accountName, containerName, accountKey.Value, sasKey.Value, blobfuseOptions.Value, relativeMountPath, identityReference.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchBlobFileSystemConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BatchBlobFileSystemConfiguration IPersistableModel<BatchBlobFileSystemConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBatchBlobFileSystemConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<BatchBlobFileSystemConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

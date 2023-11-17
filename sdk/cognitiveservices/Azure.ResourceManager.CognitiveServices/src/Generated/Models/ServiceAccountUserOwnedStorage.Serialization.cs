@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountUserOwnedStorage : IUtf8JsonSerializable
+    public partial class ServiceAccountUserOwnedStorage : IUtf8JsonSerializable, IJsonModel<ServiceAccountUserOwnedStorage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountUserOwnedStorage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceAccountUserOwnedStorage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServiceAccountUserOwnedStorage>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServiceAccountUserOwnedStorage>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
@@ -26,17 +36,48 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceAccountUserOwnedStorage DeserializeServiceAccountUserOwnedStorage(JsonElement element)
+        ServiceAccountUserOwnedStorage IJsonModel<ServiceAccountUserOwnedStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountUserOwnedStorage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountUserOwnedStorage(document.RootElement, options);
+        }
+
+        internal static ServiceAccountUserOwnedStorage DeserializeServiceAccountUserOwnedStorage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<Guid> identityClientId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -57,8 +98,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     identityClientId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceAccountUserOwnedStorage(resourceId.Value, Optional.ToNullable(identityClientId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceAccountUserOwnedStorage(resourceId.Value, Optional.ToNullable(identityClientId), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceAccountUserOwnedStorage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountUserOwnedStorage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceAccountUserOwnedStorage IPersistableModel<ServiceAccountUserOwnedStorage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountUserOwnedStorage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceAccountUserOwnedStorage(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServiceAccountUserOwnedStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

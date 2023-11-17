@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,11 +16,41 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    public partial class BillingSubscriptionAliasData : IUtf8JsonSerializable
+    public partial class BillingSubscriptionAliasData : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionAliasData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionAliasData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BillingSubscriptionAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BillingSubscriptionAliasData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BillingSubscriptionAliasData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoRenew))
@@ -41,6 +73,36 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(BillingPolicies))
+                {
+                    writer.WritePropertyName("billingPolicies"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in BillingPolicies)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingProfileDisplayName))
+                {
+                    writer.WritePropertyName("billingProfileDisplayName"u8);
+                    writer.WriteStringValue(BillingProfileDisplayName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingProfileName))
+                {
+                    writer.WritePropertyName("billingProfileName"u8);
+                    writer.WriteStringValue(BillingProfileName);
+                }
+            }
             if (Optional.IsDefined(ConsumptionCostCenter))
             {
                 writer.WritePropertyName("consumptionCostCenter"u8);
@@ -51,45 +113,263 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CustomerDisplayName))
+                {
+                    writer.WritePropertyName("customerDisplayName"u8);
+                    writer.WriteStringValue(CustomerDisplayName);
+                }
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EnrollmentAccountId))
+                {
+                    writer.WritePropertyName("enrollmentAccountId"u8);
+                    writer.WriteStringValue(EnrollmentAccountId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EnrollmentAccountDisplayName))
+                {
+                    writer.WritePropertyName("enrollmentAccountDisplayName"u8);
+                    writer.WriteStringValue(EnrollmentAccountDisplayName);
+                }
             }
             if (Optional.IsDefined(InvoiceSectionId))
             {
                 writer.WritePropertyName("invoiceSectionId"u8);
                 writer.WriteStringValue(InvoiceSectionId);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InvoiceSectionDisplayName))
+                {
+                    writer.WritePropertyName("invoiceSectionDisplayName"u8);
+                    writer.WriteStringValue(InvoiceSectionDisplayName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InvoiceSectionName))
+                {
+                    writer.WritePropertyName("invoiceSectionName"u8);
+                    writer.WriteStringValue(InvoiceSectionName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastMonthCharges))
+                {
+                    writer.WritePropertyName("lastMonthCharges"u8);
+                    writer.WriteObjectValue(LastMonthCharges);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MonthToDateCharges))
+                {
+                    writer.WritePropertyName("monthToDateCharges"u8);
+                    writer.WriteObjectValue(MonthToDateCharges);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NextBillingCycleDetails))
+                {
+                    writer.WritePropertyName("nextBillingCycleDetails"u8);
+                    writer.WriteObjectValue(NextBillingCycleDetails);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OfferId))
+                {
+                    writer.WritePropertyName("offerId"u8);
+                    writer.WriteStringValue(OfferId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProductCategory))
+                {
+                    writer.WritePropertyName("productCategory"u8);
+                    writer.WriteStringValue(ProductCategory);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProductType))
+                {
+                    writer.WritePropertyName("productType"u8);
+                    writer.WriteStringValue(ProductType);
+                }
+            }
             if (Optional.IsDefined(ProductTypeId))
             {
                 writer.WritePropertyName("productTypeId"u8);
                 writer.WriteStringValue(ProductTypeId);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PurchaseOn))
+                {
+                    writer.WritePropertyName("purchaseDate"u8);
+                    writer.WriteStringValue(PurchaseOn.Value, "O");
+                }
             }
             if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Reseller))
+                {
+                    writer.WritePropertyName("reseller"u8);
+                    writer.WriteObjectValue(Reseller);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RenewalTermDetails))
+                {
+                    writer.WritePropertyName("renewalTermDetails"u8);
+                    writer.WriteObjectValue(RenewalTermDetails);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SkuDescription))
+                {
+                    writer.WritePropertyName("skuDescription"u8);
+                    writer.WriteStringValue(SkuDescription);
+                }
+            }
             if (Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(SuspensionReasons))
+                {
+                    writer.WritePropertyName("suspensionReasons"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SuspensionReasons)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TermStartOn))
+                {
+                    writer.WritePropertyName("termStartDate"u8);
+                    writer.WriteStringValue(TermStartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TermEndOn))
+                {
+                    writer.WritePropertyName("termEndDate"u8);
+                    writer.WriteStringValue(TermEndOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingSubscriptionId))
+                {
+                    writer.WritePropertyName("billingSubscriptionId"u8);
+                    writer.WriteStringValue(BillingSubscriptionId);
+                }
+            }
             writer.WritePropertyName("enrollmentAccountSubscriptionDetails"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionEnrollmentAccountStatus))
+                {
+                    writer.WritePropertyName("subscriptionEnrollmentAccountStatus"u8);
+                    writer.WriteStringValue(SubscriptionEnrollmentAccountStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EnrollmentAccountStartOn))
+                {
+                    writer.WritePropertyName("enrollmentAccountStartDate"u8);
+                    writer.WriteStringValue(EnrollmentAccountStartOn.Value, "O");
+                }
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BillingSubscriptionAliasData DeserializeBillingSubscriptionAliasData(JsonElement element)
+        BillingSubscriptionAliasData IJsonModel<BillingSubscriptionAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionAliasData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingSubscriptionAliasData(document.RootElement, options);
+        }
+
+        internal static BillingSubscriptionAliasData DeserializeBillingSubscriptionAliasData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,6 +416,8 @@ namespace Azure.ResourceManager.Billing
             Optional<ResourceIdentifier> billingSubscriptionId = default;
             Optional<SubscriptionEnrollmentAccountStatus> subscriptionEnrollmentAccountStatus = default;
             Optional<DateTimeOffset> enrollmentAccountStartDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -462,8 +744,38 @@ namespace Azure.ResourceManager.Billing
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BillingSubscriptionAliasData(id, name, type, systemData.Value, Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, Optional.ToDictionary(billingPolicies), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Optional.ToNullable(status), subscriptionId.Value, Optional.ToList(suspensionReasons), Optional.ToNullable(termDuration), Optional.ToNullable(termStartDate), Optional.ToNullable(termEndDate), Optional.ToNullable(subscriptionEnrollmentAccountStatus), Optional.ToNullable(enrollmentAccountStartDate), billingSubscriptionId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BillingSubscriptionAliasData(id, name, type, systemData.Value, Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, Optional.ToDictionary(billingPolicies), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Optional.ToNullable(status), subscriptionId.Value, Optional.ToList(suspensionReasons), Optional.ToNullable(termDuration), Optional.ToNullable(termStartDate), Optional.ToNullable(termEndDate), Optional.ToNullable(subscriptionEnrollmentAccountStatus), Optional.ToNullable(enrollmentAccountStartDate), billingSubscriptionId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BillingSubscriptionAliasData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionAliasData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BillingSubscriptionAliasData IPersistableModel<BillingSubscriptionAliasData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionAliasData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBillingSubscriptionAliasData(document.RootElement, options);
+        }
+
+        string IPersistableModel<BillingSubscriptionAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
