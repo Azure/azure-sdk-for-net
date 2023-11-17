@@ -43,9 +43,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualMachineInstanceResource" /> object. </returns>
         public static VirtualMachineInstanceResource GetVirtualMachineInstance(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetVirtualMachineInstance(scope);
         }
 
@@ -59,9 +62,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="GalleryImageResource" /> object. </returns>
         public static GalleryImageResource GetGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetGalleryImageResource(id);
         }
 
@@ -75,9 +81,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="LogicalNetworkResource" /> object. </returns>
         public static LogicalNetworkResource GetLogicalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetLogicalNetworkResource(id);
         }
 
@@ -91,9 +100,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="MarketplaceGalleryImageResource" /> object. </returns>
         public static MarketplaceGalleryImageResource GetMarketplaceGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetMarketplaceGalleryImageResource(id);
         }
 
@@ -107,9 +119,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="NetworkInterfaceResource" /> object. </returns>
         public static NetworkInterfaceResource GetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetNetworkInterfaceResource(id);
         }
 
@@ -123,9 +138,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="StorageContainerResource" /> object. </returns>
         public static StorageContainerResource GetStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetStorageContainerResource(id);
         }
 
@@ -139,9 +157,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualHardDiskResource" /> object. </returns>
         public static VirtualHardDiskResource GetVirtualHardDiskResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetVirtualHardDiskResource(id);
         }
 
@@ -155,9 +176,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="VirtualMachineInstanceResource" /> object. </returns>
         public static VirtualMachineInstanceResource GetVirtualMachineInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetVirtualMachineInstanceResource(id);
         }
 
@@ -171,9 +195,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
         public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetHybridIdentityMetadataResource(id);
         }
 
@@ -187,9 +214,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="GuestAgentResource" /> object. </returns>
         public static GuestAgentResource GetGuestAgentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableArcVmArmClient(client).GetGuestAgentResource(id);
         }
 
@@ -201,9 +231,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of GalleryImageResources and their operations over a GalleryImageResource. </returns>
         public static GalleryImageCollection GetGalleryImages(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetGalleryImages();
         }
 
@@ -227,11 +260,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<GalleryImageResource>> GetGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableArcVmResourceGroupResource(resourceGroupResource).GetGalleryImageAsync(galleryImageName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -255,11 +290,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<GalleryImageResource> GetGalleryImage(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetGalleryImage(galleryImageName, cancellationToken);
         }
 
@@ -271,9 +308,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of LogicalNetworkResources and their operations over a LogicalNetworkResource. </returns>
         public static LogicalNetworkCollection GetLogicalNetworks(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetLogicalNetworks();
         }
 
@@ -296,11 +336,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="logicalNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<LogicalNetworkResource>> GetLogicalNetworkAsync(this ResourceGroupResource resourceGroupResource, string logicalNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableArcVmResourceGroupResource(resourceGroupResource).GetLogicalNetworkAsync(logicalNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -323,11 +365,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="logicalNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<LogicalNetworkResource> GetLogicalNetwork(this ResourceGroupResource resourceGroupResource, string logicalNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetLogicalNetwork(logicalNetworkName, cancellationToken);
         }
 
@@ -339,9 +383,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of MarketplaceGalleryImageResources and their operations over a MarketplaceGalleryImageResource. </returns>
         public static MarketplaceGalleryImageCollection GetMarketplaceGalleryImages(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImages();
         }
 
@@ -365,11 +412,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<MarketplaceGalleryImageResource>> GetMarketplaceGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableArcVmResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImageAsync(marketplaceGalleryImageName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -393,11 +442,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<MarketplaceGalleryImageResource> GetMarketplaceGalleryImage(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImage(marketplaceGalleryImageName, cancellationToken);
         }
 
@@ -409,9 +460,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
         public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetNetworkInterfaces();
         }
 
@@ -435,11 +489,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableArcVmResourceGroupResource(resourceGroupResource).GetNetworkInterfaceAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -463,11 +519,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkInterfaceResource> GetNetworkInterface(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetNetworkInterface(networkInterfaceName, cancellationToken);
         }
 
@@ -479,9 +537,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of StorageContainerResources and their operations over a StorageContainerResource. </returns>
         public static StorageContainerCollection GetStorageContainers(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetStorageContainers();
         }
 
@@ -505,11 +566,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StorageContainerResource>> GetStorageContainerAsync(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableArcVmResourceGroupResource(resourceGroupResource).GetStorageContainerAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -533,11 +596,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<StorageContainerResource> GetStorageContainer(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetStorageContainer(storageContainerName, cancellationToken);
         }
 
@@ -549,9 +614,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of VirtualHardDiskResources and their operations over a VirtualHardDiskResource. </returns>
         public static VirtualHardDiskCollection GetVirtualHardDisks(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetVirtualHardDisks();
         }
 
@@ -575,11 +643,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualHardDiskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<VirtualHardDiskResource>> GetVirtualHardDiskAsync(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableArcVmResourceGroupResource(resourceGroupResource).GetVirtualHardDiskAsync(virtualHardDiskName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -603,11 +673,13 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualHardDiskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<VirtualHardDiskResource> GetVirtualHardDisk(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableArcVmResourceGroupResource(resourceGroupResource).GetVirtualHardDisk(virtualHardDiskName, cancellationToken);
         }
 
@@ -630,9 +702,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="GalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GalleryImageResource> GetGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetGalleryImagesAsync(cancellationToken);
         }
 
@@ -655,9 +730,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="GalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GalleryImageResource> GetGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetGalleryImages(cancellationToken);
         }
 
@@ -680,9 +758,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="LogicalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LogicalNetworkResource> GetLogicalNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetLogicalNetworksAsync(cancellationToken);
         }
 
@@ -705,9 +786,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LogicalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LogicalNetworkResource> GetLogicalNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetLogicalNetworks(cancellationToken);
         }
 
@@ -730,9 +814,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="MarketplaceGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetMarketplaceGalleryImagesAsync(cancellationToken);
         }
 
@@ -755,9 +842,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MarketplaceGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetMarketplaceGalleryImages(cancellationToken);
         }
 
@@ -780,9 +870,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetNetworkInterfacesAsync(cancellationToken);
         }
 
@@ -805,9 +898,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkInterfaceResource> GetNetworkInterfaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetNetworkInterfaces(cancellationToken);
         }
 
@@ -830,9 +926,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="StorageContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageContainerResource> GetStorageContainersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetStorageContainersAsync(cancellationToken);
         }
 
@@ -855,9 +954,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="StorageContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageContainerResource> GetStorageContainers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetStorageContainers(cancellationToken);
         }
 
@@ -880,9 +982,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualHardDiskResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualHardDiskResource> GetVirtualHardDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetVirtualHardDisksAsync(cancellationToken);
         }
 
@@ -905,9 +1010,12 @@ namespace Azure.ResourceManager.ArcVm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualHardDiskResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualHardDiskResource> GetVirtualHardDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableArcVmSubscriptionResource(subscriptionResource).GetVirtualHardDisks(cancellationToken);
         }
     }
