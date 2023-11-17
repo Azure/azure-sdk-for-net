@@ -110,10 +110,8 @@ directive:
       }
     reason: workaround incorrect definition in swagger
   - where-operation: WorkbookTemplates_ListByResourceGroup
-    debug: true
     transform: >
       delete $["x-ms-pageable"]
-      
 override-operation-name:
   ComponentQuotaStatus_Get: GetComponentQuotaStatus
 ```
