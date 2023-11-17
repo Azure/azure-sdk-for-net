@@ -20,6 +20,7 @@ using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
+using Azure.Storage.Shared;
 using Azure.Storage.Test.Shared;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
@@ -27,7 +28,7 @@ using NUnit.Framework;
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
     [ShareClientTestFixture]
-    public class ShareDirectoryToBlockBlobDirectoryTests : StartTransferDirectoryCopyTestBase
+    public class ShareDirectoryToPageBlobDirectoryTests : StartTransferDirectoryCopyTestBase
         <ShareServiceClient,
         ShareClient,
         ShareClientOptions,
@@ -41,7 +42,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
         protected readonly object _serviceVersion;
 
-        public ShareDirectoryToBlockBlobDirectoryTests(
+        public ShareDirectoryToPageBlobDirectoryTests(
             bool async,
             object serviceVersion)
             : base(async, _expectedOverwriteExceptionMessage, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
@@ -75,20 +76,39 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             objectName ??= GetNewObjectName();
 
-            BlockBlobClient blobClient = container.GetBlockBlobClient(objectName);
+            PageBlobClient blobClient = container.GetPageBlobClient(objectName);
             if (contents != default)
             {
-                await blobClient.UploadAsync(contents, cancellationToken: cancellationToken);
+                await UploadPagesAsync(blobClient, contents, cancellationToken);
             }
             else
             {
                 var data = new byte[0];
                 using (var stream = new MemoryStream(data))
                 {
-                    await blobClient.UploadAsync(
-                        content: stream,
-                        cancellationToken: cancellationToken);
+                    await UploadPagesAsync(
+                        blobClient,
+                        stream,
+                        cancellationToken);
                 }
+            }
+        }
+
+        private async Task UploadPagesAsync(
+            PageBlobClient blobClient,
+            Stream contents,
+            CancellationToken cancellationToken)
+        {
+            long size = contents.Length;
+            Assert.IsTrue(size % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            await blobClient.CreateIfNotExistsAsync(size, cancellationToken: cancellationToken).ConfigureAwait(false);
+            long offset = 0;
+            long blockSize = Math.Min(Constants.DefaultBufferSize, size);
+            while (offset < size)
+            {
+                Stream partStream = WindowStream.GetWindow(contents, blockSize);
+                await blobClient.UploadPagesAsync(partStream, offset, cancellationToken: cancellationToken);
+                offset += blockSize;
             }
         }
 
@@ -117,7 +137,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(BlobContainerClient sourceContainerClient, string directoryPath)
-            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Block });
+            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Page });
 
         protected override BlobContainerClient GetOAuthDestinationContainerClient(string containerName)
         {

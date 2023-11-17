@@ -20,6 +20,7 @@ using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
+using Azure.Storage.Shared;
 using Azure.Storage.Test.Shared;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
@@ -27,7 +28,7 @@ using NUnit.Framework;
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
     [ShareClientTestFixture]
-    public class ShareDirectoryToBlockBlobDirectoryTests : StartTransferDirectoryCopyTestBase
+    public class ShareDirectoryToAppendBlobDirectoryTests : StartTransferDirectoryCopyTestBase
         <ShareServiceClient,
         ShareClient,
         ShareClientOptions,
@@ -41,7 +42,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
         protected readonly object _serviceVersion;
 
-        public ShareDirectoryToBlockBlobDirectoryTests(
+        public ShareDirectoryToAppendBlobDirectoryTests(
             bool async,
             object serviceVersion)
             : base(async, _expectedOverwriteExceptionMessage, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
@@ -75,20 +76,38 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             objectName ??= GetNewObjectName();
 
-            BlockBlobClient blobClient = container.GetBlockBlobClient(objectName);
+            AppendBlobClient blobClient = container.GetAppendBlobClient(objectName);
             if (contents != default)
             {
-                await blobClient.UploadAsync(contents, cancellationToken: cancellationToken);
+                await UploadAppendBlocksAsync(blobClient, contents, cancellationToken);
             }
             else
             {
                 var data = new byte[0];
                 using (var stream = new MemoryStream(data))
                 {
-                    await blobClient.UploadAsync(
-                        content: stream,
-                        cancellationToken: cancellationToken);
+                    await UploadAppendBlocksAsync(
+                        blobClient,
+                        stream,
+                        cancellationToken);
                 }
+            }
+        }
+
+        private async Task UploadAppendBlocksAsync(
+            AppendBlobClient blobClient,
+            Stream contents,
+            CancellationToken cancellationToken)
+        {
+            await blobClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
+            long offset = 0;
+            long size = contents.Length;
+            long blockSize = Math.Min(Constants.DefaultBufferSize, size);
+            while (offset < size)
+            {
+                Stream partStream = WindowStream.GetWindow(contents, blockSize);
+                await blobClient.AppendBlockAsync(partStream, cancellationToken: cancellationToken);
+                offset += blockSize;
             }
         }
 
@@ -117,7 +136,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(BlobContainerClient sourceContainerClient, string directoryPath)
-            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Block });
+            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Append });
 
         protected override BlobContainerClient GetOAuthDestinationContainerClient(string containerName)
         {

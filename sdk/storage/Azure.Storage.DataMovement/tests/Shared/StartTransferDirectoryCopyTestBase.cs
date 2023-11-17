@@ -253,7 +253,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0, 10)]
-        [TestCase(100, 10)]
+        [TestCase(Constants.KB / 2, 10)]
         [TestCase(Constants.KB, 10)]
         public async Task DirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
