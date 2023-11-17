@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkPacketBrokerData : IUtf8JsonSerializable
+    public partial class NetworkPacketBrokerData : IUtf8JsonSerializable, IJsonModel<NetworkPacketBrokerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkPacketBrokerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkPacketBrokerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkPacketBrokerData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkPacketBrokerData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -31,16 +41,148 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NetworkDeviceIds))
+                {
+                    writer.WritePropertyName("networkDeviceIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NetworkDeviceIds)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(SourceInterfaceIds))
+                {
+                    writer.WritePropertyName("sourceInterfaceIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SourceInterfaceIds)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NetworkTapIds))
+                {
+                    writer.WritePropertyName("networkTapIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NetworkTapIds)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NeighborGroupIds))
+                {
+                    writer.WritePropertyName("neighborGroupIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NeighborGroupIds)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkPacketBrokerData DeserializeNetworkPacketBrokerData(JsonElement element)
+        NetworkPacketBrokerData IJsonModel<NetworkPacketBrokerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkPacketBrokerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkPacketBrokerData(document.RootElement, options);
+        }
+
+        internal static NetworkPacketBrokerData DeserializeNetworkPacketBrokerData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +199,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<IReadOnlyList<ResourceIdentifier>> networkTapIds = default;
             Optional<IReadOnlyList<ResourceIdentifier>> neighborGroupIds = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -212,8 +356,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkPacketBrokerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, networkFabricId, Optional.ToList(networkDeviceIds), Optional.ToList(sourceInterfaceIds), Optional.ToList(networkTapIds), Optional.ToList(neighborGroupIds), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkPacketBrokerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, networkFabricId, Optional.ToList(networkDeviceIds), Optional.ToList(sourceInterfaceIds), Optional.ToList(networkTapIds), Optional.ToList(neighborGroupIds), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkPacketBrokerData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkPacketBrokerData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkPacketBrokerData IPersistableModel<NetworkPacketBrokerData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkPacketBrokerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkPacketBrokerData(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkPacketBrokerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

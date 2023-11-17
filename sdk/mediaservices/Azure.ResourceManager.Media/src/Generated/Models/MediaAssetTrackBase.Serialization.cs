@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaAssetTrackBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownTrackBase))]
+    public partial class MediaAssetTrackBase : IUtf8JsonSerializable, IJsonModel<MediaAssetTrackBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaAssetTrackBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaAssetTrackBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MediaAssetTrackBase>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MediaAssetTrackBase>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaAssetTrackBase DeserializeMediaAssetTrackBase(JsonElement element)
+        MediaAssetTrackBase IJsonModel<MediaAssetTrackBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaAssetTrackBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaAssetTrackBase(document.RootElement, options);
+        }
+
+        internal static MediaAssetTrackBase DeserializeMediaAssetTrackBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +77,30 @@ namespace Azure.ResourceManager.Media.Models
             }
             return UnknownTrackBase.DeserializeUnknownTrackBase(element);
         }
+
+        BinaryData IPersistableModel<MediaAssetTrackBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaAssetTrackBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaAssetTrackBase IPersistableModel<MediaAssetTrackBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaAssetTrackBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaAssetTrackBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<MediaAssetTrackBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,28 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownPreset : IUtf8JsonSerializable
+    internal partial class UnknownPreset : IUtf8JsonSerializable, IJsonModel<MediaTransformPreset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaTransformPreset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaTransformPreset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MediaTransformPreset>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MediaTransformPreset>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownPreset DeserializeUnknownPreset(JsonElement element)
+        MediaTransformPreset IJsonModel<MediaTransformPreset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownPreset(document.RootElement, options);
+        }
+
+        internal static UnknownPreset DeserializeUnknownPreset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string odataType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -34,8 +76,38 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownPreset(odataType);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownPreset(odataType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaTransformPreset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaTransformPreset IPersistableModel<MediaTransformPreset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownPreset(document.RootElement, options);
+        }
+
+        string IPersistableModel<MediaTransformPreset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

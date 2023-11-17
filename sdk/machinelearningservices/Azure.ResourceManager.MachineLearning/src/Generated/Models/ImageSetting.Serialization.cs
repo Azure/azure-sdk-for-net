@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageSetting : IUtf8JsonSerializable
+    public partial class ImageSetting : IUtf8JsonSerializable, IJsonModel<ImageSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImageSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ImageSetting>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ImageSetting>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageType))
             {
@@ -42,8 +51,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static ImageSetting DeserializeImageSetting(JsonElement element)
+        ImageSetting IJsonModel<ImageSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageSetting(document.RootElement, options);
+        }
+
+        internal static ImageSetting DeserializeImageSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,5 +96,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ImageSetting(Optional.ToNullable(type), reference.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<ImageSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ImageSetting IPersistableModel<ImageSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeImageSetting(document.RootElement, options);
+        }
+
+        string IPersistableModel<ImageSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

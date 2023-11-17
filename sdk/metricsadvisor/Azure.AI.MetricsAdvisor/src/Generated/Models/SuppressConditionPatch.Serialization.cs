@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class SuppressConditionPatch : IUtf8JsonSerializable
+    internal partial class SuppressConditionPatch : IUtf8JsonSerializable, IJsonModel<SuppressConditionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressConditionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SuppressConditionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SuppressConditionPatch>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SuppressConditionPatch>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MinNumber))
             {
@@ -25,7 +36,100 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("minRatio"u8);
                 writer.WriteNumberValue(MinRatio.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SuppressConditionPatch IJsonModel<SuppressConditionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SuppressConditionPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSuppressConditionPatch(document.RootElement, options);
+        }
+
+        internal static SuppressConditionPatch DeserializeSuppressConditionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> minNumber = default;
+            Optional<double> minRatio = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("minNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minNumber = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("minRatio"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minRatio = property.Value.GetDouble();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SuppressConditionPatch(Optional.ToNullable(minNumber), Optional.ToNullable(minRatio), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SuppressConditionPatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SuppressConditionPatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SuppressConditionPatch IPersistableModel<SuppressConditionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SuppressConditionPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSuppressConditionPatch(document.RootElement, options);
+        }
+
+        string IPersistableModel<SuppressConditionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The ConfigurationValue with secrets. </summary>
     public partial class ConfigurationValueWithSecrets : ConfigurationGroupValuePropertiesFormat
     {
-        /// <summary> Initializes a new instance of ConfigurationValueWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationValueWithSecrets"/>. </summary>
         public ConfigurationValueWithSecrets()
         {
             ConfigurationType = ConfigurationGroupValueConfigurationType.Secret;
         }
 
-        /// <summary> Initializes a new instance of ConfigurationValueWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationValueWithSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -28,8 +31,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secretConfigurationValue"> Name and value pairs that define the configuration value secrets. It can be a well formed escaped JSON string. </param>
-        internal ConfigurationValueWithSecrets(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, string secretConfigurationValue) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType)
+        internal ConfigurationValueWithSecrets(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string secretConfigurationValue) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType, serializedAdditionalRawData)
         {
             SecretConfigurationValue = secretConfigurationValue;
             ConfigurationType = configurationType;

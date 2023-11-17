@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class OperatingHoursTimeRange
+    public partial class OperatingHoursTimeRange : IUtf8JsonSerializable, IJsonModel<OperatingHoursTimeRange>
     {
-        internal static OperatingHoursTimeRange DeserializeOperatingHoursTimeRange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperatingHoursTimeRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperatingHoursTimeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OperatingHoursTimeRange>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OperatingHoursTimeRange>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RawStartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteObjectValue(RawStartTime);
+            }
+            if (Optional.IsDefined(RawEndTime))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteObjectValue(RawEndTime);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OperatingHoursTimeRange IJsonModel<OperatingHoursTimeRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperatingHoursTimeRange)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperatingHoursTimeRange(document.RootElement, options);
+        }
+
+        internal static OperatingHoursTimeRange DeserializeOperatingHoursTimeRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<OperatingHoursTime> startTime = default;
             Optional<OperatingHoursTime> endTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -40,8 +98,38 @@ namespace Azure.Maps.Search.Models
                     endTime = OperatingHoursTime.DeserializeOperatingHoursTime(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperatingHoursTimeRange(startTime.Value, endTime.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperatingHoursTimeRange(startTime.Value, endTime.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperatingHoursTimeRange>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperatingHoursTimeRange)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OperatingHoursTimeRange IPersistableModel<OperatingHoursTimeRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperatingHoursTimeRange)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOperatingHoursTimeRange(document.RootElement, options);
+        }
+
+        string IPersistableModel<OperatingHoursTimeRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

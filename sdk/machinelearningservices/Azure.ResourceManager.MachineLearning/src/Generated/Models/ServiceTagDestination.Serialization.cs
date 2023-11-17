@@ -5,21 +5,44 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ServiceTagDestination : IUtf8JsonSerializable
+    public partial class ServiceTagDestination : IUtf8JsonSerializable, IJsonModel<ServiceTagDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTagDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceTagDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServiceTagDestination>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServiceTagDestination>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(AddressPrefixes))
+                {
+                    writer.WritePropertyName("addressPrefixes"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AddressPrefixes)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (Optional.IsDefined(PortRanges))
             {
@@ -36,11 +59,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceTagDestination DeserializeServiceTagDestination(JsonElement element)
+        ServiceTagDestination IJsonModel<ServiceTagDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceTagDestination(document.RootElement, options);
+        }
+
+        internal static ServiceTagDestination DeserializeServiceTagDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +102,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> portRanges = default;
             Optional<string> protocol = default;
             Optional<string> serviceTag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -90,8 +144,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     serviceTag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceTagDestination(Optional.ToNullable(action), Optional.ToList(addressPrefixes), portRanges.Value, protocol.Value, serviceTag.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceTagDestination(Optional.ToNullable(action), Optional.ToList(addressPrefixes), portRanges.Value, protocol.Value, serviceTag.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceTagDestination>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceTagDestination IPersistableModel<ServiceTagDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceTagDestination(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServiceTagDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

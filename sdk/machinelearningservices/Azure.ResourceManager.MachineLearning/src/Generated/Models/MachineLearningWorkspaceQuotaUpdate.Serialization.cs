@@ -5,15 +5,95 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceQuotaUpdate
+    public partial class MachineLearningWorkspaceQuotaUpdate : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceQuotaUpdate>
     {
-        internal static MachineLearningWorkspaceQuotaUpdate DeserializeMachineLearningWorkspaceQuotaUpdate(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceQuotaUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningWorkspaceQuotaUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningWorkspaceQuotaUpdate>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningWorkspaceQuotaUpdate>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdateWorkspaceQuotasType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(UpdateWorkspaceQuotasType);
+                }
+            }
+            if (Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    writer.WritePropertyName("unit"u8);
+                    writer.WriteStringValue(Unit.Value.ToString());
+                }
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningWorkspaceQuotaUpdate IJsonModel<MachineLearningWorkspaceQuotaUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceQuotaUpdate(document.RootElement, options);
+        }
+
+        internal static MachineLearningWorkspaceQuotaUpdate DeserializeMachineLearningWorkspaceQuotaUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +103,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<long> limit = default;
             Optional<MachineLearningQuotaUnit> unit = default;
             Optional<MachineLearningWorkspaceQuotaStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -62,8 +144,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     status = new MachineLearningWorkspaceQuotaStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningWorkspaceQuotaUpdate(id.Value, type.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningWorkspaceQuotaUpdate(id.Value, type.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningWorkspaceQuotaUpdate>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningWorkspaceQuotaUpdate IPersistableModel<MachineLearningWorkspaceQuotaUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceQuotaUpdate(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningWorkspaceQuotaUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

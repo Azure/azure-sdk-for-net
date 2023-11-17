@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceEnvironmenEncryptionKeyReference : IUtf8JsonSerializable
+    public partial class IntegrationServiceEnvironmenEncryptionKeyReference : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmenEncryptionKeyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmenEncryptionKeyReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationServiceEnvironmenEncryptionKeyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IntegrationServiceEnvironmenEncryptionKeyReference>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IntegrationServiceEnvironmenEncryptionKeyReference>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVault))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationServiceEnvironmenEncryptionKeyReference DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(JsonElement element)
+        IntegrationServiceEnvironmenEncryptionKeyReference IJsonModel<IntegrationServiceEnvironmenEncryptionKeyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(document.RootElement, options);
+        }
+
+        internal static IntegrationServiceEnvironmenEncryptionKeyReference DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicResourceReference> keyVault = default;
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVault"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.Logic.Models
                     keyVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationServiceEnvironmenEncryptionKeyReference(keyVault.Value, keyName.Value, keyVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IntegrationServiceEnvironmenEncryptionKeyReference(keyVault.Value, keyName.Value, keyVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationServiceEnvironmenEncryptionKeyReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IntegrationServiceEnvironmenEncryptionKeyReference IPersistableModel<IntegrationServiceEnvironmenEncryptionKeyReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(document.RootElement, options);
+        }
+
+        string IPersistableModel<IntegrationServiceEnvironmenEncryptionKeyReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

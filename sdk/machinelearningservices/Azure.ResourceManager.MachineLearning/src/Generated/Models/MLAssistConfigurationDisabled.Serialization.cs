@@ -5,28 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MLAssistConfigurationDisabled : IUtf8JsonSerializable
+    public partial class MLAssistConfigurationDisabled : IUtf8JsonSerializable, IJsonModel<MLAssistConfigurationDisabled>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MLAssistConfigurationDisabled>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MLAssistConfigurationDisabled>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MLAssistConfigurationDisabled>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MLAssistConfigurationDisabled>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("mlAssist"u8);
             writer.WriteStringValue(MlAssist.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MLAssistConfigurationDisabled DeserializeMLAssistConfigurationDisabled(JsonElement element)
+        MLAssistConfigurationDisabled IJsonModel<MLAssistConfigurationDisabled>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MLAssistConfigurationDisabled)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMLAssistConfigurationDisabled(document.RootElement, options);
+        }
+
+        internal static MLAssistConfigurationDisabled DeserializeMLAssistConfigurationDisabled(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MLAssistConfigurationType mlAssist = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mlAssist"u8))
@@ -34,8 +76,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mlAssist = new MLAssistConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MLAssistConfigurationDisabled(mlAssist);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MLAssistConfigurationDisabled(mlAssist, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MLAssistConfigurationDisabled>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MLAssistConfigurationDisabled)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MLAssistConfigurationDisabled IPersistableModel<MLAssistConfigurationDisabled>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MLAssistConfigurationDisabled)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMLAssistConfigurationDisabled(document.RootElement, options);
+        }
+
+        string IPersistableModel<MLAssistConfigurationDisabled>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

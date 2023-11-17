@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> Model factory for models. </summary>
     public static partial class MetricsAdvisorModelFactory
     {
-        /// <summary> Initializes a new instance of DataSourceCredentialEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Administration.DataSourceCredentialEntity"/>. </summary>
         /// <param name="credentialKind"> Type of data source credential. </param>
         /// <param name="id"> Unique id of data source credential. </param>
         /// <param name="name"> Name of data source credential. </param>
@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <returns> A new <see cref="Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
         public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = "Unknown", string id = null, string name = null, string description = null)
         {
-            return new UnknownDataSourceCredential(credentialKind, id, name, description);
+            return new UnknownDataSourceCredential(credentialKind, id, name, description, new Dictionary<string, BinaryData>());
         }
     }
 }

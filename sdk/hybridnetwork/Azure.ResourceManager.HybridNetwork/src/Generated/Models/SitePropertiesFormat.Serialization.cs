@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,11 +15,26 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class SitePropertiesFormat : IUtf8JsonSerializable
+    public partial class SitePropertiesFormat : IUtf8JsonSerializable, IJsonModel<SitePropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SitePropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SitePropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SitePropertiesFormat>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SitePropertiesFormat>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(Nfvis))
             {
                 writer.WritePropertyName("nfvis"u8);
@@ -27,11 +45,53 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(SiteNetworkServiceReferences))
+                {
+                    writer.WritePropertyName("siteNetworkServiceReferences"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SiteNetworkServiceReferences)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SitePropertiesFormat DeserializeSitePropertiesFormat(JsonElement element)
+        SitePropertiesFormat IJsonModel<SitePropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SitePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSitePropertiesFormat(document.RootElement, options);
+        }
+
+        internal static SitePropertiesFormat DeserializeSitePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +99,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<IList<NFVIs>> nfvis = default;
             Optional<IReadOnlyList<WritableSubResource>> siteNetworkServiceReferences = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -78,8 +140,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     siteNetworkServiceReferences = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SitePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToList(nfvis), Optional.ToList(siteNetworkServiceReferences));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SitePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToList(nfvis), Optional.ToList(siteNetworkServiceReferences), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SitePropertiesFormat>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SitePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SitePropertiesFormat IPersistableModel<SitePropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SitePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSitePropertiesFormat(document.RootElement, options);
+        }
+
+        string IPersistableModel<SitePropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

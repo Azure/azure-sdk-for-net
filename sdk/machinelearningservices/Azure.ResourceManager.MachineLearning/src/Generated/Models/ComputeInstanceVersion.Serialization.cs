@@ -5,20 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class ComputeInstanceVersion
+    internal partial class ComputeInstanceVersion : IUtf8JsonSerializable, IJsonModel<ComputeInstanceVersion>
     {
-        internal static ComputeInstanceVersion DeserializeComputeInstanceVersion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeInstanceVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ComputeInstanceVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ComputeInstanceVersion>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ComputeInstanceVersion>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Runtime))
+            {
+                if (Runtime != null)
+                {
+                    writer.WritePropertyName("runtime"u8);
+                    writer.WriteStringValue(Runtime);
+                }
+                else
+                {
+                    writer.WriteNull("runtime");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ComputeInstanceVersion IJsonModel<ComputeInstanceVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeInstanceVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeInstanceVersion(document.RootElement, options);
+        }
+
+        internal static ComputeInstanceVersion DeserializeComputeInstanceVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> runtime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runtime"u8))
@@ -31,8 +91,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     runtime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ComputeInstanceVersion(runtime.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ComputeInstanceVersion(runtime.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComputeInstanceVersion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeInstanceVersion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ComputeInstanceVersion IPersistableModel<ComputeInstanceVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeInstanceVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeComputeInstanceVersion(document.RootElement, options);
+        }
+
+        string IPersistableModel<ComputeInstanceVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

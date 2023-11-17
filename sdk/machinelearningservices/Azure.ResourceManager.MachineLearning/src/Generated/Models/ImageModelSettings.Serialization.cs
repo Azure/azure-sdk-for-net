@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelSettings : IUtf8JsonSerializable
+    public partial class ImageModelSettings : IUtf8JsonSerializable, IJsonModel<ImageModelSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageModelSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImageModelSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ImageModelSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ImageModelSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AdvancedSettings))
             {
@@ -385,11 +396,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightDecay");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageModelSettings DeserializeImageModelSettings(JsonElement element)
+        ImageModelSettings IJsonModel<ImageModelSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageModelSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageModelSettings(document.RootElement, options);
+        }
+
+        internal static ImageModelSettings DeserializeImageModelSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -426,6 +466,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<float?> warmupCosineLRCycles = default;
             Optional<int?> warmupCosineLRWarmupEpochs = default;
             Optional<float?> weightDecay = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("advancedSettings"u8))
@@ -746,8 +788,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weightDecay = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageModelSettings(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageModelSettings(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ImageModelSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageModelSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ImageModelSettings IPersistableModel<ImageModelSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageModelSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeImageModelSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<ImageModelSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

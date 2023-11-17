@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class RoleDefinitionProperties : IUtf8JsonSerializable
+    internal partial class RoleDefinitionProperties : IUtf8JsonSerializable, IJsonModel<RoleDefinitionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoleDefinitionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RoleDefinitionProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RoleDefinitionProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RoleName))
             {
@@ -50,7 +62,132 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RoleDefinitionProperties IJsonModel<RoleDefinitionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoleDefinitionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleDefinitionProperties(document.RootElement, options);
+        }
+
+        internal static RoleDefinitionProperties DeserializeRoleDefinitionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> roleName = default;
+            Optional<string> description = default;
+            Optional<KeyVaultRoleType> type = default;
+            Optional<IList<KeyVaultPermission>> permissions = default;
+            Optional<IList<KeyVaultRoleScope>> assignableScopes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("roleName"u8))
+                {
+                    roleName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new KeyVaultRoleType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("permissions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KeyVaultPermission> array = new List<KeyVaultPermission>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(KeyVaultPermission.DeserializeKeyVaultPermission(item));
+                    }
+                    permissions = array;
+                    continue;
+                }
+                if (property.NameEquals("assignableScopes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KeyVaultRoleScope> array = new List<KeyVaultRoleScope>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new KeyVaultRoleScope(item.GetString()));
+                    }
+                    assignableScopes = array;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RoleDefinitionProperties(roleName.Value, description.Value, Optional.ToNullable(type), Optional.ToList(permissions), Optional.ToList(assignableScopes), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RoleDefinitionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoleDefinitionProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RoleDefinitionProperties IPersistableModel<RoleDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoleDefinitionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRoleDefinitionProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<RoleDefinitionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

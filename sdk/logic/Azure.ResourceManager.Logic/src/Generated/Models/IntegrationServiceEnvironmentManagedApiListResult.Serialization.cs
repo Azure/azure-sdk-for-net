@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,16 +15,75 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class IntegrationServiceEnvironmentManagedApiListResult
+    internal partial class IntegrationServiceEnvironmentManagedApiListResult : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentManagedApiListResult>
     {
-        internal static IntegrationServiceEnvironmentManagedApiListResult DeserializeIntegrationServiceEnvironmentManagedApiListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationServiceEnvironmentManagedApiListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IntegrationServiceEnvironmentManagedApiListResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IntegrationServiceEnvironmentManagedApiListResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IntegrationServiceEnvironmentManagedApiListResult IJsonModel<IntegrationServiceEnvironmentManagedApiListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentManagedApiListResult(document.RootElement, options);
+        }
+
+        internal static IntegrationServiceEnvironmentManagedApiListResult DeserializeIntegrationServiceEnvironmentManagedApiListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<IntegrationServiceEnvironmentManagedApiData>> value = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +105,38 @@ namespace Azure.ResourceManager.Logic.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationServiceEnvironmentManagedApiListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IntegrationServiceEnvironmentManagedApiListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IntegrationServiceEnvironmentManagedApiListResult IPersistableModel<IntegrationServiceEnvironmentManagedApiListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIntegrationServiceEnvironmentManagedApiListResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<IntegrationServiceEnvironmentManagedApiListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

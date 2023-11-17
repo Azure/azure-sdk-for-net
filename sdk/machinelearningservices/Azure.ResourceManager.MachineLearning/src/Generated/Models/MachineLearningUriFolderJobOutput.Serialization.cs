@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUriFolderJobOutput : IUtf8JsonSerializable
+    public partial class MachineLearningUriFolderJobOutput : IUtf8JsonSerializable, IJsonModel<MachineLearningUriFolderJobOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningUriFolderJobOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningUriFolderJobOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningUriFolderJobOutput>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningUriFolderJobOutput>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AssetName))
             {
@@ -83,11 +93,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobOutputType"u8);
             writer.WriteStringValue(JobOutputType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningUriFolderJobOutput DeserializeMachineLearningUriFolderJobOutput(JsonElement element)
+        MachineLearningUriFolderJobOutput IJsonModel<MachineLearningUriFolderJobOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningUriFolderJobOutput(document.RootElement, options);
+        }
+
+        internal static MachineLearningUriFolderJobOutput DeserializeMachineLearningUriFolderJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,6 +138,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<Uri> uri = default;
             Optional<string> description = default;
             JobOutputType jobOutputType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetName"u8))
@@ -165,8 +206,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobOutputType = new JobOutputType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningUriFolderJobOutput(description.Value, jobOutputType, assetName.Value, assetVersion.Value, autoDeleteSetting.Value, Optional.ToNullable(mode), uri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningUriFolderJobOutput(description.Value, jobOutputType, serializedAdditionalRawData, assetName.Value, assetVersion.Value, autoDeleteSetting.Value, Optional.ToNullable(mode), uri.Value);
         }
+
+        BinaryData IPersistableModel<MachineLearningUriFolderJobOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningUriFolderJobOutput IPersistableModel<MachineLearningUriFolderJobOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningUriFolderJobOutput(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningUriFolderJobOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

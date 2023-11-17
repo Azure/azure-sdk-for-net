@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Status from the extension. </summary>
     public partial class KubernetesClusterExtensionStatus
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionStatus"/>. </summary>
         public KubernetesClusterExtensionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionStatus"/>. </summary>
         /// <param name="code"> Status code provided by the Extension. </param>
         /// <param name="displayStatus"> Short description of status of the extension. </param>
         /// <param name="level"> Level of the status. </param>
         /// <param name="message"> Detailed message of the status from the Extension. </param>
         /// <param name="time"> DateLiteral (per ISO8601) noting the time of installation status. </param>
-        internal KubernetesClusterExtensionStatus(string code, string displayStatus, KubernetesClusterExtensionStatusLevel? level, string message, string time)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterExtensionStatus(string code, string displayStatus, KubernetesClusterExtensionStatusLevel? level, string message, string time, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             DisplayStatus = displayStatus;
             Level = level;
             Message = message;
             Time = time;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status code provided by the Extension. </summary>

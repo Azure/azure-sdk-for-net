@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
@@ -15,19 +16,20 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing a read only following database. </summary>
     public partial class KustoReadOnlyFollowingDatabase : KustoDatabaseData
     {
-        /// <summary> Initializes a new instance of KustoReadOnlyFollowingDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoReadOnlyFollowingDatabase"/>. </summary>
         public KustoReadOnlyFollowingDatabase()
         {
             Kind = KustoKind.ReadOnlyFollowing;
         }
 
-        /// <summary> Initializes a new instance of KustoReadOnlyFollowingDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoReadOnlyFollowingDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="softDeletePeriod"> The time the data should be kept before it stops being accessible to queries in TimeSpan. </param>
         /// <param name="hotCachePeriod"> The time the data should be kept in cache for fast queries in TimeSpan. </param>
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="originalDatabaseName"> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </param>
         /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
         /// <param name="suspensionDetails"> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </param>
-        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string originalDatabaseName, KustoDatabaseShareOrigin? databaseShareOrigin, SuspensionDetails suspensionDetails) : base(id, name, resourceType, systemData, location, kind)
+        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string originalDatabaseName, KustoDatabaseShareOrigin? databaseShareOrigin, SuspensionDetails suspensionDetails) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;

@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricSeriesDefinition
+    public partial class MetricSeriesDefinition : IUtf8JsonSerializable, IJsonModel<MetricSeriesDefinition>
     {
-        internal static MetricSeriesDefinition DeserializeMetricSeriesDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricSeriesDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MetricSeriesDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MetricSeriesDefinition>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MetricSeriesDefinition>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("metricId"u8);
+                writer.WriteStringValue(MetricId);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("dimension"u8);
+                writer.WriteStartObject();
+                foreach (var item in Dimension)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MetricSeriesDefinition IJsonModel<MetricSeriesDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricSeriesDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricSeriesDefinition(document.RootElement, options);
+        }
+
+        internal static MetricSeriesDefinition DeserializeMetricSeriesDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string metricId = default;
             IReadOnlyDictionary<string, string> dimension = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricId"u8))
@@ -37,8 +101,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dimension = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricSeriesDefinition(metricId, dimension);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MetricSeriesDefinition(metricId, dimension, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MetricSeriesDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricSeriesDefinition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MetricSeriesDefinition IPersistableModel<MetricSeriesDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricSeriesDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMetricSeriesDefinition(document.RootElement, options);
+        }
+
+        string IPersistableModel<MetricSeriesDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

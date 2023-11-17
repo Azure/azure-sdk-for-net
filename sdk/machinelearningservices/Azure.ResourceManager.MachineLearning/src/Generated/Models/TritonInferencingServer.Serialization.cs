@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TritonInferencingServer : IUtf8JsonSerializable
+    public partial class TritonInferencingServer : IUtf8JsonSerializable, IJsonModel<TritonInferencingServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TritonInferencingServer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TritonInferencingServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TritonInferencingServer>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TritonInferencingServer>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InferenceConfiguration))
             {
@@ -29,17 +40,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("serverType"u8);
             writer.WriteStringValue(ServerType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TritonInferencingServer DeserializeTritonInferencingServer(JsonElement element)
+        TritonInferencingServer IJsonModel<TritonInferencingServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TritonInferencingServer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTritonInferencingServer(document.RootElement, options);
+        }
+
+        internal static TritonInferencingServer DeserializeTritonInferencingServer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<OnlineInferenceConfiguration> inferenceConfiguration = default;
             InferencingServerType serverType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inferenceConfiguration"u8))
@@ -57,8 +99,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     serverType = new InferencingServerType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TritonInferencingServer(serverType, inferenceConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TritonInferencingServer(serverType, serializedAdditionalRawData, inferenceConfiguration.Value);
         }
+
+        BinaryData IPersistableModel<TritonInferencingServer>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TritonInferencingServer)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TritonInferencingServer IPersistableModel<TritonInferencingServer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TritonInferencingServer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTritonInferencingServer(document.RootElement, options);
+        }
+
+        string IPersistableModel<TritonInferencingServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

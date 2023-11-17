@@ -5,17 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClusterPoolUpgradeProfile : IUtf8JsonSerializable
+    public partial class ProvisionedClusterPoolUpgradeProfile : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterPoolUpgradeProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterPoolUpgradeProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProvisionedClusterPoolUpgradeProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ProvisionedClusterPoolUpgradeProfile>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ProvisionedClusterPoolUpgradeProfile>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KubernetesVersion))
+                {
+                    writer.WritePropertyName("kubernetesVersion"u8);
+                    writer.WriteStringValue(KubernetesVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSType))
+                {
+                    writer.WritePropertyName("osType"u8);
+                    writer.WriteStringValue(OSType.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
@@ -26,11 +60,40 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClusterPoolUpgradeProfile DeserializeProvisionedClusterPoolUpgradeProfile(JsonElement element)
+        ProvisionedClusterPoolUpgradeProfile IJsonModel<ProvisionedClusterPoolUpgradeProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClusterPoolUpgradeProfile(document.RootElement, options);
+        }
+
+        internal static ProvisionedClusterPoolUpgradeProfile DeserializeProvisionedClusterPoolUpgradeProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +102,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> name = default;
             Optional<OSType> osType = default;
             Optional<IList<ProvisionedClusterPoolUpgradeProfileProperties>> upgrades = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -74,8 +139,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     upgrades = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, name.Value, Optional.ToNullable(osType), Optional.ToList(upgrades));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, name.Value, Optional.ToNullable(osType), Optional.ToList(upgrades), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProvisionedClusterPoolUpgradeProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProvisionedClusterPoolUpgradeProfile IPersistableModel<ProvisionedClusterPoolUpgradeProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProvisionedClusterPoolUpgradeProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<ProvisionedClusterPoolUpgradeProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,19 +14,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningVirtualMachineProperties. </summary>
     public partial class MachineLearningVirtualMachineProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningVirtualMachineProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVirtualMachineProperties"/>. </summary>
         public MachineLearningVirtualMachineProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVirtualMachineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVirtualMachineProperties"/>. </summary>
         /// <param name="virtualMachineSize"> Virtual Machine size. </param>
         /// <param name="sshPort"> Port open for ssh connections. </param>
         /// <param name="notebookServerPort"> Notebook server port open for ssh connections. </param>
         /// <param name="address"> Public IP address of the virtual machine. </param>
         /// <param name="administratorAccount"> Admin credentials for virtual machine. </param>
         /// <param name="isNotebookInstanceCompute"> Indicates whether this compute will be used for running notebooks. </param>
-        internal MachineLearningVirtualMachineProperties(string virtualMachineSize, int? sshPort, int? notebookServerPort, IPAddress address, MachineLearningVmSshCredentials administratorAccount, bool? isNotebookInstanceCompute)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningVirtualMachineProperties(string virtualMachineSize, int? sshPort, int? notebookServerPort, IPAddress address, MachineLearningVmSshCredentials administratorAccount, bool? isNotebookInstanceCompute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualMachineSize = virtualMachineSize;
             SshPort = sshPort;
@@ -32,6 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Address = address;
             AdministratorAccount = administratorAccount;
             IsNotebookInstanceCompute = isNotebookInstanceCompute;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Virtual Machine size. </summary>

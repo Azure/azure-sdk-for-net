@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Media.Models;
@@ -13,13 +16,51 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class StreamingPolicyData : IUtf8JsonSerializable
+    public partial class StreamingPolicyData : IUtf8JsonSerializable, IJsonModel<StreamingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StreamingPolicyData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StreamingPolicyData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("created"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
             if (Optional.IsDefined(DefaultContentKeyPolicyName))
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
@@ -46,11 +87,40 @@ namespace Azure.ResourceManager.Media
                 writer.WriteObjectValue(NoEncryption);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamingPolicyData DeserializeStreamingPolicyData(JsonElement element)
+        StreamingPolicyData IJsonModel<StreamingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingPolicyData(document.RootElement, options);
+        }
+
+        internal static StreamingPolicyData DeserializeStreamingPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +135,8 @@ namespace Azure.ResourceManager.Media
             Optional<CommonEncryptionCenc> commonEncryptionCenc = default;
             Optional<CommonEncryptionCbcs> commonEncryptionCbcs = default;
             Optional<NoEncryption> noEncryption = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -153,8 +225,38 @@ namespace Azure.ResourceManager.Media
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(created), defaultContentKeyPolicyName.Value, envelopeEncryption.Value, commonEncryptionCenc.Value, commonEncryptionCbcs.Value, noEncryption.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StreamingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(created), defaultContentKeyPolicyName.Value, envelopeEncryption.Value, commonEncryptionCenc.Value, commonEncryptionCbcs.Value, noEncryption.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamingPolicyData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamingPolicyData IPersistableModel<StreamingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamingPolicyData(document.RootElement, options);
+        }
+
+        string IPersistableModel<StreamingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

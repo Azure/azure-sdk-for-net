@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DeviceCapabilities : IUtf8JsonSerializable
+    public partial class DeviceCapabilities : IUtf8JsonSerializable, IJsonModel<DeviceCapabilities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceCapabilities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeviceCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DeviceCapabilities>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DeviceCapabilities>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsIotEdgeDevice))
             {
                 writer.WritePropertyName("iotEdge"u8);
                 writer.WriteBooleanValue(IsIotEdgeDevice.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeviceCapabilities DeserializeDeviceCapabilities(JsonElement element)
+        DeviceCapabilities IJsonModel<DeviceCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceCapabilities)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceCapabilities(document.RootElement, options);
+        }
+
+        internal static DeviceCapabilities DeserializeDeviceCapabilities(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> iotEdge = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("iotEdge"u8))
@@ -41,8 +83,38 @@ namespace Azure.IoT.Hub.Service.Models
                     iotEdge = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceCapabilities(Optional.ToNullable(iotEdge));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeviceCapabilities(Optional.ToNullable(iotEdge), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceCapabilities>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceCapabilities)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DeviceCapabilities IPersistableModel<DeviceCapabilities>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceCapabilities)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDeviceCapabilities(document.RootElement, options);
+        }
+
+        string IPersistableModel<DeviceCapabilities>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

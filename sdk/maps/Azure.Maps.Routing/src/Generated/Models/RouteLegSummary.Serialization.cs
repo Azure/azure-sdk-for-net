@@ -6,15 +6,140 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteLegSummary
+    public partial class RouteLegSummary : IUtf8JsonSerializable, IJsonModel<RouteLegSummary>
     {
-        internal static RouteLegSummary DeserializeRouteLegSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteLegSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteLegSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RouteLegSummary>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RouteLegSummary>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LengthInMeters))
+                {
+                    writer.WritePropertyName("lengthInMeters"u8);
+                    writer.WriteNumberValue(LengthInMeters.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TravelTimeInSeconds))
+                {
+                    writer.WritePropertyName("travelTimeInSeconds"u8);
+                    writer.WriteNumberValue(TravelTimeInSeconds.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TrafficDelayInSeconds))
+                {
+                    writer.WritePropertyName("trafficDelayInSeconds"u8);
+                    writer.WriteNumberValue(TrafficDelayInSeconds.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DepartureTime))
+                {
+                    writer.WritePropertyName("departureTime"u8);
+                    writer.WriteStringValue(DepartureTime.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ArrivalTime))
+                {
+                    writer.WritePropertyName("arrivalTime"u8);
+                    writer.WriteStringValue(ArrivalTime.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NoTrafficTravelTimeInSeconds))
+                {
+                    writer.WritePropertyName("noTrafficTravelTimeInSeconds"u8);
+                    writer.WriteNumberValue(NoTrafficTravelTimeInSeconds.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HistoricTrafficTravelTimeInSeconds))
+                {
+                    writer.WritePropertyName("historicTrafficTravelTimeInSeconds"u8);
+                    writer.WriteNumberValue(HistoricTrafficTravelTimeInSeconds.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LiveTrafficIncidentsTravelTimeInSeconds))
+                {
+                    writer.WritePropertyName("liveTrafficIncidentsTravelTimeInSeconds"u8);
+                    writer.WriteNumberValue(LiveTrafficIncidentsTravelTimeInSeconds.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FuelConsumptionInLiters))
+                {
+                    writer.WritePropertyName("fuelConsumptionInLiters"u8);
+                    writer.WriteNumberValue(FuelConsumptionInLiters.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BatteryConsumptionInKwH))
+                {
+                    writer.WritePropertyName("batteryConsumptionInkWh"u8);
+                    writer.WriteNumberValue(BatteryConsumptionInKwH.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteLegSummary IJsonModel<RouteLegSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteLegSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteLegSummary(document.RootElement, options);
+        }
+
+        internal static RouteLegSummary DeserializeRouteLegSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +154,8 @@ namespace Azure.Maps.Routing.Models
             Optional<int> liveTrafficIncidentsTravelTimeInSeconds = default;
             Optional<double> fuelConsumptionInLiters = default;
             Optional<double> batteryConsumptionInkWh = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lengthInMeters"u8))
@@ -121,8 +248,38 @@ namespace Azure.Maps.Routing.Models
                     batteryConsumptionInkWh = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteLegSummary(Optional.ToNullable(lengthInMeters), Optional.ToNullable(travelTimeInSeconds), Optional.ToNullable(trafficDelayInSeconds), Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime), Optional.ToNullable(noTrafficTravelTimeInSeconds), Optional.ToNullable(historicTrafficTravelTimeInSeconds), Optional.ToNullable(liveTrafficIncidentsTravelTimeInSeconds), Optional.ToNullable(fuelConsumptionInLiters), Optional.ToNullable(batteryConsumptionInkWh));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteLegSummary(Optional.ToNullable(lengthInMeters), Optional.ToNullable(travelTimeInSeconds), Optional.ToNullable(trafficDelayInSeconds), Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime), Optional.ToNullable(noTrafficTravelTimeInSeconds), Optional.ToNullable(historicTrafficTravelTimeInSeconds), Optional.ToNullable(liveTrafficIncidentsTravelTimeInSeconds), Optional.ToNullable(fuelConsumptionInLiters), Optional.ToNullable(batteryConsumptionInkWh), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteLegSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteLegSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RouteLegSummary IPersistableModel<RouteLegSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteLegSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRouteLegSummary(document.RootElement, options);
+        }
+
+        string IPersistableModel<RouteLegSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

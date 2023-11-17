@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class CustomService : IUtf8JsonSerializable
+    public partial class CustomService : IUtf8JsonSerializable, IJsonModel<CustomService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CustomService>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CustomService>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -85,8 +94,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomService DeserializeCustomService(JsonElement element)
+        CustomService IJsonModel<CustomService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomService(document.RootElement, options);
+        }
+
+        internal static CustomService DeserializeCustomService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,5 +195,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CustomService(name.Value, image.Value, Optional.ToDictionary(environmentVariables), docker.Value, Optional.ToList(endpoints), Optional.ToList(volumes), additionalProperties);
         }
+
+        BinaryData IPersistableModel<CustomService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomService IPersistableModel<CustomService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomService(document.RootElement, options);
+        }
+
+        string IPersistableModel<CustomService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

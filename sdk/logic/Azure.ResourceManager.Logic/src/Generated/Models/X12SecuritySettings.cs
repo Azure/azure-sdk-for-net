@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 agreement security settings. </summary>
     public partial class X12SecuritySettings
     {
-        /// <summary> Initializes a new instance of X12SecuritySettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12SecuritySettings"/>. </summary>
         /// <param name="authorizationQualifier"> The authorization qualifier. </param>
         /// <param name="securityQualifier"> The security qualifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationQualifier"/> or <paramref name="securityQualifier"/> is null. </exception>
@@ -26,17 +59,24 @@ namespace Azure.ResourceManager.Logic.Models
             SecurityQualifier = securityQualifier;
         }
 
-        /// <summary> Initializes a new instance of X12SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12SecuritySettings"/>. </summary>
         /// <param name="authorizationQualifier"> The authorization qualifier. </param>
         /// <param name="authorizationValue"> The authorization value. </param>
         /// <param name="securityQualifier"> The security qualifier. </param>
         /// <param name="passwordValue"> The password value. </param>
-        internal X12SecuritySettings(string authorizationQualifier, string authorizationValue, string securityQualifier, string passwordValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12SecuritySettings(string authorizationQualifier, string authorizationValue, string securityQualifier, string passwordValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthorizationQualifier = authorizationQualifier;
             AuthorizationValue = authorizationValue;
             SecurityQualifier = securityQualifier;
             PasswordValue = passwordValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12SecuritySettings"/> for deserialization. </summary>
+        internal X12SecuritySettings()
+        {
         }
 
         /// <summary> The authorization qualifier. </summary>

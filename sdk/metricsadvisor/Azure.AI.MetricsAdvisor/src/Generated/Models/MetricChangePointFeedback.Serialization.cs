@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    public partial class MetricChangePointFeedback : IUtf8JsonSerializable
+    public partial class MetricChangePointFeedback : IUtf8JsonSerializable, IJsonModel<MetricChangePointFeedback>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricChangePointFeedback>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MetricChangePointFeedback>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MetricChangePointFeedback>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MetricChangePointFeedback>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartsOn, "O");
@@ -25,15 +35,68 @@ namespace Azure.AI.MetricsAdvisor
             writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType"u8);
             writer.WriteStringValue(FeedbackKind.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("feedbackId"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UserPrincipal))
+                {
+                    writer.WritePropertyName("userPrincipal"u8);
+                    writer.WriteStringValue(UserPrincipal);
+                }
+            }
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
             writer.WriteObjectValue(DimensionFilter);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MetricChangePointFeedback DeserializeMetricChangePointFeedback(JsonElement element)
+        MetricChangePointFeedback IJsonModel<MetricChangePointFeedback>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricChangePointFeedback)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricChangePointFeedback(document.RootElement, options);
+        }
+
+        internal static MetricChangePointFeedback DeserializeMetricChangePointFeedback(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +110,8 @@ namespace Azure.AI.MetricsAdvisor
             Optional<string> userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -98,8 +163,38 @@ namespace Azure.AI.MetricsAdvisor
                     dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricChangePointFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MetricChangePointFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, serializedAdditionalRawData, startTime, endTime, value);
         }
+
+        BinaryData IPersistableModel<MetricChangePointFeedback>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricChangePointFeedback)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MetricChangePointFeedback IPersistableModel<MetricChangePointFeedback>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricChangePointFeedback)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMetricChangePointFeedback(document.RootElement, options);
+        }
+
+        string IPersistableModel<MetricChangePointFeedback>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

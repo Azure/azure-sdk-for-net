@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTreeSettings : IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicTreeSettings : IUtf8JsonSerializable, IJsonModel<SwaggerCustomDynamicTreeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerCustomDynamicTreeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SwaggerCustomDynamicTreeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SwaggerCustomDynamicTreeSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SwaggerCustomDynamicTreeSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CanSelectParentNodes))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("CanSelectLeafNodes"u8);
                 writer.WriteBooleanValue(CanSelectLeafNodes.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SwaggerCustomDynamicTreeSettings DeserializeSwaggerCustomDynamicTreeSettings(JsonElement element)
+        SwaggerCustomDynamicTreeSettings IJsonModel<SwaggerCustomDynamicTreeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwaggerCustomDynamicTreeSettings(document.RootElement, options);
+        }
+
+        internal static SwaggerCustomDynamicTreeSettings DeserializeSwaggerCustomDynamicTreeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> canSelectParentNodes = default;
             Optional<bool> canSelectLeafNodes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("CanSelectParentNodes"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.Logic.Models
                     canSelectLeafNodes = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SwaggerCustomDynamicTreeSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SwaggerCustomDynamicTreeSettings IPersistableModel<SwaggerCustomDynamicTreeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSwaggerCustomDynamicTreeSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<SwaggerCustomDynamicTreeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

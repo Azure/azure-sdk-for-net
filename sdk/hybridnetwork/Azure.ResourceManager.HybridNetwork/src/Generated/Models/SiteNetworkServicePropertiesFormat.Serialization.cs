@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,11 +15,26 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class SiteNetworkServicePropertiesFormat : IUtf8JsonSerializable
+    public partial class SiteNetworkServicePropertiesFormat : IUtf8JsonSerializable, IJsonModel<SiteNetworkServicePropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteNetworkServicePropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteNetworkServicePropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SiteNetworkServicePropertiesFormat>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SiteNetworkServicePropertiesFormat>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
@@ -26,6 +44,46 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 writer.WritePropertyName("siteReference"u8);
                 JsonSerializer.Serialize(writer, SiteReference);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherName))
+                {
+                    writer.WritePropertyName("publisherName"u8);
+                    writer.WriteStringValue(PublisherName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherScope))
+                {
+                    writer.WritePropertyName("publisherScope"u8);
+                    writer.WriteStringValue(PublisherScope.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetworkServiceDesignGroupName))
+                {
+                    writer.WritePropertyName("networkServiceDesignGroupName"u8);
+                    writer.WriteStringValue(NetworkServiceDesignGroupName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetworkServiceDesignVersionName))
+                {
+                    writer.WritePropertyName("networkServiceDesignVersionName"u8);
+                    writer.WriteStringValue(NetworkServiceDesignVersionName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetworkServiceDesignVersionOfferingLocation))
+                {
+                    writer.WritePropertyName("networkServiceDesignVersionOfferingLocation"u8);
+                    writer.WriteStringValue(NetworkServiceDesignVersionOfferingLocation);
+                }
             }
             if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
             {
@@ -43,11 +101,62 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastStateNetworkServiceDesignVersionName))
+                {
+                    writer.WritePropertyName("lastStateNetworkServiceDesignVersionName"u8);
+                    writer.WriteStringValue(LastStateNetworkServiceDesignVersionName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(LastStateConfigurationGroupValueReferences))
+                {
+                    writer.WritePropertyName("lastStateConfigurationGroupValueReferences"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in LastStateConfigurationGroupValueReferences)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        JsonSerializer.Serialize(writer, item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SiteNetworkServicePropertiesFormat DeserializeSiteNetworkServicePropertiesFormat(JsonElement element)
+        SiteNetworkServicePropertiesFormat IJsonModel<SiteNetworkServicePropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteNetworkServicePropertiesFormat(document.RootElement, options);
+        }
+
+        internal static SiteNetworkServicePropertiesFormat DeserializeSiteNetworkServicePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +173,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<IDictionary<string, WritableSubResource>> desiredStateConfigurationGroupValueReferences = default;
             Optional<string> lastStateNetworkServiceDesignVersionName = default;
             Optional<IReadOnlyDictionary<string, WritableSubResource>> lastStateConfigurationGroupValueReferences = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -164,8 +275,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     lastStateConfigurationGroupValueReferences = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteNetworkServicePropertiesFormat(Optional.ToNullable(provisioningState), managedResourceGroupConfiguration.Value, siteReference, publisherName.Value, Optional.ToNullable(publisherScope), networkServiceDesignGroupName.Value, networkServiceDesignVersionName.Value, networkServiceDesignVersionOfferingLocation.Value, networkServiceDesignVersionResourceReference.Value, Optional.ToDictionary(desiredStateConfigurationGroupValueReferences), lastStateNetworkServiceDesignVersionName.Value, Optional.ToDictionary(lastStateConfigurationGroupValueReferences));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteNetworkServicePropertiesFormat(Optional.ToNullable(provisioningState), managedResourceGroupConfiguration.Value, siteReference, publisherName.Value, Optional.ToNullable(publisherScope), networkServiceDesignGroupName.Value, networkServiceDesignVersionName.Value, networkServiceDesignVersionOfferingLocation.Value, networkServiceDesignVersionResourceReference.Value, Optional.ToDictionary(desiredStateConfigurationGroupValueReferences), lastStateNetworkServiceDesignVersionName.Value, Optional.ToDictionary(lastStateConfigurationGroupValueReferences), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteNetworkServicePropertiesFormat>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteNetworkServicePropertiesFormat IPersistableModel<SiteNetworkServicePropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteNetworkServicePropertiesFormat(document.RootElement, options);
+        }
+
+        string IPersistableModel<SiteNetworkServicePropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

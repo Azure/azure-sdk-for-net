@@ -5,15 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteRangeResult
+    public partial class RouteRangeResult : IUtf8JsonSerializable, IJsonModel<RouteRangeResult>
     {
-        internal static RouteRangeResult DeserializeRouteRangeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteRangeResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteRangeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RouteRangeResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RouteRangeResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FormatVersion))
+                {
+                    writer.WritePropertyName("formatVersion"u8);
+                    writer.WriteStringValue(FormatVersion);
+                }
+            }
+            if (Optional.IsDefined(ReachableRange))
+            {
+                writer.WritePropertyName("reachableRange"u8);
+                writer.WriteObjectValue(ReachableRange);
+            }
+            if (Optional.IsDefined(Report))
+            {
+                writer.WritePropertyName("report"u8);
+                writer.WriteObjectValue(Report);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteRangeResult IJsonModel<RouteRangeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteRangeResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteRangeResult(document.RootElement, options);
+        }
+
+        internal static RouteRangeResult DeserializeRouteRangeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +85,8 @@ namespace Azure.Maps.Routing.Models
             Optional<string> formatVersion = default;
             Optional<RouteRange> reachableRange = default;
             Optional<RouteReport> report = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))
@@ -46,8 +112,38 @@ namespace Azure.Maps.Routing.Models
                     report = RouteReport.DeserializeRouteReport(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteRangeResult(formatVersion.Value, reachableRange.Value, report.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteRangeResult(formatVersion.Value, reachableRange.Value, report.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteRangeResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteRangeResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RouteRangeResult IPersistableModel<RouteRangeResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteRangeResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRouteRangeResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<RouteRangeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

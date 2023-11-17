@@ -5,21 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class RestoreOperationParameters : IUtf8JsonSerializable
+    internal partial class RestoreOperationParameters : IUtf8JsonSerializable, IJsonModel<RestoreOperationParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreOperationParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RestoreOperationParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RestoreOperationParameters>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RestoreOperationParameters>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sasTokenParameters"u8);
             writer.WriteObjectValue(SasTokenParameters);
             writer.WritePropertyName("folderToRestore"u8);
             writer.WriteStringValue(FolderToRestore);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RestoreOperationParameters IJsonModel<RestoreOperationParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreOperationParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreOperationParameters(document.RootElement, options);
+        }
+
+        internal static RestoreOperationParameters DeserializeRestoreOperationParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SASTokenParameter sasTokenParameters = default;
+            string folderToRestore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sasTokenParameters"u8))
+                {
+                    sasTokenParameters = SASTokenParameter.DeserializeSASTokenParameter(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("folderToRestore"u8))
+                {
+                    folderToRestore = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RestoreOperationParameters(sasTokenParameters, folderToRestore, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RestoreOperationParameters>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreOperationParameters)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RestoreOperationParameters IPersistableModel<RestoreOperationParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreOperationParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRestoreOperationParameters(document.RootElement, options);
+        }
+
+        string IPersistableModel<RestoreOperationParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

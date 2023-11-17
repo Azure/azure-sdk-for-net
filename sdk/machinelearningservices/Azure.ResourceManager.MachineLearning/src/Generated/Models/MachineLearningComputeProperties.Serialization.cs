@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownCompute))]
+    public partial class MachineLearningComputeProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningComputeProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningComputeProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
@@ -21,6 +32,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("computeLocation"u8);
                 writer.WriteStringValue(ComputeLocation);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -32,6 +51,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("description");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdOn"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ModifiedOn))
+                {
+                    writer.WritePropertyName("modifiedOn"u8);
+                    writer.WriteStringValue(ModifiedOn.Value, "O");
                 }
             }
             if (Optional.IsDefined(ResourceId))
@@ -46,16 +81,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ProvisioningErrors))
+                {
+                    if (ProvisioningErrors != null)
+                    {
+                        writer.WritePropertyName("provisioningErrors"u8);
+                        writer.WriteStartArray();
+                        foreach (var item in ProvisioningErrors)
+                        {
+                            writer.WriteObjectValue(item);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
+                    {
+                        writer.WriteNull("provisioningErrors");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsAttachedCompute))
+                {
+                    writer.WritePropertyName("isAttachedCompute"u8);
+                    writer.WriteBooleanValue(IsAttachedCompute.Value);
+                }
+            }
             if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningComputeProperties DeserializeMachineLearningComputeProperties(JsonElement element)
+        MachineLearningComputeProperties IJsonModel<MachineLearningComputeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningComputeProperties DeserializeMachineLearningComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,5 +170,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return UnknownCompute.DeserializeUnknownCompute(element);
         }
+
+        BinaryData IPersistableModel<MachineLearningComputeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningComputeProperties IPersistableModel<MachineLearningComputeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningComputeProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningComputeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

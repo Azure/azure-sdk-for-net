@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class VirtualNetworkFunctionTemplate : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownVirtualNetworkFunctionTemplate))]
+    public partial class VirtualNetworkFunctionTemplate : IUtf8JsonSerializable, IJsonModel<VirtualNetworkFunctionTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkFunctionTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualNetworkFunctionTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualNetworkFunctionTemplate>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualNetworkFunctionTemplate>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("nfviType"u8);
             writer.WriteStringValue(NfviType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkFunctionTemplate DeserializeVirtualNetworkFunctionTemplate(JsonElement element)
+        VirtualNetworkFunctionTemplate IJsonModel<VirtualNetworkFunctionTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkFunctionTemplate(document.RootElement, options);
+        }
+
+        internal static VirtualNetworkFunctionTemplate DeserializeVirtualNetworkFunctionTemplate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,5 +76,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             return UnknownVirtualNetworkFunctionTemplate.DeserializeUnknownVirtualNetworkFunctionTemplate(element);
         }
+
+        BinaryData IPersistableModel<VirtualNetworkFunctionTemplate>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualNetworkFunctionTemplate IPersistableModel<VirtualNetworkFunctionTemplate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworkFunctionTemplate(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualNetworkFunctionTemplate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MpiDistributionConfiguration : IUtf8JsonSerializable
+    public partial class MpiDistributionConfiguration : IUtf8JsonSerializable, IJsonModel<MpiDistributionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MpiDistributionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MpiDistributionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MpiDistributionConfiguration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MpiDistributionConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProcessCountPerInstance))
             {
@@ -29,17 +40,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("distributionType"u8);
             writer.WriteStringValue(DistributionType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MpiDistributionConfiguration DeserializeMpiDistributionConfiguration(JsonElement element)
+        MpiDistributionConfiguration IJsonModel<MpiDistributionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMpiDistributionConfiguration(document.RootElement, options);
+        }
+
+        internal static MpiDistributionConfiguration DeserializeMpiDistributionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int?> processCountPerInstance = default;
             DistributionType distributionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("processCountPerInstance"u8))
@@ -57,8 +99,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     distributionType = new DistributionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MpiDistributionConfiguration(distributionType, Optional.ToNullable(processCountPerInstance));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MpiDistributionConfiguration(distributionType, serializedAdditionalRawData, Optional.ToNullable(processCountPerInstance));
         }
+
+        BinaryData IPersistableModel<MpiDistributionConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MpiDistributionConfiguration IPersistableModel<MpiDistributionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMpiDistributionConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<MpiDistributionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ExternalNetworkPatchOptionAProperties : IUtf8JsonSerializable
+    public partial class ExternalNetworkPatchOptionAProperties : IUtf8JsonSerializable, IJsonModel<ExternalNetworkPatchOptionAProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExternalNetworkPatchOptionAProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExternalNetworkPatchOptionAProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExternalNetworkPatchOptionAProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mtu))
             {
@@ -24,6 +35,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FabricAsn))
+                {
+                    writer.WritePropertyName("fabricASN"u8);
+                    writer.WriteNumberValue(FabricAsn.Value);
+                }
             }
             if (Optional.IsDefined(PeerAsn))
             {
@@ -65,11 +84,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExternalNetworkPatchOptionAProperties DeserializeExternalNetworkPatchOptionAProperties(JsonElement element)
+        ExternalNetworkPatchOptionAProperties IJsonModel<ExternalNetworkPatchOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExternalNetworkPatchOptionAProperties(document.RootElement, options);
+        }
+
+        internal static ExternalNetworkPatchOptionAProperties DeserializeExternalNetworkPatchOptionAProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,6 +133,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<string> primaryIPv6Prefix = default;
             Optional<string> secondaryIPv4Prefix = default;
             Optional<string> secondaryIPv6Prefix = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtu"u8))
@@ -170,8 +220,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     secondaryIPv6Prefix = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExternalNetworkPatchOptionAProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), bfdConfiguration.Value, ingressAclId.Value, egressAclId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExternalNetworkPatchOptionAProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, serializedAdditionalRawData, Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), bfdConfiguration.Value, ingressAclId.Value, egressAclId.Value);
         }
+
+        BinaryData IPersistableModel<ExternalNetworkPatchOptionAProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExternalNetworkPatchOptionAProperties IPersistableModel<ExternalNetworkPatchOptionAProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExternalNetworkPatchOptionAProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExternalNetworkPatchOptionAProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

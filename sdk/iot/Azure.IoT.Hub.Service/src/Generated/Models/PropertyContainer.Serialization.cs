@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class PropertyContainer : IUtf8JsonSerializable
+    public partial class PropertyContainer : IUtf8JsonSerializable, IJsonModel<PropertyContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyContainer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PropertyContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PropertyContainer>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PropertyContainer>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Desired))
             {
@@ -47,7 +58,124 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PropertyContainer IJsonModel<PropertyContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PropertyContainer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePropertyContainer(document.RootElement, options);
+        }
+
+        internal static PropertyContainer DeserializePropertyContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, object>> desired = default;
+            Optional<IDictionary<string, object>> reported = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("desired"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
+                    }
+                    desired = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("reported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
+                    }
+                    reported = dictionary;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PropertyContainer(Optional.ToDictionary(desired), Optional.ToDictionary(reported), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PropertyContainer>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PropertyContainer)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PropertyContainer IPersistableModel<PropertyContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PropertyContainer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePropertyContainer(document.RootElement, options);
+        }
+
+        string IPersistableModel<PropertyContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

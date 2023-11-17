@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class EffectiveSetting
+    public partial class EffectiveSetting : IUtf8JsonSerializable, IJsonModel<EffectiveSetting>
     {
-        internal static EffectiveSetting DeserializeEffectiveSetting(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EffectiveSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EffectiveSetting>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EffectiveSetting>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Key))
+                {
+                    writer.WritePropertyName("key"u8);
+                    writer.WriteStringValue(Key);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Value))
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStringValue(Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EffectiveSetting IJsonModel<EffectiveSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EffectiveSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveSetting(document.RootElement, options);
+        }
+
+        internal static EffectiveSetting DeserializeEffectiveSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> key = default;
             Optional<string> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -32,8 +96,38 @@ namespace Azure.Maps.Routing.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EffectiveSetting(key.Value, value.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EffectiveSetting(key.Value, value.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EffectiveSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EffectiveSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EffectiveSetting IPersistableModel<EffectiveSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EffectiveSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEffectiveSetting(document.RootElement, options);
+        }
+
+        string IPersistableModel<EffectiveSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

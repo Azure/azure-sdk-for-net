@@ -5,16 +5,142 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class PointOfInterest
+    public partial class PointOfInterest : IUtf8JsonSerializable, IJsonModel<PointOfInterest>
     {
-        internal static PointOfInterest DeserializePointOfInterest(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PointOfInterest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PointOfInterest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PointOfInterest>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PointOfInterest>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Phone))
+                {
+                    writer.WritePropertyName("phone"u8);
+                    writer.WriteStringValue(Phone);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UrlInternal))
+                {
+                    writer.WritePropertyName("url"u8);
+                    writer.WriteStringValue(UrlInternal);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(CategorySets))
+                {
+                    writer.WritePropertyName("categorySet"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in CategorySets)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Categories))
+                {
+                    writer.WritePropertyName("categories"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Categories)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Classifications))
+                {
+                    writer.WritePropertyName("classifications"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Classifications)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Brands))
+                {
+                    writer.WritePropertyName("brands"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Brands)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (Optional.IsDefined(OperatingHours))
+            {
+                writer.WritePropertyName("openingHours"u8);
+                writer.WriteObjectValue(OperatingHours);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PointOfInterest IJsonModel<PointOfInterest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePointOfInterest(document.RootElement, options);
+        }
+
+        internal static PointOfInterest DeserializePointOfInterest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +153,8 @@ namespace Azure.Maps.Search.Models
             Optional<IReadOnlyList<PointOfInterestClassification>> classifications = default;
             Optional<IReadOnlyList<BrandName>> brands = default;
             Optional<OperatingHours> openingHours = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,8 +237,38 @@ namespace Azure.Maps.Search.Models
                     openingHours = OperatingHours.DeserializeOperatingHours(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(categories), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(categories), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PointOfInterest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PointOfInterest IPersistableModel<PointOfInterest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePointOfInterest(document.RootElement, options);
+        }
+
+        string IPersistableModel<PointOfInterest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

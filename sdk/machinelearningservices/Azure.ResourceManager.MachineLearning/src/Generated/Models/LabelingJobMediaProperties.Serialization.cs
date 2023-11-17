@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class LabelingJobMediaProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownLabelingJobMediaProperties))]
+    public partial class LabelingJobMediaProperties : IUtf8JsonSerializable, IJsonModel<LabelingJobMediaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabelingJobMediaProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LabelingJobMediaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LabelingJobMediaProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LabelingJobMediaProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("mediaType"u8);
             writer.WriteStringValue(MediaType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabelingJobMediaProperties DeserializeLabelingJobMediaProperties(JsonElement element)
+        LabelingJobMediaProperties IJsonModel<LabelingJobMediaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabelingJobMediaProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabelingJobMediaProperties(document.RootElement, options);
+        }
+
+        internal static LabelingJobMediaProperties DeserializeLabelingJobMediaProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,5 +76,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return UnknownLabelingJobMediaProperties.DeserializeUnknownLabelingJobMediaProperties(element);
         }
+
+        BinaryData IPersistableModel<LabelingJobMediaProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabelingJobMediaProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LabelingJobMediaProperties IPersistableModel<LabelingJobMediaProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabelingJobMediaProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLabelingJobMediaProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<LabelingJobMediaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

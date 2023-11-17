@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDatastoreProperties : IUtf8JsonSerializable
+    public partial class MachineLearningDatastoreProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningDatastoreProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDatastoreProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningDatastoreProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningDatastoreProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningDatastoreProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(Credentials);
@@ -30,6 +40,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("intellectualProperty");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsDefault))
+                {
+                    writer.WritePropertyName("isDefault"u8);
+                    writer.WriteBooleanValue(IsDefault.Value);
                 }
             }
             if (Optional.IsDefined(Description))
@@ -80,11 +98,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDatastoreProperties DeserializeMachineLearningDatastoreProperties(JsonElement element)
+        MachineLearningDatastoreProperties IJsonModel<MachineLearningDatastoreProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDatastoreProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDatastoreProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningDatastoreProperties DeserializeMachineLearningDatastoreProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,6 +155,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("credentials"u8))
@@ -179,8 +228,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningDatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningDatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault));
         }
+
+        BinaryData IPersistableModel<MachineLearningDatastoreProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDatastoreProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningDatastoreProperties IPersistableModel<MachineLearningDatastoreProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDatastoreProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningDatastoreProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningDatastoreProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

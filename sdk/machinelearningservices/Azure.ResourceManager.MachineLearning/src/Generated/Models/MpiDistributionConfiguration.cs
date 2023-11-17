@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> MPI distribution configuration. </summary>
     public partial class MpiDistributionConfiguration : MachineLearningDistributionConfiguration
     {
-        /// <summary> Initializes a new instance of MpiDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MpiDistributionConfiguration"/>. </summary>
         public MpiDistributionConfiguration()
         {
             DistributionType = DistributionType.Mpi;
         }
 
-        /// <summary> Initializes a new instance of MpiDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MpiDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="processCountPerInstance"> Number of processes per MPI node. </param>
-        internal MpiDistributionConfiguration(DistributionType distributionType, int? processCountPerInstance) : base(distributionType)
+        internal MpiDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? processCountPerInstance) : base(distributionType, serializedAdditionalRawData)
         {
             ProcessCountPerInstance = processCountPerInstance;
             DistributionType = distributionType;

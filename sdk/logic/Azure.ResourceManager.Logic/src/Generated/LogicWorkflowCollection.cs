@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), _logicWorkflowWorkflowsClientDiagnostics, Pipeline, "LogicWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), _logicWorkflowWorkflowsClientDiagnostics, Pipeline, "LogicWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), _logicWorkflowWorkflowsClientDiagnostics, Pipeline, "LogicWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), _logicWorkflowWorkflowsClientDiagnostics, Pipeline, "LogicWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

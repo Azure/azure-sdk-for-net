@@ -5,12 +5,121 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class SQLSourceParameterPatch : IUtf8JsonSerializable
+    internal partial class SQLSourceParameterPatch : IUtf8JsonSerializable, IJsonModel<SQLSourceParameterPatch>
     {
+        void IJsonModel<SQLSourceParameterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            if ((options.Format != "W" || ((IPersistableModel<SQLSourceParameterPatch>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SQLSourceParameterPatch>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SQLSourceParameterPatch IJsonModel<SQLSourceParameterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SQLSourceParameterPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSQLSourceParameterPatch(document.RootElement, options);
+        }
+
+        internal static SQLSourceParameterPatch DeserializeSQLSourceParameterPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> connectionString = default;
+            Optional<string> query = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("connectionString"u8))
+                {
+                    connectionString = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("query"u8))
+                {
+                    query = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SQLSourceParameterPatch(connectionString.Value, query.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SQLSourceParameterPatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SQLSourceParameterPatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SQLSourceParameterPatch IPersistableModel<SQLSourceParameterPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SQLSourceParameterPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSQLSourceParameterPatch(document.RootElement, options);
+        }
+
+        string IPersistableModel<SQLSourceParameterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

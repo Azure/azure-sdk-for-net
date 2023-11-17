@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +16,179 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class LogicWorkflowRunActionData
+    public partial class LogicWorkflowRunActionData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRunActionData>
     {
-        internal static LogicWorkflowRunActionData DeserializeLogicWorkflowRunActionData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunActionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LogicWorkflowRunActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LogicWorkflowRunActionData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LogicWorkflowRunActionData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Code))
+                {
+                    writer.WritePropertyName("code"u8);
+                    writer.WriteStringValue(Code);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    writer.WritePropertyName("error"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Error);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Error))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TrackingId))
+                {
+                    writer.WritePropertyName("trackingId"u8);
+                    writer.WriteStringValue(TrackingId.Value);
+                }
+            }
+            if (Optional.IsDefined(Correlation))
+            {
+                writer.WritePropertyName("correlation"u8);
+                writer.WriteObjectValue(Correlation);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InputsLink))
+                {
+                    writer.WritePropertyName("inputsLink"u8);
+                    writer.WriteObjectValue(InputsLink);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OutputsLink))
+                {
+                    writer.WritePropertyName("outputsLink"u8);
+                    writer.WriteObjectValue(OutputsLink);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TrackedProperties))
+                {
+                    writer.WritePropertyName("trackedProperties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TrackedProperties);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(TrackedProperties))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (Optional.IsCollectionDefined(RetryHistory))
+            {
+                writer.WritePropertyName("retryHistory"u8);
+                writer.WriteStartArray();
+                foreach (var item in RetryHistory)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LogicWorkflowRunActionData IJsonModel<LogicWorkflowRunActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRunActionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowRunActionData(document.RootElement, options);
+        }
+
+        internal static LogicWorkflowRunActionData DeserializeLogicWorkflowRunActionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +208,8 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicContentLink> outputsLink = default;
             Optional<BinaryData> trackedProperties = default;
             Optional<IReadOnlyList<LogicWorkRetryHistory>> retryHistory = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -175,8 +348,38 @@ namespace Azure.ResourceManager.Logic
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicWorkflowRunActionData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogicWorkflowRunActionData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicWorkflowRunActionData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRunActionData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LogicWorkflowRunActionData IPersistableModel<LogicWorkflowRunActionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowRunActionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowRunActionData(document.RootElement, options);
+        }
+
+        string IPersistableModel<LogicWorkflowRunActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

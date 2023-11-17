@@ -5,25 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class ExtensionValueData : IUtf8JsonSerializable
+    public partial class ExtensionValueData : IUtf8JsonSerializable, IJsonModel<ExtensionValueData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtensionValueData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExtensionValueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExtensionValueData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExtensionValueData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExtensionType))
+                {
+                    writer.WritePropertyName("extensionType"u8);
+                    writer.WriteStringValue(ExtensionType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Publisher))
+                {
+                    writer.WritePropertyName("publisher"u8);
+                    writer.WriteStringValue(Publisher);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtensionValueData DeserializeExtensionValueData(JsonElement element)
+        ExtensionValueData IJsonModel<ExtensionValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtensionValueData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtensionValueData(document.RootElement, options);
+        }
+
+        internal static ExtensionValueData DeserializeExtensionValueData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +122,8 @@ namespace Azure.ResourceManager.HybridCompute
             Optional<string> version = default;
             Optional<string> extensionType = default;
             Optional<string> publisher = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -88,8 +177,38 @@ namespace Azure.ResourceManager.HybridCompute
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtensionValueData(id, name, type, systemData.Value, version.Value, extensionType.Value, publisher.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExtensionValueData(id, name, type, systemData.Value, version.Value, extensionType.Value, publisher.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExtensionValueData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtensionValueData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExtensionValueData IPersistableModel<ExtensionValueData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtensionValueData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExtensionValueData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExtensionValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

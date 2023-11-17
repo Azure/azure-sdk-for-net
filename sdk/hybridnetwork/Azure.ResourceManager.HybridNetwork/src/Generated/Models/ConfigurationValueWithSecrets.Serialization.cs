@@ -5,20 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ConfigurationValueWithSecrets : IUtf8JsonSerializable
+    public partial class ConfigurationValueWithSecrets : IUtf8JsonSerializable, IJsonModel<ConfigurationValueWithSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationValueWithSecrets>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConfigurationValueWithSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConfigurationValueWithSecrets>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConfigurationValueWithSecrets>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SecretConfigurationValue))
             {
                 writer.WritePropertyName("secretConfigurationValue"u8);
                 writer.WriteStringValue(SecretConfigurationValue);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherName))
+                {
+                    writer.WritePropertyName("publisherName"u8);
+                    writer.WriteStringValue(PublisherName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherScope))
+                {
+                    writer.WritePropertyName("publisherScope"u8);
+                    writer.WriteStringValue(PublisherScope.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConfigurationGroupSchemaName))
+                {
+                    writer.WritePropertyName("configurationGroupSchemaName"u8);
+                    writer.WriteStringValue(ConfigurationGroupSchemaName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConfigurationGroupSchemaOfferingLocation))
+                {
+                    writer.WritePropertyName("configurationGroupSchemaOfferingLocation"u8);
+                    writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation);
+                }
             }
             if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {
@@ -27,11 +78,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationValueWithSecrets DeserializeConfigurationValueWithSecrets(JsonElement element)
+        ConfigurationValueWithSecrets IJsonModel<ConfigurationValueWithSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigurationValueWithSecrets(document.RootElement, options);
+        }
+
+        internal static ConfigurationValueWithSecrets DeserializeConfigurationValueWithSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +124,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> configurationGroupSchemaOfferingLocation = default;
             Optional<DeploymentResourceIdReference> configurationGroupSchemaResourceReference = default;
             ConfigurationGroupValueConfigurationType configurationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretConfigurationValue"u8))
@@ -98,8 +180,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     configurationType = new ConfigurationGroupValueConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfigurationValueWithSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), configurationGroupSchemaName.Value, configurationGroupSchemaOfferingLocation.Value, configurationGroupSchemaResourceReference.Value, configurationType, secretConfigurationValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConfigurationValueWithSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), configurationGroupSchemaName.Value, configurationGroupSchemaOfferingLocation.Value, configurationGroupSchemaResourceReference.Value, configurationType, serializedAdditionalRawData, secretConfigurationValue.Value);
         }
+
+        BinaryData IPersistableModel<ConfigurationValueWithSecrets>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConfigurationValueWithSecrets IPersistableModel<ConfigurationValueWithSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConfigurationValueWithSecrets(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConfigurationValueWithSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

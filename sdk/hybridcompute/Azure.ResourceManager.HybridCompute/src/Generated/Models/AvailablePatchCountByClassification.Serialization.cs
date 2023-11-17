@@ -5,15 +5,133 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class AvailablePatchCountByClassification
+    public partial class AvailablePatchCountByClassification : IUtf8JsonSerializable, IJsonModel<AvailablePatchCountByClassification>
     {
-        internal static AvailablePatchCountByClassification DeserializeAvailablePatchCountByClassification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailablePatchCountByClassification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AvailablePatchCountByClassification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AvailablePatchCountByClassification>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AvailablePatchCountByClassification>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Security))
+                {
+                    writer.WritePropertyName("security"u8);
+                    writer.WriteNumberValue(Security.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Critical))
+                {
+                    writer.WritePropertyName("critical"u8);
+                    writer.WriteNumberValue(Critical.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Definition))
+                {
+                    writer.WritePropertyName("definition"u8);
+                    writer.WriteNumberValue(Definition.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdateRollup))
+                {
+                    writer.WritePropertyName("updateRollup"u8);
+                    writer.WriteNumberValue(UpdateRollup.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FeaturePack))
+                {
+                    writer.WritePropertyName("featurePack"u8);
+                    writer.WriteNumberValue(FeaturePack.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServicePack))
+                {
+                    writer.WritePropertyName("servicePack"u8);
+                    writer.WriteNumberValue(ServicePack.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Tools))
+                {
+                    writer.WritePropertyName("tools"u8);
+                    writer.WriteNumberValue(Tools.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Updates))
+                {
+                    writer.WritePropertyName("updates"u8);
+                    writer.WriteNumberValue(Updates.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Other))
+                {
+                    writer.WritePropertyName("other"u8);
+                    writer.WriteNumberValue(Other.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AvailablePatchCountByClassification IJsonModel<AvailablePatchCountByClassification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailablePatchCountByClassification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailablePatchCountByClassification(document.RootElement, options);
+        }
+
+        internal static AvailablePatchCountByClassification DeserializeAvailablePatchCountByClassification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +145,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<int> tools = default;
             Optional<int> updates = default;
             Optional<int> other = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("security"u8))
@@ -110,8 +230,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     other = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailablePatchCountByClassification(Optional.ToNullable(security), Optional.ToNullable(critical), Optional.ToNullable(definition), Optional.ToNullable(updateRollup), Optional.ToNullable(featurePack), Optional.ToNullable(servicePack), Optional.ToNullable(tools), Optional.ToNullable(updates), Optional.ToNullable(other));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AvailablePatchCountByClassification(Optional.ToNullable(security), Optional.ToNullable(critical), Optional.ToNullable(definition), Optional.ToNullable(updateRollup), Optional.ToNullable(featurePack), Optional.ToNullable(servicePack), Optional.ToNullable(tools), Optional.ToNullable(updates), Optional.ToNullable(other), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvailablePatchCountByClassification>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailablePatchCountByClassification)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AvailablePatchCountByClassification IPersistableModel<AvailablePatchCountByClassification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailablePatchCountByClassification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAvailablePatchCountByClassification(document.RootElement, options);
+        }
+
+        string IPersistableModel<AvailablePatchCountByClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

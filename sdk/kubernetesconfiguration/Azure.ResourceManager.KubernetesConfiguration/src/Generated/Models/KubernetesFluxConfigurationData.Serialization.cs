@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,11 +16,41 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class KubernetesFluxConfigurationData : IUtf8JsonSerializable
+    public partial class KubernetesFluxConfigurationData : IUtf8JsonSerializable, IJsonModel<KubernetesFluxConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesFluxConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubernetesFluxConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<KubernetesFluxConfigurationData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<KubernetesFluxConfigurationData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Scope))
@@ -113,12 +145,152 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationProtectedSettings");
                 }
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Statuses))
+                {
+                    if (Statuses != null)
+                    {
+                        writer.WritePropertyName("statuses"u8);
+                        writer.WriteStartArray();
+                        foreach (var item in Statuses)
+                        {
+                            writer.WriteObjectValue(item);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
+                    {
+                        writer.WriteNull("statuses");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RepositoryPublicKey))
+                {
+                    if (RepositoryPublicKey != null)
+                    {
+                        writer.WritePropertyName("repositoryPublicKey"u8);
+                        writer.WriteStringValue(RepositoryPublicKey);
+                    }
+                    else
+                    {
+                        writer.WriteNull("repositoryPublicKey");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceSyncedCommitId))
+                {
+                    if (SourceSyncedCommitId != null)
+                    {
+                        writer.WritePropertyName("sourceSyncedCommitId"u8);
+                        writer.WriteStringValue(SourceSyncedCommitId);
+                    }
+                    else
+                    {
+                        writer.WriteNull("sourceSyncedCommitId");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceUpdatedOn))
+                {
+                    if (SourceUpdatedOn != null)
+                    {
+                        writer.WritePropertyName("sourceUpdatedAt"u8);
+                        writer.WriteStringValue(SourceUpdatedOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("sourceUpdatedAt");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StatusUpdatedOn))
+                {
+                    if (StatusUpdatedOn != null)
+                    {
+                        writer.WritePropertyName("statusUpdatedAt"u8);
+                        writer.WriteStringValue(StatusUpdatedOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("statusUpdatedAt");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ComplianceState))
+                {
+                    writer.WritePropertyName("complianceState"u8);
+                    writer.WriteStringValue(ComplianceState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    if (ErrorMessage != null)
+                    {
+                        writer.WritePropertyName("errorMessage"u8);
+                        writer.WriteStringValue(ErrorMessage);
+                    }
+                    else
+                    {
+                        writer.WriteNull("errorMessage");
+                    }
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesFluxConfigurationData DeserializeKubernetesFluxConfigurationData(JsonElement element)
+        KubernetesFluxConfigurationData IJsonModel<KubernetesFluxConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesFluxConfigurationData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesFluxConfigurationData(document.RootElement, options);
+        }
+
+        internal static KubernetesFluxConfigurationData DeserializeKubernetesFluxConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -144,6 +316,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Optional<KubernetesFluxComplianceState> complianceState = default;
             Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
             Optional<string> errorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -357,8 +531,38 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesFluxConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(scope), @namespace.Value, Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), Optional.ToList(statuses), repositoryPublicKey.Value, sourceSyncedCommitId.Value, Optional.ToNullable(sourceUpdatedAt), Optional.ToNullable(statusUpdatedAt), Optional.ToNullable(complianceState), Optional.ToNullable(provisioningState), errorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KubernetesFluxConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(scope), @namespace.Value, Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), Optional.ToList(statuses), repositoryPublicKey.Value, sourceSyncedCommitId.Value, Optional.ToNullable(sourceUpdatedAt), Optional.ToNullable(statusUpdatedAt), Optional.ToNullable(complianceState), Optional.ToNullable(provisioningState), errorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesFluxConfigurationData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesFluxConfigurationData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KubernetesFluxConfigurationData IPersistableModel<KubernetesFluxConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesFluxConfigurationData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKubernetesFluxConfigurationData(document.RootElement, options);
+        }
+
+        string IPersistableModel<KubernetesFluxConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

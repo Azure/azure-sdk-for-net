@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MonitoringInputDataBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownMonitoringInputDataBase))]
+    public partial class MonitoringInputDataBase : IUtf8JsonSerializable, IJsonModel<MonitoringInputDataBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringInputDataBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitoringInputDataBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MonitoringInputDataBase>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MonitoringInputDataBase>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Columns))
             {
@@ -51,11 +62,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobInputType.ToString());
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitoringInputDataBase DeserializeMonitoringInputDataBase(JsonElement element)
+        MonitoringInputDataBase IJsonModel<MonitoringInputDataBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringInputDataBase(document.RootElement, options);
+        }
+
+        internal static MonitoringInputDataBase DeserializeMonitoringInputDataBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,5 +111,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return UnknownMonitoringInputDataBase.DeserializeUnknownMonitoringInputDataBase(element);
         }
+
+        BinaryData IPersistableModel<MonitoringInputDataBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitoringInputDataBase IPersistableModel<MonitoringInputDataBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMonitoringInputDataBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<MonitoringInputDataBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

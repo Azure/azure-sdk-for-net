@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureOperatorNexusArmTemplateDeployMappingRuleProfile : IUtf8JsonSerializable
+    public partial class AzureOperatorNexusArmTemplateDeployMappingRuleProfile : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateMappingRuleProfile))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureOperatorNexusArmTemplateDeployMappingRuleProfile DeserializeAzureOperatorNexusArmTemplateDeployMappingRuleProfile(JsonElement element)
+        AzureOperatorNexusArmTemplateDeployMappingRuleProfile IJsonModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureOperatorNexusArmTemplateDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureOperatorNexusArmTemplateDeployMappingRuleProfile(document.RootElement, options);
+        }
+
+        internal static AzureOperatorNexusArmTemplateDeployMappingRuleProfile DeserializeAzureOperatorNexusArmTemplateDeployMappingRuleProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ArmTemplateMappingRuleProfile> templateMappingRuleProfile = default;
             Optional<ApplicationEnablement> applicationEnablement = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateMappingRuleProfile"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     applicationEnablement = new ApplicationEnablement(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureOperatorNexusArmTemplateDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), templateMappingRuleProfile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureOperatorNexusArmTemplateDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), serializedAdditionalRawData, templateMappingRuleProfile.Value);
         }
+
+        BinaryData IPersistableModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureOperatorNexusArmTemplateDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureOperatorNexusArmTemplateDeployMappingRuleProfile IPersistableModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureOperatorNexusArmTemplateDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureOperatorNexusArmTemplateDeployMappingRuleProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureOperatorNexusArmTemplateDeployMappingRuleProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

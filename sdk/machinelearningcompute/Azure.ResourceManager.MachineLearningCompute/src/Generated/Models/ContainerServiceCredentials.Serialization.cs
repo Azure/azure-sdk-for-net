@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class ContainerServiceCredentials
+    public partial class ContainerServiceCredentials : IUtf8JsonSerializable, IJsonModel<ContainerServiceCredentials>
     {
-        internal static ContainerServiceCredentials DeserializeContainerServiceCredentials(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerServiceCredentials>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerServiceCredentials>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AcsKubeConfig))
+                {
+                    writer.WritePropertyName("acsKubeConfig"u8);
+                    writer.WriteStringValue(AcsKubeConfig);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServicePrincipalConfiguration))
+                {
+                    writer.WritePropertyName("servicePrincipalConfiguration"u8);
+                    writer.WriteObjectValue(ServicePrincipalConfiguration);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ImagePullSecretName))
+                {
+                    writer.WritePropertyName("imagePullSecretName"u8);
+                    writer.WriteStringValue(ImagePullSecretName);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerServiceCredentials IJsonModel<ContainerServiceCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceCredentials(document.RootElement, options);
+        }
+
+        internal static ContainerServiceCredentials DeserializeContainerServiceCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<string> acsKubeConfig = default;
             Optional<ServicePrincipalProperties> servicePrincipalConfiguration = default;
             Optional<string> imagePullSecretName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("acsKubeConfig"u8))
@@ -42,8 +114,38 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     imagePullSecretName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceCredentials(acsKubeConfig.Value, servicePrincipalConfiguration.Value, imagePullSecretName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceCredentials(acsKubeConfig.Value, servicePrincipalConfiguration.Value, imagePullSecretName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceCredentials>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerServiceCredentials IPersistableModel<ContainerServiceCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerServiceCredentials(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerServiceCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
