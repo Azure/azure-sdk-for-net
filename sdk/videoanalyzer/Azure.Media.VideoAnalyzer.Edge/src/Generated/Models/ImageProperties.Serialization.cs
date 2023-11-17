@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class ImageProperties : IUtf8JsonSerializable
+    public partial class ImageProperties : IUtf8JsonSerializable, IJsonModel<ImageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ImageProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ImageProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Scale))
             {
@@ -25,17 +36,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageProperties DeserializeImageProperties(JsonElement element)
+        ImageProperties IJsonModel<ImageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageProperties(document.RootElement, options);
+        }
+
+        internal static ImageProperties DeserializeImageProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ImageScale> scale = default;
             Optional<ImageFormatProperties> format = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scale"u8))
@@ -56,8 +98,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     format = ImageFormatProperties.DeserializeImageFormatProperties(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageProperties(scale.Value, format.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageProperties(scale.Value, format.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ImageProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ImageProperties IPersistableModel<ImageProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeImageProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ImageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

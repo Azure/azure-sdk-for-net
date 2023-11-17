@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobInputProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownInputProperties))]
+    public partial class StreamingJobInputProperties : IUtf8JsonSerializable, IJsonModel<StreamingJobInputProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobInputProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamingJobInputProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StreamingJobInputProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StreamingJobInputProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
@@ -21,6 +32,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Diagnostics))
+                {
+                    writer.WritePropertyName("diagnostics"u8);
+                    writer.WriteObjectValue(Diagnostics);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
             }
             if (Optional.IsDefined(Compression))
             {
@@ -37,11 +64,40 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamingJobInputProperties DeserializeStreamingJobInputProperties(JsonElement element)
+        StreamingJobInputProperties IJsonModel<StreamingJobInputProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingJobInputProperties(document.RootElement, options);
+        }
+
+        internal static StreamingJobInputProperties DeserializeStreamingJobInputProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,5 +112,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             return UnknownInputProperties.DeserializeUnknownInputProperties(element);
         }
+
+        BinaryData IPersistableModel<StreamingJobInputProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamingJobInputProperties IPersistableModel<StreamingJobInputProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamingJobInputProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<StreamingJobInputProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

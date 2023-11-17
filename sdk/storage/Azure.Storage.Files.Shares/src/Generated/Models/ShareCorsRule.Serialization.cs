@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareCorsRule : IXmlSerializable
+    public partial class ShareCorsRule : IXmlSerializable, IPersistableModel<ShareCorsRule>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -34,7 +38,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareCorsRule DeserializeShareCorsRule(XElement element)
+        internal static ShareCorsRule DeserializeShareCorsRule(XElement element, ModelReaderWriterOptions options = null)
         {
             string allowedOrigins = default;
             string allowedMethods = default;
@@ -61,7 +65,43 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 maxAgeInSeconds = (int)maxAgeInSecondsElement;
             }
-            return new ShareCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new ShareCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds, default);
         }
+
+        BinaryData IPersistableModel<ShareCorsRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ShareCorsRule>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareCorsRule IPersistableModel<ShareCorsRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ShareCorsRule)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeShareCorsRule(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<ShareCorsRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

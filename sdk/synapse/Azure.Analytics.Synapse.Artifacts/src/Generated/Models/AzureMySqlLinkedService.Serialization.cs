@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureMySqlLinkedServiceConverter))]
-    public partial class AzureMySqlLinkedService : IUtf8JsonSerializable
+    public partial class AzureMySqlLinkedService : IUtf8JsonSerializable, IJsonModel<AzureMySqlLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMySqlLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureMySqlLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureMySqlLinkedService>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureMySqlLinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -80,8 +89,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMySqlLinkedService DeserializeAzureMySqlLinkedService(JsonElement element)
+        AzureMySqlLinkedService IJsonModel<AzureMySqlLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMySqlLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMySqlLinkedService(document.RootElement, options);
+        }
+
+        internal static AzureMySqlLinkedService DeserializeAzureMySqlLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -192,6 +215,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMySqlLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password.Value, encryptedCredential.Value);
         }
+
+        BinaryData IPersistableModel<AzureMySqlLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMySqlLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureMySqlLinkedService IPersistableModel<AzureMySqlLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMySqlLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureMySqlLinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureMySqlLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureMySqlLinkedServiceConverter : JsonConverter<AzureMySqlLinkedService>
         {

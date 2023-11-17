@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StackMinorVersion : IUtf8JsonSerializable
+    public partial class StackMinorVersion : IUtf8JsonSerializable, IJsonModel<StackMinorVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StackMinorVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StackMinorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StackMinorVersion>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StackMinorVersion>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayVersion))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isRemoteDebuggingEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StackMinorVersion DeserializeStackMinorVersion(JsonElement element)
+        StackMinorVersion IJsonModel<StackMinorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StackMinorVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStackMinorVersion(document.RootElement, options);
+        }
+
+        internal static StackMinorVersion DeserializeStackMinorVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> runtimeVersion = default;
             Optional<bool> isDefault = default;
             Optional<bool> isRemoteDebuggingEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayVersion"u8))
@@ -78,8 +120,38 @@ namespace Azure.ResourceManager.AppService.Models
                     isRemoteDebuggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StackMinorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isRemoteDebuggingEnabled));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StackMinorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isRemoteDebuggingEnabled), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StackMinorVersion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StackMinorVersion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StackMinorVersion IPersistableModel<StackMinorVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StackMinorVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStackMinorVersion(document.RootElement, options);
+        }
+
+        string IPersistableModel<StackMinorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

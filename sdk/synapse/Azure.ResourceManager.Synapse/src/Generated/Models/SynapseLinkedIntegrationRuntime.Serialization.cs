@@ -6,15 +6,100 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseLinkedIntegrationRuntime
+    public partial class SynapseLinkedIntegrationRuntime : IUtf8JsonSerializable, IJsonModel<SynapseLinkedIntegrationRuntime>
     {
-        internal static SynapseLinkedIntegrationRuntime DeserializeSynapseLinkedIntegrationRuntime(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseLinkedIntegrationRuntime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseLinkedIntegrationRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SynapseLinkedIntegrationRuntime>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SynapseLinkedIntegrationRuntime>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataFactoryName))
+                {
+                    writer.WritePropertyName("dataFactoryName"u8);
+                    writer.WriteStringValue(DataFactoryName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataFactoryLocation))
+                {
+                    writer.WritePropertyName("dataFactoryLocation"u8);
+                    writer.WriteStringValue(DataFactoryLocation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreateOn))
+                {
+                    writer.WritePropertyName("createTime"u8);
+                    writer.WriteStringValue(CreateOn.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SynapseLinkedIntegrationRuntime IJsonModel<SynapseLinkedIntegrationRuntime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseLinkedIntegrationRuntime(document.RootElement, options);
+        }
+
+        internal static SynapseLinkedIntegrationRuntime DeserializeSynapseLinkedIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +109,8 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> dataFactoryName = default;
             Optional<string> dataFactoryLocation = default;
             Optional<DateTimeOffset> createTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -55,8 +142,38 @@ namespace Azure.ResourceManager.Synapse.Models
                     createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseLinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, dataFactoryLocation.Value, Optional.ToNullable(createTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseLinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, dataFactoryLocation.Value, Optional.ToNullable(createTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseLinkedIntegrationRuntime>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseLinkedIntegrationRuntime IPersistableModel<SynapseLinkedIntegrationRuntime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseLinkedIntegrationRuntime(document.RootElement, options);
+        }
+
+        string IPersistableModel<SynapseLinkedIntegrationRuntime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

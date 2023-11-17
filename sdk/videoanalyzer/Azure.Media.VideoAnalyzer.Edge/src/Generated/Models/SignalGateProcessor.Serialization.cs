@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SignalGateProcessor : IUtf8JsonSerializable
+    public partial class SignalGateProcessor : IUtf8JsonSerializable, IJsonModel<SignalGateProcessor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalGateProcessor>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SignalGateProcessor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SignalGateProcessor>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SignalGateProcessor>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActivationEvaluationWindow))
             {
@@ -47,11 +57,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SignalGateProcessor DeserializeSignalGateProcessor(JsonElement element)
+        SignalGateProcessor IJsonModel<SignalGateProcessor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SignalGateProcessor)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalGateProcessor(document.RootElement, options);
+        }
+
+        internal static SignalGateProcessor DeserializeSignalGateProcessor(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +102,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activationEvaluationWindow"u8))
@@ -105,8 +146,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     inputs = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SignalGateProcessor(type, name, inputs, activationEvaluationWindow.Value, activationSignalOffset.Value, minimumActivationTime.Value, maximumActivationTime.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SignalGateProcessor(type, name, inputs, serializedAdditionalRawData, activationEvaluationWindow.Value, activationSignalOffset.Value, minimumActivationTime.Value, maximumActivationTime.Value);
         }
+
+        BinaryData IPersistableModel<SignalGateProcessor>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SignalGateProcessor)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SignalGateProcessor IPersistableModel<SignalGateProcessor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SignalGateProcessor)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSignalGateProcessor(document.RootElement, options);
+        }
+
+        string IPersistableModel<SignalGateProcessor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

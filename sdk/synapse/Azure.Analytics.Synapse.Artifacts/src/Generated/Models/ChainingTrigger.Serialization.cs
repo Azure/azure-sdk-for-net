@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ChainingTriggerConverter))]
-    public partial class ChainingTrigger : IUtf8JsonSerializable
+    public partial class ChainingTrigger : IUtf8JsonSerializable, IJsonModel<ChainingTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChainingTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ChainingTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ChainingTrigger>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ChainingTrigger>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
             writer.WriteObjectValue(Pipeline);
@@ -27,6 +36,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RuntimeState))
+                {
+                    writer.WritePropertyName("runtimeState"u8);
+                    writer.WriteStringValue(RuntimeState.Value.ToString());
+                }
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
@@ -63,8 +80,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ChainingTrigger DeserializeChainingTrigger(JsonElement element)
+        ChainingTrigger IJsonModel<ChainingTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChainingTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChainingTrigger(document.RootElement, options);
+        }
+
+        internal static ChainingTrigger DeserializeChainingTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +188,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ChainingTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, dependsOn, runDimension);
         }
+
+        BinaryData IPersistableModel<ChainingTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChainingTrigger)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ChainingTrigger IPersistableModel<ChainingTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChainingTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeChainingTrigger(document.RootElement, options);
+        }
+
+        string IPersistableModel<ChainingTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ChainingTriggerConverter : JsonConverter<ChainingTrigger>
         {

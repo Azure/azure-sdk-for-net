@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownExportSettings : IUtf8JsonSerializable
+    internal partial class UnknownExportSettings : IUtf8JsonSerializable, IJsonModel<ExportSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExportSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExportSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExportSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -26,8 +36,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownExportSettings DeserializeUnknownExportSettings(JsonElement element)
+        ExportSettings IJsonModel<ExportSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownExportSettings(document.RootElement, options);
+        }
+
+        internal static UnknownExportSettings DeserializeUnknownExportSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,5 +71,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new UnknownExportSettings(type, additionalProperties);
         }
+
+        BinaryData IPersistableModel<ExportSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExportSettings IPersistableModel<ExportSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownExportSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExportSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

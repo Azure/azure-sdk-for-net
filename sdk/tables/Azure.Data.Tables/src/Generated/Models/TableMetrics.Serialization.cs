@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -12,7 +16,7 @@ using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableMetrics : IXmlSerializable
+    public partial class TableMetrics : IXmlSerializable, IPersistableModel<TableMetrics>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -39,7 +43,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableMetrics DeserializeTableMetrics(XElement element)
+        internal static TableMetrics DeserializeTableMetrics(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool enabled = default;
@@ -61,7 +65,43 @@ namespace Azure.Data.Tables.Models
             {
                 retentionPolicy = TableRetentionPolicy.DeserializeTableRetentionPolicy(retentionPolicyElement);
             }
-            return new TableMetrics(version, enabled, includeApis, retentionPolicy);
+            return new TableMetrics(version, enabled, includeApis, retentionPolicy, default);
         }
+
+        BinaryData IPersistableModel<TableMetrics>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<TableMetrics>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableMetrics IPersistableModel<TableMetrics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableMetrics)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeTableMetrics(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<TableMetrics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

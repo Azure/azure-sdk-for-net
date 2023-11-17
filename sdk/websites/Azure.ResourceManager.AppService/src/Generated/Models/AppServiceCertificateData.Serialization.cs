@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceCertificateData : IUtf8JsonSerializable
+    public partial class AppServiceCertificateData : IUtf8JsonSerializable, IJsonModel<AppServiceCertificateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCertificateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppServiceCertificateData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppServiceCertificateData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -36,6 +46,29 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultId))
@@ -48,12 +81,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceCertificateData DeserializeAppServiceCertificateData(JsonElement element)
+        AppServiceCertificateData IJsonModel<AppServiceCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceCertificateData(document.RootElement, options);
+        }
+
+        internal static AppServiceCertificateData DeserializeAppServiceCertificateData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +138,8 @@ namespace Azure.ResourceManager.AppService
             Optional<ResourceIdentifier> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
             Optional<KeyVaultSecretStatus> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -153,8 +225,38 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceCertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceCertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceCertificateData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceCertificateData IPersistableModel<AppServiceCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceCertificateData(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppServiceCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

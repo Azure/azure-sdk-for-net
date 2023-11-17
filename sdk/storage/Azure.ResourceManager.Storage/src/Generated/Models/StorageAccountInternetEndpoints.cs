@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The URIs that are used to perform a retrieval of a public blob, file, web or dfs object via a internet routing endpoint. </summary>
     public partial class StorageAccountInternetEndpoints
     {
-        /// <summary> Initializes a new instance of StorageAccountInternetEndpoints. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountInternetEndpoints"/>. </summary>
         internal StorageAccountInternetEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountInternetEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountInternetEndpoints"/>. </summary>
         /// <param name="blobUri"> Gets the blob endpoint. </param>
         /// <param name="fileUri"> Gets the file endpoint. </param>
         /// <param name="webUri"> Gets the web endpoint. </param>
         /// <param name="dfsUri"> Gets the dfs endpoint. </param>
-        internal StorageAccountInternetEndpoints(Uri blobUri, Uri fileUri, Uri webUri, Uri dfsUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountInternetEndpoints(Uri blobUri, Uri fileUri, Uri webUri, Uri dfsUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
             FileUri = fileUri;
             WebUri = webUri;
             DfsUri = dfsUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the blob endpoint. </summary>

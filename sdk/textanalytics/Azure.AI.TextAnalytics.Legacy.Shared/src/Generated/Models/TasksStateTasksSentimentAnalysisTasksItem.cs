@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
@@ -13,21 +14,27 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasksSentimentAnalysisTasksItem. </summary>
     internal partial class TasksStateTasksSentimentAnalysisTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksSentimentAnalysisTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksSentimentAnalysisTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksSentimentAnalysisTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksSentimentAnalysisTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksSentimentAnalysisTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
-        internal TasksStateTasksSentimentAnalysisTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, State status, SentimentResponse results) : base(lastUpdateDateTime, taskName, status)
+        internal TasksStateTasksSentimentAnalysisTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, State status, IDictionary<string, BinaryData> serializedAdditionalRawData, SentimentResponse results) : base(lastUpdateDateTime, taskName, status, serializedAdditionalRawData)
         {
             Results = results;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksSentimentAnalysisTasksItem"/> for deserialization. </summary>
+        internal TasksStateTasksSentimentAnalysisTasksItem()
+        {
         }
 
         /// <summary> Gets the results. </summary>

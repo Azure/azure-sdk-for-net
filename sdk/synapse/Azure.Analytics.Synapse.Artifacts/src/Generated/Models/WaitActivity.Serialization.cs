@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(WaitActivityConverter))]
-    public partial class WaitActivity : IUtf8JsonSerializable
+    public partial class WaitActivity : IUtf8JsonSerializable, IJsonModel<WaitActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WaitActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WaitActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WaitActivity>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WaitActivity>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -71,8 +80,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static WaitActivity DeserializeWaitActivity(JsonElement element)
+        WaitActivity IJsonModel<WaitActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WaitActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWaitActivity(document.RootElement, options);
+        }
+
+        internal static WaitActivity DeserializeWaitActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,6 +195,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new WaitActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, waitTimeInSeconds);
         }
+
+        BinaryData IPersistableModel<WaitActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WaitActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WaitActivity IPersistableModel<WaitActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WaitActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWaitActivity(document.RootElement, options);
+        }
+
+        string IPersistableModel<WaitActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class WaitActivityConverter : JsonConverter<WaitActivity>
         {

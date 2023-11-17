@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class CredentialsBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownCredentialsBase))]
+    public partial class CredentialsBase : IUtf8JsonSerializable, IJsonModel<CredentialsBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CredentialsBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CredentialsBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CredentialsBase>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CredentialsBase>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CredentialsBase DeserializeCredentialsBase(JsonElement element)
+        CredentialsBase IJsonModel<CredentialsBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CredentialsBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCredentialsBase(document.RootElement, options);
+        }
+
+        internal static CredentialsBase DeserializeCredentialsBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +77,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             return UnknownCredentialsBase.DeserializeUnknownCredentialsBase(element);
         }
+
+        BinaryData IPersistableModel<CredentialsBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CredentialsBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CredentialsBase IPersistableModel<CredentialsBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CredentialsBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCredentialsBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<CredentialsBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

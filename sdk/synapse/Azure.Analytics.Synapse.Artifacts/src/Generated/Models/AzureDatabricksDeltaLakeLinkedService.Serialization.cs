@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDatabricksDeltaLakeLinkedServiceConverter))]
-    public partial class AzureDatabricksDeltaLakeLinkedService : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeLinkedService : IUtf8JsonSerializable, IJsonModel<AzureDatabricksDeltaLakeLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureDatabricksDeltaLakeLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureDatabricksDeltaLakeLinkedService>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureDatabricksDeltaLakeLinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -87,8 +96,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeLinkedService DeserializeAzureDatabricksDeltaLakeLinkedService(JsonElement element)
+        AzureDatabricksDeltaLakeLinkedService IJsonModel<AzureDatabricksDeltaLakeLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeLinkedService(document.RootElement, options);
+        }
+
+        internal static AzureDatabricksDeltaLakeLinkedService DeserializeAzureDatabricksDeltaLakeLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -215,6 +238,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken, clusterId.Value, encryptedCredential.Value, credential.Value);
         }
+
+        BinaryData IPersistableModel<AzureDatabricksDeltaLakeLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureDatabricksDeltaLakeLinkedService IPersistableModel<AzureDatabricksDeltaLakeLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureDatabricksDeltaLakeLinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureDatabricksDeltaLakeLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureDatabricksDeltaLakeLinkedServiceConverter : JsonConverter<AzureDatabricksDeltaLakeLinkedService>
         {

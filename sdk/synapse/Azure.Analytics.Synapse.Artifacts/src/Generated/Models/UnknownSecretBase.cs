@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownSecretBase. </summary>
     internal partial class UnknownSecretBase : SecretBase
     {
-        /// <summary> Initializes a new instance of UnknownSecretBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSecretBase"/>. </summary>
         /// <param name="type"> Type of the secret. </param>
-        internal UnknownSecretBase(string type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSecretBase(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
         }

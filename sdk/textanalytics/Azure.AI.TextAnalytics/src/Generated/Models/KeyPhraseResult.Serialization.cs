@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
@@ -12,10 +15,17 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class KeyPhraseResult : IUtf8JsonSerializable
+    internal partial class KeyPhraseResult : IUtf8JsonSerializable, IJsonModel<KeyPhraseResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyPhraseResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KeyPhraseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<KeyPhraseResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<KeyPhraseResult>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
@@ -38,11 +48,40 @@ namespace Azure.AI.TextAnalytics.Models
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KeyPhraseResult DeserializeKeyPhraseResult(JsonElement element)
+        KeyPhraseResult IJsonModel<KeyPhraseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyPhraseResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyPhraseResult(document.RootElement, options);
+        }
+
+        internal static KeyPhraseResult DeserializeKeyPhraseResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +90,8 @@ namespace Azure.AI.TextAnalytics.Models
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"u8))
@@ -87,8 +128,38 @@ namespace Azure.AI.TextAnalytics.Models
                     modelVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeyPhraseResult(errors, statistics.Value, modelVersion, documents);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KeyPhraseResult(errors, statistics.Value, modelVersion, serializedAdditionalRawData, documents);
         }
+
+        BinaryData IPersistableModel<KeyPhraseResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyPhraseResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KeyPhraseResult IPersistableModel<KeyPhraseResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyPhraseResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKeyPhraseResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<KeyPhraseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

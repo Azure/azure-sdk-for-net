@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(Db2LinkedServiceConverter))]
-    public partial class Db2LinkedService : IUtf8JsonSerializable
+    public partial class Db2LinkedService : IUtf8JsonSerializable, IJsonModel<Db2LinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Db2LinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<Db2LinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<Db2LinkedService>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<Db2LinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -107,8 +116,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static Db2LinkedService DeserializeDb2LinkedService(JsonElement element)
+        Db2LinkedService IJsonModel<Db2LinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Db2LinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDb2LinkedService(document.RootElement, options);
+        }
+
+        internal static Db2LinkedService DeserializeDb2LinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -275,6 +298,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new Db2LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, server, database, Optional.ToNullable(authenticationType), username.Value, password.Value, packageCollection.Value, certificateCommonName.Value, encryptedCredential.Value);
         }
+
+        BinaryData IPersistableModel<Db2LinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Db2LinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        Db2LinkedService IPersistableModel<Db2LinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Db2LinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDb2LinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<Db2LinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class Db2LinkedServiceConverter : JsonConverter<Db2LinkedService>
         {

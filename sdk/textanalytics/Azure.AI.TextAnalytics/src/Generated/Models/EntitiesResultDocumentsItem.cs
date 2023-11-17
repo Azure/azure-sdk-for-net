@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The EntitiesResultDocumentsItem. </summary>
     internal partial class EntitiesResultDocumentsItem : EntitiesDocumentResult
     {
-        /// <summary> Initializes a new instance of EntitiesResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
@@ -27,12 +27,18 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(entities, nameof(entities));
         }
 
-        /// <summary> Initializes a new instance of EntitiesResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        internal EntitiesResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<Entity> entities) : base(id, warnings, statistics, entities)
+        internal EntitiesResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<Entity> entities) : base(id, warnings, statistics, serializedAdditionalRawData, entities)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesResultDocumentsItem"/> for deserialization. </summary>
+        internal EntitiesResultDocumentsItem()
         {
         }
     }

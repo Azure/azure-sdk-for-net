@@ -5,35 +5,122 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteUser : IUtf8JsonSerializable
+    public partial class StaticSiteUser : IUtf8JsonSerializable, IJsonModel<StaticSiteUser>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteUser>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StaticSiteUser>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StaticSiteUser>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StaticSiteUser>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Provider))
+                {
+                    writer.WritePropertyName("provider"u8);
+                    writer.WriteStringValue(Provider);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UserId))
+                {
+                    writer.WritePropertyName("userId"u8);
+                    writer.WriteStringValue(UserId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+            }
             if (Optional.IsDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStringValue(Roles);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StaticSiteUser DeserializeStaticSiteUser(JsonElement element)
+        StaticSiteUser IJsonModel<StaticSiteUser>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticSiteUser)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticSiteUser(document.RootElement, options);
+        }
+
+        internal static StaticSiteUser DeserializeStaticSiteUser(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +134,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> userId = default;
             Optional<string> displayName = default;
             Optional<string> roles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -110,8 +199,38 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StaticSiteUser(id, name, type, systemData.Value, provider.Value, userId.Value, displayName.Value, roles.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StaticSiteUser(id, name, type, systemData.Value, provider.Value, userId.Value, displayName.Value, roles.Value, kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StaticSiteUser>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticSiteUser)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StaticSiteUser IPersistableModel<StaticSiteUser>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticSiteUser)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStaticSiteUser(document.RootElement, options);
+        }
+
+        string IPersistableModel<StaticSiteUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

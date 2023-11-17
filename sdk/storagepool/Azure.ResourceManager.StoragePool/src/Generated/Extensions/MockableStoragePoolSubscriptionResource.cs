@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "MockableStoragePoolSubscriptionResource.GetDiskPools", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "MockableStoragePoolSubscriptionResource.GetDiskPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "MockableStoragePoolSubscriptionResource.GetDiskPools", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "MockableStoragePoolSubscriptionResource.GetDiskPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

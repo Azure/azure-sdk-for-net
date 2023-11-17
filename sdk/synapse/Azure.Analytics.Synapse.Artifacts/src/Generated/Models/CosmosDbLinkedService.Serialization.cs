@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbLinkedServiceConverter))]
-    public partial class CosmosDbLinkedService : IUtf8JsonSerializable
+    public partial class CosmosDbLinkedService : IUtf8JsonSerializable, IJsonModel<CosmosDbLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDbLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDbLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CosmosDbLinkedService>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CosmosDbLinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -98,8 +107,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDbLinkedService DeserializeCosmosDbLinkedService(JsonElement element)
+        CosmosDbLinkedService IJsonModel<CosmosDbLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDbLinkedService(document.RootElement, options);
+        }
+
+        internal static CosmosDbLinkedService DeserializeCosmosDbLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -244,6 +267,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountEndpoint.Value, database.Value, accountKey.Value, encryptedCredential.Value, credential.Value);
         }
+
+        BinaryData IPersistableModel<CosmosDbLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDbLinkedService IPersistableModel<CosmosDbLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDbLinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<CosmosDbLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class CosmosDbLinkedServiceConverter : JsonConverter<CosmosDbLinkedService>
         {

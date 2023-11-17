@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlPoolConverter))]
-    public partial class SqlPool : IUtf8JsonSerializable
+    public partial class SqlPool : IUtf8JsonSerializable, IJsonModel<SqlPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlPool>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlPool>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlPool>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -37,6 +46,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Type))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(Type);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxSizeBytes))
@@ -85,11 +118,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(CreationDate.Value, "O");
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlPool DeserializeSqlPool(JsonElement element)
+        SqlPool IJsonModel<SqlPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPool)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlPool(document.RootElement, options);
+        }
+
+        internal static SqlPool DeserializeSqlPool(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +171,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> restorePointInTime = default;
             Optional<CreateMode> createMode = default;
             Optional<DateTimeOffset> creationDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -223,9 +287,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, Optional.ToNullable(createMode), Optional.ToNullable(creationDate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlPool(id.Value, name.Value, type.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, Optional.ToNullable(createMode), Optional.ToNullable(creationDate));
         }
+
+        BinaryData IPersistableModel<SqlPool>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPool)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlPool IPersistableModel<SqlPool>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPool)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlPool(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SqlPoolConverter : JsonConverter<SqlPool>
         {

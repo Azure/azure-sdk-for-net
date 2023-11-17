@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GoogleBigQueryObjectDatasetConverter))]
-    public partial class GoogleBigQueryObjectDataset : IUtf8JsonSerializable
+    public partial class GoogleBigQueryObjectDataset : IUtf8JsonSerializable, IJsonModel<GoogleBigQueryObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleBigQueryObjectDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GoogleBigQueryObjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GoogleBigQueryObjectDataset>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GoogleBigQueryObjectDataset>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -95,8 +104,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static GoogleBigQueryObjectDataset DeserializeGoogleBigQueryObjectDataset(JsonElement element)
+        GoogleBigQueryObjectDataset IJsonModel<GoogleBigQueryObjectDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleBigQueryObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleBigQueryObjectDataset(document.RootElement, options);
+        }
+
+        internal static GoogleBigQueryObjectDataset DeserializeGoogleBigQueryObjectDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -237,6 +260,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleBigQueryObjectDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value, table.Value, dataset.Value);
         }
+
+        BinaryData IPersistableModel<GoogleBigQueryObjectDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleBigQueryObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GoogleBigQueryObjectDataset IPersistableModel<GoogleBigQueryObjectDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleBigQueryObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGoogleBigQueryObjectDataset(document.RootElement, options);
+        }
+
+        string IPersistableModel<GoogleBigQueryObjectDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class GoogleBigQueryObjectDatasetConverter : JsonConverter<GoogleBigQueryObjectDataset>
         {

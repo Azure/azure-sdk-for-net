@@ -5,13 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Batch.Models
 {
-    internal partial class StorageError
+    internal partial class StorageError : IXmlSerializable, IPersistableModel<StorageError>
     {
-        internal static StorageError DeserializeStorageError(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "StorageError");
+            if (Optional.IsDefined(Message))
+            {
+                writer.WriteStartElement("Message");
+                writer.WriteValue(Message);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Code))
+            {
+                writer.WriteStartElement("Code");
+                writer.WriteValue(Code);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static StorageError DeserializeStorageError(XElement element, ModelReaderWriterOptions options = null)
         {
             string message = default;
             string code = default;
@@ -23,7 +47,43 @@ namespace Azure.Storage.Blobs.Batch.Models
             {
                 code = (string)codeElement;
             }
-            return new StorageError(message, code);
+            return new StorageError(message, code, default);
         }
+
+        BinaryData IPersistableModel<StorageError>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<StorageError>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        StorageError IPersistableModel<StorageError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageError)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeStorageError(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<StorageError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicySnapShot : IUtf8JsonSerializable
+    public partial class ManagementPolicySnapShot : IUtf8JsonSerializable, IJsonModel<ManagementPolicySnapShot>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicySnapShot>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagementPolicySnapShot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagementPolicySnapShot>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagementPolicySnapShot>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TierToCool))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagementPolicySnapShot DeserializeManagementPolicySnapShot(JsonElement element)
+        ManagementPolicySnapShot IJsonModel<ManagementPolicySnapShot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicySnapShot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementPolicySnapShot(document.RootElement, options);
+        }
+
+        internal static ManagementPolicySnapShot DeserializeManagementPolicySnapShot(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<DateAfterCreation> tierToCold = default;
             Optional<DateAfterCreation> tierToHot = default;
             Optional<DateAfterCreation> delete = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tierToCool"u8))
@@ -101,8 +143,38 @@ namespace Azure.ResourceManager.Storage.Models
                     delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagementPolicySnapShot(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagementPolicySnapShot(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagementPolicySnapShot>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicySnapShot)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagementPolicySnapShot IPersistableModel<ManagementPolicySnapShot>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicySnapShot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagementPolicySnapShot(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagementPolicySnapShot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

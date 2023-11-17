@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class QueryRequest : IUtf8JsonSerializable
+    internal partial class QueryRequest : IUtf8JsonSerializable, IJsonModel<QueryRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QueryRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<QueryRequest>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<QueryRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GetEvents))
             {
@@ -30,7 +41,110 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("aggregateSeries"u8);
                 writer.WriteObjectValue(AggregateSeries);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        QueryRequest IJsonModel<QueryRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryRequest(document.RootElement, options);
+        }
+
+        internal static QueryRequest DeserializeQueryRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<GetEvents> getEvents = default;
+            Optional<GetSeries> getSeries = default;
+            Optional<AggregateSeries> aggregateSeries = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("getEvents"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    getEvents = GetEvents.DeserializeGetEvents(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("getSeries"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    getSeries = GetSeries.DeserializeGetSeries(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("aggregateSeries"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aggregateSeries = AggregateSeries.DeserializeAggregateSeries(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueryRequest(getEvents.Value, getSeries.Value, aggregateSeries.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<QueryRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QueryRequest IPersistableModel<QueryRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQueryRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<QueryRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

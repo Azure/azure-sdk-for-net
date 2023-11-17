@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> List all existing live pipelines. </summary>
     public partial class LivePipelineListRequest : MethodRequest
     {
-        /// <summary> Initializes a new instance of LivePipelineListRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineListRequest"/>. </summary>
         public LivePipelineListRequest()
         {
             MethodName = "livePipelineList";
         }
 
-        /// <summary> Initializes a new instance of LivePipelineListRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineListRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
-        internal LivePipelineListRequest(string methodName, string apiVersion) : base(methodName, apiVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LivePipelineListRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(methodName, apiVersion, serializedAdditionalRawData)
         {
             MethodName = methodName ?? "livePipelineList";
         }

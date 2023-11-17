@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowReferenceConverter))]
-    public partial class DataFlowReference : IUtf8JsonSerializable
+    public partial class DataFlowReference : IUtf8JsonSerializable, IJsonModel<DataFlowReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFlowReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataFlowReference>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -52,8 +61,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFlowReference DeserializeDataFlowReference(JsonElement element)
+        DataFlowReference IJsonModel<DataFlowReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowReference(document.RootElement, options);
+        }
+
+        internal static DataFlowReference DeserializeDataFlowReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,6 +134,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFlowReference(type, referenceName, datasetParameters.Value, Optional.ToDictionary(parameters), additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFlowReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFlowReference IPersistableModel<DataFlowReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFlowReference(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataFlowReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class DataFlowReferenceConverter : JsonConverter<DataFlowReference>
         {

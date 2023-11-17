@@ -5,22 +5,89 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ServiceSpecification
+    public partial class ServiceSpecification : IUtf8JsonSerializable, IJsonModel<ServiceSpecification>
     {
-        internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServiceSpecification>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServiceSpecification>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(MetricSpecifications))
+            {
+                writer.WritePropertyName("metricSpecifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in MetricSpecifications)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LogSpecifications))
+            {
+                writer.WritePropertyName("logSpecifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in LogSpecifications)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceSpecification IJsonModel<ServiceSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceSpecification(document.RootElement, options);
+        }
+
+        internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
             Optional<IReadOnlyList<LogSpecification>> logSpecifications = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricSpecifications"u8))
@@ -51,8 +118,38 @@ namespace Azure.ResourceManager.AppService.Models
                     logSpecifications = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceSpecification(Optional.ToList(metricSpecifications), Optional.ToList(logSpecifications));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceSpecification(Optional.ToList(metricSpecifications), Optional.ToList(logSpecifications), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceSpecification IPersistableModel<ServiceSpecification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceSpecification(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServiceSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

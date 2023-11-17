@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(OrcSourceConverter))]
-    public partial class OrcSource : IUtf8JsonSerializable
+    public partial class OrcSource : IUtf8JsonSerializable, IJsonModel<OrcSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrcSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OrcSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OrcSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OrcSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StoreSettings))
             {
@@ -54,8 +63,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static OrcSource DeserializeOrcSource(JsonElement element)
+        OrcSource IJsonModel<OrcSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrcSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrcSource(document.RootElement, options);
+        }
+
+        internal static OrcSource DeserializeOrcSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,6 +148,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new OrcSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value, additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<OrcSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrcSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OrcSource IPersistableModel<OrcSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrcSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOrcSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<OrcSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class OrcSourceConverter : JsonConverter<OrcSource>
         {

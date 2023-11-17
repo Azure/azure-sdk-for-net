@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DomainRecommendationSearchContent : IUtf8JsonSerializable
+    public partial class DomainRecommendationSearchContent : IUtf8JsonSerializable, IJsonModel<DomainRecommendationSearchContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainRecommendationSearchContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DomainRecommendationSearchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DomainRecommendationSearchContent>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DomainRecommendationSearchContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Keywords))
             {
@@ -25,7 +36,96 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("maxDomainRecommendations"u8);
                 writer.WriteNumberValue(MaxDomainRecommendations.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DomainRecommendationSearchContent IJsonModel<DomainRecommendationSearchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainRecommendationSearchContent(document.RootElement, options);
+        }
+
+        internal static DomainRecommendationSearchContent DeserializeDomainRecommendationSearchContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> keywords = default;
+            Optional<int> maxDomainRecommendations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("keywords"u8))
+                {
+                    keywords = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxDomainRecommendations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxDomainRecommendations = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DomainRecommendationSearchContent(keywords.Value, Optional.ToNullable(maxDomainRecommendations), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DomainRecommendationSearchContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DomainRecommendationSearchContent IPersistableModel<DomainRecommendationSearchContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDomainRecommendationSearchContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<DomainRecommendationSearchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +15,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeConverter))]
-    public partial class IntegrationRuntime : IUtf8JsonSerializable
+    public partial class IntegrationRuntime : IUtf8JsonSerializable, IJsonModel<IntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IntegrationRuntime>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IntegrationRuntime>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -33,8 +42,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntime DeserializeIntegrationRuntime(JsonElement element)
+        IntegrationRuntime IJsonModel<IntegrationRuntime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntime(document.RootElement, options);
+        }
+
+        internal static IntegrationRuntime DeserializeIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +72,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             return UnknownIntegrationRuntime.DeserializeUnknownIntegrationRuntime(element);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntime>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IntegrationRuntime IPersistableModel<IntegrationRuntime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIntegrationRuntime(document.RootElement, options);
+        }
+
+        string IPersistableModel<IntegrationRuntime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class IntegrationRuntimeConverter : JsonConverter<IntegrationRuntime>
         {

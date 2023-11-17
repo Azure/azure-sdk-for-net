@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureMLBatchExecutionActivityConverter))]
-    public partial class AzureMLBatchExecutionActivity : IUtf8JsonSerializable
+    public partial class AzureMLBatchExecutionActivity : IUtf8JsonSerializable, IJsonModel<AzureMLBatchExecutionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLBatchExecutionActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureMLBatchExecutionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureMLBatchExecutionActivity>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureMLBatchExecutionActivity>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -117,8 +126,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMLBatchExecutionActivity DeserializeAzureMLBatchExecutionActivity(JsonElement element)
+        AzureMLBatchExecutionActivity IJsonModel<AzureMLBatchExecutionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMLBatchExecutionActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMLBatchExecutionActivity(document.RootElement, options);
+        }
+
+        internal static AzureMLBatchExecutionActivity DeserializeAzureMLBatchExecutionActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -284,6 +307,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMLBatchExecutionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToDictionary(globalParameters), Optional.ToDictionary(webServiceOutputs), Optional.ToDictionary(webServiceInputs));
         }
+
+        BinaryData IPersistableModel<AzureMLBatchExecutionActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMLBatchExecutionActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureMLBatchExecutionActivity IPersistableModel<AzureMLBatchExecutionActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMLBatchExecutionActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureMLBatchExecutionActivity(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureMLBatchExecutionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureMLBatchExecutionActivityConverter : JsonConverter<AzureMLBatchExecutionActivity>
         {

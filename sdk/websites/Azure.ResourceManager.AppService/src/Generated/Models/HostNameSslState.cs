@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SSL-enabled hostname. </summary>
     public partial class HostNameSslState
     {
-        /// <summary> Initializes a new instance of HostNameSslState. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostNameSslState"/>. </summary>
         public HostNameSslState()
         {
         }
 
-        /// <summary> Initializes a new instance of HostNameSslState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameSslState"/>. </summary>
         /// <param name="name"> Hostname. </param>
         /// <param name="sslState"> SSL type. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="toUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
         /// <param name="hostType"> Indicates whether the hostname is a standard or repository hostname. </param>
-        internal HostNameSslState(string name, HostNameBindingSslState? sslState, string virtualIP, string thumbprintString, bool? toUpdate, AppServiceHostType? hostType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostNameSslState(string name, HostNameBindingSslState? sslState, string virtualIP, string thumbprintString, bool? toUpdate, AppServiceHostType? hostType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SslState = sslState;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
             ThumbprintString = thumbprintString;
             ToUpdate = toUpdate;
             HostType = hostType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Hostname. </summary>

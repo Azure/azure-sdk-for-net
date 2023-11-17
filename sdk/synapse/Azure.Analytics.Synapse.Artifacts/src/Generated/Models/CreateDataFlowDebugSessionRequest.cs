@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for creating data flow debug session. </summary>
     public partial class CreateDataFlowDebugSessionRequest
     {
-        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionRequest. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateDataFlowDebugSessionRequest"/>. </summary>
         public CreateDataFlowDebugSessionRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateDataFlowDebugSessionRequest"/>. </summary>
         /// <param name="computeType"> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
         /// <param name="coreCount"> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
         /// <param name="timeToLive"> Time to live setting of the cluster in minutes. </param>
         /// <param name="integrationRuntime"> Set to use integration runtime setting for data flow debug session. </param>
-        internal CreateDataFlowDebugSessionRequest(string computeType, int? coreCount, int? timeToLive, IntegrationRuntimeDebugResource integrationRuntime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateDataFlowDebugSessionRequest(string computeType, int? coreCount, int? timeToLive, IntegrationRuntimeDebugResource integrationRuntime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
             TimeToLive = timeToLive;
             IntegrationRuntime = integrationRuntime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>

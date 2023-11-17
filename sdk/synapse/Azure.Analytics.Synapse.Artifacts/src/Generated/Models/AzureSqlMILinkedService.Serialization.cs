@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureSqlMILinkedServiceConverter))]
-    public partial class AzureSqlMILinkedService : IUtf8JsonSerializable
+    public partial class AzureSqlMILinkedService : IUtf8JsonSerializable, IJsonModel<AzureSqlMILinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlMILinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureSqlMILinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureSqlMILinkedService>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureSqlMILinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -110,8 +119,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlMILinkedService DeserializeAzureSqlMILinkedService(JsonElement element)
+        AzureSqlMILinkedService IJsonModel<AzureSqlMILinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlMILinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSqlMILinkedService(document.RootElement, options);
+        }
+
+        internal static AzureSqlMILinkedService DeserializeAzureSqlMILinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -282,6 +305,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSqlMILinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, alwaysEncryptedSettings.Value, encryptedCredential.Value, credential.Value);
         }
+
+        BinaryData IPersistableModel<AzureSqlMILinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlMILinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureSqlMILinkedService IPersistableModel<AzureSqlMILinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlMILinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureSqlMILinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureSqlMILinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureSqlMILinkedServiceConverter : JsonConverter<AzureSqlMILinkedService>
         {

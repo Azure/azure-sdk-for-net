@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbMongoDbApiSinkConverter))]
-    public partial class CosmosDbMongoDbApiSink : IUtf8JsonSerializable
+    public partial class CosmosDbMongoDbApiSink : IUtf8JsonSerializable, IJsonModel<CosmosDbMongoDbApiSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDbMongoDbApiSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDbMongoDbApiSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CosmosDbMongoDbApiSink>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CosmosDbMongoDbApiSink>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WriteBehavior))
             {
@@ -59,8 +68,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDbMongoDbApiSink DeserializeCosmosDbMongoDbApiSink(JsonElement element)
+        CosmosDbMongoDbApiSink IJsonModel<CosmosDbMongoDbApiSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbMongoDbApiSink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDbMongoDbApiSink(document.RootElement, options);
+        }
+
+        internal static CosmosDbMongoDbApiSink DeserializeCosmosDbMongoDbApiSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,6 +163,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbMongoDbApiSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, writeBehavior.Value);
         }
+
+        BinaryData IPersistableModel<CosmosDbMongoDbApiSink>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbMongoDbApiSink)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDbMongoDbApiSink IPersistableModel<CosmosDbMongoDbApiSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbMongoDbApiSink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDbMongoDbApiSink(document.RootElement, options);
+        }
+
+        string IPersistableModel<CosmosDbMongoDbApiSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class CosmosDbMongoDbApiSinkConverter : JsonConverter<CosmosDbMongoDbApiSink>
         {

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,15 +16,45 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SiteExtensionInfoData : IUtf8JsonSerializable
+    public partial class SiteExtensionInfoData : IUtf8JsonSerializable, IJsonModel<SiteExtensionInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteExtensionInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteExtensionInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SiteExtensionInfoData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SiteExtensionInfoData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -132,11 +164,40 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStringValue(Comment);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SiteExtensionInfoData DeserializeSiteExtensionInfoData(JsonElement element)
+        SiteExtensionInfoData IJsonModel<SiteExtensionInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteExtensionInfoData(document.RootElement, options);
+        }
+
+        internal static SiteExtensionInfoData DeserializeSiteExtensionInfoData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -166,6 +227,8 @@ namespace Azure.ResourceManager.AppService
             Optional<DateTimeOffset> installedDateTime = default;
             Optional<string> provisioningState = default;
             Optional<string> comment = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -358,8 +421,38 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteExtensionInfoData(id, name, type, systemData.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteExtensionInfoData(id, name, type, systemData.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value, kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteExtensionInfoData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteExtensionInfoData IPersistableModel<SiteExtensionInfoData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteExtensionInfoData(document.RootElement, options);
+        }
+
+        string IPersistableModel<SiteExtensionInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

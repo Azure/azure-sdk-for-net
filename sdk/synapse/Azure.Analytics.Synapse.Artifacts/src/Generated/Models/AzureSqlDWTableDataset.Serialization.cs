@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureSqlDWTableDatasetConverter))]
-    public partial class AzureSqlDWTableDataset : IUtf8JsonSerializable
+    public partial class AzureSqlDWTableDataset : IUtf8JsonSerializable, IJsonModel<AzureSqlDWTableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlDWTableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureSqlDWTableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureSqlDWTableDataset>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureSqlDWTableDataset>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -95,8 +104,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlDWTableDataset DeserializeAzureSqlDWTableDataset(JsonElement element)
+        AzureSqlDWTableDataset IJsonModel<AzureSqlDWTableDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlDWTableDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSqlDWTableDataset(document.RootElement, options);
+        }
+
+        internal static AzureSqlDWTableDataset DeserializeAzureSqlDWTableDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -237,6 +260,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSqlDWTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value, schema0.Value, table.Value);
         }
+
+        BinaryData IPersistableModel<AzureSqlDWTableDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlDWTableDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureSqlDWTableDataset IPersistableModel<AzureSqlDWTableDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlDWTableDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureSqlDWTableDataset(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureSqlDWTableDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureSqlDWTableDatasetConverter : JsonConverter<AzureSqlDWTableDataset>
         {

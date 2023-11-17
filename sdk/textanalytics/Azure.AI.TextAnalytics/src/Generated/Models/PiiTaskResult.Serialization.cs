@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class PiiTaskResult
+    internal partial class PiiTaskResult : IUtf8JsonSerializable, IJsonModel<PiiTaskResult>
     {
-        internal static PiiTaskResult DeserializePiiTaskResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiTaskResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PiiTaskResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PiiTaskResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PiiTaskResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("results"u8);
+            writer.WriteObjectValue(Results);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PiiTaskResult IJsonModel<PiiTaskResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiTaskResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePiiTaskResult(document.RootElement, options);
+        }
+
+        internal static PiiTaskResult DeserializePiiTaskResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             PiiEntitiesResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -32,8 +85,38 @@ namespace Azure.AI.TextAnalytics.Models
                     kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PiiTaskResult(kind, results);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PiiTaskResult(kind, serializedAdditionalRawData, results);
         }
+
+        BinaryData IPersistableModel<PiiTaskResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiTaskResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PiiTaskResult IPersistableModel<PiiTaskResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiTaskResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePiiTaskResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<PiiTaskResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

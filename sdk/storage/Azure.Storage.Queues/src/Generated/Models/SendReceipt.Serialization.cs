@@ -6,14 +6,39 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class SendReceipt
+    public partial class SendReceipt : IXmlSerializable, IPersistableModel<SendReceipt>
     {
-        internal static SendReceipt DeserializeSendReceipt(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "QueueMessage");
+            writer.WriteStartElement("MessageId");
+            writer.WriteValue(MessageId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("InsertionTime");
+            writer.WriteValue(InsertionTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("ExpirationTime");
+            writer.WriteValue(ExpirationTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("PopReceipt");
+            writer.WriteValue(PopReceipt);
+            writer.WriteEndElement();
+            writer.WriteStartElement("TimeNextVisible");
+            writer.WriteValue(TimeNextVisible, "R");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static SendReceipt DeserializeSendReceipt(XElement element, ModelReaderWriterOptions options = null)
         {
             string messageId = default;
             DateTimeOffset insertionTime = default;
@@ -40,7 +65,43 @@ namespace Azure.Storage.Queues.Models
             {
                 timeNextVisible = timeNextVisibleElement.GetDateTimeOffsetValue("R");
             }
-            return new SendReceipt(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible);
+            return new SendReceipt(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible, default);
         }
+
+        BinaryData IPersistableModel<SendReceipt>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<SendReceipt>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        SendReceipt IPersistableModel<SendReceipt>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SendReceipt)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeSendReceipt(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<SendReceipt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

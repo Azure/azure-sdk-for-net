@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OnvifHostName : IUtf8JsonSerializable
+    public partial class OnvifHostName : IUtf8JsonSerializable, IJsonModel<OnvifHostName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnvifHostName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OnvifHostName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OnvifHostName>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OnvifHostName>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FromDhcp))
             {
@@ -25,17 +36,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OnvifHostName DeserializeOnvifHostName(JsonElement element)
+        OnvifHostName IJsonModel<OnvifHostName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OnvifHostName)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOnvifHostName(document.RootElement, options);
+        }
+
+        internal static OnvifHostName DeserializeOnvifHostName(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> fromDhcp = default;
             Optional<string> hostname = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fromDhcp"u8))
@@ -52,8 +94,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     hostname = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OnvifHostName(Optional.ToNullable(fromDhcp), hostname.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OnvifHostName(Optional.ToNullable(fromDhcp), hostname.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OnvifHostName>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OnvifHostName)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OnvifHostName IPersistableModel<OnvifHostName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OnvifHostName)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOnvifHostName(document.RootElement, options);
+        }
+
+        string IPersistableModel<OnvifHostName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

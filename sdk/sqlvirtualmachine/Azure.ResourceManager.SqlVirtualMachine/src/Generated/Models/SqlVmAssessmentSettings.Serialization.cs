@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAssessmentSettings : IUtf8JsonSerializable
+    public partial class SqlVmAssessmentSettings : IUtf8JsonSerializable, IJsonModel<SqlVmAssessmentSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmAssessmentSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlVmAssessmentSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlVmAssessmentSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlVmAssessmentSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmAssessmentSettings DeserializeSqlVmAssessmentSettings(JsonElement element)
+        SqlVmAssessmentSettings IJsonModel<SqlVmAssessmentSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmAssessmentSettings(document.RootElement, options);
+        }
+
+        internal static SqlVmAssessmentSettings DeserializeSqlVmAssessmentSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<bool> enable = default;
             Optional<bool> runImmediately = default;
             Optional<SqlVmAssessmentSchedule> schedule = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -71,8 +113,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     schedule = SqlVmAssessmentSchedule.DeserializeSqlVmAssessmentSchedule(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlVmAssessmentSettings(Optional.ToNullable(enable), Optional.ToNullable(runImmediately), schedule.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlVmAssessmentSettings(Optional.ToNullable(enable), Optional.ToNullable(runImmediately), schedule.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlVmAssessmentSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlVmAssessmentSettings IPersistableModel<SqlVmAssessmentSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlVmAssessmentSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlVmAssessmentSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

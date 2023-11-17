@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +15,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DatasetLocationConverter))]
-    public partial class DatasetLocation : IUtf8JsonSerializable
+    public partial class DatasetLocation : IUtf8JsonSerializable, IJsonModel<DatasetLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatasetLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DatasetLocation>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DatasetLocation>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -38,8 +47,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DatasetLocation DeserializeDatasetLocation(JsonElement element)
+        DatasetLocation IJsonModel<DatasetLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetLocation(document.RootElement, options);
+        }
+
+        internal static DatasetLocation DeserializeDatasetLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +86,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element);
         }
+
+        BinaryData IPersistableModel<DatasetLocation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatasetLocation IPersistableModel<DatasetLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatasetLocation(document.RootElement, options);
+        }
+
+        string IPersistableModel<DatasetLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class DatasetLocationConverter : JsonConverter<DatasetLocation>
         {

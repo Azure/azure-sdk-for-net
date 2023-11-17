@@ -5,13 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ListFilesAndDirectoriesSegmentResponse
+    internal partial class ListFilesAndDirectoriesSegmentResponse : IXmlSerializable, IPersistableModel<ListFilesAndDirectoriesSegmentResponse>
     {
-        internal static ListFilesAndDirectoriesSegmentResponse DeserializeListFilesAndDirectoriesSegmentResponse(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            writer.WriteStartAttribute("ShareName");
+            writer.WriteValue(ShareName);
+            writer.WriteEndAttribute();
+            if (Optional.IsDefined(ShareSnapshot))
+            {
+                writer.WriteStartAttribute("ShareSnapshot");
+                writer.WriteValue(ShareSnapshot);
+                writer.WriteEndAttribute();
+            }
+            if (Optional.IsDefined(Encoded))
+            {
+                writer.WriteStartAttribute("Encoded");
+                writer.WriteValue(Encoded.Value);
+                writer.WriteEndAttribute();
+            }
+            writer.WriteStartAttribute("DirectoryPath");
+            writer.WriteValue(DirectoryPath);
+            writer.WriteEndAttribute();
+            writer.WriteObjectValue(Prefix, "Prefix");
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxResults))
+            {
+                writer.WriteStartElement("MaxResults");
+                writer.WriteValue(MaxResults.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Segment, "Entries");
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(DirectoryId))
+            {
+                writer.WriteStartElement("DirectoryId");
+                writer.WriteValue(DirectoryId);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ListFilesAndDirectoriesSegmentResponse DeserializeListFilesAndDirectoriesSegmentResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string shareName = default;
@@ -68,7 +124,43 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 directoryId = (string)directoryIdElement;
             }
-            return new ListFilesAndDirectoriesSegmentResponse(serviceEndpoint, shareName, shareSnapshot, encoded, directoryPath, prefix, marker, maxResults, segment, nextMarker, directoryId);
+            return new ListFilesAndDirectoriesSegmentResponse(serviceEndpoint, shareName, shareSnapshot, encoded, directoryPath, prefix, marker, maxResults, segment, nextMarker, directoryId, default);
         }
+
+        BinaryData IPersistableModel<ListFilesAndDirectoriesSegmentResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ListFilesAndDirectoriesSegmentResponse>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ListFilesAndDirectoriesSegmentResponse IPersistableModel<ListFilesAndDirectoriesSegmentResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ListFilesAndDirectoriesSegmentResponse)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeListFilesAndDirectoriesSegmentResponse(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<ListFilesAndDirectoriesSegmentResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

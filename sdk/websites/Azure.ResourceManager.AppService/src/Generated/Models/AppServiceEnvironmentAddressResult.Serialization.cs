@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -13,15 +16,45 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceEnvironmentAddressResult : IUtf8JsonSerializable
+    public partial class AppServiceEnvironmentAddressResult : IUtf8JsonSerializable, IJsonModel<AppServiceEnvironmentAddressResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceEnvironmentAddressResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceEnvironmentAddressResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppServiceEnvironmentAddressResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppServiceEnvironmentAddressResult>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -61,11 +94,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceEnvironmentAddressResult DeserializeAppServiceEnvironmentAddressResult(JsonElement element)
+        AppServiceEnvironmentAddressResult IJsonModel<AppServiceEnvironmentAddressResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentAddressResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceEnvironmentAddressResult(document.RootElement, options);
+        }
+
+        internal static AppServiceEnvironmentAddressResult DeserializeAppServiceEnvironmentAddressResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +141,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IPAddress> internalIPAddress = default;
             Optional<IList<IPAddress>> outboundIPAddresses = default;
             Optional<IList<VirtualIPMapping>> vipMappings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -175,8 +239,38 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceEnvironmentAddressResult(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, Optional.ToList(outboundIPAddresses), Optional.ToList(vipMappings), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceEnvironmentAddressResult(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, Optional.ToList(outboundIPAddresses), Optional.ToList(vipMappings), kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceEnvironmentAddressResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentAddressResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceEnvironmentAddressResult IPersistableModel<AppServiceEnvironmentAddressResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentAddressResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceEnvironmentAddressResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppServiceEnvironmentAddressResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

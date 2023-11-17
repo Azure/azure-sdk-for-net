@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(OracleServiceCloudObjectDatasetConverter))]
-    public partial class OracleServiceCloudObjectDataset : IUtf8JsonSerializable
+    public partial class OracleServiceCloudObjectDataset : IUtf8JsonSerializable, IJsonModel<OracleServiceCloudObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleServiceCloudObjectDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OracleServiceCloudObjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OracleServiceCloudObjectDataset>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OracleServiceCloudObjectDataset>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -85,8 +94,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static OracleServiceCloudObjectDataset DeserializeOracleServiceCloudObjectDataset(JsonElement element)
+        OracleServiceCloudObjectDataset IJsonModel<OracleServiceCloudObjectDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleServiceCloudObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOracleServiceCloudObjectDataset(document.RootElement, options);
+        }
+
+        internal static OracleServiceCloudObjectDataset DeserializeOracleServiceCloudObjectDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -207,6 +230,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new OracleServiceCloudObjectDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value);
         }
+
+        BinaryData IPersistableModel<OracleServiceCloudObjectDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleServiceCloudObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OracleServiceCloudObjectDataset IPersistableModel<OracleServiceCloudObjectDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleServiceCloudObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOracleServiceCloudObjectDataset(document.RootElement, options);
+        }
+
+        string IPersistableModel<OracleServiceCloudObjectDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class OracleServiceCloudObjectDatasetConverter : JsonConverter<OracleServiceCloudObjectDataset>
         {

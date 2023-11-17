@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ExecuteDataFlowActivityConverter))]
-    public partial class ExecuteDataFlowActivity : IUtf8JsonSerializable
+    public partial class ExecuteDataFlowActivity : IUtf8JsonSerializable, IJsonModel<ExecuteDataFlowActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteDataFlowActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExecuteDataFlowActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExecuteDataFlowActivity>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExecuteDataFlowActivity>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -116,8 +125,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecuteDataFlowActivity DeserializeExecuteDataFlowActivity(JsonElement element)
+        ExecuteDataFlowActivity IJsonModel<ExecuteDataFlowActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecuteDataFlowActivity(document.RootElement, options);
+        }
+
+        internal static ExecuteDataFlowActivity DeserializeExecuteDataFlowActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -307,6 +330,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);
         }
+
+        BinaryData IPersistableModel<ExecuteDataFlowActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExecuteDataFlowActivity IPersistableModel<ExecuteDataFlowActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExecuteDataFlowActivity(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExecuteDataFlowActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>
         {

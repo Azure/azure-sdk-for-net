@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Impala server dataset. </summary>
     public partial class ImpalaObjectDataset : Dataset
     {
-        /// <summary> Initializes a new instance of ImpalaObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpalaObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public ImpalaObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "ImpalaObject";
         }
 
-        /// <summary> Initializes a new instance of ImpalaObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpalaObjectDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Table = table;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Type = type ?? "ImpalaObject";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImpalaObjectDataset"/> for deserialization. </summary>
+        internal ImpalaObjectDataset()
+        {
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>

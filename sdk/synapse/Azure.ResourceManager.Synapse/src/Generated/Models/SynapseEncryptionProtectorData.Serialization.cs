@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,13 +16,67 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseEncryptionProtectorData : IUtf8JsonSerializable
+    public partial class SynapseEncryptionProtectorData : IUtf8JsonSerializable, IJsonModel<SynapseEncryptionProtectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseEncryptionProtectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseEncryptionProtectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SynapseEncryptionProtectorData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SynapseEncryptionProtectorData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    writer.WritePropertyName("kind"u8);
+                    writer.WriteStringValue(Kind);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Subregion))
+                {
+                    writer.WritePropertyName("subregion"u8);
+                    writer.WriteStringValue(Subregion);
+                }
+            }
             if (Optional.IsDefined(ServerKeyName))
             {
                 writer.WritePropertyName("serverKeyName"u8);
@@ -30,12 +87,64 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    writer.WritePropertyName("uri"u8);
+                    writer.WriteStringValue(Uri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Thumbprint))
+                {
+                    writer.WritePropertyName("thumbprint"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseEncryptionProtectorData DeserializeSynapseEncryptionProtectorData(JsonElement element)
+        SynapseEncryptionProtectorData IJsonModel<SynapseEncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseEncryptionProtectorData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseEncryptionProtectorData(document.RootElement, options);
+        }
+
+        internal static SynapseEncryptionProtectorData DeserializeSynapseEncryptionProtectorData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +160,8 @@ namespace Azure.ResourceManager.Synapse
             Optional<SynapseServerKeyType> serverKeyType = default;
             Optional<Uri> uri = default;
             Optional<BinaryData> thumbprint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -140,8 +251,38 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseEncryptionProtectorData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseEncryptionProtectorData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseEncryptionProtectorData IPersistableModel<SynapseEncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseEncryptionProtectorData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseEncryptionProtectorData(document.RootElement, options);
+        }
+
+        string IPersistableModel<SynapseEncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

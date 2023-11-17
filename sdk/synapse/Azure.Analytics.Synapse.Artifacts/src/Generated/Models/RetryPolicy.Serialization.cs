@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RetryPolicyConverter))]
-    public partial class RetryPolicy : IUtf8JsonSerializable
+    public partial class RetryPolicy : IUtf8JsonSerializable, IJsonModel<RetryPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetryPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RetryPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RetryPolicy>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RetryPolicy>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
@@ -28,17 +38,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RetryPolicy DeserializeRetryPolicy(JsonElement element)
+        RetryPolicy IJsonModel<RetryPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RetryPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRetryPolicy(document.RootElement, options);
+        }
+
+        internal static RetryPolicy DeserializeRetryPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<object> count = default;
             Optional<int> intervalInSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -59,9 +100,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     intervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RetryPolicy(count.Value, Optional.ToNullable(intervalInSeconds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RetryPolicy(count.Value, Optional.ToNullable(intervalInSeconds), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RetryPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RetryPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RetryPolicy IPersistableModel<RetryPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RetryPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRetryPolicy(document.RootElement, options);
+        }
+
+        string IPersistableModel<RetryPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class RetryPolicyConverter : JsonConverter<RetryPolicy>
         {

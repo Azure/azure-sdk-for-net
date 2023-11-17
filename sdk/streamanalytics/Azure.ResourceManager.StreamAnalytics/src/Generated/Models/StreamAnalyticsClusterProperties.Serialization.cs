@@ -6,21 +6,100 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsClusterProperties : IUtf8JsonSerializable
+    public partial class StreamAnalyticsClusterProperties : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsClusterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamAnalyticsClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StreamAnalyticsClusterProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StreamAnalyticsClusterProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdDate"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ClusterId))
+                {
+                    writer.WritePropertyName("clusterId"u8);
+                    writer.WriteStringValue(ClusterId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CapacityAllocated))
+                {
+                    writer.WritePropertyName("capacityAllocated"u8);
+                    writer.WriteNumberValue(CapacityAllocated.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CapacityAssigned))
+                {
+                    writer.WritePropertyName("capacityAssigned"u8);
+                    writer.WriteNumberValue(CapacityAssigned.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamAnalyticsClusterProperties DeserializeStreamAnalyticsClusterProperties(JsonElement element)
+        StreamAnalyticsClusterProperties IJsonModel<StreamAnalyticsClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsClusterProperties(document.RootElement, options);
+        }
+
+        internal static StreamAnalyticsClusterProperties DeserializeStreamAnalyticsClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +109,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamAnalyticsClusterProvisioningState> provisioningState = default;
             Optional<int> capacityAllocated = default;
             Optional<int> capacityAssigned = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDate"u8))
@@ -77,8 +158,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     capacityAssigned = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamAnalyticsClusterProperties(Optional.ToNullable(createdDate), Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(capacityAllocated), Optional.ToNullable(capacityAssigned));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StreamAnalyticsClusterProperties(Optional.ToNullable(createdDate), Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(capacityAllocated), Optional.ToNullable(capacityAssigned), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamAnalyticsClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamAnalyticsClusterProperties IPersistableModel<StreamAnalyticsClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsClusterProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<StreamAnalyticsClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

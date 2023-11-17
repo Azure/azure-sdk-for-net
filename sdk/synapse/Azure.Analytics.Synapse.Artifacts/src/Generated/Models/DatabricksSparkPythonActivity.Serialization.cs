@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DatabricksSparkPythonActivityConverter))]
-    public partial class DatabricksSparkPythonActivity : IUtf8JsonSerializable
+    public partial class DatabricksSparkPythonActivity : IUtf8JsonSerializable, IJsonModel<DatabricksSparkPythonActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabricksSparkPythonActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatabricksSparkPythonActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DatabricksSparkPythonActivity>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -122,8 +131,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DatabricksSparkPythonActivity DeserializeDatabricksSparkPythonActivity(JsonElement element)
+        DatabricksSparkPythonActivity IJsonModel<DatabricksSparkPythonActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabricksSparkPythonActivity(document.RootElement, options);
+        }
+
+        internal static DatabricksSparkPythonActivity DeserializeDatabricksSparkPythonActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -299,6 +322,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DatabricksSparkPythonActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, pythonFile, Optional.ToList(parameters), Optional.ToList(libraries));
         }
+
+        BinaryData IPersistableModel<DatabricksSparkPythonActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatabricksSparkPythonActivity IPersistableModel<DatabricksSparkPythonActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatabricksSparkPythonActivity(document.RootElement, options);
+        }
+
+        string IPersistableModel<DatabricksSparkPythonActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class DatabricksSparkPythonActivityConverter : JsonConverter<DatabricksSparkPythonActivity>
         {

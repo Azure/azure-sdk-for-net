@@ -5,28 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownCertificateSource : IUtf8JsonSerializable
+    internal partial class UnknownCertificateSource : IUtf8JsonSerializable, IJsonModel<CertificateSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CertificateSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CertificateSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CertificateSource>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCertificateSource DeserializeUnknownCertificateSource(JsonElement element)
+        CertificateSource IJsonModel<CertificateSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CertificateSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCertificateSource(document.RootElement, options);
+        }
+
+        internal static UnknownCertificateSource DeserializeUnknownCertificateSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@type"u8))
@@ -34,8 +76,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownCertificateSource(type);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownCertificateSource(type, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CertificateSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CertificateSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CertificateSource IPersistableModel<CertificateSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CertificateSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownCertificateSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<CertificateSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

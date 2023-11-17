@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbMongoDbApiSourceConverter))]
-    public partial class CosmosDbMongoDbApiSource : IUtf8JsonSerializable
+    public partial class CosmosDbMongoDbApiSource : IUtf8JsonSerializable, IJsonModel<CosmosDbMongoDbApiSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDbMongoDbApiSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDbMongoDbApiSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CosmosDbMongoDbApiSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CosmosDbMongoDbApiSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Filter))
             {
@@ -69,8 +78,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDbMongoDbApiSource DeserializeCosmosDbMongoDbApiSource(JsonElement element)
+        CosmosDbMongoDbApiSource IJsonModel<CosmosDbMongoDbApiSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbMongoDbApiSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDbMongoDbApiSource(document.RootElement, options);
+        }
+
+        internal static CosmosDbMongoDbApiSource DeserializeCosmosDbMongoDbApiSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -170,6 +193,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbMongoDbApiSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, filter.Value, cursorMethods.Value, batchSize.Value, queryTimeout.Value, additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<CosmosDbMongoDbApiSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbMongoDbApiSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDbMongoDbApiSource IPersistableModel<CosmosDbMongoDbApiSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbMongoDbApiSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDbMongoDbApiSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<CosmosDbMongoDbApiSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class CosmosDbMongoDbApiSourceConverter : JsonConverter<CosmosDbMongoDbApiSource>
         {

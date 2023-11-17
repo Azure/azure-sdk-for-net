@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class ParameterDeclaration : IUtf8JsonSerializable
+    public partial class ParameterDeclaration : IUtf8JsonSerializable, IJsonModel<ParameterDeclaration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParameterDeclaration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ParameterDeclaration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ParameterDeclaration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ParameterDeclaration>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -29,11 +40,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ParameterDeclaration DeserializeParameterDeclaration(JsonElement element)
+        ParameterDeclaration IJsonModel<ParameterDeclaration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParameterDeclaration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParameterDeclaration(document.RootElement, options);
+        }
+
+        internal static ParameterDeclaration DeserializeParameterDeclaration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             ParameterType type = default;
             Optional<string> description = default;
             Optional<string> @default = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,8 +106,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     @default = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ParameterDeclaration(name, type, description.Value, @default.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ParameterDeclaration(name, type, description.Value, @default.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ParameterDeclaration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParameterDeclaration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ParameterDeclaration IPersistableModel<ParameterDeclaration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParameterDeclaration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeParameterDeclaration(document.RootElement, options);
+        }
+
+        string IPersistableModel<ParameterDeclaration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

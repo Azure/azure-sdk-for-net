@@ -6,21 +6,84 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudTieringDatePolicyStatus
+    public partial class CloudTieringDatePolicyStatus : IUtf8JsonSerializable, IJsonModel<CloudTieringDatePolicyStatus>
     {
-        internal static CloudTieringDatePolicyStatus DeserializeCloudTieringDatePolicyStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudTieringDatePolicyStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudTieringDatePolicyStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CloudTieringDatePolicyStatus>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CloudTieringDatePolicyStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastUpdatedOn))
+                {
+                    writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                    writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TieredFilesMostRecentAccessTimestamp))
+                {
+                    writer.WritePropertyName("tieredFilesMostRecentAccessTimestamp"u8);
+                    writer.WriteStringValue(TieredFilesMostRecentAccessTimestamp.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CloudTieringDatePolicyStatus IJsonModel<CloudTieringDatePolicyStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudTieringDatePolicyStatus(document.RootElement, options);
+        }
+
+        internal static CloudTieringDatePolicyStatus DeserializeCloudTieringDatePolicyStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<DateTimeOffset> tieredFilesMostRecentAccessTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -41,8 +104,38 @@ namespace Azure.ResourceManager.StorageSync.Models
                     tieredFilesMostRecentAccessTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudTieringDatePolicyStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(tieredFilesMostRecentAccessTimestamp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudTieringDatePolicyStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(tieredFilesMostRecentAccessTimestamp), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudTieringDatePolicyStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CloudTieringDatePolicyStatus IPersistableModel<CloudTieringDatePolicyStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCloudTieringDatePolicyStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<CloudTieringDatePolicyStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

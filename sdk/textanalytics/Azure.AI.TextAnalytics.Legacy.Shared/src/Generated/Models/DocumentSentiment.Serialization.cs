@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
@@ -12,10 +15,77 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class DocumentSentiment
+    internal partial class DocumentSentiment : IUtf8JsonSerializable, IJsonModel<DocumentSentiment>
     {
-        internal static DocumentSentiment DeserializeDocumentSentiment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentSentiment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentSentiment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentSentiment>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentSentiment>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("sentiment"u8);
+            writer.WriteStringValue(Sentiment.ToSerialString());
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue(Statistics);
+            }
+            writer.WritePropertyName("confidenceScores"u8);
+            writer.WriteObjectValue(ConfidenceScores);
+            writer.WritePropertyName("sentences"u8);
+            writer.WriteStartArray();
+            foreach (var item in Sentences)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("warnings"u8);
+            writer.WriteStartArray();
+            foreach (var item in Warnings)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentSentiment IJsonModel<DocumentSentiment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentSentiment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentSentiment(document.RootElement, options);
+        }
+
+        internal static DocumentSentiment DeserializeDocumentSentiment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +96,8 @@ namespace Azure.AI.TextAnalytics.Legacy
             SentimentConfidenceScorePerLabel confidenceScores = default;
             IReadOnlyList<SentenceSentiment> sentences = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -72,8 +144,38 @@ namespace Azure.AI.TextAnalytics.Legacy
                     warnings = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentSentiment(id, sentiment, statistics.Value, confidenceScores, sentences, warnings);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentSentiment(id, sentiment, statistics.Value, confidenceScores, sentences, warnings, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentSentiment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentSentiment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentSentiment IPersistableModel<DocumentSentiment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentSentiment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentSentiment(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentSentiment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,28 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class PipelineTopologySetRequest : IUtf8JsonSerializable
+    public partial class PipelineTopologySetRequest : IUtf8JsonSerializable, IJsonModel<PipelineTopologySetRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineTopologySetRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PipelineTopologySetRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PipelineTopologySetRequest>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PipelineTopologySetRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("pipelineTopology"u8);
             writer.WriteObjectValue(PipelineTopology);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("methodName"u8);
+                writer.WriteStringValue(MethodName);
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PipelineTopologySetRequest DeserializePipelineTopologySetRequest(JsonElement element)
+        PipelineTopologySetRequest IJsonModel<PipelineTopologySetRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineTopologySetRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineTopologySetRequest(document.RootElement, options);
+        }
+
+        internal static PipelineTopologySetRequest DeserializePipelineTopologySetRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +79,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             PipelineTopology pipelineTopology = default;
             string methodName = default;
             Optional<string> apiVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineTopology"u8))
@@ -51,8 +98,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PipelineTopologySetRequest(methodName, apiVersion.Value, pipelineTopology);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PipelineTopologySetRequest(methodName, apiVersion.Value, serializedAdditionalRawData, pipelineTopology);
         }
+
+        BinaryData IPersistableModel<PipelineTopologySetRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineTopologySetRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PipelineTopologySetRequest IPersistableModel<PipelineTopologySetRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineTopologySetRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePipelineTopologySetRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<PipelineTopologySetRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

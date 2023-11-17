@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownDatasetStorageFormat : IUtf8JsonSerializable
+    internal partial class UnknownDatasetStorageFormat : IUtf8JsonSerializable, IJsonModel<DatasetStorageFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetStorageFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatasetStorageFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DatasetStorageFormat>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DatasetStorageFormat>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -36,8 +46,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownDatasetStorageFormat DeserializeUnknownDatasetStorageFormat(JsonElement element)
+        DatasetStorageFormat IJsonModel<DatasetStorageFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetStorageFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDatasetStorageFormat(document.RootElement, options);
+        }
+
+        internal static UnknownDatasetStorageFormat DeserializeUnknownDatasetStorageFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,5 +101,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new UnknownDatasetStorageFormat(type, serializer.Value, deserializer.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<DatasetStorageFormat>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetStorageFormat)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatasetStorageFormat IPersistableModel<DatasetStorageFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetStorageFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownDatasetStorageFormat(document.RootElement, options);
+        }
+
+        string IPersistableModel<DatasetStorageFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

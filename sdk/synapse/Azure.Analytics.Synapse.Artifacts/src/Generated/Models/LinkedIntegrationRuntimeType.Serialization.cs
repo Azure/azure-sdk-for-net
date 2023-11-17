@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,18 +15,54 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkedIntegrationRuntimeTypeConverter))]
-    public partial class LinkedIntegrationRuntimeType : IUtf8JsonSerializable
+    public partial class LinkedIntegrationRuntimeType : IUtf8JsonSerializable, IJsonModel<LinkedIntegrationRuntimeType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedIntegrationRuntimeType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LinkedIntegrationRuntimeType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LinkedIntegrationRuntimeType>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LinkedIntegrationRuntimeType>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkedIntegrationRuntimeType DeserializeLinkedIntegrationRuntimeType(JsonElement element)
+        LinkedIntegrationRuntimeType IJsonModel<LinkedIntegrationRuntimeType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeType)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkedIntegrationRuntimeType(document.RootElement, options);
+        }
+
+        internal static LinkedIntegrationRuntimeType DeserializeLinkedIntegrationRuntimeType(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +77,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element);
         }
+
+        BinaryData IPersistableModel<LinkedIntegrationRuntimeType>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeType)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkedIntegrationRuntimeType IPersistableModel<LinkedIntegrationRuntimeType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeType)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkedIntegrationRuntimeType(document.RootElement, options);
+        }
+
+        string IPersistableModel<LinkedIntegrationRuntimeType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class LinkedIntegrationRuntimeTypeConverter : JsonConverter<LinkedIntegrationRuntimeType>
         {

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapDiskConfigurationsContent : IUtf8JsonSerializable
+    public partial class SapDiskConfigurationsContent : IUtf8JsonSerializable, IJsonModel<SapDiskConfigurationsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiskConfigurationsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SapDiskConfigurationsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SapDiskConfigurationsContent>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SapDiskConfigurationsContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
@@ -27,7 +38,116 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("dbVmSku"u8);
             writer.WriteStringValue(DBVmSku);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SapDiskConfigurationsContent IJsonModel<SapDiskConfigurationsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapDiskConfigurationsContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapDiskConfigurationsContent(document.RootElement, options);
+        }
+
+        internal static SapDiskConfigurationsContent DeserializeSapDiskConfigurationsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AzureLocation appLocation = default;
+            SapEnvironmentType environment = default;
+            SapProductType sapProduct = default;
+            SapDatabaseType databaseType = default;
+            SapDeploymentType deploymentType = default;
+            string dbVmSku = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("appLocation"u8))
+                {
+                    appLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("environment"u8))
+                {
+                    environment = new SapEnvironmentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sapProduct"u8))
+                {
+                    sapProduct = new SapProductType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("databaseType"u8))
+                {
+                    databaseType = new SapDatabaseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("deploymentType"u8))
+                {
+                    deploymentType = new SapDeploymentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dbVmSku"u8))
+                {
+                    dbVmSku = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SapDiskConfigurationsContent(appLocation, environment, sapProduct, databaseType, deploymentType, dbVmSku, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SapDiskConfigurationsContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapDiskConfigurationsContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SapDiskConfigurationsContent IPersistableModel<SapDiskConfigurationsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapDiskConfigurationsContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSapDiskConfigurationsContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<SapDiskConfigurationsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

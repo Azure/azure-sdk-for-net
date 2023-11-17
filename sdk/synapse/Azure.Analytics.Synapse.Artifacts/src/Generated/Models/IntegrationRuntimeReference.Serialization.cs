@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeReferenceConverter))]
-    public partial class IntegrationRuntimeReference : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeReference : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationRuntimeReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IntegrationRuntimeReference>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IntegrationRuntimeReference>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -39,11 +48,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeReference DeserializeIntegrationRuntimeReference(JsonElement element)
+        IntegrationRuntimeReference IJsonModel<IntegrationRuntimeReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeReference(document.RootElement, options);
+        }
+
+        internal static IntegrationRuntimeReference DeserializeIntegrationRuntimeReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +89,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IntegrationRuntimeReferenceType type = default;
             string referenceName = default;
             Optional<IDictionary<string, object>> parameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -84,9 +124,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     parameters = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationRuntimeReference(type, referenceName, Optional.ToDictionary(parameters));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IntegrationRuntimeReference(type, referenceName, Optional.ToDictionary(parameters), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntimeReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IntegrationRuntimeReference IPersistableModel<IntegrationRuntimeReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIntegrationRuntimeReference(document.RootElement, options);
+        }
+
+        string IPersistableModel<IntegrationRuntimeReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class IntegrationRuntimeReferenceConverter : JsonConverter<IntegrationRuntimeReference>
         {

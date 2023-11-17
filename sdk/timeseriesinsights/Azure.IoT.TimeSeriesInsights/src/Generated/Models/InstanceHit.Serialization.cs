@@ -5,16 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class InstanceHit
+    internal partial class InstanceHit : IUtf8JsonSerializable, IJsonModel<InstanceHit>
     {
-        internal static InstanceHit DeserializeInstanceHit(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceHit>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InstanceHit>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InstanceHit>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InstanceHit>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(TimeSeriesId))
+                {
+                    writer.WritePropertyName("timeSeriesId"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in TimeSeriesId)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TypeId))
+                {
+                    writer.WritePropertyName("typeId"u8);
+                    writer.WriteStringValue(TypeId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(HierarchyIds))
+                {
+                    writer.WritePropertyName("hierarchyIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in HierarchyIds)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Highlights))
+                {
+                    writer.WritePropertyName("highlights"u8);
+                    writer.WriteObjectValue(Highlights);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InstanceHit IJsonModel<InstanceHit>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceHit)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceHit(document.RootElement, options);
+        }
+
+        internal static InstanceHit DeserializeInstanceHit(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +124,8 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<string> typeId = default;
             Optional<IReadOnlyList<string>> hierarchyIds = default;
             Optional<InstanceHitHighlights> highlights = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesId"u8))
@@ -80,8 +182,38 @@ namespace Azure.IoT.TimeSeriesInsights
                     highlights = InstanceHitHighlights.DeserializeInstanceHitHighlights(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InstanceHit(Optional.ToList(timeSeriesId), name.Value, typeId.Value, Optional.ToList(hierarchyIds), highlights.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InstanceHit(Optional.ToList(timeSeriesId), name.Value, typeId.Value, Optional.ToList(hierarchyIds), highlights.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InstanceHit>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceHit)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InstanceHit IPersistableModel<InstanceHit>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceHit)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInstanceHit(document.RootElement, options);
+        }
+
+        string IPersistableModel<InstanceHit>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

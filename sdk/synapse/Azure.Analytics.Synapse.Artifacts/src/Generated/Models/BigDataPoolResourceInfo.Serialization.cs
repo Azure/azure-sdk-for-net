@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(BigDataPoolResourceInfoConverter))]
-    public partial class BigDataPoolResourceInfo : IUtf8JsonSerializable
+    public partial class BigDataPoolResourceInfo : IUtf8JsonSerializable, IJsonModel<BigDataPoolResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BigDataPoolResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BigDataPoolResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BigDataPoolResourceInfo>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BigDataPoolResourceInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,6 +41,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Type))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(Type);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
@@ -124,12 +157,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastSucceededTimestamp))
+                {
+                    writer.WritePropertyName("lastSucceededTimestamp"u8);
+                    writer.WriteStringValue(LastSucceededTimestamp.Value, "O");
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BigDataPoolResourceInfo DeserializeBigDataPoolResourceInfo(JsonElement element)
+        BigDataPoolResourceInfo IJsonModel<BigDataPoolResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BigDataPoolResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBigDataPoolResourceInfo(document.RootElement, options);
+        }
+
+        internal static BigDataPoolResourceInfo DeserializeBigDataPoolResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +227,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<NodeSize> nodeSize = default;
             Optional<NodeSizeFamily> nodeSizeFamily = default;
             Optional<DateTimeOffset> lastSucceededTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -356,9 +428,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp));
         }
+
+        BinaryData IPersistableModel<BigDataPoolResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BigDataPoolResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BigDataPoolResourceInfo IPersistableModel<BigDataPoolResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BigDataPoolResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBigDataPoolResourceInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<BigDataPoolResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class BigDataPoolResourceInfoConverter : JsonConverter<BigDataPoolResourceInfo>
         {

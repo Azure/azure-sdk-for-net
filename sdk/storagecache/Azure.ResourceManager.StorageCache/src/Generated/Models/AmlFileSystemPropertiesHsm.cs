@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Hydration and archive settings and status. </summary>
     public partial class AmlFileSystemPropertiesHsm
     {
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPropertiesHsm"/>. </summary>
         public AmlFileSystemPropertiesHsm()
         {
             ArchiveStatus = new ChangeTrackingList<AmlFileSystemArchive>();
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPropertiesHsm"/>. </summary>
         /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
         /// <param name="archiveStatus"> Archive status. </param>
-        internal AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings, IReadOnlyList<AmlFileSystemArchive> archiveStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings, IReadOnlyList<AmlFileSystemArchive> archiveStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Settings = settings;
             ArchiveStatus = archiveStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies HSM settings of the AML file system. </summary>

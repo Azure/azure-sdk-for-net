@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(FtpReadSettingsConverter))]
-    public partial class FtpReadSettings : IUtf8JsonSerializable
+    public partial class FtpReadSettings : IUtf8JsonSerializable, IJsonModel<FtpReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FtpReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FtpReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FtpReadSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
@@ -79,8 +88,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element)
+        FtpReadSettings IJsonModel<FtpReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFtpReadSettings(document.RootElement, options);
+        }
+
+        internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -200,6 +223,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new FtpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, useBinaryTransfer.Value, disableChunking.Value);
         }
+
+        BinaryData IPersistableModel<FtpReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FtpReadSettings IPersistableModel<FtpReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFtpReadSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<FtpReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class FtpReadSettingsConverter : JsonConverter<FtpReadSettings>
         {

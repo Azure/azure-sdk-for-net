@@ -5,13 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileItem
+    internal partial class FileItem : IXmlSerializable, IPersistableModel<FileItem>
     {
-        internal static FileItem DeserializeFileItem(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "File");
+            writer.WriteObjectValue(Name, "Name");
+            if (Optional.IsDefined(FileId))
+            {
+                writer.WriteStartElement("FileId");
+                writer.WriteValue(FileId);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Properties, "Properties");
+            if (Optional.IsDefined(Attributes))
+            {
+                writer.WriteStartElement("Attributes");
+                writer.WriteValue(Attributes);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PermissionKey))
+            {
+                writer.WriteStartElement("PermissionKey");
+                writer.WriteValue(PermissionKey);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static FileItem DeserializeFileItem(XElement element, ModelReaderWriterOptions options = null)
         {
             StringEncoded name = default;
             string fileId = default;
@@ -38,7 +70,43 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 permissionKey = (string)permissionKeyElement;
             }
-            return new FileItem(name, fileId, properties, attributes, permissionKey);
+            return new FileItem(name, fileId, properties, attributes, permissionKey, default);
         }
+
+        BinaryData IPersistableModel<FileItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<FileItem>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FileItem IPersistableModel<FileItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FileItem)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeFileItem(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<FileItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

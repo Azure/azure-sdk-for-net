@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class PiiTaskParameters : IUtf8JsonSerializable
+    internal partial class PiiTaskParameters : IUtf8JsonSerializable, IJsonModel<PiiTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiTaskParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PiiTaskParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PiiTaskParameters>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PiiTaskParameters>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Domain))
             {
@@ -45,7 +57,131 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PiiTaskParameters IJsonModel<PiiTaskParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePiiTaskParameters(document.RootElement, options);
+        }
+
+        internal static PiiTaskParameters DeserializePiiTaskParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<PiiTaskParametersDomain> domain = default;
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
+            Optional<IList<PiiEntityLegacyCategory>> piiCategories = default;
+            Optional<StringIndexType> stringIndexType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("domain"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    domain = new PiiTaskParametersDomain(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("model-version"u8))
+                {
+                    modelVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("loggingOptOut"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loggingOptOut = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("piiCategories"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PiiEntityLegacyCategory> array = new List<PiiEntityLegacyCategory>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new PiiEntityLegacyCategory(item.GetString()));
+                    }
+                    piiCategories = array;
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PiiTaskParameters(Optional.ToNullable(domain), modelVersion.Value, Optional.ToNullable(loggingOptOut), Optional.ToList(piiCategories), Optional.ToNullable(stringIndexType), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PiiTaskParameters>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PiiTaskParameters IPersistableModel<PiiTaskParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePiiTaskParameters(document.RootElement, options);
+        }
+
+        string IPersistableModel<PiiTaskParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

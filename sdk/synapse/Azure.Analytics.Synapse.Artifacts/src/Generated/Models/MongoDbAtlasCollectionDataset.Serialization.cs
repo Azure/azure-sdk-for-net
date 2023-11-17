@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MongoDbAtlasCollectionDatasetConverter))]
-    public partial class MongoDbAtlasCollectionDataset : IUtf8JsonSerializable
+    public partial class MongoDbAtlasCollectionDataset : IUtf8JsonSerializable, IJsonModel<MongoDbAtlasCollectionDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDbAtlasCollectionDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDbAtlasCollectionDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MongoDbAtlasCollectionDataset>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MongoDbAtlasCollectionDataset>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -82,8 +91,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static MongoDbAtlasCollectionDataset DeserializeMongoDbAtlasCollectionDataset(JsonElement element)
+        MongoDbAtlasCollectionDataset IJsonModel<MongoDbAtlasCollectionDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDbAtlasCollectionDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDbAtlasCollectionDataset(document.RootElement, options);
+        }
+
+        internal static MongoDbAtlasCollectionDataset DeserializeMongoDbAtlasCollectionDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -200,6 +223,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MongoDbAtlasCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, collection);
         }
+
+        BinaryData IPersistableModel<MongoDbAtlasCollectionDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDbAtlasCollectionDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MongoDbAtlasCollectionDataset IPersistableModel<MongoDbAtlasCollectionDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDbAtlasCollectionDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMongoDbAtlasCollectionDataset(document.RootElement, options);
+        }
+
+        string IPersistableModel<MongoDbAtlasCollectionDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class MongoDbAtlasCollectionDatasetConverter : JsonConverter<MongoDbAtlasCollectionDataset>
         {

@@ -6,15 +6,132 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCertificateDetails
+    public partial class AppServiceCertificateDetails : IUtf8JsonSerializable, IJsonModel<AppServiceCertificateDetails>
     {
-        internal static AppServiceCertificateDetails DeserializeAppServiceCertificateDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCertificateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceCertificateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppServiceCertificateDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppServiceCertificateDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteNumberValue(Version.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SerialNumber))
+                {
+                    writer.WritePropertyName("serialNumber"u8);
+                    writer.WriteStringValue(SerialNumber);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThumbprintString))
+                {
+                    writer.WritePropertyName("thumbprint"u8);
+                    writer.WriteStringValue(ThumbprintString);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Subject))
+                {
+                    writer.WritePropertyName("subject"u8);
+                    writer.WriteStringValue(Subject);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NotBefore))
+                {
+                    writer.WritePropertyName("notBefore"u8);
+                    writer.WriteStringValue(NotBefore.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NotAfter))
+                {
+                    writer.WritePropertyName("notAfter"u8);
+                    writer.WriteStringValue(NotAfter.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SignatureAlgorithm))
+                {
+                    writer.WritePropertyName("signatureAlgorithm"u8);
+                    writer.WriteStringValue(SignatureAlgorithm);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Issuer))
+                {
+                    writer.WritePropertyName("issuer"u8);
+                    writer.WriteStringValue(Issuer);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RawData))
+                {
+                    writer.WritePropertyName("rawData"u8);
+                    writer.WriteStringValue(RawData);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppServiceCertificateDetails IJsonModel<AppServiceCertificateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceCertificateDetails(document.RootElement, options);
+        }
+
+        internal static AppServiceCertificateDetails DeserializeAppServiceCertificateDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +145,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> signatureAlgorithm = default;
             Optional<string> issuer = default;
             Optional<string> rawData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -87,8 +206,38 @@ namespace Azure.ResourceManager.AppService.Models
                     rawData = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceCertificateDetails(Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Optional.ToNullable(notBefore), Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceCertificateDetails(Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Optional.ToNullable(notBefore), Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceCertificateDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceCertificateDetails IPersistableModel<AppServiceCertificateDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceCertificateDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppServiceCertificateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseIntegrationRuntimeResource(Client, SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(e)), _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "SynapseIntegrationRuntimeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SynapseIntegrationRuntimeResource(Client, SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(e)), _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "SynapseIntegrationRuntimeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseIntegrationRuntimeResource(Client, SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(e)), _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "SynapseIntegrationRuntimeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SynapseIntegrationRuntimeResource(Client, SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(e)), _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "SynapseIntegrationRuntimeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

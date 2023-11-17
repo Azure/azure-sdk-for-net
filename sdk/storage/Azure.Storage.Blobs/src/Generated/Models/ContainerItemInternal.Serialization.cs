@@ -5,14 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ContainerItemInternal
+    internal partial class ContainerItemInternal : IXmlSerializable, IPersistableModel<ContainerItemInternal>
     {
-        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "Container");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Deleted))
+            {
+                writer.WriteStartElement("Deleted");
+                writer.WriteValue(Deleted.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WriteStartElement("Version");
+                writer.WriteValue(Version);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Properties, "Properties");
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                foreach (var pair in Metadata)
+                {
+                    writer.WriteStartElement("String");
+                    writer.WriteValue(pair.Value);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             bool? deleted = default;
@@ -44,7 +81,43 @@ namespace Azure.Storage.Blobs.Models
                 }
                 metadata = dictionary;
             }
-            return new ContainerItemInternal(name, deleted, version, properties, metadata);
+            return new ContainerItemInternal(name, deleted, version, properties, metadata, default);
         }
+
+        BinaryData IPersistableModel<ContainerItemInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ContainerItemInternal>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ContainerItemInternal IPersistableModel<ContainerItemInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerItemInternal)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeContainerItemInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<ContainerItemInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

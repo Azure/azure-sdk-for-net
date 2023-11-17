@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,102 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ErrorResponseConverter))]
-    internal partial class ErrorResponse
+    internal partial class ErrorResponse : IUtf8JsonSerializable, IJsonModel<ErrorResponse>
     {
-        internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ErrorResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ErrorResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ErrorResponse>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ErrorResponse>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Code))
+                {
+                    writer.WritePropertyName("code"u8);
+                    writer.WriteStringValue(Code);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Target))
+                {
+                    writer.WritePropertyName("target"u8);
+                    writer.WriteStringValue(Target);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Details))
+                {
+                    writer.WritePropertyName("details"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Details)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(AdditionalInfo))
+                {
+                    writer.WritePropertyName("additionalInfo"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AdditionalInfo)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ErrorResponse IJsonModel<ErrorResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ErrorResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeErrorResponse(document.RootElement, options);
+        }
+
+        internal static ErrorResponse DeserializeErrorResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +121,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> target = default;
             Optional<IReadOnlyList<ErrorResponse>> details = default;
             Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -72,15 +168,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     additionalInfo = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ErrorResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ErrorResponse)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ErrorResponse IPersistableModel<ErrorResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ErrorResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeErrorResponse(document.RootElement, options);
+        }
+
+        string IPersistableModel<ErrorResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ErrorResponseConverter : JsonConverter<ErrorResponse>
         {
             public override void Write(Utf8JsonWriter writer, ErrorResponse model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ErrorResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

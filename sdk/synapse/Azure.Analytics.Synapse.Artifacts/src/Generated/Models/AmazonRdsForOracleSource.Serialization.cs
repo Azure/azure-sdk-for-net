@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AmazonRdsForOracleSourceConverter))]
-    public partial class AmazonRdsForOracleSource : IUtf8JsonSerializable
+    public partial class AmazonRdsForOracleSource : IUtf8JsonSerializable, IJsonModel<AmazonRdsForOracleSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonRdsForOracleSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AmazonRdsForOracleSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AmazonRdsForOracleSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AmazonRdsForOracleSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OracleReaderQuery))
             {
@@ -69,8 +78,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AmazonRdsForOracleSource DeserializeAmazonRdsForOracleSource(JsonElement element)
+        AmazonRdsForOracleSource IJsonModel<AmazonRdsForOracleSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmazonRdsForOracleSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonRdsForOracleSource(document.RootElement, options);
+        }
+
+        internal static AmazonRdsForOracleSource DeserializeAmazonRdsForOracleSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -170,6 +193,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonRdsForOracleSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, oracleReaderQuery.Value, queryTimeout.Value, partitionOption.Value, partitionSettings.Value, additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<AmazonRdsForOracleSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmazonRdsForOracleSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AmazonRdsForOracleSource IPersistableModel<AmazonRdsForOracleSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmazonRdsForOracleSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAmazonRdsForOracleSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<AmazonRdsForOracleSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AmazonRdsForOracleSourceConverter : JsonConverter<AmazonRdsForOracleSource>
         {

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Model factory for models. </summary>

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownFormatWriteSettings : IUtf8JsonSerializable
+    internal partial class UnknownFormatWriteSettings : IUtf8JsonSerializable, IJsonModel<FormatWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormatWriteSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FormatWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FormatWriteSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FormatWriteSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -26,8 +36,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownFormatWriteSettings DeserializeUnknownFormatWriteSettings(JsonElement element)
+        FormatWriteSettings IJsonModel<FormatWriteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownFormatWriteSettings(document.RootElement, options);
+        }
+
+        internal static UnknownFormatWriteSettings DeserializeUnknownFormatWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,5 +71,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new UnknownFormatWriteSettings(type, additionalProperties);
         }
+
+        BinaryData IPersistableModel<FormatWriteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FormatWriteSettings IPersistableModel<FormatWriteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownFormatWriteSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<FormatWriteSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,118 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TriggerRunConverter))]
-    public partial class TriggerRun
+    public partial class TriggerRun : IUtf8JsonSerializable, IJsonModel<TriggerRun>
     {
-        internal static TriggerRun DeserializeTriggerRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerRun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TriggerRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TriggerRun>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TriggerRun>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TriggerRunId))
+                {
+                    writer.WritePropertyName("triggerRunId"u8);
+                    writer.WriteStringValue(TriggerRunId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TriggerName))
+                {
+                    writer.WritePropertyName("triggerName"u8);
+                    writer.WriteStringValue(TriggerName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TriggerType))
+                {
+                    writer.WritePropertyName("triggerType"u8);
+                    writer.WriteStringValue(TriggerType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TriggerRunTimestamp))
+                {
+                    writer.WritePropertyName("triggerRunTimestamp"u8);
+                    writer.WriteStringValue(TriggerRunTimestamp.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Properties))
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(TriggeredPipelines))
+                {
+                    writer.WritePropertyName("triggeredPipelines"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in TriggeredPipelines)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        TriggerRun IJsonModel<TriggerRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TriggerRun)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTriggerRun(document.RootElement, options);
+        }
+
+        internal static TriggerRun DeserializeTriggerRun(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,11 +216,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new TriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(triggeredPipelines), additionalProperties);
         }
 
+        BinaryData IPersistableModel<TriggerRun>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TriggerRun)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TriggerRun IPersistableModel<TriggerRun>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TriggerRun)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTriggerRun(document.RootElement, options);
+        }
+
+        string IPersistableModel<TriggerRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         internal partial class TriggerRunConverter : JsonConverter<TriggerRun>
         {
             public override void Write(Utf8JsonWriter writer, TriggerRun model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override TriggerRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

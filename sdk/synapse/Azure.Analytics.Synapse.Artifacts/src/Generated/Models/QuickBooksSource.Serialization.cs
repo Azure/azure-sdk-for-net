@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(QuickBooksSourceConverter))]
-    public partial class QuickBooksSource : IUtf8JsonSerializable
+    public partial class QuickBooksSource : IUtf8JsonSerializable, IJsonModel<QuickBooksSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuickBooksSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QuickBooksSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<QuickBooksSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<QuickBooksSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -59,8 +68,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static QuickBooksSource DeserializeQuickBooksSource(JsonElement element)
+        QuickBooksSource IJsonModel<QuickBooksSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuickBooksSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuickBooksSource(document.RootElement, options);
+        }
+
+        internal static QuickBooksSource DeserializeQuickBooksSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,6 +163,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new QuickBooksSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
         }
+
+        BinaryData IPersistableModel<QuickBooksSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuickBooksSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QuickBooksSource IPersistableModel<QuickBooksSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuickBooksSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQuickBooksSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<QuickBooksSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class QuickBooksSourceConverter : JsonConverter<QuickBooksSource>
         {

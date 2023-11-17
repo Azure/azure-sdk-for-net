@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbSqlApiSourceConverter))]
-    public partial class CosmosDbSqlApiSource : IUtf8JsonSerializable
+    public partial class CosmosDbSqlApiSource : IUtf8JsonSerializable, IJsonModel<CosmosDbSqlApiSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDbSqlApiSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDbSqlApiSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CosmosDbSqlApiSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CosmosDbSqlApiSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -69,8 +78,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDbSqlApiSource DeserializeCosmosDbSqlApiSource(JsonElement element)
+        CosmosDbSqlApiSource IJsonModel<CosmosDbSqlApiSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbSqlApiSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDbSqlApiSource(document.RootElement, options);
+        }
+
+        internal static CosmosDbSqlApiSource DeserializeCosmosDbSqlApiSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -170,6 +193,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbSqlApiSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, pageSize.Value, preferredRegions.Value, detectDatetime.Value, additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<CosmosDbSqlApiSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbSqlApiSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDbSqlApiSource IPersistableModel<CosmosDbSqlApiSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbSqlApiSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDbSqlApiSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<CosmosDbSqlApiSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class CosmosDbSqlApiSourceConverter : JsonConverter<CosmosDbSqlApiSource>
         {

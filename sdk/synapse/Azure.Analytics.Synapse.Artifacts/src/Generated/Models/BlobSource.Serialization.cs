@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(BlobSourceConverter))]
-    public partial class BlobSource : IUtf8JsonSerializable
+    public partial class BlobSource : IUtf8JsonSerializable, IJsonModel<BlobSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BlobSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BlobSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BlobSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
@@ -59,8 +68,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static BlobSource DeserializeBlobSource(JsonElement element)
+        BlobSource IJsonModel<BlobSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobSource(document.RootElement, options);
+        }
+
+        internal static BlobSource DeserializeBlobSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,6 +163,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new BlobSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, treatEmptyAsNull.Value, skipHeaderLineCount.Value, recursive.Value);
         }
+
+        BinaryData IPersistableModel<BlobSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BlobSource IPersistableModel<BlobSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBlobSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<BlobSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class BlobSourceConverter : JsonConverter<BlobSource>
         {

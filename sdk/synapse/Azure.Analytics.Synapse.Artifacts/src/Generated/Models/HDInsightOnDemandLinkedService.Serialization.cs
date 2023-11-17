@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(HDInsightOnDemandLinkedServiceConverter))]
-    public partial class HDInsightOnDemandLinkedService : IUtf8JsonSerializable
+    public partial class HDInsightOnDemandLinkedService : IUtf8JsonSerializable, IJsonModel<HDInsightOnDemandLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightOnDemandLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HDInsightOnDemandLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HDInsightOnDemandLinkedService>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HDInsightOnDemandLinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -227,8 +236,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static HDInsightOnDemandLinkedService DeserializeHDInsightOnDemandLinkedService(JsonElement element)
+        HDInsightOnDemandLinkedService IJsonModel<HDInsightOnDemandLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightOnDemandLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightOnDemandLinkedService(document.RootElement, options);
+        }
+
+        internal static HDInsightOnDemandLinkedService DeserializeHDInsightOnDemandLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -635,6 +658,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey.Value, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword.Value, clusterSshUserName.Value, clusterSshPassword.Value, Optional.ToList(additionalLinkedServiceNames), hcatalogLinkedServiceName.Value, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, Optional.ToList(scriptActions), virtualNetworkId.Value, subnetName.Value, credential.Value);
         }
+
+        BinaryData IPersistableModel<HDInsightOnDemandLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightOnDemandLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightOnDemandLinkedService IPersistableModel<HDInsightOnDemandLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightOnDemandLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightOnDemandLinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<HDInsightOnDemandLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class HDInsightOnDemandLinkedServiceConverter : JsonConverter<HDInsightOnDemandLinkedService>
         {

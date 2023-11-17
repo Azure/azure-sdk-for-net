@@ -5,14 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FilesAndDirectoriesListSegment
+    internal partial class FilesAndDirectoriesListSegment : IXmlSerializable, IPersistableModel<FilesAndDirectoriesListSegment>
     {
-        internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "Entries");
+            foreach (var item in DirectoryItems)
+            {
+                writer.WriteObjectValue(item, "Directory");
+            }
+            foreach (var item in FileItems)
+            {
+                writer.WriteObjectValue(item, "File");
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             IReadOnlyList<DirectoryItem> directoryItems = default;
             IReadOnlyList<FileItem> fileItems = default;
@@ -28,7 +48,43 @@ namespace Azure.Storage.Files.Shares.Models
                 array0.Add(FileItem.DeserializeFileItem(e));
             }
             fileItems = array0;
-            return new FilesAndDirectoriesListSegment(directoryItems, fileItems);
+            return new FilesAndDirectoriesListSegment(directoryItems, fileItems, default);
         }
+
+        BinaryData IPersistableModel<FilesAndDirectoriesListSegment>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<FilesAndDirectoriesListSegment>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FilesAndDirectoriesListSegment IPersistableModel<FilesAndDirectoriesListSegment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FilesAndDirectoriesListSegment)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeFilesAndDirectoriesListSegment(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<FilesAndDirectoriesListSegment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

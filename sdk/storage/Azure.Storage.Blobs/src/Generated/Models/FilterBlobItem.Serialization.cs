@@ -5,13 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class FilterBlobItem
+    internal partial class FilterBlobItem : IXmlSerializable, IPersistableModel<FilterBlobItem>
     {
-        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "Blob");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ContainerName");
+            writer.WriteValue(ContainerName);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Tags))
+            {
+                writer.WriteObjectValue(Tags, "Tags");
+            }
+            if (Optional.IsDefined(VersionId))
+            {
+                writer.WriteStartElement("VersionId");
+                writer.WriteValue(VersionId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsCurrentVersion))
+            {
+                writer.WriteStartElement("IsCurrentVersion");
+                writer.WriteValue(IsCurrentVersion.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             string containerName = default;
@@ -38,7 +72,43 @@ namespace Azure.Storage.Blobs.Models
             {
                 isCurrentVersion = (bool?)isCurrentVersionElement;
             }
-            return new FilterBlobItem(name, containerName, tags, versionId, isCurrentVersion);
+            return new FilterBlobItem(name, containerName, tags, versionId, isCurrentVersion, default);
         }
+
+        BinaryData IPersistableModel<FilterBlobItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<FilterBlobItem>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FilterBlobItem IPersistableModel<FilterBlobItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FilterBlobItem)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeFilterBlobItem(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<FilterBlobItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(HDInsightSparkActivityConverter))]
-    public partial class HDInsightSparkActivity : IUtf8JsonSerializable
+    public partial class HDInsightSparkActivity : IUtf8JsonSerializable, IJsonModel<HDInsightSparkActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightSparkActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HDInsightSparkActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HDInsightSparkActivity>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HDInsightSparkActivity>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -134,8 +143,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static HDInsightSparkActivity DeserializeHDInsightSparkActivity(JsonElement element)
+        HDInsightSparkActivity IJsonModel<HDInsightSparkActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightSparkActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightSparkActivity(document.RootElement, options);
+        }
+
+        internal static HDInsightSparkActivity DeserializeHDInsightSparkActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -341,6 +364,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightSparkActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, rootPath, entryFilePath, Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), sparkJobLinkedService.Value, className.Value, proxyUser.Value, Optional.ToDictionary(sparkConfig));
         }
+
+        BinaryData IPersistableModel<HDInsightSparkActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightSparkActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightSparkActivity IPersistableModel<HDInsightSparkActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightSparkActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightSparkActivity(document.RootElement, options);
+        }
+
+        string IPersistableModel<HDInsightSparkActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class HDInsightSparkActivityConverter : JsonConverter<HDInsightSparkActivity>
         {

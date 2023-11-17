@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryFormat : IXmlSerializable
+    internal partial class QueryFormat : IXmlSerializable, IPersistableModel<QueryFormat>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -36,5 +41,71 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        internal static QueryFormat DeserializeQueryFormat(XElement element, ModelReaderWriterOptions options = null)
+        {
+            QueryFormatType type = default;
+            DelimitedTextConfigurationInternal delimitedTextConfiguration = default;
+            JsonTextConfigurationInternal jsonTextConfiguration = default;
+            ArrowTextConfigurationInternal arrowConfiguration = default;
+            object parquetTextConfiguration = default;
+            if (element.Element("Type") is XElement typeElement)
+            {
+                type = typeElement.Value.ToQueryFormatType();
+            }
+            if (element.Element("DelimitedTextConfiguration") is XElement delimitedTextConfigurationElement)
+            {
+                delimitedTextConfiguration = DelimitedTextConfigurationInternal.DeserializeDelimitedTextConfigurationInternal(delimitedTextConfigurationElement);
+            }
+            if (element.Element("JsonTextConfiguration") is XElement jsonTextConfigurationElement)
+            {
+                jsonTextConfiguration = JsonTextConfigurationInternal.DeserializeJsonTextConfigurationInternal(jsonTextConfigurationElement);
+            }
+            if (element.Element("ArrowConfiguration") is XElement arrowConfigurationElement)
+            {
+                arrowConfiguration = ArrowTextConfigurationInternal.DeserializeArrowTextConfigurationInternal(arrowConfigurationElement);
+            }
+            if (element.Element("ParquetTextConfiguration") is XElement parquetTextConfigurationElement)
+            {
+                parquetTextConfiguration = parquetTextConfigurationElement.GetObjectValue(null);
+            }
+            return new QueryFormat(type, delimitedTextConfiguration, jsonTextConfiguration, arrowConfiguration, parquetTextConfiguration, default);
+        }
+
+        BinaryData IPersistableModel<QueryFormat>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<QueryFormat>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueryFormat IPersistableModel<QueryFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryFormat)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeQueryFormat(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<QueryFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

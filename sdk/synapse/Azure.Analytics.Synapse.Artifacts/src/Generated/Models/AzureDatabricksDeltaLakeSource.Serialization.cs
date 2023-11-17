@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDatabricksDeltaLakeSourceConverter))]
-    public partial class AzureDatabricksDeltaLakeSource : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeSource : IUtf8JsonSerializable, IJsonModel<AzureDatabricksDeltaLakeSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureDatabricksDeltaLakeSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureDatabricksDeltaLakeSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureDatabricksDeltaLakeSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -54,8 +63,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeSource DeserializeAzureDatabricksDeltaLakeSource(JsonElement element)
+        AzureDatabricksDeltaLakeSource IJsonModel<AzureDatabricksDeltaLakeSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeSource(document.RootElement, options);
+        }
+
+        internal static AzureDatabricksDeltaLakeSource DeserializeAzureDatabricksDeltaLakeSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,6 +148,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, exportSettings.Value);
         }
+
+        BinaryData IPersistableModel<AzureDatabricksDeltaLakeSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureDatabricksDeltaLakeSource IPersistableModel<AzureDatabricksDeltaLakeSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureDatabricksDeltaLakeSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureDatabricksDeltaLakeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureDatabricksDeltaLakeSourceConverter : JsonConverter<AzureDatabricksDeltaLakeSource>
         {

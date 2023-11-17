@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GitHubAccessTokenRequestConverter))]
-    public partial class GitHubAccessTokenRequest : IUtf8JsonSerializable
+    public partial class GitHubAccessTokenRequest : IUtf8JsonSerializable, IJsonModel<GitHubAccessTokenRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubAccessTokenRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GitHubAccessTokenRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GitHubAccessTokenRequest>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GitHubAccessTokenRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("gitHubClientId"u8);
             writer.WriteStringValue(GitHubClientId);
@@ -24,8 +34,99 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(GitHubAccessCode);
             writer.WritePropertyName("gitHubAccessTokenBaseUrl"u8);
             writer.WriteStringValue(GitHubAccessTokenBaseUrl);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        GitHubAccessTokenRequest IJsonModel<GitHubAccessTokenRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GitHubAccessTokenRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGitHubAccessTokenRequest(document.RootElement, options);
+        }
+
+        internal static GitHubAccessTokenRequest DeserializeGitHubAccessTokenRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string gitHubClientId = default;
+            string gitHubAccessCode = default;
+            string gitHubAccessTokenBaseUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("gitHubClientId"u8))
+                {
+                    gitHubClientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("gitHubAccessCode"u8))
+                {
+                    gitHubAccessCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("gitHubAccessTokenBaseUrl"u8))
+                {
+                    gitHubAccessTokenBaseUrl = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GitHubAccessTokenRequest(gitHubClientId, gitHubAccessCode, gitHubAccessTokenBaseUrl, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<GitHubAccessTokenRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GitHubAccessTokenRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GitHubAccessTokenRequest IPersistableModel<GitHubAccessTokenRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GitHubAccessTokenRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGitHubAccessTokenRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<GitHubAccessTokenRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class GitHubAccessTokenRequestConverter : JsonConverter<GitHubAccessTokenRequest>
         {
@@ -35,7 +136,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override GitHubAccessTokenRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeGitHubAccessTokenRequest(document.RootElement);
             }
         }
     }

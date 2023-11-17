@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The role based access control (RBAC) authorization type integration runtime. </summary>
     public partial class LinkedIntegrationRuntimeRbacAuthorization : LinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeRbacAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public LinkedIntegrationRuntimeRbacAuthorization(string resourceId)
@@ -24,13 +25,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AuthorizationType = "RBAC";
         }
 
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeRbacAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
-        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId) : base(authorizationType)
+        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceId) : base(authorizationType, serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             AuthorizationType = authorizationType ?? "RBAC";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/> for deserialization. </summary>
+        internal LinkedIntegrationRuntimeRbacAuthorization()
+        {
         }
 
         /// <summary> The resource identifier of the integration runtime to be shared. </summary>

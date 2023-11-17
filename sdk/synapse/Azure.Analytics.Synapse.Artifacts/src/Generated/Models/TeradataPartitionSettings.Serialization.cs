@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TeradataPartitionSettingsConverter))]
-    public partial class TeradataPartitionSettings : IUtf8JsonSerializable
+    public partial class TeradataPartitionSettings : IUtf8JsonSerializable, IJsonModel<TeradataPartitionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TeradataPartitionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TeradataPartitionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TeradataPartitionSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TeradataPartitionSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
@@ -33,11 +43,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("partitionLowerBound"u8);
                 writer.WriteObjectValue(PartitionLowerBound);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TeradataPartitionSettings DeserializeTeradataPartitionSettings(JsonElement element)
+        TeradataPartitionSettings IJsonModel<TeradataPartitionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TeradataPartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTeradataPartitionSettings(document.RootElement, options);
+        }
+
+        internal static TeradataPartitionSettings DeserializeTeradataPartitionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +84,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> partitionColumnName = default;
             Optional<object> partitionUpperBound = default;
             Optional<object> partitionLowerBound = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -74,9 +115,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionLowerBound = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TeradataPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TeradataPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TeradataPartitionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TeradataPartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TeradataPartitionSettings IPersistableModel<TeradataPartitionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TeradataPartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTeradataPartitionSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<TeradataPartitionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class TeradataPartitionSettingsConverter : JsonConverter<TeradataPartitionSettings>
         {

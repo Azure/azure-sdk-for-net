@@ -14,7 +14,39 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The SpatialAnalysisPersonCountZoneEvents. </summary>
     public partial class SpatialAnalysisPersonCountZoneEvents
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonCountZoneEvents. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonCountZoneEvents"/>. </summary>
         /// <param name="zone">
         /// The named zone.
         /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,17 +61,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = new ChangeTrackingList<SpatialAnalysisPersonCountEvent>();
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonCountZoneEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonCountZoneEvents"/>. </summary>
         /// <param name="zone">
         /// The named zone.
         /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPolygonString"/>.
         /// </param>
         /// <param name="events"> The event configuration. </param>
-        internal SpatialAnalysisPersonCountZoneEvents(NamedPolygonBase zone, IList<SpatialAnalysisPersonCountEvent> events)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpatialAnalysisPersonCountZoneEvents(NamedPolygonBase zone, IList<SpatialAnalysisPersonCountEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zone = zone;
             Events = events;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonCountZoneEvents"/> for deserialization. </summary>
+        internal SpatialAnalysisPersonCountZoneEvents()
+        {
         }
 
         /// <summary>

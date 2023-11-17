@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsClusterJob
+    public partial class StreamAnalyticsClusterJob : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsClusterJob>
     {
-        internal static StreamAnalyticsClusterJob DeserializeStreamAnalyticsClusterJob(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsClusterJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamAnalyticsClusterJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StreamAnalyticsClusterJob>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StreamAnalyticsClusterJob>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StreamingUnits))
+                {
+                    writer.WritePropertyName("streamingUnits"u8);
+                    writer.WriteNumberValue(StreamingUnits.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(JobState))
+                {
+                    writer.WritePropertyName("jobState"u8);
+                    writer.WriteStringValue(JobState.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StreamAnalyticsClusterJob IJsonModel<StreamAnalyticsClusterJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterJob)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsClusterJob(document.RootElement, options);
+        }
+
+        internal static StreamAnalyticsClusterJob DeserializeStreamAnalyticsClusterJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<ResourceIdentifier> id = default;
             Optional<int> streamingUnits = default;
             Optional<StreamingJobState> jobState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -50,8 +122,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     jobState = new StreamingJobState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamAnalyticsClusterJob(id.Value, Optional.ToNullable(streamingUnits), Optional.ToNullable(jobState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StreamAnalyticsClusterJob(id.Value, Optional.ToNullable(streamingUnits), Optional.ToNullable(jobState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamAnalyticsClusterJob>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterJob)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamAnalyticsClusterJob IPersistableModel<StreamAnalyticsClusterJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterJob)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsClusterJob(document.RootElement, options);
+        }
+
+        string IPersistableModel<StreamAnalyticsClusterJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(HttpServerLocationConverter))]
-    public partial class HttpServerLocation : IUtf8JsonSerializable
+    public partial class HttpServerLocation : IUtf8JsonSerializable, IJsonModel<HttpServerLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpServerLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HttpServerLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HttpServerLocation>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HttpServerLocation>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RelativeUrl))
             {
@@ -44,8 +53,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element)
+        HttpServerLocation IJsonModel<HttpServerLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpServerLocation(document.RootElement, options);
+        }
+
+        internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +118,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HttpServerLocation(type, folderPath.Value, fileName.Value, additionalProperties, relativeUrl.Value);
         }
+
+        BinaryData IPersistableModel<HttpServerLocation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HttpServerLocation IPersistableModel<HttpServerLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHttpServerLocation(document.RootElement, options);
+        }
+
+        string IPersistableModel<HttpServerLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class HttpServerLocationConverter : JsonConverter<HttpServerLocation>
         {

@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppMinorVersion
+    public partial class WebAppMinorVersion : IUtf8JsonSerializable, IJsonModel<WebAppMinorVersion>
     {
-        internal static WebAppMinorVersion DeserializeWebAppMinorVersion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppMinorVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebAppMinorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WebAppMinorVersion>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WebAppMinorVersion>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisplayText))
+                {
+                    writer.WritePropertyName("displayText"u8);
+                    writer.WriteStringValue(DisplayText);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Value))
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStringValue(Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StackSettings))
+                {
+                    writer.WritePropertyName("stackSettings"u8);
+                    writer.WriteObjectValue(StackSettings);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WebAppMinorVersion IJsonModel<WebAppMinorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebAppMinorVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppMinorVersion(document.RootElement, options);
+        }
+
+        internal static WebAppMinorVersion DeserializeWebAppMinorVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayText = default;
             Optional<string> value = default;
             Optional<WebAppRuntimes> stackSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayText"u8))
@@ -42,8 +114,38 @@ namespace Azure.ResourceManager.AppService.Models
                     stackSettings = WebAppRuntimes.DeserializeWebAppRuntimes(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebAppMinorVersion(displayText.Value, value.Value, stackSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebAppMinorVersion(displayText.Value, value.Value, stackSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebAppMinorVersion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebAppMinorVersion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WebAppMinorVersion IPersistableModel<WebAppMinorVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebAppMinorVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWebAppMinorVersion(document.RootElement, options);
+        }
+
+        string IPersistableModel<WebAppMinorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

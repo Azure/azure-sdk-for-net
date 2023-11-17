@@ -5,16 +5,126 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsQueryCompilationResult
+    public partial class StreamAnalyticsQueryCompilationResult : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsQueryCompilationResult>
     {
-        internal static StreamAnalyticsQueryCompilationResult DeserializeStreamAnalyticsQueryCompilationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsQueryCompilationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamAnalyticsQueryCompilationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StreamAnalyticsQueryCompilationResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StreamAnalyticsQueryCompilationResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Errors))
+                {
+                    writer.WritePropertyName("errors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Errors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Warnings))
+                {
+                    writer.WritePropertyName("warnings"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Warnings)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Inputs))
+                {
+                    writer.WritePropertyName("inputs"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Inputs)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Outputs))
+                {
+                    writer.WritePropertyName("outputs"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Outputs)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Functions))
+                {
+                    writer.WritePropertyName("functions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Functions)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StreamAnalyticsQueryCompilationResult IJsonModel<StreamAnalyticsQueryCompilationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsQueryCompilationResult(document.RootElement, options);
+        }
+
+        internal static StreamAnalyticsQueryCompilationResult DeserializeStreamAnalyticsQueryCompilationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +134,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<IReadOnlyList<string>> inputs = default;
             Optional<IReadOnlyList<string>> outputs = default;
             Optional<IReadOnlyList<string>> functions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"u8))
@@ -96,8 +208,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     functions = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamAnalyticsQueryCompilationResult(Optional.ToList(errors), Optional.ToList(warnings), Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToList(functions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StreamAnalyticsQueryCompilationResult(Optional.ToList(errors), Optional.ToList(warnings), Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToList(functions), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamAnalyticsQueryCompilationResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamAnalyticsQueryCompilationResult IPersistableModel<StreamAnalyticsQueryCompilationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsQueryCompilationResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<StreamAnalyticsQueryCompilationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

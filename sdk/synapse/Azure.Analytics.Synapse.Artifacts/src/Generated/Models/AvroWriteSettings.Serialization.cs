@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AvroWriteSettingsConverter))]
-    public partial class AvroWriteSettings : IUtf8JsonSerializable
+    public partial class AvroWriteSettings : IUtf8JsonSerializable, IJsonModel<AvroWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvroWriteSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AvroWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AvroWriteSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AvroWriteSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecordName))
             {
@@ -49,8 +58,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AvroWriteSettings DeserializeAvroWriteSettings(JsonElement element)
+        AvroWriteSettings IJsonModel<AvroWriteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvroWriteSettings(document.RootElement, options);
+        }
+
+        internal static AvroWriteSettings DeserializeAvroWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -102,6 +125,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AvroWriteSettings(type, additionalProperties, recordName.Value, recordNamespace.Value, maxRowsPerFile.Value, fileNamePrefix.Value);
         }
+
+        BinaryData IPersistableModel<AvroWriteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AvroWriteSettings IPersistableModel<AvroWriteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAvroWriteSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<AvroWriteSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AvroWriteSettingsConverter : JsonConverter<AvroWriteSettings>
         {

@@ -6,15 +6,92 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointBackgroundDataDownloadActivity
+    public partial class ServerEndpointBackgroundDataDownloadActivity : IUtf8JsonSerializable, IJsonModel<ServerEndpointBackgroundDataDownloadActivity>
     {
-        internal static ServerEndpointBackgroundDataDownloadActivity DeserializeServerEndpointBackgroundDataDownloadActivity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointBackgroundDataDownloadActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServerEndpointBackgroundDataDownloadActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServerEndpointBackgroundDataDownloadActivity>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("timestamp"u8);
+                    writer.WriteStringValue(Timestamp.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartedOn))
+                {
+                    writer.WritePropertyName("startedTimestamp"u8);
+                    writer.WriteStringValue(StartedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PercentProgress))
+                {
+                    writer.WritePropertyName("percentProgress"u8);
+                    writer.WriteNumberValue(PercentProgress.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DownloadedBytes))
+                {
+                    writer.WritePropertyName("downloadedBytes"u8);
+                    writer.WriteNumberValue(DownloadedBytes.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServerEndpointBackgroundDataDownloadActivity IJsonModel<ServerEndpointBackgroundDataDownloadActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointBackgroundDataDownloadActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerEndpointBackgroundDataDownloadActivity(document.RootElement, options);
+        }
+
+        internal static ServerEndpointBackgroundDataDownloadActivity DeserializeServerEndpointBackgroundDataDownloadActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +100,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<DateTimeOffset> startedTimestamp = default;
             Optional<int> percentProgress = default;
             Optional<long> downloadedBytes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -61,8 +140,38 @@ namespace Azure.ResourceManager.StorageSync.Models
                     downloadedBytes = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServerEndpointBackgroundDataDownloadActivity(Optional.ToNullable(timestamp), Optional.ToNullable(startedTimestamp), Optional.ToNullable(percentProgress), Optional.ToNullable(downloadedBytes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServerEndpointBackgroundDataDownloadActivity(Optional.ToNullable(timestamp), Optional.ToNullable(startedTimestamp), Optional.ToNullable(percentProgress), Optional.ToNullable(downloadedBytes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointBackgroundDataDownloadActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServerEndpointBackgroundDataDownloadActivity IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointBackgroundDataDownloadActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServerEndpointBackgroundDataDownloadActivity(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

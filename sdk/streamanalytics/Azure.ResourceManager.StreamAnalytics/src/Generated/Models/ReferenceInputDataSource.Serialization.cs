@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class ReferenceInputDataSource : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownReferenceInputDataSource))]
+    public partial class ReferenceInputDataSource : IUtf8JsonSerializable, IJsonModel<ReferenceInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReferenceInputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReferenceInputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ReferenceInputDataSource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ReferenceInputDataSource>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceInputDataSourceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ReferenceInputDataSource DeserializeReferenceInputDataSource(JsonElement element)
+        ReferenceInputDataSource IJsonModel<ReferenceInputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReferenceInputDataSource(document.RootElement, options);
+        }
+
+        internal static ReferenceInputDataSource DeserializeReferenceInputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +77,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             return UnknownReferenceInputDataSource.DeserializeUnknownReferenceInputDataSource(element);
         }
+
+        BinaryData IPersistableModel<ReferenceInputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReferenceInputDataSource IPersistableModel<ReferenceInputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReferenceInputDataSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<ReferenceInputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

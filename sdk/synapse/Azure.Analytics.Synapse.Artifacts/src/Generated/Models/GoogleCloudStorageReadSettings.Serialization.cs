@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GoogleCloudStorageReadSettingsConverter))]
-    public partial class GoogleCloudStorageReadSettings : IUtf8JsonSerializable
+    public partial class GoogleCloudStorageReadSettings : IUtf8JsonSerializable, IJsonModel<GoogleCloudStorageReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleCloudStorageReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GoogleCloudStorageReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GoogleCloudStorageReadSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GoogleCloudStorageReadSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
@@ -84,8 +93,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static GoogleCloudStorageReadSettings DeserializeGoogleCloudStorageReadSettings(JsonElement element)
+        GoogleCloudStorageReadSettings IJsonModel<GoogleCloudStorageReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleCloudStorageReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleCloudStorageReadSettings(document.RootElement, options);
+        }
+
+        internal static GoogleCloudStorageReadSettings DeserializeGoogleCloudStorageReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -215,6 +238,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleCloudStorageReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, prefix.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
         }
+
+        BinaryData IPersistableModel<GoogleCloudStorageReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleCloudStorageReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GoogleCloudStorageReadSettings IPersistableModel<GoogleCloudStorageReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleCloudStorageReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGoogleCloudStorageReadSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<GoogleCloudStorageReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class GoogleCloudStorageReadSettingsConverter : JsonConverter<GoogleCloudStorageReadSettings>
         {

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,11 +16,41 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class StorageMoverAgentData : IUtf8JsonSerializable
+    public partial class StorageMoverAgentData : IUtf8JsonSerializable, IJsonModel<StorageMoverAgentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverAgentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageMoverAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StorageMoverAgentData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -25,16 +58,117 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AgentVersion))
+                {
+                    writer.WritePropertyName("agentVersion"u8);
+                    writer.WriteStringValue(AgentVersion);
+                }
+            }
             writer.WritePropertyName("arcResourceId"u8);
             writer.WriteStringValue(ArcResourceId);
             writer.WritePropertyName("arcVmUuid"u8);
             writer.WriteStringValue(ArcVmUuid);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AgentStatus))
+                {
+                    writer.WritePropertyName("agentStatus"u8);
+                    writer.WriteStringValue(AgentStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastStatusUpdate))
+                {
+                    writer.WritePropertyName("lastStatusUpdate"u8);
+                    writer.WriteStringValue(LastStatusUpdate.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LocalIPAddress))
+                {
+                    writer.WritePropertyName("localIPAddress"u8);
+                    writer.WriteStringValue(LocalIPAddress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MemoryInMB))
+                {
+                    writer.WritePropertyName("memoryInMB"u8);
+                    writer.WriteNumberValue(MemoryInMB.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfCores))
+                {
+                    writer.WritePropertyName("numberOfCores"u8);
+                    writer.WriteNumberValue(NumberOfCores.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UptimeInSeconds))
+                {
+                    writer.WritePropertyName("uptimeInSeconds"u8);
+                    writer.WriteNumberValue(UptimeInSeconds.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorDetails))
+                {
+                    writer.WritePropertyName("errorDetails"u8);
+                    writer.WriteObjectValue(ErrorDetails);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageMoverAgentData DeserializeStorageMoverAgentData(JsonElement element)
+        StorageMoverAgentData IJsonModel<StorageMoverAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageMoverAgentData(document.RootElement, options);
+        }
+
+        internal static StorageMoverAgentData DeserializeStorageMoverAgentData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +189,8 @@ namespace Azure.ResourceManager.StorageMover
             Optional<long> uptimeInSeconds = default;
             Optional<StorageMoverAgentPropertiesErrorDetails> errorDetails = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -181,8 +317,38 @@ namespace Azure.ResourceManager.StorageMover
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageMoverAgentData(id, name, type, systemData.Value, description.Value, agentVersion.Value, arcResourceId, arcVmUuid, Optional.ToNullable(agentStatus), Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Optional.ToNullable(memoryInMB), Optional.ToNullable(numberOfCores), Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageMoverAgentData(id, name, type, systemData.Value, description.Value, agentVersion.Value, arcResourceId, arcVmUuid, Optional.ToNullable(agentStatus), Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Optional.ToNullable(memoryInMB), Optional.ToNullable(numberOfCores), Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageMoverAgentData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StorageMoverAgentData IPersistableModel<StorageMoverAgentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStorageMoverAgentData(document.RootElement, options);
+        }
+
+        string IPersistableModel<StorageMoverAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

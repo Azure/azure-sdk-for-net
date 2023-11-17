@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,20 +16,80 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlScriptResourceConverter))]
-    public partial class SqlScriptResource : IUtf8JsonSerializable
+    public partial class SqlScriptResource : IUtf8JsonSerializable, IJsonModel<SqlScriptResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlScriptResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlScriptResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlScriptResource>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlScriptResource>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Type))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(Type);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Etag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(Etag);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlScriptResource DeserializeSqlScriptResource(JsonElement element)
+        SqlScriptResource IJsonModel<SqlScriptResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlScriptResource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlScriptResource(document.RootElement, options);
+        }
+
+        internal static SqlScriptResource DeserializeSqlScriptResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +99,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> type = default;
             Optional<string> etag = default;
             SqlScript properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,9 +128,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     properties = SqlScript.DeserializeSqlScript(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlScriptResource(id.Value, name, type.Value, etag.Value, properties);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlScriptResource(id.Value, name, type.Value, etag.Value, properties, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlScriptResource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlScriptResource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlScriptResource IPersistableModel<SqlScriptResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlScriptResource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlScriptResource(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlScriptResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SqlScriptResourceConverter : JsonConverter<SqlScriptResource>
         {

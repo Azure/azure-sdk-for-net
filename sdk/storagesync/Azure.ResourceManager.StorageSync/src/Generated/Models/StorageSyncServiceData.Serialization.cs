@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncServiceData : IUtf8JsonSerializable
+    public partial class StorageSyncServiceData : IUtf8JsonSerializable, IJsonModel<StorageSyncServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageSyncServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StorageSyncServiceData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StorageSyncServiceData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,6 +41,29 @@ namespace Azure.ResourceManager.StorageSync
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IncomingTrafficPolicy))
@@ -39,12 +71,94 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("incomingTrafficPolicy"u8);
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StorageSyncServiceStatus))
+                {
+                    writer.WritePropertyName("storageSyncServiceStatus"u8);
+                    writer.WriteNumberValue(StorageSyncServiceStatus.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StorageSyncServiceUid))
+                {
+                    writer.WritePropertyName("storageSyncServiceUid"u8);
+                    writer.WriteStringValue(StorageSyncServiceUid.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastWorkflowId))
+                {
+                    writer.WritePropertyName("lastWorkflowId"u8);
+                    writer.WriteStringValue(LastWorkflowId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastOperationName))
+                {
+                    writer.WritePropertyName("lastOperationName"u8);
+                    writer.WriteStringValue(LastOperationName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageSyncServiceData DeserializeStorageSyncServiceData(JsonElement element)
+        StorageSyncServiceData IJsonModel<StorageSyncServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSyncServiceData(document.RootElement, options);
+        }
+
+        internal static StorageSyncServiceData DeserializeStorageSyncServiceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +176,8 @@ namespace Azure.ResourceManager.StorageSync
             Optional<string> lastWorkflowId = default;
             Optional<string> lastOperationName = default;
             Optional<IReadOnlyList<StorageSyncPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -175,8 +291,38 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageSyncServiceData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StorageSyncServiceData IPersistableModel<StorageSyncServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStorageSyncServiceData(document.RootElement, options);
+        }
+
+        string IPersistableModel<StorageSyncServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

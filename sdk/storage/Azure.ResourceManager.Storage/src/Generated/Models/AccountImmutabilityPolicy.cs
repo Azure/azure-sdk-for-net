@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> This defines account-level immutability policy properties. </summary>
     public partial class AccountImmutabilityPolicy
     {
-        /// <summary> Initializes a new instance of AccountImmutabilityPolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccountImmutabilityPolicy"/>. </summary>
         public AccountImmutabilityPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountImmutabilityPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountImmutabilityPolicy"/>. </summary>
         /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
         /// <param name="state"> The ImmutabilityPolicy state defines the mode of the policy. Disabled state disables the policy, Unlocked state allows increase and decrease of immutability retention time and also allows toggling allowProtectedAppendWrites property, Locked state only allows the increase of the immutability retention time. A policy can only be created in a Disabled or Unlocked state and can be toggled between the two states. Only a policy in an Unlocked state can transition to a Locked state which cannot be reverted. </param>
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for disabled and unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </param>
-        internal AccountImmutabilityPolicy(int? immutabilityPeriodSinceCreationInDays, AccountImmutabilityPolicyState? state, bool? allowProtectedAppendWrites)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccountImmutabilityPolicy(int? immutabilityPeriodSinceCreationInDays, AccountImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;
             AllowProtectedAppendWrites = allowProtectedAppendWrites;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>

@@ -6,21 +6,84 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class OutstandingCondition
+    public partial class OutstandingCondition : IUtf8JsonSerializable, IJsonModel<OutstandingCondition>
     {
-        internal static OutstandingCondition DeserializeOutstandingCondition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutstandingCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OutstandingCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OutstandingCondition>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OutstandingCondition>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("timestamp"u8);
+                    writer.WriteStringValue(Timestamp.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OutstandingCondition IJsonModel<OutstandingCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OutstandingCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOutstandingCondition(document.RootElement, options);
+        }
+
+        internal static OutstandingCondition DeserializeOutstandingCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> message = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -37,8 +100,38 @@ namespace Azure.ResourceManager.StorageCache.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OutstandingCondition(Optional.ToNullable(timestamp), message.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OutstandingCondition(Optional.ToNullable(timestamp), message.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OutstandingCondition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OutstandingCondition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OutstandingCondition IPersistableModel<OutstandingCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OutstandingCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOutstandingCondition(document.RootElement, options);
+        }
+
+        string IPersistableModel<OutstandingCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

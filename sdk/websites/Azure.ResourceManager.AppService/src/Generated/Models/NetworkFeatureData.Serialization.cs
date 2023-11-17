@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,24 +16,125 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class NetworkFeatureData : IUtf8JsonSerializable
+    public partial class NetworkFeatureData : IUtf8JsonSerializable, IJsonModel<NetworkFeatureData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFeatureData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkFeatureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkFeatureData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkFeatureData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VirtualNetworkName))
+                {
+                    writer.WritePropertyName("virtualNetworkName"u8);
+                    writer.WriteStringValue(VirtualNetworkName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VirtualNetworkConnection))
+                {
+                    writer.WritePropertyName("virtualNetworkConnection"u8);
+                    writer.WriteObjectValue(VirtualNetworkConnection);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(HybridConnections))
+                {
+                    writer.WritePropertyName("hybridConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in HybridConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(HybridConnectionsV2))
+                {
+                    writer.WritePropertyName("hybridConnectionsV2"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in HybridConnectionsV2)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkFeatureData DeserializeNetworkFeatureData(JsonElement element)
+        NetworkFeatureData IJsonModel<NetworkFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFeatureData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFeatureData(document.RootElement, options);
+        }
+
+        internal static NetworkFeatureData DeserializeNetworkFeatureData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +148,8 @@ namespace Azure.ResourceManager.AppService
             Optional<AppServiceVirtualNetworkProperties> virtualNetworkConnection = default;
             Optional<IReadOnlyList<RelayServiceConnectionEntityData>> hybridConnections = default;
             Optional<IReadOnlyList<HybridConnectionData>> hybridConnectionsV2 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -129,8 +235,38 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkFeatureData(id, name, type, systemData.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Optional.ToList(hybridConnections), Optional.ToList(hybridConnectionsV2), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkFeatureData(id, name, type, systemData.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Optional.ToList(hybridConnections), Optional.ToList(hybridConnectionsV2), kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFeatureData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkFeatureData IPersistableModel<NetworkFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFeatureData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkFeatureData(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

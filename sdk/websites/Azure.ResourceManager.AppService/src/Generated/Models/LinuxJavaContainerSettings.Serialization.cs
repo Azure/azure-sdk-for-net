@@ -6,15 +6,124 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class LinuxJavaContainerSettings
+    public partial class LinuxJavaContainerSettings : IUtf8JsonSerializable, IJsonModel<LinuxJavaContainerSettings>
     {
-        internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxJavaContainerSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LinuxJavaContainerSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LinuxJavaContainerSettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LinuxJavaContainerSettings>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Java11Runtime))
+                {
+                    writer.WritePropertyName("java11Runtime"u8);
+                    writer.WriteStringValue(Java11Runtime);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Java8Runtime))
+                {
+                    writer.WritePropertyName("java8Runtime"u8);
+                    writer.WriteStringValue(Java8Runtime);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsPreview))
+                {
+                    writer.WritePropertyName("isPreview"u8);
+                    writer.WriteBooleanValue(IsPreview.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsDeprecated))
+                {
+                    writer.WritePropertyName("isDeprecated"u8);
+                    writer.WriteBooleanValue(IsDeprecated.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsHidden))
+                {
+                    writer.WritePropertyName("isHidden"u8);
+                    writer.WriteBooleanValue(IsHidden.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOfLifeOn))
+                {
+                    writer.WritePropertyName("endOfLifeDate"u8);
+                    writer.WriteStringValue(EndOfLifeOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsAutoUpdate))
+                {
+                    writer.WritePropertyName("isAutoUpdate"u8);
+                    writer.WriteBooleanValue(IsAutoUpdate.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsEarlyAccess))
+                {
+                    writer.WritePropertyName("isEarlyAccess"u8);
+                    writer.WriteBooleanValue(IsEarlyAccess.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinuxJavaContainerSettings IJsonModel<LinuxJavaContainerSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinuxJavaContainerSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinuxJavaContainerSettings(document.RootElement, options);
+        }
+
+        internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +136,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<bool> isAutoUpdate = default;
             Optional<bool> isEarlyAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("java11Runtime"u8))
@@ -93,8 +204,38 @@ namespace Azure.ResourceManager.AppService.Models
                     isEarlyAccess = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinuxJavaContainerSettings(java11Runtime.Value, java8Runtime.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinuxJavaContainerSettings(java11Runtime.Value, java8Runtime.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinuxJavaContainerSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinuxJavaContainerSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinuxJavaContainerSettings IPersistableModel<LinuxJavaContainerSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinuxJavaContainerSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinuxJavaContainerSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<LinuxJavaContainerSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

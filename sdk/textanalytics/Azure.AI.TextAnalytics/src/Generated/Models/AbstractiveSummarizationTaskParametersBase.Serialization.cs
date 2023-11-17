@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummarizationTaskParametersBase : IUtf8JsonSerializable
+    internal partial class AbstractiveSummarizationTaskParametersBase : IUtf8JsonSerializable, IJsonModel<AbstractiveSummarizationTaskParametersBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AbstractiveSummarizationTaskParametersBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AbstractiveSummarizationTaskParametersBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AbstractiveSummarizationTaskParametersBase>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AbstractiveSummarizationTaskParametersBase>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SentenceCount))
             {
@@ -25,17 +36,48 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AbstractiveSummarizationTaskParametersBase DeserializeAbstractiveSummarizationTaskParametersBase(JsonElement element)
+        AbstractiveSummarizationTaskParametersBase IJsonModel<AbstractiveSummarizationTaskParametersBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AbstractiveSummarizationTaskParametersBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAbstractiveSummarizationTaskParametersBase(document.RootElement, options);
+        }
+
+        internal static AbstractiveSummarizationTaskParametersBase DeserializeAbstractiveSummarizationTaskParametersBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> sentenceCount = default;
             Optional<StringIndexType> stringIndexType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentenceCount"u8))
@@ -56,8 +98,38 @@ namespace Azure.AI.TextAnalytics.Models
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AbstractiveSummarizationTaskParametersBase(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AbstractiveSummarizationTaskParametersBase(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AbstractiveSummarizationTaskParametersBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AbstractiveSummarizationTaskParametersBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AbstractiveSummarizationTaskParametersBase IPersistableModel<AbstractiveSummarizationTaskParametersBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AbstractiveSummarizationTaskParametersBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAbstractiveSummarizationTaskParametersBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<AbstractiveSummarizationTaskParametersBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

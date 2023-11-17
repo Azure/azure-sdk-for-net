@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareServiceProperties : IXmlSerializable
+    public partial class ShareServiceProperties : IXmlSerializable, IPersistableModel<ShareServiceProperties>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -41,7 +45,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element)
+        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element, ModelReaderWriterOptions options = null)
         {
             ShareMetrics hourMetrics = default;
             ShareMetrics minuteMetrics = default;
@@ -68,7 +72,43 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 cors = array;
             }
-            return new ShareServiceProperties(hourMetrics, minuteMetrics, cors, protocol);
+            return new ShareServiceProperties(hourMetrics, minuteMetrics, cors, protocol, default);
         }
+
+        BinaryData IPersistableModel<ShareServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ShareServiceProperties>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareServiceProperties IPersistableModel<ShareServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ShareServiceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeShareServiceProperties(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<ShareServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

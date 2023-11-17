@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The SparkScheduler. </summary>
     public partial class SparkScheduler
     {
-        /// <summary> Initializes a new instance of SparkScheduler. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkScheduler"/>. </summary>
         internal SparkScheduler()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkScheduler. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkScheduler"/>. </summary>
         /// <param name="submittedAt"></param>
         /// <param name="scheduledAt"></param>
         /// <param name="endedAt"></param>
         /// <param name="cancellationRequestedAt"></param>
         /// <param name="currentState"></param>
-        internal SparkScheduler(DateTimeOffset? submittedAt, DateTimeOffset? scheduledAt, DateTimeOffset? endedAt, DateTimeOffset? cancellationRequestedAt, SchedulerCurrentState? currentState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkScheduler(DateTimeOffset? submittedAt, DateTimeOffset? scheduledAt, DateTimeOffset? endedAt, DateTimeOffset? cancellationRequestedAt, SchedulerCurrentState? currentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubmittedAt = submittedAt;
             ScheduledAt = scheduledAt;
             EndedAt = endedAt;
             CancellationRequestedAt = cancellationRequestedAt;
             CurrentState = currentState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the submitted at. </summary>

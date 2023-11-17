@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class HierarchiesRequestBatchGetDelete : IUtf8JsonSerializable
+    internal partial class HierarchiesRequestBatchGetDelete : IUtf8JsonSerializable, IJsonModel<HierarchiesRequestBatchGetDelete>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HierarchiesRequestBatchGetDelete>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HierarchiesRequestBatchGetDelete>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HierarchiesRequestBatchGetDelete>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HierarchiesRequestBatchGetDelete>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(HierarchyIds))
             {
@@ -35,7 +46,110 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        HierarchiesRequestBatchGetDelete IJsonModel<HierarchiesRequestBatchGetDelete>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HierarchiesRequestBatchGetDelete)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHierarchiesRequestBatchGetDelete(document.RootElement, options);
+        }
+
+        internal static HierarchiesRequestBatchGetDelete DeserializeHierarchiesRequestBatchGetDelete(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> hierarchyIds = default;
+            Optional<IList<string>> names = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("hierarchyIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    hierarchyIds = array;
+                    continue;
+                }
+                if (property.NameEquals("names"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    names = array;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HierarchiesRequestBatchGetDelete(Optional.ToList(hierarchyIds), Optional.ToList(names), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<HierarchiesRequestBatchGetDelete>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HierarchiesRequestBatchGetDelete)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HierarchiesRequestBatchGetDelete IPersistableModel<HierarchiesRequestBatchGetDelete>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HierarchiesRequestBatchGetDelete)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHierarchiesRequestBatchGetDelete(document.RootElement, options);
+        }
+
+        string IPersistableModel<HierarchiesRequestBatchGetDelete>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

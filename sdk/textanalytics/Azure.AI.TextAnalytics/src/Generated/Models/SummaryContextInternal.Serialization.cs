@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SummaryContextInternal : IUtf8JsonSerializable
+    internal partial class SummaryContextInternal : IUtf8JsonSerializable, IJsonModel<SummaryContextInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SummaryContextInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SummaryContextInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SummaryContextInternal>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SummaryContextInternal>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SummaryContextInternal DeserializeSummaryContextInternal(JsonElement element)
+        SummaryContextInternal IJsonModel<SummaryContextInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SummaryContextInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSummaryContextInternal(document.RootElement, options);
+        }
+
+        internal static SummaryContextInternal DeserializeSummaryContextInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int offset = default;
             int length = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offset"u8))
@@ -42,8 +84,38 @@ namespace Azure.AI.TextAnalytics.Models
                     length = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SummaryContextInternal(offset, length);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SummaryContextInternal(offset, length, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SummaryContextInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SummaryContextInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SummaryContextInternal IPersistableModel<SummaryContextInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SummaryContextInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSummaryContextInternal(document.RootElement, options);
+        }
+
+        string IPersistableModel<SummaryContextInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

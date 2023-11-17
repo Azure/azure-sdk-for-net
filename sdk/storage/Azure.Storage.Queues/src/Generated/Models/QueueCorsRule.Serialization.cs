@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueCorsRule : IXmlSerializable
+    public partial class QueueCorsRule : IXmlSerializable, IPersistableModel<QueueCorsRule>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -34,7 +38,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueCorsRule DeserializeQueueCorsRule(XElement element)
+        internal static QueueCorsRule DeserializeQueueCorsRule(XElement element, ModelReaderWriterOptions options = null)
         {
             string allowedOrigins = default;
             string allowedMethods = default;
@@ -61,7 +65,43 @@ namespace Azure.Storage.Queues.Models
             {
                 maxAgeInSeconds = (int)maxAgeInSecondsElement;
             }
-            return new QueueCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new QueueCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds, default);
         }
+
+        BinaryData IPersistableModel<QueueCorsRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<QueueCorsRule>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueCorsRule IPersistableModel<QueueCorsRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueueCorsRule)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeQueueCorsRule(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<QueueCorsRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

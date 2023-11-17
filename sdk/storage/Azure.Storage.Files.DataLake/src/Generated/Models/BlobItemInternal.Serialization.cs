@@ -5,13 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class BlobItemInternal
+    internal partial class BlobItemInternal : IXmlSerializable, IPersistableModel<BlobItemInternal>
     {
-        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "Blob");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Deleted");
+            writer.WriteValue(Deleted);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Snapshot");
+            writer.WriteValue(Snapshot);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(VersionId))
+            {
+                writer.WriteStartElement("VersionId");
+                writer.WriteValue(VersionId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsCurrentVersion))
+            {
+                writer.WriteStartElement("IsCurrentVersion");
+                writer.WriteValue(IsCurrentVersion.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Properties, "Properties");
+            if (Optional.IsDefined(DeletionId))
+            {
+                writer.WriteStartElement("DeletionId");
+                writer.WriteValue(DeletionId);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             bool deleted = default;
@@ -48,7 +88,43 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 deletionId = (string)deletionIdElement;
             }
-            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, deletionId);
+            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, deletionId, default);
         }
+
+        BinaryData IPersistableModel<BlobItemInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<BlobItemInternal>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobItemInternal IPersistableModel<BlobItemInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobItemInternal)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeBlobItemInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<BlobItemInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

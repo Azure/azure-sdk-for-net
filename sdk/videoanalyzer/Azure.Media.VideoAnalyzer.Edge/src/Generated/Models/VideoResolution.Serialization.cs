@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class VideoResolution : IUtf8JsonSerializable
+    public partial class VideoResolution : IUtf8JsonSerializable, IJsonModel<VideoResolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VideoResolution>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VideoResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VideoResolution>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VideoResolution>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Width))
             {
@@ -25,17 +36,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VideoResolution DeserializeVideoResolution(JsonElement element)
+        VideoResolution IJsonModel<VideoResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VideoResolution)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVideoResolution(document.RootElement, options);
+        }
+
+        internal static VideoResolution DeserializeVideoResolution(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<float> width = default;
             Optional<float> height = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("width"u8))
@@ -56,8 +98,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     height = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VideoResolution(Optional.ToNullable(width), Optional.ToNullable(height));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VideoResolution(Optional.ToNullable(width), Optional.ToNullable(height), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VideoResolution>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VideoResolution)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VideoResolution IPersistableModel<VideoResolution>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VideoResolution)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVideoResolution(document.RootElement, options);
+        }
+
+        string IPersistableModel<VideoResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

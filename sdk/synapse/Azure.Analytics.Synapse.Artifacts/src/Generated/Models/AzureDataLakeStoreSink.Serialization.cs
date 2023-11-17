@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDataLakeStoreSinkConverter))]
-    public partial class AzureDataLakeStoreSink : IUtf8JsonSerializable
+    public partial class AzureDataLakeStoreSink : IUtf8JsonSerializable, IJsonModel<AzureDataLakeStoreSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataLakeStoreSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureDataLakeStoreSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureDataLakeStoreSink>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureDataLakeStoreSink>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CopyBehavior))
             {
@@ -64,8 +73,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataLakeStoreSink DeserializeAzureDataLakeStoreSink(JsonElement element)
+        AzureDataLakeStoreSink IJsonModel<AzureDataLakeStoreSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataLakeStoreSink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataLakeStoreSink(document.RootElement, options);
+        }
+
+        internal static AzureDataLakeStoreSink DeserializeAzureDataLakeStoreSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +178,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataLakeStoreSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, copyBehavior.Value, enableAdlsSingleFileParallel.Value);
         }
+
+        BinaryData IPersistableModel<AzureDataLakeStoreSink>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataLakeStoreSink)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureDataLakeStoreSink IPersistableModel<AzureDataLakeStoreSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataLakeStoreSink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureDataLakeStoreSink(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureDataLakeStoreSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureDataLakeStoreSinkConverter : JsonConverter<AzureDataLakeStoreSink>
         {

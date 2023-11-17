@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookParameterConverter))]
-    public partial class NotebookParameter : IUtf8JsonSerializable
+    public partial class NotebookParameter : IUtf8JsonSerializable, IJsonModel<NotebookParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotebookParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NotebookParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NotebookParameter>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NotebookParameter>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
@@ -35,17 +45,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotebookParameter DeserializeNotebookParameter(JsonElement element)
+        NotebookParameter IJsonModel<NotebookParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotebookParameter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotebookParameter(document.RootElement, options);
+        }
+
+        internal static NotebookParameter DeserializeNotebookParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<object> value = default;
             Optional<NotebookParameterType> type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -67,9 +108,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = new NotebookParameterType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NotebookParameter(value.Value, Optional.ToNullable(type));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NotebookParameter(value.Value, Optional.ToNullable(type), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotebookParameter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotebookParameter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NotebookParameter IPersistableModel<NotebookParameter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotebookParameter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNotebookParameter(document.RootElement, options);
+        }
+
+        string IPersistableModel<NotebookParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class NotebookParameterConverter : JsonConverter<NotebookParameter>
         {
