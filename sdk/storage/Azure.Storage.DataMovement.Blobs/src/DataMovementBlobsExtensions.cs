@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using System.Threading;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.JobPlan;
 using System.IO;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -144,7 +141,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions, true),
-                TransferValidation = options?.DownloadTransferValidationOptions,
             };
 
             result.Conditions.IfMatch ??= etag;
@@ -169,8 +165,6 @@ namespace Azure.Storage.DataMovement.Blobs
                     TagConditions = options?.DestinationConditions?.TagConditions,
                     LeaseId = options?.DestinationConditions?.LeaseId,
                 },
-                ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                HasLegalHold = options?.LegalHold,
             };
         }
 
@@ -181,7 +175,6 @@ namespace Azure.Storage.DataMovement.Blobs
             return new AppendBlobAppendBlockOptions()
             {
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                TransferValidation = options?.UploadTransferValidationOptions,
             };
         }
 
@@ -224,7 +217,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions),
-                TransferValidation = options?.DownloadTransferValidationOptions,
             };
             result.Conditions.IfMatch ??= etag;
             return result;
@@ -238,14 +230,11 @@ namespace Azure.Storage.DataMovement.Blobs
                 Metadata = options?.Metadata,
                 Tags = options?.Tags,
                 AccessTier = options?.AccessTier,
-                ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
                 TransferOptions = new StorageTransferOptions()
                 {
                     InitialTransferSize = initialSize,
                 },
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                TransferValidation = options?.UploadTransferValidationOptions,
             };
         }
 
@@ -262,7 +251,6 @@ namespace Azure.Storage.DataMovement.Blobs
                     LeaseId = options?.DestinationConditions?.LeaseId,
                     TagConditions = options?.DestinationConditions?.TagConditions,
                 },
-                TransferValidation = options?.UploadTransferValidationOptions,
             };
         }
 
@@ -326,8 +314,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 Metadata = options?.Metadata,
                 Tags = options?.Tags,
                 AccessTier = options?.AccessTier,
-                ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite)
             };
         }
@@ -347,7 +333,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions, true),
-                TransferValidation = options?.DownloadTransferValidationOptions,
             };
             result.Conditions.IfMatch ??= etag;
             return result;
@@ -372,8 +357,6 @@ namespace Azure.Storage.DataMovement.Blobs
                     TagConditions = options?.DestinationConditions?.TagConditions,
                     LeaseId = options?.DestinationConditions?.LeaseId,
                 },
-                ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
             };
         }
 
@@ -384,7 +367,6 @@ namespace Azure.Storage.DataMovement.Blobs
             return new PageBlobUploadPagesOptions()
             {
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                TransferValidation = options?.UploadTransferValidationOptions,
             };
         }
 
@@ -434,7 +416,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 Tags = checkpointData.Tags,
                 HttpHeaders = checkpointData.ContentHeaders,
                 AccessTier = checkpointData.AccessTier,
-                // LegalHold = checkpointData.LegalHold
             };
         }
 
@@ -483,10 +464,6 @@ namespace Azure.Storage.DataMovement.Blobs
                     Tags = options?.BlobOptions?.Tags,
                     HttpHeaders = options?.BlobOptions?.HttpHeaders,
                     AccessTier = options?.BlobOptions?.AccessTier,
-                    DestinationImmutabilityPolicy = options?.BlobOptions?.DestinationImmutabilityPolicy,
-                    LegalHold = options?.BlobOptions?.LegalHold,
-                    UploadTransferValidationOptions = options?.BlobOptions?.UploadTransferValidationOptions,
-                    DownloadTransferValidationOptions = options?.BlobOptions?.DownloadTransferValidationOptions,
                 }
             };
     }

@@ -302,14 +302,17 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Shared'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last60Days'; properties/term with allowed values ['P1Y', 'P3Y'] and default value 'P3Y'; properties/subscriptionId; properties/resourceGroup. </param>
         /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitRecommendationModel" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(scope, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter, orderby, expand);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
@@ -328,14 +331,17 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Shared'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last60Days'; properties/term with allowed values ['P1Y', 'P3Y'] and default value 'P3Y'; properties/subscriptionId; properties/resourceGroup. </param>
         /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitRecommendationModel" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitRecommendationModel> GetBenefitRecommendations(ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(scope, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter, orderby, expand);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
@@ -354,13 +360,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forecastDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public virtual async Task<Response<ForecastResult>> UsageForecastAsync(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
             using var scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
@@ -390,13 +397,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forecastDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public virtual Response<ForecastResult> UsageForecast(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
             using var scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
@@ -426,15 +434,18 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
         /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
         }
@@ -452,15 +463,18 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
         /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementDimension> GetDimensions(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
         }
@@ -478,12 +492,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
         public virtual async Task<Response<QueryResult>> UsageQueryAsync(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
@@ -513,12 +528,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
         public virtual Response<QueryResult> UsageQuery(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
@@ -548,12 +564,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
@@ -583,12 +600,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");

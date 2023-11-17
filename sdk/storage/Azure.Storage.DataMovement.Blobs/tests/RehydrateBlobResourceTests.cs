@@ -61,13 +61,12 @@ namespace Azure.Storage.DataMovement.Tests
                 headers,
                 accessTier,
                 DataProvider.BuildMetadata(),
-                DataProvider.BuildTags(),
-                "encryption-scope");
+                DataProvider.BuildTags());
         }
 
         private static BlobDestinationCheckpointData GetDefaultDestinationCheckpointData(BlobType blobType)
         {
-            return new BlobDestinationCheckpointData(blobType, default, default, default, default, default);
+            return new BlobDestinationCheckpointData(blobType, default, default, default, default);
         }
 
         private static byte[] GetBytes(BlobCheckpointData checkpointData)

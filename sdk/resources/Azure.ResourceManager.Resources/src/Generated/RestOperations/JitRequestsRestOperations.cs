@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the JIT request. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the JIT request. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates or updates the JIT request. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="data"> Parameters supplied to the update JIT request. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates or updates the JIT request. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="data"> Parameters supplied to the update JIT request. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates the JIT request. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="patch"> Parameters supplied to the update JIT request. </param>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates the JIT request. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="patch"> Parameters supplied to the update JIT request. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes the JIT request. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes the JIT request. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Retrieves all JIT requests within the resource group. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Retrieves all JIT requests within the resource group. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

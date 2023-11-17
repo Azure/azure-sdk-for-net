@@ -4490,6 +4490,20 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(0, handles.Count);
         }
 
+        // Uncomment this test when Client Name is enabled with STG 93.
+        //[PlaybackOnly("Not possible to make this test live")]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        //public async Task ListHandlesWithClientName()
+        //{
+        //    ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_SharedKey();
+        //    ShareClient shareClient = serviceClient.GetShareClient("myshare");
+        //    ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient("directory");
+        //    ShareFileClient fileClient = directoryClient.GetFileClient("file");
+        //    IList<ShareFileHandle> handles = await fileClient.GetHandlesAsync().ToListAsync();
+        //    // Assert
+        //    Assert.NotNull(handles[0].ClientName);
+        //}
+
         [RecordedTest]
         public async Task ListHandles_Min()
         {

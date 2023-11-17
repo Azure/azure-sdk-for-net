@@ -1,6 +1,6 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,15 @@
 
 ### Other Changes
 
-## 1.8.1 (2023-11-13)
+## 1.9.0 (2023-11-14)
+
+### Features Added
+
+- Bump api-version of `Lock` to `2020-05-01`.
+
+### Bugs Fixed
+
+- Add the `Default` enum value back to `EnforcementMode`.
 
 ### Other Changes
 
@@ -32,8 +40,8 @@
 
 ### Other Changes
 
-- Bump api-version of `Subscription` to `2022-12-01`
-- Bump api-version of `Tenant` to `2022-12-01`
+- Bump api-version of `Subscription` to `2022-12-01`.
+- Bump api-version of `Tenant` to `2022-12-01`.
 
 ## 1.6.0 (2023-05-16)
 
