@@ -5,26 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DataCollectionEndpointLogsIngestion : IUtf8JsonSerializable
+    internal partial class DataCollectionEndpointLogsIngestion : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointLogsIngestion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointLogsIngestion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataCollectionEndpointLogsIngestion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataCollectionEndpointLogsIngestion>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataCollectionEndpointLogsIngestion>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Endpoint))
+                {
+                    writer.WritePropertyName("endpoint"u8);
+                    writer.WriteStringValue(Endpoint);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataCollectionEndpointLogsIngestion DeserializeDataCollectionEndpointLogsIngestion(JsonElement element)
+        DataCollectionEndpointLogsIngestion IJsonModel<DataCollectionEndpointLogsIngestion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataCollectionEndpointLogsIngestion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionEndpointLogsIngestion(document.RootElement, options);
+        }
+
+        internal static DataCollectionEndpointLogsIngestion DeserializeDataCollectionEndpointLogsIngestion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> endpoint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -32,8 +82,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     endpoint = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataCollectionEndpointLogsIngestion(endpoint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataCollectionEndpointLogsIngestion(endpoint.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataCollectionEndpointLogsIngestion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataCollectionEndpointLogsIngestion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataCollectionEndpointLogsIngestion IPersistableModel<DataCollectionEndpointLogsIngestion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataCollectionEndpointLogsIngestion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataCollectionEndpointLogsIngestion(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataCollectionEndpointLogsIngestion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class AdditionalInfoErrorResponseError
+    internal partial class AdditionalInfoErrorResponseError : IUtf8JsonSerializable, IJsonModel<AdditionalInfoErrorResponseError>
     {
-        internal static AdditionalInfoErrorResponseError DeserializeAdditionalInfoErrorResponseError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalInfoErrorResponseError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AdditionalInfoErrorResponseError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AdditionalInfoErrorResponseError>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AdditionalInfoErrorResponseError>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(AdditionalInfo))
+            {
+                writer.WritePropertyName("additionalInfo"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdditionalInfo)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AdditionalInfoErrorResponseError IJsonModel<AdditionalInfoErrorResponseError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdditionalInfoErrorResponseError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdditionalInfoErrorResponseError(document.RootElement, options);
+        }
+
+        internal static AdditionalInfoErrorResponseError DeserializeAdditionalInfoErrorResponseError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +81,8 @@ namespace Azure.Monitor.Query.Models
             Optional<IReadOnlyList<AdditionalInfoErrorResponseErrorAdditionalInfoItem>> additionalInfo = default;
             string code = default;
             string message = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalInfo"u8))
@@ -48,8 +109,38 @@ namespace Azure.Monitor.Query.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AdditionalInfoErrorResponseError(Optional.ToList(additionalInfo), code, message);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AdditionalInfoErrorResponseError(Optional.ToList(additionalInfo), code, message, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AdditionalInfoErrorResponseError>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdditionalInfoErrorResponseError)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AdditionalInfoErrorResponseError IPersistableModel<AdditionalInfoErrorResponseError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdditionalInfoErrorResponseError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAdditionalInfoErrorResponseError(document.RootElement, options);
+        }
+
+        string IPersistableModel<AdditionalInfoErrorResponseError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

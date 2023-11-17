@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackPrefixPrefixListGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackPrefixPrefixListGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackPrefixResource(Client, GlobalRulestackPrefixData.DeserializeGlobalRulestackPrefixData(e)), _globalRulestackPrefixPrefixListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new GlobalRulestackPrefixResource(Client, GlobalRulestackPrefixData.DeserializeGlobalRulestackPrefixData(e)), _globalRulestackPrefixPrefixListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackPrefixPrefixListGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackPrefixPrefixListGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackPrefixResource(Client, GlobalRulestackPrefixData.DeserializeGlobalRulestackPrefixData(e)), _globalRulestackPrefixPrefixListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new GlobalRulestackPrefixResource(Client, GlobalRulestackPrefixData.DeserializeGlobalRulestackPrefixData(e)), _globalRulestackPrefixPrefixListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class ResourceProviderAuthentication : IUtf8JsonSerializable
+    internal partial class ResourceProviderAuthentication : IUtf8JsonSerializable, IJsonModel<ResourceProviderAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderAuthentication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceProviderAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ResourceProviderAuthentication>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ResourceProviderAuthentication>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("allowedAudiences"u8);
             writer.WriteStartArray();
@@ -23,16 +33,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceProviderAuthentication DeserializeResourceProviderAuthentication(JsonElement element)
+        ResourceProviderAuthentication IJsonModel<ResourceProviderAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceProviderAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceProviderAuthentication(document.RootElement, options);
+        }
+
+        internal static ResourceProviderAuthentication DeserializeResourceProviderAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> allowedAudiences = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedAudiences"u8))
@@ -45,8 +86,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     allowedAudiences = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceProviderAuthentication(allowedAudiences);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceProviderAuthentication(allowedAudiences, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceProviderAuthentication>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceProviderAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourceProviderAuthentication IPersistableModel<ResourceProviderAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceProviderAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourceProviderAuthentication(document.RootElement, options);
+        }
+
+        string IPersistableModel<ResourceProviderAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

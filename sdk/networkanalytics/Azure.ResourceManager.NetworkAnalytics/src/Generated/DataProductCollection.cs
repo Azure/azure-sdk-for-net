@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProductRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProductRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), _dataProductClientDiagnostics, Pipeline, "DataProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), _dataProductClientDiagnostics, Pipeline, "DataProductCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProductRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProductRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), _dataProductClientDiagnostics, Pipeline, "DataProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), _dataProductClientDiagnostics, Pipeline, "DataProductCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

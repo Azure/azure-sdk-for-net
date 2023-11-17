@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,14 +20,46 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class GlobalRulestackCertificateObjectData : ResourceData
     {
-        /// <summary> Initializes a new instance of GlobalRulestackCertificateObjectData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackCertificateObjectData"/>. </summary>
         /// <param name="certificateSelfSigned"> use certificate self signed. </param>
         public GlobalRulestackCertificateObjectData(FirewallBooleanType certificateSelfSigned)
         {
             CertificateSelfSigned = certificateSelfSigned;
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackCertificateObjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackCertificateObjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +70,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="description"> user description for this object. </param>
         /// <param name="etag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal GlobalRulestackCertificateObjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificateSignerResourceId, FirewallBooleanType certificateSelfSigned, string auditComment, string description, ETag? etag, FirewallProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GlobalRulestackCertificateObjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificateSignerResourceId, FirewallBooleanType certificateSelfSigned, string auditComment, string description, ETag? etag, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CertificateSignerResourceId = certificateSignerResourceId;
             CertificateSelfSigned = certificateSelfSigned;
@@ -44,6 +79,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Description = description;
             ETag = etag;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackCertificateObjectData"/> for deserialization. </summary>
+        internal GlobalRulestackCertificateObjectData()
+        {
         }
 
         /// <summary> Resource Id of certificate signer, to be populated only when certificateSelfSigned is false. </summary>

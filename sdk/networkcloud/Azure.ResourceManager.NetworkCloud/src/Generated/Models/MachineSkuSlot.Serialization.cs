@@ -5,16 +5,170 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class MachineSkuSlot
+    public partial class MachineSkuSlot : IUtf8JsonSerializable, IJsonModel<MachineSkuSlot>
     {
-        internal static MachineSkuSlot DeserializeMachineSkuSlot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineSkuSlot>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineSkuSlot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineSkuSlot>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineSkuSlot>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RackSlot))
+                {
+                    writer.WritePropertyName("rackSlot"u8);
+                    writer.WriteNumberValue(RackSlot.Value);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BootstrapProtocol))
+                {
+                    writer.WritePropertyName("bootstrapProtocol"u8);
+                    writer.WriteStringValue(BootstrapProtocol.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CpuCores))
+                {
+                    writer.WritePropertyName("cpuCores"u8);
+                    writer.WriteNumberValue(CpuCores.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CpuSockets))
+                {
+                    writer.WritePropertyName("cpuSockets"u8);
+                    writer.WriteNumberValue(CpuSockets.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Disks))
+                {
+                    writer.WritePropertyName("disks"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Disks)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Generation))
+                {
+                    writer.WritePropertyName("generation"u8);
+                    writer.WriteStringValue(Generation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HardwareVersion))
+                {
+                    writer.WritePropertyName("hardwareVersion"u8);
+                    writer.WriteStringValue(HardwareVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MemoryCapacityGB))
+                {
+                    writer.WritePropertyName("memoryCapacityGB"u8);
+                    writer.WriteNumberValue(MemoryCapacityGB.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Model))
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(Model);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NetworkInterfaces))
+                {
+                    writer.WritePropertyName("networkInterfaces"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NetworkInterfaces)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalThreads))
+                {
+                    writer.WritePropertyName("totalThreads"u8);
+                    writer.WriteNumberValue(TotalThreads.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Vendor))
+                {
+                    writer.WritePropertyName("vendor"u8);
+                    writer.WriteStringValue(Vendor);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineSkuSlot IJsonModel<MachineSkuSlot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineSkuSlot(document.RootElement, options);
+        }
+
+        internal static MachineSkuSlot DeserializeMachineSkuSlot(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +185,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
             Optional<long> totalThreads = default;
             Optional<string> vendor = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rackSlot"u8))
@@ -147,8 +303,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineSkuSlot>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineSkuSlot IPersistableModel<MachineSkuSlot>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineSkuSlot(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineSkuSlot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

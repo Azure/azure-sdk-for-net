@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudAgentConfiguration : IUtf8JsonSerializable
+    public partial class NetworkCloudAgentConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkCloudAgentConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudAgentConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkCloudAgentConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkCloudAgentConfiguration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkCloudAgentConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("hugepagesCount"u8);
             writer.WriteNumberValue(HugepagesCount);
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("hugepagesSize"u8);
                 writer.WriteStringValue(HugepagesSize.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudAgentConfiguration DeserializeNetworkCloudAgentConfiguration(JsonElement element)
+        NetworkCloudAgentConfiguration IJsonModel<NetworkCloudAgentConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudAgentConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudAgentConfiguration(document.RootElement, options);
+        }
+
+        internal static NetworkCloudAgentConfiguration DeserializeNetworkCloudAgentConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long hugepagesCount = default;
             Optional<HugepagesSize> hugepagesSize = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hugepagesCount"u8))
@@ -49,8 +91,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     hugepagesSize = new HugepagesSize(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkCloudAgentConfiguration(hugepagesCount, Optional.ToNullable(hugepagesSize));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkCloudAgentConfiguration(hugepagesCount, Optional.ToNullable(hugepagesSize), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkCloudAgentConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudAgentConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkCloudAgentConfiguration IPersistableModel<NetworkCloudAgentConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudAgentConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudAgentConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkCloudAgentConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

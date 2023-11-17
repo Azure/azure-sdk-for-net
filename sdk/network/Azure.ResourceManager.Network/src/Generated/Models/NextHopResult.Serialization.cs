@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NextHopResult
+    public partial class NextHopResult : IUtf8JsonSerializable, IJsonModel<NextHopResult>
     {
-        internal static NextHopResult DeserializeNextHopResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NextHopResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NextHopResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NextHopResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NextHopResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextHopType))
+            {
+                writer.WritePropertyName("nextHopType"u8);
+                writer.WriteStringValue(NextHopType.Value.ToString());
+            }
+            if (Optional.IsDefined(NextHopIPAddress))
+            {
+                writer.WritePropertyName("nextHopIpAddress"u8);
+                writer.WriteStringValue(NextHopIPAddress);
+            }
+            if (Optional.IsDefined(RouteTableId))
+            {
+                writer.WritePropertyName("routeTableId"u8);
+                writer.WriteStringValue(RouteTableId);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NextHopResult IJsonModel<NextHopResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NextHopResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNextHopResult(document.RootElement, options);
+        }
+
+        internal static NextHopResult DeserializeNextHopResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<NextHopType> nextHopType = default;
             Optional<string> nextHopIPAddress = default;
             Optional<ResourceIdentifier> routeTableId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextHopType"u8))
@@ -46,8 +109,38 @@ namespace Azure.ResourceManager.Network.Models
                     routeTableId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NextHopResult(Optional.ToNullable(nextHopType), nextHopIPAddress.Value, routeTableId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NextHopResult(Optional.ToNullable(nextHopType), nextHopIPAddress.Value, routeTableId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NextHopResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NextHopResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NextHopResult IPersistableModel<NextHopResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NextHopResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNextHopResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<NextHopResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

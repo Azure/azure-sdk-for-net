@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Interface properties. </summary>
     public partial class MobileNetworkInterfaceProperties
     {
-        /// <summary> Initializes a new instance of MobileNetworkInterfaceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkInterfaceProperties"/>. </summary>
         public MobileNetworkInterfaceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkInterfaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkInterfaceProperties"/>. </summary>
         /// <param name="name"> The logical name for this interface. This should match one of the interfaces configured on your Azure Stack Edge device. </param>
         /// <param name="ipv4Address"> The IPv4 address. </param>
         /// <param name="ipv4Subnet"> The IPv4 subnet. </param>
         /// <param name="ipv4Gateway"> The default IPv4 gateway (router). </param>
-        internal MobileNetworkInterfaceProperties(string name, string ipv4Address, string ipv4Subnet, string ipv4Gateway)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkInterfaceProperties(string name, string ipv4Address, string ipv4Subnet, string ipv4Gateway, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IPv4Address = ipv4Address;
             IPv4Subnet = ipv4Subnet;
             IPv4Gateway = ipv4Gateway;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The logical name for this interface. This should match one of the interfaces configured on your Azure Stack Edge device. </summary>

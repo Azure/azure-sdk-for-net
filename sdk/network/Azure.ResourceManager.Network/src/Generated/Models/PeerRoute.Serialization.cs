@@ -5,15 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PeerRoute
+    public partial class PeerRoute : IUtf8JsonSerializable, IJsonModel<PeerRoute>
     {
-        internal static PeerRoute DeserializePeerRoute(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeerRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PeerRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PeerRoute>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PeerRoute>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LocalAddress))
+                {
+                    writer.WritePropertyName("localAddress"u8);
+                    writer.WriteStringValue(LocalAddress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Network))
+                {
+                    writer.WritePropertyName("network"u8);
+                    writer.WriteStringValue(Network);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NextHop))
+                {
+                    writer.WritePropertyName("nextHop"u8);
+                    writer.WriteStringValue(NextHop);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourcePeer))
+                {
+                    writer.WritePropertyName("sourcePeer"u8);
+                    writer.WriteStringValue(SourcePeer);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Origin))
+                {
+                    writer.WritePropertyName("origin"u8);
+                    writer.WriteStringValue(Origin);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AsPath))
+                {
+                    writer.WritePropertyName("asPath"u8);
+                    writer.WriteStringValue(AsPath);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Weight))
+                {
+                    writer.WritePropertyName("weight"u8);
+                    writer.WriteNumberValue(Weight.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PeerRoute IJsonModel<PeerRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeerRoute)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeerRoute(document.RootElement, options);
+        }
+
+        internal static PeerRoute DeserializePeerRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +127,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> origin = default;
             Optional<string> asPath = default;
             Optional<int> weight = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localAddress"u8))
@@ -66,8 +170,38 @@ namespace Azure.ResourceManager.Network.Models
                     weight = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeerRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PeerRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeerRoute>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeerRoute)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PeerRoute IPersistableModel<PeerRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeerRoute)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePeerRoute(document.RootElement, options);
+        }
+
+        string IPersistableModel<PeerRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

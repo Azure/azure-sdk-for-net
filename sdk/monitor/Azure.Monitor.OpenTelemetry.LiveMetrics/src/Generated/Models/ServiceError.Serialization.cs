@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class ServiceError
+    internal partial class ServiceError : IUtf8JsonSerializable, IJsonModel<ServiceError>
     {
-        internal static ServiceError DeserializeServiceError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServiceError>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServiceError>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("RequestId"u8);
+                writer.WriteStringValue(RequestId);
+            }
+            if (Optional.IsDefined(ResponseDateTime))
+            {
+                writer.WritePropertyName("ResponseDateTime"u8);
+                writer.WriteStringValue(ResponseDateTime.Value, "O");
+            }
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("Code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("Message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(Exception))
+            {
+                writer.WritePropertyName("Exception"u8);
+                writer.WriteStringValue(Exception);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceError IJsonModel<ServiceError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceError(document.RootElement, options);
+        }
+
+        internal static ServiceError DeserializeServiceError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +94,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> exception = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("RequestId"u8))
@@ -55,8 +127,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     exception = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceError(requestId.Value, Optional.ToNullable(responseDateTime), code.Value, message.Value, exception.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceError(requestId.Value, Optional.ToNullable(responseDateTime), code.Value, message.Value, exception.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceError>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceError)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceError IPersistableModel<ServiceError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceError(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServiceError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
