@@ -1,0 +1,246 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9aa324d58d999864ea6779784ea46ecd-2d981cc23b9e51d4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.8.0 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "33a8d9943f13fd4a14c1bfecf66ebc3b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Nov 2023 06:11:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "aec44240-94a0-4827-bf41-bbcff1982fc9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "aec44240-94a0-4827-bf41-bbcff1982fc9",
+        "x-ms-routing-request-id": "JAPANEAST:20231117T061118Z:aec44240-94a0-4827-bf41-bbcff1982fc9",
+        "X-MSEdge-Ref": "Ref A: 1E49F9EBC9564FB49999CB776DC13EE9 Ref B: TYO201100117037 Ref C: 2023-11-17T06:11:18Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/RG_Application2872?api-version=2022-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "23",
+        "Content-Type": "application/json",
+        "traceparent": "00-55ffb2d6eaa9f1ee220327d912f2b0ff-41f57195b39a9640-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.8.0 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "5fcd5ad235993c8c226745029dfa8452",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastasia"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "235",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Nov 2023 06:11:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "08f55c56-4833-496b-97b1-d033e1603fec",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "08f55c56-4833-496b-97b1-d033e1603fec",
+        "x-ms-routing-request-id": "JAPANWEST:20231117T061119Z:08f55c56-4833-496b-97b1-d033e1603fec",
+        "X-MSEdge-Ref": "Ref A: DB2DA62D5B2E4F249E6ECDB2576621E1 Ref B: TYO201100117037 Ref C: 2023-11-17T06:11:18Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/RG_Application2872",
+        "name": "RG_Application2872",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastasia",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/RG_Application2872/providers/Microsoft.Insights/workbooktemplates/workbookTemplate6834?api-version=2020-11-20",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "47",
+        "Content-Type": "application/json",
+        "traceparent": "00-28c6eec384a190097b008fe449499e53-f0fa103ff72d0f99-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20231117.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "fe8a54ec3720d3d1341e98bf042c9475",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "435",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Nov 2023 06:11:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:0dd6a9c3-b728-41ca-aa78-7e1962e22331",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cc5d58dc-4ca4-4b7a-b7c3-a8b5160c7f7e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "cc5d58dc-4ca4-4b7a-b7c3-a8b5160c7f7e",
+        "x-ms-routing-request-id": "JAPANWEST:20231117T061121Z:cc5d58dc-4ca4-4b7a-b7c3-a8b5160c7f7e",
+        "X-MSEdge-Ref": "Ref A: 55C8E46A30F94626A195481493F09328 Ref B: TYO201100117037 Ref C: 2023-11-17T06:11:19Z",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "name": "workbooktemplate6834",
+        "location": "eastus",
+        "tags": {},
+        "type": "microsoft.insights/workbooktemplates",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg_application2872/providers/microsoft.insights/workbooktemplates/workbooktemplate6834",
+        "properties": {
+          "priority": 0,
+          "author": null,
+          "templateData": null,
+          "galleries": null,
+          "localized": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/RG_Application2872/providers/Microsoft.Insights/workbooktemplates/workbookTemplate6834?api-version=2020-11-20",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9ac940b390b990a3dc0743153a7692ef-aa09c6631f2d5317-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20231117.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "217d2332fadc1ca4f7f0d705fb76c73a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "435",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Nov 2023 06:11:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:0dd6a9c3-b728-41ca-aa78-7e1962e22331",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cc56a7df-9986-4806-bd17-5a7be46d956a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "cc56a7df-9986-4806-bd17-5a7be46d956a",
+        "x-ms-routing-request-id": "JAPANWEST:20231117T061122Z:cc56a7df-9986-4806-bd17-5a7be46d956a",
+        "X-MSEdge-Ref": "Ref A: 3C840D74B3FF4C11959B88A467C69096 Ref B: TYO201100117037 Ref C: 2023-11-17T06:11:21Z",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "name": "workbooktemplate6834",
+        "location": "eastus",
+        "tags": {},
+        "type": "microsoft.insights/workbooktemplates",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/rg_application2872/providers/microsoft.insights/workbooktemplates/workbooktemplate6834",
+        "properties": {
+          "priority": 0,
+          "author": null,
+          "templateData": null,
+          "galleries": null,
+          "localized": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/RG_Application2872/providers/Microsoft.Insights/workbooktemplates/workbookTemplate68341?api-version=2020-11-20",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-34dbfcb21d1d70e6fb1b647029b4574a-ce880e238631fbf3-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20231117.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "6882f5996fb023b2fc8b6417f47c1e3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "248",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Nov 2023 06:11:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cc89afce-4226-4389-8253-e9bdeaa4a88c",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "cc89afce-4226-4389-8253-e9bdeaa4a88c",
+        "x-ms-routing-request-id": "JAPANWEST:20231117T061122Z:cc89afce-4226-4389-8253-e9bdeaa4a88c",
+        "X-MSEdge-Ref": "Ref A: C2E4786455C240BBA10068627EABDDD5 Ref B: TYO201100117037 Ref C: 2023-11-17T06:11:22Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Insights/workbooktemplates/workbookTemplate68341\u0027 under resource group \u0027RG_Application2872\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1948024136",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
