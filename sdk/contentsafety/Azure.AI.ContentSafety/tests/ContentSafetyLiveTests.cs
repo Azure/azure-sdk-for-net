@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -22,17 +22,37 @@ namespace Azure.AI.ContentSafety.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             ContentSafetyClient client;
-            var optoins = InstrumentClientOptions(new ContentSafetyClientOptions());
+            var options = InstrumentClientOptions(new ContentSafetyClientOptions());
 
             if (useTokenCredential)
             {
                 AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.Credential.ToString());
-                client = new ContentSafetyClient(endpoint, credential, options: optoins);
+                client = new ContentSafetyClient(endpoint, credential, options: options);
             }
             else
             {
                 AzureKeyCredential credential = new AzureKeyCredential(key ?? TestEnvironment.Key);
-                client = new ContentSafetyClient(endpoint, credential, options: optoins);
+                client = new ContentSafetyClient(endpoint, credential, options: options);
+            }
+
+            return skipInstrumenting ? client : InstrumentClient(client);
+        }
+
+        protected BlocklistClient CreateBlocklistClient(bool useTokenCredential = false, string key = default, bool skipInstrumenting = false)
+        {
+            var endpoint = new Uri(TestEnvironment.Endpoint);
+            BlocklistClient client;
+            var options = InstrumentClientOptions(new ContentSafetyClientOptions());
+
+            if (useTokenCredential)
+            {
+                AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.Credential.ToString());
+                client = new BlocklistClient(endpoint, credential, options: options);
+            }
+            else
+            {
+                AzureKeyCredential credential = new AzureKeyCredential(key ?? TestEnvironment.Key);
+                client = new BlocklistClient(endpoint, credential, options: options);
             }
 
             return skipInstrumenting ? client : InstrumentClient(client);
@@ -49,11 +69,12 @@ namespace Azure.AI.ContentSafety.Tests
             var response = await client.AnalyzeTextAsync(request);
 
             Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value.HateResult);
-            Assert.Greater(response.Value.HateResult.Severity, 0);
-            Assert.IsNotNull(response.Value.SelfHarmResult);
-            Assert.IsNull(response.Value.SexualResult);
-            Assert.IsNull(response.Value.ViolenceResult);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate));
+            Assert.Greater(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate).Severity, 0);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm));
+            Assert.IsNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual));
+            Assert.IsNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence));
         }
 
         [RecordedTest]
@@ -61,25 +82,23 @@ namespace Azure.AI.ContentSafety.Tests
         {
             var client = CreateContentSafetyClient();
 
-            var image = new ContentSafetyImageData()
-            {
-                Content = BinaryData.FromBytes(File.ReadAllBytes(TestData.TestImageLocation))
-            };
+            var image = new ContentSafetyImageData(BinaryData.FromBytes(File.ReadAllBytes(TestData.TestImageLocation)));
             var request = new AnalyzeImageOptions(image);
             var response = await client.AnalyzeImageAsync(request);
 
             Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value.ViolenceResult);
-            Assert.Greater(response.Value.ViolenceResult.Severity, 0);
-            Assert.IsNotNull(response.Value.HateResult);
-            Assert.IsNotNull(response.Value.SexualResult);
-            Assert.IsNotNull(response.Value.SelfHarmResult);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence));
+            Assert.Greater(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence).Severity, 0);
+            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Hate));
+            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Sexual));
+            Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.SelfHarm));
         }
 
         [RecordedTest]
         public async Task TestCreateOrUpdateBlocklist()
         {
-            var client = CreateContentSafetyClient();
+            var client = CreateBlocklistClient();
 
             var blocklistName = "TestBlocklist";
             var blocklistDescription = "Test blocklist management";
