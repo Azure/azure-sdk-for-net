@@ -476,13 +476,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
         /// <param name="informationProtectionPolicy"> Information protection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="informationProtectionPolicy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="informationProtectionPolicy"/> is null. </exception>
         public virtual async Task<Response<InformationProtectionPolicy>> CreateOrUpdateInformationProtectionPolicyAsync(ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(informationProtectionPolicy, nameof(informationProtectionPolicy));
 
             using var scope0 = InformationProtectionPoliciesClientDiagnostics.CreateScope("MockableSecurityCenterArmClient.CreateOrUpdateInformationProtectionPolicy");
@@ -512,13 +513,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
         /// <param name="informationProtectionPolicy"> Information protection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="informationProtectionPolicy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="informationProtectionPolicy"/> is null. </exception>
         public virtual Response<InformationProtectionPolicy> CreateOrUpdateInformationProtectionPolicy(ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(informationProtectionPolicy, nameof(informationProtectionPolicy));
 
             using var scope0 = InformationProtectionPoliciesClientDiagnostics.CreateScope("MockableSecurityCenterArmClient.CreateOrUpdateInformationProtectionPolicy");
@@ -548,11 +550,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="InformationProtectionPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InformationProtectionPolicy> GetInformationProtectionPoliciesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, scope);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
@@ -571,11 +576,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="InformationProtectionPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InformationProtectionPolicy> GetInformationProtectionPolicies(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, scope);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
@@ -594,11 +602,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecuritySubAssessmentResource> GetSecuritySubAssessmentsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllNextPageRequest(nextLink, scope);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
@@ -617,11 +628,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecuritySubAssessmentResource> GetSecuritySubAssessments(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllNextPageRequest(nextLink, scope);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
@@ -640,11 +654,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="SecurityAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAssessmentResource> GetSecurityAssessmentsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAssessmentAssessmentsRestClient.CreateListRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAssessmentAssessmentsRestClient.CreateListNextPageRequest(nextLink, scope);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
@@ -663,11 +680,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="SecurityAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAssessmentResource> GetSecurityAssessments(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAssessmentAssessmentsRestClient.CreateListRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAssessmentAssessmentsRestClient.CreateListNextPageRequest(nextLink, scope);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);

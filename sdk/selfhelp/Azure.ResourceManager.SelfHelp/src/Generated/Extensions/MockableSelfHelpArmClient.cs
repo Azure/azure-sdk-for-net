@@ -234,11 +234,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
             scope0.Start();
             try
@@ -266,11 +269,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
             scope0.Start();
             try
@@ -298,13 +304,16 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> 'ProblemClassificationId' or 'Id' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The filter supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(scope, filter, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, scope, filter, skiptoken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata, DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
@@ -323,13 +332,16 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> 'ProblemClassificationId' or 'Id' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The filter supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="SelfHelpSolutionMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(scope, filter, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, scope, filter, skiptoken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata, DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
