@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class TextAnalyzeSeverityResult
+    public partial class TextAnalyzeSeverityResult : IUtf8JsonSerializable, IJsonModel<TextAnalyzeSeverityResult>
     {
-        internal static TextAnalyzeSeverityResult DeserializeTextAnalyzeSeverityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextAnalyzeSeverityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TextAnalyzeSeverityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TextAnalyzeSeverityResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TextAnalyzeSeverityResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("category"u8);
+            writer.WriteStringValue(Category.ToString());
+            writer.WritePropertyName("severity"u8);
+            writer.WriteNumberValue(Severity);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TextAnalyzeSeverityResult IJsonModel<TextAnalyzeSeverityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextAnalyzeSeverityResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextAnalyzeSeverityResult(document.RootElement, options);
+        }
+
+        internal static TextAnalyzeSeverityResult DeserializeTextAnalyzeSeverityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             TextCategory category = default;
             int severity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -32,16 +85,54 @@ namespace Azure.AI.ContentSafety
                     severity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TextAnalyzeSeverityResult(category, severity);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TextAnalyzeSeverityResult(category, severity, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TextAnalyzeSeverityResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextAnalyzeSeverityResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TextAnalyzeSeverityResult IPersistableModel<TextAnalyzeSeverityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextAnalyzeSeverityResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTextAnalyzeSeverityResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<TextAnalyzeSeverityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TextAnalyzeSeverityResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTextAnalyzeSeverityResult(document.RootElement);
+            return DeserializeTextAnalyzeSeverityResult(document.RootElement, new ModelReaderWriterOptions("W"));
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

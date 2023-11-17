@@ -6,16 +6,162 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestAttributesBase
+    internal partial class ManifestAttributesBase : IUtf8JsonSerializable, IJsonModel<ManifestAttributesBase>
     {
-        internal static ManifestAttributesBase DeserializeManifestAttributesBase(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManifestAttributesBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManifestAttributesBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManifestAttributesBase>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManifestAttributesBase>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("digest"u8);
+                writer.WriteStringValue(Digest);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Size))
+                {
+                    writer.WritePropertyName("imageSize"u8);
+                    writer.WriteNumberValue(Size.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn, "O");
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("lastUpdateTime"u8);
+                writer.WriteStringValue(LastUpdatedOn, "O");
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Architecture))
+                {
+                    if (Architecture != null)
+                    {
+                        writer.WritePropertyName("architecture"u8);
+                        writer.WriteStringValue(Architecture.Value.ToString());
+                    }
+                    else
+                    {
+                        writer.WriteNull("architecture");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OperatingSystem))
+                {
+                    if (OperatingSystem != null)
+                    {
+                        writer.WritePropertyName("os"u8);
+                        writer.WriteStringValue(OperatingSystem.Value.ToString());
+                    }
+                    else
+                    {
+                        writer.WriteNull("os");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(RelatedArtifacts))
+                {
+                    writer.WritePropertyName("references"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in RelatedArtifacts)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    writer.WritePropertyName("tags"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Tags)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            writer.WritePropertyName("changeableAttributes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CanDelete))
+            {
+                writer.WritePropertyName("deleteEnabled"u8);
+                writer.WriteBooleanValue(CanDelete.Value);
+            }
+            if (Optional.IsDefined(CanWrite))
+            {
+                writer.WritePropertyName("writeEnabled"u8);
+                writer.WriteBooleanValue(CanWrite.Value);
+            }
+            if (Optional.IsDefined(CanList))
+            {
+                writer.WritePropertyName("listEnabled"u8);
+                writer.WriteBooleanValue(CanList.Value);
+            }
+            if (Optional.IsDefined(CanRead))
+            {
+                writer.WritePropertyName("readEnabled"u8);
+                writer.WriteBooleanValue(CanRead.Value);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManifestAttributesBase IJsonModel<ManifestAttributesBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManifestAttributesBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManifestAttributesBase(document.RootElement, options);
+        }
+
+        internal static ManifestAttributesBase DeserializeManifestAttributesBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +178,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
             Optional<bool> readEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"u8))
@@ -154,8 +302,38 @@ namespace Azure.Containers.ContainerRegistry
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManifestAttributesBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManifestAttributesBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManifestAttributesBase IPersistableModel<ManifestAttributesBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManifestAttributesBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManifestAttributesBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManifestAttributesBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

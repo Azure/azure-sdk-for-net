@@ -5,16 +5,126 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceTrustedAccessRoleRule
+    public partial class ContainerServiceTrustedAccessRoleRule : IUtf8JsonSerializable, IJsonModel<ContainerServiceTrustedAccessRoleRule>
     {
-        internal static ContainerServiceTrustedAccessRoleRule DeserializeContainerServiceTrustedAccessRoleRule(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceTrustedAccessRoleRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceTrustedAccessRoleRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerServiceTrustedAccessRoleRule>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerServiceTrustedAccessRoleRule>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Verbs))
+                {
+                    writer.WritePropertyName("verbs"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Verbs)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ApiGroups))
+                {
+                    writer.WritePropertyName("apiGroups"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ApiGroups)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Resources))
+                {
+                    writer.WritePropertyName("resources"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Resources)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ResourceNames))
+                {
+                    writer.WritePropertyName("resourceNames"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ResourceNames)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NonResourceUrls))
+                {
+                    writer.WritePropertyName("nonResourceURLs"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NonResourceUrls)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerServiceTrustedAccessRoleRule IJsonModel<ContainerServiceTrustedAccessRoleRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRoleRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceTrustedAccessRoleRule(document.RootElement, options);
+        }
+
+        internal static ContainerServiceTrustedAccessRoleRule DeserializeContainerServiceTrustedAccessRoleRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +134,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<IReadOnlyList<string>> resources = default;
             Optional<IReadOnlyList<string>> resourceNames = default;
             Optional<IReadOnlyList<string>> nonResourceUrls = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verbs"u8))
@@ -96,8 +208,38 @@ namespace Azure.ResourceManager.ContainerService.Models
                     nonResourceUrls = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceTrustedAccessRoleRule(Optional.ToList(verbs), Optional.ToList(apiGroups), Optional.ToList(resources), Optional.ToList(resourceNames), Optional.ToList(nonResourceUrls));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceTrustedAccessRoleRule(Optional.ToList(verbs), Optional.ToList(apiGroups), Optional.ToList(resources), Optional.ToList(resourceNames), Optional.ToList(nonResourceUrls), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRoleRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerServiceTrustedAccessRoleRule IPersistableModel<ContainerServiceTrustedAccessRoleRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceTrustedAccessRoleRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerServiceTrustedAccessRoleRule(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerServiceTrustedAccessRoleRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

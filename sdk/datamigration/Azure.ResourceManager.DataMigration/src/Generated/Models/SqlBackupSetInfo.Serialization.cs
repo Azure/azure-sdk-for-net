@@ -6,16 +6,158 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SqlBackupSetInfo
+    public partial class SqlBackupSetInfo : IUtf8JsonSerializable, IJsonModel<SqlBackupSetInfo>
     {
-        internal static SqlBackupSetInfo DeserializeSqlBackupSetInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlBackupSetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlBackupSetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlBackupSetInfo>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlBackupSetInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BackupSetId))
+                {
+                    writer.WritePropertyName("backupSetId"u8);
+                    writer.WriteStringValue(BackupSetId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FirstLSN))
+                {
+                    writer.WritePropertyName("firstLSN"u8);
+                    writer.WriteStringValue(FirstLSN);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastLSN))
+                {
+                    writer.WritePropertyName("lastLSN"u8);
+                    writer.WriteStringValue(LastLSN);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BackupType))
+                {
+                    writer.WritePropertyName("backupType"u8);
+                    writer.WriteStringValue(BackupType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ListOfBackupFiles))
+                {
+                    writer.WritePropertyName("listOfBackupFiles"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ListOfBackupFiles)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BackupStartOn))
+                {
+                    writer.WritePropertyName("backupStartDate"u8);
+                    writer.WriteStringValue(BackupStartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BackupFinishOn))
+                {
+                    writer.WritePropertyName("backupFinishDate"u8);
+                    writer.WriteStringValue(BackupFinishOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsBackupRestored))
+                {
+                    writer.WritePropertyName("isBackupRestored"u8);
+                    writer.WriteBooleanValue(IsBackupRestored.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HasBackupChecksums))
+                {
+                    writer.WritePropertyName("hasBackupChecksums"u8);
+                    writer.WriteBooleanValue(HasBackupChecksums.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FamilyCount))
+                {
+                    writer.WritePropertyName("familyCount"u8);
+                    writer.WriteNumberValue(FamilyCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(IgnoreReasons))
+                {
+                    writer.WritePropertyName("ignoreReasons"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in IgnoreReasons)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SqlBackupSetInfo IJsonModel<SqlBackupSetInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlBackupSetInfo(document.RootElement, options);
+        }
+
+        internal static SqlBackupSetInfo DeserializeSqlBackupSetInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +173,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<bool> hasBackupChecksums = default;
             Optional<int> familyCount = default;
             Optional<IReadOnlyList<string>> ignoreReasons = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupSetId"u8))
@@ -130,8 +274,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     ignoreReasons = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Optional.ToList(listOfBackupFiles), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), Optional.ToList(ignoreReasons));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Optional.ToList(listOfBackupFiles), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), Optional.ToList(ignoreReasons), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlBackupSetInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlBackupSetInfo IPersistableModel<SqlBackupSetInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlBackupSetInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlBackupSetInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

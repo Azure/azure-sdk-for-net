@@ -5,15 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class TextBlocklistMatchResult
+    public partial class TextBlocklistMatchResult : IUtf8JsonSerializable, IJsonModel<TextBlocklistMatchResult>
     {
-        internal static TextBlocklistMatchResult DeserializeTextBlocklistMatchResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextBlocklistMatchResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TextBlocklistMatchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TextBlocklistMatchResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TextBlocklistMatchResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("blocklistName"u8);
+            writer.WriteStringValue(BlocklistName);
+            writer.WritePropertyName("blockItemId"u8);
+            writer.WriteStringValue(BlockItemId);
+            writer.WritePropertyName("blockItemText"u8);
+            writer.WriteStringValue(BlockItemText);
+            writer.WritePropertyName("offset"u8);
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length"u8);
+            writer.WriteNumberValue(Length);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TextBlocklistMatchResult IJsonModel<TextBlocklistMatchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextBlocklistMatchResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextBlocklistMatchResult(document.RootElement, options);
+        }
+
+        internal static TextBlocklistMatchResult DeserializeTextBlocklistMatchResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +80,8 @@ namespace Azure.AI.ContentSafety
             string blockItemText = default;
             int offset = default;
             int length = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blocklistName"u8))
@@ -50,16 +109,54 @@ namespace Azure.AI.ContentSafety
                     length = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TextBlocklistMatchResult(blocklistName, blockItemId, blockItemText, offset, length);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TextBlocklistMatchResult(blocklistName, blockItemId, blockItemText, offset, length, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TextBlocklistMatchResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextBlocklistMatchResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TextBlocklistMatchResult IPersistableModel<TextBlocklistMatchResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextBlocklistMatchResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTextBlocklistMatchResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<TextBlocklistMatchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TextBlocklistMatchResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTextBlocklistMatchResult(document.RootElement);
+            return DeserializeTextBlocklistMatchResult(document.RootElement, new ModelReaderWriterOptions("W"));
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class ReviewNote : IUtf8JsonSerializable
+    public partial class ReviewNote : IUtf8JsonSerializable, IJsonModel<ReviewNote>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReviewNote>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReviewNote>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ReviewNote>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ReviewNote>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Message))
             {
@@ -26,17 +36,48 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ReviewNote DeserializeReviewNote(JsonElement element)
+        ReviewNote IJsonModel<ReviewNote>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReviewNote)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReviewNote(document.RootElement, options);
+        }
+
+        internal static ReviewNote DeserializeReviewNote(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> message = default;
             Optional<DateTimeOffset> date = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -53,8 +94,38 @@ namespace Azure.Communication.ShortCodes.Models
                     date = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReviewNote(message.Value, Optional.ToNullable(date));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReviewNote(message.Value, Optional.ToNullable(date), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReviewNote>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReviewNote)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReviewNote IPersistableModel<ReviewNote>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReviewNote)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReviewNote(document.RootElement, options);
+        }
+
+        string IPersistableModel<ReviewNote>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

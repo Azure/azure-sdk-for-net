@@ -5,15 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxDiskCopyLogDetails
+    public partial class DataBoxDiskCopyLogDetails : IUtf8JsonSerializable, IJsonModel<DataBoxDiskCopyLogDetails>
     {
-        internal static DataBoxDiskCopyLogDetails DeserializeDataBoxDiskCopyLogDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxDiskCopyLogDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataBoxDiskCopyLogDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataBoxDiskCopyLogDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataBoxDiskCopyLogDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DiskSerialNumber))
+                {
+                    writer.WritePropertyName("diskSerialNumber"u8);
+                    writer.WriteStringValue(DiskSerialNumber);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorLogLink))
+                {
+                    writer.WritePropertyName("errorLogLink"u8);
+                    writer.WriteStringValue(ErrorLogLink);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VerboseLogLink))
+                {
+                    writer.WritePropertyName("verboseLogLink"u8);
+                    writer.WriteStringValue(VerboseLogLink);
+                }
+            }
+            writer.WritePropertyName("copyLogDetailsType"u8);
+            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxDiskCopyLogDetails IJsonModel<DataBoxDiskCopyLogDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxDiskCopyLogDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxDiskCopyLogDetails(document.RootElement, options);
+        }
+
+        internal static DataBoxDiskCopyLogDetails DeserializeDataBoxDiskCopyLogDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +94,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> errorLogLink = default;
             Optional<string> verboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSerialNumber"u8))
@@ -44,8 +118,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxDiskCopyLogDetails(copyLogDetailsType, diskSerialNumber.Value, errorLogLink.Value, verboseLogLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxDiskCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, diskSerialNumber.Value, errorLogLink.Value, verboseLogLink.Value);
         }
+
+        BinaryData IPersistableModel<DataBoxDiskCopyLogDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxDiskCopyLogDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxDiskCopyLogDetails IPersistableModel<DataBoxDiskCopyLogDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxDiskCopyLogDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxDiskCopyLogDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataBoxDiskCopyLogDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionMeterDetailsInfo
+    public partial class ConsumptionMeterDetailsInfo : IUtf8JsonSerializable, IJsonModel<ConsumptionMeterDetailsInfo>
     {
-        internal static ConsumptionMeterDetailsInfo DeserializeConsumptionMeterDetailsInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionMeterDetailsInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionMeterDetailsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConsumptionMeterDetailsInfo>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConsumptionMeterDetailsInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MeterName))
+                {
+                    writer.WritePropertyName("meterName"u8);
+                    writer.WriteStringValue(MeterName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MeterCategory))
+                {
+                    writer.WritePropertyName("meterCategory"u8);
+                    writer.WriteStringValue(MeterCategory);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MeterSubCategory))
+                {
+                    writer.WritePropertyName("meterSubCategory"u8);
+                    writer.WriteStringValue(MeterSubCategory);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UnitOfMeasure))
+                {
+                    writer.WritePropertyName("unitOfMeasure"u8);
+                    writer.WriteStringValue(UnitOfMeasure);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceFamily))
+                {
+                    writer.WritePropertyName("serviceFamily"u8);
+                    writer.WriteStringValue(ServiceFamily);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionMeterDetailsInfo IJsonModel<ConsumptionMeterDetailsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionMeterDetailsInfo(document.RootElement, options);
+        }
+
+        internal static ConsumptionMeterDetailsInfo DeserializeConsumptionMeterDetailsInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +109,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> meterSubCategory = default;
             Optional<string> unitOfMeasure = default;
             Optional<string> serviceFamily = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterName"u8))
@@ -50,8 +138,38 @@ namespace Azure.ResourceManager.Consumption.Models
                     serviceFamily = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionMeterDetailsInfo(meterName.Value, meterCategory.Value, meterSubCategory.Value, unitOfMeasure.Value, serviceFamily.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionMeterDetailsInfo(meterName.Value, meterCategory.Value, meterSubCategory.Value, unitOfMeasure.Value, serviceFamily.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionMeterDetailsInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConsumptionMeterDetailsInfo IPersistableModel<ConsumptionMeterDetailsInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConsumptionMeterDetailsInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConsumptionMeterDetailsInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

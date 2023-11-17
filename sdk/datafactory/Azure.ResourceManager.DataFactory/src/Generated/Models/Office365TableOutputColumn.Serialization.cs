@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,26 +16,64 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     [JsonConverter(typeof(Office365TableOutputColumnConverter))]
-    public partial class Office365TableOutputColumn : IUtf8JsonSerializable
+    public partial class Office365TableOutputColumn : IUtf8JsonSerializable, IJsonModel<Office365TableOutputColumn>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Office365TableOutputColumn>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<Office365TableOutputColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<Office365TableOutputColumn>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<Office365TableOutputColumn>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Office365TableOutputColumn DeserializeOffice365TableOutputColumn(JsonElement element)
+        Office365TableOutputColumn IJsonModel<Office365TableOutputColumn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Office365TableOutputColumn)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOffice365TableOutputColumn(document.RootElement, options);
+        }
+
+        internal static Office365TableOutputColumn DeserializeOffice365TableOutputColumn(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -40,9 +81,39 @@ namespace Azure.ResourceManager.DataFactory.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Office365TableOutputColumn(name.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Office365TableOutputColumn(name.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Office365TableOutputColumn>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Office365TableOutputColumn)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        Office365TableOutputColumn IPersistableModel<Office365TableOutputColumn>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Office365TableOutputColumn)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOffice365TableOutputColumn(document.RootElement, options);
+        }
+
+        string IPersistableModel<Office365TableOutputColumn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class Office365TableOutputColumnConverter : JsonConverter<Office365TableOutputColumn>
         {

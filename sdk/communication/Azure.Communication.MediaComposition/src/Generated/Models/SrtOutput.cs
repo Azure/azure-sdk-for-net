@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Srt stream to be used as an output. </summary>
     public partial class SrtOutput : MediaOutput
     {
-        /// <summary> Initializes a new instance of SrtOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SrtOutput"/>. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
@@ -28,15 +29,21 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaOutputType.Srt;
         }
 
-        /// <summary> Initializes a new instance of SrtOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SrtOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
-        internal SrtOutput(MediaOutputType kind, LayoutResolution resolution, string streamUrl) : base(kind)
+        internal SrtOutput(MediaOutputType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, LayoutResolution resolution, string streamUrl) : base(kind, serializedAdditionalRawData)
         {
             Resolution = resolution;
             StreamUrl = streamUrl;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SrtOutput"/> for deserialization. </summary>
+        internal SrtOutput()
+        {
         }
 
         /// <summary> The dimensions of the scene or objects in the scene. </summary>

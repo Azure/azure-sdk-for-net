@@ -5,16 +5,147 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateMigrationInputSqlServerSqlMITaskOutput
+    public partial class ValidateMigrationInputSqlServerSqlMITaskOutput : IUtf8JsonSerializable, IJsonModel<ValidateMigrationInputSqlServerSqlMITaskOutput>
     {
-        internal static ValidateMigrationInputSqlServerSqlMITaskOutput DeserializeValidateMigrationInputSqlServerSqlMITaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateMigrationInputSqlServerSqlMITaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ValidateMigrationInputSqlServerSqlMITaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskOutput>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ValidateMigrationInputSqlServerSqlMITaskOutput>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(RestoreDatabaseNameErrors))
+                {
+                    writer.WritePropertyName("restoreDatabaseNameErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in RestoreDatabaseNameErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(BackupFolderErrors))
+                {
+                    writer.WritePropertyName("backupFolderErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in BackupFolderErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(BackupShareCredentialsErrors))
+                {
+                    writer.WritePropertyName("backupShareCredentialsErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in BackupShareCredentialsErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(BackupStorageAccountErrors))
+                {
+                    writer.WritePropertyName("backupStorageAccountErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in BackupStorageAccountErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ExistingBackupErrors))
+                {
+                    writer.WritePropertyName("existingBackupErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ExistingBackupErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (Optional.IsDefined(DatabaseBackupInfo))
+            {
+                writer.WritePropertyName("databaseBackupInfo"u8);
+                writer.WriteObjectValue(DatabaseBackupInfo);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ValidateMigrationInputSqlServerSqlMITaskOutput IJsonModel<ValidateMigrationInputSqlServerSqlMITaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeValidateMigrationInputSqlServerSqlMITaskOutput(document.RootElement, options);
+        }
+
+        internal static ValidateMigrationInputSqlServerSqlMITaskOutput DeserializeValidateMigrationInputSqlServerSqlMITaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +158,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<ReportableException>> backupStorageAccountErrors = default;
             Optional<IReadOnlyList<ReportableException>> existingBackupErrors = default;
             Optional<DatabaseBackupInfo> databaseBackupInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,8 +251,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     databaseBackupInfo = DatabaseBackupInfo.DeserializeDatabaseBackupInfo(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ValidateMigrationInputSqlServerSqlMITaskOutput(id.Value, name.Value, Optional.ToList(restoreDatabaseNameErrors), Optional.ToList(backupFolderErrors), Optional.ToList(backupShareCredentialsErrors), Optional.ToList(backupStorageAccountErrors), Optional.ToList(existingBackupErrors), databaseBackupInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ValidateMigrationInputSqlServerSqlMITaskOutput(id.Value, name.Value, Optional.ToList(restoreDatabaseNameErrors), Optional.ToList(backupFolderErrors), Optional.ToList(backupShareCredentialsErrors), Optional.ToList(backupStorageAccountErrors), Optional.ToList(existingBackupErrors), databaseBackupInfo.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ValidateMigrationInputSqlServerSqlMITaskOutput IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeValidateMigrationInputSqlServerSqlMITaskOutput(document.RootElement, options);
+        }
+
+        string IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

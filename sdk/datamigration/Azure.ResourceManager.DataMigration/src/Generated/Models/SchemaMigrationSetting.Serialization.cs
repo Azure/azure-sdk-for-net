@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SchemaMigrationSetting : IUtf8JsonSerializable
+    public partial class SchemaMigrationSetting : IUtf8JsonSerializable, IJsonModel<SchemaMigrationSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchemaMigrationSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SchemaMigrationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SchemaMigrationSetting>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SchemaMigrationSetting>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaOption))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SchemaMigrationSetting DeserializeSchemaMigrationSetting(JsonElement element)
+        SchemaMigrationSetting IJsonModel<SchemaMigrationSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSchemaMigrationSetting(document.RootElement, options);
+        }
+
+        internal static SchemaMigrationSetting DeserializeSchemaMigrationSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<SchemaMigrationOption> schemaOption = default;
             Optional<string> fileId = default;
             Optional<string> fileName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaOption"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     fileName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SchemaMigrationSetting(Optional.ToNullable(schemaOption), fileId.Value, fileName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SchemaMigrationSetting(Optional.ToNullable(schemaOption), fileId.Value, fileName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SchemaMigrationSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SchemaMigrationSetting IPersistableModel<SchemaMigrationSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSchemaMigrationSetting(document.RootElement, options);
+        }
+
+        string IPersistableModel<SchemaMigrationSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class TemplateResponseInternal
+    internal partial class TemplateResponseInternal : IUtf8JsonSerializable, IJsonModel<TemplateResponseInternal>
     {
-        internal static TemplateResponseInternal DeserializeTemplateResponseInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateResponseInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TemplateResponseInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TemplateResponseInternal>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TemplateResponseInternal>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
+            if (Optional.IsDefined(ChannelType))
+            {
+                writer.WritePropertyName("channelType"u8);
+                writer.WriteStringValue(ChannelType.Value.ToString());
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(WhatsApp))
+            {
+                writer.WritePropertyName("whatsApp"u8);
+                writer.WriteObjectValue(WhatsApp);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TemplateResponseInternal IJsonModel<TemplateResponseInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TemplateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTemplateResponseInternal(document.RootElement, options);
+        }
+
+        internal static TemplateResponseInternal DeserializeTemplateResponseInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.Communication.Messages
             Optional<CommunicationMessagesChannelType> channelType = default;
             Optional<TemplateStatus> status = default;
             Optional<TemplateResponseWhatsAppInternal> whatsApp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -62,8 +135,38 @@ namespace Azure.Communication.Messages
                     whatsApp = TemplateResponseWhatsAppInternal.DeserializeTemplateResponseWhatsAppInternal(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TemplateResponseInternal(name.Value, language.Value, Optional.ToNullable(channelType), Optional.ToNullable(status), whatsApp.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TemplateResponseInternal(name.Value, language.Value, Optional.ToNullable(channelType), Optional.ToNullable(status), whatsApp.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TemplateResponseInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TemplateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TemplateResponseInternal IPersistableModel<TemplateResponseInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TemplateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTemplateResponseInternal(document.RootElement, options);
+        }
+
+        string IPersistableModel<TemplateResponseInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

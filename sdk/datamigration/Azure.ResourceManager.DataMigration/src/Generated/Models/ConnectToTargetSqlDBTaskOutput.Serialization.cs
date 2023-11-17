@@ -5,15 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlDBTaskOutput
+    public partial class ConnectToTargetSqlDBTaskOutput : IUtf8JsonSerializable, IJsonModel<ConnectToTargetSqlDBTaskOutput>
     {
-        internal static ConnectToTargetSqlDBTaskOutput DeserializeConnectToTargetSqlDBTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetSqlDBTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectToTargetSqlDBTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectToTargetSqlDBTaskOutput>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectToTargetSqlDBTaskOutput>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Databases))
+                {
+                    writer.WritePropertyName("databases"u8);
+                    writer.WriteStringValue(Databases);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TargetServerVersion))
+                {
+                    writer.WritePropertyName("targetServerVersion"u8);
+                    writer.WriteStringValue(TargetServerVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TargetServerBrandVersion))
+                {
+                    writer.WritePropertyName("targetServerBrandVersion"u8);
+                    writer.WriteStringValue(TargetServerBrandVersion);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectToTargetSqlDBTaskOutput IJsonModel<ConnectToTargetSqlDBTaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToTargetSqlDBTaskOutput(document.RootElement, options);
+        }
+
+        internal static ConnectToTargetSqlDBTaskOutput DeserializeConnectToTargetSqlDBTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +100,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> databases = default;
             Optional<string> targetServerVersion = default;
             Optional<string> targetServerBrandVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -44,8 +124,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetServerBrandVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToTargetSqlDBTaskOutput(id.Value, databases.Value, targetServerVersion.Value, targetServerBrandVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectToTargetSqlDBTaskOutput(id.Value, databases.Value, targetServerVersion.Value, targetServerBrandVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectToTargetSqlDBTaskOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectToTargetSqlDBTaskOutput IPersistableModel<ConnectToTargetSqlDBTaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectToTargetSqlDBTaskOutput(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectToTargetSqlDBTaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

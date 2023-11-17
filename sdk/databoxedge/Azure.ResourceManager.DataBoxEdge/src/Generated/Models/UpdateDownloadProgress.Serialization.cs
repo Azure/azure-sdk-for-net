@@ -5,15 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class UpdateDownloadProgress
+    public partial class UpdateDownloadProgress : IUtf8JsonSerializable, IJsonModel<UpdateDownloadProgress>
     {
-        internal static UpdateDownloadProgress DeserializeUpdateDownloadProgress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDownloadProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UpdateDownloadProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UpdateDownloadProgress>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UpdateDownloadProgress>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DownloadPhase))
+                {
+                    writer.WritePropertyName("downloadPhase"u8);
+                    writer.WriteStringValue(DownloadPhase.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PercentComplete))
+                {
+                    writer.WritePropertyName("percentComplete"u8);
+                    writer.WriteNumberValue(PercentComplete.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalBytesToDownload))
+                {
+                    writer.WritePropertyName("totalBytesToDownload"u8);
+                    writer.WriteNumberValue(TotalBytesToDownload.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalBytesDownloaded))
+                {
+                    writer.WritePropertyName("totalBytesDownloaded"u8);
+                    writer.WriteNumberValue(TotalBytesDownloaded.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfUpdatesToDownload))
+                {
+                    writer.WritePropertyName("numberOfUpdatesToDownload"u8);
+                    writer.WriteNumberValue(NumberOfUpdatesToDownload.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfUpdatesDownloaded))
+                {
+                    writer.WritePropertyName("numberOfUpdatesDownloaded"u8);
+                    writer.WriteNumberValue(NumberOfUpdatesDownloaded.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UpdateDownloadProgress IJsonModel<UpdateDownloadProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateDownloadProgress(document.RootElement, options);
+        }
+
+        internal static UpdateDownloadProgress DeserializeUpdateDownloadProgress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +118,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<double> totalBytesDownloaded = default;
             Optional<int> numberOfUpdatesToDownload = default;
             Optional<int> numberOfUpdatesDownloaded = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("downloadPhase"u8))
@@ -80,8 +176,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     numberOfUpdatesDownloaded = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpdateDownloadProgress(Optional.ToNullable(downloadPhase), Optional.ToNullable(percentComplete), Optional.ToNullable(totalBytesToDownload), Optional.ToNullable(totalBytesDownloaded), Optional.ToNullable(numberOfUpdatesToDownload), Optional.ToNullable(numberOfUpdatesDownloaded));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpdateDownloadProgress(Optional.ToNullable(downloadPhase), Optional.ToNullable(percentComplete), Optional.ToNullable(totalBytesToDownload), Optional.ToNullable(totalBytesDownloaded), Optional.ToNullable(numberOfUpdatesToDownload), Optional.ToNullable(numberOfUpdatesDownloaded), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UpdateDownloadProgress>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UpdateDownloadProgress IPersistableModel<UpdateDownloadProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUpdateDownloadProgress(document.RootElement, options);
+        }
+
+        string IPersistableModel<UpdateDownloadProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

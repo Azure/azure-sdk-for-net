@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class PlacementProfile : IUtf8JsonSerializable
+    public partial class PlacementProfile : IUtf8JsonSerializable, IJsonModel<PlacementProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlacementProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PlacementProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PlacementProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourcePoolId))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("datastoreId"u8);
                 writer.WriteStringValue(DatastoreId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PlacementProfile DeserializePlacementProfile(JsonElement element)
+        PlacementProfile IJsonModel<PlacementProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePlacementProfile(document.RootElement, options);
+        }
+
+        internal static PlacementProfile DeserializePlacementProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> clusterId = default;
             Optional<string> hostId = default;
             Optional<string> datastoreId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourcePoolId"u8))
@@ -70,8 +112,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     datastoreId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PlacementProfile(resourcePoolId.Value, clusterId.Value, hostId.Value, datastoreId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PlacementProfile(resourcePoolId.Value, clusterId.Value, hostId.Value, datastoreId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PlacementProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PlacementProfile IPersistableModel<PlacementProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePlacementProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<PlacementProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

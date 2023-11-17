@@ -6,16 +6,179 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeNetworkAdapter
+    public partial class DataBoxEdgeNetworkAdapter : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeNetworkAdapter>
     {
-        internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeNetworkAdapter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataBoxEdgeNetworkAdapter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataBoxEdgeNetworkAdapter>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AdapterId))
+                {
+                    writer.WritePropertyName("adapterId"u8);
+                    writer.WriteStringValue(AdapterId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AdapterPosition))
+                {
+                    writer.WritePropertyName("adapterPosition"u8);
+                    writer.WriteObjectValue(AdapterPosition);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Index))
+                {
+                    writer.WritePropertyName("index"u8);
+                    writer.WriteNumberValue(Index.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NodeId))
+                {
+                    writer.WritePropertyName("nodeId"u8);
+                    writer.WriteStringValue(NodeId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetworkAdapterName))
+                {
+                    writer.WritePropertyName("networkAdapterName"u8);
+                    writer.WriteStringValue(NetworkAdapterName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Label))
+                {
+                    writer.WritePropertyName("label"u8);
+                    writer.WriteStringValue(Label);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MacAddress))
+                {
+                    writer.WritePropertyName("macAddress"u8);
+                    writer.WriteStringValue(MacAddress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LinkSpeed))
+                {
+                    writer.WritePropertyName("linkSpeed"u8);
+                    writer.WriteNumberValue(LinkSpeed.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (Optional.IsDefined(RdmaStatus))
+            {
+                writer.WritePropertyName("rdmaStatus"u8);
+                writer.WriteStringValue(RdmaStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(DhcpStatus))
+            {
+                writer.WritePropertyName("dhcpStatus"u8);
+                writer.WriteStringValue(DhcpStatus.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IPv4Configuration))
+                {
+                    writer.WritePropertyName("ipv4Configuration"u8);
+                    writer.WriteObjectValue(IPv4Configuration);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IPv6Configuration))
+                {
+                    writer.WritePropertyName("ipv6Configuration"u8);
+                    writer.WriteObjectValue(IPv6Configuration);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IPv6LinkLocalAddress))
+                {
+                    writer.WritePropertyName("ipv6LinkLocalAddress"u8);
+                    writer.WriteStringValue(IPv6LinkLocalAddress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(DnsServers))
+                {
+                    writer.WritePropertyName("dnsServers"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DnsServers)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxEdgeNetworkAdapter IJsonModel<DataBoxEdgeNetworkAdapter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeNetworkAdapter(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +198,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeIPv6Config> ipv6Configuration = default;
             Optional<string> ipv6LinkLocalAddress = default;
             Optional<IReadOnlyList<string>> dnsServers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adapterId"u8))
@@ -157,8 +322,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     dnsServers = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeNetworkAdapter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxEdgeNetworkAdapter IPersistableModel<DataBoxEdgeNetworkAdapter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeNetworkAdapter(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataBoxEdgeNetworkAdapter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

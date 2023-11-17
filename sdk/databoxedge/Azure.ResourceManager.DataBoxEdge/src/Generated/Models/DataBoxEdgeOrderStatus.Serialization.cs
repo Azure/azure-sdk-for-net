@@ -6,16 +6,97 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeOrderStatus
+    public partial class DataBoxEdgeOrderStatus : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeOrderStatus>
     {
-        internal static DataBoxEdgeOrderStatus DeserializeDataBoxEdgeOrderStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeOrderStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataBoxEdgeOrderStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataBoxEdgeOrderStatus>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataBoxEdgeOrderStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdateOn))
+                {
+                    writer.WritePropertyName("updateDateTime"u8);
+                    writer.WriteStringValue(UpdateOn.Value, "O");
+                }
+            }
+            if (Optional.IsDefined(Comments))
+            {
+                writer.WritePropertyName("comments"u8);
+                writer.WriteStringValue(Comments);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TrackingInformation))
+                {
+                    writer.WritePropertyName("trackingInformation"u8);
+                    writer.WriteObjectValue(TrackingInformation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(AdditionalOrderDetails))
+                {
+                    writer.WritePropertyName("additionalOrderDetails"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in AdditionalOrderDetails)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxEdgeOrderStatus IJsonModel<DataBoxEdgeOrderStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeOrderStatus(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeOrderStatus DeserializeDataBoxEdgeOrderStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> comments = default;
             Optional<DataBoxEdgeTrackingInfo> trackingInformation = default;
             Optional<IReadOnlyDictionary<string, string>> additionalOrderDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -69,8 +152,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalOrderDetails = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeOrderStatus(status, Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, Optional.ToDictionary(additionalOrderDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxEdgeOrderStatus(status, Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, Optional.ToDictionary(additionalOrderDetails), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeOrderStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxEdgeOrderStatus IPersistableModel<DataBoxEdgeOrderStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeOrderStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataBoxEdgeOrderStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

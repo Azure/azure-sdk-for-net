@@ -5,24 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Describes the input to the 'finish' MongoDB migration command. </summary>
     public partial class MongoDBFinishCommandInput : MongoDBCommandInput
     {
-        /// <summary> Initializes a new instance of MongoDBFinishCommandInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBFinishCommandInput"/>. </summary>
         /// <param name="immediate"> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </param>
         public MongoDBFinishCommandInput(bool immediate)
         {
             Immediate = immediate;
         }
 
-        /// <summary> Initializes a new instance of MongoDBFinishCommandInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBFinishCommandInput"/>. </summary>
         /// <param name="objectName"> The qualified name of a database or collection to act upon, or null to act upon the entire migration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="immediate"> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </param>
-        internal MongoDBFinishCommandInput(string objectName, bool immediate) : base(objectName)
+        internal MongoDBFinishCommandInput(string objectName, IDictionary<string, BinaryData> serializedAdditionalRawData, bool immediate) : base(objectName, serializedAdditionalRawData)
         {
             Immediate = immediate;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBFinishCommandInput"/> for deserialization. </summary>
+        internal MongoDBFinishCommandInput()
+        {
         }
 
         /// <summary> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </summary>

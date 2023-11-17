@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,20 +15,53 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> DataBox Disk Copy Progress. </summary>
     public partial class DataBoxDiskCopyProgress
     {
-        /// <summary> Initializes a new instance of DataBoxDiskCopyProgress. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyProgress"/>. </summary>
         internal DataBoxDiskCopyProgress()
         {
             Actions = new ChangeTrackingList<CustomerResolutionCode>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyProgress"/>. </summary>
         /// <param name="serialNumber"> The serial number of the disk. </param>
         /// <param name="bytesCopied"> Bytes copied during the copy of disk. </param>
         /// <param name="percentComplete"> Indicates the percentage completed for the copy of the disk. </param>
         /// <param name="status"> The Status of the copy. </param>
         /// <param name="error"> Error, if any, in the stage. </param>
         /// <param name="actions"> Available actions on the job. </param>
-        internal DataBoxDiskCopyProgress(string serialNumber, long? bytesCopied, int? percentComplete, DataBoxCopyStatus? status, ResponseError error, IReadOnlyList<CustomerResolutionCode> actions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxDiskCopyProgress(string serialNumber, long? bytesCopied, int? percentComplete, DataBoxCopyStatus? status, ResponseError error, IReadOnlyList<CustomerResolutionCode> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
             BytesCopied = bytesCopied;
@@ -35,6 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Status = status;
             Error = error;
             Actions = actions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The serial number of the disk. </summary>

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The UnknownFactoryRepoConfiguration. </summary>
     internal partial class UnknownFactoryRepoConfiguration : FactoryRepoConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownFactoryRepoConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFactoryRepoConfiguration"/>. </summary>
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
@@ -18,9 +21,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="rootFolder"> Root folder. </param>
         /// <param name="lastCommitId"> Last commit id. </param>
         /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
-        internal UnknownFactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish, serializedAdditionalRawData)
         {
             FactoryRepoConfigurationType = factoryRepoConfigurationType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownFactoryRepoConfiguration"/> for deserialization. </summary>
+        internal UnknownFactoryRepoConfiguration()
+        {
         }
     }
 }

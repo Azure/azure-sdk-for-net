@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class UnencryptedCredentials
+    public partial class UnencryptedCredentials : IUtf8JsonSerializable, IJsonModel<UnencryptedCredentials>
     {
-        internal static UnencryptedCredentials DeserializeUnencryptedCredentials(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UnencryptedCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UnencryptedCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UnencryptedCredentials>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UnencryptedCredentials>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(JobName))
+                {
+                    writer.WritePropertyName("jobName"u8);
+                    writer.WriteStringValue(JobName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(JobSecrets))
+                {
+                    writer.WritePropertyName("jobSecrets"u8);
+                    writer.WriteObjectValue(JobSecrets);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UnencryptedCredentials IJsonModel<UnencryptedCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnencryptedCredentials(document.RootElement, options);
+        }
+
+        internal static UnencryptedCredentials DeserializeUnencryptedCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> jobName = default;
             Optional<JobSecrets> jobSecrets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))
@@ -36,8 +100,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     jobSecrets = JobSecrets.DeserializeJobSecrets(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnencryptedCredentials(jobName.Value, jobSecrets.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnencryptedCredentials(jobName.Value, jobSecrets.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UnencryptedCredentials>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UnencryptedCredentials IPersistableModel<UnencryptedCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnencryptedCredentials(document.RootElement, options);
+        }
+
+        string IPersistableModel<UnencryptedCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

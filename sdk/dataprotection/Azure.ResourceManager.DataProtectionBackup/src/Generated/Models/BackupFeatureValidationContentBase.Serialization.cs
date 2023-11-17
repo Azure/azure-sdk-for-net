@@ -5,19 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupFeatureValidationContentBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownFeatureValidationRequestBase))]
+    public partial class BackupFeatureValidationContentBase : IUtf8JsonSerializable, IJsonModel<BackupFeatureValidationContentBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFeatureValidationContentBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackupFeatureValidationContentBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BackupFeatureValidationContentBase>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BackupFeatureValidationContentBase>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        BackupFeatureValidationContentBase IJsonModel<BackupFeatureValidationContentBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupFeatureValidationContentBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupFeatureValidationContentBase(document.RootElement, options);
+        }
+
+        internal static BackupFeatureValidationContentBase DeserializeBackupFeatureValidationContentBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "FeatureValidationRequest": return BackupFeatureValidationContent.DeserializeBackupFeatureValidationContent(element);
+                }
+            }
+            return UnknownFeatureValidationRequestBase.DeserializeUnknownFeatureValidationRequestBase(element);
+        }
+
+        BinaryData IPersistableModel<BackupFeatureValidationContentBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupFeatureValidationContentBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BackupFeatureValidationContentBase IPersistableModel<BackupFeatureValidationContentBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupFeatureValidationContentBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBackupFeatureValidationContentBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<BackupFeatureValidationContentBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,15 +6,121 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class UploadCertificateResponse
+    public partial class UploadCertificateResponse : IUtf8JsonSerializable, IJsonModel<UploadCertificateResponse>
     {
-        internal static UploadCertificateResponse DeserializeUploadCertificateResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadCertificateResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UploadCertificateResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UploadCertificateResponse>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AuthType))
+            {
+                writer.WritePropertyName("authType"u8);
+                writer.WriteStringValue(AuthType.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceId))
+                {
+                    writer.WritePropertyName("resourceId"u8);
+                    writer.WriteStringValue(ResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AadAuthority))
+                {
+                    writer.WritePropertyName("aadAuthority"u8);
+                    writer.WriteStringValue(AadAuthority);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AadTenantId))
+                {
+                    writer.WritePropertyName("aadTenantId"u8);
+                    writer.WriteStringValue(AadTenantId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServicePrincipalClientId))
+                {
+                    writer.WritePropertyName("servicePrincipalClientId"u8);
+                    writer.WriteStringValue(ServicePrincipalClientId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServicePrincipalObjectId))
+                {
+                    writer.WritePropertyName("servicePrincipalObjectId"u8);
+                    writer.WriteStringValue(ServicePrincipalObjectId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AzureManagementEndpointAudience))
+                {
+                    writer.WritePropertyName("azureManagementEndpointAudience"u8);
+                    writer.WriteStringValue(AzureManagementEndpointAudience);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AadAudience))
+                {
+                    writer.WritePropertyName("aadAudience"u8);
+                    writer.WriteStringValue(AadAudience);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UploadCertificateResponse IJsonModel<UploadCertificateResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUploadCertificateResponse(document.RootElement, options);
+        }
+
+        internal static UploadCertificateResponse DeserializeUploadCertificateResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +133,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<Guid> servicePrincipalObjectId = default;
             Optional<string> azureManagementEndpointAudience = default;
             Optional<string> aadAudience = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authType"u8))
@@ -85,8 +193,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     aadAudience = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UploadCertificateResponse(Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, Optional.ToNullable(aadTenantId), Optional.ToNullable(servicePrincipalClientId), Optional.ToNullable(servicePrincipalObjectId), azureManagementEndpointAudience.Value, aadAudience.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UploadCertificateResponse(Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, Optional.ToNullable(aadTenantId), Optional.ToNullable(servicePrincipalClientId), Optional.ToNullable(servicePrincipalObjectId), azureManagementEndpointAudience.Value, aadAudience.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UploadCertificateResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UploadCertificateResponse IPersistableModel<UploadCertificateResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUploadCertificateResponse(document.RootElement, options);
+        }
+
+        string IPersistableModel<UploadCertificateResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

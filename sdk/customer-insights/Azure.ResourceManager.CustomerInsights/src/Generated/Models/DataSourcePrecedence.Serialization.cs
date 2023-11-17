@@ -5,15 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class DataSourcePrecedence
+    public partial class DataSourcePrecedence : IUtf8JsonSerializable, IJsonModel<DataSourcePrecedence>
     {
-        internal static DataSourcePrecedence DeserializeDataSourcePrecedence(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataSourcePrecedence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataSourcePrecedence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataSourcePrecedence>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataSourcePrecedence>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Precedence))
+            {
+                writer.WritePropertyName("precedence"u8);
+                writer.WriteNumberValue(Precedence.Value);
+            }
+            writer.WritePropertyName("dataSource"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataSourceType))
+                {
+                    writer.WritePropertyName("dataSourceType"u8);
+                    writer.WriteStringValue(DataSourceType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteNumberValue(Id.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataSourceReferenceId))
+                {
+                    writer.WritePropertyName("dataSourceReferenceId"u8);
+                    writer.WriteStringValue(DataSourceReferenceId);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataSourcePrecedence IJsonModel<DataSourcePrecedence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataSourcePrecedence(document.RootElement, options);
+        }
+
+        internal static DataSourcePrecedence DeserializeDataSourcePrecedence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +118,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<Status> status = default;
             Optional<int> id = default;
             Optional<string> dataSourceReferenceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("precedence"u8))
@@ -84,8 +180,38 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataSourcePrecedence(Optional.ToNullable(precedence), name.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id), dataSourceReferenceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataSourcePrecedence(Optional.ToNullable(precedence), name.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id), dataSourceReferenceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataSourcePrecedence>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataSourcePrecedence IPersistableModel<DataSourcePrecedence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataSourcePrecedence(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataSourcePrecedence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

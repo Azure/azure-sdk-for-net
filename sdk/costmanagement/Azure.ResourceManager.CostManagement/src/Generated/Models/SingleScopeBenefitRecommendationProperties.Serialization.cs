@@ -6,25 +6,83 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class SingleScopeBenefitRecommendationProperties : IUtf8JsonSerializable
+    public partial class SingleScopeBenefitRecommendationProperties : IUtf8JsonSerializable, IJsonModel<SingleScopeBenefitRecommendationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleScopeBenefitRecommendationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SingleScopeBenefitRecommendationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SingleScopeBenefitRecommendationProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SingleScopeBenefitRecommendationProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceGroup))
+                {
+                    writer.WritePropertyName("resourceGroup"u8);
+                    writer.WriteStringValue(ResourceGroup);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FirstConsumptionOn))
+                {
+                    writer.WritePropertyName("firstConsumptionDate"u8);
+                    writer.WriteStringValue(FirstConsumptionOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastConsumptionOn))
+                {
+                    writer.WritePropertyName("lastConsumptionDate"u8);
+                    writer.WriteStringValue(LastConsumptionOn.Value, "O");
+                }
+            }
             if (Optional.IsDefined(LookBackPeriod))
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteStringValue(LookBackPeriod.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalHours))
+                {
+                    writer.WritePropertyName("totalHours"u8);
+                    writer.WriteNumberValue(TotalHours.Value);
+                }
+            }
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ArmSkuName))
+                {
+                    writer.WritePropertyName("armSkuName"u8);
+                    writer.WriteStringValue(ArmSkuName);
+                }
             }
             if (Optional.IsDefined(Term))
             {
@@ -36,18 +94,71 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("commitmentGranularity"u8);
                 writer.WriteStringValue(CommitmentGranularity.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrencyCode))
+                {
+                    writer.WritePropertyName("currencyCode"u8);
+                    writer.WriteStringValue(CurrencyCode);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CostWithoutBenefit))
+                {
+                    writer.WritePropertyName("costWithoutBenefit"u8);
+                    writer.WriteNumberValue(CostWithoutBenefit.Value);
+                }
+            }
             if (Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
                 writer.WriteObjectValue(RecommendationDetails);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AllRecommendationDetails))
+                {
+                    writer.WritePropertyName("allRecommendationDetails"u8);
+                    writer.WriteObjectValue(AllRecommendationDetails);
+                }
+            }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SingleScopeBenefitRecommendationProperties DeserializeSingleScopeBenefitRecommendationProperties(JsonElement element)
+        SingleScopeBenefitRecommendationProperties IJsonModel<SingleScopeBenefitRecommendationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SingleScopeBenefitRecommendationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSingleScopeBenefitRecommendationProperties(document.RootElement, options);
+        }
+
+        internal static SingleScopeBenefitRecommendationProperties DeserializeSingleScopeBenefitRecommendationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +178,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<AllSavingsBenefitDetails> recommendationDetails = default;
             Optional<AllSavingsList> allRecommendationDetails = default;
             BenefitRecommendationScope scope = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -184,8 +297,38 @@ namespace Azure.ResourceManager.CostManagement.Models
                     scope = new BenefitRecommendationScope(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SingleScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, subscriptionId.Value, resourceGroup.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SingleScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, serializedAdditionalRawData, subscriptionId.Value, resourceGroup.Value);
         }
+
+        BinaryData IPersistableModel<SingleScopeBenefitRecommendationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SingleScopeBenefitRecommendationProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SingleScopeBenefitRecommendationProperties IPersistableModel<SingleScopeBenefitRecommendationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SingleScopeBenefitRecommendationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSingleScopeBenefitRecommendationProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<SingleScopeBenefitRecommendationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

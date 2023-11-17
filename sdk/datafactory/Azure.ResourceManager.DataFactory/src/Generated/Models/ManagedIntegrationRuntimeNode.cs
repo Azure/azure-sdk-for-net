@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Properties of integration runtime node. </summary>
     public partial class ManagedIntegrationRuntimeNode
     {
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntimeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeNode"/>. </summary>
         internal ManagedIntegrationRuntimeNode()
         {
             Errors = new ChangeTrackingList<ManagedIntegrationRuntimeError>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntimeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeNode"/>. </summary>
         /// <param name="nodeId"> The managed integration runtime node id. </param>
         /// <param name="status"> The managed integration runtime node status. </param>
         /// <param name="errors"> The errors that occurred on this integration runtime node. </param>

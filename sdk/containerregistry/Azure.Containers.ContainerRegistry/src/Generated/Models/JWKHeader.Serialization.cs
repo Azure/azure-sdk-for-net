@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class JWKHeader
+    internal partial class JWKHeader : IUtf8JsonSerializable, IJsonModel<JWKHeader>
     {
-        internal static JWKHeader DeserializeJWKHeader(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JWKHeader>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JWKHeader>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<JWKHeader>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<JWKHeader>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Crv))
+            {
+                writer.WritePropertyName("crv"u8);
+                writer.WriteStringValue(Crv);
+            }
+            if (Optional.IsDefined(Kid))
+            {
+                writer.WritePropertyName("kid"u8);
+                writer.WriteStringValue(Kid);
+            }
+            if (Optional.IsDefined(Kty))
+            {
+                writer.WritePropertyName("kty"u8);
+                writer.WriteStringValue(Kty);
+            }
+            if (Optional.IsDefined(X))
+            {
+                writer.WritePropertyName("x"u8);
+                writer.WriteStringValue(X);
+            }
+            if (Optional.IsDefined(Y))
+            {
+                writer.WritePropertyName("y"u8);
+                writer.WriteStringValue(Y);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        JWKHeader IJsonModel<JWKHeader>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JWKHeader)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJWKHeader(document.RootElement, options);
+        }
+
+        internal static JWKHeader DeserializeJWKHeader(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> kty = default;
             Optional<string> x = default;
             Optional<string> y = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crv"u8))
@@ -50,8 +123,38 @@ namespace Azure.Containers.ContainerRegistry
                     y = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JWKHeader(crv.Value, kid.Value, kty.Value, x.Value, y.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JWKHeader(crv.Value, kid.Value, kty.Value, x.Value, y.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JWKHeader>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JWKHeader)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JWKHeader IPersistableModel<JWKHeader>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JWKHeader)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJWKHeader(document.RootElement, options);
+        }
+
+        string IPersistableModel<JWKHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class LayoutResolution : IUtf8JsonSerializable
+    public partial class LayoutResolution : IUtf8JsonSerializable, IJsonModel<LayoutResolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LayoutResolution>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LayoutResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LayoutResolution>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LayoutResolution>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("width"u8);
             writer.WriteNumberValue(Width);
             writer.WritePropertyName("height"u8);
             writer.WriteNumberValue(Height);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LayoutResolution DeserializeLayoutResolution(JsonElement element)
+        LayoutResolution IJsonModel<LayoutResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LayoutResolution)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLayoutResolution(document.RootElement, options);
+        }
+
+        internal static LayoutResolution DeserializeLayoutResolution(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int width = default;
             int height = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("width"u8))
@@ -42,8 +84,38 @@ namespace Azure.Communication.MediaComposition.Models
                     height = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LayoutResolution(width, height);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LayoutResolution(width, height, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LayoutResolution>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LayoutResolution)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LayoutResolution IPersistableModel<LayoutResolution>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LayoutResolution)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLayoutResolution(document.RootElement, options);
+        }
+
+        string IPersistableModel<LayoutResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

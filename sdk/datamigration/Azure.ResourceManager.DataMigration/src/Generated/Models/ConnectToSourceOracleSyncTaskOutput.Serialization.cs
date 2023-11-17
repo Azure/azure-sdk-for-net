@@ -5,16 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceOracleSyncTaskOutput
+    public partial class ConnectToSourceOracleSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<ConnectToSourceOracleSyncTaskOutput>
     {
-        internal static ConnectToSourceOracleSyncTaskOutput DeserializeConnectToSourceOracleSyncTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceOracleSyncTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectToSourceOracleSyncTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectToSourceOracleSyncTaskOutput>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectToSourceOracleSyncTaskOutput>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceServerVersion))
+                {
+                    writer.WritePropertyName("sourceServerVersion"u8);
+                    writer.WriteStringValue(SourceServerVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Databases))
+                {
+                    writer.WritePropertyName("databases"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Databases)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceServerBrandVersion))
+                {
+                    writer.WritePropertyName("sourceServerBrandVersion"u8);
+                    writer.WriteStringValue(SourceServerBrandVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ValidationErrors))
+                {
+                    writer.WritePropertyName("validationErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ValidationErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectToSourceOracleSyncTaskOutput IJsonModel<ConnectToSourceOracleSyncTaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourceOracleSyncTaskOutput(document.RootElement, options);
+        }
+
+        internal static ConnectToSourceOracleSyncTaskOutput DeserializeConnectToSourceOracleSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +110,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> databases = default;
             Optional<string> sourceServerBrandVersion = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceServerVersion"u8))
@@ -63,8 +152,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToSourceOracleSyncTaskOutput(sourceServerVersion.Value, Optional.ToList(databases), sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectToSourceOracleSyncTaskOutput(sourceServerVersion.Value, Optional.ToList(databases), sourceServerBrandVersion.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectToSourceOracleSyncTaskOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectToSourceOracleSyncTaskOutput IPersistableModel<ConnectToSourceOracleSyncTaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectToSourceOracleSyncTaskOutput(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectToSourceOracleSyncTaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

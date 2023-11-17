@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ScheduleAvailabilityContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownScheduleAvailabilityRequest))]
+    public partial class ScheduleAvailabilityContent : IUtf8JsonSerializable, IJsonModel<ScheduleAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleAvailabilityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScheduleAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ScheduleAvailabilityContent>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ScheduleAvailabilityContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("storageLocation"u8);
             writer.WriteStringValue(StorageLocation);
@@ -24,7 +35,79 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ScheduleAvailabilityContent IJsonModel<ScheduleAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScheduleAvailabilityContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduleAvailabilityContent(document.RootElement, options);
+        }
+
+        internal static ScheduleAvailabilityContent DeserializeScheduleAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("skuName", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "DataBox": return DataBoxScheduleAvailabilityContent.DeserializeDataBoxScheduleAvailabilityContent(element);
+                    case "DataBoxDisk": return DiskScheduleAvailabilityContent.DeserializeDiskScheduleAvailabilityContent(element);
+                    case "DataBoxHeavy": return HeavyScheduleAvailabilityContent.DeserializeHeavyScheduleAvailabilityContent(element);
+                }
+            }
+            return UnknownScheduleAvailabilityRequest.DeserializeUnknownScheduleAvailabilityRequest(element);
+        }
+
+        BinaryData IPersistableModel<ScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScheduleAvailabilityContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScheduleAvailabilityContent IPersistableModel<ScheduleAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScheduleAvailabilityContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScheduleAvailabilityContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<ScheduleAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

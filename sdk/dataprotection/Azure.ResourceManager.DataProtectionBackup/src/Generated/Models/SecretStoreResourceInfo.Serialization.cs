@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SecretStoreResourceInfo : IUtf8JsonSerializable
+    public partial class SecretStoreResourceInfo : IUtf8JsonSerializable, IJsonModel<SecretStoreResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretStoreResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecretStoreResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecretStoreResourceInfo>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecretStoreResourceInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -28,11 +38,40 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecretStoreResourceInfo DeserializeSecretStoreResourceInfo(JsonElement element)
+        SecretStoreResourceInfo IJsonModel<SecretStoreResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretStoreResourceInfo(document.RootElement, options);
+        }
+
+        internal static SecretStoreResourceInfo DeserializeSecretStoreResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +79,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<Uri> uri = default;
             SecretStoreType secretStoreType = default;
             Optional<string> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -61,8 +102,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecretStoreResourceInfo(uri.Value, secretStoreType, value.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecretStoreResourceInfo(uri.Value, secretStoreType, value.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecretStoreResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecretStoreResourceInfo IPersistableModel<SecretStoreResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecretStoreResourceInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecretStoreResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineVariableSpecification : IUtf8JsonSerializable
+    public partial class PipelineVariableSpecification : IUtf8JsonSerializable, IJsonModel<PipelineVariableSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineVariableSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PipelineVariableSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PipelineVariableSpecification>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PipelineVariableSpecification>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(VariableType.ToString());
@@ -30,17 +40,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PipelineVariableSpecification DeserializePipelineVariableSpecification(JsonElement element)
+        PipelineVariableSpecification IJsonModel<PipelineVariableSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineVariableSpecification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineVariableSpecification(document.RootElement, options);
+        }
+
+        internal static PipelineVariableSpecification DeserializePipelineVariableSpecification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             PipelineVariableType type = default;
             Optional<BinaryData> defaultValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,8 +98,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PipelineVariableSpecification(type, defaultValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PipelineVariableSpecification(type, defaultValue.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PipelineVariableSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineVariableSpecification)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PipelineVariableSpecification IPersistableModel<PipelineVariableSpecification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineVariableSpecification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePipelineVariableSpecification(document.RootElement, options);
+        }
+
+        string IPersistableModel<PipelineVariableSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

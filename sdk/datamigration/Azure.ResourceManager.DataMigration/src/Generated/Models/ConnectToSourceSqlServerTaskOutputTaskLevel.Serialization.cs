@@ -5,16 +5,132 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskOutputTaskLevel
+    public partial class ConnectToSourceSqlServerTaskOutputTaskLevel : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>
     {
-        internal static ConnectToSourceSqlServerTaskOutputTaskLevel DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Databases))
+                {
+                    writer.WritePropertyName("databases"u8);
+                    writer.WriteStringValue(Databases);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Logins))
+                {
+                    writer.WritePropertyName("logins"u8);
+                    writer.WriteStringValue(Logins);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AgentJobs))
+                {
+                    writer.WritePropertyName("agentJobs"u8);
+                    writer.WriteStringValue(AgentJobs);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DatabaseTdeCertificateMapping))
+                {
+                    writer.WritePropertyName("databaseTdeCertificateMapping"u8);
+                    writer.WriteStringValue(DatabaseTdeCertificateMapping);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceServerVersion))
+                {
+                    writer.WritePropertyName("sourceServerVersion"u8);
+                    writer.WriteStringValue(SourceServerVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceServerBrandVersion))
+                {
+                    writer.WritePropertyName("sourceServerBrandVersion"u8);
+                    writer.WriteStringValue(SourceServerBrandVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ValidationErrors))
+                {
+                    writer.WritePropertyName("validationErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ValidationErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectToSourceSqlServerTaskOutputTaskLevel IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(document.RootElement, options);
+        }
+
+        internal static ConnectToSourceSqlServerTaskOutputTaskLevel DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +144,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             Optional<string> id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databases"u8))
@@ -84,8 +202,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, serializedAdditionalRawData, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
         }
+
+        BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectToSourceSqlServerTaskOutputTaskLevel IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

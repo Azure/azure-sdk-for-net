@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareResourcePoolResourcePoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vMwareResourcePoolResourcePoolsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), _vMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "VMwareResourcePoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), _vMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "VMwareResourcePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareResourcePoolResourcePoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vMwareResourcePoolResourcePoolsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), _vMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "VMwareResourcePoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VMwareResourcePoolResource(Client, VMwareResourcePoolData.DeserializeVMwareResourcePoolData(e)), _vMwareResourcePoolResourcePoolsClientDiagnostics, Pipeline, "VMwareResourcePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
