@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsPackable>false</IsPackable>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>

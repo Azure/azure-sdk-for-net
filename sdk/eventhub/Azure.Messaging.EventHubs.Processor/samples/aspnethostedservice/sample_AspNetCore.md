@@ -11,7 +11,7 @@ description: Using the EventProcessorClient with an ASP.NET hosted service
 
 # Using the `EventProcessorClient` with an ASP.NET hosted service
 This is an example of how to create and configure the `EventProcessorClient` in an ASP.NET context as an IHostedService implementation.
-ASP.NET hosted services can be used to implement background task processing, so are a good choice if your application needs to process events directly from Azure Event Hubs. Refer to the [hosted services documentation](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services) for further information.
+ASP.NET hosted services can be used to implement background task processing, so are a good choice if your application needs to process events directly from Azure Event Hubs. Refer to the [hosted services documentation](https://learn.microsoft.com/aspnet/core/fundamentals/host/hosted-services) for further information.
 
 
 The [Azure.Messaging.EventHubs.Processor](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/README.md) package provides a stand-alone client for consuming events in a robust, durable, and scalable way that is suitable for the majority of production scenarios.
@@ -76,7 +76,7 @@ Open the appsettings.Development.json settings file and replace the Storage and 
 2. Run the following dotnet command: ```dotnet run --framework net7.0```
 
 #### Process an Event
-1. Send an event to your Event Hubs instance. An example using data generator is available [here](https://learn.microsoft.com/en-us/azure/event-hubs/send-and-receive-events-using-data-generator#send-events-using-event-hubs-data-generator).
+1. Send an event to your Event Hubs instance. An example using data generator is available [here](https://learn.microsoft.com/azure/event-hubs/send-and-receive-events-using-data-generator#send-events-using-event-hubs-data-generator).
 2. Observe the event body being processing via the application logs. Example:
 
 ```
