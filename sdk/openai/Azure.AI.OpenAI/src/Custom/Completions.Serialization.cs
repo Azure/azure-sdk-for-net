@@ -18,7 +18,7 @@ namespace Azure.AI.OpenAI
             }
             string id = default;
             DateTimeOffset created = default;
-            Optional<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
+            Optional<IReadOnlyList<ContentFilterResultsForPrompt>> promptAnnotations = default;
             IReadOnlyList<Choice> choices = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
@@ -40,10 +40,10 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    List<PromptFilterResult> array = new List<PromptFilterResult>();
+                    List<ContentFilterResultsForPrompt> array = new List<ContentFilterResultsForPrompt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PromptFilterResult.DeserializePromptFilterResult(item));
+                        array.Add(ContentFilterResultsForPrompt.DeserializeContentFilterResultsForPrompt(item));
                     }
                     promptAnnotations = array;
                     continue;

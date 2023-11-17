@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.Core;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,7 +19,8 @@ namespace Azure.AI.OpenAI
             string id = default;
             DateTimeOffset created = default;
             IReadOnlyList<ChatChoice> choices = default;
-            Optional<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
+            Optional<IReadOnlyList<ContentFilterResultsForPrompt>> promptFilterResults = default;
+            string systemFingerprint = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,12 +51,17 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    List<PromptFilterResult> array = new List<PromptFilterResult>();
+                    List<ContentFilterResultsForPrompt> array = new List<ContentFilterResultsForPrompt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PromptFilterResult.DeserializePromptFilterResult(item));
+                        array.Add(ContentFilterResultsForPrompt.DeserializeContentFilterResultsForPrompt(item));
                     }
-                    promptAnnotations = array;
+                    promptFilterResults = array;
+                    continue;
+                }
+                if (property.NameEquals("system_fingerprint"u8))
+                {
+                    systemFingerprint = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("usage"u8))
@@ -64,7 +70,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatCompletions(id, created, choices, Optional.ToList(promptAnnotations), usage);
+            return new ChatCompletions(id, created, choices, Optional.ToList(promptFilterResults), systemFingerprint, usage);
         }
     }
 }

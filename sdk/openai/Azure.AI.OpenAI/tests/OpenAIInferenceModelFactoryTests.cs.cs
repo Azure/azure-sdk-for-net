@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI.Tests
 
             ChatChoice[] chatChoices = expectedChoices
                 .Select(e => AzureOpenAIModelFactory.ChatChoice(
-                    new ChatMessage(e.role, e.text),
+                    AzureOpenAIModelFactory.ChatResponseMessage(e.role, e.text),
                     e.index,
                     e.reason))
                 .ToArray();
@@ -76,16 +76,16 @@ namespace Azure.AI.OpenAI.Tests
 
             ChatChoice[] chatChoices = expectedChoices
                 .Select(e => AzureOpenAIModelFactory.ChatChoice(
-                    new ChatMessage(e.role, e.text),
+                    AzureOpenAIModelFactory.ChatResponseMessage(e.role, e.text),
                     e.index,
                     e.reason))
                 .ToArray();
 
-            var promptFilterResults = new List<PromptFilterResult>()
+            var promptFilterResults = new List<ContentFilterResultsForPrompt>()
             {
-                AzureOpenAIModelFactory.PromptFilterResult(
+                AzureOpenAIModelFactory.ContentFilterResultsForPrompt(
                     0,
-                    AzureOpenAIModelFactory.ContentFilterResults(
+                    AzureOpenAIModelFactory.ContentFilterResultDetailsForPrompt(
                         hate: AzureOpenAIModelFactory.ContentFilterResult(
                             ContentFilterSeverity.Medium,
                             filtered: true)))
@@ -96,6 +96,7 @@ namespace Azure.AI.OpenAI.Tests
                 expectedCreationTime,
                 chatChoices,
                 promptFilterResults,
+                "system_fingerprint",
                 AzureOpenAIModelFactory.CompletionsUsage(2, 5, 7));
 
             Assert.That(chatCompletions, Is.Not.Null);

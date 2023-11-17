@@ -202,10 +202,10 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
     DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
     Messages =
     {
-        new ChatMessage(ChatRole.System, "You are a helpful assistant. You will talk like a pirate."),
-        new ChatMessage(ChatRole.User, "Can you help me?"),
-        new ChatMessage(ChatRole.Assistant, "Arrrr! Of course, me hearty! What can I do for ye?"),
-        new ChatMessage(ChatRole.User, "What's the best way to train a parrot?"),
+        new ChatRequestSystemMessage("You are a helpful assistant. You will talk like a pirate."),
+        new ChatRequestUserMessage("Can you help me?"),
+        new ChatRequestAssistantMessage("Arrrr! Of course, me hearty! What can I do for ye?"),
+        new ChatRequestUserMessage("What's the best way to train a parrot?"),
     }
 };
 
@@ -230,7 +230,7 @@ When explicitly requesting more than one `Choice` while streaming, use the `Choi
 // same response. This may be useful when choosing between multiple candidates for a single request.
 var chatCompletionsOptions = new ChatCompletionsOptions()
 {
-    Messages = { new ChatMessage(ChatRole.User, "Write a limerick about bananas.") },
+    Messages = { new ChatRequestUserMessage("Write a limerick about bananas.") },
     ChoiceCount = 4
 };
 
@@ -302,16 +302,16 @@ handled across multiple calls that build up data for subsequent stateless reques
 messages as a form of conversation history.
 
 ```C# Snippet:ChatFunctions:RequestWithFunctions
-var conversationMessages = new List<ChatMessage>()
+var conversationMessages = new List<ChatRequestMessage>()
 {
-    new(ChatRole.User, "What is the weather like in Boston?"),
+    new ChatRequestUserMessage("What is the weather like in Boston?"),
 };
 
 var chatCompletionsOptions = new ChatCompletionsOptions()
 {
     DeploymentName = "gpt-35-turbo-0613",
 };
-foreach (ChatMessage chatMessage in conversationMessages)
+foreach (ChatRequestMessage chatMessage in conversationMessages)
 {
     chatCompletionsOptions.Messages.Add(chatMessage);
 }
@@ -340,7 +340,10 @@ ChatChoice responseChoice = response.Value.Choices[0];
 if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
 {
     // Include the FunctionCall message in the conversation history
-    conversationMessages.Add(responseChoice.Message);
+    conversationMessages.Add(new ChatRequestAssistantMessage(responseChoice.Message.Content)
+    {
+        FunctionCall = responseChoice.Message.FunctionCall,
+    });
 
     if (responseChoice.Message.FunctionCall.Name == "get_current_weather")
     {
@@ -355,14 +358,11 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
         };
         // Serialize the result data from the function into a new chat message with the 'Function' role,
         // then add it to the messages after the first User message and initial response FunctionCall
-        var functionResponseMessage = new ChatMessage(
-            ChatRole.Function,
-            JsonSerializer.Serialize(
+        var functionResponseMessage = new ChatRequestFunctionMessage(
+            name: responseChoice.Message.FunctionCall.Name,
+            arguments: JsonSerializer.Serialize(
                 functionResultData,
-                new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }))
-        {
-            Name = responseChoice.Message.FunctionCall.Name
-        };
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
         conversationMessages.Add(functionResponseMessage);
         // Now make a new request using all three messages in conversationMessages
     }
@@ -394,7 +394,7 @@ if (finishReason == CompletionsFinishReason.FunctionCall)
 {
     string lastContent = contentBuilder.ToString();
     string unvalidatedArguments = functionArgumentsBuilder.ToString();
-    ChatMessage chatMessageForHistory = new(streamedRole, lastContent)
+    ChatRequestAssistantMessage chatMessageForHistory = new(contentBuilder.ToString())
     {
         FunctionCall = new(functionName, unvalidatedArguments),
     };
@@ -431,10 +431,9 @@ ChatCompletionsOptions chatCompletionsOptions = new()
     DeploymentName = "gpt-35-turbo-0613",
     Messages =
     {
-        new ChatMessage(
-            ChatRole.System,
+        new ChatRequestSystemMessage(
             "You are a helpful assistant that answers questions about the Contoso product database."),
-        new ChatMessage(ChatRole.User, "What are the best-selling Contoso products this month?")
+        new ChatRequestUserMessage("What are the best-selling Contoso products this month?")
     },
 
     // The addition of AzureChatExtensionsOptions enables the use of Azure OpenAI capabilities that add to
@@ -447,7 +446,7 @@ ChatCompletionsOptions chatCompletionsOptions = new()
 };
 
 Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
-ChatMessage message = response.Value.Choices[0].Message;
+ChatResponseMessage message = response.Value.Choices[0].Message;
 
 // The final, data-informed response still appears in the ChatMessages as usual
 Console.WriteLine($"{message.Role}: {message.Content}");
@@ -456,7 +455,7 @@ Console.WriteLine($"{message.Role}: {message.Content}");
 // to explain extension activity and provide supplemental information like citations.
 Console.WriteLine($"Citations and other information:");
 
-foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
+foreach (ChatResponseMessage contextMessage in message.AzureExtensionsContext.Messages)
 {
     // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents
     // and need to be parsed as such; that step is omitted here for brevity.

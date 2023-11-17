@@ -3,10 +3,7 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -17,11 +14,6 @@ namespace Azure.AI.OpenAI
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentName))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(DeploymentName);
-            }
             writer.WritePropertyName("messages"u8);
             writer.WriteStartArray();
             foreach (var item in Messages)
@@ -29,73 +21,35 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Functions) && Functions.Count > 0)
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    if (item.IsPredefined)
-                    {
-                        throw new ArgumentException(
-                            @"Predefined function definitions such as 'auto' and 'none' cannot be provided as
-                            custom functions. These should only be used to constrain the FunctionCall option.");
-                    }
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FunctionCall))
             {
-                writer.WritePropertyName("function_call");
-
-                if (FunctionCall.IsPredefined)
-                {
-                    writer.WriteStringValue(FunctionCall.Name);
-                }
-                else
-                {
-                    writer.WriteStartObject();
-                    writer.WritePropertyName("name");
-                    writer.WriteStringValue(FunctionCall.Name);
-                    writer.WriteEndObject();
-                }
+                writer.WritePropertyName("function_call"u8);
+                writer.WriteObjectValue(FunctionCall);
             }
             if (Optional.IsDefined(MaxTokens))
             {
-                if (MaxTokens != null)
-                {
-                    writer.WritePropertyName("max_tokens"u8);
-                    writer.WriteNumberValue(MaxTokens.Value);
-                }
-                else
-                {
-                    writer.WriteNull("max_tokens");
-                }
+                writer.WritePropertyName("max_tokens"u8);
+                writer.WriteNumberValue(MaxTokens.Value);
             }
             if (Optional.IsDefined(Temperature))
             {
-                if (Temperature != null)
-                {
-                    writer.WritePropertyName("temperature"u8);
-                    writer.WriteNumberValue(Temperature.Value);
-                }
-                else
-                {
-                    writer.WriteNull("temperature");
-                }
+                writer.WritePropertyName("temperature"u8);
+                writer.WriteNumberValue(Temperature.Value);
             }
             if (Optional.IsDefined(NucleusSamplingFactor))
             {
-                if (NucleusSamplingFactor != null)
-                {
-                    writer.WritePropertyName("top_p"u8);
-                    writer.WriteNumberValue(NucleusSamplingFactor.Value);
-                }
-                else
-                {
-                    writer.WriteNull("top_p");
-                }
+                writer.WritePropertyName("top_p"u8);
+                writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
             // CUSTOM: serialize <int, int> to <string, int>
             if (Optional.IsCollectionDefined(TokenSelectionBiases))
@@ -116,15 +70,8 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(ChoiceCount))
             {
-                if (ChoiceCount != null)
-                {
-                    writer.WritePropertyName("n"u8);
-                    writer.WriteNumberValue(ChoiceCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("n");
-                }
+                writer.WritePropertyName("n"u8);
+                writer.WriteNumberValue(ChoiceCount.Value);
             }
             if (Optional.IsCollectionDefined(StopSequences))
             {
@@ -138,45 +85,70 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(PresencePenalty))
             {
-                if (PresencePenalty != null)
-                {
-                    writer.WritePropertyName("presence_penalty"u8);
-                    writer.WriteNumberValue(PresencePenalty.Value);
-                }
-                else
-                {
-                    writer.WriteNull("presence_penalty");
-                }
+                writer.WritePropertyName("presence_penalty"u8);
+                writer.WriteNumberValue(PresencePenalty.Value);
             }
             if (Optional.IsDefined(FrequencyPenalty))
             {
-                if (FrequencyPenalty != null)
-                {
-                    writer.WritePropertyName("frequency_penalty"u8);
-                    writer.WriteNumberValue(FrequencyPenalty.Value);
-                }
-                else
-                {
-                    writer.WriteNull("frequency_penalty");
-                }
+                writer.WritePropertyName("frequency_penalty"u8);
+                writer.WriteNumberValue(FrequencyPenalty.Value);
             }
             if (Optional.IsDefined(InternalShouldStreamResponse))
             {
-                if (InternalShouldStreamResponse != null)
-                {
-                    writer.WritePropertyName("stream"u8);
-                    writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
-                }
-                else
-                {
-                    writer.WriteNull("stream");
-                }
+                writer.WritePropertyName("stream"u8);
+                writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
             }
-            if (AzureExtensionsOptions != null)
+            if (Optional.IsDefined(DeploymentName))
             {
-                // CUSTOM CODE NOTE: Extensions options currently deserialize directly into the payload (not as a
-                //                      property value therein)
-                ((IUtf8JsonSerializable)AzureExtensionsOptions).Write(writer);
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
+            if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
+            {
+                writer.WritePropertyName("dataSources"u8);
+                writer.WriteStartArray();
+                foreach (var item in InternalAzureExtensionsDataSources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Enhancements))
+            {
+                writer.WritePropertyName("enhancements"u8);
+                writer.WriteObjectValue(Enhancements);
+            }
+            if (Optional.IsDefined(Seed))
+            {
+                writer.WritePropertyName("seed"u8);
+                writer.WriteNumberValue(Seed.Value);
+            }
+            if (Optional.IsDefined(ResponseFormat))
+            {
+                writer.WritePropertyName("response_format"u8);
+                writer.WriteStringValue(ResponseFormat.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Tools))
+            {
+                writer.WritePropertyName("tools"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tools)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ToolChoice))
+            {
+                writer.WritePropertyName("tool_choice"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ToolChoice);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
         }

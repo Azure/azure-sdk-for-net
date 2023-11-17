@@ -19,15 +19,17 @@ namespace Azure.AI.OpenAI
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
         /// <param name="deltaMessage"> For streamed choices, the internal representation of a 'delta' payload. </param>
         /// <param name="contentFilterResults"> The category annotations for this chat choice's content filtering. </param>
+        /// <param name="enhancements"> The enhancements for this choice. </param>
         /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
         public static ChatChoice ChatChoice(
-            ChatMessage message = null,
+            ChatResponseMessage message = null,
             int index = default,
             CompletionsFinishReason finishReason = default,
-            ChatMessage deltaMessage = null,
-            ContentFilterResults contentFilterResults = null)
+            ChatResponseMessage deltaMessage = null,
+            ContentFilterResultsForChoice contentFilterResults = null,
+            AzureChatEnhancements enhancements = null)
         {
-            return new ChatChoice(message, index, finishReason, deltaMessage, contentFilterResults);
+            return new ChatChoice(message, index, finishReason, deltaMessage, contentFilterResults, enhancements);
         }
 
         public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(

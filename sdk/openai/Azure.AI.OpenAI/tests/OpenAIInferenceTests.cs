@@ -145,10 +145,10 @@ namespace Azure.AI.OpenAI.Tests
                 DeploymentName = deploymentOrModelName,
                 Messages =
                 {
-                    new ChatMessage(ChatRole.System, "You are a helpful assistant."),
-                    new ChatMessage(ChatRole.User, "Can you help me?"),
-                    new ChatMessage(ChatRole.Assistant, "Of course! What do you need help with?"),
-                    new ChatMessage(ChatRole.User, "What temperature should I bake pizza at?"),
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("Can you help me?"),
+                    new ChatRequestAssistantMessage("Of course! What do you need help with?"),
+                    new ChatRequestUserMessage("What temperature should I bake pizza at?"),
                 },
             };
             Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
@@ -177,7 +177,7 @@ namespace Azure.AI.OpenAI.Tests
                 DeploymentName = deploymentOrModelName,
                 Messages =
                 {
-                    new ChatMessage(ChatRole.User, "How do I cook a bell pepper?"),
+                    new ChatRequestUserMessage("How do I cook a bell pepper?"),
                 },
             };
             Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
@@ -193,7 +193,7 @@ namespace Azure.AI.OpenAI.Tests
                 response.Value.PromptFilterResults,
                 serviceTarget,
                 expectedCount: (requestOptions.ChoiceCount ?? 1));
-            AssertExpectedContentFilterResults(firstChoice.ContentFilterResults, serviceTarget);
+            AssertExpectedContentFilterResponseResults(firstChoice.ContentFilterResults, serviceTarget);
         }
 
         [RecordedTest]
@@ -223,7 +223,7 @@ namespace Azure.AI.OpenAI.Tests
                 response.Value.PromptFilterResults,
                 serviceTarget,
                 expectedCount: requestOptions.Prompts.Count * (requestOptions.ChoicesPerPrompt ?? 1));
-            AssertExpectedContentFilterResults(firstChoice.ContentFilterResults, serviceTarget);
+            AssertExpectedContentFilterResponseResults(firstChoice.ContentFilterResults, serviceTarget);
         }
 
         [RecordedTest]
@@ -240,10 +240,10 @@ namespace Azure.AI.OpenAI.Tests
                 DeploymentName = deploymentOrModelName,
                 Messages =
                 {
-                    new ChatMessage(ChatRole.System, "You are a helpful assistant."),
-                    new ChatMessage(ChatRole.User, "Can you help me?"),
-                    new ChatMessage(ChatRole.Assistant, "Of course! What do you need help with?"),
-                    new ChatMessage(ChatRole.User, "What temperature should I bake pizza at?"),
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("Can you help me?"),
+                    new ChatRequestAssistantMessage("Of course! What do you need help with?"),
+                    new ChatRequestUserMessage("What temperature should I bake pizza at?"),
                 },
                 MaxTokens = 512,
             };
@@ -280,12 +280,17 @@ namespace Azure.AI.OpenAI.Tests
                 if (chatUpdate.AzureExtensionsContext?.RequestContentFilterResults is not null)
                 {
                     Assert.IsFalse(gotRequestContentFilterResults);
-                    AssertExpectedContentFilterResults(chatUpdate.AzureExtensionsContext.RequestContentFilterResults, serviceTarget);
+                    Assert.That(chatUpdate.AzureExtensionsContext.RequestContentFilterResults.PromptIndex, Is.EqualTo(0));
+                    AssertExpectedContentFilterRequestResults(
+                        chatUpdate.AzureExtensionsContext.RequestContentFilterResults.ContentFilterResults,
+                        serviceTarget);
                     gotRequestContentFilterResults = true;
                 }
                 if (chatUpdate.AzureExtensionsContext?.ResponseContentFilterResults is not null)
                 {
-                    AssertExpectedContentFilterResults(chatUpdate.AzureExtensionsContext.ResponseContentFilterResults, serviceTarget);
+                    AssertExpectedContentFilterResponseResults(
+                        chatUpdate.AzureExtensionsContext.ResponseContentFilterResults,
+                        serviceTarget);
                     gotResponseContentFilterResults = true;
                 }
             }
@@ -416,7 +421,7 @@ namespace Azure.AI.OpenAI.Tests
             using StreamingResponse<Completions> response = await client.GetCompletionsStreamingAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
 
-            Dictionary<int, PromptFilterResult> promptFilterResultsByPromptIndex = new();
+            Dictionary<int, ContentFilterResultsForPrompt> promptFilterResultsByPromptIndex = new();
             Dictionary<int, CompletionsFinishReason> finishReasonsByChoiceIndex = new();
             Dictionary<int, StringBuilder> textBuildersByChoiceIndex = new();
 
@@ -424,11 +429,11 @@ namespace Azure.AI.OpenAI.Tests
             {
                 if (streamingCompletions.PromptFilterResults is not null)
                 {
-                    foreach (PromptFilterResult promptFilterResult in streamingCompletions.PromptFilterResults)
+                    foreach (ContentFilterResultsForPrompt promptFilterResult in streamingCompletions.PromptFilterResults)
                     {
                         // When providing multiple prompts, the filter results may arrive across separate messages and
                         // the payload array index may differ from the in-data index property
-                        AssertExpectedContentFilterResults(promptFilterResult.ContentFilterResults, serviceTarget);
+                        AssertExpectedContentFilterRequestResults(promptFilterResult.ContentFilterResults, serviceTarget);
                         promptFilterResultsByPromptIndex[promptFilterResult.PromptIndex] = promptFilterResult;
                     }
                 }
@@ -456,7 +461,7 @@ namespace Azure.AI.OpenAI.Tests
                     if (!string.IsNullOrEmpty(choice.Text))
                     {
                         // Content filter results are only populated when content (text) is present
-                        AssertExpectedContentFilterResults(choice.ContentFilterResults, serviceTarget);
+                        AssertExpectedContentFilterResponseResults(choice.ContentFilterResults, serviceTarget);
                     }
                 }
             }
@@ -480,25 +485,8 @@ namespace Azure.AI.OpenAI.Tests
             }
         }
 
-        [RecordedTest]
-        [Ignore("Built-in serialization/deserialization not yet supported, but can be achieved with a custom converter")]
-        public void JsonTypeSerialization()
-        {
-            var originalMessage = new ChatMessage(ChatRole.User, "How do I make a great taco?");
-
-            string clearTextSerializedMessage = System.Text.Json.JsonSerializer.Serialize(originalMessage);
-            ChatMessage messageFromClearText = System.Text.Json.JsonSerializer.Deserialize<ChatMessage>(clearTextSerializedMessage);
-            Assert.That(messageFromClearText.Role, Is.EqualTo(originalMessage.Role));
-            Assert.That(messageFromClearText.Content, Is.EqualTo(originalMessage.Content));
-
-            byte[] utf8SerializedMessage = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(originalMessage);
-            ChatMessage messageFromUtf8Bytes = System.Text.Json.JsonSerializer.Deserialize<ChatMessage>(utf8SerializedMessage);
-            Assert.That(messageFromUtf8Bytes.Role, Is.EqualTo(originalMessage.Role));
-            Assert.That(messageFromUtf8Bytes.Content, Is.EqualTo(originalMessage.Content));
-        }
-
         private void AssertExpectedPromptFilterResults(
-            IReadOnlyList<PromptFilterResult> promptFilterResults,
+            IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults,
             OpenAIClientServiceTarget serviceTarget,
             int expectedCount)
         {
@@ -523,8 +511,25 @@ namespace Azure.AI.OpenAI.Tests
             }
         }
 
-        private void AssertExpectedContentFilterResults(
-            ContentFilterResults contentFilterResults,
+        private void AssertExpectedContentFilterResponseResults(
+            ContentFilterResultsForChoice contentFilterResults,
+            OpenAIClientServiceTarget serviceTarget)
+        {
+            if (serviceTarget == OpenAIClientServiceTarget.NonAzure)
+            {
+                Assert.That(contentFilterResults, Is.Null);
+            }
+            else
+            {
+                Assert.That(contentFilterResults, Is.Not.Null.Or.Empty);
+                Assert.That(contentFilterResults.Hate, Is.Not.Null);
+                Assert.That(contentFilterResults.Hate.Filtered, Is.False);
+                Assert.That(contentFilterResults.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+            }
+        }
+
+        private void AssertExpectedContentFilterRequestResults(
+            ContentFilterResultDetailsForPrompt contentFilterResults,
             OpenAIClientServiceTarget serviceTarget)
         {
             if (serviceTarget == OpenAIClientServiceTarget.NonAzure)

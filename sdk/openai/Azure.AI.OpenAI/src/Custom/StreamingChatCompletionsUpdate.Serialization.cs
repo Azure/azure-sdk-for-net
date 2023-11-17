@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI
             string id = default;
             DateTimeOffset created = default;
             AzureChatExtensionsMessageContext azureExtensionsContext = null;
-            ContentFilterResults requestContentFilterResults = null;
+            ContentFilterResultsForPrompt requestContentFilterResults = null;
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -43,11 +43,10 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    List<PromptFilterResult> array = new List<PromptFilterResult>();
+                    List<ContentFilterResultsForPrompt> array = new List<ContentFilterResultsForPrompt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        PromptFilterResult promptFilterResult = PromptFilterResult.DeserializePromptFilterResult(item);
-                        requestContentFilterResults = promptFilterResult.ContentFilterResults;
+                        requestContentFilterResults = ContentFilterResultsForPrompt.DeserializeContentFilterResultsForPrompt(item);
                     }
                     continue;
                 }
@@ -62,7 +61,7 @@ namespace Azure.AI.OpenAI
                         string functionArgumentsUpdate = null;
                         int choiceIndex = 0;
                         CompletionsFinishReason? finishReason = null;
-                        ContentFilterResults responseContentFilterResults = null;
+                        ContentFilterResultsForChoice responseContentFilterResults = null;
                         foreach (JsonProperty choiceProperty in choiceElement.EnumerateObject())
                         {
                             if (choiceProperty.NameEquals("index"u8))
@@ -121,7 +120,8 @@ namespace Azure.AI.OpenAI
                             {
                                 if (choiceProperty.Value.EnumerateObject().Any())
                                 {
-                                    responseContentFilterResults = ContentFilterResults.DeserializeContentFilterResults(choiceProperty.Value);
+                                    responseContentFilterResults
+                                        = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(choiceProperty.Value);
                                 }
                                 continue;
                             }

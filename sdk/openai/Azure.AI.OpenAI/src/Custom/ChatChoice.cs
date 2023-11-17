@@ -9,6 +9,6 @@ namespace Azure.AI.OpenAI
     {
         // Chat responses include "delta" objects as part of their SSE payloads when streaming is enabled.
         // This internal property facilitates proper deserialization of streamed chat messages.
-        internal ChatMessage InternalStreamingDeltaMessage { get; }
+        internal ChatResponseMessage InternalStreamingDeltaMessage { get; }
     }
 }

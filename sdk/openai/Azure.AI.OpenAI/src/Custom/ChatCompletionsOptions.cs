@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    [CodeGenSuppress("ChatCompletionsOptions", typeof(IEnumerable<ChatMessage>))]
     public partial class ChatCompletionsOptions
     {
         /// <inheritdoc cref="CompletionsOptions.ChoicesPerPrompt"/>
@@ -109,14 +108,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentException">
         ///     <paramref name="deploymentName"/> is an empty string.
         /// </exception>
-        public ChatCompletionsOptions(string deploymentName, IEnumerable<ChatMessage> messages) : this()
+        public ChatCompletionsOptions(string deploymentName, IEnumerable<ChatRequestMessage> messages) : this()
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(messages, nameof(messages));
 
             DeploymentName = deploymentName;
 
-            foreach (ChatMessage chatMessage in messages)
+            foreach (ChatRequestMessage chatMessage in messages)
             {
                 Messages.Add(chatMessage);
             }
@@ -127,13 +126,15 @@ namespace Azure.AI.OpenAI
         {
             // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
             //                      may be reconsidered for required payload constituents in the future.
-            Messages = new ChangeTrackingList<ChatMessage>();
+            Messages = new ChangeTrackingList<ChatRequestMessage>();
             TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
             InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
             StopSequences = new ChangeTrackingList<string>();
             Functions = new ChangeTrackingList<FunctionDefinition>();
             InternalAzureExtensionsDataSources = new ChangeTrackingList<AzureChatExtensionConfiguration>();
             AzureExtensionsOptions = null;
+            Enhancements = null;
+            Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
         }
     }
 }

@@ -6,24 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>
-    ///   A representation of the additional context information available when Azure OpenAI chat extensions are involved
-    ///   in the generation of a corresponding chat completions response. This context information is only populated when
-    ///   using an Azure OpenAI request configured to use a matching extension.
-    /// </summary>
     public partial class AzureChatExtensionsMessageContext
     {
-        public ContentFilterResults RequestContentFilterResults { get; internal set; }
-        public ContentFilterResults ResponseContentFilterResults { get; internal set; }
+        public ContentFilterResultsForPrompt RequestContentFilterResults { get; internal set; }
+        public ContentFilterResultsForChoice ResponseContentFilterResults { get; internal set; }
 
         internal AzureChatExtensionsMessageContext(
-            IList<ChatMessage> messages,
-            ContentFilterResults requestContentFilterResults,
-            ContentFilterResults responseContentFilterResults)
+            IReadOnlyList<ChatResponseMessage> messages,
+            ContentFilterResultsForPrompt requestContentFilterResults,
+            ContentFilterResultsForChoice responseContentFilterResults)
             : this(messages)
         {
             RequestContentFilterResults = requestContentFilterResults;

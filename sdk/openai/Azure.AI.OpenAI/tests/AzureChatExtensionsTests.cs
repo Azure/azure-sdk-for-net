@@ -26,7 +26,6 @@ public class AzureChatExtensionsTests : OpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase(OpenAIClientServiceTarget.Azure, ExtensionObjectStrategy.WithGenericParentType)]
     [TestCase(OpenAIClientServiceTarget.Azure, ExtensionObjectStrategy.WithScenarioSpecificHelperType)]
     public async Task BasicSearchExtensionWorks(
         OpenAIClientServiceTarget serviceTarget,
@@ -40,20 +39,6 @@ public class AzureChatExtensionsTests : OpenAITestBase
         AzureChatExtensionsOptions extensionsOptions = new();
         switch (extensionStrategy)
         {
-            case ExtensionObjectStrategy.WithGenericParentType:
-                AzureChatExtensionConfiguration genericConfig = new()
-                {
-                    Type = "AzureCognitiveSearch",
-                    Parameters = BinaryData.FromObjectAsJson(new
-                    {
-                        Endpoint = "https://openaisdktestsearch.search.windows.net",
-                        IndexName = "openai-test-index-carbon-wiki",
-                        GetCognitiveSearchApiKey().Key,
-                    },
-                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
-                };
-                extensionsOptions.Extensions.Add(genericConfig);
-                break;
             case ExtensionObjectStrategy.WithScenarioSpecificHelperType:
                 AzureCognitiveSearchChatExtensionConfiguration helperTypeConfig = new()
                 {
@@ -73,7 +58,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
             DeploymentName = deploymentOrModelName,
             Messages =
             {
-                new ChatMessage(ChatRole.User, "What does PR complete mean?"),
+                new ChatRequestUserMessage("What does PR complete mean?"),
             },
             MaxTokens = 512,
             AzureExtensionsOptions = extensionsOptions,
@@ -92,9 +77,9 @@ public class AzureChatExtensionsTests : OpenAITestBase
         AzureChatExtensionsMessageContext context = firstChoice.Message.AzureExtensionsContext;
         Assert.That(context, Is.Not.Null);
         Assert.That(context.Messages, Is.Not.Null.Or.Empty);
-        Assert.That(context.Messages.First().Role, Is.EqualTo(ChatRole.Tool));
-        Assert.That(context.Messages.First().Content, Is.Not.Null.Or.Empty);
-        Assert.That(context.Messages.First().Content.Contains("citations"));
+        Assert.That(context.Messages[0], Is.Not.Null);
+        Assert.That(context.Messages[0].Content, Is.Not.Null.Or.Empty);
+        Assert.That(context.Messages[0].Content.Contains("citations"));
     }
 
     [RecordedTest]
@@ -111,14 +96,14 @@ public class AzureChatExtensionsTests : OpenAITestBase
             DeploymentName = deploymentOrModelName,
             Messages =
             {
-                new ChatMessage(ChatRole.User, "What does PR complete mean?"),
+                new ChatRequestUserMessage("What does PR complete mean?"),
             },
             MaxTokens = 512,
             AzureExtensionsOptions = new()
             {
                 Extensions =
                 {
-                    new AzureChatExtensionConfiguration()
+                    new AzureCognitiveSearchChatExtensionConfiguration()
                     {
                         Type = "AzureCognitiveSearch",
                         Parameters = BinaryData.FromObjectAsJson(new
@@ -139,7 +124,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
         Assert.That(response.GetRawResponse(), Is.Not.Null);
 
         ChatRole? streamedRole = null;
-        IEnumerable<ChatMessage> azureContextMessages = null;
+        IEnumerable<ChatResponseMessage> azureContextMessages = null;
         StringBuilder contentBuilder = new();
 
         await foreach (StreamingChatCompletionsUpdate chatUpdate in response)

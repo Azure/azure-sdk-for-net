@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary>
@@ -17,10 +20,19 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of ChatChoice. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
-        internal ChatChoice(int index, CompletionsFinishReason? finishReason)
+        /// <param name="enhancements">
+        /// Represents the output results of Azure OpenAI enhancements to chat completions, as configured via the matching input
+        /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
+        /// request is configured to use enhancements.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="enhancements"/> is null. </exception>
+        internal ChatChoice(int index, CompletionsFinishReason? finishReason, AzureChatEnhancements enhancements)
         {
+            Argument.AssertNotNull(enhancements, nameof(enhancements));
+
             Index = index;
             FinishReason = finishReason;
+            Enhancements = enhancements;
         }
 
         /// <summary> Initializes a new instance of ChatChoice. </summary>
@@ -33,17 +45,23 @@ namespace Azure.AI.OpenAI
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
         /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
         /// </param>
-        internal ChatChoice(ChatMessage message, int index, CompletionsFinishReason? finishReason, ChatMessage internalStreamingDeltaMessage, ContentFilterResults contentFilterResults)
+        /// <param name="enhancements">
+        /// Represents the output results of Azure OpenAI enhancements to chat completions, as configured via the matching input
+        /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
+        /// request is configured to use enhancements.
+        /// </param>
+        internal ChatChoice(ChatResponseMessage message, int index, CompletionsFinishReason? finishReason, ChatResponseMessage internalStreamingDeltaMessage, ContentFilterResultsForChoice contentFilterResults, AzureChatEnhancements enhancements)
         {
             Message = message;
             Index = index;
             FinishReason = finishReason;
             InternalStreamingDeltaMessage = internalStreamingDeltaMessage;
             ContentFilterResults = contentFilterResults;
+            Enhancements = enhancements;
         }
 
         /// <summary> The chat message for a given chat completions prompt. </summary>
-        public ChatMessage Message { get; }
+        public ChatResponseMessage Message { get; }
         /// <summary> The ordered index associated with this chat completions choice. </summary>
         public int Index { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>
@@ -53,6 +71,12 @@ namespace Azure.AI.OpenAI
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
         /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
         /// </summary>
-        public ContentFilterResults ContentFilterResults { get; }
+        public ContentFilterResultsForChoice ContentFilterResults { get; }
+        /// <summary>
+        /// Represents the output results of Azure OpenAI enhancements to chat completions, as configured via the matching input
+        /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
+        /// request is configured to use enhancements.
+        /// </summary>
+        public AzureChatEnhancements Enhancements { get; }
     }
 }

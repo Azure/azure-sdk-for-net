@@ -35,10 +35,9 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 DeploymentName = "gpt-35-turbo-0613",
                 Messages =
                 {
-                    new ChatMessage(
-                        ChatRole.System,
+                    new ChatRequestSystemMessage(
                         "You are a helpful assistant that answers questions about the Contoso product database."),
-                    new ChatMessage(ChatRole.User, "What are the best-selling Contoso products this month?")
+                    new ChatRequestUserMessage("What are the best-selling Contoso products this month?")
                 },
 
                 // The addition of AzureChatExtensionsOptions enables the use of Azure OpenAI capabilities that add to
@@ -51,7 +50,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             };
 
             Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
-            ChatMessage message = response.Value.Choices[0].Message;
+            ChatResponseMessage message = response.Value.Choices[0].Message;
 
             // The final, data-informed response still appears in the ChatMessages as usual
             Console.WriteLine($"{message.Role}: {message.Content}");
@@ -60,7 +59,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             // to explain extension activity and provide supplemental information like citations.
             Console.WriteLine($"Citations and other information:");
 
-            foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
+            foreach (ChatResponseMessage contextMessage in message.AzureExtensionsContext.Messages)
             {
                 // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents
                 // and need to be parsed as such; that step is omitted here for brevity.

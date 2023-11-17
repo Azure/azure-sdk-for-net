@@ -19,11 +19,12 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ChatMessage> message = default;
+            Optional<ChatResponseMessage> message = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            Optional<ChatMessage> delta = default;
-            Optional<ContentFilterResults> contentFilterResults = default;
+            Optional<ChatResponseMessage> delta = default;
+            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
+            AzureChatEnhancements enhancements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -32,7 +33,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    message = ChatMessage.DeserializeChatMessage(property.Value);
+                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -56,7 +57,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    delta = ChatMessage.DeserializeChatMessage(property.Value);
+                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("content_filter_results"u8))
@@ -65,11 +66,16 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResults.DeserializeContentFilterResults(property.Value);
+                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("enhancements"u8))
+                {
+                    enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value);
                     continue;
                 }
             }
-            return new ChatChoice(message.Value, index, finishReason, delta.Value, contentFilterResults.Value);
+            return new ChatChoice(message.Value, index, finishReason, delta.Value, contentFilterResults.Value, enhancements);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

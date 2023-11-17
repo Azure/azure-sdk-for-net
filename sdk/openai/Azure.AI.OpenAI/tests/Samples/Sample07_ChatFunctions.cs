@@ -49,16 +49,16 @@ namespace Azure.AI.OpenAI.Tests.Samples
             #endregion
 
             #region Snippet:ChatFunctions:RequestWithFunctions
-            var conversationMessages = new List<ChatMessage>()
+            var conversationMessages = new List<ChatRequestMessage>()
             {
-                new(ChatRole.User, "What is the weather like in Boston?"),
+                new ChatRequestUserMessage("What is the weather like in Boston?"),
             };
 
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
                 DeploymentName = "gpt-35-turbo-0613",
             };
-            foreach (ChatMessage chatMessage in conversationMessages)
+            foreach (ChatRequestMessage chatMessage in conversationMessages)
             {
                 chatCompletionsOptions.Messages.Add(chatMessage);
             }
@@ -72,7 +72,10 @@ namespace Azure.AI.OpenAI.Tests.Samples
             if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
             {
                 // Include the FunctionCall message in the conversation history
-                conversationMessages.Add(responseChoice.Message);
+                conversationMessages.Add(new ChatRequestAssistantMessage(responseChoice.Message.Content)
+                {
+                    FunctionCall = responseChoice.Message.FunctionCall,
+                });
 
                 if (responseChoice.Message.FunctionCall.Name == "get_current_weather")
                 {
@@ -87,14 +90,11 @@ namespace Azure.AI.OpenAI.Tests.Samples
                     };
                     // Serialize the result data from the function into a new chat message with the 'Function' role,
                     // then add it to the messages after the first User message and initial response FunctionCall
-                    var functionResponseMessage = new ChatMessage(
-                        ChatRole.Function,
-                        JsonSerializer.Serialize(
+                    var functionResponseMessage = new ChatRequestFunctionMessage(
+                        name: responseChoice.Message.FunctionCall.Name,
+                        arguments: JsonSerializer.Serialize(
                             functionResultData,
-                            new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }))
-                    {
-                        Name = responseChoice.Message.FunctionCall.Name
-                    };
+                            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
                     conversationMessages.Add(functionResponseMessage);
                     // Now make a new request using all three messages in conversationMessages
                 }
@@ -122,7 +122,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             {
                 string lastContent = contentBuilder.ToString();
                 string unvalidatedArguments = functionArgumentsBuilder.ToString();
-                ChatMessage chatMessageForHistory = new(streamedRole, lastContent)
+                ChatRequestAssistantMessage chatMessageForHistory = new(contentBuilder.ToString())
                 {
                     FunctionCall = new(functionName, unvalidatedArguments),
                 };

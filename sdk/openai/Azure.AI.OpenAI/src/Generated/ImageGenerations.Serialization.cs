@@ -9,11 +9,27 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ImageGenerations
+    public partial class ImageGenerations : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("created"u8);
+            writer.WriteNumberValue(Created, "U");
+            writer.WritePropertyName("data"u8);
+            writer.WriteStartArray();
+            foreach (var item in Data)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+        }
+
         internal static ImageGenerations DeserializeImageGenerations(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -21,7 +37,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             DateTimeOffset created = default;
-            IReadOnlyList<ImageLocation> data = default;
+            IList<ImageGenerationData> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("created"u8))
@@ -31,7 +47,12 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    DeserializeDataProperty(property, ref data);
+                    List<ImageGenerationData> array = new List<ImageGenerationData>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ImageGenerationData.DeserializeImageGenerationData(item));
+                    }
+                    data = array;
                     continue;
                 }
             }
@@ -44,6 +65,14 @@ namespace Azure.AI.OpenAI
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeImageGenerations(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

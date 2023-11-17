@@ -603,7 +603,7 @@ namespace Azure.AI.OpenAI
                 Response rawResponse = default;
                 ImageGenerations responseValue = default;
 
-                if (_isConfiguredForAzureOpenAI)
+                if (_isConfiguredForAzureOpenAI && string.IsNullOrEmpty(imageGenerationOptions.DeploymentName))
                 {
                     Operation<ImageGenerations> imagesOperation
                         = BeginAzureBatchImageGeneration(

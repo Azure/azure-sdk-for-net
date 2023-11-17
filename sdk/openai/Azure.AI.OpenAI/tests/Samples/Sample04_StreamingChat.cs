@@ -21,10 +21,10 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
                 Messages =
                 {
-                    new ChatMessage(ChatRole.System, "You are a helpful assistant. You will talk like a pirate."),
-                    new ChatMessage(ChatRole.User, "Can you help me?"),
-                    new ChatMessage(ChatRole.Assistant, "Arrrr! Of course, me hearty! What can I do for ye?"),
-                    new ChatMessage(ChatRole.User, "What's the best way to train a parrot?"),
+                    new ChatRequestSystemMessage("You are a helpful assistant. You will talk like a pirate."),
+                    new ChatRequestUserMessage("Can you help me?"),
+                    new ChatRequestAssistantMessage("Arrrr! Of course, me hearty! What can I do for ye?"),
+                    new ChatRequestUserMessage("What's the best way to train a parrot?"),
                 }
             };
 
@@ -55,7 +55,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             // same response. This may be useful when choosing between multiple candidates for a single request.
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
-                Messages = { new ChatMessage(ChatRole.User, "Write a limerick about bananas.") },
+                Messages = { new ChatRequestUserMessage("Write a limerick about bananas.") },
                 ChoiceCount = 4
             };
 
