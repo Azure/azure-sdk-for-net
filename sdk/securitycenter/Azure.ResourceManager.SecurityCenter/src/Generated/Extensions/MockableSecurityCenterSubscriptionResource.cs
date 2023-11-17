@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MdeOnboarding"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MdeOnboarding> GetMdeOnboardingsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MdeOnboardingsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MdeOnboarding"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MdeOnboarding> GetMdeOnboardings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MdeOnboardingsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignmentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignments(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotSecuritySolutionResource> GetIotSecuritySolutionsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotSecuritySolutionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotSecuritySolutionResource> GetIotSecuritySolutions(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotSecuritySolutionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityTaskData> GetTasksAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TasksRestClient.CreateListRequest(Id.SubscriptionId, filter);
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityTaskData> GetTasks(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TasksRestClient.CreateListRequest(Id.SubscriptionId, filter);
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAutomationResource> GetSecurityAutomationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAutomationAutomationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAutomationResource> GetSecurityAutomations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAutomationAutomationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1140,7 +1140,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="includePathRecommendations"> Include the policy rules. </param>
         /// <param name="summary"> Return output in a summarized form. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AdaptiveApplicationControlGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.CreateListRequest(Id.SubscriptionId, includePathRecommendations, summary);
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="includePathRecommendations"> Include the policy rules. </param>
         /// <param name="summary"> Return output in a summarized form. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AdaptiveApplicationControlGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.CreateListRequest(Id.SubscriptionId, includePathRecommendations, summary);
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AllowedConnectionsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1206,7 +1206,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCenterAllowedConnection> GetAllowedConnections(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AllowedConnectionsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityTopologyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityTopologyResource> GetTopologiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TopologyRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityTopologyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityTopologyResource> GetTopologies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TopologyRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1316,7 +1316,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiscoveredSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoveredSecuritySolutionsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoveredSecuritySolutionsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => securitySolutionsReferenceDataRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1381,7 +1381,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecuritySolutionsReferenceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceData(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => securitySolutionsReferenceDataRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExternalSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExternalSecuritySolutionsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1424,7 +1424,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExternalSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExternalSecuritySolution> GetExternalSecuritySolutions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExternalSecuritySolutionsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1447,7 +1447,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlsRestClient.CreateListRequest(Id.SubscriptionId, expand);
@@ -1470,7 +1470,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecureScoreControlDetails> GetSecureScoreControls(SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlsRestClient.CreateListRequest(Id.SubscriptionId, expand);
@@ -1492,7 +1492,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1514,7 +1514,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscription(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1536,7 +1536,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecuritySolution> GetSecuritySolutionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySolutionsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1558,7 +1558,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecuritySolution> GetSecuritySolutions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySolutionsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAlertData> GetAlertsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1602,7 +1602,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAlertData> GetAlerts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1624,7 +1624,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SoftwareInventoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SoftwareInventoryResource> GetSoftwareInventoriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SoftwareInventoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1646,7 +1646,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SoftwareInventoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SoftwareInventoryResource> GetSoftwareInventories(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SoftwareInventoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityConnectorResource> GetSecurityConnectorsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityConnectorRestClient.CreateListRequest(Id.SubscriptionId);
@@ -1690,7 +1690,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityConnectorResource> GetSecurityConnectors(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityConnectorRestClient.CreateListRequest(Id.SubscriptionId);

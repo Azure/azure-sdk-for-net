@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityCenterPricingResource" /> and their operations.
-    /// Each <see cref="SecurityCenterPricingResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityCenterPricingCollection" /> instance call the GetSecurityCenterPricings method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityCenterPricingResource"/> and their operations.
+    /// Each <see cref="SecurityCenterPricingResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityCenterPricingCollection"/> instance call the GetSecurityCenterPricings method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityCenterPricingCollection : ArmCollection, IEnumerable<SecurityCenterPricingResource>, IAsyncEnumerable<SecurityCenterPricingResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCenterPricingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityCenterPricingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCenterPricingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterPricingPricingsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterPricingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityCenterPricingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCenterPricingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterPricingPricingsRestClient.CreateListRequest(Id.SubscriptionId);

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityAlertsSuppressionRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityAlertsSuppressionRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityAlertsSuppressionRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecurityAlertsSuppressionRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityAlertsSuppressionRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityAlertsSuppressionRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityAlertsSuppressionRule method.
     /// </summary>
     public partial class SecurityAlertsSuppressionRuleResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityAlertsSuppressionRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityAlertsSuppressionRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityAlertsSuppressionRuleResource(ArmClient client, SecurityAlertsSuppressionRuleData data) : this(client, data.Id)

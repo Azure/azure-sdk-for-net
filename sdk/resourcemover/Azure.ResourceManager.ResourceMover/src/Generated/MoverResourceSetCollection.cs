@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ResourceMover
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MoverResourceSetResource" /> and their operations.
-    /// Each <see cref="MoverResourceSetResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="MoverResourceSetCollection" /> instance call the GetMoverResourceSets method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="MoverResourceSetResource"/> and their operations.
+    /// Each <see cref="MoverResourceSetResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="MoverResourceSetCollection"/> instance call the GetMoverResourceSets method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class MoverResourceSetCollection : ArmCollection, IEnumerable<MoverResourceSetResource>, IAsyncEnumerable<MoverResourceSetResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MoverResourceSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverResourceSetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MoverResourceSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverResourceSetResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

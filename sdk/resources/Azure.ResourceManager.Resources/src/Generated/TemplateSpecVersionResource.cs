@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a TemplateSpecVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TemplateSpecVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTemplateSpecVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TemplateSpecResource" /> using the GetTemplateSpecVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TemplateSpecVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTemplateSpecVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TemplateSpecResource"/> using the GetTemplateSpecVersion method.
     /// </summary>
     public partial class TemplateSpecVersionResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TemplateSpecVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TemplateSpecVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TemplateSpecVersionResource(ArmClient client, TemplateSpecVersionData data) : this(client, data.Id)

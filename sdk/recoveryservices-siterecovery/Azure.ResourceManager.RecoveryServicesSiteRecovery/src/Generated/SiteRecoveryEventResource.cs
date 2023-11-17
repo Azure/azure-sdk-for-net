@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryEvent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryEventResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryEventResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteRecoveryEvent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryEventResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryEventResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteRecoveryEvent method.
     /// </summary>
     public partial class SiteRecoveryEventResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryEventResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryEventResource(ArmClient client, SiteRecoveryEventData data) : this(client, data.Id)

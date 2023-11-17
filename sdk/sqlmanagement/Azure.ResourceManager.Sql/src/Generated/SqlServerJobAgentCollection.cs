@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerJobAgentResource" /> and their operations.
-    /// Each <see cref="SqlServerJobAgentResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SqlServerJobAgentCollection" /> instance call the GetSqlServerJobAgents method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SqlServerJobAgentResource"/> and their operations.
+    /// Each <see cref="SqlServerJobAgentResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SqlServerJobAgentCollection"/> instance call the GetSqlServerJobAgents method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SqlServerJobAgentCollection : ArmCollection, IEnumerable<SqlServerJobAgentResource>, IAsyncEnumerable<SqlServerJobAgentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobAgentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerJobAgentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobAgentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobAgentJobAgentsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobAgentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobAgentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobAgentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobAgentJobAgentsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

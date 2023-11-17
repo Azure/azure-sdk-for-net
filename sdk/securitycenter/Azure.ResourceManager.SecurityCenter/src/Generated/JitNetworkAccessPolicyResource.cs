@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a JitNetworkAccessPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JitNetworkAccessPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetJitNetworkAccessPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetJitNetworkAccessPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JitNetworkAccessPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetJitNetworkAccessPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetJitNetworkAccessPolicy method.
     /// </summary>
     public partial class JitNetworkAccessPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "JitNetworkAccessPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JitNetworkAccessPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal JitNetworkAccessPolicyResource(ArmClient client, JitNetworkAccessPolicyData data) : this(client, data.Id)
