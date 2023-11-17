@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryResource"/> object. </returns>
         public static DataFactoryResource GetDataFactoryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryIntegrationRuntimeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryIntegrationRuntimeResource"/> object. </returns>
         public static DataFactoryIntegrationRuntimeResource GetDataFactoryIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryLinkedServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryLinkedServiceResource"/> object. </returns>
         public static DataFactoryLinkedServiceResource GetDataFactoryLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryDatasetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryDatasetResource"/> object. </returns>
         public static DataFactoryDatasetResource GetDataFactoryDatasetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryPipelineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryPipelineResource"/> object. </returns>
         public static DataFactoryPipelineResource GetDataFactoryPipelineResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryTriggerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryTriggerResource"/> object. </returns>
         public static DataFactoryTriggerResource GetDataFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryDataFlowResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryDataFlowResource"/> object. </returns>
         public static DataFactoryDataFlowResource GetDataFactoryDataFlowResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryManagedVirtualNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryManagedVirtualNetworkResource"/> object. </returns>
         public static DataFactoryManagedVirtualNetworkResource GetDataFactoryManagedVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryPrivateEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryPrivateEndpointResource"/> object. </returns>
         public static DataFactoryPrivateEndpointResource GetDataFactoryPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryManagedIdentityCredentialResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryManagedIdentityCredentialResource"/> object. </returns>
         public static DataFactoryManagedIdentityCredentialResource GetDataFactoryManagedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryPrivateEndpointConnectionResource"/> object. </returns>
         public static DataFactoryPrivateEndpointConnectionResource GetDataFactoryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryGlobalParameterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryGlobalParameterResource"/> object. </returns>
         public static DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryChangeDataCaptureResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataFactoryChangeDataCaptureResource"/> object. </returns>
         public static DataFactoryChangeDataCaptureResource GetDataFactoryChangeDataCaptureResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataFactoryResource> GetDataFactoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataFactoryResource> GetDataFactories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

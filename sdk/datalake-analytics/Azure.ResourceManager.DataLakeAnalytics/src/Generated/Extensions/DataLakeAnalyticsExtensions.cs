@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsAccountResource"/> object. </returns>
         public static DataLakeAnalyticsAccountResource GetDataLakeAnalyticsAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataLakeStoreAccountInformationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeStoreAccountInformationResource"/> object. </returns>
         public static DataLakeStoreAccountInformationResource GetDataLakeStoreAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource"/> object. </returns>
         public static DataLakeAnalyticsStorageAccountInformationResource GetDataLakeAnalyticsStorageAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource"/> object. </returns>
         public static DataLakeAnalyticsStorageContainerResource GetDataLakeAnalyticsStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource"/> object. </returns>
         public static DataLakeAnalyticsComputePolicyResource GetDataLakeAnalyticsComputePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource"/> object. </returns>
         public static DataLakeAnalyticsFirewallRuleResource GetDataLakeAnalyticsFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeAnalyticsAccountBasic> GetAccountsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeAnalyticsAccountBasic> GetAccounts(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

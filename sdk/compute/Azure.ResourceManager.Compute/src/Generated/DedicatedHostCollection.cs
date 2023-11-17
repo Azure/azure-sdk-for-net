@@ -21,9 +21,9 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DedicatedHostResource" /> and their operations.
-    /// Each <see cref="DedicatedHostResource" /> in the collection will belong to the same instance of <see cref="DedicatedHostGroupResource" />.
-    /// To get a <see cref="DedicatedHostCollection" /> instance call the GetDedicatedHosts method from an instance of <see cref="DedicatedHostGroupResource" />.
+    /// A class representing a collection of <see cref="DedicatedHostResource"/> and their operations.
+    /// Each <see cref="DedicatedHostResource"/> in the collection will belong to the same instance of <see cref="DedicatedHostGroupResource"/>.
+    /// To get a <see cref="DedicatedHostCollection"/> instance call the GetDedicatedHosts method from an instance of <see cref="DedicatedHostGroupResource"/>.
     /// </summary>
     public partial class DedicatedHostCollection : ArmCollection, IEnumerable<DedicatedHostResource>, IAsyncEnumerable<DedicatedHostResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedHostResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DedicatedHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DedicatedHostResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHostRestClient.CreateListByHostGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedHostResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DedicatedHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DedicatedHostResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHostRestClient.CreateListByHostGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

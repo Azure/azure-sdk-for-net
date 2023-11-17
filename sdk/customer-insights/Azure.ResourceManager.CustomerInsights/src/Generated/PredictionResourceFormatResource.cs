@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a PredictionResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PredictionResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPredictionResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetPredictionResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PredictionResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPredictionResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetPredictionResourceFormat method.
     /// </summary>
     public partial class PredictionResourceFormatResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PredictionResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PredictionResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PredictionResourceFormatResource(ArmClient client, PredictionResourceFormatData data) : this(client, data.Id)

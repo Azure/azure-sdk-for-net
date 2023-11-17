@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeJobResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeJobResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource" />.
-    /// To get a <see cref="DataBoxEdgeJobCollection" /> instance call the GetDataBoxEdgeJobs method from an instance of <see cref="DataBoxEdgeDeviceResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeJobResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeJobResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource"/>.
+    /// To get a <see cref="DataBoxEdgeJobCollection"/> instance call the GetDataBoxEdgeJobs method from an instance of <see cref="DataBoxEdgeDeviceResource"/>.
     /// </summary>
     public partial class DataBoxEdgeJobCollection : ArmCollection
     {
