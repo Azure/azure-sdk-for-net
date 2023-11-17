@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InitialReplicationDetails
+    public partial class InitialReplicationDetails : IUtf8JsonSerializable, IJsonModel<InitialReplicationDetails>
     {
-        internal static InitialReplicationDetails DeserializeInitialReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InitialReplicationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InitialReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InitialReplicationDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InitialReplicationDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(InitialReplicationType))
+            {
+                writer.WritePropertyName("initialReplicationType"u8);
+                writer.WriteStringValue(InitialReplicationType);
+            }
+            if (Optional.IsDefined(InitialReplicationProgressPercentage))
+            {
+                writer.WritePropertyName("initialReplicationProgressPercentage"u8);
+                writer.WriteStringValue(InitialReplicationProgressPercentage);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InitialReplicationDetails IJsonModel<InitialReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInitialReplicationDetails(document.RootElement, options);
+        }
+
+        internal static InitialReplicationDetails DeserializeInitialReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> initialReplicationType = default;
             Optional<string> initialReplicationProgressPercentage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialReplicationType"u8))
@@ -32,8 +90,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     initialReplicationProgressPercentage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InitialReplicationDetails(initialReplicationType.Value, initialReplicationProgressPercentage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InitialReplicationDetails(initialReplicationType.Value, initialReplicationProgressPercentage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InitialReplicationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InitialReplicationDetails IPersistableModel<InitialReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInitialReplicationDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<InitialReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

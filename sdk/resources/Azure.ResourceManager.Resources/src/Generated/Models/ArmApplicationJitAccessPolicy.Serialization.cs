@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationJitAccessPolicy : IUtf8JsonSerializable
+    public partial class ArmApplicationJitAccessPolicy : IUtf8JsonSerializable, IJsonModel<ArmApplicationJitAccessPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationJitAccessPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArmApplicationJitAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ArmApplicationJitAccessPolicy>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("jitAccessEnabled"u8);
             writer.WriteBooleanValue(JitAccessEnabled);
@@ -39,11 +48,40 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("maximumJitAccessDuration"u8);
                 writer.WriteStringValue(MaximumJitAccessDuration.Value, "P");
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmApplicationJitAccessPolicy DeserializeArmApplicationJitAccessPolicy(JsonElement element)
+        ArmApplicationJitAccessPolicy IJsonModel<ArmApplicationJitAccessPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmApplicationJitAccessPolicy(document.RootElement, options);
+        }
+
+        internal static ArmApplicationJitAccessPolicy DeserializeArmApplicationJitAccessPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +90,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<JitApprovalMode> jitApprovalMode = default;
             Optional<IList<JitApprover>> jitApprovers = default;
             Optional<TimeSpan> maximumJitAccessDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jitAccessEnabled"u8))
@@ -91,8 +131,38 @@ namespace Azure.ResourceManager.Resources.Models
                     maximumJitAccessDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), Optional.ToList(jitApprovers), Optional.ToNullable(maximumJitAccessDuration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), Optional.ToList(jitApprovers), Optional.ToNullable(maximumJitAccessDuration), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArmApplicationJitAccessPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ArmApplicationJitAccessPolicy IPersistableModel<ArmApplicationJitAccessPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeArmApplicationJitAccessPolicy(document.RootElement, options);
+        }
+
+        string IPersistableModel<ArmApplicationJitAccessPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

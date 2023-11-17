@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Job custom data details. </summary>
     public partial class SiteRecoveryJobProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobProperties"/>. </summary>
         internal SiteRecoveryJobProperties()
         {
             Tasks = new ChangeTrackingList<AsrTask>();
@@ -22,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AllowedActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobProperties"/>. </summary>
         /// <param name="activityId"> The activity id. </param>
         /// <param name="scenarioName"> The ScenarioName. </param>
         /// <param name="friendlyName"> The DisplayName. </param>
@@ -41,7 +73,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="SiteRecoveryJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
         /// </param>
-        internal SiteRecoveryJobProperties(string activityId, string scenarioName, string friendlyName, string state, string stateDescription, IReadOnlyList<AsrTask> tasks, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string targetObjectId, string targetObjectName, string targetInstanceType, SiteRecoveryJobDetails customDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobProperties(string activityId, string scenarioName, string friendlyName, string state, string stateDescription, IReadOnlyList<AsrTask> tasks, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string targetObjectId, string targetObjectName, string targetInstanceType, SiteRecoveryJobDetails customDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActivityId = activityId;
             ScenarioName = scenarioName;
@@ -57,6 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetObjectName = targetObjectName;
             TargetInstanceType = targetInstanceType;
             CustomDetails = customDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The activity id. </summary>

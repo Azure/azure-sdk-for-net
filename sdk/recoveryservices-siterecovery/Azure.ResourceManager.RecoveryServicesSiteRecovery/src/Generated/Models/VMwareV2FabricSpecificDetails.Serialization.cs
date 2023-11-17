@@ -5,16 +5,124 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareV2FabricSpecificDetails
+    public partial class VMwareV2FabricSpecificDetails : IUtf8JsonSerializable, IJsonModel<VMwareV2FabricSpecificDetails>
     {
-        internal static VMwareV2FabricSpecificDetails DeserializeVMwareV2FabricSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareV2FabricSpecificDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VMwareV2FabricSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VMwareV2FabricSpecificDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VMwareV2FabricSpecificDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VMwareSiteId))
+                {
+                    writer.WritePropertyName("vmwareSiteId"u8);
+                    writer.WriteStringValue(VMwareSiteId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PhysicalSiteId))
+                {
+                    writer.WritePropertyName("physicalSiteId"u8);
+                    writer.WriteStringValue(PhysicalSiteId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MigrationSolutionId))
+                {
+                    writer.WritePropertyName("migrationSolutionId"u8);
+                    writer.WriteStringValue(MigrationSolutionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceEndpoint))
+                {
+                    writer.WritePropertyName("serviceEndpoint"u8);
+                    writer.WriteStringValue(ServiceEndpoint);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceResourceId))
+                {
+                    writer.WritePropertyName("serviceResourceId"u8);
+                    writer.WriteStringValue(ServiceResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceContainerId))
+                {
+                    writer.WritePropertyName("serviceContainerId"u8);
+                    writer.WriteStringValue(ServiceContainerId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ProcessServers))
+                {
+                    writer.WritePropertyName("processServers"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ProcessServers)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VMwareV2FabricSpecificDetails IJsonModel<VMwareV2FabricSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareV2FabricSpecificDetails(document.RootElement, options);
+        }
+
+        internal static VMwareV2FabricSpecificDetails DeserializeVMwareV2FabricSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +135,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> serviceContainerId = default;
             Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmwareSiteId"u8))
@@ -94,8 +204,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareV2FabricSpecificDetails(instanceType, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Optional.ToList(processServers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VMwareV2FabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Optional.ToList(processServers));
         }
+
+        BinaryData IPersistableModel<VMwareV2FabricSpecificDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VMwareV2FabricSpecificDetails IPersistableModel<VMwareV2FabricSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVMwareV2FabricSpecificDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<VMwareV2FabricSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtUpdateDiskContent : IUtf8JsonSerializable
+    public partial class VMwareCbtUpdateDiskContent : IUtf8JsonSerializable, IJsonModel<VMwareCbtUpdateDiskContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtUpdateDiskContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VMwareCbtUpdateDiskContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VMwareCbtUpdateDiskContent>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VMwareCbtUpdateDiskContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
@@ -27,7 +38,98 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VMwareCbtUpdateDiskContent IJsonModel<VMwareCbtUpdateDiskContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtUpdateDiskContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtUpdateDiskContent(document.RootElement, options);
+        }
+
+        internal static VMwareCbtUpdateDiskContent DeserializeVMwareCbtUpdateDiskContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string diskId = default;
+            Optional<string> targetDiskName = default;
+            Optional<string> isOSDisk = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("diskId"u8))
+                {
+                    diskId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetDiskName"u8))
+                {
+                    targetDiskName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isOSDisk"u8))
+                {
+                    isOSDisk = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VMwareCbtUpdateDiskContent(diskId, targetDiskName.Value, isOSDisk.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<VMwareCbtUpdateDiskContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtUpdateDiskContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VMwareCbtUpdateDiskContent IPersistableModel<VMwareCbtUpdateDiskContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtUpdateDiskContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVMwareCbtUpdateDiskContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<VMwareCbtUpdateDiskContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

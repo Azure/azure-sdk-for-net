@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Encryption details for the fabric. </summary>
     public partial class SiteRecoveryEncryptionDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEncryptionDetails"/>. </summary>
         internal SiteRecoveryEncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEncryptionDetails"/>. </summary>
         /// <param name="kekState"> The key encryption key state for the Vmm. </param>
         /// <param name="kekCertThumbprint"> The key encryption key certificate thumbprint. </param>
         /// <param name="kekCertExpireOn"> The key encryption key certificate expiry date. </param>
-        internal SiteRecoveryEncryptionDetails(string kekState, string kekCertThumbprint, DateTimeOffset? kekCertExpireOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryEncryptionDetails(string kekState, string kekCertThumbprint, DateTimeOffset? kekCertExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KekState = kekState;
             KekCertThumbprint = kekCertThumbprint;
             KekCertExpireOn = kekCertExpireOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The key encryption key state for the Vmm. </summary>

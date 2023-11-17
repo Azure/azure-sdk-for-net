@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class PartitionSchemeDescription : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownPartitionSchemeDescription))]
+    public partial class PartitionSchemeDescription : IUtf8JsonSerializable, IJsonModel<PartitionSchemeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartitionSchemeDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PartitionSchemeDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PartitionSchemeDescription>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PartitionSchemeDescription>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("partitionScheme"u8);
             writer.WriteStringValue(PartitionScheme.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PartitionSchemeDescription DeserializePartitionSchemeDescription(JsonElement element)
+        PartitionSchemeDescription IJsonModel<PartitionSchemeDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartitionSchemeDescription(document.RootElement, options);
+        }
+
+        internal static PartitionSchemeDescription DeserializePartitionSchemeDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +77,30 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             return UnknownPartitionSchemeDescription.DeserializeUnknownPartitionSchemeDescription(element);
         }
+
+        BinaryData IPersistableModel<PartitionSchemeDescription>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PartitionSchemeDescription IPersistableModel<PartitionSchemeDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartitionSchemeDescription)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePartitionSchemeDescription(document.RootElement, options);
+        }
+
+        string IPersistableModel<PartitionSchemeDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

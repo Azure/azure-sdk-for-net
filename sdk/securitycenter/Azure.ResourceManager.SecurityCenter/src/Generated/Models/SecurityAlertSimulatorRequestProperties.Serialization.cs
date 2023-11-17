@@ -5,15 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAlertSimulatorRequestProperties : IUtf8JsonSerializable
+    public partial class SecurityAlertSimulatorRequestProperties : IUtf8JsonSerializable, IJsonModel<SecurityAlertSimulatorRequestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAlertSimulatorRequestProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityAlertSimulatorRequestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityAlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityAlertSimulatorRequestProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -31,5 +41,60 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WriteEndObject();
         }
+
+        SecurityAlertSimulatorRequestProperties IJsonModel<SecurityAlertSimulatorRequestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAlertSimulatorRequestProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAlertSimulatorRequestProperties(document.RootElement, options);
+        }
+
+        internal static SecurityAlertSimulatorRequestProperties DeserializeSecurityAlertSimulatorRequestProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Bundles": return SecurityAlertSimulatorBundlesRequestProperties.DeserializeSecurityAlertSimulatorBundlesRequestProperties(element);
+                }
+            }
+            return UnknownAlertSimulatorRequestProperties.DeserializeUnknownAlertSimulatorRequestProperties(element);
+        }
+
+        BinaryData IPersistableModel<SecurityAlertSimulatorRequestProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAlertSimulatorRequestProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityAlertSimulatorRequestProperties IPersistableModel<SecurityAlertSimulatorRequestProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAlertSimulatorRequestProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityAlertSimulatorRequestProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityAlertSimulatorRequestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

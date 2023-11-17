@@ -5,15 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsThreatIntelligence
+    public partial class SecurityInsightsThreatIntelligence : IUtf8JsonSerializable, IJsonModel<SecurityInsightsThreatIntelligence>
     {
-        internal static SecurityInsightsThreatIntelligence DeserializeSecurityInsightsThreatIntelligence(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsThreatIntelligence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInsightsThreatIntelligence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityInsightsThreatIntelligence>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityInsightsThreatIntelligence>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Confidence))
+                {
+                    writer.WritePropertyName("confidence"u8);
+                    writer.WriteNumberValue(Confidence.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProviderName))
+                {
+                    writer.WritePropertyName("providerName"u8);
+                    writer.WriteStringValue(ProviderName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ReportLink))
+                {
+                    writer.WritePropertyName("reportLink"u8);
+                    writer.WriteStringValue(ReportLink);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThreatDescription))
+                {
+                    writer.WritePropertyName("threatDescription"u8);
+                    writer.WriteStringValue(ThreatDescription);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThreatName))
+                {
+                    writer.WritePropertyName("threatName"u8);
+                    writer.WriteStringValue(ThreatName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThreatType))
+                {
+                    writer.WritePropertyName("threatType"u8);
+                    writer.WriteStringValue(ThreatType);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SecurityInsightsThreatIntelligence IJsonModel<SecurityInsightsThreatIntelligence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsThreatIntelligence(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsThreatIntelligence DeserializeSecurityInsightsThreatIntelligence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +118,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> threatDescription = default;
             Optional<string> threatName = default;
             Optional<string> threatType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confidence"u8))
@@ -60,8 +156,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     threatType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsThreatIntelligence(Optional.ToNullable(confidence), providerName.Value, reportLink.Value, threatDescription.Value, threatName.Value, threatType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityInsightsThreatIntelligence(Optional.ToNullable(confidence), providerName.Value, reportLink.Value, threatDescription.Value, threatName.Value, threatType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityInsightsThreatIntelligence>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityInsightsThreatIntelligence IPersistableModel<SecurityInsightsThreatIntelligence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsThreatIntelligence(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityInsightsThreatIntelligence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

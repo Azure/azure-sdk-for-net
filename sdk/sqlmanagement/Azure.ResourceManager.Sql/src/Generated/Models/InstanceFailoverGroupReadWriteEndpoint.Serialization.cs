@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class InstanceFailoverGroupReadWriteEndpoint : IUtf8JsonSerializable
+    public partial class InstanceFailoverGroupReadWriteEndpoint : IUtf8JsonSerializable, IJsonModel<InstanceFailoverGroupReadWriteEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceFailoverGroupReadWriteEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InstanceFailoverGroupReadWriteEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InstanceFailoverGroupReadWriteEndpoint>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("failoverPolicy"u8);
             writer.WriteStringValue(FailoverPolicy.ToString());
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("failoverWithDataLossGracePeriodMinutes"u8);
                 writer.WriteNumberValue(FailoverWithDataLossGracePeriodMinutes.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InstanceFailoverGroupReadWriteEndpoint DeserializeInstanceFailoverGroupReadWriteEndpoint(JsonElement element)
+        InstanceFailoverGroupReadWriteEndpoint IJsonModel<InstanceFailoverGroupReadWriteEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadWriteEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceFailoverGroupReadWriteEndpoint(document.RootElement, options);
+        }
+
+        internal static InstanceFailoverGroupReadWriteEndpoint DeserializeInstanceFailoverGroupReadWriteEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ReadWriteEndpointFailoverPolicy failoverPolicy = default;
             Optional<int> failoverWithDataLossGracePeriodMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failoverPolicy"u8))
@@ -49,8 +91,38 @@ namespace Azure.ResourceManager.Sql.Models
                     failoverWithDataLossGracePeriodMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, Optional.ToNullable(failoverWithDataLossGracePeriodMinutes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, Optional.ToNullable(failoverWithDataLossGracePeriodMinutes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadWriteEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InstanceFailoverGroupReadWriteEndpoint IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadWriteEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInstanceFailoverGroupReadWriteEndpoint(document.RootElement, options);
+        }
+
+        string IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

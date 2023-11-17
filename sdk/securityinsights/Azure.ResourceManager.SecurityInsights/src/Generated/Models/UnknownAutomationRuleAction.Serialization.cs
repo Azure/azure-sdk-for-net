@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class UnknownAutomationRuleAction : IUtf8JsonSerializable
+    internal partial class UnknownAutomationRuleAction : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAutomationRuleAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAutomationRuleAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInsightsAutomationRuleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityInsightsAutomationRuleAction>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityInsightsAutomationRuleAction>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAutomationRuleAction DeserializeUnknownAutomationRuleAction(JsonElement element)
+        SecurityInsightsAutomationRuleAction IJsonModel<SecurityInsightsAutomationRuleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAutomationRuleAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAutomationRuleAction(document.RootElement, options);
+        }
+
+        internal static UnknownAutomationRuleAction DeserializeUnknownAutomationRuleAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int order = default;
             ActionType actionType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("order"u8))
@@ -42,8 +84,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     actionType = new ActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownAutomationRuleAction(order, actionType);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownAutomationRuleAction(order, actionType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityInsightsAutomationRuleAction>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAutomationRuleAction)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityInsightsAutomationRuleAction IPersistableModel<SecurityInsightsAutomationRuleAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAutomationRuleAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownAutomationRuleAction(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityInsightsAutomationRuleAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

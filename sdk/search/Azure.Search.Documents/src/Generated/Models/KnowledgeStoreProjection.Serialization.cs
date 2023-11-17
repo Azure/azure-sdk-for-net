@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeStoreProjection : IUtf8JsonSerializable
+    public partial class KnowledgeStoreProjection : IUtf8JsonSerializable, IJsonModel<KnowledgeStoreProjection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeStoreProjection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KnowledgeStoreProjection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<KnowledgeStoreProjection>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<KnowledgeStoreProjection>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tables))
             {
@@ -46,11 +56,40 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KnowledgeStoreProjection DeserializeKnowledgeStoreProjection(JsonElement element)
+        KnowledgeStoreProjection IJsonModel<KnowledgeStoreProjection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KnowledgeStoreProjection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKnowledgeStoreProjection(document.RootElement, options);
+        }
+
+        internal static KnowledgeStoreProjection DeserializeKnowledgeStoreProjection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +97,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<KnowledgeStoreTableProjectionSelector>> tables = default;
             Optional<IList<KnowledgeStoreObjectProjectionSelector>> objects = default;
             Optional<IList<KnowledgeStoreFileProjectionSelector>> files = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))
@@ -102,8 +143,38 @@ namespace Azure.Search.Documents.Indexes.Models
                     files = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KnowledgeStoreProjection(Optional.ToList(tables), Optional.ToList(objects), Optional.ToList(files));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KnowledgeStoreProjection(Optional.ToList(tables), Optional.ToList(objects), Optional.ToList(files), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KnowledgeStoreProjection>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KnowledgeStoreProjection)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KnowledgeStoreProjection IPersistableModel<KnowledgeStoreProjection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KnowledgeStoreProjection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKnowledgeStoreProjection(document.RootElement, options);
+        }
+
+        string IPersistableModel<KnowledgeStoreProjection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

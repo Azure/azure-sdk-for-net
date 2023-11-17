@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationRecoveryPointRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationRecoveryPointResource(Client, DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(e)), _dataReplicationRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "DataReplicationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationRecoveryPointResource(Client, DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(e)), _dataReplicationRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "DataReplicationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationRecoveryPointRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationRecoveryPointResource(Client, DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(e)), _dataReplicationRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "DataReplicationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationRecoveryPointResource(Client, DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(e)), _dataReplicationRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "DataReplicationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

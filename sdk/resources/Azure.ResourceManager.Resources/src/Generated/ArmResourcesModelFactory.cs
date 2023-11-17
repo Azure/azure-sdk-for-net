@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourcesModelFactory
     {
-        /// <summary> Initializes a new instance of TemplateSpecData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.TemplateSpecData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,20 +35,20 @@ namespace Azure.ResourceManager.Resources.Models
             tags ??= new Dictionary<string, string>();
             versions ??= new Dictionary<string, TemplateSpecVersionInfo>();
 
-            return new TemplateSpecData(id, name, resourceType, systemData, location, tags, description, displayName, metadata, versions);
+            return new TemplateSpecData(id, name, resourceType, systemData, location, tags, description, displayName, metadata, versions, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecVersionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecVersionInfo"/>. </summary>
         /// <param name="description"> Template Spec version description. </param>
         /// <param name="timeCreated"> The timestamp of when the version was created. </param>
         /// <param name="timeModified"> The timestamp of when the version was last modified. </param>
         /// <returns> A new <see cref="Models.TemplateSpecVersionInfo"/> instance for mocking. </returns>
         public static TemplateSpecVersionInfo TemplateSpecVersionInfo(string description = null, DateTimeOffset? timeCreated = null, DateTimeOffset? timeModified = null)
         {
-            return new TemplateSpecVersionInfo(description, timeCreated, timeModified);
+            return new TemplateSpecVersionInfo(description, timeCreated, timeModified, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TemplateSpecPatch(id, name, resourceType, systemData, tags);
+            return new TemplateSpecPatch(id, name, resourceType, systemData, tags, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.TemplateSpecVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Resources.Models
             tags ??= new Dictionary<string, string>();
             linkedTemplates ??= new List<LinkedTemplateArtifact>();
 
-            return new TemplateSpecVersionData(id, name, resourceType, systemData, location, tags, description, linkedTemplates?.ToList(), metadata, mainTemplate, uiFormDefinition);
+            return new TemplateSpecVersionData(id, name, resourceType, systemData, location, tags, description, linkedTemplates?.ToList(), metadata, mainTemplate, uiFormDefinition, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecVersionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecVersionPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TemplateSpecVersionPatch(id, name, resourceType, systemData, tags);
+            return new TemplateSpecVersionPatch(id, name, resourceType, systemData, tags, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentScriptData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArmDeploymentScriptData(id, name, resourceType, systemData, identity, location, tags, kind);
+            return new ArmDeploymentScriptData(id, name, resourceType, systemData, identity, location, tags, kind, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentScriptManagedIdentity"/>. </summary>
         /// <param name="identityType"> Type of the managed identity. </param>
         /// <param name="tenantId"> ID of the Azure Active Directory. </param>
         /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
 
-            return new ArmDeploymentScriptManagedIdentity(identityType, tenantId, userAssignedIdentities);
+            return new ArmDeploymentScriptManagedIdentity(identityType, tenantId, userAssignedIdentities, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentScriptPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArmDeploymentScriptPatch(id, name, resourceType, systemData, tags);
+            return new ArmDeploymentScriptPatch(id, name, resourceType, systemData, tags, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ScriptLogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ScriptLogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -149,10 +149,37 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Resources.ScriptLogData"/> instance for mocking. </returns>
         public static ScriptLogData ScriptLogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string log = null)
         {
-            return new ScriptLogData(id, name, resourceType, systemData, log);
+            return new ScriptLogData(id, name, resourceType, systemData, log, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentContent"/>. </summary>
+        /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <param name="tags"> Deployment tags. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentContent"/> instance for mocking. </returns>
+        public static ArmDeploymentContent ArmDeploymentContent(AzureLocation? location = null, ArmDeploymentProperties properties = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ArmDeploymentContent(location, properties, tags, new Dictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentProperties"/>. </summary>
+        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
+        /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
+        /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
+        /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentProperties"/> instance for mocking. </returns>
+        public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null)
+        {
+            return new ArmDeploymentProperties(template, templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, new Dictionary<string, BinaryData>()) : null, errorDeployment, expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope, new Dictionary<string, BinaryData>()) : null, new Dictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -165,10 +192,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArmDeploymentData(id, name, resourceType, systemData, location, properties, tags);
+            return new ArmDeploymentData(id, name, resourceType, systemData, location, properties, tags, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentPropertiesExtended. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentPropertiesExtended"/>. </summary>
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <param name="correlationId"> The correlation ID of the deployment. </param>
         /// <param name="timestamp"> The timestamp of the template deployment. </param>
@@ -194,10 +221,10 @@ namespace Azure.ResourceManager.Resources.Models
             outputResources ??= new List<SubResource>();
             validatedResources ??= new List<SubResource>();
 
-            return new ArmDeploymentPropertiesExtended(provisioningState, correlationId, timestamp, duration, outputs, providers?.ToList(), dependencies?.ToList(), templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel) : null, errorDeployment, templateHash, outputResources?.ToList(), validatedResources?.ToList(), error);
+            return new ArmDeploymentPropertiesExtended(provisioningState, correlationId, timestamp, duration, outputs, providers?.ToList(), dependencies?.ToList(), templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, new Dictionary<string, BinaryData>()) : null, errorDeployment, templateHash, outputResources?.ToList(), validatedResources?.ToList(), error, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDependency"/>. </summary>
         /// <param name="dependsOn"> The list of dependencies. </param>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
@@ -207,47 +234,72 @@ namespace Azure.ResourceManager.Resources.Models
         {
             dependsOn ??= new List<BasicArmDependency>();
 
-            return new ArmDependency(dependsOn?.ToList(), id, resourceType, resourceName);
+            return new ArmDependency(dependsOn?.ToList(), id, resourceType, resourceName, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of BasicArmDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BasicArmDependency"/>. </summary>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
         /// <returns> A new <see cref="Models.BasicArmDependency"/> instance for mocking. </returns>
         public static BasicArmDependency BasicArmDependency(string id = null, ResourceType? resourceType = null, string resourceName = null)
         {
-            return new BasicArmDependency(id, resourceType, resourceName);
+            return new BasicArmDependency(id, resourceType, resourceName, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorDeploymentExtended"/>. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
         /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
         /// <param name="deploymentName"> The deployment to be used on error case. </param>
         /// <returns> A new <see cref="Models.ErrorDeploymentExtended"/> instance for mocking. </returns>
         public static ErrorDeploymentExtended ErrorDeploymentExtended(string provisioningState = null, ErrorDeploymentType? deploymentType = null, string deploymentName = null)
         {
-            return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName);
+            return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentValidateResult"/>. </summary>
         /// <param name="error"> The deployment validation error. </param>
         /// <param name="properties"> The template deployment properties. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentValidateResult"/> instance for mocking. </returns>
         public static ArmDeploymentValidateResult ArmDeploymentValidateResult(ResponseError error = null, ArmDeploymentPropertiesExtended properties = null)
         {
-            return new ArmDeploymentValidateResult(error, properties);
+            return new ArmDeploymentValidateResult(error, properties, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentExportResult"/>. </summary>
         /// <param name="template"> The template content. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentExportResult"/> instance for mocking. </returns>
         public static ArmDeploymentExportResult ArmDeploymentExportResult(BinaryData template = null)
         {
-            return new ArmDeploymentExportResult(template);
+            return new ArmDeploymentExportResult(template, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of WhatIfOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentWhatIfContent"/>. </summary>
+        /// <param name="location"> The location to store the deployment data, only required at the tenant and management group scope. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentWhatIfContent"/> instance for mocking. </returns>
+        public static ArmDeploymentWhatIfContent ArmDeploymentWhatIfContent(AzureLocation? location = null, ArmDeploymentWhatIfProperties properties = null)
+        {
+            return new ArmDeploymentWhatIfContent(location, properties, new Dictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentWhatIfProperties"/>. </summary>
+        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
+        /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
+        /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
+        /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
+        /// <param name="whatIfResultFormat"> Optional What-If operation settings. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentWhatIfProperties"/> instance for mocking. </returns>
+        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, WhatIfResultFormat? whatIfResultFormat = null)
+        {
+            return new ArmDeploymentWhatIfProperties(template, templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, new Dictionary<string, BinaryData>()) : null, errorDeployment, expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope, new Dictionary<string, BinaryData>()) : null, new Dictionary<string, BinaryData>(), whatIfResultFormat != null ? new ArmDeploymentWhatIfSettings(whatIfResultFormat, new Dictionary<string, BinaryData>()) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WhatIfOperationResult"/>. </summary>
         /// <param name="status"> Status of the What-If operation. </param>
         /// <param name="error"> Error when What-If operation fails. </param>
         /// <param name="changes"> List of resource changes predicted by What-If operation. </param>
@@ -256,10 +308,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             changes ??= new List<WhatIfChange>();
 
-            return new WhatIfOperationResult(status, error, changes?.ToList());
+            return new WhatIfOperationResult(status, error, changes?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of WhatIfChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WhatIfChange"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
         /// <param name="unsupportedReason"> The explanation about why the resource is unsupported by What-If. </param>
@@ -271,10 +323,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             delta ??= new List<WhatIfPropertyChange>();
 
-            return new WhatIfChange(resourceId, changeType, unsupportedReason, before, after, delta?.ToList());
+            return new WhatIfChange(resourceId, changeType, unsupportedReason, before, after, delta?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of WhatIfPropertyChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WhatIfPropertyChange"/>. </summary>
         /// <param name="path"> The path of the property. </param>
         /// <param name="propertyChangeType"> The type of property change. </param>
         /// <param name="before"> The value of the property before the deployment is executed. </param>
@@ -285,20 +337,20 @@ namespace Azure.ResourceManager.Resources.Models
         {
             children ??= new List<WhatIfPropertyChange>();
 
-            return new WhatIfPropertyChange(path, propertyChangeType, before, after, children?.ToList());
+            return new WhatIfPropertyChange(path, propertyChangeType, before, after, children?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentOperation"/>. </summary>
         /// <param name="id"> Full deployment operation ID. </param>
         /// <param name="operationId"> Deployment operation ID. </param>
         /// <param name="properties"> Deployment properties. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentOperation"/> instance for mocking. </returns>
         public static ArmDeploymentOperation ArmDeploymentOperation(string id = null, string operationId = null, ArmDeploymentOperationProperties properties = null)
         {
-            return new ArmDeploymentOperation(id, operationId, properties);
+            return new ArmDeploymentOperation(id, operationId, properties, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentOperationProperties"/>. </summary>
         /// <param name="provisioningOperation"> The name of the current provisioning operation. </param>
         /// <param name="provisioningState"> The state of the provisioning. </param>
         /// <param name="timestamp"> The date and time of the operation. </param>
@@ -312,38 +364,38 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentOperationProperties"/> instance for mocking. </returns>
         public static ArmDeploymentOperationProperties ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation = null, string provisioningState = null, DateTimeOffset? timestamp = null, TimeSpan? duration = null, string serviceRequestId = null, string statusCode = null, StatusMessage statusMessage = null, TargetResource targetResource = null, BinaryData requestContent = null, BinaryData responseContent = null)
         {
-            return new ArmDeploymentOperationProperties(provisioningOperation, provisioningState, timestamp, duration, serviceRequestId, statusCode, statusMessage, targetResource, requestContent != null ? new HttpMessage(requestContent) : null, responseContent != null ? new HttpMessage(responseContent) : null);
+            return new ArmDeploymentOperationProperties(provisioningOperation, provisioningState, timestamp, duration, serviceRequestId, statusCode, statusMessage, targetResource, requestContent != null ? new HttpMessage(requestContent, new Dictionary<string, BinaryData>()) : null, responseContent != null ? new HttpMessage(responseContent, new Dictionary<string, BinaryData>()) : null, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of StatusMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StatusMessage"/>. </summary>
         /// <param name="status"> Status of the deployment operation. </param>
         /// <param name="error"> The error reported by the operation. </param>
         /// <returns> A new <see cref="Models.StatusMessage"/> instance for mocking. </returns>
         public static StatusMessage StatusMessage(string status = null, ResponseError error = null)
         {
-            return new StatusMessage(status, error);
+            return new StatusMessage(status, error, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of TargetResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetResource"/>. </summary>
         /// <param name="id"> The ID of the resource. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <returns> A new <see cref="Models.TargetResource"/> instance for mocking. </returns>
         public static TargetResource TargetResource(string id = null, string resourceName = null, ResourceType? resourceType = null)
         {
-            return new TargetResource(id, resourceName, resourceType);
+            return new TargetResource(id, resourceName, resourceType, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of TemplateHashResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateHashResult"/>. </summary>
         /// <param name="minifiedTemplate"> The minified template string. </param>
         /// <param name="templateHash"> The template hash. </param>
         /// <returns> A new <see cref="Models.TemplateHashResult"/> instance for mocking. </returns>
         public static TemplateHashResult TemplateHashResult(string minifiedTemplate = null, string templateHash = null)
         {
-            return new TemplateHashResult(minifiedTemplate, templateHash);
+            return new TemplateHashResult(minifiedTemplate, templateHash, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ArmApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -377,55 +429,49 @@ namespace Azure.ResourceManager.Resources.Models
             authorizations ??= new List<ArmApplicationAuthorization>();
             artifacts ??= new List<ArmApplicationArtifact>();
 
-            return new ArmApplicationData(id, name, resourceType, systemData, tags, location, managedBy, sku, plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
+            return new ArmApplicationData(id, name, resourceType, systemData, tags, location, managedBy, sku, new Dictionary<string, BinaryData>(), plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId, new Dictionary<string, BinaryData>()) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPackageContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationPackageContact"/>. </summary>
         /// <param name="contactName"> The contact name. </param>
         /// <param name="email"> The contact email. </param>
         /// <param name="phone"> The contact phone number. </param>
         /// <returns> A new <see cref="Models.ArmApplicationPackageContact"/> instance for mocking. </returns>
         public static ArmApplicationPackageContact ArmApplicationPackageContact(string contactName = null, string email = null, string phone = null)
         {
-            return new ArmApplicationPackageContact(contactName, email, phone);
+            return new ArmApplicationPackageContact(contactName, email, phone, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPackageSupportUris. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationPackageSupportUris"/>. </summary>
         /// <param name="azurePublicCloudUri"> The public azure support URL. </param>
         /// <param name="azureGovernmentUri"> The government cloud support URL. </param>
         /// <returns> A new <see cref="Models.ArmApplicationPackageSupportUris"/> instance for mocking. </returns>
         public static ArmApplicationPackageSupportUris ArmApplicationPackageSupportUris(Uri azurePublicCloudUri = null, Uri azureGovernmentUri = null)
         {
-            return new ArmApplicationPackageSupportUris(azurePublicCloudUri, azureGovernmentUri);
+            return new ArmApplicationPackageSupportUris(azurePublicCloudUri, azureGovernmentUri, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationArtifact"/>. </summary>
         /// <param name="name"> The managed application artifact name. </param>
         /// <param name="uri"> The managed application artifact blob uri. </param>
         /// <param name="artifactType"> The managed application artifact type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <returns> A new <see cref="Models.ArmApplicationArtifact"/> instance for mocking. </returns>
         public static ArmApplicationArtifact ArmApplicationArtifact(ArmApplicationArtifactName name = default, Uri uri = null, ArmApplicationArtifactType artifactType = default)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-
-            return new ArmApplicationArtifact(name, uri, artifactType);
+            return new ArmApplicationArtifact(name, uri, artifactType, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationDetails"/>. </summary>
         /// <param name="objectId"> The client Oid. </param>
         /// <param name="puid"> The client Puid. </param>
         /// <param name="applicationId"> The client application Id. </param>
         /// <returns> A new <see cref="Models.ArmApplicationDetails"/> instance for mocking. </returns>
         public static ArmApplicationDetails ArmApplicationDetails(Guid? objectId = null, string puid = null, Guid? applicationId = null)
         {
-            return new ArmApplicationDetails(objectId, puid, applicationId);
+            return new ArmApplicationDetails(objectId, puid, applicationId, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationManagedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="identityType"> The identity type. </param>
@@ -435,19 +481,19 @@ namespace Azure.ResourceManager.Resources.Models
         {
             userAssignedIdentities ??= new Dictionary<string, ArmApplicationUserAssignedIdentity>();
 
-            return new ArmApplicationManagedIdentity(principalId, tenantId, identityType, userAssignedIdentities);
+            return new ArmApplicationManagedIdentity(principalId, tenantId, identityType, userAssignedIdentities, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationUserAssignedIdentity"/>. </summary>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="tenantId"> The tenant id of user assigned identity. </param>
         /// <returns> A new <see cref="Models.ArmApplicationUserAssignedIdentity"/> instance for mocking. </returns>
         public static ArmApplicationUserAssignedIdentity ArmApplicationUserAssignedIdentity(Guid? principalId = null, Guid? tenantId = null)
         {
-            return new ArmApplicationUserAssignedIdentity(principalId, tenantId);
+            return new ArmApplicationUserAssignedIdentity(principalId, tenantId, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -461,10 +507,10 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArmApplicationResourceData(id, name, resourceType, systemData, tags, location, managedBy, sku);
+            return new ArmApplicationResourceData(id, name, resourceType, systemData, tags, location, managedBy, sku, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -498,10 +544,10 @@ namespace Azure.ResourceManager.Resources.Models
             authorizations ??= new List<ArmApplicationAuthorization>();
             artifacts ??= new List<ArmApplicationArtifact>();
 
-            return new ArmApplicationPatch(id, name, resourceType, systemData, tags, location, managedBy, sku, plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
+            return new ArmApplicationPatch(id, name, resourceType, systemData, tags, location, managedBy, sku, new Dictionary<string, BinaryData>(), plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId, new Dictionary<string, BinaryData>()) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ArmApplicationDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -533,10 +579,10 @@ namespace Azure.ResourceManager.Resources.Models
             notificationEndpoints ??= new List<ArmApplicationNotificationEndpoint>();
             policies ??= new List<ArmApplicationPolicy>();
 
-            return new ArmApplicationDefinitionData(id, name, resourceType, systemData, tags, location, managedBy, sku, lockLevel, displayName, isEnabled, authorizations?.ToList(), artifacts?.ToList(), description, packageFileUri, mainTemplate, createUiDefinition, notificationEndpoints != null ? new ArmApplicationNotificationPolicy(notificationEndpoints?.ToList()) : null, lockingPolicy, deploymentMode.HasValue ? new ArmApplicationDeploymentPolicy(deploymentMode.Value) : null, managementMode != null ? new ArmApplicationManagementPolicy(managementMode) : null, policies?.ToList());
+            return new ArmApplicationDefinitionData(id, name, resourceType, systemData, tags, location, managedBy, sku, new Dictionary<string, BinaryData>(), lockLevel, displayName, isEnabled, authorizations?.ToList(), artifacts?.ToList(), description, packageFileUri, mainTemplate, createUiDefinition, notificationEndpoints != null ? new ArmApplicationNotificationPolicy(notificationEndpoints?.ToList(), new Dictionary<string, BinaryData>()) : null, lockingPolicy, deploymentMode.HasValue ? new ArmApplicationDeploymentPolicy(deploymentMode.Value, new Dictionary<string, BinaryData>()) : null, managementMode != null ? new ArmApplicationManagementPolicy(managementMode, new Dictionary<string, BinaryData>()) : null, policies?.ToList());
         }
 
-        /// <summary> Initializes a new instance of JitRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.JitRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -557,10 +603,10 @@ namespace Azure.ResourceManager.Resources.Models
             tags ??= new Dictionary<string, string>();
             jitAuthorizationPolicies ??= new List<JitAuthorizationPolicies>();
 
-            return new JitRequestData(id, name, resourceType, systemData, tags, location, applicationResourceId, publisherTenantId, jitAuthorizationPolicies?.ToList(), jitSchedulingPolicy, provisioningState, jitRequestState, createdBy, updatedBy);
+            return new JitRequestData(id, name, resourceType, systemData, tags, location, applicationResourceId, publisherTenantId, jitAuthorizationPolicies?.ToList(), jitSchedulingPolicy, provisioningState, jitRequestState, createdBy, updatedBy, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of AzurePowerShellScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzurePowerShellScript"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -590,10 +636,10 @@ namespace Azure.ResourceManager.Resources.Models
             supportingScriptUris ??= new List<Uri>();
             environmentVariables ??= new List<ScriptEnvironmentVariable>();
 
-            return new AzurePowerShellScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzurePowerShell, containerGroupName != null ? new ContainerConfiguration(containerGroupName) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azPowerShellVersion);
+            return new AzurePowerShellScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzurePowerShell, new Dictionary<string, BinaryData>(), containerGroupName != null ? new ContainerConfiguration(containerGroupName, new Dictionary<string, BinaryData>()) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azPowerShellVersion);
         }
 
-        /// <summary> Initializes a new instance of ScriptStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScriptStatus"/>. </summary>
         /// <param name="containerInstanceId"> ACI resource Id. </param>
         /// <param name="storageAccountId"> Storage account resource Id. </param>
         /// <param name="startOn"> Start time of the script execution. </param>
@@ -603,10 +649,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ScriptStatus"/> instance for mocking. </returns>
         public static ScriptStatus ScriptStatus(string containerInstanceId = null, string storageAccountId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? expireOn = null, ResponseError error = null)
         {
-            return new ScriptStatus(containerInstanceId, storageAccountId, startOn, endOn, expireOn, error);
+            return new ScriptStatus(containerInstanceId, storageAccountId, startOn, endOn, expireOn, error, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of AzureCliScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureCliScript"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -636,7 +682,7 @@ namespace Azure.ResourceManager.Resources.Models
             supportingScriptUris ??= new List<Uri>();
             environmentVariables ??= new List<ScriptEnvironmentVariable>();
 
-            return new AzureCliScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzureCLI, containerGroupName != null ? new ContainerConfiguration(containerGroupName) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azCliVersion);
+            return new AzureCliScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzureCLI, new Dictionary<string, BinaryData>(), containerGroupName != null ? new ContainerConfiguration(containerGroupName, new Dictionary<string, BinaryData>()) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azCliVersion);
         }
     }
 }

@@ -5,15 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class QuotaDimension
+    public partial class QuotaDimension : IUtf8JsonSerializable, IJsonModel<QuotaDimension>
     {
-        internal static QuotaDimension DeserializeQuotaDimension(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QuotaDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<QuotaDimension>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<QuotaDimension>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
+            if (Optional.IsDefined(Period))
+            {
+                writer.WritePropertyName("period"u8);
+                writer.WriteStringValue(Period);
+            }
+            if (Optional.IsDefined(Quota))
+            {
+                writer.WritePropertyName("quota"u8);
+                writer.WriteNumberValue(Quota.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(UnitPlural))
+            {
+                writer.WritePropertyName("unitPlural"u8);
+                writer.WriteStringValue(UnitPlural);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        QuotaDimension IJsonModel<QuotaDimension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuotaDimension)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuotaDimension(document.RootElement, options);
+        }
+
+        internal static QuotaDimension DeserializeQuotaDimension(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +112,8 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<string> description = default;
             Optional<string> unit = default;
             Optional<string> unitPlural = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -72,8 +160,38 @@ namespace Azure.ResourceManager.Quantum.Models
                     unitPlural = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QuotaDimension(id.Value, scope.Value, period.Value, Optional.ToNullable(quota), name.Value, description.Value, unit.Value, unitPlural.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QuotaDimension(id.Value, scope.Value, period.Value, Optional.ToNullable(quota), name.Value, description.Value, unit.Value, unitPlural.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QuotaDimension>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuotaDimension)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QuotaDimension IPersistableModel<QuotaDimension>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuotaDimension)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQuotaDimension(document.RootElement, options);
+        }
+
+        string IPersistableModel<QuotaDimension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

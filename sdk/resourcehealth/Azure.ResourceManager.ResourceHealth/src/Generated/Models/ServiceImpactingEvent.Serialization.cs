@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ServiceImpactingEvent
+    public partial class ServiceImpactingEvent : IUtf8JsonSerializable, IJsonModel<ServiceImpactingEvent>
     {
-        internal static ServiceImpactingEvent DeserializeServiceImpactingEvent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceImpactingEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceImpactingEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServiceImpactingEvent>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServiceImpactingEvent>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EventStartOn))
+            {
+                writer.WritePropertyName("eventStartTime"u8);
+                writer.WriteStringValue(EventStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EventStatusLastModifiedOn))
+            {
+                writer.WritePropertyName("eventStatusLastModifiedTime"u8);
+                writer.WriteStringValue(EventStatusLastModifiedOn.Value, "O");
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status);
+            }
+            if (Optional.IsDefined(IncidentProperties))
+            {
+                writer.WritePropertyName("incidentProperties"u8);
+                writer.WriteObjectValue(IncidentProperties);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceImpactingEvent IJsonModel<ServiceImpactingEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceImpactingEvent(document.RootElement, options);
+        }
+
+        internal static ServiceImpactingEvent DeserializeServiceImpactingEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +94,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<string> correlationId = default;
             Optional<ServiceImpactingEventStatus> status = default;
             Optional<ServiceImpactingEventIncidentProperties> incidentProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventStartTime"u8))
@@ -67,8 +139,38 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceImpactingEvent(Optional.ToNullable(eventStartTime), Optional.ToNullable(eventStatusLastModifiedTime), correlationId.Value, status.Value, incidentProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceImpactingEvent(Optional.ToNullable(eventStartTime), Optional.ToNullable(eventStatusLastModifiedTime), correlationId.Value, status.Value, incidentProperties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceImpactingEvent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceImpactingEvent IPersistableModel<ServiceImpactingEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceImpactingEvent(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServiceImpactingEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

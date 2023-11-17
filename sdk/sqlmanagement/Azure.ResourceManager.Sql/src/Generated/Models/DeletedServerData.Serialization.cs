@@ -6,25 +6,119 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DeletedServerData : IUtf8JsonSerializable
+    public partial class DeletedServerData : IUtf8JsonSerializable, IJsonModel<DeletedServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeletedServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DeletedServerData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DeletedServerData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DeletedOn))
+                {
+                    writer.WritePropertyName("deletionTime"u8);
+                    writer.WriteStringValue(DeletedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OriginalId))
+                {
+                    writer.WritePropertyName("originalId"u8);
+                    writer.WriteStringValue(OriginalId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FullyQualifiedDomainName))
+                {
+                    writer.WritePropertyName("fullyQualifiedDomainName"u8);
+                    writer.WriteStringValue(FullyQualifiedDomainName);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeletedServerData DeserializeDeletedServerData(JsonElement element)
+        DeletedServerData IJsonModel<DeletedServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeletedServerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedServerData(document.RootElement, options);
+        }
+
+        internal static DeletedServerData DeserializeDeletedServerData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +131,8 @@ namespace Azure.ResourceManager.Sql
             Optional<DateTimeOffset> deletionTime = default;
             Optional<ResourceIdentifier> originalId = default;
             Optional<string> fullyQualifiedDomainName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -103,8 +199,38 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeletedServerData(id, name, type, systemData.Value, version.Value, Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeletedServerData(id, name, type, systemData.Value, version.Value, Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeletedServerData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeletedServerData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DeletedServerData IPersistableModel<DeletedServerData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeletedServerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDeletedServerData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DeletedServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

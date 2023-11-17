@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class DefenderForContainersAwsOfferingKubernetesScubaReader : IUtf8JsonSerializable
+    internal partial class DefenderForContainersAwsOfferingKubernetesScubaReader : IUtf8JsonSerializable, IJsonModel<DefenderForContainersAwsOfferingKubernetesScubaReader>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersAwsOfferingKubernetesScubaReader>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefenderForContainersAwsOfferingKubernetesScubaReader>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DefenderForContainersAwsOfferingKubernetesScubaReader>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DefenderForContainersAwsOfferingKubernetesScubaReader>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForContainersAwsOfferingKubernetesScubaReader DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(JsonElement element)
+        DefenderForContainersAwsOfferingKubernetesScubaReader IJsonModel<DefenderForContainersAwsOfferingKubernetesScubaReader>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForContainersAwsOfferingKubernetesScubaReader)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(document.RootElement, options);
+        }
+
+        internal static DefenderForContainersAwsOfferingKubernetesScubaReader DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> cloudRoleArn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cloudRoleArn"u8))
@@ -37,8 +79,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForContainersAwsOfferingKubernetesScubaReader(cloudRoleArn.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DefenderForContainersAwsOfferingKubernetesScubaReader(cloudRoleArn.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefenderForContainersAwsOfferingKubernetesScubaReader>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForContainersAwsOfferingKubernetesScubaReader)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DefenderForContainersAwsOfferingKubernetesScubaReader IPersistableModel<DefenderForContainersAwsOfferingKubernetesScubaReader>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForContainersAwsOfferingKubernetesScubaReader)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(document.RootElement, options);
+        }
+
+        string IPersistableModel<DefenderForContainersAwsOfferingKubernetesScubaReader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

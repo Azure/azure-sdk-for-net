@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UpsertManagedServerOperationStep
+    public partial class UpsertManagedServerOperationStep : IUtf8JsonSerializable, IJsonModel<UpsertManagedServerOperationStep>
     {
-        internal static UpsertManagedServerOperationStep DeserializeUpsertManagedServerOperationStep(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpsertManagedServerOperationStep>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UpsertManagedServerOperationStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UpsertManagedServerOperationStep>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UpsertManagedServerOperationStep>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Order))
+            {
+                writer.WritePropertyName("order"u8);
+                writer.WriteNumberValue(Order.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UpsertManagedServerOperationStep IJsonModel<UpsertManagedServerOperationStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpsertManagedServerOperationStep(document.RootElement, options);
+        }
+
+        internal static UpsertManagedServerOperationStep DeserializeUpsertManagedServerOperationStep(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> order = default;
             Optional<string> name = default;
             Optional<UpsertManagedServerOperationStepStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("order"u8))
@@ -46,8 +109,38 @@ namespace Azure.ResourceManager.Sql.Models
                     status = new UpsertManagedServerOperationStepStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpsertManagedServerOperationStep(Optional.ToNullable(order), name.Value, Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpsertManagedServerOperationStep(Optional.ToNullable(order), name.Value, Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UpsertManagedServerOperationStep>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UpsertManagedServerOperationStep IPersistableModel<UpsertManagedServerOperationStep>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUpsertManagedServerOperationStep(document.RootElement, options);
+        }
+
+        string IPersistableModel<UpsertManagedServerOperationStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryDiskEncryptionInfo : IUtf8JsonSerializable
+    public partial class SiteRecoveryDiskEncryptionInfo : IUtf8JsonSerializable, IJsonModel<SiteRecoveryDiskEncryptionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryDiskEncryptionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryDiskEncryptionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SiteRecoveryDiskEncryptionInfo>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SiteRecoveryDiskEncryptionInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskEncryptionKeyInfo))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("keyEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyInfo);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SiteRecoveryDiskEncryptionInfo DeserializeSiteRecoveryDiskEncryptionInfo(JsonElement element)
+        SiteRecoveryDiskEncryptionInfo IJsonModel<SiteRecoveryDiskEncryptionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryDiskEncryptionInfo(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryDiskEncryptionInfo DeserializeSiteRecoveryDiskEncryptionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SiteRecoveryDiskEncryptionKeyInfo> diskEncryptionKeyInfo = default;
             Optional<SiteRecoveryKeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionKeyInfo"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     keyEncryptionKeyInfo = SiteRecoveryKeyEncryptionKeyInfo.DeserializeSiteRecoveryKeyEncryptionKeyInfo(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryDiskEncryptionInfo(diskEncryptionKeyInfo.Value, keyEncryptionKeyInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryDiskEncryptionInfo(diskEncryptionKeyInfo.Value, keyEncryptionKeyInfo.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryDiskEncryptionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryDiskEncryptionInfo IPersistableModel<SiteRecoveryDiskEncryptionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryDiskEncryptionInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<SiteRecoveryDiskEncryptionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

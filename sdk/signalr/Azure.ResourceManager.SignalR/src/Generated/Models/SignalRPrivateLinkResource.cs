@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,39 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Private link resource. </summary>
     public partial class SignalRPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of SignalRPrivateLinkResource. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkResource"/>. </summary>
         public SignalRPrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
@@ -22,7 +55,7 @@ namespace Azure.ResourceManager.SignalR.Models
             ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareablePrivateLinkResourceType>();
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +64,14 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>
         /// <param name="shareablePrivateLinkResourceTypes"> The list of resources that are onboarded to private link service. </param>
-        internal SignalRPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkResourceType> shareablePrivateLinkResourceTypes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkResourceType> shareablePrivateLinkResourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
             ShareablePrivateLinkResourceTypes = shareablePrivateLinkResourceTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Group Id of the private link resource. </summary>

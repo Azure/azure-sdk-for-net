@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class TIDataConnectorDataTypesIndicators : IUtf8JsonSerializable
+    internal partial class TIDataConnectorDataTypesIndicators : IUtf8JsonSerializable, IJsonModel<TIDataConnectorDataTypesIndicators>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TIDataConnectorDataTypesIndicators>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TIDataConnectorDataTypesIndicators>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TIDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TIDataConnectorDataTypesIndicators>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TIDataConnectorDataTypesIndicators DeserializeTIDataConnectorDataTypesIndicators(JsonElement element)
+        TIDataConnectorDataTypesIndicators IJsonModel<TIDataConnectorDataTypesIndicators>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TIDataConnectorDataTypesIndicators)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTIDataConnectorDataTypesIndicators(document.RootElement, options);
+        }
+
+        internal static TIDataConnectorDataTypesIndicators DeserializeTIDataConnectorDataTypesIndicators(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SecurityInsightsDataTypeConnectionState> state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     state = new SecurityInsightsDataTypeConnectionState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TIDataConnectorDataTypesIndicators(Optional.ToNullable(state));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TIDataConnectorDataTypesIndicators(Optional.ToNullable(state), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TIDataConnectorDataTypesIndicators>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TIDataConnectorDataTypesIndicators)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TIDataConnectorDataTypesIndicators IPersistableModel<TIDataConnectorDataTypesIndicators>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TIDataConnectorDataTypesIndicators)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTIDataConnectorDataTypesIndicators(document.RootElement, options);
+        }
+
+        string IPersistableModel<TIDataConnectorDataTypesIndicators>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RecommendedActionImpactRecord
+    public partial class RecommendedActionImpactRecord : IUtf8JsonSerializable, IJsonModel<RecommendedActionImpactRecord>
     {
-        internal static RecommendedActionImpactRecord DeserializeRecommendedActionImpactRecord(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedActionImpactRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecommendedActionImpactRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecommendedActionImpactRecord>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecommendedActionImpactRecord>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DimensionName))
+                {
+                    writer.WritePropertyName("dimensionName"u8);
+                    writer.WriteStringValue(DimensionName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    writer.WritePropertyName("unit"u8);
+                    writer.WriteStringValue(Unit);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AbsoluteValue))
+                {
+                    writer.WritePropertyName("absoluteValue"u8);
+                    writer.WriteNumberValue(AbsoluteValue.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ChangeValueAbsolute))
+                {
+                    writer.WritePropertyName("changeValueAbsolute"u8);
+                    writer.WriteNumberValue(ChangeValueAbsolute.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ChangeValueRelative))
+                {
+                    writer.WritePropertyName("changeValueRelative"u8);
+                    writer.WriteNumberValue(ChangeValueRelative.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RecommendedActionImpactRecord IJsonModel<RecommendedActionImpactRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecommendedActionImpactRecord(document.RootElement, options);
+        }
+
+        internal static RecommendedActionImpactRecord DeserializeRecommendedActionImpactRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +109,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<double> absoluteValue = default;
             Optional<double> changeValueAbsolute = default;
             Optional<double> changeValueRelative = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensionName"u8))
@@ -62,8 +150,38 @@ namespace Azure.ResourceManager.Sql.Models
                     changeValueRelative = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecommendedActionImpactRecord(dimensionName.Value, unit.Value, Optional.ToNullable(absoluteValue), Optional.ToNullable(changeValueAbsolute), Optional.ToNullable(changeValueRelative));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecommendedActionImpactRecord(dimensionName.Value, unit.Value, Optional.ToNullable(absoluteValue), Optional.ToNullable(changeValueAbsolute), Optional.ToNullable(changeValueRelative), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecommendedActionImpactRecord>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecommendedActionImpactRecord IPersistableModel<RecommendedActionImpactRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecommendedActionImpactRecord(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecommendedActionImpactRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

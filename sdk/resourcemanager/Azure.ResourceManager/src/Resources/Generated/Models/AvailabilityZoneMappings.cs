@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Availability zone mappings for the region. </summary>
     public partial class AvailabilityZoneMappings
     {
-        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMappings"/>. </summary>
         internal AvailabilityZoneMappings()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMappings"/>. </summary>
         /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
         /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
-        internal AvailabilityZoneMappings(string logicalZone, string physicalZone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilityZoneMappings(string logicalZone, string physicalZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogicalZone = logicalZone;
             PhysicalZone = physicalZone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The logical zone id for the availability zone. </summary>

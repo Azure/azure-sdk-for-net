@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAlertSupportingEvidence : IUtf8JsonSerializable
+    public partial class SecurityAlertSupportingEvidence : IUtf8JsonSerializable, IJsonModel<SecurityAlertSupportingEvidence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAlertSupportingEvidence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityAlertSupportingEvidence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityAlertSupportingEvidence>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityAlertSupportingEvidence>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SecurityAlertSupportingEvidenceType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(SecurityAlertSupportingEvidenceType);
+                }
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -32,8 +49,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityAlertSupportingEvidence DeserializeSecurityAlertSupportingEvidence(JsonElement element)
+        SecurityAlertSupportingEvidence IJsonModel<SecurityAlertSupportingEvidence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAlertSupportingEvidence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAlertSupportingEvidence(document.RootElement, options);
+        }
+
+        internal static SecurityAlertSupportingEvidence DeserializeSecurityAlertSupportingEvidence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,5 +84,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SecurityAlertSupportingEvidence(type.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<SecurityAlertSupportingEvidence>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAlertSupportingEvidence)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityAlertSupportingEvidence IPersistableModel<SecurityAlertSupportingEvidence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAlertSupportingEvidence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityAlertSupportingEvidence(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityAlertSupportingEvidence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomEntityAlias : IUtf8JsonSerializable
+    public partial class CustomEntityAlias : IUtf8JsonSerializable, IJsonModel<CustomEntityAlias>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEntityAlias>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomEntityAlias>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CustomEntityAlias>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CustomEntityAlias>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
@@ -53,11 +64,40 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("fuzzyEditDistance");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomEntityAlias DeserializeCustomEntityAlias(JsonElement element)
+        CustomEntityAlias IJsonModel<CustomEntityAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomEntityAlias(document.RootElement, options);
+        }
+
+        internal static CustomEntityAlias DeserializeCustomEntityAlias(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +106,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<bool?> caseSensitive = default;
             Optional<bool?> accentSensitive = default;
             Optional<int?> fuzzyEditDistance = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -103,8 +145,38 @@ namespace Azure.Search.Documents.Indexes.Models
                     fuzzyEditDistance = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomEntityAlias(text, Optional.ToNullable(caseSensitive), Optional.ToNullable(accentSensitive), Optional.ToNullable(fuzzyEditDistance));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomEntityAlias(text, Optional.ToNullable(caseSensitive), Optional.ToNullable(accentSensitive), Optional.ToNullable(fuzzyEditDistance), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomEntityAlias>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomEntityAlias IPersistableModel<CustomEntityAlias>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomEntityAlias)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomEntityAlias(document.RootElement, options);
+        }
+
+        string IPersistableModel<CustomEntityAlias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

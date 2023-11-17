@@ -5,16 +5,94 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackNicDetails
+    public partial class InMageRcmFailbackNicDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackNicDetails>
     {
-        internal static InMageRcmFailbackNicDetails DeserializeInMageRcmFailbackNicDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackNicDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InMageRcmFailbackNicDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InMageRcmFailbackNicDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InMageRcmFailbackNicDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MacAddress))
+                {
+                    writer.WritePropertyName("macAddress"u8);
+                    writer.WriteStringValue(MacAddress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetworkName))
+                {
+                    writer.WritePropertyName("networkName"u8);
+                    writer.WriteStringValue(NetworkName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AdapterType))
+                {
+                    writer.WritePropertyName("adapterType"u8);
+                    writer.WriteStringValue(AdapterType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceIPAddress))
+                {
+                    writer.WritePropertyName("sourceIpAddress"u8);
+                    writer.WriteStringValue(SourceIPAddress.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmFailbackNicDetails IJsonModel<InMageRcmFailbackNicDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmFailbackNicDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmFailbackNicDetails DeserializeInMageRcmFailbackNicDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +101,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> networkName = default;
             Optional<string> adapterType = default;
             Optional<IPAddress> sourceIPAddress = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("macAddress"u8))
@@ -49,8 +129,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     sourceIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmFailbackNicDetails(macAddress.Value, networkName.Value, adapterType.Value, sourceIPAddress.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmFailbackNicDetails(macAddress.Value, networkName.Value, adapterType.Value, sourceIPAddress.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InMageRcmFailbackNicDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InMageRcmFailbackNicDetails IPersistableModel<InMageRcmFailbackNicDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInMageRcmFailbackNicDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<InMageRcmFailbackNicDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

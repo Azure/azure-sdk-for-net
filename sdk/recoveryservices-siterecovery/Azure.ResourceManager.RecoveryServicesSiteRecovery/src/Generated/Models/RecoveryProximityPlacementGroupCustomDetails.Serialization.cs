@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryProximityPlacementGroupCustomDetails : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownRecoveryProximityPlacementGroupCustomDetails))]
+    public partial class RecoveryProximityPlacementGroupCustomDetails : IUtf8JsonSerializable, IJsonModel<RecoveryProximityPlacementGroupCustomDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryProximityPlacementGroupCustomDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecoveryProximityPlacementGroupCustomDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecoveryProximityPlacementGroupCustomDetails>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryProximityPlacementGroupCustomDetails DeserializeRecoveryProximityPlacementGroupCustomDetails(JsonElement element)
+        RecoveryProximityPlacementGroupCustomDetails IJsonModel<RecoveryProximityPlacementGroupCustomDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
+        }
+
+        internal static RecoveryProximityPlacementGroupCustomDetails DeserializeRecoveryProximityPlacementGroupCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,5 +75,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             return UnknownRecoveryProximityPlacementGroupCustomDetails.DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(element);
         }
+
+        BinaryData IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecoveryProximityPlacementGroupCustomDetails IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

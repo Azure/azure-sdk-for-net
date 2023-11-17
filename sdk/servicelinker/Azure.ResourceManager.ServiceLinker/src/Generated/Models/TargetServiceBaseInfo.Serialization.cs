@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class TargetServiceBaseInfo : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownTargetServiceBase))]
+    public partial class TargetServiceBaseInfo : IUtf8JsonSerializable, IJsonModel<TargetServiceBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetServiceBaseInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TargetServiceBaseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TargetServiceBaseInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetServiceType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TargetServiceBaseInfo DeserializeTargetServiceBaseInfo(JsonElement element)
+        TargetServiceBaseInfo IJsonModel<TargetServiceBaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTargetServiceBaseInfo(document.RootElement, options);
+        }
+
+        internal static TargetServiceBaseInfo DeserializeTargetServiceBaseInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +77,30 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             return UnknownTargetServiceBase.DeserializeUnknownTargetServiceBase(element);
         }
+
+        BinaryData IPersistableModel<TargetServiceBaseInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TargetServiceBaseInfo IPersistableModel<TargetServiceBaseInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTargetServiceBaseInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<TargetServiceBaseInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,11 +16,41 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    public partial class SphereImageData : IUtf8JsonSerializable
+    public partial class SphereImageData : IUtf8JsonSerializable, IJsonModel<SphereImageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereImageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SphereImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SphereImageData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SphereImageData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Image))
@@ -30,17 +63,94 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("imageId"u8);
                 writer.WriteStringValue(ImageId);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ImageName))
+                {
+                    writer.WritePropertyName("imageName"u8);
+                    writer.WriteStringValue(ImageName);
+                }
+            }
             if (Optional.IsDefined(RegionalDataBoundary))
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    writer.WritePropertyName("uri"u8);
+                    writer.WriteStringValue(Uri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ComponentId))
+                {
+                    writer.WritePropertyName("componentId"u8);
+                    writer.WriteStringValue(ComponentId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ImageType))
+                {
+                    writer.WritePropertyName("imageType"u8);
+                    writer.WriteStringValue(ImageType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SphereImageData DeserializeSphereImageData(JsonElement element)
+        SphereImageData IJsonModel<SphereImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SphereImageData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSphereImageData(document.RootElement, options);
+        }
+
+        internal static SphereImageData DeserializeSphereImageData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +168,8 @@ namespace Azure.ResourceManager.Sphere
             Optional<string> componentId = default;
             Optional<SphereImageType> imageType = default;
             Optional<SphereProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -157,8 +269,38 @@ namespace Azure.ResourceManager.Sphere
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SphereImageData(id, name, type, systemData.Value, image.Value, imageId.Value, imageName.Value, Optional.ToNullable(regionalDataBoundary), uri.Value, description.Value, componentId.Value, Optional.ToNullable(imageType), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SphereImageData(id, name, type, systemData.Value, image.Value, imageId.Value, imageName.Value, Optional.ToNullable(regionalDataBoundary), uri.Value, description.Value, componentId.Value, Optional.ToNullable(imageType), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SphereImageData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SphereImageData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SphereImageData IPersistableModel<SphereImageData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SphereImageData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSphereImageData(document.RootElement, options);
+        }
+
+        string IPersistableModel<SphereImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

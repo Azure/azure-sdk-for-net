@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,14 +19,46 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class InstanceFailoverGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupData"/>. </summary>
         public InstanceFailoverGroupData()
         {
             PartnerRegions = new ChangeTrackingList<PartnerRegionInfo>();
             ManagedInstancePairs = new ChangeTrackingList<ManagedInstancePairInfo>();
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +70,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerRegions"> Partner region information for the failover group. </param>
         /// <param name="managedInstancePairs"> List of managed instance pairs in the failover group. </param>
-        internal InstanceFailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GeoSecondaryInstanceType? secondaryType, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint, InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint, InstanceFailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerRegionInfo> partnerRegions, IList<ManagedInstancePairInfo> managedInstancePairs) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstanceFailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GeoSecondaryInstanceType? secondaryType, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint, InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint, InstanceFailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerRegionInfo> partnerRegions, IList<ManagedInstancePairInfo> managedInstancePairs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SecondaryType = secondaryType;
             ReadWriteEndpoint = readWriteEndpoint;
@@ -46,6 +80,7 @@ namespace Azure.ResourceManager.Sql
             ReplicationState = replicationState;
             PartnerRegions = partnerRegions;
             ManagedInstancePairs = managedInstancePairs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the geo-secondary instance. Set 'Standby' if the instance is used as a DR option only. </summary>

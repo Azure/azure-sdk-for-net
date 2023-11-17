@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -15,10 +17,17 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityConnectorData : IUtf8JsonSerializable
+    public partial class SecurityConnectorData : IUtf8JsonSerializable, IJsonModel<SecurityConnectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityConnectorData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityConnectorData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -43,12 +52,43 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HierarchyIdentifier))
             {
                 writer.WritePropertyName("hierarchyIdentifier"u8);
                 writer.WriteStringValue(HierarchyIdentifier);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HierarchyIdentifierTrialEndOn))
+                {
+                    writer.WritePropertyName("hierarchyIdentifierTrialEndDate"u8);
+                    writer.WriteStringValue(HierarchyIdentifierTrialEndOn.Value, "O");
+                }
             }
             if (Optional.IsDefined(EnvironmentName))
             {
@@ -71,11 +111,40 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteObjectValue(EnvironmentData);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityConnectorData DeserializeSecurityConnectorData(JsonElement element)
+        SecurityConnectorData IJsonModel<SecurityConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityConnectorData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityConnectorData(document.RootElement, options);
+        }
+
+        internal static SecurityConnectorData DeserializeSecurityConnectorData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,6 +162,8 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SecurityCenterCloudName> environmentName = default;
             Optional<IList<SecurityCenterCloudOffering>> offerings = default;
             Optional<SecurityConnectorEnvironment> environmentData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -210,8 +281,38 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, hierarchyIdentifier.Value, Optional.ToNullable(hierarchyIdentifierTrialEndDate), Optional.ToNullable(environmentName), Optional.ToList(offerings), environmentData.Value, kind.Value, Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, hierarchyIdentifier.Value, Optional.ToNullable(hierarchyIdentifierTrialEndDate), Optional.ToNullable(environmentName), Optional.ToList(offerings), environmentData.Value, kind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityConnectorData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityConnectorData IPersistableModel<SecurityConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityConnectorData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityConnectorData(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

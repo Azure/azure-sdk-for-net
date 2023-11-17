@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class IndexingParametersConfiguration : IUtf8JsonSerializable
+    public partial class IndexingParametersConfiguration : IUtf8JsonSerializable, IJsonModel<IndexingParametersConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IndexingParametersConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IndexingParametersConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IndexingParametersConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ParsingMode))
             {
@@ -104,8 +114,22 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element)
+        IndexingParametersConfiguration IJsonModel<IndexingParametersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIndexingParametersConfiguration(document.RootElement, options);
+        }
+
+        internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -255,5 +279,30 @@ namespace Azure.Search.Documents.Indexes.Models
             additionalProperties = additionalPropertiesDictionary;
             return new IndexingParametersConfiguration(Optional.ToNullable(parsingMode), excludedFileNameExtensions.Value, indexedFileNameExtensions.Value, Optional.ToNullable(failOnUnsupportedContentType), Optional.ToNullable(failOnUnprocessableDocument), Optional.ToNullable(indexStorageMetadataOnlyForOversizedDocuments), delimitedTextHeaders.Value, delimitedTextDelimiter.Value, Optional.ToNullable(firstLineContainsHeaders), documentRoot.Value, Optional.ToNullable(dataToExtract), Optional.ToNullable(imageAction), Optional.ToNullable(allowSkillsetToReadFileData), Optional.ToNullable(pdfTextRotationAlgorithm), Optional.ToNullable(executionEnvironment), queryTimeout.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<IndexingParametersConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IndexingParametersConfiguration IPersistableModel<IndexingParametersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIndexingParametersConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<IndexingParametersConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

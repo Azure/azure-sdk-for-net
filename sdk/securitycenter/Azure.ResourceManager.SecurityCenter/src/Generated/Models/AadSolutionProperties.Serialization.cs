@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AadSolutionProperties : IUtf8JsonSerializable
+    public partial class AadSolutionProperties : IUtf8JsonSerializable, IJsonModel<AadSolutionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadSolutionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AadSolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AadSolutionProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AadSolutionProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectivityState))
             {
@@ -53,8 +62,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static AadSolutionProperties DeserializeAadSolutionProperties(JsonElement element)
+        AadSolutionProperties IJsonModel<AadSolutionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAadSolutionProperties(document.RootElement, options);
+        }
+
+        internal static AadSolutionProperties DeserializeAadSolutionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,5 +123,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AadSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, Optional.ToNullable(connectivityState));
         }
+
+        BinaryData IPersistableModel<AadSolutionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AadSolutionProperties IPersistableModel<AadSolutionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AadSolutionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAadSolutionProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<AadSolutionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

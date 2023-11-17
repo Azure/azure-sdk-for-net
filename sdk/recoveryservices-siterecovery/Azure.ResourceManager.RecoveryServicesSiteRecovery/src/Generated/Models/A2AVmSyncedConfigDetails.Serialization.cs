@@ -5,22 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AVmSyncedConfigDetails
+    public partial class A2AVmSyncedConfigDetails : IUtf8JsonSerializable, IJsonModel<A2AVmSyncedConfigDetails>
     {
-        internal static A2AVmSyncedConfigDetails DeserializeA2AVmSyncedConfigDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AVmSyncedConfigDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<A2AVmSyncedConfigDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<A2AVmSyncedConfigDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<A2AVmSyncedConfigDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(VmEndpoints))
+            {
+                writer.WritePropertyName("inputEndpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmEndpoints)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        A2AVmSyncedConfigDetails IJsonModel<A2AVmSyncedConfigDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(A2AVmSyncedConfigDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AVmSyncedConfigDetails(document.RootElement, options);
+        }
+
+        internal static A2AVmSyncedConfigDetails DeserializeA2AVmSyncedConfigDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<IReadOnlyList<SiteRecoveryVmEndpoint>> contentEndpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -51,8 +119,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     contentEndpoints = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new A2AVmSyncedConfigDetails(Optional.ToDictionary(tags), Optional.ToList(contentEndpoints));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new A2AVmSyncedConfigDetails(Optional.ToDictionary(tags), Optional.ToList(contentEndpoints), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<A2AVmSyncedConfigDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(A2AVmSyncedConfigDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        A2AVmSyncedConfigDetails IPersistableModel<A2AVmSyncedConfigDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(A2AVmSyncedConfigDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeA2AVmSyncedConfigDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<A2AVmSyncedConfigDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

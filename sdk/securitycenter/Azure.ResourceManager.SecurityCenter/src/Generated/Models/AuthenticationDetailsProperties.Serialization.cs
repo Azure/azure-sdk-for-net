@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AuthenticationDetailsProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAuthenticationDetailsProperties))]
+    public partial class AuthenticationDetailsProperties : IUtf8JsonSerializable, IJsonModel<AuthenticationDetailsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationDetailsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AuthenticationDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AuthenticationDetailsProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AuthenticationDetailsProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AuthenticationProvisioningState))
+                {
+                    writer.WritePropertyName("authenticationProvisioningState"u8);
+                    writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(GrantedPermissions))
+                {
+                    writer.WritePropertyName("grantedPermissions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in GrantedPermissions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AuthenticationDetailsProperties DeserializeAuthenticationDetailsProperties(JsonElement element)
+        AuthenticationDetailsProperties IJsonModel<AuthenticationDetailsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthenticationDetailsProperties(document.RootElement, options);
+        }
+
+        internal static AuthenticationDetailsProperties DeserializeAuthenticationDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +98,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             return UnknownAuthenticationDetailsProperties.DeserializeUnknownAuthenticationDetailsProperties(element);
         }
+
+        BinaryData IPersistableModel<AuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AuthenticationDetailsProperties IPersistableModel<AuthenticationDetailsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAuthenticationDetailsProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<AuthenticationDetailsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

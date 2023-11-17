@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceOperationSteps
+    public partial class ManagedInstanceOperationSteps : IUtf8JsonSerializable, IJsonModel<ManagedInstanceOperationSteps>
     {
-        internal static ManagedInstanceOperationSteps DeserializeManagedInstanceOperationSteps(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceOperationSteps>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedInstanceOperationSteps>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedInstanceOperationSteps>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedInstanceOperationSteps>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalSteps))
+                {
+                    writer.WritePropertyName("totalSteps"u8);
+                    writer.WriteStringValue(TotalSteps);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentStep))
+                {
+                    writer.WritePropertyName("currentStep"u8);
+                    writer.WriteNumberValue(CurrentStep.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(StepsList))
+                {
+                    writer.WritePropertyName("stepsList"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in StepsList)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedInstanceOperationSteps IJsonModel<ManagedInstanceOperationSteps>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceOperationSteps(document.RootElement, options);
+        }
+
+        internal static ManagedInstanceOperationSteps DeserializeManagedInstanceOperationSteps(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +96,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> totalSteps = default;
             Optional<int> currentStep = default;
             Optional<IReadOnlyList<UpsertManagedServerOperationStep>> stepsList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalSteps"u8))
@@ -52,8 +128,38 @@ namespace Azure.ResourceManager.Sql.Models
                     stepsList = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedInstanceOperationSteps(totalSteps.Value, Optional.ToNullable(currentStep), Optional.ToList(stepsList));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedInstanceOperationSteps(totalSteps.Value, Optional.ToNullable(currentStep), Optional.ToList(stepsList), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedInstanceOperationSteps>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedInstanceOperationSteps IPersistableModel<ManagedInstanceOperationSteps>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedInstanceOperationSteps(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedInstanceOperationSteps>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

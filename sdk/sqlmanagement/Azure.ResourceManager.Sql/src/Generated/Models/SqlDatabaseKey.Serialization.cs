@@ -6,21 +6,92 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlDatabaseKey : IUtf8JsonSerializable
+    public partial class SqlDatabaseKey : IUtf8JsonSerializable, IJsonModel<SqlDatabaseKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlDatabaseKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlDatabaseKey>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlDatabaseKey>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KeyType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(KeyType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Thumbprint))
+                {
+                    writer.WritePropertyName("thumbprint"u8);
+                    writer.WriteStringValue(Thumbprint);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationDate"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Subregion))
+                {
+                    writer.WritePropertyName("subregion"u8);
+                    writer.WriteStringValue(Subregion);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDatabaseKey DeserializeSqlDatabaseKey(JsonElement element)
+        SqlDatabaseKey IJsonModel<SqlDatabaseKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDatabaseKey(document.RootElement, options);
+        }
+
+        internal static SqlDatabaseKey DeserializeSqlDatabaseKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +100,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> thumbprint = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> subregion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -59,8 +132,38 @@ namespace Azure.ResourceManager.Sql.Models
                     subregion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDatabaseKey(Optional.ToNullable(type), thumbprint.Value, Optional.ToNullable(creationDate), subregion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlDatabaseKey(Optional.ToNullable(type), thumbprint.Value, Optional.ToNullable(creationDate), subregion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlDatabaseKey>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlDatabaseKey IPersistableModel<SqlDatabaseKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlDatabaseKey(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlDatabaseKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

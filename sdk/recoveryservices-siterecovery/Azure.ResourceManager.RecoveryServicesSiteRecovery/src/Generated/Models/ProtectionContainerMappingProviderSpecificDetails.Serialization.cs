@@ -5,14 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ProtectionContainerMappingProviderSpecificDetails
+    [PersistableModelProxy(typeof(UnknownProtectionContainerMappingProviderSpecificDetails))]
+    public partial class ProtectionContainerMappingProviderSpecificDetails : IUtf8JsonSerializable, IJsonModel<ProtectionContainerMappingProviderSpecificDetails>
     {
-        internal static ProtectionContainerMappingProviderSpecificDetails DeserializeProtectionContainerMappingProviderSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtectionContainerMappingProviderSpecificDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProtectionContainerMappingProviderSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ProtectionContainerMappingProviderSpecificDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ProtectionContainerMappingProviderSpecificDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProtectionContainerMappingProviderSpecificDetails IJsonModel<ProtectionContainerMappingProviderSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProtectionContainerMappingProviderSpecificDetails(document.RootElement, options);
+        }
+
+        internal static ProtectionContainerMappingProviderSpecificDetails DeserializeProtectionContainerMappingProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,5 +77,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             return UnknownProtectionContainerMappingProviderSpecificDetails.DeserializeUnknownProtectionContainerMappingProviderSpecificDetails(element);
         }
+
+        BinaryData IPersistableModel<ProtectionContainerMappingProviderSpecificDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProtectionContainerMappingProviderSpecificDetails IPersistableModel<ProtectionContainerMappingProviderSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProtectionContainerMappingProviderSpecificDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<ProtectionContainerMappingProviderSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

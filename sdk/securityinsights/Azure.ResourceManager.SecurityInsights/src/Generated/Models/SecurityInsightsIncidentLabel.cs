@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an incident label. </summary>
     public partial class SecurityInsightsIncidentLabel
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentLabel. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentLabel"/>. </summary>
         /// <param name="labelName"> The name of the label. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public SecurityInsightsIncidentLabel(string labelName)
@@ -23,13 +56,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             LabelName = labelName;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentLabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentLabel"/>. </summary>
         /// <param name="labelName"> The name of the label. </param>
         /// <param name="labelType"> The type of the label. </param>
-        internal SecurityInsightsIncidentLabel(string labelName, SecurityInsightsIncidentLabelType? labelType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentLabel(string labelName, SecurityInsightsIncidentLabelType? labelType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LabelName = labelName;
             LabelType = labelType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentLabel"/> for deserialization. </summary>
+        internal SecurityInsightsIncidentLabel()
+        {
         }
 
         /// <summary> The name of the label. </summary>

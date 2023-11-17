@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class VMwareToAzStackHciDiskInput : IUtf8JsonSerializable
+    public partial class VMwareToAzStackHciDiskInput : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciDiskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciDiskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VMwareToAzStackHciDiskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VMwareToAzStackHciDiskInput>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VMwareToAzStackHciDiskInput>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
@@ -33,11 +44,40 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(DiskFileFormat);
             writer.WritePropertyName("isOsDisk"u8);
             writer.WriteBooleanValue(IsOSDisk);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VMwareToAzStackHciDiskInput DeserializeVMwareToAzStackHciDiskInput(JsonElement element)
+        VMwareToAzStackHciDiskInput IJsonModel<VMwareToAzStackHciDiskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareToAzStackHciDiskInput(document.RootElement, options);
+        }
+
+        internal static VMwareToAzStackHciDiskInput DeserializeVMwareToAzStackHciDiskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             long diskSizeGB = default;
             string diskFileFormat = default;
             bool isOSDisk = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -84,8 +126,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     isOSDisk = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareToAzStackHciDiskInput(diskId, storageContainerId.Value, Optional.ToNullable(isDynamic), diskSizeGB, diskFileFormat, isOSDisk);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VMwareToAzStackHciDiskInput(diskId, storageContainerId.Value, Optional.ToNullable(isDynamic), diskSizeGB, diskFileFormat, isOSDisk, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VMwareToAzStackHciDiskInput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VMwareToAzStackHciDiskInput IPersistableModel<VMwareToAzStackHciDiskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVMwareToAzStackHciDiskInput(document.RootElement, options);
+        }
+
+        string IPersistableModel<VMwareToAzStackHciDiskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,24 +16,313 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class RecommendedActionData : IUtf8JsonSerializable
+    public partial class RecommendedActionData : IUtf8JsonSerializable, IJsonModel<RecommendedActionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedActionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecommendedActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecommendedActionData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    writer.WritePropertyName("kind"u8);
+                    writer.WriteStringValue(Kind);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RecommendationReason))
+                {
+                    writer.WritePropertyName("recommendationReason"u8);
+                    writer.WriteStringValue(RecommendationReason);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ValidSince))
+                {
+                    writer.WritePropertyName("validSince"u8);
+                    writer.WriteStringValue(ValidSince.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastRefresh))
+                {
+                    writer.WritePropertyName("lastRefresh"u8);
+                    writer.WriteStringValue(LastRefresh.Value, "O");
+                }
+            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteObjectValue(State);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsExecutableAction))
+                {
+                    writer.WritePropertyName("isExecutableAction"u8);
+                    writer.WriteBooleanValue(IsExecutableAction.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsRevertableAction))
+                {
+                    writer.WritePropertyName("isRevertableAction"u8);
+                    writer.WriteBooleanValue(IsRevertableAction.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsArchivedAction))
+                {
+                    writer.WritePropertyName("isArchivedAction"u8);
+                    writer.WriteBooleanValue(IsArchivedAction.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExecuteActionStartOn))
+                {
+                    writer.WritePropertyName("executeActionStartTime"u8);
+                    writer.WriteStringValue(ExecuteActionStartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExecuteActionDuration))
+                {
+                    writer.WritePropertyName("executeActionDuration"u8);
+                    writer.WriteStringValue(ExecuteActionDuration.Value, "P");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RevertActionStartOn))
+                {
+                    writer.WritePropertyName("revertActionStartTime"u8);
+                    writer.WriteStringValue(RevertActionStartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RevertActionDuration))
+                {
+                    writer.WritePropertyName("revertActionDuration"u8);
+                    writer.WriteStringValue(RevertActionDuration.Value, "P");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExecuteActionInitiatedBy))
+                {
+                    writer.WritePropertyName("executeActionInitiatedBy"u8);
+                    writer.WriteStringValue(ExecuteActionInitiatedBy.Value.ToSerialString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExecuteActionInitiatedOn))
+                {
+                    writer.WritePropertyName("executeActionInitiatedTime"u8);
+                    writer.WriteStringValue(ExecuteActionInitiatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RevertActionInitiatedBy))
+                {
+                    writer.WritePropertyName("revertActionInitiatedBy"u8);
+                    writer.WriteStringValue(RevertActionInitiatedBy.Value.ToSerialString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RevertActionInitiatedOn))
+                {
+                    writer.WritePropertyName("revertActionInitiatedTime"u8);
+                    writer.WriteStringValue(RevertActionInitiatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Score))
+                {
+                    writer.WritePropertyName("score"u8);
+                    writer.WriteNumberValue(Score.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ImplementationDetails))
+                {
+                    writer.WritePropertyName("implementationDetails"u8);
+                    writer.WriteObjectValue(ImplementationDetails);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorDetails))
+                {
+                    writer.WritePropertyName("errorDetails"u8);
+                    writer.WriteObjectValue(ErrorDetails);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(EstimatedImpact))
+                {
+                    writer.WritePropertyName("estimatedImpact"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in EstimatedImpact)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ObservedImpact))
+                {
+                    writer.WritePropertyName("observedImpact"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ObservedImpact)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(TimeSeries))
+                {
+                    writer.WritePropertyName("timeSeries"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in TimeSeries)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(LinkedObjects))
+                {
+                    writer.WritePropertyName("linkedObjects"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in LinkedObjects)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Details))
+                {
+                    writer.WritePropertyName("details"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Details)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
+                    }
+                    writer.WriteEndObject();
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecommendedActionData DeserializeRecommendedActionData(JsonElement element)
+        RecommendedActionData IJsonModel<RecommendedActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecommendedActionData(document.RootElement, options);
+        }
+
+        internal static RecommendedActionData DeserializeRecommendedActionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +356,8 @@ namespace Azure.ResourceManager.Sql
             Optional<IReadOnlyList<RecommendedActionMetricInfo>> timeSeries = default;
             Optional<IReadOnlyList<string>> linkedObjects = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> details = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -352,8 +645,38 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecommendedActionData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecommendedActionData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecommendedActionData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecommendedActionData IPersistableModel<RecommendedActionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecommendedActionData(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecommendedActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

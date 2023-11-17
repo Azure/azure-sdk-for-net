@@ -5,26 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class DataReplicationVaultProperties : IUtf8JsonSerializable
+    public partial class DataReplicationVaultProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataReplicationVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataReplicationVaultProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataReplicationVaultProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceResourceId))
+                {
+                    writer.WritePropertyName("serviceResourceId"u8);
+                    writer.WriteStringValue(ServiceResourceId);
+                }
+            }
             if (Optional.IsDefined(VaultType))
             {
                 writer.WritePropertyName("vaultType"u8);
                 writer.WriteStringValue(VaultType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataReplicationVaultProperties DeserializeDataReplicationVaultProperties(JsonElement element)
+        DataReplicationVaultProperties IJsonModel<DataReplicationVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataReplicationVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataReplicationVaultProperties(document.RootElement, options);
+        }
+
+        internal static DataReplicationVaultProperties DeserializeDataReplicationVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +88,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<DataReplicationProvisioningState> provisioningState = default;
             Optional<ResourceIdentifier> serviceResourceId = default;
             Optional<DataReplicationReplicationVaultType> vaultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -61,8 +119,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     vaultType = new DataReplicationReplicationVaultType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataReplicationVaultProperties(Optional.ToNullable(provisioningState), serviceResourceId.Value, Optional.ToNullable(vaultType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataReplicationVaultProperties(Optional.ToNullable(provisioningState), serviceResourceId.Value, Optional.ToNullable(vaultType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataReplicationVaultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataReplicationVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataReplicationVaultProperties IPersistableModel<DataReplicationVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataReplicationVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataReplicationVaultProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataReplicationVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

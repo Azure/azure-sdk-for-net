@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class JitRequestData : IUtf8JsonSerializable
+    public partial class JitRequestData : IUtf8JsonSerializable, IJsonModel<JitRequestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitRequestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JitRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<JitRequestData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<JitRequestData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,12 +41,43 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationResourceId))
             {
                 writer.WritePropertyName("applicationResourceId"u8);
                 writer.WriteStringValue(ApplicationResourceId);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherTenantId))
+                {
+                    writer.WritePropertyName("publisherTenantId"u8);
+                    writer.WriteStringValue(PublisherTenantId.Value);
+                }
             }
             if (Optional.IsCollectionDefined(JitAuthorizationPolicies))
             {
@@ -54,12 +94,73 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("jitSchedulingPolicy"u8);
                 writer.WriteObjectValue(JitSchedulingPolicy);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(JitRequestState))
+                {
+                    writer.WritePropertyName("jitRequestState"u8);
+                    writer.WriteStringValue(JitRequestState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedBy))
+                {
+                    writer.WritePropertyName("createdBy"u8);
+                    writer.WriteObjectValue(CreatedBy);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdatedBy))
+                {
+                    writer.WritePropertyName("updatedBy"u8);
+                    writer.WriteObjectValue(UpdatedBy);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JitRequestData DeserializeJitRequestData(JsonElement element)
+        JitRequestData IJsonModel<JitRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitRequestData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitRequestData(document.RootElement, options);
+        }
+
+        internal static JitRequestData DeserializeJitRequestData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +179,8 @@ namespace Azure.ResourceManager.Resources
             Optional<JitRequestState> jitRequestState = default;
             Optional<ArmApplicationDetails> createdBy = default;
             Optional<ArmApplicationDetails> updatedBy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -208,8 +311,38 @@ namespace Azure.ResourceManager.Resources
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JitRequestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, applicationResourceId.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JitRequestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, applicationResourceId.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JitRequestData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitRequestData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JitRequestData IPersistableModel<JitRequestData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitRequestData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJitRequestData(document.RootElement, options);
+        }
+
+        string IPersistableModel<JitRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

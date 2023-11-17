@@ -6,15 +6,108 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncGroupLogProperties
+    public partial class SyncGroupLogProperties : IUtf8JsonSerializable, IJsonModel<SyncGroupLogProperties>
     {
-        internal static SyncGroupLogProperties DeserializeSyncGroupLogProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncGroupLogProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SyncGroupLogProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SyncGroupLogProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SyncGroupLogProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("timestamp"u8);
+                    writer.WriteStringValue(Timestamp.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LogType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(LogType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Source))
+                {
+                    writer.WritePropertyName("source"u8);
+                    writer.WriteStringValue(Source);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Details))
+                {
+                    writer.WritePropertyName("details"u8);
+                    writer.WriteStringValue(Details);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TracingId))
+                {
+                    writer.WritePropertyName("tracingId"u8);
+                    writer.WriteStringValue(TracingId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OperationStatus))
+                {
+                    writer.WritePropertyName("operationStatus"u8);
+                    writer.WriteStringValue(OperationStatus);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SyncGroupLogProperties IJsonModel<SyncGroupLogProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSyncGroupLogProperties(document.RootElement, options);
+        }
+
+        internal static SyncGroupLogProperties DeserializeSyncGroupLogProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +118,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> details = default;
             Optional<Guid> tracingId = default;
             Optional<string> operationStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -69,8 +164,38 @@ namespace Azure.ResourceManager.Sql.Models
                     operationStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SyncGroupLogProperties(Optional.ToNullable(timestamp), Optional.ToNullable(type), source.Value, details.Value, Optional.ToNullable(tracingId), operationStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SyncGroupLogProperties(Optional.ToNullable(timestamp), Optional.ToNullable(type), source.Value, details.Value, Optional.ToNullable(tracingId), operationStatus.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SyncGroupLogProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SyncGroupLogProperties IPersistableModel<SyncGroupLogProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSyncGroupLogProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<SyncGroupLogProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

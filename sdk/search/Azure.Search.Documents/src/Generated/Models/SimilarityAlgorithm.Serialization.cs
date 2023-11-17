@@ -5,24 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SimilarityAlgorithm : IUtf8JsonSerializable
+    public partial class SimilarityAlgorithm : IUtf8JsonSerializable, IJsonModel<SimilarityAlgorithm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimilarityAlgorithm>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SimilarityAlgorithm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SimilarityAlgorithm>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SimilarityAlgorithm>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SimilarityAlgorithm DeserializeSimilarityAlgorithm(JsonElement element)
+        SimilarityAlgorithm IJsonModel<SimilarityAlgorithm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimilarityAlgorithm)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimilarityAlgorithm(document.RootElement, options);
+        }
+
+        internal static SimilarityAlgorithm DeserializeSimilarityAlgorithm(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +76,30 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return UnknownSimilarity.DeserializeUnknownSimilarity(element);
         }
+
+        BinaryData IPersistableModel<SimilarityAlgorithm>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimilarityAlgorithm)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SimilarityAlgorithm IPersistableModel<SimilarityAlgorithm>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimilarityAlgorithm)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSimilarityAlgorithm(document.RootElement, options);
+        }
+
+        string IPersistableModel<SimilarityAlgorithm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

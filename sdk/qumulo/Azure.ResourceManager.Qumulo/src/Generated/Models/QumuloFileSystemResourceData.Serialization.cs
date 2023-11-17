@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -15,10 +17,17 @@ using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    public partial class QumuloFileSystemResourceData : IUtf8JsonSerializable
+    public partial class QumuloFileSystemResourceData : IUtf8JsonSerializable, IJsonModel<QumuloFileSystemResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloFileSystemResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QumuloFileSystemResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<QumuloFileSystemResourceData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<QumuloFileSystemResourceData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -38,10 +47,41 @@ namespace Azure.ResourceManager.Qumulo
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("marketplaceDetails"u8);
             writer.WriteObjectValue(MarketplaceDetails);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                }
+            }
             writer.WritePropertyName("storageSku"u8);
             writer.WriteStringValue(StorageSku.ToSerialString());
             writer.WritePropertyName("userDetails"u8);
@@ -78,11 +118,40 @@ namespace Azure.ResourceManager.Qumulo
                 writer.WriteStringValue(AvailabilityZone);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QumuloFileSystemResourceData DeserializeQumuloFileSystemResourceData(JsonElement element)
+        QumuloFileSystemResourceData IJsonModel<QumuloFileSystemResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQumuloFileSystemResourceData(document.RootElement, options);
+        }
+
+        internal static QumuloFileSystemResourceData DeserializeQumuloFileSystemResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,6 +173,8 @@ namespace Azure.ResourceManager.Qumulo
             string adminPassword = default;
             int initialCapacity = default;
             Optional<string> availabilityZone = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -244,8 +315,38 @@ namespace Azure.ResourceManager.Qumulo
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QumuloFileSystemResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, marketplaceDetails, Optional.ToNullable(provisioningState), storageSku, userDetails, delegatedSubnetId, clusterLoginUrl.Value, Optional.ToList(privateIPs), adminPassword, initialCapacity, availabilityZone.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QumuloFileSystemResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, marketplaceDetails, Optional.ToNullable(provisioningState), storageSku, userDetails, delegatedSubnetId, clusterLoginUrl.Value, Optional.ToList(privateIPs), adminPassword, initialCapacity, availabilityZone.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QumuloFileSystemResourceData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QumuloFileSystemResourceData IPersistableModel<QumuloFileSystemResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQumuloFileSystemResourceData(document.RootElement, options);
+        }
+
+        string IPersistableModel<QumuloFileSystemResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
