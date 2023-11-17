@@ -53,6 +53,17 @@ public class PipelineMessage : IDisposable
 
     #endregion
 
+    #region Per-request pipeline
+
+    internal bool CustomPipeline =>
+        PerCallPolicies is not null || PerTryPolicies is not null;
+
+    internal PipelinePolicy[]? PerCallPolicies { get; set; }
+
+    internal PipelinePolicy[]? PerTryPolicies { get; set; }
+
+    #endregion
+
     #region IDisposable
 
     protected virtual void Dispose(bool disposing)

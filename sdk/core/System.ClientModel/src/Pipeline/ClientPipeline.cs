@@ -1,18 +1,25 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
 using System.ClientModel.Internal.Primitives;
+using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public class ClientPipeline
+public partial class ClientPipeline
 {
+    private readonly int _perCallIndex;
+    private readonly int _perTryIndex;
+
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies)
+    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex)
     {
+        if (perCallIndex > 255) throw new ArgumentOutOfRangeException("Cannot create pipeline with more than 255 policies.");
+        if (perTryIndex > 255) throw new ArgumentOutOfRangeException("Cannot create pipeline with more than 255 policies.");
+        if (perTryIndex > perCallIndex) throw new ArgumentOutOfRangeException("perCallIndex cannot be greater than perTryIndex.");
+
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
         {
             throw new ArgumentException("Last policy in the array must be of type 'PipelineTransport'.", nameof(policies));
@@ -20,7 +27,11 @@ public class ClientPipeline
 
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
+
+        _perCallIndex = perCallIndex;
+        _perTryIndex = perTryIndex;
     }
+
     public static ClientPipeline Create(ServiceClientOptions options, params PipelinePolicy[] perCallPolicies)
         => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
@@ -61,6 +72,8 @@ public class ClientPipeline
             index += options.PerCallPolicies.Length;
         }
 
+        int perCallIndex = index;
+
         if (options.RetryPolicy != null)
         {
             pipeline[index++] = options.RetryPolicy;
@@ -74,6 +87,8 @@ public class ClientPipeline
             options.PerTryPolicies.CopyTo(pipeline.AsSpan(index));
             index += options.PerTryPolicies.Length;
         }
+
+        int perTryIndex = index;
 
         TimeSpan networkTimeout = options.NetworkTimeout ?? ResponseBufferingPolicy.DefaultNetworkTimeout;
         ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
@@ -89,7 +104,7 @@ public class ClientPipeline
             pipeline[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        return new ClientPipeline(pipeline);
+        return new ClientPipeline(pipeline, perCallIndex, perTryIndex);
     }
 
     // TODO: note that without a common base type, nothing validates that MessagePipeline
@@ -99,24 +114,38 @@ public class ClientPipeline
 
     public void Send(PipelineMessage message)
     {
-        PipelineProcessor enumerator = new MessagePipelineExecutor(message, _policies);
-        enumerator.ProcessNext();
+        PipelineProcessor processor = GetProcessor(message);
+        processor.ProcessNext();
     }
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
-        PipelineProcessor enumerator = new MessagePipelineExecutor(message, _policies);
-        await enumerator.ProcessNextAsync().ConfigureAwait(false);
+        PipelineProcessor processor = GetProcessor(message);
+        await processor.ProcessNextAsync().ConfigureAwait(false);
     }
 
-    private class MessagePipelineExecutor : PipelineProcessor
+    private PipelineProcessor GetProcessor(PipelineMessage message)
+    {
+        if (message.CustomPipeline)
+        {
+            return new CustomPipelineProcessor(message,
+                _policies,
+                message.PerCallPolicies,
+                message.PerTryPolicies,
+                _perCallIndex,
+                _perTryIndex);
+        }
+
+        return new ClientPipelineProcessor(message, _policies);
+    }
+
+    private class ClientPipelineProcessor : PipelineProcessor
     {
         private readonly PipelineMessage _message;
         private ReadOnlyMemory<PipelinePolicy> _policies;
 
-        public MessagePipelineExecutor(
-            PipelineMessage message,
-            ReadOnlyMemory<PipelinePolicy> policies )
+        public ClientPipelineProcessor(PipelineMessage message,
+            ReadOnlyMemory<PipelinePolicy> policies)
         {
             _message = message;
             _policies = policies;
@@ -126,17 +155,17 @@ public class ClientPipeline
 
         public override bool ProcessNext()
         {
-            var first = _policies.Span[0];
+            var next = _policies.Span[0];
             _policies = _policies.Slice(1);
-            first.Process(_message, this);
+            next.Process(_message, this);
             return _policies.Length > 0;
         }
 
         public override async ValueTask<bool> ProcessNextAsync()
         {
-            var first = _policies.Span[0];
+            var next = _policies.Span[0];
             _policies = _policies.Slice(1);
-            await first.ProcessAsync(_message, this).ConfigureAwait(false);
+            await next.ProcessAsync(_message, this).ConfigureAwait(false);
             return _policies.Length > 0;
         }
     }

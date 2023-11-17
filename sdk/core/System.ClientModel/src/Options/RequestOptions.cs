@@ -29,10 +29,6 @@ public class RequestOptions
 
     public virtual MessageHeaders RequestHeaders { get; }
 
-    internal bool PipelineModified =>
-        _perCallPolicies is not null ||
-        _perTryPolicies is not null;
-
     // Set options on the message before sending it through the pipeline.
     public virtual void Apply(PipelineMessage message, MessageClassifier? messageClassifier = default)
     {
@@ -53,6 +49,10 @@ public class RequestOptions
 
             // The internal global default classifier.
             MessageClassifier.Default;
+
+        // Copy custom pipeline policies.
+        message.PerCallPolicies = _perCallPolicies;
+        message.PerTryPolicies = _perTryPolicies;
     }
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
