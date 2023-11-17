@@ -18,7 +18,9 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Optional<string> phoneNumber = default;
+            string phoneNumber = default;
+            string nationalFormat = default;
+            string internationalFormat = default;
             Optional<OperatorNumberType> numberType = default;
             Optional<string> isoCountryCode = default;
             Optional<OperatorDetails> operatorDetails = default;
@@ -27,6 +29,16 @@ namespace Azure.Communication.PhoneNumbers
                 if (property.NameEquals("phoneNumber"u8))
                 {
                     phoneNumber = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("nationalFormat"u8))
+                {
+                    nationalFormat = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("internationalFormat"u8))
+                {
+                    internationalFormat = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("numberType"u8))
@@ -53,7 +65,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorInformation(phoneNumber.Value, Optional.ToNullable(numberType), isoCountryCode.Value, operatorDetails.Value);
+            return new OperatorInformation(phoneNumber, nationalFormat, internationalFormat, Optional.ToNullable(numberType), isoCountryCode.Value, operatorDetails.Value);
         }
     }
 }

@@ -25,6 +25,11 @@ namespace Azure.Communication.PhoneNumbers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Options))
+            {
+                writer.WritePropertyName("options"u8);
+                writer.WriteObjectValue(Options);
+            }
             writer.WriteEndObject();
         }
     }

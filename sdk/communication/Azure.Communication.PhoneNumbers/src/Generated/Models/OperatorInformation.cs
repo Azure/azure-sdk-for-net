@@ -5,24 +5,42 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents metadata about a phone number that is controlled/provided by that phone number's operator. </summary>
     public partial class OperatorInformation
     {
         /// <summary> Initializes a new instance of OperatorInformation. </summary>
-        internal OperatorInformation()
+        /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
+        /// <param name="nationalFormat"> National format of the phone number. </param>
+        /// <param name="internationalFormat"> International format of the phone number. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/>, <paramref name="nationalFormat"/> or <paramref name="internationalFormat"/> is null. </exception>
+        internal OperatorInformation(string phoneNumber, string nationalFormat, string internationalFormat)
         {
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
+            Argument.AssertNotNull(nationalFormat, nameof(nationalFormat));
+            Argument.AssertNotNull(internationalFormat, nameof(internationalFormat));
+
+            PhoneNumber = phoneNumber;
+            NationalFormat = nationalFormat;
+            InternationalFormat = internationalFormat;
         }
 
         /// <summary> Initializes a new instance of OperatorInformation. </summary>
         /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
+        /// <param name="nationalFormat"> National format of the phone number. </param>
+        /// <param name="internationalFormat"> International format of the phone number. </param>
         /// <param name="numberType"> Type of service associated with the phone number. </param>
         /// <param name="isoCountryCode"> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </param>
         /// <param name="operatorDetails"> Represents metadata describing the operator of a phone number. </param>
-        internal OperatorInformation(string phoneNumber, OperatorNumberType? numberType, string isoCountryCode, OperatorDetails operatorDetails)
+        internal OperatorInformation(string phoneNumber, string nationalFormat, string internationalFormat, OperatorNumberType? numberType, string isoCountryCode, OperatorDetails operatorDetails)
         {
             PhoneNumber = phoneNumber;
+            NationalFormat = nationalFormat;
+            InternationalFormat = internationalFormat;
             NumberType = numberType;
             IsoCountryCode = isoCountryCode;
             OperatorDetails = operatorDetails;
@@ -30,6 +48,10 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> E.164 formatted string representation of the phone number. </summary>
         public string PhoneNumber { get; }
+        /// <summary> National format of the phone number. </summary>
+        public string NationalFormat { get; }
+        /// <summary> International format of the phone number. </summary>
+        public string InternationalFormat { get; }
         /// <summary> Type of service associated with the phone number. </summary>
         public OperatorNumberType? NumberType { get; }
         /// <summary> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </summary>
