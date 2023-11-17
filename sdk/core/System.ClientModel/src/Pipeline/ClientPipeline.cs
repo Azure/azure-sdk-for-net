@@ -11,26 +11,27 @@ public class ClientPipeline
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    internal ClientPipeline(
-        PipelineTransport transport,
-        ReadOnlyMemory<PipelinePolicy> policies)
-    {
-        _transport = transport;
-        var larger = new PipelinePolicy[policies.Length + 1];
-        policies.Span.CopyTo(larger);
-        larger[policies.Length] = transport;
-        _policies = larger;
-    }
-
     private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies)
     {
+        if (policies.Span[policies.Length - 1] is not PipelineTransport)
+        {
+            throw new ArgumentException("Last policy in the array must be of type 'PipelineTransport'.", nameof(policies));
+        }
+
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
     }
+    public static ClientPipeline Create(ServiceClientOptions options, params PipelinePolicy[] perCallPolicies)
+        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
-    public static ClientPipeline Create(ServiceClientOptions options)
+    public static ClientPipeline Create(
+        ServiceClientOptions options,
+        ReadOnlySpan<PipelinePolicy> perCallPolicies,
+        ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
-        int pipelineLength = 0;
+        if (options is null) throw new ArgumentNullException(nameof(options));
+
+        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
         if (options.PerTryPolicies != null)
         {
@@ -51,9 +52,12 @@ public class ClientPipeline
 
         int index = 0;
 
+        perCallPolicies.CopyTo(pipeline.AsSpan(index));
+        index += perCallPolicies.Length;
+
         if (options.PerCallPolicies != null)
         {
-            options.PerCallPolicies.CopyTo(pipeline.AsSpan());
+            options.PerCallPolicies.CopyTo(pipeline.AsSpan(index));
             index += options.PerCallPolicies.Length;
         }
 
@@ -61,6 +65,9 @@ public class ClientPipeline
         {
             pipeline[index++] = options.RetryPolicy;
         }
+
+        perTryPolicies.CopyTo(pipeline.AsSpan(index));
+        index += perTryPolicies.Length;
 
         if (options.PerTryPolicies != null)
         {
@@ -79,7 +86,6 @@ public class ClientPipeline
         else
         {
             // Add default transport.
-            // TODO: Note this adds an HTTP dependency we should be aware of.
             pipeline[index++] = HttpClientPipelineTransport.Shared;
         }
 

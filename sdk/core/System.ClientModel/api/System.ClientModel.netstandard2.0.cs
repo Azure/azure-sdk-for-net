@@ -61,13 +61,22 @@ namespace System.ClientModel
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
     }
-    public partial class RequestOptions : System.ClientModel.Primitives.PipelineOptions
+    public partial class RequestOptions
     {
         public RequestOptions() { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public virtual System.ClientModel.Primitives.MessageHeaders RequestHeaders { get { throw null; } }
-        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.MessageClassifier? classifier = null) { }
+        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.MessageClassifier? messageClassifier = null) { }
+    }
+    public abstract partial class ServiceClientOptions
+    {
+        protected ServiceClientOptions() { }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
+        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
     }
 }
 namespace System.ClientModel.Internal
@@ -240,7 +249,8 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipeline
     {
         internal ClientPipeline() { }
-        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.PipelineOptions options) { throw null; }
+        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.ServiceClientOptions options, params System.ClientModel.Primitives.PipelinePolicy[] perCallPolicies) { throw null; }
+        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.ServiceClientOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies) { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
@@ -313,20 +323,16 @@ namespace System.ClientModel.Primitives
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
-    public partial class PipelineOptions
-    {
-        public PipelineOptions() { }
-        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
-    }
     public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
         public abstract void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline);
+    }
+    public enum PipelinePosition
+    {
+        PerCall = 0,
+        PerTry = 1,
     }
     public abstract partial class PipelineProcessor
     {
