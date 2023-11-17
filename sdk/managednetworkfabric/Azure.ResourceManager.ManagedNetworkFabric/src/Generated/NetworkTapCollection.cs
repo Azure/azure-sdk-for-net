@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkTapResource>> GetIfExistsAsync(string networkTapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+
+            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkTapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkTapResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkTapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        public virtual NullableResponse<NetworkTapResource> GetIfExists(string networkTapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+
+            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkTapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkTapResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkTapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkTapResource> IEnumerable<NetworkTapResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2023-10-17)
+
+### Features Added
+
+- Added install patches for hybrid machine
+- Added assess patches for hybrid machine
 
 ## 1.0.0-beta.4 (2023-05-30)
 

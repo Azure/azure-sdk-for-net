@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/invitations/{invitationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invitations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="invitationName"> The name of the invitation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataShareInvitationResource>> GetIfExistsAsync(string invitationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
+
+            using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataShareInvitationInvitationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareInvitationResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareInvitationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/invitations/{invitationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Invitations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="invitationName"> The name of the invitation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
+        public virtual NullableResponse<DataShareInvitationResource> GetIfExists(string invitationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
+
+            using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataShareInvitationInvitationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareInvitationResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareInvitationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataShareInvitationResource> IEnumerable<DataShareInvitationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

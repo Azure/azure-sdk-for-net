@@ -28,6 +28,8 @@
 - [BREAKING CHANGE] Made parameter `completeLength` from `*BlobStorageResource.CopyBlockFromUriAsync` mandatory.
 - [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` (including it's derived classes).
 - [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
+- [BREAKING CHANGE] Removed `DestinationImmutabilityPolicy`, `LegalHold`, `UploadTransferValidationOptions`, and `DownloadTransferValidationOptions` from `BlobStorageResourceOptions` as they were not fully supported.
+
 ### Bugs Fixed
 
 ### Other Changes

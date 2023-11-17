@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Consumption
     public partial class ConsumptionBudgetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConsumptionBudgetResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="budgetName"> The budgetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string budgetName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Consumption/budgets/{budgetName}";

@@ -82,5 +82,10 @@ namespace Azure.DigitalTwins.Core.Tests
         /// Default Ward Model Id.
         /// </summary>
         public const string WardModelId = "dtmi:example:Ward;1";
+
+        /// <summary>
+        /// Default Job Id.
+        /// </summary>
+        public const string ImportJobId = "job1";
     }
 }

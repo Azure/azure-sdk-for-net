@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -15,6 +16,13 @@ namespace Azure.Core.Json
     /// <summary>
     /// A mutable representation of a JSON value.
     /// </summary>
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+    // This class is marked as RequiresUnreferencedCode and RequiresDynamic code for two reasons. First, for the usage of MutableJsonElement in RootElement and WriteTo. Second, the method WriteTo
+    // is  used in the MutableJsonDocumentConverter, which causes MutableJsonDocumentConverter to be incompatible with trimming. Since the class is used in the attribute on this class, the entire
+    // class must be annotated.
+    [RequiresUnreferencedCode(SerializationRequiresUnreferencedCodeClass)]
+    [RequiresDynamicCode(SerializationRequiresUnreferencedCodeClass)]
+#endif
     [JsonConverter(typeof(MutableJsonDocumentConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
     {
@@ -25,6 +33,8 @@ namespace Azure.Core.Json
 
         private readonly JsonSerializerOptions _serializerOptions;
         internal JsonSerializerOptions SerializerOptions => _serializerOptions;
+
+        internal const string SerializationRequiresUnreferencedCodeClass = "This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
 
         private ChangeTracker? _changeTracker;
         internal ChangeTracker Changes
@@ -210,8 +220,14 @@ namespace Azure.Core.Json
             _serializerOptions = serializerOptions ?? DefaultSerializerOptions;
         }
 
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+        [RequiresUnreferencedCode(classIsIncompatibleWithTrimming)]
+#endif
+        [RequiresDynamicCode(classIsIncompatibleWithTrimming)]
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
         {
+            public const string classIsIncompatibleWithTrimming = "Using MutableJsonDocument or MutableJsonDocumentConverter is not compatible with trimming due to reflection-based serialization.";
+
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 return Parse(ref reader);

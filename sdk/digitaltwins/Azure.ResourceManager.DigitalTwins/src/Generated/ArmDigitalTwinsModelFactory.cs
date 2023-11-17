@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// DigitalTwinsInstance endpoint resource properties.
-        /// Please note <see cref="DigitalTwinsEndpointResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DigitalTwinsEventGridProperties"/>, <see cref="DigitalTwinsEventHubProperties"/> and <see cref="DigitalTwinsServiceBusProperties"/>.
+        /// Please note <see cref="Models.DigitalTwinsEndpointResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DigitalTwinsEventGridProperties"/>, <see cref="Models.DigitalTwinsEventHubProperties"/> and <see cref="Models.DigitalTwinsServiceBusProperties"/>.
         /// </param>
         /// <returns> A new <see cref="DigitalTwins.DigitalTwinsEndpointResourceData"/> instance for mocking. </returns>
         public static DigitalTwinsEndpointResourceData DigitalTwinsEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DigitalTwinsEndpointResourceProperties properties = null)
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of a specific time series database connection.
-        /// Please note <see cref="TimeSeriesDatabaseConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataExplorerConnectionProperties"/>.
+        /// Please note <see cref="Models.TimeSeriesDatabaseConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataExplorerConnectionProperties"/>.
         /// </param>
         /// <returns> A new <see cref="DigitalTwins.TimeSeriesDatabaseConnectionData"/> instance for mocking. </returns>
         public static TimeSeriesDatabaseConnectionData TimeSeriesDatabaseConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TimeSeriesDatabaseConnectionProperties properties = null)

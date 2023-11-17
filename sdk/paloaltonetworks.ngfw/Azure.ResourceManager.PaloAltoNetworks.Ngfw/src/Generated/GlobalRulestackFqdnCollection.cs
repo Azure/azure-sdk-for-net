@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FqdnListGlobalRulestack_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> fqdn list name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<GlobalRulestackFqdnResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackFqdnCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _globalRulestackFqdnFqdnListGlobalRulestackRestClient.GetAsync(Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GlobalRulestackFqdnResource>(response.GetRawResponse());
+                return Response.FromValue(new GlobalRulestackFqdnResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FqdnListGlobalRulestack_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> fqdn list name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<GlobalRulestackFqdnResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackFqdnCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _globalRulestackFqdnFqdnListGlobalRulestackRestClient.Get(Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GlobalRulestackFqdnResource>(response.GetRawResponse());
+                return Response.FromValue(new GlobalRulestackFqdnResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<GlobalRulestackFqdnResource> IEnumerable<GlobalRulestackFqdnResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

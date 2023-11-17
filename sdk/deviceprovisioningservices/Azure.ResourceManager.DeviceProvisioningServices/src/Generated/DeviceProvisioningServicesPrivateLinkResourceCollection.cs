@@ -239,6 +239,80 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual async Task<NullableResponse<DeviceProvisioningServicesPrivateLinkResource>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DeviceProvisioningServicesPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual NullableResponse<DeviceProvisioningServicesPrivateLinkResource> GetIfExists(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DeviceProvisioningServicesPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DeviceProvisioningServicesPrivateLinkResource> IEnumerable<DeviceProvisioningServicesPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

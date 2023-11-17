@@ -243,6 +243,80 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}/regulatoryComplianceAssessments/{regulatoryComplianceAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceAssessments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceAssessmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RegulatoryComplianceAssessmentResource>> GetIfExistsAsync(string regulatoryComplianceAssessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceAssessmentName, nameof(regulatoryComplianceAssessmentName));
+
+            using var scope = _regulatoryComplianceAssessmentClientDiagnostics.CreateScope("RegulatoryComplianceAssessmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _regulatoryComplianceAssessmentRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, regulatoryComplianceAssessmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RegulatoryComplianceAssessmentResource>(response.GetRawResponse());
+                return Response.FromValue(new RegulatoryComplianceAssessmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}/regulatoryComplianceAssessments/{regulatoryComplianceAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceAssessments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceAssessmentName"/> is null. </exception>
+        public virtual NullableResponse<RegulatoryComplianceAssessmentResource> GetIfExists(string regulatoryComplianceAssessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceAssessmentName, nameof(regulatoryComplianceAssessmentName));
+
+            using var scope = _regulatoryComplianceAssessmentClientDiagnostics.CreateScope("RegulatoryComplianceAssessmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _regulatoryComplianceAssessmentRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, regulatoryComplianceAssessmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RegulatoryComplianceAssessmentResource>(response.GetRawResponse());
+                return Response.FromValue(new RegulatoryComplianceAssessmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RegulatoryComplianceAssessmentResource> IEnumerable<RegulatoryComplianceAssessmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

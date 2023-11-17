@@ -13,20 +13,27 @@ namespace Azure.Storage.DataMovement
     public class DataTransferOptions : IEquatable<DataTransferOptions>
     {
         /// <summary>
-        /// The maximum length of a network transfer in bytes.
-        ///
-        /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB
-        /// or will default to 8 MB if the total size is greater than or equal to 100MB.
+        /// The maximum size to use for each chunk when transferring data in chunks.
+        /// The default value is 4 MiB.
+        /// <para/>
+        /// When resuming a transfer, the default value will be the value specified
+        /// when the transfer was first started.
+        /// <para/>
+        /// This value may be clamped to the maximum allowed for the particular transfer/resource type.
         /// </summary>
         public long? MaximumTransferChunkSize { get; set; }
 
         /// <summary>
         /// The size of the first range request in bytes. Single Transfer sizes smaller than this
-        /// limit will be Uploaded or Downloaded in a single request.
-        /// Transfers larger than this limit will continue being downloaded or uploaded
-        /// in chunks of size <see cref="MaximumTransferChunkSize"/>.
-        ///
-        /// On Uploads, if the value is not set, it will set at 256 MB. (TODO: We should lower to 32 MB)
+        /// limit will be Uploaded or Downloaded in a single request. Transfers larger than this
+        /// limit will continue being downloaded or uploaded in chunks of size
+        /// <see cref="MaximumTransferChunkSize"/>.
+        /// The default value is 32 MiB.
+        /// <para/>
+        /// When resuming a transfer, the default value will be the value specified
+        /// when the transfer was first started.
+        /// <para/>
+        /// This value may be clamped to the maximum allowed for the particular transfer/resource type.
         /// </summary>
         public long? InitialTransferSize { get; set; }
 
@@ -83,8 +90,15 @@ namespace Azure.Storage.DataMovement
             && InitialTransferSize == obj?.InitialTransferSize;
 
         /// <summary>
-        /// Optional <see cref="StorageResourceCreationPreference"/> to configure overwrite
-        /// behavior. Will default to <see cref="StorageResourceCreationPreference.OverwriteIfExists"/>.
+        /// Configures the behavior when a transfer encounters a resource that
+        /// already exists.
+        /// <para/>
+        /// Will default to <see cref="StorageResourceCreationPreference.Default"/>
+        /// which will be <see cref="StorageResourceCreationPreference.FailIfExists"/> when
+        /// starting a new transfer.
+        /// When resuming a transfer, the value will default to the value used when first starting
+        /// the transfer for all resources that were successfully enumerated and the regular default
+        /// for any remaining resources.
         /// </summary>
         public StorageResourceCreationPreference CreationPreference { get; set; }
 

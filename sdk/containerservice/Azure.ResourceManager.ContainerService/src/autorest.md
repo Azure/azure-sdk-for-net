@@ -110,7 +110,7 @@ format-by-name-rules:
   'PrincipalId': 'uuid'
   'IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

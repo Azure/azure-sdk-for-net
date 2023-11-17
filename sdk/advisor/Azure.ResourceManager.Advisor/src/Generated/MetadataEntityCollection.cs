@@ -242,6 +242,80 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of metadata entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<MetadataEntityResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _metadataEntityRecommendationMetadataRestClient.GetAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MetadataEntityResource>(response.GetRawResponse());
+                return Response.FromValue(new MetadataEntityResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of metadata entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<MetadataEntityResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _metadataEntityRecommendationMetadataRestClient.Get(name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MetadataEntityResource>(response.GetRawResponse());
+                return Response.FromValue(new MetadataEntityResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MetadataEntityResource> IEnumerable<MetadataEntityResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

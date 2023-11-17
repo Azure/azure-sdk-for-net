@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Avs
     public partial class AvsPrivateCloudClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvsPrivateCloudClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}";
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudDatastoreResources and their operations over a AvsPrivateCloudDatastoreResource. </returns>
         public virtual AvsPrivateCloudDatastoreCollection GetAvsPrivateCloudDatastores()
         {
-            return GetCachedClient(Client => new AvsPrivateCloudDatastoreCollection(Client, Id));
+            return GetCachedClient(client => new AvsPrivateCloudDatastoreCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvsPrivateCloudDatastoreResource>> GetAvsPrivateCloudDatastoreAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvsPrivateCloudDatastoreResource> GetAvsPrivateCloudDatastore(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudClusterVirtualMachineResources and their operations over a AvsPrivateCloudClusterVirtualMachineResource. </returns>
         public virtual AvsPrivateCloudClusterVirtualMachineCollection GetAvsPrivateCloudClusterVirtualMachines()
         {
-            return GetCachedClient(Client => new AvsPrivateCloudClusterVirtualMachineCollection(Client, Id));
+            return GetCachedClient(client => new AvsPrivateCloudClusterVirtualMachineCollection(client, Id));
         }
 
         /// <summary>
@@ -163,8 +167,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvsPrivateCloudClusterVirtualMachineResource>> GetAvsPrivateCloudClusterVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
@@ -186,8 +190,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvsPrivateCloudClusterVirtualMachineResource> GetAvsPrivateCloudClusterVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
         {
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of PlacementPolicyResources and their operations over a PlacementPolicyResource. </returns>
         public virtual PlacementPolicyCollection GetPlacementPolicies()
         {
-            return GetCachedClient(Client => new PlacementPolicyCollection(Client, Id));
+            return GetCachedClient(client => new PlacementPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -216,8 +220,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="placementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="placementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PlacementPolicyResource>> GetPlacementPolicyAsync(string placementPolicyName, CancellationToken cancellationToken = default)
         {
@@ -239,8 +243,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="placementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="placementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PlacementPolicyResource> GetPlacementPolicy(string placementPolicyName, CancellationToken cancellationToken = default)
         {

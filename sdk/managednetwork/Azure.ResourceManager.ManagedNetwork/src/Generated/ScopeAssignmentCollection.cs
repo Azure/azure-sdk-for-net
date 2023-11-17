@@ -313,6 +313,80 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScopeAssignmentResource>> GetIfExistsAsync(string scopeAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scopeAssignmentName, nameof(scopeAssignmentName));
+
+            using var scope = _scopeAssignmentClientDiagnostics.CreateScope("ScopeAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scopeAssignmentRestClient.GetAsync(Id, scopeAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScopeAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
+        public virtual NullableResponse<ScopeAssignmentResource> GetIfExists(string scopeAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scopeAssignmentName, nameof(scopeAssignmentName));
+
+            using var scope = _scopeAssignmentClientDiagnostics.CreateScope("ScopeAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scopeAssignmentRestClient.Get(Id, scopeAssignmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScopeAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ScopeAssignmentResource> IEnumerable<ScopeAssignmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -5,32 +5,26 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The PageBlobStorageResource class.
     /// </summary>
-    public class PageBlobStorageResource : StorageResourceItem
+    internal class PageBlobStorageResource : StorageResourceItemInternal
     {
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
         internal long? _length;
         internal ETag? _etagDownloadLock = default;
 
-        /// <summary>
-        /// The identifier for the type of storage resource.
-        /// </summary>
         protected override string ResourceId => "PageBlob";
 
-        /// <summary>
-        /// Gets the Uri of the Storage Resource
-        /// </summary>
         public override Uri Uri => BlobClient.Uri;
+
+        public override string ProviderId => "blob";
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
@@ -40,7 +34,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        protected override long MaxChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
+        protected override long MaxSupportedChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
@@ -291,6 +285,21 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new BlobSourceCheckpointData(BlobType.Page);
+        }
+
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new BlobDestinationCheckpointData(
+                BlobType.Page,
+                _options?.HttpHeaders,
+                _options?.AccessTier,
+                _options?.Metadata,
+                _options?.Tags);
         }
 
         private void GrabEtag(Response response)

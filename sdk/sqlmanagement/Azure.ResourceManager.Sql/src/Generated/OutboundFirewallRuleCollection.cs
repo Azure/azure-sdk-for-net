@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundFirewallRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outboundRuleFqdn"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
+        public virtual async Task<NullableResponse<OutboundFirewallRuleResource>> GetIfExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
+
+            using var scope = _outboundFirewallRuleClientDiagnostics.CreateScope("OutboundFirewallRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _outboundFirewallRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<OutboundFirewallRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new OutboundFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundFirewallRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outboundRuleFqdn"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
+        public virtual NullableResponse<OutboundFirewallRuleResource> GetIfExists(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
+
+            using var scope = _outboundFirewallRuleClientDiagnostics.CreateScope("OutboundFirewallRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _outboundFirewallRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<OutboundFirewallRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new OutboundFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<OutboundFirewallRuleResource> IEnumerable<OutboundFirewallRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

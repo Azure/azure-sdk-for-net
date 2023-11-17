@@ -1,22 +1,26 @@
 matrix:
   scenarios:
     consumer:
-      image: Dockerfile
-      imageBuildDir: "../../../.."
       scenarioName: "Consumer"
+      parallel: 2
+      image: Dockerfile
+      imageBuildDir: "../../../.."
     eventprod:
-      image: Dockerfile
-      imageBuildDir: "../../../.."
       scenarioName: "EventProd"
+      parallel: 2
+      image: Dockerfile
+      imageBuildDir: "../../../.."
     buffprod:
-      image: Dockerfile
-      imageBuildDir: "../../../.."
       scenarioName: "BuffProd"
+      parallel: 2
+      image: Dockerfile
+      imageBuildDir: "../../../.."
     burstbuffprod:
-      image: Dockerfile
-      imageBuildDir: "../../../.."
       scenarioName: "BurstBuffProd"
-    processor:
       image: Dockerfile
       imageBuildDir: "../../../.."
+    processor:
       scenarioName: "Processor"
+      parallel: 3
+      image: Dockerfile
+      imageBuildDir: "../../../.."

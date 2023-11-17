@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateStoreResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}";
@@ -36,6 +37,8 @@ namespace Azure.ResourceManager.Marketplace
 
         private readonly ClientDiagnostics _privateStoreClientDiagnostics;
         private readonly PrivateStoreRestOperations _privateStoreRestClient;
+        private readonly ClientDiagnostics _defaultClientDiagnostics;
+        private readonly MarketplaceRPServiceRestOperations _defaultRestClient;
         private readonly PrivateStoreData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateStoreResource"/> class for mocking. </summary>
@@ -60,6 +63,8 @@ namespace Azure.ResourceManager.Marketplace
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string privateStoreApiVersion);
             _privateStoreRestClient = new PrivateStoreRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreApiVersion);
+            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _defaultRestClient = new MarketplaceRPServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of MarketplaceApprovalRequestResources and their operations over a MarketplaceApprovalRequestResource. </returns>
         public virtual MarketplaceApprovalRequestCollection GetMarketplaceApprovalRequests()
         {
-            return GetCachedClient(Client => new MarketplaceApprovalRequestCollection(Client, Id));
+            return GetCachedClient(client => new MarketplaceApprovalRequestCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +116,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MarketplaceApprovalRequestResource>> GetMarketplaceApprovalRequestAsync(string requestApprovalId, CancellationToken cancellationToken = default)
         {
@@ -134,8 +139,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MarketplaceApprovalRequestResource> GetMarketplaceApprovalRequest(string requestApprovalId, CancellationToken cancellationToken = default)
         {
@@ -146,7 +151,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of MarketplaceAdminApprovalRequestResources and their operations over a MarketplaceAdminApprovalRequestResource. </returns>
         public virtual MarketplaceAdminApprovalRequestCollection GetMarketplaceAdminApprovalRequests()
         {
-            return GetCachedClient(Client => new MarketplaceAdminApprovalRequestCollection(Client, Id));
+            return GetCachedClient(client => new MarketplaceAdminApprovalRequestCollection(client, Id));
         }
 
         /// <summary>
@@ -165,8 +170,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetMarketplaceAdminApprovalRequestAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
@@ -189,8 +194,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MarketplaceAdminApprovalRequestResource> GetMarketplaceAdminApprovalRequest(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
@@ -201,7 +206,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of PrivateStoreCollectionInfoResources and their operations over a PrivateStoreCollectionInfoResource. </returns>
         public virtual PrivateStoreCollectionInfoCollection GetPrivateStoreCollectionInfos()
         {
-            return GetCachedClient(Client => new PrivateStoreCollectionInfoCollection(Client, Id));
+            return GetCachedClient(client => new PrivateStoreCollectionInfoCollection(client, Id));
         }
 
         /// <summary>
@@ -1202,6 +1207,50 @@ namespace Azure.ResourceManager.Marketplace
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// All rules approved in the private store that are relevant for user subscriptions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryUserRules</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The QueryUserRulesContent to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MarketplaceRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarketplaceRule> QueryUserRulesAsync(QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// All rules approved in the private store that are relevant for user subscriptions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryUserRules</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The QueryUserRulesContent to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MarketplaceRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarketplaceRule> QueryUserRules(QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
         }
     }
 }

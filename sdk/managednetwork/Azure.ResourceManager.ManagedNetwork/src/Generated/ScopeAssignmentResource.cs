@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.ManagedNetwork
     public partial class ScopeAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScopeAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="scopeAssignmentName"> The scopeAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string scopeAssignmentName)
         {
             var resourceId = $"{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}";

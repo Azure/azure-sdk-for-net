@@ -23,6 +23,7 @@ namespace Azure.AI.OpenAI
             Optional<ContentFilterResult> violence = default;
             Optional<ContentFilterResult> hate = default;
             Optional<ContentFilterResult> selfHarm = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -61,8 +62,17 @@ namespace Azure.AI.OpenAI
                     selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    continue;
+                }
             }
-            return new ContentFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value);
+            return new ContentFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value, error.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MongoClusterResource>> GetIfExistsAsync(string mongoClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+
+            using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mongoClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
+        public virtual NullableResponse<MongoClusterResource> GetIfExists(string mongoClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+
+            using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mongoClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MongoClusterResource> IEnumerable<MongoClusterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

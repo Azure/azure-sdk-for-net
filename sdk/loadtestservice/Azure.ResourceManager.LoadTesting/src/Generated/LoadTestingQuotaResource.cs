@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.LoadTesting
     public partial class LoadTestingQuotaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LoadTestingQuotaResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="quotaBucketName"> The quotaBucketName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string quotaBucketName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}";

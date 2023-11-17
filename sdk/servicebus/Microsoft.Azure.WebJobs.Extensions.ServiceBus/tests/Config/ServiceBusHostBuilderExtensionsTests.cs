@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
@@ -30,6 +31,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             Assert.AreEqual(123, options.PrefetchCount);
             Assert.AreEqual(123, options.MaxConcurrentCalls);
+            Assert.AreEqual(123, options.MaxMessageBatchSize);
             Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
         }
@@ -64,6 +66,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             Assert.AreEqual(123, options.PrefetchCount);
             Assert.AreEqual(123, options.MaxConcurrentCalls);
+            Assert.AreEqual(20, options.MaxConcurrentSessions);
+            Assert.AreEqual(5, options.MaxConcurrentCallsPerSession);
             Assert.AreEqual(20, options.MaxMessageBatchSize);
             Assert.AreEqual(10, options.MinMessageBatchSize);
             Assert.AreEqual(TimeSpan.FromSeconds(1), options.MaxBatchWaitTime);
@@ -99,6 +103,32 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(10, result.ClientRetryOptions.MaxRetries);
         }
 
+        [Test]
+        public void ConfigureOptions_InfiniteTimeSpans_Format_Returns_Expected()
+        {
+            ServiceBusOptions options = CreateOptionsFromConfigInfiniteTimeSpans();
+            JObject jObject = new JObject
+            {
+                { ExtensionPath, JObject.Parse(((IOptionsFormatter)options).Format()) }
+            };
+
+            ServiceBusOptions result = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                jsonStream: new BinaryData(jObject.ToString()).ToStream());
+
+            Assert.AreEqual(123, result.PrefetchCount);
+
+            Assert.AreEqual(123, result.MaxConcurrentCalls);
+            Assert.False(result.AutoCompleteMessages);
+            Assert.AreEqual(Timeout.InfiniteTimeSpan, result.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(Timeout.InfiniteTimeSpan, result.MaxBatchWaitTime);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
+            Assert.AreEqual(10, result.ClientRetryOptions.MaxRetries);
+        }
+
         private static ServiceBusOptions CreateOptionsFromConfig()
         {
             var values = new Dictionary<string, string>
@@ -108,11 +138,37 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 { $"{ExtensionPath}:MaxConcurrentCalls", "123" },
                 { $"{ExtensionPath}:AutoCompleteMessages", "false" },
                 { $"{ExtensionPath}:MaxAutoLockRenewalDuration", "00:00:15" },
-                { $"{ExtensionPath}:MaxConcurrentSessions", "123" },
+                { $"{ExtensionPath}:MaxConcurrentSessions", "20" },
+                { $"{ExtensionPath}:MaxConcurrentCallsPerSession", "5" },
                 { $"{ExtensionPath}:TransportType", "AmqpWebSockets" },
                 { $"{ExtensionPath}:MaxMessageBatchSize", "20" },
                 { $"{ExtensionPath}:MinMessageBatchSize", "10" },
                 { $"{ExtensionPath}:MaxBatchWaitTime", "00:00:01" },
+                { $"{ExtensionPath}:WebProxy", "http://proxyserver:8080/" },
+                { $"{ExtensionPath}:ClientRetryOptions:MaxRetries", "10" },
+            };
+
+            ServiceBusOptions options = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
+            {
+                b.AddServiceBus();
+            }, values);
+            return options;
+        }
+
+        private static ServiceBusOptions CreateOptionsFromConfigInfiniteTimeSpans()
+        {
+            var values = new Dictionary<string, string>
+            {
+                { $"{ExtensionPath}:PrefetchCount", "123" },
+                { $"ConnectionStrings:ServiceBus", "TestConnectionString" },
+                { $"{ExtensionPath}:MaxConcurrentCalls", "123" },
+                { $"{ExtensionPath}:AutoCompleteMessages", "false" },
+                { $"{ExtensionPath}:MaxAutoLockRenewalDuration", "-00:00:00.0010000" },
+                { $"{ExtensionPath}:MaxConcurrentSessions", "123" },
+                { $"{ExtensionPath}:TransportType", "AmqpWebSockets" },
+                { $"{ExtensionPath}:MaxMessageBatchSize", "20" },
+                { $"{ExtensionPath}:MinMessageBatchSize", "10" },
+                { $"{ExtensionPath}:MaxBatchWaitTime", "-00:00:00.0010000" },
                 { $"{ExtensionPath}:WebProxy", "http://proxyserver:8080/" },
                 { $"{ExtensionPath}:ClientRetryOptions:MaxRetries", "10" },
             };

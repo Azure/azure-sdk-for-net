@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceEncryptionProtectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceEncryptionProtectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="encryptionProtectorName"> The encryptionProtectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}";

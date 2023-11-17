@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class MsixPackageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MsixPackageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hostPoolName"> The hostPoolName. </param>
+        /// <param name="msixPackageFullName"> The msixPackageFullName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}";

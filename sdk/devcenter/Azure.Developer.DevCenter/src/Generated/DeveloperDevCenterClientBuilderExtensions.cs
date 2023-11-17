@@ -11,61 +11,59 @@ using Azure.Developer.DevCenter;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="DevCenterClient"/>, <see cref="DevBoxesClient"/>, <see cref="EnvironmentsClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="DevCenterClient"/>, <see cref="DevBoxesClient"/>, <see cref="DeploymentEnvironmentsClient"/> to client builder. </summary>
     public static partial class DeveloperDevCenterClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="DevCenterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
-        public static IAzureClientBuilder<DevCenterClient, DevCenterClientOptions> AddDevCenterClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<DevCenterClient, AzureDeveloperDevCenterClientOptions> AddDevCenterClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<DevCenterClient, DevCenterClientOptions>((options, cred) => new DevCenterClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<DevCenterClient, AzureDeveloperDevCenterClientOptions>((options, cred) => new DevCenterClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="DevBoxesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
-        public static IAzureClientBuilder<DevBoxesClient, DevCenterClientOptions> AddDevBoxesClient<TBuilder>(this TBuilder builder, Uri endpoint, string projectName)
+        public static IAzureClientBuilder<DevBoxesClient, AzureDeveloperDevCenterClientOptions> AddDevBoxesClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<DevBoxesClient, DevCenterClientOptions>((options, cred) => new DevBoxesClient(endpoint, projectName, cred, options));
+            return builder.RegisterClientFactory<DevBoxesClient, AzureDeveloperDevCenterClientOptions>((options, cred) => new DevBoxesClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="EnvironmentsClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DeploymentEnvironmentsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
-        public static IAzureClientBuilder<EnvironmentsClient, DevCenterClientOptions> AddEnvironmentsClient<TBuilder>(this TBuilder builder, Uri endpoint, string projectName)
+        public static IAzureClientBuilder<DeploymentEnvironmentsClient, AzureDeveloperDevCenterClientOptions> AddDeploymentEnvironmentsClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EnvironmentsClient, DevCenterClientOptions>((options, cred) => new EnvironmentsClient(endpoint, projectName, cred, options));
+            return builder.RegisterClientFactory<DeploymentEnvironmentsClient, AzureDeveloperDevCenterClientOptions>((options, cred) => new DeploymentEnvironmentsClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="DevCenterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<DevCenterClient, DevCenterClientOptions> AddDevCenterClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<DevCenterClient, AzureDeveloperDevCenterClientOptions> AddDevCenterClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<DevCenterClient, DevCenterClientOptions>(configuration);
+            return builder.RegisterClientFactory<DevCenterClient, AzureDeveloperDevCenterClientOptions>(configuration);
         }
         /// <summary> Registers a <see cref="DevBoxesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<DevBoxesClient, DevCenterClientOptions> AddDevBoxesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<DevBoxesClient, AzureDeveloperDevCenterClientOptions> AddDevBoxesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<DevBoxesClient, DevCenterClientOptions>(configuration);
+            return builder.RegisterClientFactory<DevBoxesClient, AzureDeveloperDevCenterClientOptions>(configuration);
         }
-        /// <summary> Registers a <see cref="EnvironmentsClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DeploymentEnvironmentsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<EnvironmentsClient, DevCenterClientOptions> AddEnvironmentsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<DeploymentEnvironmentsClient, AzureDeveloperDevCenterClientOptions> AddDeploymentEnvironmentsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<EnvironmentsClient, DevCenterClientOptions>(configuration);
+            return builder.RegisterClientFactory<DeploymentEnvironmentsClient, AzureDeveloperDevCenterClientOptions>(configuration);
         }
     }
 }

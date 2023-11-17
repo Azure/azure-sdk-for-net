@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RedisEnterprise
     public partial class RedisEnterpriseClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RedisEnterpriseClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}";
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An object representing collection of RedisEnterpriseDatabaseResources and their operations over a RedisEnterpriseDatabaseResource. </returns>
         public virtual RedisEnterpriseDatabaseCollection GetRedisEnterpriseDatabases()
         {
-            return GetCachedClient(Client => new RedisEnterpriseDatabaseCollection(Client, Id));
+            return GetCachedClient(client => new RedisEnterpriseDatabaseCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisEnterpriseDatabaseResource>> GetRedisEnterpriseDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisEnterpriseDatabaseResource> GetRedisEnterpriseDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An object representing collection of RedisEnterprisePrivateEndpointConnectionResources and their operations over a RedisEnterprisePrivateEndpointConnectionResource. </returns>
         public virtual RedisEnterprisePrivateEndpointConnectionCollection GetRedisEnterprisePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new RedisEnterprisePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new RedisEnterprisePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -169,8 +172,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisEnterprisePrivateEndpointConnectionResource>> GetRedisEnterprisePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -192,8 +195,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisEnterprisePrivateEndpointConnectionResource> GetRedisEnterprisePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {

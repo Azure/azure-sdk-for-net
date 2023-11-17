@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.KeyVault
     public partial class KeyVaultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KeyVaultResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}";
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of KeyVaultPrivateEndpointConnectionResources and their operations over a KeyVaultPrivateEndpointConnectionResource. </returns>
         public virtual KeyVaultPrivateEndpointConnectionCollection GetKeyVaultPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new KeyVaultPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new KeyVaultPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KeyVaultPrivateEndpointConnectionResource>> GetKeyVaultPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KeyVaultPrivateEndpointConnectionResource> GetKeyVaultPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of KeyVaultSecretResources and their operations over a KeyVaultSecretResource. </returns>
         public virtual KeyVaultSecretCollection GetKeyVaultSecrets()
         {
-            return GetCachedClient(Client => new KeyVaultSecretCollection(Client, Id));
+            return GetCachedClient(client => new KeyVaultSecretCollection(client, Id));
         }
 
         /// <summary>
@@ -169,8 +172,8 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KeyVaultSecretResource>> GetKeyVaultSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
@@ -192,8 +195,8 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KeyVaultSecretResource> GetKeyVaultSecret(string secretName, CancellationToken cancellationToken = default)
         {

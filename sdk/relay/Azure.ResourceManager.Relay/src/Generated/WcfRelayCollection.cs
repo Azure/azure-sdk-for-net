@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Relay
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relayName"> The relay name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        public virtual async Task<NullableResponse<WcfRelayResource>> GetIfExistsAsync(string relayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+
+            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _wcfRelayWCFRelaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WcfRelayResource>(response.GetRawResponse());
+                return Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relayName"> The relay name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        public virtual NullableResponse<WcfRelayResource> GetIfExists(string relayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+
+            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _wcfRelayWCFRelaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WcfRelayResource>(response.GetRawResponse());
+                return Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<WcfRelayResource> IEnumerable<WcfRelayResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

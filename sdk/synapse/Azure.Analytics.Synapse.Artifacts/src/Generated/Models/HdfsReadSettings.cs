@@ -26,13 +26,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="wildcardFolderPath"> HDFS wildcardFolderPath. Type: string (or Expression with resultType string). </param>
         /// <param name="wildcardFileName"> HDFS wildcardFileName. Type: string (or Expression with resultType string). </param>
         /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
-        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
+        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
         /// <param name="modifiedDatetimeStart"> The start of file's modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="modifiedDatetimeEnd"> The end of file's modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="distcpSettings"> Specifies Distcp-related settings. </param>
         /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal HdfsReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, object fileListPath, bool? enablePartitionDiscovery, object partitionRootPath, object modifiedDatetimeStart, object modifiedDatetimeEnd, DistcpSettings distcpSettings, object deleteFilesAfterCompletion) : base(type, maxConcurrentConnections, additionalProperties)
+        internal HdfsReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, object fileListPath, object enablePartitionDiscovery, object partitionRootPath, object modifiedDatetimeStart, object modifiedDatetimeEnd, DistcpSettings distcpSettings, object deleteFilesAfterCompletion) : base(type, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -55,8 +55,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object WildcardFileName { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
         public object FileListPath { get; set; }
-        /// <summary> Indicates whether to enable partition discovery. </summary>
-        public bool? EnablePartitionDiscovery { get; set; }
+        /// <summary> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </summary>
+        public object EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
         public object PartitionRootPath { get; set; }
         /// <summary> The start of file's modified datetime. Type: string (or Expression with resultType string). </summary>

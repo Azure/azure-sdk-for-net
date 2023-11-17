@@ -1,6 +1,6 @@
 # Release History
 
-## 5.10.0-beta.1 (Unreleased)
+## 5.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.10.0 (2023-11-08)
+
+### Breaking Changes
+
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.EventHubs.EventHubs` to `Azure.Messaging.EventHubs.Message`
+  and message `Activity` name from `EventHubs.Message` to `Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+
+### Bugs Fixed
+
+- Fixed a parameter type mismatch in ETW #7 (ReceiveComplete) which caused the duration argument of the operation to be interpreted as a Unicode string and fail to render properly in the formatted message.
+
+### Other Changes
+
+- When an Event Hub is disabled, it will now be detected and result in a terminal `EventHubsException` with its reason set to `FailureReason.ResourceNotFound`.
+
+## 5.9.3 (2023-09-12)
+
+### Other Changes
+
+- Several improvements to logging have been made to capture additional context and fix typos.  Most notable among them is the inclusion of starting and ending sequence numbers when events are read from Event Hubs and dispatched for processing.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3.  This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
 
 ## 5.9.2 (2023-06-06)
 

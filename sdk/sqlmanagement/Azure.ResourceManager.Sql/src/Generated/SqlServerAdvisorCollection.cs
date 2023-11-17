@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerAdvisors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advisorName"> The name of the Server Advisor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlServerAdvisorResource>> GetIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+
+            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerAdvisorServerAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerAdvisorResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerAdvisorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerAdvisors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advisorName"> The name of the Server Advisor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        public virtual NullableResponse<SqlServerAdvisorResource> GetIfExists(string advisorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+
+            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerAdvisorServerAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerAdvisorResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerAdvisorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SqlServerAdvisorResource> IEnumerable<SqlServerAdvisorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

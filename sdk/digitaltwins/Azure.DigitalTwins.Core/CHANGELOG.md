@@ -1,14 +1,24 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## Unreleased
 
-### Features Added
+### Breaking changes
 
-### Breaking Changes
+- Renamed tags reported on `DigitalTwinsClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `digitalTwinId` to `az.digitaltwins.twin.id`
+  - `componentName` to `az.digitaltwins.component.name`
+  - `relationshipName` to `az.digitaltwins.relationship.name`
+  - `modelId` to `az.digitaltwins.model.id`
+  - `jobId` to `az.digitaltwins.job.id`
+  - `query` to `az.digitaltwins.query`
+  - `eventRouteId` to `az.digitaltwins.event_route.id`
+  - `messageId` to `az.digitaltwins.message.id`
 
-### Bugs Fixed
+## 1.5.0 (2023-09-07)
 
-### Other Changes
+### New Features
+- Updated service API version to use API version 2023-06-30 by default.
+- Added support for the new import job. You can now use a blob file in your storage account to import multiple models, twins and relationships at once.
 
 ## 1.4.0 (2022-06-30)
 

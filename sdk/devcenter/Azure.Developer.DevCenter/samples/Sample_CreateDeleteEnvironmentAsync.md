@@ -7,27 +7,36 @@ To use these samples, you'll first need to set up resources. See [getting starte
 Create a `DevCenterClient` and issue a request to get all projects the signed-in user can access.
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
-var credential = new DefaultAzureCredential();
-var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1, context: new()))
+await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetProjectName = result.GetProperty("name").ToString();
 }
 ```
 
-## Get all catalog items in a project
+## Get project catalogs
 
-Create an `EnvironmentsClient` and issue a request to get all catalog items in a project.
+Create an `EnvironmentsClient` and issue a request to get all catalogs in a project.
 
-```C# Snippet:Azure_DevCenter_GetCatalogItems_Scenario
-var environmentsClient = new EnvironmentsClient(endpoint, projectName, credential);
-string catalogItemName = null;
-await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1, context: new()))
+```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
+string catalogName = null;
+
+await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    catalogItemName = result.GetProperty("name").ToString();
+    catalogName = result.GetProperty("name").ToString();
+}
+```
+
+## Get all environment definitions in a project for a catalog
+
+```C# Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
+string environmentDefinitionName = null;
+await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName, maxCount: 1, context: new()))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    environmentDefinitionName = result.GetProperty("name").ToString();
 }
 ```
 
@@ -37,7 +46,7 @@ Issue a request to get all environment types in a project.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
 string environmentTypeName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1, context: new()))
+await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     environmentTypeName = result.GetProperty("name").ToString();
@@ -46,17 +55,24 @@ await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(ma
 
 ## Create an environment
 
-Issue a request to create an environment using a specific catalog item and environment type.
+Issue a request to create an environment using a specific definition item and environment type.
 
 ```C# Snippet:Azure_DevCenter_CreateEnvironment_Scenario
 var content = new
 {
+    catalogName = catalogName,
     environmentType = environmentTypeName,
-    catalogItemName = catalogItemName,
+    environmentDefinitionName = environmentDefinitionName,
 };
 
 // Deploy the environment
-Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "me", "DevEnvironment", RequestContent.Create(content));
+Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
+    WaitUntil.Completed,
+    projectName,
+    "me",
+    "DevEnvironment",
+    RequestContent.Create(content));
+
 BinaryData environmentData = await environmentCreateOperation.WaitForCompletionAsync();
 JsonElement environment = JsonDocument.Parse(environmentData.ToStream()).RootElement;
 Console.WriteLine($"Completed provisioning for environment with status {environment.GetProperty("provisioningState")}.");
@@ -67,7 +83,11 @@ Console.WriteLine($"Completed provisioning for environment with status {environm
 Issue a request to delete an environment.
 
 ```C# Snippet:Azure_DevCenter_DeleteEnvironment_Scenario
-Operation environmentDeleteOperation = await environmentsClient.DeleteEnvironmentAsync(WaitUntil.Completed, projectName, "DevEnvironment");
+Operation environmentDeleteOperation = await environmentsClient.DeleteEnvironmentAsync(
+    WaitUntil.Completed,
+    projectName,
+    "me",
+    "DevEnvironment");
 await environmentDeleteOperation.WaitForCompletionResponseAsync();
 Console.WriteLine($"Completed environment deletion.");
 ```

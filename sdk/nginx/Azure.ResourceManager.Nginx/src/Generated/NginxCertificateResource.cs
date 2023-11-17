@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Nginx
     public partial class NginxCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NginxCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
+        /// <param name="certificateName"> The certificateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName, string certificateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/certificates/{certificateName}";

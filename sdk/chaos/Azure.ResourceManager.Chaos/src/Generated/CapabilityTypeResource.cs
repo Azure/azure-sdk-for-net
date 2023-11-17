@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Chaos
     public partial class CapabilityTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CapabilityTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="targetTypeName"> The targetTypeName. </param>
+        /// <param name="capabilityTypeName"> The capabilityTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}";
