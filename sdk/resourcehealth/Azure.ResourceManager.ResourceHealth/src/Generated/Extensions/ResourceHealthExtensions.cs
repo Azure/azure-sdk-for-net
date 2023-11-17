@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceHealth.Mocking;
 using Azure.ResourceManager.ResourceHealth.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,182 +20,25 @@ namespace Azure.ResourceManager.ResourceHealth
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceHealth. </summary>
     public static partial class ResourceHealthExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableResourceHealthArmClient GetMockableResourceHealthArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableResourceHealthArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableResourceHealthResourceGroupResource GetMockableResourceHealthResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableResourceHealthResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableResourceHealthSubscriptionResource GetMockableResourceHealthSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableResourceHealthSubscriptionResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableResourceHealthTenantResource GetMockableResourceHealthTenantResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableResourceHealthTenantResource(client, resource.Id));
         }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region ResourceHealthMetadataEntityResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceHealthMetadataEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceHealthMetadataEntityResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthMetadataEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceHealthMetadataEntityResource" /> object. </returns>
-        public static ResourceHealthMetadataEntityResource GetResourceHealthMetadataEntityResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceHealthMetadataEntityResource.ValidateResourceId(id);
-                return new ResourceHealthMetadataEntityResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceHealthEventImpactedResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceHealthEventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceHealthEventImpactedResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthEventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceHealthEventImpactedResource" /> object. </returns>
-        public static ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceHealthEventImpactedResource.ValidateResourceId(id);
-                return new ResourceHealthEventImpactedResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region TenantResourceHealthEventImpactedResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantResourceHealthEventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantResourceHealthEventImpactedResource.CreateResourceIdentifier" /> to create a <see cref="TenantResourceHealthEventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantResourceHealthEventImpactedResource" /> object. </returns>
-        public static TenantResourceHealthEventImpactedResource GetTenantResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TenantResourceHealthEventImpactedResource.ValidateResourceId(id);
-                return new TenantResourceHealthEventImpactedResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceHealthEventResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceHealthEventResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceHealthEventResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthEventResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceHealthEventResource" /> object. </returns>
-        public static ResourceHealthEventResource GetResourceHealthEventResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceHealthEventResource.ValidateResourceId(id);
-                return new ResourceHealthEventResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region TenantResourceHealthEventResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantResourceHealthEventResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantResourceHealthEventResource.CreateResourceIdentifier" /> to create a <see cref="TenantResourceHealthEventResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantResourceHealthEventResource" /> object. </returns>
-        public static TenantResourceHealthEventResource GetTenantResourceHealthEventResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TenantResourceHealthEventResource.ValidateResourceId(id);
-                return new TenantResourceHealthEventResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ServiceEmergingIssueResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceEmergingIssueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceEmergingIssueResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEmergingIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceEmergingIssueResource" /> object. </returns>
-        public static ServiceEmergingIssueResource GetServiceEmergingIssueResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ServiceEmergingIssueResource.ValidateResourceId(id);
-                return new ServiceEmergingIssueResource(client, id);
-            }
-            );
-        }
-        #endregion
 
         /// <summary>
         /// Gets current availability status for a single resource
@@ -208,6 +52,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>AvailabilityStatuses_GetByResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatus(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -216,7 +64,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusAsync(filter, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceHealthArmClient(client).GetAvailabilityStatusAsync(scope, filter, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -231,6 +79,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>AvailabilityStatuses_GetByResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatus(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -239,7 +91,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatus(filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatus(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -254,6 +106,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>AvailabilityStatuses_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatuses(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -262,7 +118,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusesAsync(filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusesAsync(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -277,6 +133,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>AvailabilityStatuses_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatuses(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -285,7 +145,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatuses(filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatuses(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -300,6 +160,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>Events_ListBySingleResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetHealthEventsOfSingleResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -307,7 +171,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetHealthEventsOfSingleResourceAsync(filter, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetHealthEventsOfSingleResourceAsync(scope, filter, cancellationToken);
         }
 
         /// <summary>
@@ -322,6 +186,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>Events_ListBySingleResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetHealthEventsOfSingleResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -329,7 +197,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<ResourceHealthEventData> GetHealthEventsOfSingleResource(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetHealthEventsOfSingleResource(filter, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetHealthEventsOfSingleResource(scope, filter, cancellationToken);
         }
 
         /// <summary>
@@ -344,6 +212,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>ChildAvailabilityStatuses_GetByResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -352,7 +224,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResourceAsync(filter, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceHealthArmClient(client).GetAvailabilityStatusOfChildResourceAsync(scope, filter, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -367,6 +239,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>ChildAvailabilityStatuses_GetByResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -375,7 +251,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResource(filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusOfChildResource(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -390,6 +266,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>ChildAvailabilityStatuses_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetHistoricalAvailabilityStatusesOfChildResource(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -398,7 +278,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetHistoricalAvailabilityStatusesOfChildResourceAsync(filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetHistoricalAvailabilityStatusesOfChildResourceAsync(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -413,6 +293,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>ChildAvailabilityStatuses_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetHistoricalAvailabilityStatusesOfChildResource(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -421,7 +305,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetHistoricalAvailabilityStatusesOfChildResource(filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetHistoricalAvailabilityStatusesOfChildResource(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -436,6 +320,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>ChildResources_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResources(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -444,7 +332,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResourcesAsync(filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusOfChildResourcesAsync(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -459,6 +347,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>ChildResources_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResources(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -467,7 +359,103 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResources(filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusOfChildResources(scope, filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceHealthMetadataEntityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceHealthMetadataEntityResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthMetadataEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetResourceHealthMetadataEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceHealthMetadataEntityResource" /> object. </returns>
+        public static ResourceHealthMetadataEntityResource GetResourceHealthMetadataEntityResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableResourceHealthArmClient(client).GetResourceHealthMetadataEntityResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceHealthEventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceHealthEventImpactedResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthEventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetResourceHealthEventImpactedResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceHealthEventImpactedResource" /> object. </returns>
+        public static ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableResourceHealthArmClient(client).GetResourceHealthEventImpactedResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantResourceHealthEventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantResourceHealthEventImpactedResource.CreateResourceIdentifier" /> to create a <see cref="TenantResourceHealthEventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetTenantResourceHealthEventImpactedResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantResourceHealthEventImpactedResource" /> object. </returns>
+        public static TenantResourceHealthEventImpactedResource GetTenantResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableResourceHealthArmClient(client).GetTenantResourceHealthEventImpactedResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceHealthEventResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceHealthEventResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthEventResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetResourceHealthEventResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceHealthEventResource" /> object. </returns>
+        public static ResourceHealthEventResource GetResourceHealthEventResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableResourceHealthArmClient(client).GetResourceHealthEventResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantResourceHealthEventResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantResourceHealthEventResource.CreateResourceIdentifier" /> to create a <see cref="TenantResourceHealthEventResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetTenantResourceHealthEventResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantResourceHealthEventResource" /> object. </returns>
+        public static TenantResourceHealthEventResource GetTenantResourceHealthEventResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableResourceHealthArmClient(client).GetTenantResourceHealthEventResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceEmergingIssueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceEmergingIssueResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEmergingIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetServiceEmergingIssueResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceEmergingIssueResource" /> object. </returns>
+        public static ServiceEmergingIssueResource GetServiceEmergingIssueResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableResourceHealthArmClient(client).GetServiceEmergingIssueResource(id);
         }
 
         /// <summary>
@@ -482,6 +470,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>AvailabilityStatuses_ListByResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -490,7 +482,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailabilityStatusesByResourceGroupAsync(filter, expand, cancellationToken);
+            return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatusesByResourceGroupAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -505,6 +497,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>AvailabilityStatuses_ListByResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -513,15 +509,21 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(this ResourceGroupResource resourceGroupResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailabilityStatusesByResourceGroup(filter, expand, cancellationToken);
+            return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatusesByResourceGroup(filter, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceHealthEventResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of ResourceHealthEventResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetResourceHealthEvents()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ResourceHealthEventResources and their operations over a ResourceHealthEventResource. </returns>
         public static ResourceHealthEventCollection GetResourceHealthEvents(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceHealthEvents();
+            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetResourceHealthEvents();
         }
 
         /// <summary>
@@ -536,18 +538,22 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetResourceHealthEventAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ResourceHealthEventResource>> GetResourceHealthEventAsync(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetResourceHealthEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetResourceHealthEventAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -562,18 +568,22 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetResourceHealthEvent(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ResourceHealthEventResource> GetResourceHealthEvent(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetResourceHealthEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
+            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetResourceHealthEvent(eventTrackingId, filter, queryStartTime, cancellationToken);
         }
 
         /// <summary>
@@ -588,6 +598,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>AvailabilityStatuses_ListBySubscriptionId</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -596,7 +610,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailabilityStatusesBySubscriptionAsync(filter, expand, cancellationToken);
+            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetAvailabilityStatusesBySubscriptionAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -611,6 +625,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>AvailabilityStatuses_ListBySubscriptionId</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -619,15 +637,21 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailabilityStatusesBySubscription(filter, expand, cancellationToken);
+            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetAvailabilityStatusesBySubscription(filter, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceHealthMetadataEntityResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of ResourceHealthMetadataEntityResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetResourceHealthMetadataEntities()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ResourceHealthMetadataEntityResources and their operations over a ResourceHealthMetadataEntityResource. </returns>
         public static ResourceHealthMetadataEntityCollection GetResourceHealthMetadataEntities(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetResourceHealthMetadataEntities();
+            return GetMockableResourceHealthTenantResource(tenantResource).GetResourceHealthMetadataEntities();
         }
 
         /// <summary>
@@ -642,16 +666,20 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>Metadata_GetEntity</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetResourceHealthMetadataEntityAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ResourceHealthMetadataEntityResource>> GetResourceHealthMetadataEntityAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetResourceHealthMetadataEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceHealthTenantResource(tenantResource).GetResourceHealthMetadataEntityAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -666,24 +694,34 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>Metadata_GetEntity</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetResourceHealthMetadataEntity(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ResourceHealthMetadataEntityResource> GetResourceHealthMetadataEntity(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetResourceHealthMetadataEntities().Get(name, cancellationToken);
+            return GetMockableResourceHealthTenantResource(tenantResource).GetResourceHealthMetadataEntity(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantResourceHealthEventResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of TenantResourceHealthEventResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetTenantResourceHealthEvents()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TenantResourceHealthEventResources and their operations over a TenantResourceHealthEventResource. </returns>
         public static TenantResourceHealthEventCollection GetTenantResourceHealthEvents(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantResourceHealthEvents();
+            return GetMockableResourceHealthTenantResource(tenantResource).GetTenantResourceHealthEvents();
         }
 
         /// <summary>
@@ -698,18 +736,22 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>Event_GetByTenantIdAndTrackingId</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetTenantResourceHealthEventAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<TenantResourceHealthEventResource>> GetTenantResourceHealthEventAsync(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetTenantResourceHealthEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceHealthTenantResource(tenantResource).GetTenantResourceHealthEventAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -724,26 +766,36 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>Event_GetByTenantIdAndTrackingId</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetTenantResourceHealthEvent(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<TenantResourceHealthEventResource> GetTenantResourceHealthEvent(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetTenantResourceHealthEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
+            return GetMockableResourceHealthTenantResource(tenantResource).GetTenantResourceHealthEvent(eventTrackingId, filter, queryStartTime, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceEmergingIssueResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of ServiceEmergingIssueResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetServiceEmergingIssues()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ServiceEmergingIssueResources and their operations over a ServiceEmergingIssueResource. </returns>
         public static ServiceEmergingIssueCollection GetServiceEmergingIssues(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetServiceEmergingIssues();
+            return GetMockableResourceHealthTenantResource(tenantResource).GetServiceEmergingIssues();
         }
 
         /// <summary>
@@ -758,6 +810,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>EmergingIssues_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetServiceEmergingIssueAsync(EmergingIssueNameContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="issueName"> The name of the emerging issue. </param>
@@ -765,7 +821,7 @@ namespace Azure.ResourceManager.ResourceHealth
         [ForwardsClientCalls]
         public static async Task<Response<ServiceEmergingIssueResource>> GetServiceEmergingIssueAsync(this TenantResource tenantResource, EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetServiceEmergingIssues().GetAsync(issueName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceHealthTenantResource(tenantResource).GetServiceEmergingIssueAsync(issueName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -780,6 +836,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <description>EmergingIssues_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceHealthTenantResource.GetServiceEmergingIssue(EmergingIssueNameContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="issueName"> The name of the emerging issue. </param>
@@ -787,7 +847,7 @@ namespace Azure.ResourceManager.ResourceHealth
         [ForwardsClientCalls]
         public static Response<ServiceEmergingIssueResource> GetServiceEmergingIssue(this TenantResource tenantResource, EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetServiceEmergingIssues().Get(issueName, cancellationToken);
+            return GetMockableResourceHealthTenantResource(tenantResource).GetServiceEmergingIssue(issueName, cancellationToken);
         }
     }
 }

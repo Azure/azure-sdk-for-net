@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     public partial class BackupEngineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupEngineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="backupEngineName"> The backupEngineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupEngineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}";

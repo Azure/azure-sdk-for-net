@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Cdn
     public partial class FrontDoorRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="ruleSetName"> The ruleSetName. </param>
+        /// <param name="ruleName"> The ruleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}";

@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.ManagementGroups
     public partial class ManagementGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupResource"/> instance. </summary>
+        /// <param name="groupId"> The groupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string groupId)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{groupId}";

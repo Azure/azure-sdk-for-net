@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             double thresholdSeconds = default;
-            string kind = default;
+            ExceptionTriggerKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thresholdSeconds"u8))
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new ExceptionTriggerKind(property.Value.GetString());
                     continue;
                 }
             }

@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Tests
 {
+    [NonParallelizable]
     internal class DevTestLabVirtualNetworkTests : DevTestLabsManagementTestBase
     {
         private DevTestLabVirtualNetworkCollection _dtlVnetCollection => TestDevTestLab.GetDevTestLabVirtualNetworks();

@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreCollectionInfoResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateStoreCollectionInfoResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
+        /// <param name="collectionId"> The collectionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId, Guid collectionId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}";
@@ -101,7 +103,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of PrivateStoreOfferResources and their operations over a PrivateStoreOfferResource. </returns>
         public virtual PrivateStoreOfferCollection GetPrivateStoreOffers()
         {
-            return GetCachedClient(Client => new PrivateStoreOfferCollection(Client, Id));
+            return GetCachedClient(client => new PrivateStoreOfferCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +121,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="offerId"> The offer ID to update or delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PrivateStoreOfferResource>> GetPrivateStoreOfferAsync(string offerId, CancellationToken cancellationToken = default)
         {
@@ -142,8 +144,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="offerId"> The offer ID to update or delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PrivateStoreOfferResource> GetPrivateStoreOffer(string offerId, CancellationToken cancellationToken = default)
         {

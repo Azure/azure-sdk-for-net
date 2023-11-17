@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityCenterPricingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityCenterPricingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="pricingName"> The pricingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string pricingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}";

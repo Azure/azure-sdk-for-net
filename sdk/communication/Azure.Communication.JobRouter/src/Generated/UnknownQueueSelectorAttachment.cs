@@ -16,8 +16,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of UnknownQueueSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        internal UnknownQueueSelectorAttachment(string kind) : base(kind)
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        internal UnknownQueueSelectorAttachment(QueueSelectorAttachmentKind kind) : base(kind)
         {
         }
     }

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights
     public partial class LogAnalyticsQueryPackResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogAnalyticsQueryPackResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="queryPackName"> The queryPackName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string queryPackName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}";
@@ -99,7 +102,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of LogAnalyticsQueryResources and their operations over a LogAnalyticsQueryResource. </returns>
         public virtual LogAnalyticsQueryCollection GetLogAnalyticsQueries()
         {
-            return GetCachedClient(Client => new LogAnalyticsQueryCollection(Client, Id));
+            return GetCachedClient(client => new LogAnalyticsQueryCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +120,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="id"> The id of a specific query defined in the Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogAnalyticsQueryResource>> GetLogAnalyticsQueryAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -140,8 +143,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="id"> The id of a specific query defined in the Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogAnalyticsQueryResource> GetLogAnalyticsQuery(string id, CancellationToken cancellationToken = default)
         {

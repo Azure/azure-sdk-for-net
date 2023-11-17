@@ -26,7 +26,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Troubleshoot AzureCliCredential authentication issues](#troubleshoot-azureclicredential-authentication-issues)
 - [Troubleshoot AzurePowerShellCredential authentication issues](#troubleshoot-azurepowershellcredential-authentication-issues)
 - [Troubleshoot multi-tenant authentication issues](#troubleshoot-multi-tenant-authentication-issues)
-- [Troubleshoot WAM with MSA login issues](#troubleshoot-wam-with-msa-login-issues)
+- [Troubleshoot Web Account Manager (WAM) brokered authentication issues](#troubleshoot-web-account-manager-wam-brokered-authentication-issues)
 - [Get additional help](#get-additional-help)
 
 ## Handle Azure Identity exceptions
@@ -188,12 +188,12 @@ The `ManagedIdentityCredential` is designed to work on various Azure hosts that 
 |---|---|---|
 |The requested identity hasn't been assigned to this resource.|The IMDS endpoint responded with a status code of 400, indicating the requested identity isn't assigned to the VM.|If using a user assigned identity, ensure the specified `clientId` is correct.<p/><p/>If using a system assigned identity, make sure it has been enabled properly. Instructions to enable the system assigned identity on an Azure VM can be found [here](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm#enable-system-assigned-managed-identity-on-an-existing-vm).|
 |The request failed due to a gateway error.|The request to the IMDS endpoint failed due to a gateway error, 502 or 504 status code.|IMDS doesn't support calls via proxy or gateway. Disable proxies or gateways running on the VM for calls to the IMDS endpoint `http://169.254.169.254/`|
-|No response received from the managed identity endpoint.|No response was received for the request to IMDS or the request timed out.|<ul><li>Ensure managed identity has been properly configured on the VM. Instructions for configuring the manged identity can be found [here](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm).</li><li>Verify the IMDS endpoint is reachable on the VM by following the instructions at [Verify IMDS is available on the VM](#verify-imds-is-available-on-the-vm).</li></ul>|
-|Multiple attempts failed to obtain a token from the managed identity endpoint.|Retries to retrieve a token from the IMDS endpoint have been exhausted.|<ul><li>For more information on specific failures, see the inner exception messages. If the data has been truncated, more detail can be obtained by [collecting logs](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#logging).</li><li>Ensure managed identity has been properly configured on the VM. Instructions for configuring the manged identity can be found [here](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm).</li><li>Verify the IMDS endpoint is reachable on the VM by following the instructions at [Verify IMDS is available on the VM](#verify-imds-is-available-on-the-vm).</li></ul>|
+|No response received from the managed identity endpoint.|No response was received for the request to IMDS or the request timed out.|<ul><li>Ensure managed identity has been properly configured on the VM. Instructions for configuring the managed identity can be found [here](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm).</li><li>Verify the IMDS endpoint is reachable on the VM by following the instructions at [Verify IMDS is available on the VM](#verify-imds-is-available-on-the-vm).</li></ul>|
+|Multiple attempts failed to obtain a token from the managed identity endpoint.|Retries to retrieve a token from the IMDS endpoint have been exhausted.|<ul><li>For more information on specific failures, see the inner exception messages. If the data has been truncated, more detail can be obtained by [collecting logs](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#logging).</li><li>Ensure managed identity has been properly configured on the VM. Instructions for configuring the managed identity can be found [here](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm).</li><li>Verify the IMDS endpoint is reachable on the VM by following the instructions at [Verify IMDS is available on the VM](#verify-imds-is-available-on-the-vm).</li></ul>|
 
 #### __Verify IMDS is available on the VM__
 
-If you have access to the VM, you can verify the manged identity endpoint is available via the command line using curl.
+If you have access to the VM, you can verify the managed identity endpoint is available via the command line using curl.
 
 ```bash
 curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://management.core.windows.net&api-version=2018-02-01' -H "Metadata: true"
@@ -340,7 +340,13 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 |---|---|---|
 |The current credential is not configured to acquire tokens for tenant <tenant ID>|<p>The application must configure the credential to allow token acquisition from the requested tenant.|Make one of the following changes in your app:<ul><li>Add the requested tenant ID to `AdditionallyAllowedTenants` on the credential options.</li><li>Add `*` to `AdditionallyAllowedTenants` to allow token acquisition for any tenant.</li></ul></p><p>This exception was added as part of a breaking change to multi-tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).</p> |
 
-## Troubleshoot WAM with MSA login issues
+## Troubleshoot Web Account Manager (WAM) brokered authentication issues
+
+| Error Message |Description| Mitigation |
+|---|---|---|
+|AADSTS50011|The application is missing the expected redirect URI.|Ensure that one of redirect URIs registered for the Microsoft Entra application matches the following URI pattern: `ms-appx-web://Microsoft.AAD.BrokerPlugin/{client_id}`|
+
+### Troubleshoot WAM with MSA login issues
 
 When using `InteractiveBrowserCredential`, by default, only the Microsoft Entra account is listed:
 
@@ -350,7 +356,7 @@ If you choose "Use another account" and type in an MSA outlook.com account, it f
 
 ![Fail on use another account](./images/MSA2.png)
 
-Since version `1.0.0-beta.4` of [Azure.Identity.BrokeredAuthentication](https://www.nuget.org/packages/Azure.Identity.BrokeredAuthentication), you can set the `IsMsaPassthroughEnabled` property on `InteractiveBrowserCredentialBrokerOptions` or `SharedTokenCacheCredentialBrokerOptions` to `true`. MSA outlook.com accounts that are logged in to Windows are automatically listed:
+Since version `1.0.0-beta.4` of [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.BrokeredAuthentication), you can set the `IsLegacyMsaPassthroughEnabled` property on `InteractiveBrowserCredentialBrokerOptions` or `SharedTokenCacheCredentialBrokerOptions` to `true`. MSA outlook.com accounts that are logged in to Windows are automatically listed:
 
 ![Enable MSA](./images/MSA3.png)
 

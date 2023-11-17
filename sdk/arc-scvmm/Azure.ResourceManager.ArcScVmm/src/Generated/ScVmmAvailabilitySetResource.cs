@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ArcScVmm
     public partial class ScVmmAvailabilitySetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScVmmAvailabilitySetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="availabilitySetName"> The availabilitySetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string availabilitySetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}";

@@ -11,25 +11,161 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="PurviewWorkflowServiceClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="WorkflowsClient"/>, <see cref="WorkflowClient"/>, <see cref="UserRequestsClient"/>, <see cref="WorkflowRunsClient"/>, <see cref="WorkflowRunClient"/>, <see cref="WorkflowTasksClient"/>, <see cref="WorkflowTaskClient"/>, <see cref="ApprovalClient"/>, <see cref="TaskStatusClient"/> to client builder. </summary>
     public static partial class AnalyticsPurviewWorkflowsClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="PurviewWorkflowServiceClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="WorkflowsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
-        public static IAzureClientBuilder<PurviewWorkflowServiceClient, PurviewWorkflowServiceClientOptions> AddPurviewWorkflowServiceClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<WorkflowsClient, PurviewWorkflowServiceClientOptions> AddWorkflowsClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<PurviewWorkflowServiceClient, PurviewWorkflowServiceClientOptions>((options, cred) => new PurviewWorkflowServiceClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<WorkflowsClient, PurviewWorkflowServiceClientOptions>((options, cred) => new WorkflowsClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="PurviewWorkflowServiceClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="WorkflowClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
+        public static IAzureClientBuilder<WorkflowClient, PurviewWorkflowServiceClientOptions> AddWorkflowClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<WorkflowClient, PurviewWorkflowServiceClientOptions>((options, cred) => new WorkflowClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="UserRequestsClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
+        public static IAzureClientBuilder<UserRequestsClient, PurviewWorkflowServiceClientOptions> AddUserRequestsClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<UserRequestsClient, PurviewWorkflowServiceClientOptions>((options, cred) => new UserRequestsClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="WorkflowRunsClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
+        public static IAzureClientBuilder<WorkflowRunsClient, PurviewWorkflowServiceClientOptions> AddWorkflowRunsClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<WorkflowRunsClient, PurviewWorkflowServiceClientOptions>((options, cred) => new WorkflowRunsClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="WorkflowRunClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
+        public static IAzureClientBuilder<WorkflowRunClient, PurviewWorkflowServiceClientOptions> AddWorkflowRunClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<WorkflowRunClient, PurviewWorkflowServiceClientOptions>((options, cred) => new WorkflowRunClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="WorkflowTasksClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
+        public static IAzureClientBuilder<WorkflowTasksClient, PurviewWorkflowServiceClientOptions> AddWorkflowTasksClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<WorkflowTasksClient, PurviewWorkflowServiceClientOptions>((options, cred) => new WorkflowTasksClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="WorkflowTaskClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
+        public static IAzureClientBuilder<WorkflowTaskClient, PurviewWorkflowServiceClientOptions> AddWorkflowTaskClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<WorkflowTaskClient, PurviewWorkflowServiceClientOptions>((options, cred) => new WorkflowTaskClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="ApprovalClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
+        public static IAzureClientBuilder<ApprovalClient, PurviewWorkflowServiceClientOptions> AddApprovalClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ApprovalClient, PurviewWorkflowServiceClientOptions>((options, cred) => new ApprovalClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="TaskStatusClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/. </param>
+        public static IAzureClientBuilder<TaskStatusClient, PurviewWorkflowServiceClientOptions> AddTaskStatusClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<TaskStatusClient, PurviewWorkflowServiceClientOptions>((options, cred) => new TaskStatusClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="WorkflowsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<PurviewWorkflowServiceClient, PurviewWorkflowServiceClientOptions> AddPurviewWorkflowServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<WorkflowsClient, PurviewWorkflowServiceClientOptions> AddWorkflowsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<PurviewWorkflowServiceClient, PurviewWorkflowServiceClientOptions>(configuration);
+            return builder.RegisterClientFactory<WorkflowsClient, PurviewWorkflowServiceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="WorkflowClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<WorkflowClient, PurviewWorkflowServiceClientOptions> AddWorkflowClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<WorkflowClient, PurviewWorkflowServiceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="UserRequestsClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<UserRequestsClient, PurviewWorkflowServiceClientOptions> AddUserRequestsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<UserRequestsClient, PurviewWorkflowServiceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="WorkflowRunsClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<WorkflowRunsClient, PurviewWorkflowServiceClientOptions> AddWorkflowRunsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<WorkflowRunsClient, PurviewWorkflowServiceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="WorkflowRunClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<WorkflowRunClient, PurviewWorkflowServiceClientOptions> AddWorkflowRunClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<WorkflowRunClient, PurviewWorkflowServiceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="WorkflowTasksClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<WorkflowTasksClient, PurviewWorkflowServiceClientOptions> AddWorkflowTasksClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<WorkflowTasksClient, PurviewWorkflowServiceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="WorkflowTaskClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<WorkflowTaskClient, PurviewWorkflowServiceClientOptions> AddWorkflowTaskClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<WorkflowTaskClient, PurviewWorkflowServiceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="ApprovalClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<ApprovalClient, PurviewWorkflowServiceClientOptions> AddApprovalClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<ApprovalClient, PurviewWorkflowServiceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="TaskStatusClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<TaskStatusClient, PurviewWorkflowServiceClientOptions> AddTaskStatusClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<TaskStatusClient, PurviewWorkflowServiceClientOptions>(configuration);
         }
     }
 }

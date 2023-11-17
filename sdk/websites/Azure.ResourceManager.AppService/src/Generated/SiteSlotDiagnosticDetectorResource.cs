@@ -26,6 +26,12 @@ namespace Azure.ResourceManager.AppService
     public partial class SiteSlotDiagnosticDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotDiagnosticDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteName"> The siteName. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="diagnosticCategory"> The diagnosticCategory. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string slot, string diagnosticCategory, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}";

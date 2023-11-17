@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDatastore()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/GetDatastore.json
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetDatastore.json
             // this example is just showing the usage of "Datastores_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateDatastore()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/UpdateDatastore.json
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/UpdateDatastore.json
             // this example is just showing the usage of "Datastores_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             VMwareDatastoreResource vMwareDatastore = client.GetVMwareDatastoreResource(vMwareDatastoreResourceId);
 
             // invoke the operation
-            ResourcePatch patch = new ResourcePatch()
+            VMwareResourcePatchContent content = new VMwareResourcePatchContent()
             {
                 Tags =
 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 ["tag2"] = "value2",
 },
             };
-            VMwareDatastoreResource result = await vMwareDatastore.UpdateAsync(patch);
+            VMwareDatastoreResource result = await vMwareDatastore.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteDatastore()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/DeleteDatastore.json
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/DeleteDatastore.json
             // this example is just showing the usage of "Datastores_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVMwareDatastores_ListDatastores()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/ListDatastores.json
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/ListDatastores.json
             // this example is just showing the usage of "Datastores_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

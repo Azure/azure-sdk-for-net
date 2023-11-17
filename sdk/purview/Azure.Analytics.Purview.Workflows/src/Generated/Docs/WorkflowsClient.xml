@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetWorkflowsAsync(RequestContext)">
+      <example>
+This sample shows how to call GetWorkflowsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowsClient client = new WorkflowsClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetWorkflowsAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("isEnabled").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+}
+]]></code>
+This sample shows how to call GetWorkflowsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowsClient client = new WorkflowsClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetWorkflowsAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossaryHierarchy").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underCollection").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossary").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+    Console.WriteLine(result.GetProperty("updatedBy").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("isEnabled").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetWorkflows(RequestContext)">
+      <example>
+This sample shows how to call GetWorkflows and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowsClient client = new WorkflowsClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetWorkflows(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("isEnabled").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+}
+]]></code>
+This sample shows how to call GetWorkflows with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowsClient client = new WorkflowsClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetWorkflows(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossaryHierarchy").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underCollection").ToString());
+    Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossary").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+    Console.WriteLine(result.GetProperty("updatedBy").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("isEnabled").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

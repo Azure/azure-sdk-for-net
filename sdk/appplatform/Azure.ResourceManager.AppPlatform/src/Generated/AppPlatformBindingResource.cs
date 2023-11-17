@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppPlatform
     public partial class AppPlatformBindingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformBindingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="appName"> The appName. </param>
+        /// <param name="bindingName"> The bindingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string appName, string bindingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}";

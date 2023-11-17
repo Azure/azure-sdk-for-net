@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
     public partial class ConfidentialLedgerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConfidentialLedgerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ledgerName"> The ledgerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ledgerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}";

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.NetworkFunction
     public partial class CollectorPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CollectorPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureTrafficCollectorName"> The azureTrafficCollectorName. </param>
+        /// <param name="collectorPolicyName"> The collectorPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureTrafficCollectorName, string collectorPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}";

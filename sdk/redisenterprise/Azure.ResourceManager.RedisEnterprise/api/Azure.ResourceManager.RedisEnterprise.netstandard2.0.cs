@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     }
     public partial class RedisEnterpriseClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RedisEnterpriseClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public RedisEnterpriseClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku) { }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -167,6 +167,33 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.RedisEnterprise.Mocking
+{
+    public partial class MockableRedisEnterpriseArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableRedisEnterpriseArmClient() { }
+        public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource GetRedisEnterpriseClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterpriseDatabaseResource GetRedisEnterpriseDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableRedisEnterpriseResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableRedisEnterpriseResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource> GetRedisEnterpriseCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource>> GetRedisEnterpriseClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterCollection GetRedisEnterpriseClusters() { throw null; }
+    }
+    public partial class MockableRedisEnterpriseSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableRedisEnterpriseSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource> GetRedisEnterpriseClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource> GetRedisEnterpriseClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseOperationStatus> GetRedisEnterpriseOperationsStatus(Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseOperationStatus>> GetRedisEnterpriseOperationsStatusAsync(Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkus(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkusAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.RedisEnterprise.Models

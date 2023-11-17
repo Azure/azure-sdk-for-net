@@ -92,6 +92,7 @@ trigger:
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -119,6 +120,7 @@ trigger:
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
     - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
@@ -274,6 +276,7 @@ pr:
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -301,6 +304,7 @@ pr:
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
     - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability

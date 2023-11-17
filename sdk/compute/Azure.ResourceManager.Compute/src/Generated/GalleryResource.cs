@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GalleryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}";
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryImageResources and their operations over a GalleryImageResource. </returns>
         public virtual GalleryImageCollection GetGalleryImages()
         {
-            return GetCachedClient(Client => new GalleryImageCollection(Client, Id));
+            return GetCachedClient(client => new GalleryImageCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +118,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GalleryImageResource>> GetGalleryImageAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +141,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GalleryImageResource> GetGalleryImage(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryApplicationResources and their operations over a GalleryApplicationResource. </returns>
         public virtual GalleryApplicationCollection GetGalleryApplications()
         {
-            return GetCachedClient(Client => new GalleryApplicationCollection(Client, Id));
+            return GetCachedClient(client => new GalleryApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +171,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GalleryApplicationResource>> GetGalleryApplicationAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +194,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GalleryApplicationResource> GetGalleryApplication(string galleryApplicationName, CancellationToken cancellationToken = default)
         {

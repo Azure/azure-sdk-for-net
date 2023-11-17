@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityContactResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityContactResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="securityContactName"> The securityContactName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string securityContactName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}";

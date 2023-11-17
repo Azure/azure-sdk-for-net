@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.JobPlan;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -243,11 +242,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Build expected results first to use to populate checkpointer
             DataTransferProperties[] expectedResults = new DataTransferProperties[]
             {
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "local", SourceTypeId = "LocalFile", SourceUri = new Uri(parentLocalUri1, "file1"), DestinationProviderId = "blob", DestinationTypeId = "BlockBlob", DestinationUri = new Uri(parentRemoteUri, "file1"), IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceTypeId = "BlockBlob", SourceUri = new Uri(parentRemoteUri, "file2/"), DestinationProviderId = "local", DestinationTypeId = "LocalFile", DestinationUri = new Uri(parentLocalUri1, "file2/"), IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceTypeId = "BlockBlob", SourceUri = new Uri(parentRemoteUri, "file3"), DestinationProviderId = "blob", DestinationTypeId = "BlockBlob", DestinationUri = new Uri(parentRemoteUri, "file3"), IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceTypeId = "BlockBlob", SourceUri = parentRemoteUri, DestinationProviderId = "local", DestinationTypeId = "LocalFile", DestinationUri = parentLocalUri1, IsContainer = true },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "local", SourceTypeId = "LocalFile", SourceUri = parentLocalUri2, DestinationProviderId = "blob", DestinationTypeId = "AppendBlob", DestinationUri = parentRemoteUri, IsContainer = true },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "local", SourceUri = new Uri(parentLocalUri1, "file1"), DestinationProviderId = "blob", DestinationUri = new Uri(parentRemoteUri, "file1"), IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceUri = new Uri(parentRemoteUri, "file2/"), DestinationProviderId = "local", DestinationUri = new Uri(parentLocalUri1, "file2/"), IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceUri = new Uri(parentRemoteUri, "file3"), DestinationProviderId = "blob", DestinationUri = new Uri(parentRemoteUri, "file3"), IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceUri = parentRemoteUri, DestinationProviderId = "local", DestinationUri = parentLocalUri1, IsContainer = true },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "local", SourceUri = parentLocalUri2, DestinationProviderId = "blob", DestinationUri = parentRemoteUri, IsContainer = true },
             };
 
             // Add a transfer for each expected result
@@ -322,7 +321,10 @@ namespace Azure.Storage.DataMovement.Tests
                 parentSourcePath: properties.SourceUri.AbsoluteUri,
                 parentDestinationPath: properties.DestinationUri.AbsoluteUri,
                 sourceProviderId: properties.SourceProviderId,
-                destinationProviderId: properties.DestinationProviderId);
+                destinationProviderId: properties.DestinationProviderId,
+                isContainer: properties.IsContainer,
+                sourceCheckpointData: MockResourceCheckpointData.DefaultInstance,
+                destinationCheckpointData: MockResourceCheckpointData.DefaultInstance);
 
             if (properties.IsContainer)
             {
@@ -343,15 +345,16 @@ namespace Azure.Storage.DataMovement.Tests
                     destinationPaths.Add(properties.DestinationUri + $"file{i}");
                 }
 
+                // Because type ID is null on container transfers, derive a type from provider id
+                string sourceTypeId = GetTypeIdForProvider(properties.SourceProviderId);
+                string destinationTypeId = GetTypeIdForProvider(properties.DestinationProviderId);
                 factory.CreateStubJobPartPlanFilesAsync(
                     checkpointerPath,
                     properties.TransferId,
                     numParts, /* jobPartCount */
                     InProgressStatus,
                     sourcePaths,
-                    destinationPaths,
-                    sourceResourceId: properties.SourceTypeId,
-                    destinationResourceId: properties.DestinationTypeId);
+                    destinationPaths);
             }
             else
             {
@@ -361,9 +364,7 @@ namespace Azure.Storage.DataMovement.Tests
                     1, /* jobPartCount */
                     InProgressStatus,
                     new List<string> { properties.SourceUri.AbsoluteUri },
-                    new List<string> { properties.DestinationUri.AbsoluteUri },
-                    sourceResourceId: properties.SourceTypeId,
-                    destinationResourceId: properties.DestinationTypeId);
+                    new List<string> { properties.DestinationUri.AbsoluteUri });
             }
         }
 
@@ -371,12 +372,21 @@ namespace Azure.Storage.DataMovement.Tests
         {
             Assert.AreEqual(expected.TransferId, actual.TransferId);
             Assert.AreEqual(expected.SourceProviderId, actual.SourceProviderId);
-            Assert.AreEqual(expected.SourceTypeId, actual.SourceTypeId);
             Assert.AreEqual(expected.SourceUri.AbsoluteUri.TrimEnd('\\', '/'), actual.SourceUri.AbsoluteUri.TrimEnd('\\', '/'));
             Assert.AreEqual(expected.DestinationProviderId, actual.DestinationProviderId);
-            Assert.AreEqual(expected.DestinationTypeId, actual.DestinationTypeId);
             Assert.AreEqual(expected.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'), actual.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'));
             Assert.AreEqual(expected.IsContainer, actual.IsContainer);
+
+            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, actual.SourceCheckpointData);
+            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, actual.DestinationCheckpointData);
         }
+
+        private string GetTypeIdForProvider(string providerId)
+            => providerId switch
+            {
+                "blob" => "BlockBlob",
+                "local" => "LocalFile",
+                _ => "Unknown"
+            };
     }
 }
