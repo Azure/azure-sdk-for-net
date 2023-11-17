@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.ClientModel.Internal.Primitives;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests;
@@ -25,6 +26,49 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0);
 
         Assert.IsFalse(processor.ProcessNext());
+    }
+
+    [Test]
+    public void ConstructorThrowsForInvalidIndexValues()
+    {
+        PipelineRequest request = new HttpPipelineRequest();
+        PipelineMessage message = new PipelineMessage(request);
+
+        var perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
+        {
+            ClientPipeline.CustomPipelineProcessor processor = new(message,
+            original: new PipelinePolicy[1],
+            perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            perCallIndex: 1,
+            perTryIndex: 0);
+        });
+
+        Assert.AreEqual("perCallIndex", perCallEx!.ParamName);
+
+        perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
+        {
+            ClientPipeline.CustomPipelineProcessor processor = new(message,
+            original: new PipelinePolicy[1],
+            perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            perCallIndex: 2,
+            perTryIndex: 2);
+        });
+
+        Assert.AreEqual("perCallIndex", perCallEx!.ParamName);
+
+        var perTryEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
+        {
+            ClientPipeline.CustomPipelineProcessor processor = new(message,
+            original: new PipelinePolicy[1],
+            perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            perCallIndex: 0,
+            perTryIndex: 2);
+        });
+
+        Assert.AreEqual("perTryIndex", perTryEx!.ParamName);
     }
 
     [Test]
@@ -167,7 +211,7 @@ public class CustomPipelineProcessorTests
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
-            perTryIndex: 0);
+            perTryIndex: 2);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -207,7 +251,7 @@ public class CustomPipelineProcessorTests
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
-            perTryIndex: 0);
+            perTryIndex: 2);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -344,6 +388,147 @@ public class CustomPipelineProcessorTests
         Assert.AreEqual("Response:E", observations[index++]);
         Assert.AreEqual("Response:D", observations[index++]);
         Assert.AreEqual("Response:B", observations[index++]);
+        Assert.AreEqual("Response:A", observations[index++]);
+    }
+
+    [Test]
+    public void AddsPerCallAndPerTryPoliciesAtStartOfPipeline()
+    {
+        PipelineRequest request = new HttpPipelineRequest();
+        PipelineMessage message = new PipelineMessage(request);
+
+        PipelinePolicy[] original = new PipelinePolicy[2];
+        original[0] = new ObservablePolicy("A");
+        original[1] = new ObservablePolicy("B");
+
+        PipelinePolicy[] perCall = new PipelinePolicy[2];
+        perCall[0] = new ObservablePolicy("C");
+        perCall[1] = new ObservablePolicy("D");
+
+        PipelinePolicy[] perTry = new PipelinePolicy[2];
+        perTry[0] = new ObservablePolicy("E");
+        perTry[1] = new ObservablePolicy("F");
+
+        ClientPipeline.CustomPipelineProcessor processor = new(message,
+            original: original,
+            perCallPolicies: perCall,
+            perTryPolicies: perTry,
+            perCallIndex: 0,
+            perTryIndex: 0);
+
+        Assert.IsTrue(processor.ProcessNext());
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(12, observations.Count);
+        Assert.AreEqual("Request:C", observations[index++]);
+        Assert.AreEqual("Request:D", observations[index++]);
+        Assert.AreEqual("Request:E", observations[index++]);
+        Assert.AreEqual("Request:F", observations[index++]);
+        Assert.AreEqual("Request:A", observations[index++]);
+        Assert.AreEqual("Request:B", observations[index++]);
+        Assert.AreEqual("Response:B", observations[index++]);
+        Assert.AreEqual("Response:A", observations[index++]);
+        Assert.AreEqual("Response:F", observations[index++]);
+        Assert.AreEqual("Response:E", observations[index++]);
+        Assert.AreEqual("Response:D", observations[index++]);
+        Assert.AreEqual("Response:C", observations[index++]);
+    }
+
+    [Test]
+    public void AddsPerCallAndPerTryPoliciesAtEndOfPipeline()
+    {
+        PipelineRequest request = new HttpPipelineRequest();
+        PipelineMessage message = new PipelineMessage(request);
+
+        PipelinePolicy[] original = new PipelinePolicy[2];
+        original[0] = new ObservablePolicy("A");
+        original[1] = new ObservablePolicy("B");
+
+        PipelinePolicy[] perCall = new PipelinePolicy[2];
+        perCall[0] = new ObservablePolicy("C");
+        perCall[1] = new ObservablePolicy("D");
+
+        PipelinePolicy[] perTry = new PipelinePolicy[2];
+        perTry[0] = new ObservablePolicy("E");
+        perTry[1] = new ObservablePolicy("F");
+
+        ClientPipeline.CustomPipelineProcessor processor = new(message,
+            original: original,
+            perCallPolicies: perCall,
+            perTryPolicies: perTry,
+            perCallIndex: 2,
+            perTryIndex: 2);
+
+        Assert.IsTrue(processor.ProcessNext());
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(12, observations.Count);
+        Assert.AreEqual("Request:A", observations[index++]);
+        Assert.AreEqual("Request:B", observations[index++]);
+        Assert.AreEqual("Request:C", observations[index++]);
+        Assert.AreEqual("Request:D", observations[index++]);
+        Assert.AreEqual("Request:E", observations[index++]);
+        Assert.AreEqual("Request:F", observations[index++]);
+        Assert.AreEqual("Response:F", observations[index++]);
+        Assert.AreEqual("Response:E", observations[index++]);
+        Assert.AreEqual("Response:D", observations[index++]);
+        Assert.AreEqual("Response:C", observations[index++]);
+        Assert.AreEqual("Response:B", observations[index++]);
+        Assert.AreEqual("Response:A", observations[index++]);
+    }
+
+    [Test]
+    public void AddsPerCallAndPerTryPoliciesMidPipeline()
+    {
+        PipelineRequest request = new HttpPipelineRequest();
+        PipelineMessage message = new PipelineMessage(request);
+
+        PipelinePolicy[] original = new PipelinePolicy[4];
+        original[0] = new ObservablePolicy("A");
+        original[1] = new ObservablePolicy("B");
+        original[2] = new ObservablePolicy("C");
+        original[3] = new ObservablePolicy("D");
+
+        PipelinePolicy[] perCall = new PipelinePolicy[2];
+        perCall[0] = new ObservablePolicy("E");
+        perCall[1] = new ObservablePolicy("F");
+
+        PipelinePolicy[] perTry = new PipelinePolicy[2];
+        perTry[0] = new ObservablePolicy("G");
+        perTry[1] = new ObservablePolicy("H");
+
+        ClientPipeline.CustomPipelineProcessor processor = new(message,
+            original: original,
+            perCallPolicies: perCall,
+            perTryPolicies: perTry,
+            perCallIndex: 1,
+            perTryIndex: 2);
+
+        Assert.IsTrue(processor.ProcessNext());
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(16, observations.Count);
+        Assert.AreEqual("Request:A", observations[index++]);
+        Assert.AreEqual("Request:E", observations[index++]);
+        Assert.AreEqual("Request:F", observations[index++]);
+        Assert.AreEqual("Request:B", observations[index++]);
+        Assert.AreEqual("Request:G", observations[index++]);
+        Assert.AreEqual("Request:H", observations[index++]);
+        Assert.AreEqual("Request:C", observations[index++]);
+        Assert.AreEqual("Request:D", observations[index++]);
+        Assert.AreEqual("Response:D", observations[index++]);
+        Assert.AreEqual("Response:C", observations[index++]);
+        Assert.AreEqual("Response:H", observations[index++]);
+        Assert.AreEqual("Response:G", observations[index++]);
+        Assert.AreEqual("Response:B", observations[index++]);
+        Assert.AreEqual("Response:F", observations[index++]);
+        Assert.AreEqual("Response:E", observations[index++]);
         Assert.AreEqual("Response:A", observations[index++]);
     }
 

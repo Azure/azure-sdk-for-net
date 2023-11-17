@@ -28,6 +28,10 @@ public partial class ClientPipeline
             int perCallIndex,
             int perTryIndex)
         {
+            if (perCallIndex > original.Length) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than pipeline length.");
+            if (perTryIndex > original.Length) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than pipeline length.");
+            if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
+
             _message = message;
 
             _original = original;

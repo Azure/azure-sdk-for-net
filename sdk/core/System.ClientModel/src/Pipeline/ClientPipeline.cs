@@ -16,9 +16,9 @@ public partial class ClientPipeline
 
     private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex)
     {
-        if (perCallIndex > 255) throw new ArgumentOutOfRangeException("Cannot create pipeline with more than 255 policies.");
-        if (perTryIndex > 255) throw new ArgumentOutOfRangeException("Cannot create pipeline with more than 255 policies.");
-        if (perTryIndex > perCallIndex) throw new ArgumentOutOfRangeException("perCallIndex cannot be greater than perTryIndex.");
+        if (perCallIndex > 255) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "Cannot create pipeline with more than 255 policies.");
+        if (perTryIndex > 255) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "Cannot create pipeline with more than 255 policies.");
+        if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
 
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
         {
