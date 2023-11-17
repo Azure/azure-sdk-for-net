@@ -28,7 +28,7 @@ public class ClientPipeline
         _policies = policies;
     }
 
-    public static ClientPipeline Create(PipelineOptions options)
+    public static ClientPipeline Create(ServiceClientOptions options)
     {
         int pipelineLength = 0;
 
