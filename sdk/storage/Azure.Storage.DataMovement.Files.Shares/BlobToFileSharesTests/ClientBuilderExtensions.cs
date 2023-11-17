@@ -21,6 +21,8 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
+using Azure.Core;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {

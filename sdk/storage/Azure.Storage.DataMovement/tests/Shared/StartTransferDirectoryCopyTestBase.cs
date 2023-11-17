@@ -562,17 +562,18 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task DirectoryToDirectory_OAuth()
+        public async virtual Task DirectoryToDirectory_OAuth()
         {
             // Arrange
             long size = Constants.KB;
             int waitTimeInSec = 20;
             string sourceContainerName = GetNewObjectName();
+            string destContainerName = GetNewObjectName();
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync(containerName: sourceContainerName);
             TSourceContainerClient oauthSourceContainer = GetOAuthSourceContainerClient(containerName: sourceContainerName);
 
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-            TDestinationContainerClient oauthDestinationContainer = GetOAuthDestinationContainerClient(containerName: sourceContainerName);
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync(containerName: destContainerName);
+            TDestinationContainerClient oauthDestinationContainer = GetOAuthDestinationContainerClient(containerName: destContainerName);
 
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destFolder";
