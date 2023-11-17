@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,16 +15,85 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(SystemDataConverter))]
-    public partial class SystemData : IUtf8JsonSerializable
+    public partial class SystemData : IUtf8JsonSerializable, IJsonModel<SystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SystemData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SystemData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedBy))
+                {
+                    writer.WritePropertyName("createdBy"u8);
+                    writer.WriteStringValue(CreatedBy);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedByType))
+                {
+                    writer.WritePropertyName("createdByType"u8);
+                    writer.WriteStringValue(CreatedByType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdAt"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastModifiedBy))
+                {
+                    writer.WritePropertyName("lastModifiedBy"u8);
+                    writer.WriteStringValue(LastModifiedBy);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastModifiedByType))
+                {
+                    writer.WritePropertyName("lastModifiedByType"u8);
+                    writer.WriteStringValue(LastModifiedByType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    writer.WritePropertyName("lastModifiedAt"u8);
+                    writer.WriteStringValue(LastModifiedOn.Value, "O");
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SystemData DeserializeSystemData(JsonElement element)
+        SystemData IJsonModel<SystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSystemData(document.RootElement, options);
+        }
+
+        internal static SystemData DeserializeSystemData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +155,31 @@ namespace Azure.ResourceManager.Models
             }
             return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
+
+        BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SystemData IPersistableModel<SystemData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSystemData(document.RootElement, options);
+        }
+
+        string IPersistableModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class SystemDataConverter : JsonConverter<SystemData>
         {

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ScoringFunction : IUtf8JsonSerializable
+    public partial class ScoringFunction : IUtf8JsonSerializable, IJsonModel<ScoringFunction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScoringFunction>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ScoringFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ScoringFunction>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ScoringFunction>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -27,11 +37,40 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScoringFunction DeserializeScoringFunction(JsonElement element)
+        ScoringFunction IJsonModel<ScoringFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScoringFunction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScoringFunction(document.RootElement, options);
+        }
+
+        internal static ScoringFunction DeserializeScoringFunction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,5 +87,30 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return UnknownScoringFunction.DeserializeUnknownScoringFunction(element);
         }
+
+        BinaryData IPersistableModel<ScoringFunction>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScoringFunction)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScoringFunction IPersistableModel<ScoringFunction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScoringFunction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScoringFunction(document.RootElement, options);
+        }
+
+        string IPersistableModel<ScoringFunction>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

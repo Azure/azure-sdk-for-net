@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointTierInformation : IUtf8JsonSerializable
+    public partial class RecoveryPointTierInformation : IUtf8JsonSerializable, IJsonModel<RecoveryPointTierInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPointTierInformation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RecoveryPointTierInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecoveryPointTierInformation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecoveryPointTierInformation>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TierType))
             {
@@ -37,11 +47,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryPointTierInformation DeserializeRecoveryPointTierInformation(JsonElement element)
+        RecoveryPointTierInformation IJsonModel<RecoveryPointTierInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPointTierInformation(document.RootElement, options);
+        }
+
+        internal static RecoveryPointTierInformation DeserializeRecoveryPointTierInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +88,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryPointTierType> type = default;
             Optional<RecoveryPointTierStatus> status = default;
             Optional<IDictionary<string, string>> extendedInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -83,8 +124,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedInfo = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryPointTierInformation(Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToDictionary(extendedInfo));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecoveryPointTierInformation(Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToDictionary(extendedInfo), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecoveryPointTierInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecoveryPointTierInformation IPersistableModel<RecoveryPointTierInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecoveryPointTierInformation(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecoveryPointTierInformation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

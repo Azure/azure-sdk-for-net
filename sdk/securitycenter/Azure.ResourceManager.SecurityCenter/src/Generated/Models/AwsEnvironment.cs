@@ -5,25 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The aws connector environment data. </summary>
     public partial class AwsEnvironment : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of AwsEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
         public AwsEnvironment()
         {
             EnvironmentType = EnvironmentType.AwsAccount;
         }
 
-        /// <summary> Initializes a new instance of AwsEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="organizationalData">
         /// The AWS account's organizational data
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
         /// </param>
-        internal AwsEnvironment(EnvironmentType environmentType, AwsOrganizationalInfo organizationalData) : base(environmentType)
+        internal AwsEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData, AwsOrganizationalInfo organizationalData) : base(environmentType, serializedAdditionalRawData)
         {
             OrganizationalData = organizationalData;
             EnvironmentType = environmentType;

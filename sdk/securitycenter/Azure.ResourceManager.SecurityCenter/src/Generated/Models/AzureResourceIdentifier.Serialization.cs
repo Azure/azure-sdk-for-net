@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AzureResourceIdentifier
+    public partial class AzureResourceIdentifier : IUtf8JsonSerializable, IJsonModel<AzureResourceIdentifier>
     {
-        internal static AzureResourceIdentifier DeserializeAzureResourceIdentifier(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureResourceIdentifier>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureResourceIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureResourceIdentifier>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureResourceIdentifier>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AzureResourceId))
+                {
+                    writer.WritePropertyName("azureResourceId"u8);
+                    writer.WriteStringValue(AzureResourceId);
+                }
+            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ResourceIdentifierType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AzureResourceIdentifier IJsonModel<AzureResourceIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureResourceIdentifier(document.RootElement, options);
+        }
+
+        internal static AzureResourceIdentifier DeserializeAzureResourceIdentifier(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> azureResourceId = default;
             ResourceIdentifierType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureResourceId"u8))
@@ -36,8 +94,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     type = new ResourceIdentifierType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureResourceIdentifier(type, azureResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureResourceIdentifier(type, serializedAdditionalRawData, azureResourceId.Value);
         }
+
+        BinaryData IPersistableModel<AzureResourceIdentifier>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureResourceIdentifier IPersistableModel<AzureResourceIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureResourceIdentifier(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureResourceIdentifier>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

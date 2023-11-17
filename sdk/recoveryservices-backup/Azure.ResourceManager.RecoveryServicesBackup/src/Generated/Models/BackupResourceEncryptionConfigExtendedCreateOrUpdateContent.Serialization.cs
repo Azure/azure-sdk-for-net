@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupResourceEncryptionConfigExtendedCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class BackupResourceEncryptionConfigExtendedCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
@@ -41,11 +51,63 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupResourceEncryptionConfigExtendedCreateOrUpdateContent DeserializeBackupResourceEncryptionConfigExtendedCreateOrUpdateContent(JsonElement element)
+        BackupResourceEncryptionConfigExtendedCreateOrUpdateContent IJsonModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupResourceEncryptionConfigExtendedCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static BackupResourceEncryptionConfigExtendedCreateOrUpdateContent DeserializeBackupResourceEncryptionConfigExtendedCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +120,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -121,8 +185,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BackupResourceEncryptionConfigExtendedCreateOrUpdateContent IPersistableModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBackupResourceEncryptionConfigExtendedCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

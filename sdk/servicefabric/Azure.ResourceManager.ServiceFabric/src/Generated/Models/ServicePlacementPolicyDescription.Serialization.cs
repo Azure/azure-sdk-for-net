@@ -5,28 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServicePlacementPolicyDescription : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownServicePlacementPolicyDescription))]
+    public partial class ServicePlacementPolicyDescription : IUtf8JsonSerializable, IJsonModel<ServicePlacementPolicyDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePlacementPolicyDescription>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ServicePlacementPolicyDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServicePlacementPolicyDescription>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServicePlacementPolicyDescription>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServicePlacementPolicyDescription DeserializeServicePlacementPolicyDescription(JsonElement element)
+        ServicePlacementPolicyDescription IJsonModel<ServicePlacementPolicyDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePlacementPolicyDescription(document.RootElement, options);
+        }
+
+        internal static ServicePlacementPolicyDescription DeserializeServicePlacementPolicyDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             return UnknownServicePlacementPolicyDescription.DeserializeUnknownServicePlacementPolicyDescription(element);
         }
+
+        BinaryData IPersistableModel<ServicePlacementPolicyDescription>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServicePlacementPolicyDescription IPersistableModel<ServicePlacementPolicyDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServicePlacementPolicyDescription(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServicePlacementPolicyDescription>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

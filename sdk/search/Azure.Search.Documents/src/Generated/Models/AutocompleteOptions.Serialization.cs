@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
-    public partial class AutocompleteOptions : IUtf8JsonSerializable
+    public partial class AutocompleteOptions : IUtf8JsonSerializable, IJsonModel<AutocompleteOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutocompleteOptions>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AutocompleteOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AutocompleteOptions>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AutocompleteOptions>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("search"u8);
             writer.WriteStringValue(SearchText);
@@ -60,7 +71,156 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AutocompleteOptions IJsonModel<AutocompleteOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutocompleteOptions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutocompleteOptions(document.RootElement, options);
+        }
+
+        internal static AutocompleteOptions DeserializeAutocompleteOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string search = default;
+            Optional<AutocompleteMode> autocompleteMode = default;
+            Optional<string> filter = default;
+            Optional<bool> fuzzy = default;
+            Optional<string> highlightPostTag = default;
+            Optional<string> highlightPreTag = default;
+            Optional<double> minimumCoverage = default;
+            Optional<string> searchFields = default;
+            string suggesterName = default;
+            Optional<int> top = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("search"u8))
+                {
+                    search = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autocompleteMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autocompleteMode = property.Value.GetString().ToAutocompleteMode();
+                    continue;
+                }
+                if (property.NameEquals("filter"u8))
+                {
+                    filter = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fuzzy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fuzzy = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("highlightPostTag"u8))
+                {
+                    highlightPostTag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("highlightPreTag"u8))
+                {
+                    highlightPreTag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("minimumCoverage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimumCoverage = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("searchFields"u8))
+                {
+                    searchFields = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("suggesterName"u8))
+                {
+                    suggesterName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("top"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    top = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutocompleteOptions(search, Optional.ToNullable(autocompleteMode), filter.Value, Optional.ToNullable(fuzzy), highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), searchFields.Value, suggesterName, Optional.ToNullable(top), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AutocompleteOptions>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutocompleteOptions)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AutocompleteOptions IPersistableModel<AutocompleteOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutocompleteOptions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAutocompleteOptions(document.RootElement, options);
+        }
+
+        string IPersistableModel<AutocompleteOptions>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,22 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlOutboundEnvironmentEndpoint
+    public partial class SqlOutboundEnvironmentEndpoint : IUtf8JsonSerializable, IJsonModel<SqlOutboundEnvironmentEndpoint>
     {
-        internal static SqlOutboundEnvironmentEndpoint DeserializeSqlOutboundEnvironmentEndpoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlOutboundEnvironmentEndpoint>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlOutboundEnvironmentEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlOutboundEnvironmentEndpoint>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlOutboundEnvironmentEndpoint>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Category))
+                {
+                    writer.WritePropertyName("category"u8);
+                    writer.WriteStringValue(Category);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Endpoints))
+                {
+                    writer.WritePropertyName("endpoints"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Endpoints)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SqlOutboundEnvironmentEndpoint IJsonModel<SqlOutboundEnvironmentEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlOutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlOutboundEnvironmentEndpoint(document.RootElement, options);
+        }
+
+        internal static SqlOutboundEnvironmentEndpoint DeserializeSqlOutboundEnvironmentEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> category = default;
             Optional<IReadOnlyList<ManagedInstanceEndpointDependency>> endpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -42,8 +110,38 @@ namespace Azure.ResourceManager.Sql.Models
                     endpoints = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlOutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlOutboundEnvironmentEndpoint IPersistableModel<SqlOutboundEnvironmentEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlOutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlOutboundEnvironmentEndpoint(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlOutboundEnvironmentEndpoint>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

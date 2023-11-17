@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class RecommendedSecurityRule : IUtf8JsonSerializable
+    public partial class RecommendedSecurityRule : IUtf8JsonSerializable, IJsonModel<RecommendedSecurityRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedSecurityRule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RecommendedSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecommendedSecurityRule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecommendedSecurityRule>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -51,11 +61,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecommendedSecurityRule DeserializeRecommendedSecurityRule(JsonElement element)
+        RecommendedSecurityRule IJsonModel<RecommendedSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecommendedSecurityRule(document.RootElement, options);
+        }
+
+        internal static RecommendedSecurityRule DeserializeRecommendedSecurityRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +104,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<int> destinationPort = default;
             Optional<IList<SecurityTransportProtocol>> protocols = default;
             Optional<IList<string>> ipAddresses = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -118,8 +159,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ipAddresses = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecommendedSecurityRule(name.Value, Optional.ToNullable(direction), Optional.ToNullable(destinationPort), Optional.ToList(protocols), Optional.ToList(ipAddresses));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecommendedSecurityRule(name.Value, Optional.ToNullable(direction), Optional.ToNullable(destinationPort), Optional.ToList(protocols), Optional.ToList(ipAddresses), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecommendedSecurityRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecommendedSecurityRule IPersistableModel<RecommendedSecurityRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecommendedSecurityRule(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecommendedSecurityRule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

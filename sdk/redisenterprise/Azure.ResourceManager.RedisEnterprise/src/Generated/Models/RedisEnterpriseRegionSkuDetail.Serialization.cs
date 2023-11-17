@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseRegionSkuDetail
+    public partial class RedisEnterpriseRegionSkuDetail : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseRegionSkuDetail>
     {
-        internal static RedisEnterpriseRegionSkuDetail DeserializeRedisEnterpriseRegionSkuDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseRegionSkuDetail>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RedisEnterpriseRegionSkuDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RedisEnterpriseRegionSkuDetail>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RedisEnterpriseRegionSkuDetail>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
+            if (Optional.IsDefined(LocationInfo))
+            {
+                writer.WritePropertyName("locationInfo"u8);
+                writer.WriteObjectValue(LocationInfo);
+            }
+            if (Optional.IsDefined(SkuDetails))
+            {
+                writer.WritePropertyName("skuDetails"u8);
+                writer.WriteObjectValue(SkuDetails);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RedisEnterpriseRegionSkuDetail IJsonModel<RedisEnterpriseRegionSkuDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseRegionSkuDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterpriseRegionSkuDetail(document.RootElement, options);
+        }
+
+        internal static RedisEnterpriseRegionSkuDetail DeserializeRedisEnterpriseRegionSkuDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Optional<ResourceType> resourceType = default;
             Optional<RedisEnterpriseLocationInfo> locationInfo = default;
             Optional<SkuDetail> skuDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -50,8 +113,38 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     skuDetails = SkuDetail.DeserializeSkuDetail(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisEnterpriseRegionSkuDetail(Optional.ToNullable(resourceType), locationInfo.Value, skuDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RedisEnterpriseRegionSkuDetail(Optional.ToNullable(resourceType), locationInfo.Value, skuDetails.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RedisEnterpriseRegionSkuDetail>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseRegionSkuDetail)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RedisEnterpriseRegionSkuDetail IPersistableModel<RedisEnterpriseRegionSkuDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseRegionSkuDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRedisEnterpriseRegionSkuDetail(document.RootElement, options);
+        }
+
+        string IPersistableModel<RedisEnterpriseRegionSkuDetail>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of the gateway operation. </summary>
     public partial class GatewayOperationDetails
     {
-        /// <summary> Initializes a new instance of GatewayOperationDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayOperationDetails"/>. </summary>
         internal GatewayOperationDetails()
         {
             DataStores = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GatewayOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayOperationDetails"/>. </summary>
         /// <param name="state"> A value indicating the state of gateway operation. </param>
         /// <param name="progressPercentage"> A value indicating the progress percentage of gateway operation. </param>
         /// <param name="timeElapsed"> A value indicating the time elapsed for the operation in milliseconds. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hostName"> A value indicating the ESXi host name. </param>
         /// <param name="dataStores"> A value indicating the datastore collection. </param>
         /// <param name="vmwareReadThroughput"> A value indicating the VMware read throughput in bytes per second. </param>
-        internal GatewayOperationDetails(string state, int? progressPercentage, long? timeElapsed, long? timeRemaining, long? uploadSpeed, string hostName, IReadOnlyList<string> dataStores, long? vmwareReadThroughput)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayOperationDetails(string state, int? progressPercentage, long? timeElapsed, long? timeRemaining, long? uploadSpeed, string hostName, IReadOnlyList<string> dataStores, long? vmwareReadThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             ProgressPercentage = progressPercentage;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HostName = hostName;
             DataStores = dataStores;
             VMwareReadThroughput = vmwareReadThroughput;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A value indicating the state of gateway operation. </summary>

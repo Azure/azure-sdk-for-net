@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm appliance details. </summary>
     public partial class InMageRcmApplianceDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceDetails"/>. </summary>
         internal InMageRcmApplianceDetails()
         {
             SwitchProviderBlockingErrorDetails = new ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceDetails"/>. </summary>
         /// <param name="id"> The appliance Id. </param>
         /// <param name="name"> The appliance name. </param>
         /// <param name="fabricArmId"> The fabric ARM Id. </param>
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="marsAgent"> The Mars agent. </param>
         /// <param name="dra"> The DRA. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
-        internal InMageRcmApplianceDetails(string id, string name, ResourceIdentifier fabricArmId, SiteRecoveryProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, SiteRecoveryDraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmApplianceDetails(string id, string name, ResourceIdentifier fabricArmId, SiteRecoveryProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, SiteRecoveryDraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -44,6 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsAgent = marsAgent;
             Dra = dra;
             SwitchProviderBlockingErrorDetails = switchProviderBlockingErrorDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The appliance Id. </summary>

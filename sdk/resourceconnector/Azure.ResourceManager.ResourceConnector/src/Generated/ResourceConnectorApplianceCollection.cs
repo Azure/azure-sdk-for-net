@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), _resourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "ResourceConnectorApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), _resourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "ResourceConnectorApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), _resourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "ResourceConnectorApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), _resourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "ResourceConnectorApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

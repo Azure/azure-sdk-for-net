@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class FailoverProcessServerProperties : IUtf8JsonSerializable
+    public partial class FailoverProcessServerProperties : IUtf8JsonSerializable, IJsonModel<FailoverProcessServerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverProcessServerProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FailoverProcessServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FailoverProcessServerProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FailoverProcessServerProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerName))
             {
@@ -45,7 +56,127 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        FailoverProcessServerProperties IJsonModel<FailoverProcessServerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFailoverProcessServerProperties(document.RootElement, options);
+        }
+
+        internal static FailoverProcessServerProperties DeserializeFailoverProcessServerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> containerName = default;
+            Optional<Guid> sourceProcessServerId = default;
+            Optional<Guid> targetProcessServerId = default;
+            Optional<IList<string>> vmsToMigrate = default;
+            Optional<string> updateType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("containerName"u8))
+                {
+                    containerName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceProcessServerId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceProcessServerId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("targetProcessServerId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProcessServerId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("vmsToMigrate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    vmsToMigrate = array;
+                    continue;
+                }
+                if (property.NameEquals("updateType"u8))
+                {
+                    updateType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FailoverProcessServerProperties(containerName.Value, Optional.ToNullable(sourceProcessServerId), Optional.ToNullable(targetProcessServerId), Optional.ToList(vmsToMigrate), updateType.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<FailoverProcessServerProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FailoverProcessServerProperties IPersistableModel<FailoverProcessServerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFailoverProcessServerProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<FailoverProcessServerProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

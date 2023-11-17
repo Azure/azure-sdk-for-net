@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SqlDataDirectory : IUtf8JsonSerializable
+    public partial class SqlDataDirectory : IUtf8JsonSerializable, IJsonModel<SqlDataDirectory>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDataDirectory>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlDataDirectory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlDataDirectory>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlDataDirectory>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DirectoryType))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("logicalName"u8);
                 writer.WriteStringValue(LogicalName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDataDirectory DeserializeSqlDataDirectory(JsonElement element)
+        SqlDataDirectory IJsonModel<SqlDataDirectory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDataDirectory(document.RootElement, options);
+        }
+
+        internal static SqlDataDirectory DeserializeSqlDataDirectory(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<SqlDataDirectoryType> type = default;
             Optional<string> path = default;
             Optional<string> logicalName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     logicalName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDataDirectory(Optional.ToNullable(type), path.Value, logicalName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlDataDirectory(Optional.ToNullable(type), path.Value, logicalName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlDataDirectory>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlDataDirectory IPersistableModel<SqlDataDirectory>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlDataDirectory(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlDataDirectory>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

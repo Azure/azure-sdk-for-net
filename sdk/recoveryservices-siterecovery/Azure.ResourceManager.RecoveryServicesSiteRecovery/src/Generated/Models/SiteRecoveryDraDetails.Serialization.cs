@@ -7,15 +7,136 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryDraDetails
+    public partial class SiteRecoveryDraDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryDraDetails>
     {
-        internal static SiteRecoveryDraDetails DeserializeSiteRecoveryDraDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryDraDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SiteRecoveryDraDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SiteRecoveryDraDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SiteRecoveryDraDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BiosId))
+                {
+                    writer.WritePropertyName("biosId"u8);
+                    writer.WriteStringValue(BiosId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastHeartbeatReceivedOn))
+                {
+                    writer.WritePropertyName("lastHeartbeatUtc"u8);
+                    writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Health))
+                {
+                    writer.WritePropertyName("health"u8);
+                    writer.WriteStringValue(Health.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(HealthErrors))
+                {
+                    writer.WritePropertyName("healthErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in HealthErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ForwardProtectedItemCount))
+                {
+                    writer.WritePropertyName("forwardProtectedItemCount"u8);
+                    writer.WriteNumberValue(ForwardProtectedItemCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ReverseProtectedItemCount))
+                {
+                    writer.WritePropertyName("reverseProtectedItemCount"u8);
+                    writer.WriteNumberValue(ReverseProtectedItemCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryDraDetails IJsonModel<SiteRecoveryDraDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryDraDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryDraDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryDraDetails DeserializeSiteRecoveryDraDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +150,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             Optional<int> forwardProtectedItemCount = default;
             Optional<int> reverseProtectedItemCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -101,8 +224,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     reverseProtectedItemCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryDraDetails(id.Value, name.Value, biosId.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(forwardProtectedItemCount), Optional.ToNullable(reverseProtectedItemCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryDraDetails(id.Value, name.Value, biosId.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(forwardProtectedItemCount), Optional.ToNullable(reverseProtectedItemCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryDraDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryDraDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryDraDetails IPersistableModel<SiteRecoveryDraDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryDraDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryDraDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<SiteRecoveryDraDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

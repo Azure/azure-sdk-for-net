@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class AssetConversion
+    public partial class AssetConversion : IUtf8JsonSerializable, IJsonModel<AssetConversion>
     {
-        internal static AssetConversion DeserializeAssetConversion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetConversion>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AssetConversion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AssetConversion>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AssetConversion>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(ConversionId);
+            writer.WritePropertyName("settings"u8);
+            writer.WriteObjectValue(Options);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Output))
+                {
+                    writer.WritePropertyName("output"u8);
+                    writer.WriteObjectValue(Output);
+                }
+            }
+            if (Error != null)
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            else
+            {
+                writer.WriteNull("error");
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            writer.WritePropertyName("creationTime"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AssetConversion IJsonModel<AssetConversion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AssetConversion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssetConversion(document.RootElement, options);
+        }
+
+        internal static AssetConversion DeserializeAssetConversion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +95,8 @@ namespace Azure.MixedReality.RemoteRendering
             RemoteRenderingServiceError error = default;
             AssetConversionStatus status = default;
             DateTimeOffset creationTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -66,8 +138,38 @@ namespace Azure.MixedReality.RemoteRendering
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssetConversion(id, settings, output.Value, error, status, creationTime);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AssetConversion(id, settings, output.Value, error, status, creationTime, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AssetConversion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AssetConversion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AssetConversion IPersistableModel<AssetConversion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AssetConversion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAssetConversion(document.RootElement, options);
+        }
+
+        string IPersistableModel<AssetConversion>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

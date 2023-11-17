@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SearchResult : IUtf8JsonSerializable
+    public partial class SearchResult : IUtf8JsonSerializable, IJsonModel<SearchResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SearchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SearchResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SearchResult>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SolutionId))
             {
@@ -55,11 +66,40 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SearchResult DeserializeSearchResult(JsonElement element)
+        SearchResult IJsonModel<SearchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchResult(document.RootElement, options);
+        }
+
+        internal static SearchResult DeserializeSearchResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +112,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<ResultType> resultType = default;
             Optional<int> rank = default;
             Optional<string> link = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -126,8 +168,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     link = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchResult(solutionId.Value, content.Value, title.Value, Optional.ToNullable(confidence), source.Value, Optional.ToNullable(resultType), Optional.ToNullable(rank), link.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchResult(solutionId.Value, content.Value, title.Value, Optional.ToNullable(confidence), source.Value, Optional.ToNullable(resultType), Optional.ToNullable(rank), link.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SearchResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SearchResult IPersistableModel<SearchResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSearchResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<SearchResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMware to AzStackHCI Protected item model custom properties. </summary>
     public partial class VMwareToAzStackHciProtectedItemModelCustomProperties : ProtectedItemModelCustomProperties
     {
-        /// <summary> Initializes a new instance of VMwareToAzStackHciProtectedItemModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>. </summary>
         /// <param name="targetHciClusterId"> Gets or sets the Target HCI Cluster ARM Id. </param>
         /// <param name="targetArcClusterCustomLocationId"> Gets or sets the Target Arc Cluster Custom Location ARM Id. </param>
         /// <param name="storageContainerId"> Gets or sets the target storage container ARM Id. </param>
@@ -61,8 +61,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "VMwareToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of VMwareToAzStackHciProtectedItemModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="activeLocation"> Gets or sets the location of the protected item. </param>
         /// <param name="targetHciClusterId"> Gets or sets the Target HCI Cluster ARM Id. </param>
         /// <param name="targetArcClusterCustomLocationId"> Gets or sets the Target Arc Cluster Custom Location ARM Id. </param>
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="performAutoResync"> Gets or sets a value indicating whether auto resync is to be done. </param>
         /// <param name="resumeRetryCount"> Gets or sets the resume retry count. </param>
         /// <param name="lastReplicationUpdateOn"> Gets or sets the latest timestamp that replication status is updated. </param>
-        internal VMwareToAzStackHciProtectedItemModelCustomProperties(string instanceType, ProtectedItemActiveLocation? activeLocation, ResourceIdentifier targetHciClusterId, ResourceIdentifier targetArcClusterCustomLocationId, string targetAzStackHciClusterName, ResourceIdentifier storageContainerId, ResourceIdentifier targetResourceGroupId, string targetLocation, string customLocationRegion, IList<VMwareToAzStackHciDiskInput> disksToInclude, IList<VMwareToAzStackHciNicInput> nicsToInclude, IReadOnlyList<VMwareToAzStackHciProtectedDiskProperties> protectedDisks, IReadOnlyList<VMwareToAzStackHciProtectedNicProperties> protectedNics, string targetVmBiosId, string targetVmName, string hyperVGeneration, string targetNetworkId, string testNetworkId, int? targetCpuCores, bool? isDynamicRam, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig, int? targetMemoryInMegaBytes, string osType, string osName, string firmwareType, ResourceIdentifier fabricDiscoveryMachineId, string sourceVmName, int? sourceCpuCores, double? sourceMemoryInMegaBytes, string runAsAccountId, string sourceDraName, string targetDraName, string sourceApplianceName, string targetApplianceName, string failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialReplicationProgressPercentage, int? migrationProgressPercentage, int? resumeProgressPercentage, int? resyncProgressPercentage, long? resyncRetryCount, bool? resyncRequired, VMwareToAzureMigrateResyncState? resyncState, bool? performAutoResync, long? resumeRetryCount, DateTimeOffset? lastReplicationUpdateOn) : base(instanceType)
+        internal VMwareToAzStackHciProtectedItemModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ProtectedItemActiveLocation? activeLocation, ResourceIdentifier targetHciClusterId, ResourceIdentifier targetArcClusterCustomLocationId, string targetAzStackHciClusterName, ResourceIdentifier storageContainerId, ResourceIdentifier targetResourceGroupId, string targetLocation, string customLocationRegion, IList<VMwareToAzStackHciDiskInput> disksToInclude, IList<VMwareToAzStackHciNicInput> nicsToInclude, IReadOnlyList<VMwareToAzStackHciProtectedDiskProperties> protectedDisks, IReadOnlyList<VMwareToAzStackHciProtectedNicProperties> protectedNics, string targetVmBiosId, string targetVmName, string hyperVGeneration, string targetNetworkId, string testNetworkId, int? targetCpuCores, bool? isDynamicRam, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig, int? targetMemoryInMegaBytes, string osType, string osName, string firmwareType, ResourceIdentifier fabricDiscoveryMachineId, string sourceVmName, int? sourceCpuCores, double? sourceMemoryInMegaBytes, string runAsAccountId, string sourceDraName, string targetDraName, string sourceApplianceName, string targetApplianceName, string failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialReplicationProgressPercentage, int? migrationProgressPercentage, int? resumeProgressPercentage, int? resyncProgressPercentage, long? resyncRetryCount, bool? resyncRequired, VMwareToAzureMigrateResyncState? resyncState, bool? performAutoResync, long? resumeRetryCount, DateTimeOffset? lastReplicationUpdateOn) : base(instanceType, serializedAdditionalRawData)
         {
             ActiveLocation = activeLocation;
             TargetHciClusterId = targetHciClusterId;
@@ -164,6 +165,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ResumeRetryCount = resumeRetryCount;
             LastReplicationUpdateOn = lastReplicationUpdateOn;
             InstanceType = instanceType ?? "VMwareToAzStackHCI";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/> for deserialization. </summary>
+        internal VMwareToAzStackHciProtectedItemModelCustomProperties()
+        {
         }
 
         /// <summary> Gets or sets the location of the protected item. </summary>

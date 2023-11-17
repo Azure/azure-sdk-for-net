@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanAutomationRunbookActionDetails : IUtf8JsonSerializable
+    public partial class RecoveryPlanAutomationRunbookActionDetails : IUtf8JsonSerializable, IJsonModel<RecoveryPlanAutomationRunbookActionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanAutomationRunbookActionDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RecoveryPlanAutomationRunbookActionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecoveryPlanAutomationRunbookActionDetails>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RunbookId))
             {
@@ -29,11 +40,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(FabricLocation.ToString());
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryPlanAutomationRunbookActionDetails DeserializeRecoveryPlanAutomationRunbookActionDetails(JsonElement element)
+        RecoveryPlanAutomationRunbookActionDetails IJsonModel<RecoveryPlanAutomationRunbookActionDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanAutomationRunbookActionDetails(document.RootElement, options);
+        }
+
+        internal static RecoveryPlanAutomationRunbookActionDetails DeserializeRecoveryPlanAutomationRunbookActionDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runbookId"u8))
@@ -68,8 +110,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryPlanAutomationRunbookActionDetails(instanceType, runbookId.Value, timeout.Value, fabricLocation);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecoveryPlanAutomationRunbookActionDetails(instanceType, serializedAdditionalRawData, runbookId.Value, timeout.Value, fabricLocation);
         }
+
+        BinaryData IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecoveryPlanAutomationRunbookActionDetails IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanAutomationRunbookActionDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

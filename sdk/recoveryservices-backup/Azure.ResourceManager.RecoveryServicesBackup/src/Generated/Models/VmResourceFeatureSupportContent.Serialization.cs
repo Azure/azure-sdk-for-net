@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmResourceFeatureSupportContent : IUtf8JsonSerializable
+    public partial class VmResourceFeatureSupportContent : IUtf8JsonSerializable, IJsonModel<VmResourceFeatureSupportContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmResourceFeatureSupportContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VmResourceFeatureSupportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VmResourceFeatureSupportContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VmResourceFeatureSupportContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VmSize))
             {
@@ -27,7 +38,98 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("featureType"u8);
             writer.WriteStringValue(FeatureType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VmResourceFeatureSupportContent IJsonModel<VmResourceFeatureSupportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmResourceFeatureSupportContent(document.RootElement, options);
+        }
+
+        internal static VmResourceFeatureSupportContent DeserializeVmResourceFeatureSupportContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> vmSize = default;
+            Optional<string> vmSku = default;
+            string featureType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("vmSize"u8))
+                {
+                    vmSize = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vmSku"u8))
+                {
+                    vmSku = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("featureType"u8))
+                {
+                    featureType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VmResourceFeatureSupportContent(featureType, serializedAdditionalRawData, vmSize.Value, vmSku.Value);
+        }
+
+        BinaryData IPersistableModel<VmResourceFeatureSupportContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VmResourceFeatureSupportContent IPersistableModel<VmResourceFeatureSupportContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVmResourceFeatureSupportContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<VmResourceFeatureSupportContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

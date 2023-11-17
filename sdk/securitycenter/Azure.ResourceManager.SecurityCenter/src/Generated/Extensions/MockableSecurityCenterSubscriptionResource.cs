@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), CustomAssessmentAutomationClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), CustomAssessmentAutomationClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), CustomAssessmentAutomationClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), CustomAssessmentAutomationClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotSecuritySolutionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotSecuritySolutionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), IotSecuritySolutionClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), IotSecuritySolutionClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotSecuritySolutionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotSecuritySolutionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), IotSecuritySolutionClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), IotSecuritySolutionClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAutomationAutomationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAutomationAutomationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), SecurityAutomationAutomationsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityAutomations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), SecurityAutomationAutomationsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityAutomations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAutomationAutomationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAutomationAutomationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), SecurityAutomationAutomationsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityAutomations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), SecurityAutomationAutomationsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityAutomations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.CreateListRequest(Id.SubscriptionId, includePathRecommendations, summary);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AdaptiveApplicationControlGroupResource(Client, AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e)), AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AdaptiveApplicationControlGroupResource(Client, AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e)), AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.CreateListRequest(Id.SubscriptionId, includePathRecommendations, summary);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AdaptiveApplicationControlGroupResource(Client, AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e)), AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AdaptiveApplicationControlGroupResource(Client, AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e)), AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1277,7 +1277,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1299,7 +1299,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1629,7 +1629,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SoftwareInventoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SoftwareInventoryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), SoftwareInventoryClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSoftwareInventories", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), SoftwareInventoryClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSoftwareInventories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SoftwareInventoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SoftwareInventoryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), SoftwareInventoryClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSoftwareInventories", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), SoftwareInventoryClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSoftwareInventories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityConnectorRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityConnectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorResource(Client, SecurityConnectorData.DeserializeSecurityConnectorData(e)), SecurityConnectorClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityConnectors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityConnectorResource(Client, SecurityConnectorData.DeserializeSecurityConnectorData(e)), SecurityConnectorClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1695,7 +1695,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityConnectorRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityConnectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorResource(Client, SecurityConnectorData.DeserializeSecurityConnectorData(e)), SecurityConnectorClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityConnectors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityConnectorResource(Client, SecurityConnectorData.DeserializeSecurityConnectorData(e)), SecurityConnectorClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityConnectors", "value", "nextLink", cancellationToken);
         }
     }
 }

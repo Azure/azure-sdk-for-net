@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
     public partial class ClusterNodeTypeDescription
     {
-        /// <summary> Initializes a new instance of ClusterNodeTypeDescription. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/>. </summary>
         /// <param name="name"> The name of the node type. </param>
         /// <param name="clientConnectionEndpointPort"> The TCP cluster management endpoint port. </param>
         /// <param name="httpGatewayEndpointPort"> The HTTP cluster management endpoint port. </param>
@@ -34,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             VmInstanceCount = vmInstanceCount;
         }
 
-        /// <summary> Initializes a new instance of ClusterNodeTypeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/>. </summary>
         /// <param name="name"> The name of the node type. </param>
         /// <param name="placementProperties"> The placement tags applied to nodes in the node type, which can be used to indicate where certain services (workload) should run. </param>
         /// <param name="capacities"> The capacity tags applied to the nodes in the node type, the cluster resource manager uses these tags to understand how much resource a node has. </param>
@@ -55,7 +87,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="reverseProxyEndpointPort"> The endpoint used by reverse proxy. </param>
         /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
         /// <param name="isMultipleAvailabilityZonesSupported"> Indicates if the node type is enabled to support multiple zones. </param>
-        internal ClusterNodeTypeDescription(string name, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, int clientConnectionEndpointPort, int httpGatewayEndpointPort, ClusterDurabilityLevel? durabilityLevel, ClusterEndpointRangeDescription applicationPorts, ClusterEndpointRangeDescription ephemeralPorts, bool isPrimary, int vmInstanceCount, int? reverseProxyEndpointPort, bool? isStateless, bool? isMultipleAvailabilityZonesSupported)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterNodeTypeDescription(string name, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, int clientConnectionEndpointPort, int httpGatewayEndpointPort, ClusterDurabilityLevel? durabilityLevel, ClusterEndpointRangeDescription applicationPorts, ClusterEndpointRangeDescription ephemeralPorts, bool isPrimary, int vmInstanceCount, int? reverseProxyEndpointPort, bool? isStateless, bool? isMultipleAvailabilityZonesSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PlacementProperties = placementProperties;
@@ -70,6 +103,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ReverseProxyEndpointPort = reverseProxyEndpointPort;
             IsStateless = isStateless;
             IsMultipleAvailabilityZonesSupported = isMultipleAvailabilityZonesSupported;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/> for deserialization. </summary>
+        internal ClusterNodeTypeDescription()
+        {
         }
 
         /// <summary> The name of the node type. </summary>

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _linkerResourceLinkerRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkerResourceLinkerRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LinkerResource(Client, LinkerResourceData.DeserializeLinkerResourceData(e)), _linkerResourceLinkerClientDiagnostics, Pipeline, "LinkerResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LinkerResource(Client, LinkerResourceData.DeserializeLinkerResourceData(e)), _linkerResourceLinkerClientDiagnostics, Pipeline, "LinkerResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _linkerResourceLinkerRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkerResourceLinkerRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LinkerResource(Client, LinkerResourceData.DeserializeLinkerResourceData(e)), _linkerResourceLinkerClientDiagnostics, Pipeline, "LinkerResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LinkerResource(Client, LinkerResourceData.DeserializeLinkerResourceData(e)), _linkerResourceLinkerClientDiagnostics, Pipeline, "LinkerResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

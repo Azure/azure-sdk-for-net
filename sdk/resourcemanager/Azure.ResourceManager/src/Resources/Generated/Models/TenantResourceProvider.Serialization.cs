@@ -5,22 +5,87 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TenantResourceProvider
+    public partial class TenantResourceProvider : IUtf8JsonSerializable, IJsonModel<TenantResourceProvider>
     {
-        internal static TenantResourceProvider DeserializeTenantResourceProvider(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantResourceProvider>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TenantResourceProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TenantResourceProvider>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TenantResourceProvider>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ResourceTypes))
+                {
+                    writer.WritePropertyName("resourceTypes"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ResourceTypes)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TenantResourceProvider IJsonModel<TenantResourceProvider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TenantResourceProvider)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTenantResourceProvider(document.RootElement, options);
+        }
+
+        internal static TenantResourceProvider DeserializeTenantResourceProvider(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> @namespace = default;
             Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namespace"u8))
@@ -42,8 +107,38 @@ namespace Azure.ResourceManager.Resources.Models
                     resourceTypes = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TenantResourceProvider(@namespace.Value, Optional.ToList(resourceTypes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TenantResourceProvider(@namespace.Value, Optional.ToList(resourceTypes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TenantResourceProvider>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TenantResourceProvider)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TenantResourceProvider IPersistableModel<TenantResourceProvider>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TenantResourceProvider)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTenantResourceProvider(document.RootElement, options);
+        }
+
+        string IPersistableModel<TenantResourceProvider>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

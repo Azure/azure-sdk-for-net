@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForContainersAwsOffering : IUtf8JsonSerializable
+    public partial class DefenderForContainersAwsOffering : IUtf8JsonSerializable, IJsonModel<DefenderForContainersAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersAwsOffering>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DefenderForContainersAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DefenderForContainersAwsOffering>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KubernetesService))
             {
@@ -67,11 +78,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element)
+        DefenderForContainersAwsOffering IJsonModel<DefenderForContainersAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForContainersAwsOffering(document.RootElement, options);
+        }
+
+        internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +136,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> scubaExternalId = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesService"u8))
@@ -186,8 +236,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForContainersAwsOffering(offeringType, description.Value, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DefenderForContainersAwsOffering(offeringType, description.Value, serializedAdditionalRawData, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value);
         }
+
+        BinaryData IPersistableModel<DefenderForContainersAwsOffering>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DefenderForContainersAwsOffering IPersistableModel<DefenderForContainersAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDefenderForContainersAwsOffering(document.RootElement, options);
+        }
+
+        string IPersistableModel<DefenderForContainersAwsOffering>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

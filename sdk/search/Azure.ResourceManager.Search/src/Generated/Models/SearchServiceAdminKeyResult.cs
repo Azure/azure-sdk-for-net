@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Response containing the primary and secondary admin API keys for a given Azure Cognitive Search service. </summary>
     public partial class SearchServiceAdminKeyResult
     {
-        /// <summary> Initializes a new instance of SearchServiceAdminKeyResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceAdminKeyResult"/>. </summary>
         internal SearchServiceAdminKeyResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchServiceAdminKeyResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceAdminKeyResult"/>. </summary>
         /// <param name="primaryKey"> The primary admin API key of the search service. </param>
         /// <param name="secondaryKey"> The secondary admin API key of the search service. </param>
-        internal SearchServiceAdminKeyResult(string primaryKey, string secondaryKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceAdminKeyResult(string primaryKey, string secondaryKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary admin API key of the search service. </summary>

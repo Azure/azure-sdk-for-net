@@ -5,16 +5,85 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class TestFailoverCleanupWorkflowModelCustomProperties
+    public partial class TestFailoverCleanupWorkflowModelCustomProperties : IUtf8JsonSerializable, IJsonModel<TestFailoverCleanupWorkflowModelCustomProperties>
     {
-        internal static TestFailoverCleanupWorkflowModelCustomProperties DeserializeTestFailoverCleanupWorkflowModelCustomProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestFailoverCleanupWorkflowModelCustomProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TestFailoverCleanupWorkflowModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TestFailoverCleanupWorkflowModelCustomProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TestFailoverCleanupWorkflowModelCustomProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Comments))
+                {
+                    writer.WritePropertyName("comments"u8);
+                    writer.WriteStringValue(Comments);
+                }
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(AffectedObjectDetails))
+                {
+                    writer.WritePropertyName("affectedObjectDetails"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in AffectedObjectDetails)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TestFailoverCleanupWorkflowModelCustomProperties IJsonModel<TestFailoverCleanupWorkflowModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTestFailoverCleanupWorkflowModelCustomProperties(document.RootElement, options);
+        }
+
+        internal static TestFailoverCleanupWorkflowModelCustomProperties DeserializeTestFailoverCleanupWorkflowModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +91,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> comments = default;
             string instanceType = default;
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("comments"u8))
@@ -48,8 +119,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     affectedObjectDetails = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TestFailoverCleanupWorkflowModelCustomProperties(instanceType, Optional.ToDictionary(affectedObjectDetails), comments.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TestFailoverCleanupWorkflowModelCustomProperties(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData, comments.Value);
         }
+
+        BinaryData IPersistableModel<TestFailoverCleanupWorkflowModelCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TestFailoverCleanupWorkflowModelCustomProperties IPersistableModel<TestFailoverCleanupWorkflowModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTestFailoverCleanupWorkflowModelCustomProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<TestFailoverCleanupWorkflowModelCustomProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

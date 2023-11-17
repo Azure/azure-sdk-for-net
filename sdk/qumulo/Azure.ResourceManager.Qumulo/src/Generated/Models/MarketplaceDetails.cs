@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Qumulo.Models
     /// <summary> MarketplaceDetails of Qumulo FileSystem resource. </summary>
     public partial class MarketplaceDetails
     {
-        /// <summary> Initializes a new instance of MarketplaceDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
@@ -29,19 +62,26 @@ namespace Azure.ResourceManager.Qumulo.Models
             PublisherId = publisherId;
         }
 
-        /// <summary> Initializes a new instance of MarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
-        internal MarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             PlanId = planId;
             OfferId = offerId;
             PublisherId = publisherId;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/> for deserialization. </summary>
+        internal MarketplaceDetails()
+        {
         }
 
         /// <summary> Marketplace Subscription Id. </summary>

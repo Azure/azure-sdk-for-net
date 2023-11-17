@@ -5,20 +5,75 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class ElasticPoolDatabaseActivityListResult
+    internal partial class ElasticPoolDatabaseActivityListResult : IUtf8JsonSerializable, IJsonModel<ElasticPoolDatabaseActivityListResult>
     {
-        internal static ElasticPoolDatabaseActivityListResult DeserializeElasticPoolDatabaseActivityListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolDatabaseActivityListResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ElasticPoolDatabaseActivityListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ElasticPoolDatabaseActivityListResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ElasticPoolDatabaseActivityListResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ElasticPoolDatabaseActivityListResult IJsonModel<ElasticPoolDatabaseActivityListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolDatabaseActivityListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticPoolDatabaseActivityListResult(document.RootElement, options);
+        }
+
+        internal static ElasticPoolDatabaseActivityListResult DeserializeElasticPoolDatabaseActivityListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ElasticPoolDatabaseActivity> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -31,8 +86,38 @@ namespace Azure.ResourceManager.Sql.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticPoolDatabaseActivityListResult(value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ElasticPoolDatabaseActivityListResult(value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticPoolDatabaseActivityListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolDatabaseActivityListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ElasticPoolDatabaseActivityListResult IPersistableModel<ElasticPoolDatabaseActivityListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolDatabaseActivityListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeElasticPoolDatabaseActivityListResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<ElasticPoolDatabaseActivityListResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,15 +7,173 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReprotectAgentDetails
+    public partial class ReprotectAgentDetails : IUtf8JsonSerializable, IJsonModel<ReprotectAgentDetails>
     {
-        internal static ReprotectAgentDetails DeserializeReprotectAgentDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReprotectAgentDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ReprotectAgentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ReprotectAgentDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ReprotectAgentDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BiosId))
+                {
+                    writer.WritePropertyName("biosId"u8);
+                    writer.WriteStringValue(BiosId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FabricObjectId))
+                {
+                    writer.WritePropertyName("fabricObjectId"u8);
+                    writer.WriteStringValue(FabricObjectId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Fqdn))
+                {
+                    writer.WritePropertyName("fqdn"u8);
+                    writer.WriteStringValue(Fqdn);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastHeartbeatReceivedOn))
+                {
+                    writer.WritePropertyName("lastHeartbeatUtc"u8);
+                    writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Health))
+                {
+                    writer.WritePropertyName("health"u8);
+                    writer.WriteStringValue(Health.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(HealthErrors))
+                {
+                    writer.WritePropertyName("healthErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in HealthErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProtectedItemCount))
+                {
+                    writer.WritePropertyName("protectedItemCount"u8);
+                    writer.WriteNumberValue(ProtectedItemCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(AccessibleDatastores))
+                {
+                    writer.WritePropertyName("accessibleDatastores"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AccessibleDatastores)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VCenterId))
+                {
+                    writer.WritePropertyName("vcenterId"u8);
+                    writer.WriteStringValue(VCenterId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Last))
+                {
+                    writer.WritePropertyName("lastDiscoveryInUtc"u8);
+                    writer.WriteStringValue(Last.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReprotectAgentDetails IJsonModel<ReprotectAgentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReprotectAgentDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReprotectAgentDetails(document.RootElement, options);
+        }
+
+        internal static ReprotectAgentDetails DeserializeReprotectAgentDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +191,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> accessibleDatastores = default;
             Optional<string> vCenterId = default;
             Optional<DateTimeOffset> lastDiscoveryInUtc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -138,8 +298,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastDiscoveryInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReprotectAgentDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToList(accessibleDatastores), vCenterId.Value, Optional.ToNullable(lastDiscoveryInUtc));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReprotectAgentDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToList(accessibleDatastores), vCenterId.Value, Optional.ToNullable(lastDiscoveryInUtc), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReprotectAgentDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReprotectAgentDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReprotectAgentDetails IPersistableModel<ReprotectAgentDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReprotectAgentDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReprotectAgentDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<ReprotectAgentDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

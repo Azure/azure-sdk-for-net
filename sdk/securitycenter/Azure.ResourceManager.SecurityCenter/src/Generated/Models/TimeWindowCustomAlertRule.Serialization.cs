@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class TimeWindowCustomAlertRule : IUtf8JsonSerializable
+    public partial class TimeWindowCustomAlertRule : IUtf8JsonSerializable, IJsonModel<TimeWindowCustomAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TimeWindowCustomAlertRule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TimeWindowCustomAlertRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TimeWindowCustomAlertRule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TimeWindowCustomAlertRule>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
             writer.WriteStringValue(TimeWindowSize, "P");
@@ -22,15 +32,60 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteNumberValue(MinThreshold);
             writer.WritePropertyName("maxThreshold"u8);
             writer.WriteNumberValue(MaxThreshold);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TimeWindowCustomAlertRule DeserializeTimeWindowCustomAlertRule(JsonElement element)
+        TimeWindowCustomAlertRule IJsonModel<TimeWindowCustomAlertRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TimeWindowCustomAlertRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTimeWindowCustomAlertRule(document.RootElement, options);
+        }
+
+        internal static TimeWindowCustomAlertRule DeserializeTimeWindowCustomAlertRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +119,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = "TimeWindowCustomAlertRule";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeWindowSize"u8))
@@ -101,8 +158,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TimeWindowCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TimeWindowCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold, timeWindowSize);
         }
+
+        BinaryData IPersistableModel<TimeWindowCustomAlertRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TimeWindowCustomAlertRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TimeWindowCustomAlertRule IPersistableModel<TimeWindowCustomAlertRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TimeWindowCustomAlertRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTimeWindowCustomAlertRule(document.RootElement, options);
+        }
+
+        string IPersistableModel<TimeWindowCustomAlertRule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

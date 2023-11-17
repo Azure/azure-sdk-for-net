@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadProtectionPolicy : IUtf8JsonSerializable
+    public partial class VmWorkloadProtectionPolicy : IUtf8JsonSerializable, IJsonModel<VmWorkloadProtectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadProtectionPolicy>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VmWorkloadProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VmWorkloadProtectionPolicy>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkLoadType))
             {
@@ -58,11 +68,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadProtectionPolicy DeserializeVmWorkloadProtectionPolicy(JsonElement element)
+        VmWorkloadProtectionPolicy IJsonModel<VmWorkloadProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadProtectionPolicy(document.RootElement, options);
+        }
+
+        internal static VmWorkloadProtectionPolicy DeserializeVmWorkloadProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +113,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
             Optional<IList<string>> resourceGuardOperationRequests = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workLoadType"u8))
@@ -145,8 +186,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     resourceGuardOperationRequests = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmWorkloadProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(workLoadType), settings.Value, Optional.ToList(subProtectionPolicy), Optional.ToNullable(makePolicyConsistent));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VmWorkloadProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), serializedAdditionalRawData, Optional.ToNullable(workLoadType), settings.Value, Optional.ToList(subProtectionPolicy), Optional.ToNullable(makePolicyConsistent));
         }
+
+        BinaryData IPersistableModel<VmWorkloadProtectionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VmWorkloadProtectionPolicy IPersistableModel<VmWorkloadProtectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVmWorkloadProtectionPolicy(document.RootElement, options);
+        }
+
+        string IPersistableModel<VmWorkloadProtectionPolicy>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

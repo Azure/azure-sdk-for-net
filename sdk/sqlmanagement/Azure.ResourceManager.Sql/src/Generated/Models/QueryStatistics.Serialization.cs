@@ -5,20 +5,85 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class QueryStatistics : IUtf8JsonSerializable
+    public partial class QueryStatistics : IUtf8JsonSerializable, IJsonModel<QueryStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryStatistics>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<QueryStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<QueryStatistics>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<QueryStatistics>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DatabaseName))
+                {
+                    writer.WritePropertyName("databaseName"u8);
+                    writer.WriteStringValue(DatabaseName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(QueryId))
+                {
+                    writer.WritePropertyName("queryId"u8);
+                    writer.WriteStringValue(QueryId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartTime))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartTime);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndTime))
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndTime);
+                }
+            }
             if (Optional.IsCollectionDefined(Intervals))
             {
                 writer.WritePropertyName("intervals"u8);
@@ -30,11 +95,40 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QueryStatistics DeserializeQueryStatistics(JsonElement element)
+        QueryStatistics IJsonModel<QueryStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryStatistics(document.RootElement, options);
+        }
+
+        internal static QueryStatistics DeserializeQueryStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +142,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> startTime = default;
             Optional<string> endTime = default;
             Optional<IList<QueryMetricInterval>> intervals = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -120,8 +216,38 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueryStatistics(id, name, type, systemData.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueryStatistics(id, name, type, systemData.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QueryStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QueryStatistics IPersistableModel<QueryStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQueryStatistics(document.RootElement, options);
+        }
+
+        string IPersistableModel<QueryStatistics>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

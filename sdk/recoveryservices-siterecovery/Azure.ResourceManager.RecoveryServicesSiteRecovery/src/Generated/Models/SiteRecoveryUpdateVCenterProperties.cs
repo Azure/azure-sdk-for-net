@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,9 +14,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of an update vCenter request. </summary>
     public partial class SiteRecoveryUpdateVCenterProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryUpdateVCenterProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryUpdateVCenterProperties"/>. </summary>
         public SiteRecoveryUpdateVCenterProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryUpdateVCenterProperties"/>. </summary>
+        /// <param name="friendlyName"> The friendly name of the vCenter. </param>
+        /// <param name="ipAddress"> The IP address of the vCenter to be discovered. </param>
+        /// <param name="processServerId"> The process server Id from where the update can be orchestrated. </param>
+        /// <param name="port"> The port number for discovery. </param>
+        /// <param name="runAsAccountId"> The CS account Id which has privileges to update the vCenter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryUpdateVCenterProperties(string friendlyName, IPAddress ipAddress, Guid? processServerId, string port, string runAsAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FriendlyName = friendlyName;
+            IPAddress = ipAddress;
+            ProcessServerId = processServerId;
+            Port = port;
+            RunAsAccountId = runAsAccountId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The friendly name of the vCenter. </summary>

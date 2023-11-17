@@ -6,15 +6,90 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupManagementUsage
+    public partial class BackupManagementUsage : IUtf8JsonSerializable, IJsonModel<BackupManagementUsage>
     {
-        internal static BackupManagementUsage DeserializeBackupManagementUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupManagementUsage>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BackupManagementUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BackupManagementUsage>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BackupManagementUsage>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (Optional.IsDefined(QuotaPeriod))
+            {
+                writer.WritePropertyName("quotaPeriod"u8);
+                writer.WriteStringValue(QuotaPeriod);
+            }
+            if (Optional.IsDefined(NextResetOn))
+            {
+                writer.WritePropertyName("nextResetTime"u8);
+                writer.WriteStringValue(NextResetOn.Value, "O");
+            }
+            if (Optional.IsDefined(CurrentValue))
+            {
+                writer.WritePropertyName("currentValue"u8);
+                writer.WriteNumberValue(CurrentValue.Value);
+            }
+            if (Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteObjectValue(Name);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BackupManagementUsage IJsonModel<BackupManagementUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupManagementUsage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupManagementUsage(document.RootElement, options);
+        }
+
+        internal static BackupManagementUsage DeserializeBackupManagementUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +100,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<BackupNameInfo> name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -77,8 +154,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     name = BackupNameInfo.DeserializeBackupNameInfo(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupManagementUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackupManagementUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupManagementUsage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupManagementUsage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BackupManagementUsage IPersistableModel<BackupManagementUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupManagementUsage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBackupManagementUsage(document.RootElement, options);
+        }
+
+        string IPersistableModel<BackupManagementUsage>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
