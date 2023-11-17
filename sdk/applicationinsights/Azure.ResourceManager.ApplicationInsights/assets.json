@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/applicationinsights/Azure.ResourceManager.ApplicationInsights",
+  "Tag": "net/applicationinsights/Azure.ResourceManager.ApplicationInsights_f73865d643"
+}
