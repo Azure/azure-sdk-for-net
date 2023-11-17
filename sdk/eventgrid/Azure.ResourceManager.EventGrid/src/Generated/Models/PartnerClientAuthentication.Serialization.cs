@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class PartnerClientAuthentication : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownPartnerClientAuthentication))]
+    public partial class PartnerClientAuthentication : IUtf8JsonSerializable, IJsonModel<PartnerClientAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerClientAuthentication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PartnerClientAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PartnerClientAuthentication>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PartnerClientAuthentication>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("clientAuthenticationType"u8);
             writer.WriteStringValue(ClientAuthenticationType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PartnerClientAuthentication DeserializePartnerClientAuthentication(JsonElement element)
+        PartnerClientAuthentication IJsonModel<PartnerClientAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartnerClientAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerClientAuthentication(document.RootElement, options);
+        }
+
+        internal static PartnerClientAuthentication DeserializePartnerClientAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,5 +75,30 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             return UnknownPartnerClientAuthentication.DeserializeUnknownPartnerClientAuthentication(element);
         }
+
+        BinaryData IPersistableModel<PartnerClientAuthentication>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartnerClientAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PartnerClientAuthentication IPersistableModel<PartnerClientAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartnerClientAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePartnerClientAuthentication(document.RootElement, options);
+        }
+
+        string IPersistableModel<PartnerClientAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

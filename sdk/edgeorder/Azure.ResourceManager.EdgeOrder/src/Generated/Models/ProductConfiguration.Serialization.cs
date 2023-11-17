@@ -5,16 +5,151 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ProductConfiguration
+    public partial class ProductConfiguration : IUtf8JsonSerializable, IJsonModel<ProductConfiguration>
     {
-        internal static ProductConfiguration DeserializeProductConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProductConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ProductConfiguration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ProductConfiguration>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteObjectValue(Description);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ImageInformation))
+                {
+                    writer.WritePropertyName("imageInformation"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ImageInformation)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CostInformation))
+                {
+                    writer.WritePropertyName("costInformation"u8);
+                    writer.WriteObjectValue(CostInformation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AvailabilityInformation))
+                {
+                    writer.WritePropertyName("availabilityInformation"u8);
+                    writer.WriteObjectValue(AvailabilityInformation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HierarchyInformation))
+                {
+                    writer.WritePropertyName("hierarchyInformation"u8);
+                    writer.WriteObjectValue(HierarchyInformation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(FilterableProperties))
+                {
+                    writer.WritePropertyName("filterableProperties"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in FilterableProperties)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Specifications))
+                {
+                    writer.WritePropertyName("specifications"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Specifications)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Dimensions))
+                {
+                    writer.WritePropertyName("dimensions"u8);
+                    writer.WriteObjectValue(Dimensions);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProductConfiguration IJsonModel<ProductConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProductConfiguration(document.RootElement, options);
+        }
+
+        internal static ProductConfiguration DeserializeProductConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +163,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
             Optional<IReadOnlyList<ProductSpecification>> specifications = default;
             Optional<ProductDimensions> dimensions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -134,8 +271,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProductConfiguration(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(specifications), dimensions.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProductConfiguration(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(specifications), dimensions.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProductConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProductConfiguration IPersistableModel<ProductConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProductConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<ProductConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

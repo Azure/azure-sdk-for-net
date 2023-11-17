@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,180 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaLiveEventIngestHeartbeatEventDataConverter))]
-    public partial class MediaLiveEventIngestHeartbeatEventData
+    public partial class MediaLiveEventIngestHeartbeatEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventIngestHeartbeatEventData>
     {
-        internal static MediaLiveEventIngestHeartbeatEventData DeserializeMediaLiveEventIngestHeartbeatEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventIngestHeartbeatEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaLiveEventIngestHeartbeatEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MediaLiveEventIngestHeartbeatEventData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MediaLiveEventIngestHeartbeatEventData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TrackType))
+                {
+                    writer.WritePropertyName("trackType"u8);
+                    writer.WriteStringValue(TrackType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TrackName))
+                {
+                    writer.WritePropertyName("trackName"u8);
+                    writer.WriteStringValue(TrackName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TranscriptionLanguage))
+                {
+                    writer.WritePropertyName("transcriptionLanguage"u8);
+                    writer.WriteStringValue(TranscriptionLanguage);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TranscriptionState))
+                {
+                    writer.WritePropertyName("transcriptionState"u8);
+                    writer.WriteStringValue(TranscriptionState);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Bitrate))
+                {
+                    writer.WritePropertyName("bitrate"u8);
+                    writer.WriteNumberValue(Bitrate.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IncomingBitrate))
+                {
+                    writer.WritePropertyName("incomingBitrate"u8);
+                    writer.WriteNumberValue(IncomingBitrate.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IngestDriftValueInternal))
+                {
+                    writer.WritePropertyName("ingestDriftValue"u8);
+                    writer.WriteStringValue(IngestDriftValueInternal);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastFragmentArrivalTime))
+                {
+                    writer.WritePropertyName("lastFragmentArrivalTime"u8);
+                    writer.WriteStringValue(LastFragmentArrivalTime.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastTimestamp))
+                {
+                    writer.WritePropertyName("lastTimestamp"u8);
+                    writer.WriteStringValue(LastTimestamp);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Timescale))
+                {
+                    writer.WritePropertyName("timescale"u8);
+                    writer.WriteStringValue(Timescale);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OverlapCount))
+                {
+                    writer.WritePropertyName("overlapCount"u8);
+                    writer.WriteNumberValue(OverlapCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DiscontinuityCount))
+                {
+                    writer.WritePropertyName("discontinuityCount"u8);
+                    writer.WriteNumberValue(DiscontinuityCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NonincreasingCount))
+                {
+                    writer.WritePropertyName("nonincreasingCount"u8);
+                    writer.WriteNumberValue(NonincreasingCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UnexpectedBitrate))
+                {
+                    writer.WritePropertyName("unexpectedBitrate"u8);
+                    writer.WriteBooleanValue(UnexpectedBitrate.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Healthy))
+                {
+                    writer.WritePropertyName("healthy"u8);
+                    writer.WriteBooleanValue(Healthy.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaLiveEventIngestHeartbeatEventData IJsonModel<MediaLiveEventIngestHeartbeatEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIngestHeartbeatEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaLiveEventIngestHeartbeatEventData(document.RootElement, options);
+        }
+
+        internal static MediaLiveEventIngestHeartbeatEventData DeserializeMediaLiveEventIngestHeartbeatEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +210,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<bool> unexpectedBitrate = default;
             Optional<string> state = default;
             Optional<bool> healthy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackType"u8))
@@ -151,15 +326,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     healthy = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, Optional.ToNullable(lastFragmentArrivalTime), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, Optional.ToNullable(lastFragmentArrivalTime), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaLiveEventIngestHeartbeatEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIngestHeartbeatEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaLiveEventIngestHeartbeatEventData IPersistableModel<MediaLiveEventIngestHeartbeatEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIngestHeartbeatEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaLiveEventIngestHeartbeatEventData(document.RootElement, options);
+        }
+
+        string IPersistableModel<MediaLiveEventIngestHeartbeatEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class MediaLiveEventIngestHeartbeatEventDataConverter : JsonConverter<MediaLiveEventIngestHeartbeatEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventIngestHeartbeatEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaLiveEventIngestHeartbeatEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

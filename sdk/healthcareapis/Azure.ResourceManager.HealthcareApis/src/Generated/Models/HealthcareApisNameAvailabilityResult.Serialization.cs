@@ -5,15 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisNameAvailabilityResult
+    public partial class HealthcareApisNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<HealthcareApisNameAvailabilityResult>
     {
-        internal static HealthcareApisNameAvailabilityResult DeserializeHealthcareApisNameAvailabilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HealthcareApisNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HealthcareApisNameAvailabilityResult>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HealthcareApisNameAvailabilityResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsNameAvailable))
+                {
+                    writer.WritePropertyName("nameAvailable"u8);
+                    writer.WriteBooleanValue(IsNameAvailable.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    writer.WritePropertyName("reason"u8);
+                    writer.WriteStringValue(Reason.Value.ToSerialString());
+                }
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HealthcareApisNameAvailabilityResult IJsonModel<HealthcareApisNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisNameAvailabilityResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareApisNameAvailabilityResult(document.RootElement, options);
+        }
+
+        internal static HealthcareApisNameAvailabilityResult DeserializeHealthcareApisNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +88,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<bool> nameAvailable = default;
             Optional<HealthcareApisNameUnavailableReason> reason = default;
             Optional<string> message = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -46,8 +115,38 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthcareApisNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthcareApisNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HealthcareApisNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisNameAvailabilityResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HealthcareApisNameAvailabilityResult IPersistableModel<HealthcareApisNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisNameAvailabilityResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHealthcareApisNameAvailabilityResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<HealthcareApisNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

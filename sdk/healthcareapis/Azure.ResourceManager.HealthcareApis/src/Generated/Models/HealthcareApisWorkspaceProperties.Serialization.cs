@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,21 +15,78 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisWorkspaceProperties : IUtf8JsonSerializable
+    public partial class HealthcareApisWorkspaceProperties : IUtf8JsonSerializable, IJsonModel<HealthcareApisWorkspaceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisWorkspaceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HealthcareApisWorkspaceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HealthcareApisWorkspaceProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HealthcareApisWorkspaceProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthcareApisWorkspaceProperties DeserializeHealthcareApisWorkspaceProperties(JsonElement element)
+        HealthcareApisWorkspaceProperties IJsonModel<HealthcareApisWorkspaceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisWorkspaceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareApisWorkspaceProperties(document.RootElement, options);
+        }
+
+        internal static HealthcareApisWorkspaceProperties DeserializeHealthcareApisWorkspaceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +94,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<HealthcareApisProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -68,8 +130,38 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     publicNetworkAccess = new HealthcareApisPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthcareApisWorkspaceProperties(Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthcareApisWorkspaceProperties(Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HealthcareApisWorkspaceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisWorkspaceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HealthcareApisWorkspaceProperties IPersistableModel<HealthcareApisWorkspaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisWorkspaceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHealthcareApisWorkspaceProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<HealthcareApisWorkspaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

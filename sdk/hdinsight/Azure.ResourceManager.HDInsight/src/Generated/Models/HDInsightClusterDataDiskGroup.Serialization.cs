@@ -5,26 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterDataDiskGroup : IUtf8JsonSerializable
+    public partial class HDInsightClusterDataDiskGroup : IUtf8JsonSerializable, IJsonModel<HDInsightClusterDataDiskGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterDataDiskGroup>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HDInsightClusterDataDiskGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HDInsightClusterDataDiskGroup>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HDInsightClusterDataDiskGroup>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisksPerNode))
             {
                 writer.WritePropertyName("disksPerNode"u8);
                 writer.WriteNumberValue(DisksPerNode.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StorageAccountType))
+                {
+                    writer.WritePropertyName("storageAccountType"u8);
+                    writer.WriteStringValue(StorageAccountType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DiskSizeInGB))
+                {
+                    writer.WritePropertyName("diskSizeGB"u8);
+                    writer.WriteNumberValue(DiskSizeInGB.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightClusterDataDiskGroup DeserializeHDInsightClusterDataDiskGroup(JsonElement element)
+        HDInsightClusterDataDiskGroup IJsonModel<HDInsightClusterDataDiskGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterDataDiskGroup(document.RootElement, options);
+        }
+
+        internal static HDInsightClusterDataDiskGroup DeserializeHDInsightClusterDataDiskGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +88,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<int> disksPerNode = default;
             Optional<string> storageAccountType = default;
             Optional<int> diskSizeGB = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disksPerNode"u8))
@@ -57,8 +115,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightClusterDataDiskGroup(Optional.ToNullable(disksPerNode), storageAccountType.Value, Optional.ToNullable(diskSizeGB));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightClusterDataDiskGroup(Optional.ToNullable(disksPerNode), storageAccountType.Value, Optional.ToNullable(diskSizeGB), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightClusterDataDiskGroup>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightClusterDataDiskGroup IPersistableModel<HDInsightClusterDataDiskGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterDataDiskGroup(document.RootElement, options);
+        }
+
+        string IPersistableModel<HDInsightClusterDataDiskGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

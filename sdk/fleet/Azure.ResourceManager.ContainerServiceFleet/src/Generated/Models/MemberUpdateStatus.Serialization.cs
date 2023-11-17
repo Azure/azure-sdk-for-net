@@ -5,15 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    public partial class MemberUpdateStatus
+    public partial class MemberUpdateStatus : IUtf8JsonSerializable, IJsonModel<MemberUpdateStatus>
     {
-        internal static MemberUpdateStatus DeserializeMemberUpdateStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MemberUpdateStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MemberUpdateStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MemberUpdateStatus>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MemberUpdateStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteObjectValue(Status);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ClusterResourceId))
+                {
+                    writer.WritePropertyName("clusterResourceId"u8);
+                    writer.WriteStringValue(ClusterResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OperationId))
+                {
+                    writer.WritePropertyName("operationId"u8);
+                    writer.WriteStringValue(OperationId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MemberUpdateStatus IJsonModel<MemberUpdateStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MemberUpdateStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMemberUpdateStatus(document.RootElement, options);
+        }
+
+        internal static MemberUpdateStatus DeserializeMemberUpdateStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +109,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Optional<ResourceIdentifier> clusterResourceId = default;
             Optional<string> operationId = default;
             Optional<string> message = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -58,8 +146,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MemberUpdateStatus(status.Value, name.Value, clusterResourceId.Value, operationId.Value, message.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MemberUpdateStatus(status.Value, name.Value, clusterResourceId.Value, operationId.Value, message.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MemberUpdateStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MemberUpdateStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MemberUpdateStatus IPersistableModel<MemberUpdateStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MemberUpdateStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMemberUpdateStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<MemberUpdateStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

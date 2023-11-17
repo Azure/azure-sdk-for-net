@@ -6,17 +6,87 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class RuntimeScriptActionDetail : IUtf8JsonSerializable
+    public partial class RuntimeScriptActionDetail : IUtf8JsonSerializable, IJsonModel<RuntimeScriptActionDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuntimeScriptActionDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RuntimeScriptActionDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RuntimeScriptActionDetail>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ScriptExecutionId))
+                {
+                    writer.WritePropertyName("scriptExecutionId"u8);
+                    writer.WriteNumberValue(ScriptExecutionId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Operation))
+                {
+                    writer.WritePropertyName("operation"u8);
+                    writer.WriteStringValue(Operation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ExecutionSummary))
+                {
+                    writer.WritePropertyName("executionSummary"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ExecutionSummary)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DebugInformation))
+                {
+                    writer.WritePropertyName("debugInformation"u8);
+                    writer.WriteStringValue(DebugInformation);
+                }
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
@@ -33,11 +103,48 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ApplicationName))
+                {
+                    writer.WritePropertyName("applicationName"u8);
+                    writer.WriteStringValue(ApplicationName);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuntimeScriptActionDetail DeserializeRuntimeScriptActionDetail(JsonElement element)
+        RuntimeScriptActionDetail IJsonModel<RuntimeScriptActionDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuntimeScriptActionDetail(document.RootElement, options);
+        }
+
+        internal static RuntimeScriptActionDetail DeserializeRuntimeScriptActionDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +161,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> parameters = default;
             IList<string> roles = default;
             Optional<string> applicationName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scriptExecutionId"u8))
@@ -142,8 +251,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                     applicationName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, serializedAdditionalRawData, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value);
         }
+
+        BinaryData IPersistableModel<RuntimeScriptActionDetail>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RuntimeScriptActionDetail IPersistableModel<RuntimeScriptActionDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRuntimeScriptActionDetail(document.RootElement, options);
+        }
+
+        string IPersistableModel<RuntimeScriptActionDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

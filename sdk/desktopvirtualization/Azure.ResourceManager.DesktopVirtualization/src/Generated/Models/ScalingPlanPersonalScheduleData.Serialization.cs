@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +16,41 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class ScalingPlanPersonalScheduleData : IUtf8JsonSerializable
+    public partial class ScalingPlanPersonalScheduleData : IUtf8JsonSerializable, IJsonModel<ScalingPlanPersonalScheduleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPersonalScheduleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScalingPlanPersonalScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ScalingPlanPersonalScheduleData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ScalingPlanPersonalScheduleData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DaysOfWeek))
@@ -156,11 +189,40 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteNumberValue(OffPeakMinutesToWaitOnLogoff.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScalingPlanPersonalScheduleData DeserializeScalingPlanPersonalScheduleData(JsonElement element)
+        ScalingPlanPersonalScheduleData IJsonModel<ScalingPlanPersonalScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalScheduleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalingPlanPersonalScheduleData(document.RootElement, options);
+        }
+
+        internal static ScalingPlanPersonalScheduleData DeserializeScalingPlanPersonalScheduleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -195,6 +257,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<int> offPeakMinutesToWaitOnDisconnect = default;
             Optional<SessionHandlingOperation> offPeakActionOnLogoff = default;
             Optional<int> offPeakMinutesToWaitOnLogoff = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -472,8 +536,38 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScalingPlanPersonalScheduleData(id, name, type, systemData.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpAutoStartHosts), Optional.ToNullable(rampUpStartVmOnConnect), Optional.ToNullable(rampUpActionOnDisconnect), Optional.ToNullable(rampUpMinutesToWaitOnDisconnect), Optional.ToNullable(rampUpActionOnLogoff), Optional.ToNullable(rampUpMinutesToWaitOnLogoff), peakStartTime.Value, Optional.ToNullable(peakStartVmOnConnect), Optional.ToNullable(peakActionOnDisconnect), Optional.ToNullable(peakMinutesToWaitOnDisconnect), Optional.ToNullable(peakActionOnLogoff), Optional.ToNullable(peakMinutesToWaitOnLogoff), rampDownStartTime.Value, Optional.ToNullable(rampDownStartVmOnConnect), Optional.ToNullable(rampDownActionOnDisconnect), Optional.ToNullable(rampDownMinutesToWaitOnDisconnect), Optional.ToNullable(rampDownActionOnLogoff), Optional.ToNullable(rampDownMinutesToWaitOnLogoff), offPeakStartTime.Value, Optional.ToNullable(offPeakStartVmOnConnect), Optional.ToNullable(offPeakActionOnDisconnect), Optional.ToNullable(offPeakMinutesToWaitOnDisconnect), Optional.ToNullable(offPeakActionOnLogoff), Optional.ToNullable(offPeakMinutesToWaitOnLogoff));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScalingPlanPersonalScheduleData(id, name, type, systemData.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpAutoStartHosts), Optional.ToNullable(rampUpStartVmOnConnect), Optional.ToNullable(rampUpActionOnDisconnect), Optional.ToNullable(rampUpMinutesToWaitOnDisconnect), Optional.ToNullable(rampUpActionOnLogoff), Optional.ToNullable(rampUpMinutesToWaitOnLogoff), peakStartTime.Value, Optional.ToNullable(peakStartVmOnConnect), Optional.ToNullable(peakActionOnDisconnect), Optional.ToNullable(peakMinutesToWaitOnDisconnect), Optional.ToNullable(peakActionOnLogoff), Optional.ToNullable(peakMinutesToWaitOnLogoff), rampDownStartTime.Value, Optional.ToNullable(rampDownStartVmOnConnect), Optional.ToNullable(rampDownActionOnDisconnect), Optional.ToNullable(rampDownMinutesToWaitOnDisconnect), Optional.ToNullable(rampDownActionOnLogoff), Optional.ToNullable(rampDownMinutesToWaitOnLogoff), offPeakStartTime.Value, Optional.ToNullable(offPeakStartVmOnConnect), Optional.ToNullable(offPeakActionOnDisconnect), Optional.ToNullable(offPeakMinutesToWaitOnDisconnect), Optional.ToNullable(offPeakActionOnLogoff), Optional.ToNullable(offPeakMinutesToWaitOnLogoff), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScalingPlanPersonalScheduleData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalScheduleData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScalingPlanPersonalScheduleData IPersistableModel<ScalingPlanPersonalScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalScheduleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScalingPlanPersonalScheduleData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ScalingPlanPersonalScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

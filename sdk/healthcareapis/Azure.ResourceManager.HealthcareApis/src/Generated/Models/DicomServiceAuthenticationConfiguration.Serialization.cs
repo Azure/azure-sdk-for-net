@@ -5,28 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class DicomServiceAuthenticationConfiguration : IUtf8JsonSerializable
+    public partial class DicomServiceAuthenticationConfiguration : IUtf8JsonSerializable, IJsonModel<DicomServiceAuthenticationConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DicomServiceAuthenticationConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DicomServiceAuthenticationConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DicomServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DicomServiceAuthenticationConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Authority))
+                {
+                    writer.WritePropertyName("authority"u8);
+                    writer.WriteStringValue(Authority);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Audiences))
+                {
+                    writer.WritePropertyName("audiences"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Audiences)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DicomServiceAuthenticationConfiguration DeserializeDicomServiceAuthenticationConfiguration(JsonElement element)
+        DicomServiceAuthenticationConfiguration IJsonModel<DicomServiceAuthenticationConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DicomServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDicomServiceAuthenticationConfiguration(document.RootElement, options);
+        }
+
+        internal static DicomServiceAuthenticationConfiguration DeserializeDicomServiceAuthenticationConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> authority = default;
             Optional<IReadOnlyList<string>> audiences = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authority"u8))
@@ -48,8 +110,38 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     audiences = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DicomServiceAuthenticationConfiguration(authority.Value, Optional.ToList(audiences));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DicomServiceAuthenticationConfiguration(authority.Value, Optional.ToList(audiences), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DicomServiceAuthenticationConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DicomServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DicomServiceAuthenticationConfiguration IPersistableModel<DicomServiceAuthenticationConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DicomServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDicomServiceAuthenticationConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<DicomServiceAuthenticationConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

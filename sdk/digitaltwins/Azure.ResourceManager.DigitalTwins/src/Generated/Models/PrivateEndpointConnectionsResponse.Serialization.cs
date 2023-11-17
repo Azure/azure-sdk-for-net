@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,15 +15,69 @@ using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    internal partial class PrivateEndpointConnectionsResponse
+    internal partial class PrivateEndpointConnectionsResponse : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionsResponse>
     {
-        internal static PrivateEndpointConnectionsResponse DeserializePrivateEndpointConnectionsResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionsResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrivateEndpointConnectionsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PrivateEndpointConnectionsResponse>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PrivateEndpointConnectionsResponse>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PrivateEndpointConnectionsResponse IJsonModel<PrivateEndpointConnectionsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionsResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateEndpointConnectionsResponse(document.RootElement, options);
+        }
+
+        internal static PrivateEndpointConnectionsResponse DeserializePrivateEndpointConnectionsResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<DigitalTwinsPrivateEndpointConnectionData>> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,8 +94,38 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateEndpointConnectionsResponse(Optional.ToList(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrivateEndpointConnectionsResponse(Optional.ToList(value), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateEndpointConnectionsResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionsResponse)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PrivateEndpointConnectionsResponse IPersistableModel<PrivateEndpointConnectionsResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionsResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePrivateEndpointConnectionsResponse(document.RootElement, options);
+        }
+
+        string IPersistableModel<PrivateEndpointConnectionsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

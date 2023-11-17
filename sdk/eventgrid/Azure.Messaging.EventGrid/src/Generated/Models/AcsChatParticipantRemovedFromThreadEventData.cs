@@ -6,25 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadParticipantRemoved event. </summary>
     public partial class AcsChatParticipantRemovedFromThreadEventData : AcsChatEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatParticipantRemovedFromThreadEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadEventData"/>. </summary>
         internal AcsChatParticipantRemovedFromThreadEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatParticipantRemovedFromThreadEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="time"> The time at which the user was removed to the thread. </param>
         /// <param name="removedByCommunicationIdentifier"> The communication identifier of the user who removed the user. </param>
         /// <param name="participantRemoved"> The details of the user who was removed. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal AcsChatParticipantRemovedFromThreadEventData(string transactionId, string threadId, DateTimeOffset? time, CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved, long? version) : base(transactionId, threadId)
+        internal AcsChatParticipantRemovedFromThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? time, CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved, long? version) : base(transactionId, threadId, serializedAdditionalRawData)
         {
             Time = time;
             RemovedByCommunicationIdentifier = removedByCommunicationIdentifier;

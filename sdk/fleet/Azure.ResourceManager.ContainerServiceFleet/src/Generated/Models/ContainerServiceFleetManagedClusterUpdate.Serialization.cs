@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    public partial class ContainerServiceFleetManagedClusterUpdate : IUtf8JsonSerializable
+    public partial class ContainerServiceFleetManagedClusterUpdate : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetManagedClusterUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetManagedClusterUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceFleetManagedClusterUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerServiceFleetManagedClusterUpdate>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerServiceFleetManagedClusterUpdate>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("upgrade"u8);
             writer.WriteObjectValue(Upgrade);
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("nodeImageSelection"u8);
                 writer.WriteObjectValue(NodeImageSelection);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerServiceFleetManagedClusterUpdate DeserializeContainerServiceFleetManagedClusterUpdate(JsonElement element)
+        ContainerServiceFleetManagedClusterUpdate IJsonModel<ContainerServiceFleetManagedClusterUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpdate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceFleetManagedClusterUpdate(document.RootElement, options);
+        }
+
+        internal static ContainerServiceFleetManagedClusterUpdate DeserializeContainerServiceFleetManagedClusterUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ContainerServiceFleetManagedClusterUpgradeSpec upgrade = default;
             Optional<NodeImageSelection> nodeImageSelection = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("upgrade"u8))
@@ -49,8 +91,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     nodeImageSelection = NodeImageSelection.DeserializeNodeImageSelection(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceFleetManagedClusterUpdate(upgrade, nodeImageSelection.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceFleetManagedClusterUpdate(upgrade, nodeImageSelection.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceFleetManagedClusterUpdate>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpdate)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerServiceFleetManagedClusterUpdate IPersistableModel<ContainerServiceFleetManagedClusterUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpdate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerServiceFleetManagedClusterUpdate(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerServiceFleetManagedClusterUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

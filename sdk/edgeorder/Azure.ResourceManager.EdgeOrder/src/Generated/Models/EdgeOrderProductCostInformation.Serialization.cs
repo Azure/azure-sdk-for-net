@@ -6,22 +6,89 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderProductCostInformation
+    public partial class EdgeOrderProductCostInformation : IUtf8JsonSerializable, IJsonModel<EdgeOrderProductCostInformation>
     {
-        internal static EdgeOrderProductCostInformation DeserializeEdgeOrderProductCostInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProductCostInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdgeOrderProductCostInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EdgeOrderProductCostInformation>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EdgeOrderProductCostInformation>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(BillingMeterDetails))
+                {
+                    writer.WritePropertyName("billingMeterDetails"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in BillingMeterDetails)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingInfoUri))
+                {
+                    writer.WritePropertyName("billingInfoUrl"u8);
+                    writer.WriteStringValue(BillingInfoUri.AbsoluteUri);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EdgeOrderProductCostInformation IJsonModel<EdgeOrderProductCostInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeOrderProductCostInformation(document.RootElement, options);
+        }
+
+        internal static EdgeOrderProductCostInformation DeserializeEdgeOrderProductCostInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<EdgeOrderProductBillingMeterDetails>> billingMeterDetails = default;
             Optional<Uri> billingInfoUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingMeterDetails"u8))
@@ -47,8 +114,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     billingInfoUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeOrderProductCostInformation(Optional.ToList(billingMeterDetails), billingInfoUrl.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdgeOrderProductCostInformation(Optional.ToList(billingMeterDetails), billingInfoUrl.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeOrderProductCostInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EdgeOrderProductCostInformation IPersistableModel<EdgeOrderProductCostInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEdgeOrderProductCostInformation(document.RootElement, options);
+        }
+
+        string IPersistableModel<EdgeOrderProductCostInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

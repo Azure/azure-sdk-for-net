@@ -6,21 +6,84 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class ElasticCloudUser : IUtf8JsonSerializable
+    public partial class ElasticCloudUser : IUtf8JsonSerializable, IJsonModel<ElasticCloudUser>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticCloudUser>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ElasticCloudUser>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ElasticCloudUser>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ElasticCloudUser>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EmailAddress))
+                {
+                    writer.WritePropertyName("emailAddress"u8);
+                    writer.WriteStringValue(EmailAddress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ElasticCloudSsoDefaultUri))
+                {
+                    writer.WritePropertyName("elasticCloudSsoDefaultUrl"u8);
+                    writer.WriteStringValue(ElasticCloudSsoDefaultUri.AbsoluteUri);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ElasticCloudUser DeserializeElasticCloudUser(JsonElement element)
+        ElasticCloudUser IJsonModel<ElasticCloudUser>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticCloudUser(document.RootElement, options);
+        }
+
+        internal static ElasticCloudUser DeserializeElasticCloudUser(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +91,8 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<string> emailAddress = default;
             Optional<string> id = default;
             Optional<Uri> elasticCloudSsoDefaultUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailAddress"u8))
@@ -49,8 +114,38 @@ namespace Azure.ResourceManager.Elastic.Models
                     elasticCloudSsoDefaultUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticCloudUser(emailAddress.Value, id.Value, elasticCloudSsoDefaultUrl.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ElasticCloudUser(emailAddress.Value, id.Value, elasticCloudSsoDefaultUrl.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticCloudUser>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ElasticCloudUser IPersistableModel<ElasticCloudUser>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeElasticCloudUser(document.RootElement, options);
+        }
+
+        string IPersistableModel<ElasticCloudUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

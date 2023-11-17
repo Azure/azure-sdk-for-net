@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorBackend : IUtf8JsonSerializable
+    public partial class FrontDoorBackend : IUtf8JsonSerializable, IJsonModel<FrontDoorBackend>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorBackend>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FrontDoorBackend>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FrontDoorBackend>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FrontDoorBackend>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Address))
             {
@@ -47,6 +58,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 else
                 {
                     writer.WriteNull("privateLinkLocation");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrivateEndpointStatus))
+                {
+                    if (PrivateEndpointStatus != null)
+                    {
+                        writer.WritePropertyName("privateEndpointStatus"u8);
+                        writer.WriteStringValue(PrivateEndpointStatus.Value.ToString());
+                    }
+                    else
+                    {
+                        writer.WriteNull("privateEndpointStatus");
+                    }
                 }
             }
             if (Optional.IsDefined(PrivateLinkApprovalMessage))
@@ -84,11 +110,40 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("backendHostHeader"u8);
                 writer.WriteStringValue(BackendHostHeader);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorBackend DeserializeFrontDoorBackend(JsonElement element)
+        FrontDoorBackend IJsonModel<FrontDoorBackend>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorBackend)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorBackend(document.RootElement, options);
+        }
+
+        internal static FrontDoorBackend DeserializeFrontDoorBackend(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +160,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<int> priority = default;
             Optional<int> weight = default;
             Optional<string> backendHostHeader = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -202,8 +259,38 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     backendHostHeader = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Optional.ToNullable(privateLinkLocation), Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enabledState), Optional.ToNullable(priority), Optional.ToNullable(weight), backendHostHeader.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Optional.ToNullable(privateLinkLocation), Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enabledState), Optional.ToNullable(priority), Optional.ToNullable(weight), backendHostHeader.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FrontDoorBackend>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorBackend)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FrontDoorBackend IPersistableModel<FrontDoorBackend>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorBackend)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFrontDoorBackend(document.RootElement, options);
+        }
+
+        string IPersistableModel<FrontDoorBackend>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class RecommendedMachineConfiguration
+    public partial class RecommendedMachineConfiguration : IUtf8JsonSerializable, IJsonModel<RecommendedMachineConfiguration>
     {
-        internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedMachineConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecommendedMachineConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecommendedMachineConfiguration>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecommendedMachineConfiguration>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Memory))
+                {
+                    writer.WritePropertyName("memory"u8);
+                    writer.WriteObjectValue(Memory);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VCpus))
+                {
+                    writer.WritePropertyName("vCPUs"u8);
+                    writer.WriteObjectValue(VCpus);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RecommendedMachineConfiguration IJsonModel<RecommendedMachineConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecommendedMachineConfiguration(document.RootElement, options);
+        }
+
+        internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DevCenterResourceRange> memory = default;
             Optional<DevCenterResourceRange> vCpus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memory"u8))
@@ -40,8 +104,38 @@ namespace Azure.ResourceManager.DevCenter.Models
                     vCpus = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecommendedMachineConfiguration(memory.Value, vCpus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecommendedMachineConfiguration(memory.Value, vCpus.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecommendedMachineConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecommendedMachineConfiguration IPersistableModel<RecommendedMachineConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecommendedMachineConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecommendedMachineConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

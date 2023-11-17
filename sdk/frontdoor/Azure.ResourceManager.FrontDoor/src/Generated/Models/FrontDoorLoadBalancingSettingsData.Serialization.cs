@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorLoadBalancingSettingsData : IUtf8JsonSerializable
+    public partial class FrontDoorLoadBalancingSettingsData : IUtf8JsonSerializable, IJsonModel<FrontDoorLoadBalancingSettingsData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorLoadBalancingSettingsData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FrontDoorLoadBalancingSettingsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FrontDoorLoadBalancingSettingsData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FrontDoorLoadBalancingSettingsData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -24,6 +35,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ResourceType.Value);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -42,12 +61,49 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("additionalLatencyMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyMilliseconds.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceState))
+                {
+                    writer.WritePropertyName("resourceState"u8);
+                    writer.WriteStringValue(ResourceState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorLoadBalancingSettingsData DeserializeFrontDoorLoadBalancingSettingsData(JsonElement element)
+        FrontDoorLoadBalancingSettingsData IJsonModel<FrontDoorLoadBalancingSettingsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorLoadBalancingSettingsData(document.RootElement, options);
+        }
+
+        internal static FrontDoorLoadBalancingSettingsData DeserializeFrontDoorLoadBalancingSettingsData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +115,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<int> successfulSamplesRequired = default;
             Optional<int> additionalLatencyMilliseconds = default;
             Optional<FrontDoorResourceState> resourceState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,8 +190,38 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorLoadBalancingSettingsData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyMilliseconds), Optional.ToNullable(resourceState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FrontDoorLoadBalancingSettingsData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyMilliseconds), Optional.ToNullable(resourceState));
         }
+
+        BinaryData IPersistableModel<FrontDoorLoadBalancingSettingsData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FrontDoorLoadBalancingSettingsData IPersistableModel<FrontDoorLoadBalancingSettingsData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFrontDoorLoadBalancingSettingsData(document.RootElement, options);
+        }
+
+        string IPersistableModel<FrontDoorLoadBalancingSettingsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

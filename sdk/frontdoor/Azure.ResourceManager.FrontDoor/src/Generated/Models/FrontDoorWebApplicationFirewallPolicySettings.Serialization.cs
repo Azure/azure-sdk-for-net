@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable
+    public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable, IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
@@ -46,11 +56,40 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element)
+        FrontDoorWebApplicationFirewallPolicySettings IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorWebApplicationFirewallPolicySettings(document.RootElement, options);
+        }
+
+        internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +100,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<int> customBlockResponseStatusCode = default;
             Optional<string> customBlockResponseBody = default;
             Optional<PolicyRequestBodyCheck> requestBodyCheck = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledState"u8))
@@ -113,8 +154,38 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     requestBodyCheck = new PolicyRequestBodyCheck(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FrontDoorWebApplicationFirewallPolicySettings IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFrontDoorWebApplicationFirewallPolicySettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

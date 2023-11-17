@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

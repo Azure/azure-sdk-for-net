@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ScriptActionExecutionSummary
+    public partial class ScriptActionExecutionSummary : IUtf8JsonSerializable, IJsonModel<ScriptActionExecutionSummary>
     {
-        internal static ScriptActionExecutionSummary DeserializeScriptActionExecutionSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptActionExecutionSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScriptActionExecutionSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ScriptActionExecutionSummary>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ScriptActionExecutionSummary>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InstanceCount))
+                {
+                    writer.WritePropertyName("instanceCount"u8);
+                    writer.WriteNumberValue(InstanceCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ScriptActionExecutionSummary IJsonModel<ScriptActionExecutionSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptActionExecutionSummary(document.RootElement, options);
+        }
+
+        internal static ScriptActionExecutionSummary DeserializeScriptActionExecutionSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> status = default;
             Optional<int> instanceCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -36,8 +100,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                     instanceCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScriptActionExecutionSummary(status.Value, Optional.ToNullable(instanceCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScriptActionExecutionSummary(status.Value, Optional.ToNullable(instanceCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScriptActionExecutionSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScriptActionExecutionSummary IPersistableModel<ScriptActionExecutionSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScriptActionExecutionSummary(document.RootElement, options);
+        }
+
+        string IPersistableModel<ScriptActionExecutionSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

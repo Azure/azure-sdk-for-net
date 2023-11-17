@@ -6,21 +6,43 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterProfile : IUtf8JsonSerializable
+    public partial class ClusterProfile : IUtf8JsonSerializable, IJsonModel<ClusterProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ClusterProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ClusterProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("clusterVersion"u8);
             writer.WriteStringValue(ClusterVersion);
             writer.WritePropertyName("ossVersion"u8);
             writer.WriteStringValue(OssVersion);
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Components))
+                {
+                    writer.WritePropertyName("components"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Components)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WritePropertyName("identityProfile"u8);
             writer.WriteObjectValue(IdentityProfile);
             writer.WritePropertyName("authorizationProfile"u8);
@@ -39,6 +61,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConnectivityProfile))
+                {
+                    writer.WritePropertyName("connectivityProfile"u8);
+                    writer.WriteObjectValue(ConnectivityProfile);
+                }
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
@@ -154,11 +184,40 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterProfile DeserializeClusterProfile(JsonElement element)
+        ClusterProfile IJsonModel<ClusterProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterProfile(document.RootElement, options);
+        }
+
+        internal static ClusterProfile DeserializeClusterProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -182,6 +241,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<SparkProfile> sparkProfile = default;
             Optional<IDictionary<string, BinaryData>> stubProfile = default;
             Optional<IList<ScriptActionProfile>> scriptActionProfiles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterVersion"u8))
@@ -390,8 +451,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     scriptActionProfiles = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterProfile(clusterVersion, ossVersion, Optional.ToList(components), identityProfile, authorizationProfile, secretsProfile.Value, Optional.ToList(serviceConfigsProfiles), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), Optional.ToList(scriptActionProfiles));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterProfile(clusterVersion, ossVersion, Optional.ToList(components), identityProfile, authorizationProfile, secretsProfile.Value, Optional.ToList(serviceConfigsProfiles), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), Optional.ToList(scriptActionProfiles), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClusterProfile IPersistableModel<ClusterProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClusterProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<ClusterProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

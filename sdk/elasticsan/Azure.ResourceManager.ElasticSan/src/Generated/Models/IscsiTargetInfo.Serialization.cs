@@ -5,15 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class IscsiTargetInfo
+    public partial class IscsiTargetInfo : IUtf8JsonSerializable, IJsonModel<IscsiTargetInfo>
     {
-        internal static IscsiTargetInfo DeserializeIscsiTargetInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IscsiTargetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IscsiTargetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IscsiTargetInfo>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IscsiTargetInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TargetIqn))
+                {
+                    writer.WritePropertyName("targetIqn"u8);
+                    writer.WriteStringValue(TargetIqn);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TargetPortalHostname))
+                {
+                    writer.WritePropertyName("targetPortalHostname"u8);
+                    writer.WriteStringValue(TargetPortalHostname);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TargetPortalPort))
+                {
+                    writer.WritePropertyName("targetPortalPort"u8);
+                    writer.WriteNumberValue(TargetPortalPort.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IscsiTargetInfo IJsonModel<IscsiTargetInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IscsiTargetInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIscsiTargetInfo(document.RootElement, options);
+        }
+
+        internal static IscsiTargetInfo DeserializeIscsiTargetInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +106,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<int> targetPortalPort = default;
             Optional<ElasticSanProvisioningState> provisioningState = default;
             Optional<ResourceOperationalStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetIqn"u8))
@@ -62,8 +147,38 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     status = new ResourceOperationalStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IscsiTargetInfo(targetIqn.Value, targetPortalHostname.Value, Optional.ToNullable(targetPortalPort), Optional.ToNullable(provisioningState), Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IscsiTargetInfo(targetIqn.Value, targetPortalHostname.Value, Optional.ToNullable(targetPortalPort), Optional.ToNullable(provisioningState), Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IscsiTargetInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IscsiTargetInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IscsiTargetInfo IPersistableModel<IscsiTargetInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IscsiTargetInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIscsiTargetInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<IscsiTargetInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

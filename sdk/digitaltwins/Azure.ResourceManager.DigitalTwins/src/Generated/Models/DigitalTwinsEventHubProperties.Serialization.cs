@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsEventHubProperties : IUtf8JsonSerializable
+    public partial class DigitalTwinsEventHubProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsEventHubProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsEventHubProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DigitalTwinsEventHubProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DigitalTwinsEventHubProperties>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DigitalTwinsEventHubProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionStringPrimaryKey))
             {
@@ -66,6 +76,36 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    if (ProvisioningState != null)
+                    {
+                        writer.WritePropertyName("provisioningState"u8);
+                        writer.WriteStringValue(ProvisioningState.Value.ToString());
+                    }
+                    else
+                    {
+                        writer.WriteNull("provisioningState");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    if (CreatedOn != null)
+                    {
+                        writer.WritePropertyName("createdTime"u8);
+                        writer.WriteStringValue(CreatedOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("createdTime");
+                    }
+                }
+            }
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -107,11 +147,40 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("identity");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DigitalTwinsEventHubProperties DeserializeDigitalTwinsEventHubProperties(JsonElement element)
+        DigitalTwinsEventHubProperties IJsonModel<DigitalTwinsEventHubProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsEventHubProperties(document.RootElement, options);
+        }
+
+        internal static DigitalTwinsEventHubProperties DeserializeDigitalTwinsEventHubProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -127,6 +196,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionStringPrimaryKey"u8))
@@ -233,8 +304,38 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DigitalTwinsEventHubProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, connectionStringPrimaryKey.Value, connectionStringSecondaryKey.Value, endpointUri.Value, entityPath.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DigitalTwinsEventHubProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, serializedAdditionalRawData, connectionStringPrimaryKey.Value, connectionStringSecondaryKey.Value, endpointUri.Value, entityPath.Value);
         }
+
+        BinaryData IPersistableModel<DigitalTwinsEventHubProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DigitalTwinsEventHubProperties IPersistableModel<DigitalTwinsEventHubProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDigitalTwinsEventHubProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<DigitalTwinsEventHubProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

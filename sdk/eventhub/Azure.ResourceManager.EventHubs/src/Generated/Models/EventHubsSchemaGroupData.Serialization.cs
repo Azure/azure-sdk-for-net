@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -15,13 +17,75 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsSchemaGroupData : IUtf8JsonSerializable
+    public partial class EventHubsSchemaGroupData : IUtf8JsonSerializable, IJsonModel<EventHubsSchemaGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsSchemaGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventHubsSchemaGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EventHubsSchemaGroupData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EventHubsSchemaGroupData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdatedAtUtc))
+                {
+                    writer.WritePropertyName("updatedAtUtc"u8);
+                    writer.WriteStringValue(UpdatedAtUtc.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedAtUtc))
+                {
+                    writer.WritePropertyName("createdAtUtc"u8);
+                    writer.WriteStringValue(CreatedAtUtc.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("eTag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(GroupProperties))
             {
                 writer.WritePropertyName("groupProperties"u8);
@@ -44,11 +108,40 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStringValue(SchemaType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubsSchemaGroupData DeserializeEventHubsSchemaGroupData(JsonElement element)
+        EventHubsSchemaGroupData IJsonModel<EventHubsSchemaGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsSchemaGroupData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsSchemaGroupData(document.RootElement, options);
+        }
+
+        internal static EventHubsSchemaGroupData DeserializeEventHubsSchemaGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +157,8 @@ namespace Azure.ResourceManager.EventHubs
             Optional<IDictionary<string, string>> groupProperties = default;
             Optional<EventHubsSchemaCompatibility> schemaCompatibility = default;
             Optional<EventHubsSchemaType> schemaType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -170,8 +265,38 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventHubsSchemaGroupData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsSchemaGroupData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventHubsSchemaGroupData IPersistableModel<EventHubsSchemaGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsSchemaGroupData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventHubsSchemaGroupData(document.RootElement, options);
+        }
+
+        string IPersistableModel<EventHubsSchemaGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -15,10 +17,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridTopicData : IUtf8JsonSerializable
+    public partial class EventGridTopicData : IUtf8JsonSerializable, IJsonModel<EventGridTopicData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridTopicData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventGridTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EventGridTopicData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EventGridTopicData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -53,8 +62,60 @@ namespace Azure.ResourceManager.EventGrid
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Endpoint))
+                {
+                    writer.WritePropertyName("endpoint"u8);
+                    writer.WriteStringValue(Endpoint.AbsoluteUri);
+                }
+            }
             if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
@@ -74,6 +135,14 @@ namespace Azure.ResourceManager.EventGrid
             {
                 writer.WritePropertyName("inputSchemaMapping"u8);
                 writer.WriteObjectValue(InputSchemaMapping);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MetricResourceId))
+                {
+                    writer.WritePropertyName("metricResourceId"u8);
+                    writer.WriteStringValue(MetricResourceId);
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -101,11 +170,40 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridTopicData DeserializeEventGridTopicData(JsonElement element)
+        EventGridTopicData IJsonModel<EventGridTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridTopicData(document.RootElement, options);
+        }
+
+        internal static EventGridTopicData DeserializeEventGridTopicData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -132,6 +230,8 @@ namespace Azure.ResourceManager.EventGrid
             Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
             Optional<bool> disableLocalAuth = default;
             Optional<DataResidencyBoundary> dataResidencyBoundary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -339,8 +439,38 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventGridTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(kind), extendedLocation, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), endpoint.Value, eventTypeInfo.Value, Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(inputSchema), inputSchemaMapping.Value, metricResourceId.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(dataResidencyBoundary));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(kind), extendedLocation, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), endpoint.Value, eventTypeInfo.Value, Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(inputSchema), inputSchemaMapping.Value, metricResourceId.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(dataResidencyBoundary), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventGridTopicData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventGridTopicData IPersistableModel<EventGridTopicData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventGridTopicData(document.RootElement, options);
+        }
+
+        string IPersistableModel<EventGridTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

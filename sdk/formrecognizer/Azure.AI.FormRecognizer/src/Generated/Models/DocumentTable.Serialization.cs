@@ -5,16 +5,89 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentTable
+    public partial class DocumentTable : IUtf8JsonSerializable, IJsonModel<DocumentTable>
     {
-        internal static DocumentTable DeserializeDocumentTable(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentTable>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentTable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentTable>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("rowCount"u8);
+            writer.WriteNumberValue(RowCount);
+            writer.WritePropertyName("columnCount"u8);
+            writer.WriteNumberValue(ColumnCount);
+            writer.WritePropertyName("cells"u8);
+            writer.WriteStartArray();
+            foreach (var item in Cells)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(BoundingRegions))
+            {
+                writer.WritePropertyName("boundingRegions"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundingRegions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("spans"u8);
+            writer.WriteStartArray();
+            foreach (var item in Spans)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentTable IJsonModel<DocumentTable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentTable)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentTable(document.RootElement, options);
+        }
+
+        internal static DocumentTable DeserializeDocumentTable(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +97,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             IReadOnlyList<DocumentTableCell> cells = default;
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rowCount"u8))
@@ -70,8 +145,38 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     spans = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentTable(rowCount, columnCount, cells, Optional.ToList(boundingRegions), spans);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentTable(rowCount, columnCount, cells, Optional.ToList(boundingRegions), spans, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentTable>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentTable)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentTable IPersistableModel<DocumentTable>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentTable)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentTable(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentTable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

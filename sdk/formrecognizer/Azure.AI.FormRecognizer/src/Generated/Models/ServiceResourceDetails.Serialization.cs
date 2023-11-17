@@ -5,21 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class ServiceResourceDetails
+    internal partial class ServiceResourceDetails : IUtf8JsonSerializable, IJsonModel<ServiceResourceDetails>
     {
-        internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceResourceDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServiceResourceDetails>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServiceResourceDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("customDocumentModels"u8);
+            writer.WriteObjectValue(CustomDocumentModels);
+            if (Optional.IsDefined(CustomNeuralDocumentModelBuilds))
+            {
+                writer.WritePropertyName("customNeuralDocumentModelBuilds"u8);
+                writer.WriteObjectValue(CustomNeuralDocumentModelBuilds);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceResourceDetails IJsonModel<ServiceResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceResourceDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceResourceDetails(document.RootElement, options);
+        }
+
+        internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             CustomDocumentModelsDetails customDocumentModels = default;
             Optional<ResourceQuotaDetails> customNeuralDocumentModelBuilds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"u8))
@@ -36,8 +91,38 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     customNeuralDocumentModelBuilds = ResourceQuotaDetails.DeserializeResourceQuotaDetails(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceResourceDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceResourceDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceResourceDetails IPersistableModel<ServiceResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceResourceDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceResourceDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServiceResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

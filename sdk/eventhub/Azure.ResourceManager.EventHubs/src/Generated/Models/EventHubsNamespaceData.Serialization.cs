@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsNamespaceData : IUtf8JsonSerializable
+    public partial class EventHubsNamespaceData : IUtf8JsonSerializable, IJsonModel<EventHubsNamespaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNamespaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventHubsNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EventHubsNamespaceData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EventHubsNamespaceData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -42,6 +51,29 @@ namespace Azure.ResourceManager.EventHubs
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MinimumTlsVersion))
@@ -49,10 +81,58 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdAt"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdatedOn))
+                {
+                    writer.WritePropertyName("updatedAt"u8);
+                    writer.WriteStringValue(UpdatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceBusEndpoint))
+                {
+                    writer.WritePropertyName("serviceBusEndpoint"u8);
+                    writer.WriteStringValue(ServiceBusEndpoint);
+                }
+            }
             if (Optional.IsDefined(ClusterArmId))
             {
                 writer.WritePropertyName("clusterArmId"u8);
                 writer.WriteStringValue(ClusterArmId);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MetricId))
+                {
+                    writer.WritePropertyName("metricId"u8);
+                    writer.WriteStringValue(MetricId);
+                }
             }
             if (Optional.IsDefined(IsAutoInflateEnabled))
             {
@@ -105,11 +185,40 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStringValue(AlternateName);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element)
+        EventHubsNamespaceData IJsonModel<EventHubsNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsNamespaceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsNamespaceData(document.RootElement, options);
+        }
+
+        internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +248,8 @@ namespace Azure.ResourceManager.EventHubs
             Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -352,8 +463,38 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubsNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubsNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventHubsNamespaceData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsNamespaceData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventHubsNamespaceData IPersistableModel<EventHubsNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubsNamespaceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventHubsNamespaceData(document.RootElement, options);
+        }
+
+        string IPersistableModel<EventHubsNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

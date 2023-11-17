@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +15,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RoutingRuleData : IUtf8JsonSerializable
+    public partial class RoutingRuleData : IUtf8JsonSerializable, IJsonModel<RoutingRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoutingRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RoutingRuleData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RoutingRuleData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -26,6 +36,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ResourceType.Value);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -79,12 +97,49 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceState))
+                {
+                    writer.WritePropertyName("resourceState"u8);
+                    writer.WriteStringValue(ResourceState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoutingRuleData DeserializeRoutingRuleData(JsonElement element)
+        RoutingRuleData IJsonModel<RoutingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoutingRuleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingRuleData(document.RootElement, options);
+        }
+
+        internal static RoutingRuleData DeserializeRoutingRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,6 +155,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<WritableSubResource> rulesEngine = default;
             Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
             Optional<FrontDoorResourceState> resourceState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -224,8 +281,38 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine, webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine, webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState));
         }
+
+        BinaryData IPersistableModel<RoutingRuleData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoutingRuleData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RoutingRuleData IPersistableModel<RoutingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoutingRuleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRoutingRuleData(document.RootElement, options);
+        }
+
+        string IPersistableModel<RoutingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

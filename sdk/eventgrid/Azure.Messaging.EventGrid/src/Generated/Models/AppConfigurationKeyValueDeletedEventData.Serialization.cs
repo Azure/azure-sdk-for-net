@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,72 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AppConfigurationKeyValueDeletedEventDataConverter))]
-    public partial class AppConfigurationKeyValueDeletedEventData
+    public partial class AppConfigurationKeyValueDeletedEventData : IUtf8JsonSerializable, IJsonModel<AppConfigurationKeyValueDeletedEventData>
     {
-        internal static AppConfigurationKeyValueDeletedEventData DeserializeAppConfigurationKeyValueDeletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationKeyValueDeletedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppConfigurationKeyValueDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppConfigurationKeyValueDeletedEventData>)this).GetFormatFromOptions(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppConfigurationKeyValueDeletedEventData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Key))
+            {
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(Key);
+            }
+            if (Optional.IsDefined(Label))
+            {
+                writer.WritePropertyName("label"u8);
+                writer.WriteStringValue(Label);
+            }
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(Etag);
+            }
+            if (Optional.IsDefined(SyncToken))
+            {
+                writer.WritePropertyName("syncToken"u8);
+                writer.WriteStringValue(SyncToken);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppConfigurationKeyValueDeletedEventData IJsonModel<AppConfigurationKeyValueDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppConfigurationKeyValueDeletedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppConfigurationKeyValueDeletedEventData(document.RootElement, options);
+        }
+
+        internal static AppConfigurationKeyValueDeletedEventData DeserializeAppConfigurationKeyValueDeletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +90,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> label = default;
             Optional<string> etag = default;
             Optional<string> syncToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -47,15 +114,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     syncToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppConfigurationKeyValueDeletedEventData(key.Value, label.Value, etag.Value, syncToken.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppConfigurationKeyValueDeletedEventData(key.Value, label.Value, etag.Value, syncToken.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppConfigurationKeyValueDeletedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppConfigurationKeyValueDeletedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppConfigurationKeyValueDeletedEventData IPersistableModel<AppConfigurationKeyValueDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppConfigurationKeyValueDeletedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppConfigurationKeyValueDeletedEventData(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppConfigurationKeyValueDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AppConfigurationKeyValueDeletedEventDataConverter : JsonConverter<AppConfigurationKeyValueDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AppConfigurationKeyValueDeletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AppConfigurationKeyValueDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
