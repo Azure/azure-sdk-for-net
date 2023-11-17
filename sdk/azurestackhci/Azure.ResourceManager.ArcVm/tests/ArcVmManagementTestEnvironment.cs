@@ -7,12 +7,12 @@ namespace Azure.ResourceManager.ArcVm.Tests
 {
     public class ArcVmManagementTestEnvironment : TestEnvironment
     {
-        public string CustomLocationId => GetRecordedVariable("CUSTOM_LOCATION_ID", options => options.IsSecret());
+        public string CustomLocationId => GetRecordedVariable("CUSTOM_LOCATION_ID");
         public string MachineName => GetRecordedVariable("HC_MACHINE_NAME");
         public string MachineNameAsync => GetRecordedVariable("HC_MACHINE_NAME_ASYNC");
-        public string ImagePath => GetRecordedVariable("IMAGE_PATH", options => options.IsSecret());
-        public string StoragePath => GetRecordedVariable("STORAGE_PATH", options => options.IsSecret());
-        public string VmUsername => GetRecordedVariable("VM_USERNAME", options => options.IsSecret());
-        public string VmPass => GetRecordedVariable("VM_PASS", options => options.IsSecret());
+        public string ImagePath => GetRecordedVariable("IMAGE_PATH");
+        public string StoragePath => GetRecordedVariable("STORAGE_PATH");
+        public string VmUsername => GetRecordedVariable("VM_USERNAME");
+        public string VmPass => GetRecordedVariable("VM_PASS");
     }
 }
