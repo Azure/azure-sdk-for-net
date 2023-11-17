@@ -61,10 +61,13 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<OrchestratorVersionProfileListResult>> GetOrchestratorsHybridContainerServiceAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = HybridContainerServiceClientDiagnostics.CreateScope("MockableHybridContainerServiceArmClient.GetOrchestratorsHybridContainerService");
             scope0.Start();
             try
@@ -92,10 +95,13 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<OrchestratorVersionProfileListResult> GetOrchestratorsHybridContainerService(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = HybridContainerServiceClientDiagnostics.CreateScope("MockableHybridContainerServiceArmClient.GetOrchestratorsHybridContainerService");
             scope0.Start();
             try
@@ -123,10 +129,13 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = HybridContainerServiceClientDiagnostics.CreateScope("MockableHybridContainerServiceArmClient.GetVmSkusHybridContainerService");
             scope0.Start();
             try
@@ -154,10 +163,13 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<VmSkuListResult> GetVmSkusHybridContainerService(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             using var scope0 = HybridContainerServiceClientDiagnostics.CreateScope("MockableHybridContainerServiceArmClient.GetVmSkusHybridContainerService");
             scope0.Start();
             try
