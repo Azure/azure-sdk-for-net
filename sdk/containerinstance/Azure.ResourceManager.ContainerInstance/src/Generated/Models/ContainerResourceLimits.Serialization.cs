@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerResourceLimits : IUtf8JsonSerializable
+    public partial class ContainerResourceLimits : IUtf8JsonSerializable, IJsonModel<ContainerResourceLimits>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerResourceLimits>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerResourceLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerResourceLimits>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerResourceLimits>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MemoryInGB))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerResourceLimits DeserializeContainerResourceLimits(JsonElement element)
+        ContainerResourceLimits IJsonModel<ContainerResourceLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerResourceLimits(document.RootElement, options);
+        }
+
+        internal static ContainerResourceLimits DeserializeContainerResourceLimits(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<double> memoryInGB = default;
             Optional<double> cpu = default;
             Optional<ContainerGpuResourceInfo> gpu = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memoryInGB"u8))
@@ -71,8 +113,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerResourceLimits(Optional.ToNullable(memoryInGB), Optional.ToNullable(cpu), gpu.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerResourceLimits(Optional.ToNullable(memoryInGB), Optional.ToNullable(cpu), gpu.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerResourceLimits>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerResourceLimits IPersistableModel<ContainerResourceLimits>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerResourceLimits(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerResourceLimits>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

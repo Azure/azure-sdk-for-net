@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppWorkloadProfile : IUtf8JsonSerializable
+    public partial class ContainerAppWorkloadProfile : IUtf8JsonSerializable, IJsonModel<ContainerAppWorkloadProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppWorkloadProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerAppWorkloadProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerAppWorkloadProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerAppWorkloadProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -29,11 +40,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("maximumCount"u8);
                 writer.WriteNumberValue(MaximumNodeCount.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppWorkloadProfile DeserializeContainerAppWorkloadProfile(JsonElement element)
+        ContainerAppWorkloadProfile IJsonModel<ContainerAppWorkloadProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppWorkloadProfile(document.RootElement, options);
+        }
+
+        internal static ContainerAppWorkloadProfile DeserializeContainerAppWorkloadProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             string workloadProfileType = default;
             Optional<int> minimumCount = default;
             Optional<int> maximumCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -72,8 +114,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maximumCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppWorkloadProfile(name, workloadProfileType, Optional.ToNullable(minimumCount), Optional.ToNullable(maximumCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppWorkloadProfile(name, workloadProfileType, Optional.ToNullable(minimumCount), Optional.ToNullable(maximumCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppWorkloadProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerAppWorkloadProfile IPersistableModel<ContainerAppWorkloadProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerAppWorkloadProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerAppWorkloadProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

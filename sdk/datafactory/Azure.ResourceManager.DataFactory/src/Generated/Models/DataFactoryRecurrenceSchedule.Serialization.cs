@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryRecurrenceSchedule : IUtf8JsonSerializable
+    public partial class DataFactoryRecurrenceSchedule : IUtf8JsonSerializable, IJsonModel<DataFactoryRecurrenceSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryRecurrenceSchedule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataFactoryRecurrenceSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataFactoryRecurrenceSchedule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataFactoryRecurrenceSchedule>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Minutes))
             {
@@ -82,8 +91,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryRecurrenceSchedule DeserializeDataFactoryRecurrenceSchedule(JsonElement element)
+        DataFactoryRecurrenceSchedule IJsonModel<DataFactoryRecurrenceSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryRecurrenceSchedule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryRecurrenceSchedule(document.RootElement, options);
+        }
+
+        internal static DataFactoryRecurrenceSchedule DeserializeDataFactoryRecurrenceSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,5 +195,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryRecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFactoryRecurrenceSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryRecurrenceSchedule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFactoryRecurrenceSchedule IPersistableModel<DataFactoryRecurrenceSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryRecurrenceSchedule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFactoryRecurrenceSchedule(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataFactoryRecurrenceSchedule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

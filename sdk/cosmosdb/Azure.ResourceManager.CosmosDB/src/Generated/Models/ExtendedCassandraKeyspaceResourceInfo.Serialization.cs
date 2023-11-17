@@ -5,24 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCassandraKeyspaceResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCassandraKeyspaceResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedCassandraKeyspaceResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCassandraKeyspaceResourceInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ExtendedCassandraKeyspaceResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExtendedCassandraKeyspaceResourceInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExtendedCassandraKeyspaceResourceInfo>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Rid))
+                {
+                    writer.WritePropertyName("_rid"u8);
+                    writer.WriteStringValue(Rid);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("_ts"u8);
+                    writer.WriteNumberValue(Timestamp.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("_etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(KeyspaceName);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedCassandraKeyspaceResourceInfo DeserializeExtendedCassandraKeyspaceResourceInfo(JsonElement element)
+        ExtendedCassandraKeyspaceResourceInfo IJsonModel<ExtendedCassandraKeyspaceResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedCassandraKeyspaceResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedCassandraKeyspaceResourceInfo(document.RootElement, options);
+        }
+
+        internal static ExtendedCassandraKeyspaceResourceInfo DeserializeExtendedCassandraKeyspaceResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +95,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<float> ts = default;
             Optional<ETag> etag = default;
             string id = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -61,8 +127,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtendedCassandraKeyspaceResourceInfo(id, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExtendedCassandraKeyspaceResourceInfo(id, serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
+
+        BinaryData IPersistableModel<ExtendedCassandraKeyspaceResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedCassandraKeyspaceResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExtendedCassandraKeyspaceResourceInfo IPersistableModel<ExtendedCassandraKeyspaceResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedCassandraKeyspaceResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExtendedCassandraKeyspaceResourceInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExtendedCassandraKeyspaceResourceInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,86 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError : IUtf8JsonSerializable, IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>
     {
-        internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsCollectionDefined(Events))
+            {
+                writer.WritePropertyName("events"u8);
+                writer.WriteStartArray();
+                foreach (var item in Events)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(document.RootElement, options);
+        }
+
+        internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +93,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
             Optional<string> id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorMessage"u8))
@@ -54,8 +126,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(id.Value, resultType, errorMessage.Value, Optional.ToList(events));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(id.Value, resultType, serializedAdditionalRawData, errorMessage.Value, Optional.ToList(events));
         }
+
+        BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(document.RootElement, options);
+        }
+
+        string IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

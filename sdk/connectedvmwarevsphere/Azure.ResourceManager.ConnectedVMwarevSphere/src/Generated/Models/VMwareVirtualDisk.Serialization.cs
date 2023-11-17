@@ -5,20 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VMwareVirtualDisk : IUtf8JsonSerializable
+    public partial class VMwareVirtualDisk : IUtf8JsonSerializable, IJsonModel<VMwareVirtualDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVirtualDisk>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VMwareVirtualDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VMwareVirtualDisk>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VMwareVirtualDisk>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Label))
+                {
+                    writer.WritePropertyName("label"u8);
+                    writer.WriteStringValue(Label);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DiskObjectId))
+                {
+                    writer.WritePropertyName("diskObjectId"u8);
+                    writer.WriteStringValue(DiskObjectId);
+                }
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -55,11 +82,40 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VMwareVirtualDisk DeserializeVMwareVirtualDisk(JsonElement element)
+        VMwareVirtualDisk IJsonModel<VMwareVirtualDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareVirtualDisk(document.RootElement, options);
+        }
+
+        internal static VMwareVirtualDisk DeserializeVMwareVirtualDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +130,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<int> unitNumber = default;
             Optional<string> deviceName = default;
             Optional<VMwareDiskType> diskType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -150,8 +208,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     diskType = new VMwareDiskType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareVirtualDisk(name.Value, label.Value, diskObjectId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(deviceKey), Optional.ToNullable(diskMode), Optional.ToNullable(controllerKey), Optional.ToNullable(unitNumber), deviceName.Value, Optional.ToNullable(diskType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VMwareVirtualDisk(name.Value, label.Value, diskObjectId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(deviceKey), Optional.ToNullable(diskMode), Optional.ToNullable(controllerKey), Optional.ToNullable(unitNumber), deviceName.Value, Optional.ToNullable(diskType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VMwareVirtualDisk>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VMwareVirtualDisk IPersistableModel<VMwareVirtualDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVMwareVirtualDisk(document.RootElement, options);
+        }
+
+        string IPersistableModel<VMwareVirtualDisk>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

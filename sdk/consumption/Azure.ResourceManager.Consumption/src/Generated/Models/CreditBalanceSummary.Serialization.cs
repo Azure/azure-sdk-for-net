@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class CreditBalanceSummary
+    public partial class CreditBalanceSummary : IUtf8JsonSerializable, IJsonModel<CreditBalanceSummary>
     {
-        internal static CreditBalanceSummary DeserializeCreditBalanceSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreditBalanceSummary>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CreditBalanceSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CreditBalanceSummary>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CreditBalanceSummary>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EstimatedBalance))
+                {
+                    writer.WritePropertyName("estimatedBalance"u8);
+                    writer.WriteObjectValue(EstimatedBalance);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentBalance))
+                {
+                    writer.WritePropertyName("currentBalance"u8);
+                    writer.WriteObjectValue(CurrentBalance);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EstimatedBalanceInBillingCurrency))
+                {
+                    writer.WritePropertyName("estimatedBalanceInBillingCurrency"u8);
+                    writer.WriteObjectValue(EstimatedBalanceInBillingCurrency);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CreditBalanceSummary IJsonModel<CreditBalanceSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreditBalanceSummary(document.RootElement, options);
+        }
+
+        internal static CreditBalanceSummary DeserializeCreditBalanceSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<ConsumptionAmount> estimatedBalance = default;
             Optional<ConsumptionAmount> currentBalance = default;
             Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("estimatedBalance"u8))
@@ -50,8 +122,38 @@ namespace Azure.ResourceManager.Consumption.Models
                     estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CreditBalanceSummary(estimatedBalance.Value, currentBalance.Value, estimatedBalanceInBillingCurrency.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CreditBalanceSummary(estimatedBalance.Value, currentBalance.Value, estimatedBalanceInBillingCurrency.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CreditBalanceSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CreditBalanceSummary IPersistableModel<CreditBalanceSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCreditBalanceSummary(document.RootElement, options);
+        }
+
+        string IPersistableModel<CreditBalanceSummary>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

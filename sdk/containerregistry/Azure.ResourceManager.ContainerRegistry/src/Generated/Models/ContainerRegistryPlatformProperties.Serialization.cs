@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryPlatformProperties : IUtf8JsonSerializable
+    public partial class ContainerRegistryPlatformProperties : IUtf8JsonSerializable, IJsonModel<ContainerRegistryPlatformProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryPlatformProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerRegistryPlatformProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerRegistryPlatformProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerRegistryPlatformProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("os"u8);
             writer.WriteStringValue(OS.ToString());
@@ -27,11 +38,40 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("variant"u8);
                 writer.WriteStringValue(Variant.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryPlatformProperties DeserializeContainerRegistryPlatformProperties(JsonElement element)
+        ContainerRegistryPlatformProperties IJsonModel<ContainerRegistryPlatformProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryPlatformProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryPlatformProperties(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryPlatformProperties DeserializeContainerRegistryPlatformProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryOS os = default;
             Optional<ContainerRegistryOSArchitecture> architecture = default;
             Optional<ContainerRegistryCpuVariant> variant = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("os"u8))
@@ -64,8 +106,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     variant = new ContainerRegistryCpuVariant(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryPlatformProperties(os, Optional.ToNullable(architecture), Optional.ToNullable(variant));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryPlatformProperties(os, Optional.ToNullable(architecture), Optional.ToNullable(variant), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerRegistryPlatformProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryPlatformProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerRegistryPlatformProperties IPersistableModel<ContainerRegistryPlatformProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryPlatformProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryPlatformProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerRegistryPlatformProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

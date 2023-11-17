@@ -5,15 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ReportableException
+    public partial class ReportableException : IUtf8JsonSerializable, IJsonModel<ReportableException>
     {
-        internal static ReportableException DeserializeReportableException(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportableException>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ReportableException>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ReportableException>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ReportableException>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(ActionableMessage))
+            {
+                writer.WritePropertyName("actionableMessage"u8);
+                writer.WriteStringValue(ActionableMessage);
+            }
+            if (Optional.IsDefined(FilePath))
+            {
+                writer.WritePropertyName("filePath"u8);
+                writer.WriteStringValue(FilePath);
+            }
+            if (Optional.IsDefined(LineNumber))
+            {
+                writer.WritePropertyName("lineNumber"u8);
+                writer.WriteStringValue(LineNumber);
+            }
+            if (Optional.IsDefined(HResult))
+            {
+                writer.WritePropertyName("hResult"u8);
+                writer.WriteNumberValue(HResult.Value);
+            }
+            if (Optional.IsDefined(StackTrace))
+            {
+                writer.WritePropertyName("stackTrace"u8);
+                writer.WriteStringValue(StackTrace);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReportableException IJsonModel<ReportableException>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReportableException)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReportableException(document.RootElement, options);
+        }
+
+        internal static ReportableException DeserializeReportableException(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +100,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> lineNumber = default;
             Optional<int> hResult = default;
             Optional<string> stackTrace = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -60,8 +138,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     stackTrace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReportableException(message.Value, actionableMessage.Value, filePath.Value, lineNumber.Value, Optional.ToNullable(hResult), stackTrace.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReportableException(message.Value, actionableMessage.Value, filePath.Value, lineNumber.Value, Optional.ToNullable(hResult), stackTrace.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReportableException>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReportableException)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReportableException IPersistableModel<ReportableException>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReportableException)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReportableException(document.RootElement, options);
+        }
+
+        string IPersistableModel<ReportableException>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

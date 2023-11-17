@@ -5,16 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    public partial class DataLakeAnalyticsStorageAccountInformationData
+    public partial class DataLakeAnalyticsStorageAccountInformationData : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsStorageAccountInformationData>
     {
-        internal static DataLakeAnalyticsStorageAccountInformationData DeserializeDataLakeAnalyticsStorageAccountInformationData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsStorageAccountInformationData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataLakeAnalyticsStorageAccountInformationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataLakeAnalyticsStorageAccountInformationData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Suffix))
+                {
+                    writer.WritePropertyName("suffix"u8);
+                    writer.WriteStringValue(Suffix);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataLakeAnalyticsStorageAccountInformationData IJsonModel<DataLakeAnalyticsStorageAccountInformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeAnalyticsStorageAccountInformationData(document.RootElement, options);
+        }
+
+        internal static DataLakeAnalyticsStorageAccountInformationData DeserializeDataLakeAnalyticsStorageAccountInformationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +104,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> suffix = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -67,8 +149,38 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLakeAnalyticsStorageAccountInformationData(id, name, type, systemData.Value, suffix.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataLakeAnalyticsStorageAccountInformationData(id, name, type, systemData.Value, suffix.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataLakeAnalyticsStorageAccountInformationData IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataLakeAnalyticsStorageAccountInformationData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

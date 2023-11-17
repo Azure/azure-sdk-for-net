@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -12,13 +14,61 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request body to get the datacenter address. </summary>
     public partial class DataCenterAddressContent
     {
-        /// <summary> Initializes a new instance of DataCenterAddressContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressContent"/>. </summary>
         /// <param name="storageLocation"> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="skuName"> Sku Name for which the data center address requested. </param>
         public DataCenterAddressContent(AzureLocation storageLocation, DataBoxSkuName skuName)
         {
             StorageLocation = storageLocation;
             SkuName = skuName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressContent"/>. </summary>
+        /// <param name="storageLocation"> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuName"> Sku Name for which the data center address requested. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCenterAddressContent(AzureLocation storageLocation, DataBoxSkuName skuName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StorageLocation = storageLocation;
+            SkuName = skuName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressContent"/> for deserialization. </summary>
+        internal DataCenterAddressContent()
+        {
         }
 
         /// <summary> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>

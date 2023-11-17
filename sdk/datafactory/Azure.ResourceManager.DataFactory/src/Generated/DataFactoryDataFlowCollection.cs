@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryDataFlowDataFlowsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryDataFlowDataFlowsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryDataFlowResource(Client, DataFactoryDataFlowData.DeserializeDataFactoryDataFlowData(e)), _dataFactoryDataFlowDataFlowsClientDiagnostics, Pipeline, "DataFactoryDataFlowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataFactoryDataFlowResource(Client, DataFactoryDataFlowData.DeserializeDataFactoryDataFlowData(e)), _dataFactoryDataFlowDataFlowsClientDiagnostics, Pipeline, "DataFactoryDataFlowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryDataFlowDataFlowsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryDataFlowDataFlowsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryDataFlowResource(Client, DataFactoryDataFlowData.DeserializeDataFactoryDataFlowData(e)), _dataFactoryDataFlowDataFlowsClientDiagnostics, Pipeline, "DataFactoryDataFlowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataFactoryDataFlowResource(Client, DataFactoryDataFlowData.DeserializeDataFactoryDataFlowData(e)), _dataFactoryDataFlowDataFlowsClientDiagnostics, Pipeline, "DataFactoryDataFlowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureBlobFSWriteSettings : IUtf8JsonSerializable
+    public partial class AzureBlobFSWriteSettings : IUtf8JsonSerializable, IJsonModel<AzureBlobFSWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobFSWriteSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureBlobFSWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureBlobFSWriteSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureBlobFSWriteSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BlockSizeInMB))
             {
@@ -55,8 +64,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureBlobFSWriteSettings DeserializeAzureBlobFSWriteSettings(JsonElement element)
+        AzureBlobFSWriteSettings IJsonModel<AzureBlobFSWriteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureBlobFSWriteSettings(document.RootElement, options);
+        }
+
+        internal static AzureBlobFSWriteSettings DeserializeAzureBlobFSWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,5 +139,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBlobFSWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, additionalProperties, blockSizeInMB.Value);
         }
+
+        BinaryData IPersistableModel<AzureBlobFSWriteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureBlobFSWriteSettings IPersistableModel<AzureBlobFSWriteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureBlobFSWriteSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureBlobFSWriteSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

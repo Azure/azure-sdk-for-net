@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppReplicaContainer : IUtf8JsonSerializable
+    public partial class ContainerAppReplicaContainer : IUtf8JsonSerializable, IJsonModel<ContainerAppReplicaContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppReplicaContainer>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerAppReplicaContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerAppReplicaContainer>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerAppReplicaContainer>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -40,11 +51,72 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RunningState))
+                {
+                    writer.WritePropertyName("runningState"u8);
+                    writer.WriteStringValue(RunningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RunningStateDetails))
+                {
+                    writer.WritePropertyName("runningStateDetails"u8);
+                    writer.WriteStringValue(RunningStateDetails);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LogStreamEndpoint))
+                {
+                    writer.WritePropertyName("logStreamEndpoint"u8);
+                    writer.WriteStringValue(LogStreamEndpoint);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExecEndpoint))
+                {
+                    writer.WritePropertyName("execEndpoint"u8);
+                    writer.WriteStringValue(ExecEndpoint);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppReplicaContainer DeserializeContainerAppReplicaContainer(JsonElement element)
+        ContainerAppReplicaContainer IJsonModel<ContainerAppReplicaContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppReplicaContainer(document.RootElement, options);
+        }
+
+        internal static ContainerAppReplicaContainer DeserializeContainerAppReplicaContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +130,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> runningStateDetails = default;
             Optional<string> logStreamEndpoint = default;
             Optional<string> execEndpoint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -121,8 +195,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     execEndpoint = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), Optional.ToNullable(runningState), runningStateDetails.Value, logStreamEndpoint.Value, execEndpoint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), Optional.ToNullable(runningState), runningStateDetails.Value, logStreamEndpoint.Value, execEndpoint.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppReplicaContainer>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerAppReplicaContainer IPersistableModel<ContainerAppReplicaContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerAppReplicaContainer(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerAppReplicaContainer>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

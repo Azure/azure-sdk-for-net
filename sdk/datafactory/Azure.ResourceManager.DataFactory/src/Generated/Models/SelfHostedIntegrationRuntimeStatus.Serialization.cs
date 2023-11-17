@@ -7,15 +7,228 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SelfHostedIntegrationRuntimeStatus
+    public partial class SelfHostedIntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<SelfHostedIntegrationRuntimeStatus>
     {
-        internal static SelfHostedIntegrationRuntimeStatus DeserializeSelfHostedIntegrationRuntimeStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHostedIntegrationRuntimeStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SelfHostedIntegrationRuntimeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SelfHostedIntegrationRuntimeStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SelfHostedIntegrationRuntimeStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(RuntimeType.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataFactoryName))
+                {
+                    writer.WritePropertyName("dataFactoryName"u8);
+                    writer.WriteStringValue(DataFactoryName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+            }
+            writer.WritePropertyName("typeProperties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TaskQueueId))
+                {
+                    writer.WritePropertyName("taskQueueId"u8);
+                    writer.WriteStringValue(TaskQueueId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InternalChannelEncryption))
+                {
+                    writer.WritePropertyName("internalChannelEncryption"u8);
+                    writer.WriteStringValue(InternalChannelEncryption.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (Optional.IsCollectionDefined(Nodes))
+            {
+                writer.WritePropertyName("nodes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Nodes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ScheduledUpdateOn))
+                {
+                    writer.WritePropertyName("scheduledUpdateDate"u8);
+                    writer.WriteStringValue(ScheduledUpdateOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdateDelayOffset))
+                {
+                    writer.WritePropertyName("updateDelayOffset"u8);
+                    writer.WriteStringValue(UpdateDelayOffset.Value, "P");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LocalTimeZoneOffset))
+                {
+                    writer.WritePropertyName("localTimeZoneOffset"u8);
+                    writer.WriteStringValue(LocalTimeZoneOffset.Value, "P");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Capabilities))
+                {
+                    writer.WritePropertyName("capabilities"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Capabilities)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ServiceUriStringList))
+                {
+                    writer.WritePropertyName("serviceUrls"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ServiceUriStringList)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AutoUpdate))
+                {
+                    writer.WritePropertyName("autoUpdate"u8);
+                    writer.WriteStringValue(AutoUpdate.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VersionStatus))
+                {
+                    writer.WritePropertyName("versionStatus"u8);
+                    writer.WriteStringValue(VersionStatus);
+                }
+            }
+            if (Optional.IsCollectionDefined(Links))
+            {
+                writer.WritePropertyName("links"u8);
+                writer.WriteStartArray();
+                foreach (var item in Links)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PushedVersion))
+                {
+                    writer.WritePropertyName("pushedVersion"u8);
+                    writer.WriteStringValue(PushedVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LatestVersion))
+                {
+                    writer.WritePropertyName("latestVersion"u8);
+                    writer.WriteStringValue(LatestVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AutoUpdateEta))
+                {
+                    writer.WritePropertyName("autoUpdateETA"u8);
+                    writer.WriteStringValue(AutoUpdateEta.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
+                {
+                    writer.WritePropertyName("selfContainedInteractiveAuthoringEnabled"u8);
+                    writer.WriteBooleanValue(IsSelfContainedInteractiveAuthoringEnabled.Value);
+                }
+            }
+            writer.WriteEndObject();
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        SelfHostedIntegrationRuntimeStatus IJsonModel<SelfHostedIntegrationRuntimeStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelfHostedIntegrationRuntimeStatus(document.RootElement, options);
+        }
+
+        internal static SelfHostedIntegrationRuntimeStatus DeserializeSelfHostedIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -237,5 +450,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
         }
+
+        BinaryData IPersistableModel<SelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SelfHostedIntegrationRuntimeStatus IPersistableModel<SelfHostedIntegrationRuntimeStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSelfHostedIntegrationRuntimeStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<SelfHostedIntegrationRuntimeStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,24 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
     /// <summary> The content or blob url of image, could be base64 encoding bytes or blob url. If both are given, the request will be refused. The maximum size of image is 2048 pixels * 2048 pixels, no larger than 4MB at the same time. The minimum size of image is 50 pixels * 50 pixels. </summary>
     public partial class ContentSafetyImageData
     {
-        /// <summary> Initializes a new instance of ContentSafetyImageData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafetyImageData"/>. </summary>
         public ContentSafetyImageData()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ContentSafetyImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentSafetyImageData"/>. </summary>
         /// <param name="content"> Base64 encoding of image. </param>
         /// <param name="blobUrl"> The blob url of image. </param>
-        internal ContentSafetyImageData(BinaryData content, Uri blobUrl)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentSafetyImageData(BinaryData content, Uri blobUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             BlobUrl = blobUrl;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

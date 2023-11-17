@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineActivityPolicy : IUtf8JsonSerializable
+    public partial class PipelineActivityPolicy : IUtf8JsonSerializable, IJsonModel<PipelineActivityPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineActivityPolicy>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PipelineActivityPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PipelineActivityPolicy>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PipelineActivityPolicy>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Timeout))
             {
@@ -58,8 +67,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static PipelineActivityPolicy DeserializePipelineActivityPolicy(JsonElement element)
+        PipelineActivityPolicy IJsonModel<PipelineActivityPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineActivityPolicy(document.RootElement, options);
+        }
+
+        internal static PipelineActivityPolicy DeserializePipelineActivityPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,5 +146,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new PipelineActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
         }
+
+        BinaryData IPersistableModel<PipelineActivityPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PipelineActivityPolicy IPersistableModel<PipelineActivityPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePipelineActivityPolicy(document.RootElement, options);
+        }
+
+        string IPersistableModel<PipelineActivityPolicy>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

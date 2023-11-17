@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,14 +20,46 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeDeviceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataBoxEdgeDeviceData(AzureLocation location) : base(location)
         {
             ConfiguredRoleTypes = new ChangeTrackingList<DataBoxEdgeRoleType>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +87,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="resourceMoveDetails"> The details of the move operation on this resource. </param>
         /// <param name="edgeProfile"> The details of Edge Profile for this resource. </param>
         /// <param name="dataResidency"> The details of data-residency related properties for this resource. </param>
-        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -77,6 +111,12 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceMoveDetails = resourceMoveDetails;
             EdgeProfile = edgeProfile;
             DataResidency = dataResidency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/> for deserialization. </summary>
+        internal DataBoxEdgeDeviceData()
+        {
         }
 
         /// <summary> The SKU type. </summary>

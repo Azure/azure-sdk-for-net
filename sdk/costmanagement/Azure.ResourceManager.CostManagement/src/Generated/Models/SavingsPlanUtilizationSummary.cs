@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,18 +15,19 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Savings plan utilization summary resource. </summary>
     public partial class SavingsPlanUtilizationSummary : BenefitUtilizationSummary
     {
-        /// <summary> Initializes a new instance of SavingsPlanUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUtilizationSummary"/>. </summary>
         public SavingsPlanUtilizationSummary()
         {
             Kind = BillingAccountBenefitKind.SavingsPlan;
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="armSkuName"> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </param>
         /// <param name="benefitId"> The benefit ID is the identifier of the benefit. </param>
         /// <param name="benefitOrderId"> The benefit order ID is the identifier for a benefit purchase. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="avgUtilizationPercentage"> This is the average hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the avgUtilizationPercentage value will be equal to the average of the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. </param>
         /// <param name="minUtilizationPercentage"> This is the minimum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the minUtilizationPercentage value will be equal to the smallest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the lowest utilization percentage was 10% at hour 4, then the value for the minUtilizationPercentage in the response will be 10%. </param>
         /// <param name="maxUtilizationPercentage"> This is the maximum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the maxUtilizationPercentage value will be equal to the largest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the largest utilization percentage was 90% at hour 5, then the value for the maxUtilizationPercentage in the response will be 90%. </param>
-        internal SavingsPlanUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, string armSkuName, string benefitId, string benefitOrderId, BillingAccountBenefitKind? benefitType, DateTimeOffset? usageOn, decimal? avgUtilizationPercentage, decimal? minUtilizationPercentage, decimal? maxUtilizationPercentage) : base(id, name, resourceType, systemData, kind)
+        internal SavingsPlanUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string armSkuName, string benefitId, string benefitOrderId, BillingAccountBenefitKind? benefitType, DateTimeOffset? usageOn, decimal? avgUtilizationPercentage, decimal? minUtilizationPercentage, decimal? maxUtilizationPercentage) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             ArmSkuName = armSkuName;
             BenefitId = benefitId;

@@ -5,17 +5,105 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    public partial class DataLakeAnalyticsFirewallRuleData
+    public partial class DataLakeAnalyticsFirewallRuleData : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsFirewallRuleData>
     {
-        internal static DataLakeAnalyticsFirewallRuleData DeserializeDataLakeAnalyticsFirewallRuleData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsFirewallRuleData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataLakeAnalyticsFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataLakeAnalyticsFirewallRuleData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataLakeAnalyticsFirewallRuleData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartIPAddress))
+                {
+                    writer.WritePropertyName("startIpAddress"u8);
+                    writer.WriteStringValue(StartIPAddress.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndIPAddress))
+                {
+                    writer.WritePropertyName("endIpAddress"u8);
+                    writer.WriteStringValue(EndIPAddress.ToString());
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataLakeAnalyticsFirewallRuleData IJsonModel<DataLakeAnalyticsFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsFirewallRuleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeAnalyticsFirewallRuleData(document.RootElement, options);
+        }
+
+        internal static DataLakeAnalyticsFirewallRuleData DeserializeDataLakeAnalyticsFirewallRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +114,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Optional<SystemData> systemData = default;
             Optional<IPAddress> startIPAddress = default;
             Optional<IPAddress> endIPAddress = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,8 +172,38 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLakeAnalyticsFirewallRuleData(id, name, type, systemData.Value, startIPAddress.Value, endIPAddress.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataLakeAnalyticsFirewallRuleData(id, name, type, systemData.Value, startIPAddress.Value, endIPAddress.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsFirewallRuleData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataLakeAnalyticsFirewallRuleData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsFirewallRuleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataLakeAnalyticsFirewallRuleData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataLakeAnalyticsFirewallRuleData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

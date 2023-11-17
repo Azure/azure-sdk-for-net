@@ -6,16 +6,69 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterWorkerAssignment
+    public partial class RouterWorkerAssignment : IUtf8JsonSerializable, IJsonModel<RouterWorkerAssignment>
     {
-        internal static RouterWorkerAssignment DeserializeRouterWorkerAssignment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterWorkerAssignment>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RouterWorkerAssignment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RouterWorkerAssignment>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RouterWorkerAssignment>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("assignmentId"u8);
+            writer.WriteStringValue(AssignmentId);
+            writer.WritePropertyName("jobId"u8);
+            writer.WriteStringValue(JobId);
+            writer.WritePropertyName("capacityCost"u8);
+            writer.WriteNumberValue(CapacityCost);
+            writer.WritePropertyName("assignedAt"u8);
+            writer.WriteStringValue(AssignedAt, "O");
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouterWorkerAssignment IJsonModel<RouterWorkerAssignment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterWorkerAssignment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterWorkerAssignment(document.RootElement, options);
+        }
+
+        internal static RouterWorkerAssignment DeserializeRouterWorkerAssignment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +77,8 @@ namespace Azure.Communication.JobRouter
             string jobId = default;
             int capacityCost = default;
             DateTimeOffset assignedAt = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignmentId"u8))
@@ -46,16 +101,54 @@ namespace Azure.Communication.JobRouter
                     assignedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouterWorkerAssignment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterWorkerAssignment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RouterWorkerAssignment IPersistableModel<RouterWorkerAssignment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterWorkerAssignment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRouterWorkerAssignment(document.RootElement, options);
+        }
+
+        string IPersistableModel<RouterWorkerAssignment>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RouterWorkerAssignment FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRouterWorkerAssignment(document.RootElement);
+            return DeserializeRouterWorkerAssignment(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

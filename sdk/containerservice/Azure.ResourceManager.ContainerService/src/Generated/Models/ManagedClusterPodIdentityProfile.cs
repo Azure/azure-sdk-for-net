@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,58 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on pod identity integration. </summary>
     public partial class ManagedClusterPodIdentityProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProfile"/>. </summary>
         public ManagedClusterPodIdentityProfile()
         {
             UserAssignedIdentities = new ChangeTrackingList<ManagedClusterPodIdentity>();
             UserAssignedIdentityExceptions = new ChangeTrackingList<ManagedClusterPodIdentityException>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProfile"/>. </summary>
         /// <param name="isEnabled"> Whether the pod identity addon is enabled. </param>
         /// <param name="allowNetworkPluginKubenet"> Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </param>
         /// <param name="userAssignedIdentities"> The pod identities to use in the cluster. </param>
         /// <param name="userAssignedIdentityExceptions"> The pod identity exceptions to allow. </param>
-        internal ManagedClusterPodIdentityProfile(bool? isEnabled, bool? allowNetworkPluginKubenet, IList<ManagedClusterPodIdentity> userAssignedIdentities, IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPodIdentityProfile(bool? isEnabled, bool? allowNetworkPluginKubenet, IList<ManagedClusterPodIdentity> userAssignedIdentities, IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             AllowNetworkPluginKubenet = allowNetworkPluginKubenet;
             UserAssignedIdentities = userAssignedIdentities;
             UserAssignedIdentityExceptions = userAssignedIdentityExceptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether the pod identity addon is enabled. </summary>

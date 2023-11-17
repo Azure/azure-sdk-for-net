@@ -6,15 +6,100 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LinkedIntegrationRuntime
+    public partial class LinkedIntegrationRuntime : IUtf8JsonSerializable, IJsonModel<LinkedIntegrationRuntime>
     {
-        internal static LinkedIntegrationRuntime DeserializeLinkedIntegrationRuntime(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedIntegrationRuntime>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LinkedIntegrationRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LinkedIntegrationRuntime>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LinkedIntegrationRuntime>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataFactoryName))
+                {
+                    writer.WritePropertyName("dataFactoryName"u8);
+                    writer.WriteStringValue(DataFactoryName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataFactoryLocation))
+                {
+                    writer.WritePropertyName("dataFactoryLocation"u8);
+                    writer.WriteStringValue(DataFactoryLocation.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinkedIntegrationRuntime IJsonModel<LinkedIntegrationRuntime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkedIntegrationRuntime(document.RootElement, options);
+        }
+
+        internal static LinkedIntegrationRuntime DeserializeLinkedIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +109,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> dataFactoryName = default;
             Optional<AzureLocation> dataFactoryLocation = default;
             Optional<DateTimeOffset> createTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -59,8 +146,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, Optional.ToNullable(dataFactoryLocation), Optional.ToNullable(createTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, Optional.ToNullable(dataFactoryLocation), Optional.ToNullable(createTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkedIntegrationRuntime>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkedIntegrationRuntime IPersistableModel<LinkedIntegrationRuntime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkedIntegrationRuntime(document.RootElement, options);
+        }
+
+        string IPersistableModel<LinkedIntegrationRuntime>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

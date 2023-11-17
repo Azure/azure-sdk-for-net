@@ -5,15 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterJobPositionDetails
+    public partial class RouterJobPositionDetails : IUtf8JsonSerializable, IJsonModel<RouterJobPositionDetails>
     {
-        internal static RouterJobPositionDetails DeserializeRouterJobPositionDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterJobPositionDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RouterJobPositionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RouterJobPositionDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RouterJobPositionDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("jobId"u8);
+            writer.WriteStringValue(JobId);
+            writer.WritePropertyName("position"u8);
+            writer.WriteNumberValue(Position);
+            writer.WritePropertyName("queueId"u8);
+            writer.WriteStringValue(QueueId);
+            writer.WritePropertyName("queueLength"u8);
+            writer.WriteNumberValue(QueueLength);
+            writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
+            writer.WriteNumberValue(_estimatedWaitTimeMinutes);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouterJobPositionDetails IJsonModel<RouterJobPositionDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterJobPositionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterJobPositionDetails(document.RootElement, options);
+        }
+
+        internal static RouterJobPositionDetails DeserializeRouterJobPositionDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +80,8 @@ namespace Azure.Communication.JobRouter
             string queueId = default;
             int queueLength = default;
             double estimatedWaitTimeMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -50,16 +109,54 @@ namespace Azure.Communication.JobRouter
                     estimatedWaitTimeMinutes = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouterJobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouterJobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouterJobPositionDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterJobPositionDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RouterJobPositionDetails IPersistableModel<RouterJobPositionDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterJobPositionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRouterJobPositionDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<RouterJobPositionDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RouterJobPositionDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRouterJobPositionDetails(document.RootElement);
+            return DeserializeRouterJobPositionDetails(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

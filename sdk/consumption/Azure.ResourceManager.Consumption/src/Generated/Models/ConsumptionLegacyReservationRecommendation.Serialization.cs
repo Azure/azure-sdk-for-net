@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -14,10 +16,229 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionLegacyReservationRecommendation
+    public partial class ConsumptionLegacyReservationRecommendation : IUtf8JsonSerializable, IJsonModel<ConsumptionLegacyReservationRecommendation>
     {
-        internal static ConsumptionLegacyReservationRecommendation DeserializeConsumptionLegacyReservationRecommendation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLegacyReservationRecommendation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConsumptionLegacyReservationRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConsumptionLegacyReservationRecommendation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConsumptionLegacyReservationRecommendation>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    writer.WritePropertyName("tags"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    writer.WritePropertyName("sku"u8);
+                    writer.WriteStringValue(Sku);
+                }
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LookBackPeriod))
+                {
+                    writer.WritePropertyName("lookBackPeriod"u8);
+                    writer.WriteStringValue(LookBackPeriod);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InstanceFlexibilityRatio))
+                {
+                    writer.WritePropertyName("instanceFlexibilityRatio"u8);
+                    writer.WriteNumberValue(InstanceFlexibilityRatio.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InstanceFlexibilityGroup))
+                {
+                    writer.WritePropertyName("instanceFlexibilityGroup"u8);
+                    writer.WriteStringValue(InstanceFlexibilityGroup);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NormalizedSize))
+                {
+                    writer.WritePropertyName("normalizedSize"u8);
+                    writer.WriteStringValue(NormalizedSize);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RecommendedQuantityNormalized))
+                {
+                    writer.WritePropertyName("recommendedQuantityNormalized"u8);
+                    writer.WriteNumberValue(RecommendedQuantityNormalized.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MeterId))
+                {
+                    writer.WritePropertyName("meterId"u8);
+                    writer.WriteStringValue(MeterId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Term))
+                {
+                    writer.WritePropertyName("term"u8);
+                    writer.WriteStringValue(Term);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CostWithNoReservedInstances))
+                {
+                    writer.WritePropertyName("costWithNoReservedInstances"u8);
+                    writer.WriteNumberValue(CostWithNoReservedInstances.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RecommendedQuantity))
+                {
+                    writer.WritePropertyName("recommendedQuantity"u8);
+                    writer.WriteNumberValue(RecommendedQuantity.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalCostWithReservedInstances))
+                {
+                    writer.WritePropertyName("totalCostWithReservedInstances"u8);
+                    writer.WriteNumberValue(TotalCostWithReservedInstances.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetSavings))
+                {
+                    writer.WritePropertyName("netSavings"u8);
+                    writer.WriteNumberValue(NetSavings.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FirstUsageOn))
+                {
+                    writer.WritePropertyName("firstUsageDate"u8);
+                    writer.WriteStringValue(FirstUsageOn.Value, "O");
+                }
+            }
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStringValue(Scope);
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(SkuProperties))
+                {
+                    writer.WritePropertyName("skuProperties"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SkuProperties)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionLegacyReservationRecommendation IJsonModel<ConsumptionLegacyReservationRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionLegacyReservationRecommendation(document.RootElement, options);
+        }
+
+        internal static ConsumptionLegacyReservationRecommendation DeserializeConsumptionLegacyReservationRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +266,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<DateTimeOffset> firstUsageDate = default;
             string scope = default;
             Optional<IReadOnlyList<ConsumptionSkuProperty>> skuProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -236,8 +459,38 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, lookBackPeriod.Value, Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, Optional.ToNullable(costWithNoReservedInstances), Optional.ToNullable(recommendedQuantity), Optional.ToNullable(totalCostWithReservedInstances), Optional.ToNullable(netSavings), Optional.ToNullable(firstUsageDate), scope, Optional.ToList(skuProperties));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData, lookBackPeriod.Value, Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, Optional.ToNullable(costWithNoReservedInstances), Optional.ToNullable(recommendedQuantity), Optional.ToNullable(totalCostWithReservedInstances), Optional.ToNullable(netSavings), Optional.ToNullable(firstUsageDate), scope, Optional.ToList(skuProperties));
         }
+
+        BinaryData IPersistableModel<ConsumptionLegacyReservationRecommendation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConsumptionLegacyReservationRecommendation IPersistableModel<ConsumptionLegacyReservationRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConsumptionLegacyReservationRecommendation(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConsumptionLegacyReservationRecommendation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

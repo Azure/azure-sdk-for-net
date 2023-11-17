@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlMaintenanceWindow : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlMaintenanceWindow : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlMaintenanceWindow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlMaintenanceWindow>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CosmosDBForPostgreSqlMaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CosmosDBForPostgreSqlMaintenanceWindow>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CosmosDBForPostgreSqlMaintenanceWindow>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomWindow))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBForPostgreSqlMaintenanceWindow DeserializeCosmosDBForPostgreSqlMaintenanceWindow(JsonElement element)
+        CosmosDBForPostgreSqlMaintenanceWindow IJsonModel<CosmosDBForPostgreSqlMaintenanceWindow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBForPostgreSqlMaintenanceWindow(document.RootElement, options);
+        }
+
+        internal static CosmosDBForPostgreSqlMaintenanceWindow DeserializeCosmosDBForPostgreSqlMaintenanceWindow(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             Optional<int> startHour = default;
             Optional<int> startMinute = default;
             Optional<int> dayOfWeek = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customWindow"u8))
@@ -82,8 +124,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     dayOfWeek = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBForPostgreSqlMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBForPostgreSqlMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlMaintenanceWindow>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDBForPostgreSqlMaintenanceWindow IPersistableModel<CosmosDBForPostgreSqlMaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDBForPostgreSqlMaintenanceWindow(document.RootElement, options);
+        }
+
+        string IPersistableModel<CosmosDBForPostgreSqlMaintenanceWindow>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

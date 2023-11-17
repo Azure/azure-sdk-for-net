@@ -5,25 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MaterializedViewDefinition : IUtf8JsonSerializable
+    public partial class MaterializedViewDefinition : IUtf8JsonSerializable, IJsonModel<MaterializedViewDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaterializedViewDefinition>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MaterializedViewDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MaterializedViewDefinition>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MaterializedViewDefinition>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceCollectionRid))
+                {
+                    writer.WritePropertyName("sourceCollectionRid"u8);
+                    writer.WriteStringValue(SourceCollectionRid);
+                }
+            }
             writer.WritePropertyName("sourceCollectionId"u8);
             writer.WriteStringValue(SourceCollectionId);
             writer.WritePropertyName("definition"u8);
             writer.WriteStringValue(Definition);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MaterializedViewDefinition DeserializeMaterializedViewDefinition(JsonElement element)
+        MaterializedViewDefinition IJsonModel<MaterializedViewDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaterializedViewDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaterializedViewDefinition(document.RootElement, options);
+        }
+
+        internal static MaterializedViewDefinition DeserializeMaterializedViewDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +79,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> sourceCollectionRid = default;
             string sourceCollectionId = default;
             string definition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceCollectionRid"u8))
@@ -48,8 +98,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     definition = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MaterializedViewDefinition(sourceCollectionRid.Value, sourceCollectionId, definition);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MaterializedViewDefinition(sourceCollectionRid.Value, sourceCollectionId, definition, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MaterializedViewDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaterializedViewDefinition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MaterializedViewDefinition IPersistableModel<MaterializedViewDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaterializedViewDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMaterializedViewDefinition(document.RootElement, options);
+        }
+
+        string IPersistableModel<MaterializedViewDefinition>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

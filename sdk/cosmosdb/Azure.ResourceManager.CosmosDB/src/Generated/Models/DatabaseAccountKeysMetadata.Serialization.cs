@@ -5,15 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DatabaseAccountKeysMetadata
+    public partial class DatabaseAccountKeysMetadata : IUtf8JsonSerializable, IJsonModel<DatabaseAccountKeysMetadata>
     {
-        internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseAccountKeysMetadata>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DatabaseAccountKeysMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DatabaseAccountKeysMetadata>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrimaryMasterKey))
+                {
+                    writer.WritePropertyName("primaryMasterKey"u8);
+                    writer.WriteObjectValue(PrimaryMasterKey);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SecondaryMasterKey))
+                {
+                    writer.WritePropertyName("secondaryMasterKey"u8);
+                    writer.WriteObjectValue(SecondaryMasterKey);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrimaryReadonlyMasterKey))
+                {
+                    writer.WritePropertyName("primaryReadonlyMasterKey"u8);
+                    writer.WriteObjectValue(PrimaryReadonlyMasterKey);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SecondaryReadonlyMasterKey))
+                {
+                    writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
+                    writer.WriteObjectValue(SecondaryReadonlyMasterKey);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DatabaseAccountKeysMetadata IJsonModel<DatabaseAccountKeysMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseAccountKeysMetadata(document.RootElement, options);
+        }
+
+        internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +100,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<AccountKeyMetadata> secondaryMasterKey = default;
             Optional<AccountKeyMetadata> primaryReadonlyMasterKey = default;
             Optional<AccountKeyMetadata> secondaryReadonlyMasterKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMasterKey"u8))
@@ -60,8 +140,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatabaseAccountKeysMetadata(primaryMasterKey.Value, secondaryMasterKey.Value, primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatabaseAccountKeysMetadata(primaryMasterKey.Value, secondaryMasterKey.Value, primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatabaseAccountKeysMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatabaseAccountKeysMetadata IPersistableModel<DatabaseAccountKeysMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatabaseAccountKeysMetadata(document.RootElement, options);
+        }
+
+        string IPersistableModel<DatabaseAccountKeysMetadata>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

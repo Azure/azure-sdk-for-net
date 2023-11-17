@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -12,20 +13,21 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the command that completes sync migration for a database. </summary>
     public partial class MigrateSyncCompleteCommandProperties : CommandProperties
     {
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandProperties"/>. </summary>
         public MigrateSyncCompleteCommandProperties()
         {
             CommandType = CommandType.MigrateSyncCompleteDatabase;
         }
 
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Command input. </param>
         /// <param name="output"> Command output. This is ignored if submitted. </param>
         /// <param name="commandId"> Command id. </param>
-        internal MigrateSyncCompleteCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, MigrateSyncCompleteCommandInput input, MigrateSyncCompleteCommandOutput output, string commandId) : base(commandType, errors, state)
+        internal MigrateSyncCompleteCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateSyncCompleteCommandInput input, MigrateSyncCompleteCommandOutput output, string commandId) : base(commandType, errors, state, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

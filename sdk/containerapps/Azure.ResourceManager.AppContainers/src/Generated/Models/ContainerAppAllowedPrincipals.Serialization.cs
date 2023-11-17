@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAllowedPrincipals : IUtf8JsonSerializable
+    public partial class ContainerAppAllowedPrincipals : IUtf8JsonSerializable, IJsonModel<ContainerAppAllowedPrincipals>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAllowedPrincipals>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerAppAllowedPrincipals>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerAppAllowedPrincipals>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerAppAllowedPrincipals>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Groups))
             {
@@ -36,17 +46,48 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppAllowedPrincipals DeserializeContainerAppAllowedPrincipals(JsonElement element)
+        ContainerAppAllowedPrincipals IJsonModel<ContainerAppAllowedPrincipals>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppAllowedPrincipals)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppAllowedPrincipals(document.RootElement, options);
+        }
+
+        internal static ContainerAppAllowedPrincipals DeserializeContainerAppAllowedPrincipals(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> groups = default;
             Optional<IList<string>> identities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groups"u8))
@@ -77,8 +118,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     identities = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppAllowedPrincipals(Optional.ToList(groups), Optional.ToList(identities));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppAllowedPrincipals(Optional.ToList(groups), Optional.ToList(identities), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppAllowedPrincipals>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppAllowedPrincipals)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerAppAllowedPrincipals IPersistableModel<ContainerAppAllowedPrincipals>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppAllowedPrincipals)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerAppAllowedPrincipals(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerAppAllowedPrincipals>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

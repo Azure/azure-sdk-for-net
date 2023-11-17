@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBPrivateLinkResource(Client, CosmosDBPrivateLinkResourceData.DeserializeCosmosDBPrivateLinkResourceData(e)), _cosmosDBPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CosmosDBPrivateLinkResource(Client, CosmosDBPrivateLinkResourceData.DeserializeCosmosDBPrivateLinkResourceData(e)), _cosmosDBPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBPrivateLinkResource(Client, CosmosDBPrivateLinkResourceData.DeserializeCosmosDBPrivateLinkResourceData(e)), _cosmosDBPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CosmosDBPrivateLinkResource(Client, CosmosDBPrivateLinkResourceData.DeserializeCosmosDBPrivateLinkResourceData(e)), _cosmosDBPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

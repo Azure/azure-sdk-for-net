@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class TransferConfigurationTransferAllDetails : IUtf8JsonSerializable
+    internal partial class TransferConfigurationTransferAllDetails : IUtf8JsonSerializable, IJsonModel<TransferConfigurationTransferAllDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferConfigurationTransferAllDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TransferConfigurationTransferAllDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TransferConfigurationTransferAllDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TransferConfigurationTransferAllDetails>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteObjectValue(Include);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TransferConfigurationTransferAllDetails DeserializeTransferConfigurationTransferAllDetails(JsonElement element)
+        TransferConfigurationTransferAllDetails IJsonModel<TransferConfigurationTransferAllDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TransferConfigurationTransferAllDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTransferConfigurationTransferAllDetails(document.RootElement, options);
+        }
+
+        internal static TransferConfigurationTransferAllDetails DeserializeTransferConfigurationTransferAllDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<TransferAllDetails> include = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("include"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     include = TransferAllDetails.DeserializeTransferAllDetails(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TransferConfigurationTransferAllDetails(include.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TransferConfigurationTransferAllDetails(include.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TransferConfigurationTransferAllDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TransferConfigurationTransferAllDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TransferConfigurationTransferAllDetails IPersistableModel<TransferConfigurationTransferAllDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TransferConfigurationTransferAllDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTransferConfigurationTransferAllDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<TransferConfigurationTransferAllDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

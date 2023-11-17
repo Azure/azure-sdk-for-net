@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,44 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class SuppressionListAddressResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceData"/>. </summary>
         public SuppressionListAddressResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +66,8 @@ namespace Azure.ResourceManager.Communication
         /// <param name="notes"> An optional property to provide contextual notes or a description for an address. </param>
         /// <param name="lastModified"> The date the address was last updated in a suppression list. </param>
         /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
-        internal SuppressionListAddressResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string email, string firstName, string lastName, string notes, DateTimeOffset? lastModified, string dataLocation) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SuppressionListAddressResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string email, string firstName, string lastName, string notes, DateTimeOffset? lastModified, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Email = email;
             FirstName = firstName;
@@ -41,6 +75,7 @@ namespace Azure.ResourceManager.Communication
             Notes = notes;
             LastModified = lastModified;
             DataLocation = dataLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Email address of the recipient. </summary>

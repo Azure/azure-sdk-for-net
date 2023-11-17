@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SnowflakeExportCopyCommand : IUtf8JsonSerializable
+    public partial class SnowflakeExportCopyCommand : IUtf8JsonSerializable, IJsonModel<SnowflakeExportCopyCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeExportCopyCommand>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SnowflakeExportCopyCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SnowflakeExportCopyCommand>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SnowflakeExportCopyCommand>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdditionalCopyOptions))
             {
@@ -80,8 +89,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SnowflakeExportCopyCommand DeserializeSnowflakeExportCopyCommand(JsonElement element)
+        SnowflakeExportCopyCommand IJsonModel<SnowflakeExportCopyCommand>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SnowflakeExportCopyCommand)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnowflakeExportCopyCommand(document.RootElement, options);
+        }
+
+        internal static SnowflakeExportCopyCommand DeserializeSnowflakeExportCopyCommand(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -145,5 +168,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SnowflakeExportCopyCommand(type, additionalProperties, Optional.ToDictionary(additionalCopyOptions), Optional.ToDictionary(additionalFormatOptions));
         }
+
+        BinaryData IPersistableModel<SnowflakeExportCopyCommand>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SnowflakeExportCopyCommand)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SnowflakeExportCopyCommand IPersistableModel<SnowflakeExportCopyCommand>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SnowflakeExportCopyCommand)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSnowflakeExportCopyCommand(document.RootElement, options);
+        }
+
+        string IPersistableModel<SnowflakeExportCopyCommand>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

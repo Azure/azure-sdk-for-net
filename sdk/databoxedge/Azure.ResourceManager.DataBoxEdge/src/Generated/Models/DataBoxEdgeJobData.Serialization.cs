@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -13,10 +16,179 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeJobData
+    public partial class DataBoxEdgeJobData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeJobData>
     {
-        internal static DataBoxEdgeJobData DeserializeDataBoxEdgeJobData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeJobData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataBoxEdgeJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataBoxEdgeJobData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataBoxEdgeJobData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PercentComplete))
+                {
+                    writer.WritePropertyName("percentComplete"u8);
+                    writer.WriteNumberValue(PercentComplete.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error);
+                }
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(JobType))
+                {
+                    writer.WritePropertyName("jobType"u8);
+                    writer.WriteStringValue(JobType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentStage))
+                {
+                    writer.WritePropertyName("currentStage"u8);
+                    writer.WriteStringValue(CurrentStage.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DownloadProgress))
+                {
+                    writer.WritePropertyName("downloadProgress"u8);
+                    writer.WriteObjectValue(DownloadProgress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InstallProgress))
+                {
+                    writer.WritePropertyName("installProgress"u8);
+                    writer.WriteObjectValue(InstallProgress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalRefreshErrors))
+                {
+                    writer.WritePropertyName("totalRefreshErrors"u8);
+                    writer.WriteNumberValue(TotalRefreshErrors.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorManifestFile))
+                {
+                    writer.WritePropertyName("errorManifestFile"u8);
+                    writer.WriteStringValue(ErrorManifestFile);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RefreshedEntityId))
+                {
+                    writer.WritePropertyName("refreshedEntityId"u8);
+                    writer.WriteStringValue(RefreshedEntityId);
+                }
+            }
+            if (Optional.IsDefined(Folder))
+            {
+                writer.WritePropertyName("folder"u8);
+                writer.WriteStringValue(Folder);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxEdgeJobData IJsonModel<DataBoxEdgeJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeJobData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeJobData(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeJobData DeserializeDataBoxEdgeJobData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +210,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<string> errorManifestFile = default;
             Optional<ResourceIdentifier> refreshedEntityId = default;
             Optional<string> folder = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -185,8 +359,38 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeJobData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), error.Value, Optional.ToNullable(jobType), Optional.ToNullable(currentStage), downloadProgress.Value, installProgress.Value, Optional.ToNullable(totalRefreshErrors), errorManifestFile.Value, refreshedEntityId.Value, folder.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxEdgeJobData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), error.Value, Optional.ToNullable(jobType), Optional.ToNullable(currentStage), downloadProgress.Value, installProgress.Value, Optional.ToNullable(totalRefreshErrors), errorManifestFile.Value, refreshedEntityId.Value, folder.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeJobData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeJobData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxEdgeJobData IPersistableModel<DataBoxEdgeJobData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeJobData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeJobData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataBoxEdgeJobData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> A Room to be used as an output. </summary>
     public partial class RoomOutput : MediaOutput
     {
-        /// <summary> Initializes a new instance of RoomOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoomOutput"/>. </summary>
         /// <param name="id"> Room identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public RoomOutput(string id)
@@ -25,13 +26,19 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaOutputType.Room;
         }
 
-        /// <summary> Initializes a new instance of RoomOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoomOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Room identifier. </param>
-        internal RoomOutput(MediaOutputType kind, string id) : base(kind)
+        internal RoomOutput(MediaOutputType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(kind, serializedAdditionalRawData)
         {
             Id = id;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoomOutput"/> for deserialization. </summary>
+        internal RoomOutput()
+        {
         }
 
         /// <summary> Room identifier. </summary>

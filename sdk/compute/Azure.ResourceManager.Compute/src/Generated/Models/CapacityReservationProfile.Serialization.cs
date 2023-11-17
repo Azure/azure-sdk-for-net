@@ -5,32 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CapacityReservationProfile : IUtf8JsonSerializable
+    internal partial class CapacityReservationProfile : IUtf8JsonSerializable, IJsonModel<CapacityReservationProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CapacityReservationProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CapacityReservationProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CapacityReservationProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CapacityReservationGroup))
             {
                 writer.WritePropertyName("capacityReservationGroup"u8);
                 JsonSerializer.Serialize(writer, CapacityReservationGroup);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CapacityReservationProfile DeserializeCapacityReservationProfile(JsonElement element)
+        CapacityReservationProfile IJsonModel<CapacityReservationProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CapacityReservationProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapacityReservationProfile(document.RootElement, options);
+        }
+
+        internal static CapacityReservationProfile DeserializeCapacityReservationProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<WritableSubResource> capacityReservationGroup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityReservationGroup"u8))
@@ -42,8 +84,38 @@ namespace Azure.ResourceManager.Compute.Models
                     capacityReservationGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CapacityReservationProfile(capacityReservationGroup);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CapacityReservationProfile(capacityReservationGroup, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CapacityReservationProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CapacityReservationProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CapacityReservationProfile IPersistableModel<CapacityReservationProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CapacityReservationProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCapacityReservationProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<CapacityReservationProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

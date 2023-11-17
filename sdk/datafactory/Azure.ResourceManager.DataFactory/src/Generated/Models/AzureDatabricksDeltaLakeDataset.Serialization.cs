@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDatabricksDeltaLakeDataset : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeDataset : IUtf8JsonSerializable, IJsonModel<AzureDatabricksDeltaLakeDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeDataset>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureDatabricksDeltaLakeDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureDatabricksDeltaLakeDataset>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureDatabricksDeltaLakeDataset>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -103,8 +112,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeDataset DeserializeAzureDatabricksDeltaLakeDataset(JsonElement element)
+        AzureDatabricksDeltaLakeDataset IJsonModel<AzureDatabricksDeltaLakeDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeDataset(document.RootElement, options);
+        }
+
+        internal static AzureDatabricksDeltaLakeDataset DeserializeAzureDatabricksDeltaLakeDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -235,5 +258,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, table.Value, database.Value);
         }
+
+        BinaryData IPersistableModel<AzureDatabricksDeltaLakeDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureDatabricksDeltaLakeDataset IPersistableModel<AzureDatabricksDeltaLakeDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureDatabricksDeltaLakeDataset(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureDatabricksDeltaLakeDataset>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

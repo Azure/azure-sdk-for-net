@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> An image input. </summary>
     public partial class ImageInput : MediaInput
     {
-        /// <summary> Initializes a new instance of ImageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInput"/>. </summary>
         /// <param name="uri"> Url of the image file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ImageInput(string uri)
@@ -25,14 +26,20 @@ namespace Azure.Communication.MediaComposition.Models
             Kind = MediaInputType.Image;
         }
 
-        /// <summary> Initializes a new instance of ImageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> Url of the image file. </param>
-        internal ImageInput(MediaInputType kind, string placeholderImageUri, string uri) : base(kind, placeholderImageUri)
+        internal ImageInput(MediaInputType kind, string placeholderImageUri, IDictionary<string, BinaryData> serializedAdditionalRawData, string uri) : base(kind, placeholderImageUri, serializedAdditionalRawData)
         {
             Uri = uri;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageInput"/> for deserialization. </summary>
+        internal ImageInput()
+        {
         }
 
         /// <summary> Url of the image file. </summary>

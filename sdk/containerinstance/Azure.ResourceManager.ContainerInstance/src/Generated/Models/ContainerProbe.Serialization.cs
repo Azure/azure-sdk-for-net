@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerProbe : IUtf8JsonSerializable
+    public partial class ContainerProbe : IUtf8JsonSerializable, IJsonModel<ContainerProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerProbe>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerProbe>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerProbe>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Exec))
             {
@@ -50,11 +61,40 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerProbe DeserializeContainerProbe(JsonElement element)
+        ContainerProbe IJsonModel<ContainerProbe>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerProbe)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerProbe(document.RootElement, options);
+        }
+
+        internal static ContainerProbe DeserializeContainerProbe(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +106,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<int> failureThreshold = default;
             Optional<int> successThreshold = default;
             Optional<int> timeoutSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exec"u8))
@@ -131,8 +173,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     timeoutSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerProbe(exec.Value, httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), Optional.ToNullable(timeoutSeconds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerProbe(exec.Value, httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), Optional.ToNullable(timeoutSeconds), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerProbe>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerProbe)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerProbe IPersistableModel<ContainerProbe>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerProbe)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerProbe(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerProbe>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

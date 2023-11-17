@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

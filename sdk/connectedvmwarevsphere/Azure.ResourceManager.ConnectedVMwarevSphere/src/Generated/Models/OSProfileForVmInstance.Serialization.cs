@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class OSProfileForVmInstance : IUtf8JsonSerializable
+    public partial class OSProfileForVmInstance : IUtf8JsonSerializable, IJsonModel<OSProfileForVmInstance>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSProfileForVmInstance>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OSProfileForVmInstance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OSProfileForVmInstance>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OSProfileForVmInstance>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputerName))
             {
@@ -40,11 +51,72 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSSku))
+                {
+                    writer.WritePropertyName("osSku"u8);
+                    writer.WriteStringValue(OSSku);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ToolsRunningStatus))
+                {
+                    writer.WritePropertyName("toolsRunningStatus"u8);
+                    writer.WriteStringValue(ToolsRunningStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ToolsVersionStatus))
+                {
+                    writer.WritePropertyName("toolsVersionStatus"u8);
+                    writer.WriteStringValue(ToolsVersionStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ToolsVersion))
+                {
+                    writer.WritePropertyName("toolsVersion"u8);
+                    writer.WriteStringValue(ToolsVersion);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OSProfileForVmInstance DeserializeOSProfileForVmInstance(JsonElement element)
+        OSProfileForVmInstance IJsonModel<OSProfileForVmInstance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSProfileForVmInstance(document.RootElement, options);
+        }
+
+        internal static OSProfileForVmInstance DeserializeOSProfileForVmInstance(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +130,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> toolsRunningStatus = default;
             Optional<string> toolsVersionStatus = default;
             Optional<string> toolsVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerName"u8))
@@ -109,8 +183,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     toolsVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OSProfileForVmInstance(computerName.Value, adminUsername.Value, adminPassword.Value, guestId.Value, Optional.ToNullable(osType), osSku.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OSProfileForVmInstance(computerName.Value, adminUsername.Value, adminPassword.Value, guestId.Value, Optional.ToNullable(osType), osSku.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OSProfileForVmInstance>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OSProfileForVmInstance IPersistableModel<OSProfileForVmInstance>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOSProfileForVmInstance(document.RootElement, options);
+        }
+
+        string IPersistableModel<OSProfileForVmInstance>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

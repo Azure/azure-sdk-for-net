@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Query parameters for listing runs. </summary>
     public partial class RunFilterContent
     {
-        /// <summary> Initializes a new instance of RunFilterContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunFilterContent"/>. </summary>
         /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
         /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
         public RunFilterContent(DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore)
@@ -23,6 +55,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             LastUpdatedBefore = lastUpdatedBefore;
             Filters = new ChangeTrackingList<RunQueryFilter>();
             OrderBy = new ChangeTrackingList<RunQueryOrderBy>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunFilterContent"/>. </summary>
+        /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
+        /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="filters"> List of filters. </param>
+        /// <param name="orderBy"> List of OrderBy option. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunFilterContent(string continuationToken, DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore, IList<RunQueryFilter> filters, IList<RunQueryOrderBy> orderBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContinuationToken = continuationToken;
+            LastUpdatedAfter = lastUpdatedAfter;
+            LastUpdatedBefore = lastUpdatedBefore;
+            Filters = filters;
+            OrderBy = orderBy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunFilterContent"/> for deserialization. </summary>
+        internal RunFilterContent()
+        {
         }
 
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>

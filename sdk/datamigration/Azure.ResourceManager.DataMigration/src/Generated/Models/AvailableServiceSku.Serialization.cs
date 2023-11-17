@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class AvailableServiceSku
+    public partial class AvailableServiceSku : IUtf8JsonSerializable, IJsonModel<AvailableServiceSku>
     {
-        internal static AvailableServiceSku DeserializeAvailableServiceSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableServiceSku>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AvailableServiceSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AvailableServiceSku>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AvailableServiceSku>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku);
+            }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteObjectValue(Capacity);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AvailableServiceSku IJsonModel<AvailableServiceSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailableServiceSku)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableServiceSku(document.RootElement, options);
+        }
+
+        internal static AvailableServiceSku DeserializeAvailableServiceSku(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> resourceType = default;
             Optional<AvailableServiceSkuSku> sku = default;
             Optional<AvailableServiceSkuCapacity> capacity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -46,8 +109,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     capacity = AvailableServiceSkuCapacity.DeserializeAvailableServiceSkuCapacity(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailableServiceSku(resourceType.Value, sku.Value, capacity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AvailableServiceSku(resourceType.Value, sku.Value, capacity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvailableServiceSku>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailableServiceSku)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AvailableServiceSku IPersistableModel<AvailableServiceSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailableServiceSku)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAvailableServiceSku(document.RootElement, options);
+        }
+
+        string IPersistableModel<AvailableServiceSku>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

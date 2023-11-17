@@ -6,25 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Delete option with duration. </summary>
     public partial class DataProtectionBackupAbsoluteDeleteSetting : DataProtectionBackupDeleteSetting
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupAbsoluteDeleteSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         public DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration) : base(duration)
         {
             ObjectType = "AbsoluteDeleteOption";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupAbsoluteDeleteSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration, string objectType) : base(duration, objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(duration, objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "AbsoluteDeleteOption";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAbsoluteDeleteSetting"/> for deserialization. </summary>
+        internal DataProtectionBackupAbsoluteDeleteSetting()
+        {
         }
     }
 }

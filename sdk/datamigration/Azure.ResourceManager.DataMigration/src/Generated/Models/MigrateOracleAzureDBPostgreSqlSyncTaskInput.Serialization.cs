@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskInput : IUtf8JsonSerializable
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskInput : IUtf8JsonSerializable, IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
@@ -27,11 +37,40 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateOracleAzureDBPostgreSqlSyncTaskInput DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskInput(JsonElement element)
+        MigrateOracleAzureDBPostgreSqlSyncTaskInput IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskInput(document.RootElement, options);
+        }
+
+        internal static MigrateOracleAzureDBPostgreSqlSyncTaskInput DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +78,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases = default;
             PostgreSqlConnectionInfo targetConnectionInfo = default;
             OracleConnectionInfo sourceConnectionInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("selectedDatabases"u8))
@@ -61,8 +102,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sourceConnectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskInput(selectedDatabases, targetConnectionInfo, sourceConnectionInfo);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskInput(selectedDatabases, targetConnectionInfo, sourceConnectionInfo, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrateOracleAzureDBPostgreSqlSyncTaskInput IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskInput(document.RootElement, options);
+        }
+
+        string IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
