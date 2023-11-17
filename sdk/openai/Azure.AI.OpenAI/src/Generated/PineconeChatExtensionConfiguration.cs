@@ -85,12 +85,6 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
-        /// <summary> The environment name of Pinecone. </summary>
-        public string Environment { get; }
-        /// <summary> The index name name of Pinecone. </summary>
-        public string IndexName { get; }
-        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
-        public PineconeFieldMappingOptions FieldMappingOptions { get; }
         /// <summary>
         /// The embedding dependency for vector search.
         /// Please note <see cref="OnYourDataEmbeddingDependency"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

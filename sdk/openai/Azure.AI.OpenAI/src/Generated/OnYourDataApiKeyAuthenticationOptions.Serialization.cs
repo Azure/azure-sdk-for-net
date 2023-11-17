@@ -15,8 +15,8 @@ namespace Azure.AI.OpenAI
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("apiKey"u8);
-            writer.WriteStringValue(ApiKey);
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(Key);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WriteEndObject();

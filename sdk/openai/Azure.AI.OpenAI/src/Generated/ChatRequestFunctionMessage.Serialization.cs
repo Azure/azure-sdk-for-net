@@ -17,8 +17,8 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("arguments"u8);
-            writer.WriteStringValue(Arguments);
+            writer.WritePropertyName("content"u8);
+            writer.WriteStringValue(Content);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             writer.WriteEndObject();

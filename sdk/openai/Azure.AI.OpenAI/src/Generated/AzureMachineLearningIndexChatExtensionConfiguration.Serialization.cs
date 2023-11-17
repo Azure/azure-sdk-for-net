@@ -12,59 +12,6 @@ namespace Azure.AI.OpenAI
 {
     public partial class AzureMachineLearningIndexChatExtensionConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Authentication))
-            {
-                writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
-            }
-            if (Optional.IsDefined(DocumentCount))
-            {
-                writer.WritePropertyName("topNDocuments"u8);
-                writer.WriteNumberValue(DocumentCount.Value);
-            }
-            if (Optional.IsDefined(ShouldRestrictResultScope))
-            {
-                writer.WritePropertyName("inScope"u8);
-                writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
-            }
-            if (Optional.IsDefined(Strictness))
-            {
-                writer.WritePropertyName("strictness"u8);
-                writer.WriteNumberValue(Strictness.Value);
-            }
-            if (Optional.IsDefined(RoleInformation))
-            {
-                writer.WritePropertyName("roleInformation"u8);
-                writer.WriteStringValue(RoleInformation);
-            }
-            writer.WritePropertyName("projectResourceId"u8);
-            writer.WriteStringValue(ProjectResourceId);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("version"u8);
-            writer.WriteStringValue(Version);
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter"u8);
-                writer.WriteStringValue(Filter);
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Parameters);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Parameters))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
-            writer.WriteEndObject();
-        }
-
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal override RequestContent ToRequestContent()
         {

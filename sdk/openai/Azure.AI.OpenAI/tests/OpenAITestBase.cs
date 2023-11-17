@@ -334,6 +334,12 @@ namespace Azure.AI.OpenAI.Tests
                 NonAzureModelName = "whisper-1",
             };
 
+            public static readonly ModelDeploymentEntry ImageGenerations = new()
+            {
+                AzureDeploymentName = "dall-e-3",
+                NonAzureModelName = "dall-e-3",
+            };
+
             public string AzureDeploymentName { get; set; }
             public string AzureModelName { get; set; }
             public string NonAzureModelName { get; set; }
@@ -411,6 +417,7 @@ namespace Azure.AI.OpenAI.Tests
             ChatCompletions,
             Embeddings,
             AudioTranscription,
+            ImageGenerations,
         }
 
         protected static string GetDeploymentOrModelName(
@@ -429,6 +436,8 @@ namespace Azure.AI.OpenAI.Tests
                     => ModelDeploymentEntry.Embeddings.AzureDeploymentName,
                 (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.AudioTranscription)
                     => ModelDeploymentEntry.AudioTranscription.AzureDeploymentName,
+                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.ImageGenerations)
+                    => ModelDeploymentEntry.ImageGenerations.AzureDeploymentName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.LegacyCompletions)
                     => ModelDeploymentEntry.LegacyCompletions.NonAzureModelName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.Completions)
@@ -439,6 +448,8 @@ namespace Azure.AI.OpenAI.Tests
                     => ModelDeploymentEntry.Embeddings.NonAzureModelName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.AudioTranscription)
                     => ModelDeploymentEntry.AudioTranscription.NonAzureModelName,
+                (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.ImageGenerations)
+                    => ModelDeploymentEntry.ImageGenerations.NonAzureModelName,
                 _ => throw new ArgumentException("Unsupported service target / scenario combination")
             };
         }

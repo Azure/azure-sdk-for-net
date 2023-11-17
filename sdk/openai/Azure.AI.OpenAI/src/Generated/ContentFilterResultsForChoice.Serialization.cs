@@ -27,6 +27,8 @@ namespace Azure.AI.OpenAI
             Optional<ContentFilterDetectionResult> profanity = default;
             Optional<IReadOnlyList<ContentFilterBlocklistIdResult>> customBlocklists = default;
             Optional<ResponseError> error = default;
+            Optional<ContentFilterDetectionResult> protectedMaterialText = default;
+            Optional<ContentFilterCitedDetectionResult> protectedMaterialCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -97,8 +99,26 @@ namespace Azure.AI.OpenAI
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("protected_material_text"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectedMaterialText = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("protected_material_code"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectedMaterialCode = ContentFilterCitedDetectionResult.DeserializeContentFilterCitedDetectionResult(property.Value);
+                    continue;
+                }
             }
-            return new ContentFilterResultsForChoice(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, Optional.ToList(customBlocklists), error.Value);
+            return new ContentFilterResultsForChoice(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, Optional.ToList(customBlocklists), error.Value, protectedMaterialText.Value, protectedMaterialCode.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

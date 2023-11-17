@@ -3,14 +3,13 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-    public partial class AzureCognitiveSearchChatExtensionConfiguration : IUtf8JsonSerializable
+    public partial class ElasticsearchChatExtensionConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -42,7 +41,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(RoleInformation);
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(SearchEndpoint.AbsoluteUri);
+            writer.WriteStringValue(Endpoint.AbsoluteUri);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
             if (Optional.IsDefined(FieldMappingOptions))
@@ -55,31 +54,14 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("queryType"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
-            if (Optional.IsDefined(SemanticConfiguration))
-            {
-                writer.WritePropertyName("semanticConfiguration"u8);
-                writer.WriteStringValue(SemanticConfiguration);
-            }
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter"u8);
-                writer.WriteStringValue(Filter);
-            }
-            if (Optional.IsDefined(EmbeddingEndpoint))
-            {
-                writer.WritePropertyName("embeddingEndpoint"u8);
-                writer.WriteStringValue(EmbeddingEndpoint.AbsoluteUri);
-            }
-            if (Optional.IsDefined(EmbeddingKey))
-            {
-                writer.WritePropertyName("embeddingKey"u8);
-                writer.WriteStringValue(EmbeddingKey);
-            }
             if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embeddingDependency"u8);
                 writer.WriteObjectValue(EmbeddingDependency);
             }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("parameters"u8);
 
             EndCommonSerialization(writer);
         }

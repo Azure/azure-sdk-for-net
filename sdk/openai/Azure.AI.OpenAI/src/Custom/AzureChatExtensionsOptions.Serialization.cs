@@ -20,6 +20,11 @@ namespace Azure.AI.OpenAI
                 (dataSource as IUtf8JsonSerializable).Write(writer);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(EnhancementOptions))
+            {
+                writer.WritePropertyName("enhancements");
+                writer.WriteObjectValue(EnhancementOptions);
+            }
         }
     }
 }

@@ -71,7 +71,7 @@ public class ChatFunctionsTests : OpenAITestBase
         });
         followupOptions.Messages.Add(new ChatRequestFunctionMessage(
             name: message.FunctionCall.Name,
-            arguments: JsonSerializer.Serialize(
+            content: JsonSerializer.Serialize(
                 new
                 {
                     Temperature = "31",

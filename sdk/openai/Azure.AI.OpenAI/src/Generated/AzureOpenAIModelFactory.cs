@@ -148,15 +148,9 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of ContentFilterDetectionResult. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detected"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ContentFilterDetectionResult"/> instance for mocking. </returns>
-        public static ContentFilterDetectionResult ContentFilterDetectionResult(bool filtered = default, string detected = null)
+        public static ContentFilterDetectionResult ContentFilterDetectionResult(bool filtered = default, bool detected = default)
         {
-            if (detected == null)
-            {
-                throw new ArgumentNullException(nameof(detected));
-            }
-
             return new ContentFilterDetectionResult(filtered, detected);
         }
 
@@ -219,12 +213,35 @@ namespace Azure.AI.OpenAI
         /// Describes an error returned if the content filtering system is
         /// down or otherwise unable to complete the operation in time.
         /// </param>
+        /// <param name="protectedMaterialText"> Information about detection of protected text material. </param>
+        /// <param name="protectedMaterialCode"> Information about detection of protected code material. </param>
         /// <returns> A new <see cref="OpenAI.ContentFilterResultsForChoice"/> instance for mocking. </returns>
-        public static ContentFilterResultsForChoice ContentFilterResultsForChoice(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, IEnumerable<ContentFilterBlocklistIdResult> customBlocklists = null, ResponseError error = null)
+        public static ContentFilterResultsForChoice ContentFilterResultsForChoice(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, IEnumerable<ContentFilterBlocklistIdResult> customBlocklists = null, ResponseError error = null, ContentFilterDetectionResult protectedMaterialText = null, ContentFilterCitedDetectionResult protectedMaterialCode = null)
         {
             customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
 
-            return new ContentFilterResultsForChoice(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error);
+            return new ContentFilterResultsForChoice(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, protectedMaterialText, protectedMaterialCode);
+        }
+
+        /// <summary> Initializes a new instance of ContentFilterCitedDetectionResult. </summary>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
+        /// <param name="url"> The internet location associated with the detection. </param>
+        /// <param name="license"> The license description associated with the detection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="license"/> is null. </exception>
+        /// <returns> A new <see cref="OpenAI.ContentFilterCitedDetectionResult"/> instance for mocking. </returns>
+        public static ContentFilterCitedDetectionResult ContentFilterCitedDetectionResult(bool filtered = default, bool detected = default, Uri url = null, string license = null)
+        {
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+            if (license == null)
+            {
+                throw new ArgumentNullException(nameof(license));
+            }
+
+            return new ContentFilterCitedDetectionResult(filtered, detected, url, license);
         }
 
         /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>

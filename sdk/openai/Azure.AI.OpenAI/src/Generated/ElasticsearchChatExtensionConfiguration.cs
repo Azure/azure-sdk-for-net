@@ -84,10 +84,6 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
-        /// <summary> The endpoint of Elasticsearch. </summary>
-        public Uri Endpoint { get; }
-        /// <summary> The index name of Elasticsearch. </summary>
-        public string IndexName { get; }
         /// <summary> The index field mapping options of Elasticsearch. </summary>
         public ElasticsearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
         /// <summary> The query type of Elasticsearch. </summary>

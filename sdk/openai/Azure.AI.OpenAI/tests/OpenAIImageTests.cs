@@ -21,15 +21,15 @@ namespace Azure.AI.OpenAI.Tests
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
         public async Task CanGenerateImages(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetTestClient(serviceTarget);
-            Assert.That(client, Is.InstanceOf<OpenAIClient>());
+            OpenAIClient client = GetDevelopmentTestClient(serviceTarget, "AOAI_DALLE3_ENDPOINT", "AOAI_DALLE3_API_KEY");
+            string deploymentName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ImageGenerations);
 
             const string prompt = "a simplistic picture of a cyberpunk money dreaming of electric bananas";
             var requestOptions = new ImageGenerationOptions()
             {
+                DeploymentName = deploymentName,
                 Prompt = prompt,
-                Size = ImageSize.Size256x256,
-                ImageCount = 2,
+                ImageCount = 1,
                 User = "placeholder",
             };
             Assert.That(requestOptions, Is.InstanceOf<ImageGenerationOptions>());
@@ -51,13 +51,6 @@ namespace Azure.AI.OpenAI.Tests
             ImageGenerationData firstImageLocation = imageGenerations.Data[0];
             Assert.That(firstImageLocation, Is.Not.Null);
             Assert.That(firstImageLocation.Url, Is.Not.Null.Or.Empty);
-
-            ImageGenerationData secondImageLocation = imageGenerations.Data[1];
-            Assert.That(secondImageLocation, Is.Not.Null);
-            Assert.That(secondImageLocation.Url, Is.Not.Null.Or.Empty);
-            Assert.That(
-                secondImageLocation.Url.ToString(),
-                Is.Not.EquivalentTo(firstImageLocation.Url.ToString()));
         }
     }
 }

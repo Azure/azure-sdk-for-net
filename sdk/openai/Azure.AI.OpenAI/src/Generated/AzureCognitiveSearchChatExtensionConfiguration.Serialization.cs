@@ -12,5 +12,12 @@ namespace Azure.AI.OpenAI
 {
     public partial class AzureCognitiveSearchChatExtensionConfiguration : IUtf8JsonSerializable
     {
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

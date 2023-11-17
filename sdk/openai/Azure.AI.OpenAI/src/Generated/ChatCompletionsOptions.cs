@@ -151,8 +151,6 @@ namespace Azure.AI.OpenAI
         /// The available derived classes include <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestUserMessage"/>, <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestFunctionMessage"/>.
         /// </summary>
         public IList<ChatRequestMessage> Messages { get; }
-        /// <summary> If provided, the configuration options for available Azure OpenAI chat enhancements. </summary>
-        public AzureChatEnhancementConfiguration Enhancements { get; set; }
         /// <summary>
         /// If specified, the system will make a best effort to sample deterministically such that repeated requests with the
         /// same seed and parameters should return the same result. Determinism is not guaranteed, and you should refer to the

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -26,32 +25,28 @@ public class AzureChatExtensionsTests : OpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase(OpenAIClientServiceTarget.Azure, ExtensionObjectStrategy.WithScenarioSpecificHelperType)]
-    public async Task BasicSearchExtensionWorks(
-        OpenAIClientServiceTarget serviceTarget,
-        ExtensionObjectStrategy extensionStrategy)
+    [TestCase(OpenAIClientServiceTarget.Azure)]
+    public async Task BasicSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
             serviceTarget,
             OpenAIClientScenario.ChatCompletions);
 
-        AzureChatExtensionsOptions extensionsOptions = new();
-        switch (extensionStrategy)
+        OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
+        apiKeyAuthentication.SetKey(GetCognitiveSearchApiKey().Key);
+        //OnYourDataKeyAndKeyIdAuthenticationOptions keyOptions = new();
+        //keyOptions.SetKey(GetCognitiveSearchApiKey().Key);
+        AzureCognitiveSearchChatExtensionConfiguration searchExtension = new()
         {
-            case ExtensionObjectStrategy.WithScenarioSpecificHelperType:
-                AzureCognitiveSearchChatExtensionConfiguration helperTypeConfig = new()
-                {
-                    Type = "AzureCognitiveSearch",
-                    SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
-                    IndexName = "openai-test-index-carbon-wiki"
-                };
-                helperTypeConfig.SetSearchKey(GetCognitiveSearchApiKey().Key);
-                extensionsOptions.Extensions.Add(helperTypeConfig);
-                break;
-            default:
-                throw new NotImplementedException("Don't know how to add the extension config!");
-        }
+            SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
+            IndexName = "openai-test-index-carbon-wiki",
+            Authentication = apiKeyAuthentication,
+        };
+        AzureChatExtensionsOptions extensionsOptions = new()
+        {
+            Extensions = { searchExtension },
+        };
 
         var requestOptions = new ChatCompletionsOptions()
         {
@@ -91,6 +86,16 @@ public class AzureChatExtensionsTests : OpenAITestBase
             serviceTarget,
             OpenAIClientScenario.ChatCompletions);
 
+        OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
+        apiKeyAuthentication.SetKey(GetCognitiveSearchApiKey().Key);
+        AzureCognitiveSearchChatExtensionConfiguration searchConfig = new()
+        {
+            Type = "AzureCognitiveSearch",
+            SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
+            IndexName = "openai-test-index-carbon-wiki",
+            Authentication = apiKeyAuthentication,
+        };
+
         var requestOptions = new ChatCompletionsOptions()
         {
             DeploymentName = deploymentOrModelName,
@@ -101,20 +106,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
             MaxTokens = 512,
             AzureExtensionsOptions = new()
             {
-                Extensions =
-                {
-                    new AzureCognitiveSearchChatExtensionConfiguration()
-                    {
-                        Type = "AzureCognitiveSearch",
-                        Parameters = BinaryData.FromObjectAsJson(new
-                        {
-                            Endpoint = "https://openaisdktestsearch.search.windows.net",
-                            IndexName = "openai-test-index-carbon-wiki",
-                            GetCognitiveSearchApiKey().Key,
-                        },
-                        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
-                    },
-                }
+                Extensions = { searchConfig },
             },
         };
 

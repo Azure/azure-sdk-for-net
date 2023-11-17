@@ -48,7 +48,9 @@ namespace Azure.AI.OpenAI
         /// Describes an error returned if the content filtering system is
         /// down or otherwise unable to complete the operation in time.
         /// </param>
-        internal ContentFilterResultsForChoice(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, ContentFilterDetectionResult profanity, IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists, ResponseError error)
+        /// <param name="protectedMaterialText"> Information about detection of protected text material. </param>
+        /// <param name="protectedMaterialCode"> Information about detection of protected code material. </param>
+        internal ContentFilterResultsForChoice(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, ContentFilterDetectionResult profanity, IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists, ResponseError error, ContentFilterDetectionResult protectedMaterialText, ContentFilterCitedDetectionResult protectedMaterialCode)
         {
             Sexual = sexual;
             Violence = violence;
@@ -57,6 +59,8 @@ namespace Azure.AI.OpenAI
             Profanity = profanity;
             CustomBlocklists = customBlocklists;
             Error = error;
+            ProtectedMaterialText = protectedMaterialText;
+            ProtectedMaterialCode = protectedMaterialCode;
         }
 
         /// <summary>
@@ -93,5 +97,9 @@ namespace Azure.AI.OpenAI
         /// down or otherwise unable to complete the operation in time.
         /// </summary>
         public ResponseError Error { get; }
+        /// <summary> Information about detection of protected text material. </summary>
+        public ContentFilterDetectionResult ProtectedMaterialText { get; }
+        /// <summary> Information about detection of protected code material. </summary>
+        public ContentFilterCitedDetectionResult ProtectedMaterialCode { get; }
     }
 }

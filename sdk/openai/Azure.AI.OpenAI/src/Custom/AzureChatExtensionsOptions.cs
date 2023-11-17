@@ -31,5 +31,8 @@ namespace Azure.AI.OpenAI
         {
             Extensions = new List<AzureChatExtensionConfiguration>();
         }
+
+        /// <summary> If provided, the configuration options for available Azure OpenAI chat enhancements. </summary>
+        public AzureChatEnhancementConfiguration EnhancementOptions { get; }
     }
 }

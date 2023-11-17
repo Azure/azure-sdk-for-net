@@ -91,6 +91,7 @@ namespace Azure.AI.OpenAI
         // CUSTOM CODE NOTE: the following properties are forward declared here as internal as their behavior is
         //                      otherwise handled in the custom implementation.
         internal IList<AzureChatExtensionConfiguration> InternalAzureExtensionsDataSources { get; set; }
+        internal AzureChatEnhancementConfiguration Enhancements { get; set; }
         internal bool? InternalShouldStreamResponse { get; set; }
         internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
 

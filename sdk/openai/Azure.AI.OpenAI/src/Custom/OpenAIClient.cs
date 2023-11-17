@@ -619,7 +619,7 @@ namespace Azure.AI.OpenAI
                 {
                     RequestContext context = FromCancellationToken(cancellationToken);
                     HttpMessage message = CreatePostRequestMessage(
-                        string.Empty,
+                        imageGenerationOptions.DeploymentName,
                         "images/generations",
                         content: imageGenerationOptions.ToRequestContent(),
                         context);
@@ -665,7 +665,7 @@ namespace Azure.AI.OpenAI
                 Response rawResponse = default;
                 ImageGenerations responseValue = default;
 
-                if (_isConfiguredForAzureOpenAI)
+                if (_isConfiguredForAzureOpenAI && string.IsNullOrEmpty(imageGenerationOptions.DeploymentName))
                 {
                     Operation<ImageGenerations> imagesOperation
                         = await BeginAzureBatchImageGenerationAsync(
@@ -682,7 +682,7 @@ namespace Azure.AI.OpenAI
                 {
                     RequestContext context = FromCancellationToken(cancellationToken);
                     HttpMessage message = CreatePostRequestMessage(
-                        string.Empty,
+                        imageGenerationOptions.DeploymentName,
                         "images/generations",
                         content: imageGenerationOptions.ToRequestContent(),
                         context);

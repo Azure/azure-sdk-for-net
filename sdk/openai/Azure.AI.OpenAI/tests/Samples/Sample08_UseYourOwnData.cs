@@ -22,13 +22,14 @@ namespace Azure.AI.OpenAI.Tests.Samples
 
             #region Snippet:ChatUsingYourOwnData
 
+            OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
+            apiKeyAuthentication.SetKey("<your Cognitive Search resource API key>");
             AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new()
             {
                 SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
                 IndexName = "contoso-products-index",
+                Authentication = apiKeyAuthentication,
             };
-
-            contosoExtensionConfig.SetSearchKey("<your Cognitive Search resource API key>");
 
             ChatCompletionsOptions chatCompletionsOptions = new()
             {

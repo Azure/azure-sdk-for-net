@@ -12,67 +12,6 @@ namespace Azure.AI.OpenAI
 {
     public partial class ElasticsearchChatExtensionConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Authentication))
-            {
-                writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
-            }
-            if (Optional.IsDefined(DocumentCount))
-            {
-                writer.WritePropertyName("topNDocuments"u8);
-                writer.WriteNumberValue(DocumentCount.Value);
-            }
-            if (Optional.IsDefined(ShouldRestrictResultScope))
-            {
-                writer.WritePropertyName("inScope"u8);
-                writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
-            }
-            if (Optional.IsDefined(Strictness))
-            {
-                writer.WritePropertyName("strictness"u8);
-                writer.WriteNumberValue(Strictness.Value);
-            }
-            if (Optional.IsDefined(RoleInformation))
-            {
-                writer.WritePropertyName("roleInformation"u8);
-                writer.WriteStringValue(RoleInformation);
-            }
-            writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(Endpoint.AbsoluteUri);
-            writer.WritePropertyName("indexName"u8);
-            writer.WriteStringValue(IndexName);
-            if (Optional.IsDefined(FieldMappingOptions))
-            {
-                writer.WritePropertyName("fieldsMapping"u8);
-                writer.WriteObjectValue(FieldMappingOptions);
-            }
-            if (Optional.IsDefined(QueryType))
-            {
-                writer.WritePropertyName("queryType"u8);
-                writer.WriteStringValue(QueryType.Value.ToString());
-            }
-            if (Optional.IsDefined(EmbeddingDependency))
-            {
-                writer.WritePropertyName("embeddingDependency"u8);
-                writer.WriteObjectValue(EmbeddingDependency);
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Parameters);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Parameters))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
-            writer.WriteEndObject();
-        }
-
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal override RequestContent ToRequestContent()
         {

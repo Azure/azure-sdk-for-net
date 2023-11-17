@@ -103,15 +103,11 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
+            if (AzureExtensionsOptions != null)
             {
-                writer.WritePropertyName("dataSources"u8);
-                writer.WriteStartArray();
-                foreach (var item in InternalAzureExtensionsDataSources)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                // CUSTOM CODE NOTE: Extensions options currently deserialize directly into the payload (not as a
+                //                      property value therein)
+                ((IUtf8JsonSerializable)AzureExtensionsOptions).Write(writer);
             }
             if (Optional.IsDefined(Enhancements))
             {

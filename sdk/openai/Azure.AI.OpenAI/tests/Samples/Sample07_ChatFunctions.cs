@@ -92,7 +92,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
                     // then add it to the messages after the first User message and initial response FunctionCall
                     var functionResponseMessage = new ChatRequestFunctionMessage(
                         name: responseChoice.Message.FunctionCall.Name,
-                        arguments: JsonSerializer.Serialize(
+                        content: JsonSerializer.Serialize(
                             functionResultData,
                             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
                     conversationMessages.Add(functionResponseMessage);

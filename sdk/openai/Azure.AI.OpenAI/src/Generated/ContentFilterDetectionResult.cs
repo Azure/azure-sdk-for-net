@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI
 {
     /// <summary> Represents the outcome of a detection operation performed by content filtering. </summary>
@@ -16,11 +13,8 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of ContentFilterDetectionResult. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detected"/> is null. </exception>
-        internal ContentFilterDetectionResult(bool filtered, string detected)
+        internal ContentFilterDetectionResult(bool filtered, bool detected)
         {
-            Argument.AssertNotNull(detected, nameof(detected));
-
             Filtered = filtered;
             Detected = detected;
         }
@@ -28,6 +22,6 @@ namespace Azure.AI.OpenAI
         /// <summary> A value indicating whether or not the content has been filtered. </summary>
         public bool Filtered { get; }
         /// <summary> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </summary>
-        public string Detected { get; }
+        public bool Detected { get; }
     }
 }

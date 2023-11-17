@@ -3,14 +3,13 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-    public partial class AzureCognitiveSearchChatExtensionConfiguration : IUtf8JsonSerializable
+    public partial class PineconeChatExtensionConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,40 +40,12 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("roleInformation"u8);
                 writer.WriteStringValue(RoleInformation);
             }
-            writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(SearchEndpoint.AbsoluteUri);
+            writer.WritePropertyName("environment"u8);
+            writer.WriteStringValue(Environment);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
-            if (Optional.IsDefined(FieldMappingOptions))
-            {
-                writer.WritePropertyName("fieldsMapping"u8);
-                writer.WriteObjectValue(FieldMappingOptions);
-            }
-            if (Optional.IsDefined(QueryType))
-            {
-                writer.WritePropertyName("queryType"u8);
-                writer.WriteStringValue(QueryType.Value.ToString());
-            }
-            if (Optional.IsDefined(SemanticConfiguration))
-            {
-                writer.WritePropertyName("semanticConfiguration"u8);
-                writer.WriteStringValue(SemanticConfiguration);
-            }
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter"u8);
-                writer.WriteStringValue(Filter);
-            }
-            if (Optional.IsDefined(EmbeddingEndpoint))
-            {
-                writer.WritePropertyName("embeddingEndpoint"u8);
-                writer.WriteStringValue(EmbeddingEndpoint.AbsoluteUri);
-            }
-            if (Optional.IsDefined(EmbeddingKey))
-            {
-                writer.WritePropertyName("embeddingKey"u8);
-                writer.WriteStringValue(EmbeddingKey);
-            }
+            writer.WritePropertyName("fieldsMapping"u8);
+            writer.WriteObjectValue(FieldMappingOptions);
             if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embeddingDependency"u8);

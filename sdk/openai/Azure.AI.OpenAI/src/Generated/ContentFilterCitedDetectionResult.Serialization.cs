@@ -5,14 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ContentFilterDetectionResult
+    public partial class ContentFilterCitedDetectionResult
     {
-        internal static ContentFilterDetectionResult DeserializeContentFilterDetectionResult(JsonElement element)
+        internal static ContentFilterCitedDetectionResult DeserializeContentFilterCitedDetectionResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -20,6 +21,8 @@ namespace Azure.AI.OpenAI
             }
             bool filtered = default;
             bool detected = default;
+            Uri url = default;
+            string license = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filtered"u8))
@@ -32,16 +35,26 @@ namespace Azure.AI.OpenAI
                     detected = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("URL"u8))
+                {
+                    url = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("license"u8))
+                {
+                    license = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContentFilterDetectionResult(filtered, detected);
+            return new ContentFilterCitedDetectionResult(filtered, detected, url, license);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ContentFilterDetectionResult FromResponse(Response response)
+        internal static ContentFilterCitedDetectionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeContentFilterDetectionResult(document.RootElement);
+            return DeserializeContentFilterCitedDetectionResult(document.RootElement);
         }
     }
 }
