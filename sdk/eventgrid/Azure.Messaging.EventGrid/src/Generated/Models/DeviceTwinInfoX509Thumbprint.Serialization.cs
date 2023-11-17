@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class DeviceTwinInfoX509Thumbprint
+    public partial class DeviceTwinInfoX509Thumbprint : IUtf8JsonSerializable, IJsonModel<DeviceTwinInfoX509Thumbprint>
     {
-        internal static DeviceTwinInfoX509Thumbprint DeserializeDeviceTwinInfoX509Thumbprint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceTwinInfoX509Thumbprint>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DeviceTwinInfoX509Thumbprint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DeviceTwinInfoX509Thumbprint>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DeviceTwinInfoX509Thumbprint>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrimaryThumbprint))
+            {
+                writer.WritePropertyName("primaryThumbprint"u8);
+                writer.WriteStringValue(PrimaryThumbprint);
+            }
+            if (Optional.IsDefined(SecondaryThumbprint))
+            {
+                writer.WritePropertyName("secondaryThumbprint"u8);
+                writer.WriteStringValue(SecondaryThumbprint);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DeviceTwinInfoX509Thumbprint IJsonModel<DeviceTwinInfoX509Thumbprint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceTwinInfoX509Thumbprint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceTwinInfoX509Thumbprint(document.RootElement, options);
+        }
+
+        internal static DeviceTwinInfoX509Thumbprint DeserializeDeviceTwinInfoX509Thumbprint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> primaryThumbprint = default;
             Optional<string> secondaryThumbprint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryThumbprint"u8))
@@ -32,8 +90,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     secondaryThumbprint = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceTwinInfoX509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeviceTwinInfoX509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceTwinInfoX509Thumbprint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceTwinInfoX509Thumbprint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DeviceTwinInfoX509Thumbprint IPersistableModel<DeviceTwinInfoX509Thumbprint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceTwinInfoX509Thumbprint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDeviceTwinInfoX509Thumbprint(document.RootElement, options);
+        }
+
+        string IPersistableModel<DeviceTwinInfoX509Thumbprint>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

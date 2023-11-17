@@ -6,21 +6,116 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class ElasticCloudDeployment : IUtf8JsonSerializable
+    public partial class ElasticCloudDeployment : IUtf8JsonSerializable, IJsonModel<ElasticCloudDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticCloudDeployment>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ElasticCloudDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ElasticCloudDeployment>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ElasticCloudDeployment>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DeploymentId))
+                {
+                    writer.WritePropertyName("deploymentId"u8);
+                    writer.WriteStringValue(DeploymentId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AzureSubscriptionId))
+                {
+                    writer.WritePropertyName("azureSubscriptionId"u8);
+                    writer.WriteStringValue(AzureSubscriptionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ElasticsearchRegion))
+                {
+                    writer.WritePropertyName("elasticsearchRegion"u8);
+                    writer.WriteStringValue(ElasticsearchRegion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ElasticsearchServiceUri))
+                {
+                    writer.WritePropertyName("elasticsearchServiceUrl"u8);
+                    writer.WriteStringValue(ElasticsearchServiceUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KibanaServiceUri))
+                {
+                    writer.WritePropertyName("kibanaServiceUrl"u8);
+                    writer.WriteStringValue(KibanaServiceUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KibanaSsoUri))
+                {
+                    writer.WritePropertyName("kibanaSsoUrl"u8);
+                    writer.WriteStringValue(KibanaSsoUri.AbsoluteUri);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ElasticCloudDeployment DeserializeElasticCloudDeployment(JsonElement element)
+        ElasticCloudDeployment IJsonModel<ElasticCloudDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticCloudDeployment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticCloudDeployment(document.RootElement, options);
+        }
+
+        internal static ElasticCloudDeployment DeserializeElasticCloudDeployment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +127,8 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<Uri> elasticsearchServiceUrl = default;
             Optional<Uri> kibanaServiceUrl = default;
             Optional<Uri> kibanaSsoUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -81,8 +178,38 @@ namespace Azure.ResourceManager.Elastic.Models
                     kibanaSsoUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticCloudDeployment(name.Value, deploymentId.Value, azureSubscriptionId.Value, elasticsearchRegion.Value, elasticsearchServiceUrl.Value, kibanaServiceUrl.Value, kibanaSsoUrl.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ElasticCloudDeployment(name.Value, deploymentId.Value, azureSubscriptionId.Value, elasticsearchRegion.Value, elasticsearchServiceUrl.Value, kibanaServiceUrl.Value, kibanaSsoUrl.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticCloudDeployment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticCloudDeployment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ElasticCloudDeployment IPersistableModel<ElasticCloudDeployment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticCloudDeployment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeElasticCloudDeployment(document.RootElement, options);
+        }
+
+        string IPersistableModel<ElasticCloudDeployment>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

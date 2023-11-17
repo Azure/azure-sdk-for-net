@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterPoolLogAnalyticsProfile : IUtf8JsonSerializable
+    public partial class ClusterPoolLogAnalyticsProfile : IUtf8JsonSerializable, IJsonModel<ClusterPoolLogAnalyticsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPoolLogAnalyticsProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ClusterPoolLogAnalyticsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ClusterPoolLogAnalyticsProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ClusterPoolLogAnalyticsProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterPoolLogAnalyticsProfile DeserializeClusterPoolLogAnalyticsProfile(JsonElement element)
+        ClusterPoolLogAnalyticsProfile IJsonModel<ClusterPoolLogAnalyticsProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterPoolLogAnalyticsProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterPoolLogAnalyticsProfile(document.RootElement, options);
+        }
+
+        internal static ClusterPoolLogAnalyticsProfile DeserializeClusterPoolLogAnalyticsProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool enabled = default;
             Optional<ResourceIdentifier> workspaceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -49,8 +91,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     workspaceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterPoolLogAnalyticsProfile(enabled, workspaceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterPoolLogAnalyticsProfile(enabled, workspaceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterPoolLogAnalyticsProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterPoolLogAnalyticsProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClusterPoolLogAnalyticsProfile IPersistableModel<ClusterPoolLogAnalyticsProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterPoolLogAnalyticsProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClusterPoolLogAnalyticsProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<ClusterPoolLogAnalyticsProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

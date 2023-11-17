@@ -6,25 +6,74 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class SqlDWTableDataSetMapping : IUtf8JsonSerializable
+    public partial class SqlDWTableDataSetMapping : IUtf8JsonSerializable, IJsonModel<SqlDWTableDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDWTableDataSetMapping>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlDWTableDataSetMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlDWTableDataSetMapping>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlDWTableDataSetMapping>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataSetId"u8);
             writer.WriteStringValue(DataSetId);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataSetMappingStatus))
+                {
+                    writer.WritePropertyName("dataSetMappingStatus"u8);
+                    writer.WriteStringValue(DataSetMappingStatus.Value.ToString());
+                }
+            }
             writer.WritePropertyName("dataWarehouseName"u8);
             writer.WriteStringValue(DataWarehouseName);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WritePropertyName("schemaName"u8);
             writer.WriteStringValue(SchemaName);
             writer.WritePropertyName("sqlServerResourceId"u8);
@@ -32,11 +81,40 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDWTableDataSetMapping DeserializeSqlDWTableDataSetMapping(JsonElement element)
+        SqlDWTableDataSetMapping IJsonModel<SqlDWTableDataSetMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDWTableDataSetMapping(document.RootElement, options);
+        }
+
+        internal static SqlDWTableDataSetMapping DeserializeSqlDWTableDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +131,8 @@ namespace Azure.ResourceManager.DataShare.Models
             string schemaName = default;
             ResourceIdentifier sqlServerResourceId = default;
             string tableName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -139,8 +219,38 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDWTableDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), dataWarehouseName, Optional.ToNullable(provisioningState), schemaName, sqlServerResourceId, tableName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlDWTableDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, dataSetId, Optional.ToNullable(dataSetMappingStatus), dataWarehouseName, Optional.ToNullable(provisioningState), schemaName, sqlServerResourceId, tableName);
         }
+
+        BinaryData IPersistableModel<SqlDWTableDataSetMapping>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlDWTableDataSetMapping IPersistableModel<SqlDWTableDataSetMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlDWTableDataSetMapping(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlDWTableDataSetMapping>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

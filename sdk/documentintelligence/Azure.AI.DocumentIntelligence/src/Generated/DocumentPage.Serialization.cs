@@ -5,17 +5,141 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentPage
+    public partial class DocumentPage : IUtf8JsonSerializable, IJsonModel<DocumentPage>
     {
-        internal static DocumentPage DeserializeDocumentPage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentPage>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DocumentPage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentPage>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentPage>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("pageNumber"u8);
+            writer.WriteNumberValue(PageNumber);
+            if (Optional.IsDefined(Angle))
+            {
+                writer.WritePropertyName("angle"u8);
+                writer.WriteNumberValue(Angle.Value);
+            }
+            if (Optional.IsDefined(Width))
+            {
+                writer.WritePropertyName("width"u8);
+                writer.WriteNumberValue(Width.Value);
+            }
+            if (Optional.IsDefined(Height))
+            {
+                writer.WritePropertyName("height"u8);
+                writer.WriteNumberValue(Height.Value);
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            writer.WritePropertyName("spans"u8);
+            writer.WriteStartArray();
+            foreach (var item in Spans)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Words))
+            {
+                writer.WritePropertyName("words"u8);
+                writer.WriteStartArray();
+                foreach (var item in Words)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SelectionMarks))
+            {
+                writer.WritePropertyName("selectionMarks"u8);
+                writer.WriteStartArray();
+                foreach (var item in SelectionMarks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Lines))
+            {
+                writer.WritePropertyName("lines"u8);
+                writer.WriteStartArray();
+                foreach (var item in Lines)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Barcodes))
+            {
+                writer.WritePropertyName("barcodes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Barcodes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Formulas))
+            {
+                writer.WritePropertyName("formulas"u8);
+                writer.WriteStartArray();
+                foreach (var item in Formulas)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentPage IJsonModel<DocumentPage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentPage(document.RootElement, options);
+        }
+
+        internal static DocumentPage DeserializeDocumentPage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +155,8 @@ namespace Azure.AI.DocumentIntelligence
             Optional<IReadOnlyList<DocumentLine>> lines = default;
             Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
             Optional<IReadOnlyList<DocumentFormula>> formulas = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pageNumber"u8))
@@ -154,16 +280,54 @@ namespace Azure.AI.DocumentIntelligence
                     formulas = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(barcodes), Optional.ToList(formulas));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(barcodes), Optional.ToList(formulas), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentPage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentPage IPersistableModel<DocumentPage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentPage(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentPage>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentPage FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentPage(document.RootElement);
+            return DeserializeDocumentPage(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,82 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsRouterWorkerOfferRevokedEventDataConverter))]
-    public partial class AcsRouterWorkerOfferRevokedEventData
+    public partial class AcsRouterWorkerOfferRevokedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterWorkerOfferRevokedEventData>
     {
-        internal static AcsRouterWorkerOfferRevokedEventData DeserializeAcsRouterWorkerOfferRevokedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterWorkerOfferRevokedEventData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AcsRouterWorkerOfferRevokedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AcsRouterWorkerOfferRevokedEventData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AcsRouterWorkerOfferRevokedEventData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(QueueId))
+            {
+                writer.WritePropertyName("queueId"u8);
+                writer.WriteStringValue(QueueId);
+            }
+            if (Optional.IsDefined(OfferId))
+            {
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
+            }
+            if (Optional.IsDefined(WorkerId))
+            {
+                writer.WritePropertyName("workerId"u8);
+                writer.WriteStringValue(WorkerId);
+            }
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsDefined(ChannelReference))
+            {
+                writer.WritePropertyName("channelReference"u8);
+                writer.WriteStringValue(ChannelReference);
+            }
+            if (Optional.IsDefined(ChannelId))
+            {
+                writer.WritePropertyName("channelId"u8);
+                writer.WriteStringValue(ChannelId);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsRouterWorkerOfferRevokedEventData IJsonModel<AcsRouterWorkerOfferRevokedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterWorkerOfferRevokedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsRouterWorkerOfferRevokedEventData(document.RootElement, options);
+        }
+
+        internal static AcsRouterWorkerOfferRevokedEventData DeserializeAcsRouterWorkerOfferRevokedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +102,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> jobId = default;
             Optional<string> channelReference = default;
             Optional<string> channelId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"u8))
@@ -59,15 +136,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     channelId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsRouterWorkerOfferRevokedEventData(jobId.Value, channelReference.Value, channelId.Value, workerId.Value, queueId.Value, offerId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsRouterWorkerOfferRevokedEventData(jobId.Value, channelReference.Value, channelId.Value, serializedAdditionalRawData, workerId.Value, queueId.Value, offerId.Value);
         }
+
+        BinaryData IPersistableModel<AcsRouterWorkerOfferRevokedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterWorkerOfferRevokedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsRouterWorkerOfferRevokedEventData IPersistableModel<AcsRouterWorkerOfferRevokedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterWorkerOfferRevokedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsRouterWorkerOfferRevokedEventData(document.RootElement, options);
+        }
+
+        string IPersistableModel<AcsRouterWorkerOfferRevokedEventData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsRouterWorkerOfferRevokedEventDataConverter : JsonConverter<AcsRouterWorkerOfferRevokedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterWorkerOfferRevokedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsRouterWorkerOfferRevokedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

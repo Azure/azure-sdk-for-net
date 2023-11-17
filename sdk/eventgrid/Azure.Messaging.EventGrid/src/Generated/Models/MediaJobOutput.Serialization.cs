@@ -5,15 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class MediaJobOutput
+    public partial class MediaJobOutput : IUtf8JsonSerializable, IJsonModel<MediaJobOutput>
     {
-        internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobOutput>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MediaJobOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MediaJobOutput>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MediaJobOutput>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (Optional.IsDefined(Label))
+            {
+                writer.WritePropertyName("label"u8);
+                writer.WriteStringValue(Label);
+            }
+            writer.WritePropertyName("progress"u8);
+            writer.WriteNumberValue(Progress);
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaJobOutput IJsonModel<MediaJobOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaJobOutput(document.RootElement, options);
+        }
+
+        internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,5 +89,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return UnknownMediaJobOutput.DeserializeUnknownMediaJobOutput(element);
         }
+
+        BinaryData IPersistableModel<MediaJobOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaJobOutput IPersistableModel<MediaJobOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaJobOutput(document.RootElement, options);
+        }
+
+        string IPersistableModel<MediaJobOutput>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

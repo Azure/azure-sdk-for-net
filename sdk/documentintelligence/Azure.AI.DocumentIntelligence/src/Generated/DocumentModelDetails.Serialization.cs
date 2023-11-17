@@ -7,16 +7,116 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentModelDetails
+    public partial class DocumentModelDetails : IUtf8JsonSerializable, IJsonModel<DocumentModelDetails>
     {
-        internal static DocumentModelDetails DeserializeDocumentModelDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentModelDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DocumentModelDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentModelDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentModelDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("modelId"u8);
+            writer.WriteStringValue(ModelId);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedDateTime, "O");
+            if (Optional.IsDefined(ExpirationDateTime))
+            {
+                writer.WritePropertyName("expirationDateTime"u8);
+                writer.WriteStringValue(ExpirationDateTime.Value, "O");
+            }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(BuildMode))
+            {
+                writer.WritePropertyName("buildMode"u8);
+                writer.WriteStringValue(BuildMode.Value.ToString());
+            }
+            if (Optional.IsDefined(AzureBlobSource))
+            {
+                writer.WritePropertyName("azureBlobSource"u8);
+                writer.WriteObjectValue(AzureBlobSource);
+            }
+            if (Optional.IsDefined(AzureBlobFileListSource))
+            {
+                writer.WritePropertyName("azureBlobFileListSource"u8);
+                writer.WriteObjectValue(AzureBlobFileListSource);
+            }
+            if (Optional.IsCollectionDefined(DocTypes))
+            {
+                writer.WritePropertyName("docTypes"u8);
+                writer.WriteStartObject();
+                foreach (var item in DocTypes)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentModelDetails IJsonModel<DocumentModelDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentModelDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentModelDetails(document.RootElement, options);
+        }
+
+        internal static DocumentModelDetails DeserializeDocumentModelDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +131,8 @@ namespace Azure.AI.DocumentIntelligence
             Optional<AzureBlobContentSource> azureBlobSource = default;
             Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
             Optional<IReadOnlyDictionary<string, DocumentTypeDetails>> docTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -117,8 +219,46 @@ namespace Azure.AI.DocumentIntelligence
                     docTypes = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags), Optional.ToNullable(buildMode), azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(docTypes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags), Optional.ToNullable(buildMode), azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(docTypes), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DocumentModelDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentModelDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentModelDetails IPersistableModel<DocumentModelDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentModelDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentModelDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentModelDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

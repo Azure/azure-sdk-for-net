@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicEventSubscriptionResource(Client, NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(e)), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NamespaceTopicEventSubscriptionResource(Client, NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(e)), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicEventSubscriptionResource(Client, NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(e)), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NamespaceTopicEventSubscriptionResource(Client, NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(e)), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

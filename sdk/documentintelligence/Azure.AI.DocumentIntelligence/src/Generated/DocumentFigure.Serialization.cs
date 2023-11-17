@@ -5,17 +5,104 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentFigure
+    public partial class DocumentFigure : IUtf8JsonSerializable, IJsonModel<DocumentFigure>
     {
-        internal static DocumentFigure DeserializeDocumentFigure(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFigure>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DocumentFigure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentFigure>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentFigure>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(BoundingRegions))
+            {
+                writer.WritePropertyName("boundingRegions"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundingRegions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("spans"u8);
+            writer.WriteStartArray();
+            foreach (var item in Spans)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Elements))
+            {
+                writer.WritePropertyName("elements"u8);
+                writer.WriteStartArray();
+                foreach (var item in Elements)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Caption))
+            {
+                writer.WritePropertyName("caption"u8);
+                writer.WriteObjectValue(Caption);
+            }
+            if (Optional.IsCollectionDefined(Footnotes))
+            {
+                writer.WritePropertyName("footnotes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Footnotes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentFigure IJsonModel<DocumentFigure>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentFigure(document.RootElement, options);
+        }
+
+        internal static DocumentFigure DeserializeDocumentFigure(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +112,8 @@ namespace Azure.AI.DocumentIntelligence
             Optional<IReadOnlyList<string>> elements = default;
             Optional<DocumentCaption> caption = default;
             Optional<IReadOnlyList<DocumentFootnote>> footnotes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boundingRegions"u8))
@@ -88,16 +177,54 @@ namespace Azure.AI.DocumentIntelligence
                     footnotes = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentFigure(Optional.ToList(boundingRegions), spans, Optional.ToList(elements), caption.Value, Optional.ToList(footnotes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentFigure(Optional.ToList(boundingRegions), spans, Optional.ToList(elements), caption.Value, Optional.ToList(footnotes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentFigure>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentFigure IPersistableModel<DocumentFigure>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentFigure(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentFigure>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentFigure FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentFigure(document.RootElement);
+            return DeserializeDocumentFigure(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

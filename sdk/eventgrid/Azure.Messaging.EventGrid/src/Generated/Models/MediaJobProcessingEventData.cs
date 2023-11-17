@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -12,16 +13,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Job processing event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobProcessing event. </summary>
     public partial class MediaJobProcessingEventData : MediaJobStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobProcessingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobProcessingEventData"/>. </summary>
         internal MediaJobProcessingEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobProcessingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobProcessingEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
-        internal MediaJobProcessingEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData) : base(previousState, state, correlationData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobProcessingEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(previousState, state, correlationData, serializedAdditionalRawData)
         {
         }
     }

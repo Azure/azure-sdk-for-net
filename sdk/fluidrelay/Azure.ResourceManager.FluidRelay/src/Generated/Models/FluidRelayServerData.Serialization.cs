@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.FluidRelay.Models;
@@ -14,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FluidRelay
 {
-    public partial class FluidRelayServerData : IUtf8JsonSerializable
+    public partial class FluidRelayServerData : IUtf8JsonSerializable, IJsonModel<FluidRelayServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluidRelayServerData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FluidRelayServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FluidRelayServerData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FluidRelayServerData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -37,8 +46,47 @@ namespace Azure.ResourceManager.FluidRelay
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FrsTenantId))
+                {
+                    writer.WritePropertyName("frsTenantId"u8);
+                    writer.WriteStringValue(FrsTenantId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FluidRelayEndpoints))
+                {
+                    writer.WritePropertyName("fluidRelayEndpoints"u8);
+                    writer.WriteObjectValue(FluidRelayEndpoints);
+                }
+            }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -55,11 +103,40 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WriteStringValue(StorageSku.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FluidRelayServerData DeserializeFluidRelayServerData(JsonElement element)
+        FluidRelayServerData IJsonModel<FluidRelayServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFluidRelayServerData(document.RootElement, options);
+        }
+
+        internal static FluidRelayServerData DeserializeFluidRelayServerData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +153,8 @@ namespace Azure.ResourceManager.FluidRelay
             Optional<FluidRelayProvisioningState> provisioningState = default;
             Optional<Models.EncryptionProperties> encryption = default;
             Optional<FluidRelayStorageSku> storagesku = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -187,8 +266,38 @@ namespace Azure.ResourceManager.FluidRelay
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FluidRelayServerData IPersistableModel<FluidRelayServerData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFluidRelayServerData(document.RootElement, options);
+        }
+
+        string IPersistableModel<FluidRelayServerData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

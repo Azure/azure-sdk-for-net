@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,12 +14,44 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a network interface. </summary>
     public partial class DevTestLabNetworkInterface
     {
-        /// <summary> Initializes a new instance of DevTestLabNetworkInterface. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNetworkInterface"/>. </summary>
         public DevTestLabNetworkInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNetworkInterface"/>. </summary>
         /// <param name="virtualNetworkId"> The resource ID of the virtual network. </param>
         /// <param name="subnetId"> The resource ID of the sub net. </param>
         /// <param name="publicIPAddressId"> The resource ID of the public IP address. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="rdpAuthority"> The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol). </param>
         /// <param name="sshAuthority"> The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH. </param>
         /// <param name="sharedPublicIPAddressConfiguration"> The configuration for sharing a public IP address across multiple virtual machines. </param>
-        internal DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier publicIPAddressId, string publicIPAddress, string privateIPAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier publicIPAddressId, string publicIPAddress, string privateIPAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualNetworkId = virtualNetworkId;
             SubnetId = subnetId;
@@ -39,6 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             RdpAuthority = rdpAuthority;
             SshAuthority = sshAuthority;
             SharedPublicIPAddressConfiguration = sharedPublicIPAddressConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource ID of the virtual network. </summary>

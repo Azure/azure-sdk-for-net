@@ -5,14 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties for evaluating a policy set. </summary>
     public partial class DevTestLabEvaluatePolicy
     {
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePolicy"/>. </summary>
         public DevTestLabEvaluatePolicy()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePolicy"/>. </summary>
+        /// <param name="factName"> The fact name. </param>
+        /// <param name="factData"> The fact data. </param>
+        /// <param name="valueOffset"> The value offset. </param>
+        /// <param name="userObjectId"> The user for which policies will be evaluated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabEvaluatePolicy(string factName, string factData, string valueOffset, string userObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FactName = factName;
+            FactData = factData;
+            ValueOffset = valueOffset;
+            UserObjectId = userObjectId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The fact name. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemAddressProperties : IUtf8JsonSerializable
+    public partial class EdgeOrderItemAddressProperties : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemAddressProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemAddressProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EdgeOrderItemAddressProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EdgeOrderItemAddressProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EdgeOrderItemAddressProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ShippingAddress))
             {
@@ -22,11 +33,48 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AddressValidationStatus))
+                {
+                    writer.WritePropertyName("addressValidationStatus"u8);
+                    writer.WriteStringValue(AddressValidationStatus.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeOrderItemAddressProperties DeserializeEdgeOrderItemAddressProperties(JsonElement element)
+        EdgeOrderItemAddressProperties IJsonModel<EdgeOrderItemAddressProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeOrderItemAddressProperties(document.RootElement, options);
+        }
+
+        internal static EdgeOrderItemAddressProperties DeserializeEdgeOrderItemAddressProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +82,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<EdgeOrderShippingAddress> shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
             Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shippingAddress"u8))
@@ -59,8 +109,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     addressValidationStatus = new EdgeOrderAddressValidationStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeOrderItemAddressProperties(shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdgeOrderItemAddressProperties(shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeOrderItemAddressProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EdgeOrderItemAddressProperties IPersistableModel<EdgeOrderItemAddressProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEdgeOrderItemAddressProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<EdgeOrderItemAddressProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

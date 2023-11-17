@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ProductAvailabilityInformation
+    public partial class ProductAvailabilityInformation : IUtf8JsonSerializable, IJsonModel<ProductAvailabilityInformation>
     {
-        internal static ProductAvailabilityInformation DeserializeProductAvailabilityInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductAvailabilityInformation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ProductAvailabilityInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ProductAvailabilityInformation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ProductAvailabilityInformation>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AvailabilityStage))
+                {
+                    writer.WritePropertyName("availabilityStage"u8);
+                    writer.WriteStringValue(AvailabilityStage.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisabledReason))
+                {
+                    writer.WritePropertyName("disabledReason"u8);
+                    writer.WriteStringValue(DisabledReason.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisabledReasonMessage))
+                {
+                    writer.WritePropertyName("disabledReasonMessage"u8);
+                    writer.WriteStringValue(DisabledReasonMessage);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProductAvailabilityInformation IJsonModel<ProductAvailabilityInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProductAvailabilityInformation(document.RootElement, options);
+        }
+
+        internal static ProductAvailabilityInformation DeserializeProductAvailabilityInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<ProductAvailabilityStage> availabilityStage = default;
             Optional<ProductDisabledReason> disabledReason = default;
             Optional<string> disabledReasonMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityStage"u8))
@@ -46,8 +118,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     disabledReasonMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProductAvailabilityInformation(Optional.ToNullable(availabilityStage), Optional.ToNullable(disabledReason), disabledReasonMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProductAvailabilityInformation(Optional.ToNullable(availabilityStage), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProductAvailabilityInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProductAvailabilityInformation IPersistableModel<ProductAvailabilityInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProductAvailabilityInformation(document.RootElement, options);
+        }
+
+        string IPersistableModel<ProductAvailabilityInformation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual AsyncPageable<DigitalTwinsPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DigitalTwinsPrivateEndpointConnectionResource(Client, DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(e)), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DigitalTwinsPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new DigitalTwinsPrivateEndpointConnectionResource(Client, DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(e)), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DigitalTwinsPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual Pageable<DigitalTwinsPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DigitalTwinsPrivateEndpointConnectionResource(Client, DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(e)), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DigitalTwinsPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new DigitalTwinsPrivateEndpointConnectionResource(Client, DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(e)), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DigitalTwinsPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterImageImagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterImageImagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterImageImagesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterImageImagesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

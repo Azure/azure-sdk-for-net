@@ -6,31 +6,80 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class BlobDataSetMapping : IUtf8JsonSerializable
+    public partial class BlobDataSetMapping : IUtf8JsonSerializable, IJsonModel<BlobDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobDataSetMapping>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BlobDataSetMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BlobDataSetMapping>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BlobDataSetMapping>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("dataSetId"u8);
             writer.WriteStringValue(DataSetId);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataSetMappingStatus))
+                {
+                    writer.WritePropertyName("dataSetMappingStatus"u8);
+                    writer.WriteStringValue(DataSetMappingStatus.Value.ToString());
+                }
+            }
             writer.WritePropertyName("filePath"u8);
             writer.WriteStringValue(FilePath);
             if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
             }
             writer.WritePropertyName("resourceGroup"u8);
             writer.WriteStringValue(ResourceGroup);
@@ -39,11 +88,40 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobDataSetMapping DeserializeBlobDataSetMapping(JsonElement element)
+        BlobDataSetMapping IJsonModel<BlobDataSetMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobDataSetMapping(document.RootElement, options);
+        }
+
+        internal static BlobDataSetMapping DeserializeBlobDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +140,8 @@ namespace Azure.ResourceManager.DataShare.Models
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -162,8 +242,38 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BlobDataSetMapping(id, name, type, systemData.Value, kind, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), filePath, Optional.ToNullable(outputType), Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BlobDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), filePath, Optional.ToNullable(outputType), Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
         }
+
+        BinaryData IPersistableModel<BlobDataSetMapping>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BlobDataSetMapping IPersistableModel<BlobDataSetMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBlobDataSetMapping(document.RootElement, options);
+        }
+
+        string IPersistableModel<BlobDataSetMapping>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

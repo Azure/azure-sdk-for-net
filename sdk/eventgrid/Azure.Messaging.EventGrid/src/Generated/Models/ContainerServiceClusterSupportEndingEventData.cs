@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.ClusterSupportEnding event. </summary>
     public partial class ContainerServiceClusterSupportEndingEventData : ContainerServiceClusterSupportEventData
     {
-        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEndingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/>. </summary>
         internal ContainerServiceClusterSupportEndingEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEndingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
-        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion) : base(kubernetesVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kubernetesVersion, serializedAdditionalRawData)
         {
         }
     }

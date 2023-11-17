@@ -5,32 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterImageReference : IUtf8JsonSerializable
+    public partial class DevCenterImageReference : IUtf8JsonSerializable, IJsonModel<DevCenterImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterImageReference>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DevCenterImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DevCenterImageReference>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DevCenterImageReference>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExactVersion))
+                {
+                    writer.WritePropertyName("exactVersion"u8);
+                    writer.WriteStringValue(ExactVersion);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevCenterImageReference DeserializeDevCenterImageReference(JsonElement element)
+        DevCenterImageReference IJsonModel<DevCenterImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevCenterImageReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterImageReference(document.RootElement, options);
+        }
+
+        internal static DevCenterImageReference DeserializeDevCenterImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
             Optional<string> exactVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -47,8 +97,38 @@ namespace Azure.ResourceManager.DevCenter.Models
                     exactVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevCenterImageReference(id.Value, exactVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevCenterImageReference(id.Value, exactVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevCenterImageReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevCenterImageReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DevCenterImageReference IPersistableModel<DevCenterImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevCenterImageReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDevCenterImageReference(document.RootElement, options);
+        }
+
+        string IPersistableModel<DevCenterImageReference>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ScalingRule : IUtf8JsonSerializable
+    public partial class ScalingRule : IUtf8JsonSerializable, IJsonModel<ScalingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingRule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ScalingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ScalingRule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ScalingRule>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
@@ -23,11 +34,40 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(ScalingMetric);
             writer.WritePropertyName("comparisonRule"u8);
             writer.WriteObjectValue(ComparisonRule);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScalingRule DeserializeScalingRule(JsonElement element)
+        ScalingRule IJsonModel<ScalingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScalingRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalingRule(document.RootElement, options);
+        }
+
+        internal static ScalingRule DeserializeScalingRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             int evaluationCount = default;
             string scalingMetric = default;
             HDInsightComparisonRule comparisonRule = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"u8))
@@ -58,8 +100,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScalingRule(actionType, evaluationCount, scalingMetric, comparisonRule);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScalingRule(actionType, evaluationCount, scalingMetric, comparisonRule, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScalingRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScalingRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScalingRule IPersistableModel<ScalingRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScalingRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScalingRule(document.RootElement, options);
+        }
+
+        string IPersistableModel<ScalingRule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

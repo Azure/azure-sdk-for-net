@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class CustomDocumentModelsDetails
+    public partial class CustomDocumentModelsDetails : IUtf8JsonSerializable, IJsonModel<CustomDocumentModelsDetails>
     {
-        internal static CustomDocumentModelsDetails DeserializeCustomDocumentModelsDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDocumentModelsDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CustomDocumentModelsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CustomDocumentModelsDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CustomDocumentModelsDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("count"u8);
+            writer.WriteNumberValue(Count);
+            writer.WritePropertyName("limit"u8);
+            writer.WriteNumberValue(Limit);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CustomDocumentModelsDetails IJsonModel<CustomDocumentModelsDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomDocumentModelsDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomDocumentModelsDetails(document.RootElement, options);
+        }
+
+        internal static CustomDocumentModelsDetails DeserializeCustomDocumentModelsDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int count = default;
             int limit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -32,16 +85,54 @@ namespace Azure.AI.DocumentIntelligence
                     limit = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomDocumentModelsDetails(count, limit);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomDocumentModelsDetails(count, limit, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomDocumentModelsDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomDocumentModelsDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomDocumentModelsDetails IPersistableModel<CustomDocumentModelsDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomDocumentModelsDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomDocumentModelsDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<CustomDocumentModelsDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CustomDocumentModelsDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCustomDocumentModelsDetails(document.RootElement);
+            return DeserializeCustomDocumentModelsDetails(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
