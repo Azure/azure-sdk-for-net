@@ -744,7 +744,6 @@ namespace Azure.Storage.Files.Shares.Models
         internal ShareFileHandle() { }
         public Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights? AccessRights { get { throw null; } }
         public string ClientIp { get { throw null; } }
-        public string ClientName { get { throw null; } }
         public string FileId { get { throw null; } }
         public string HandleId { get { throw null; } }
         public System.DateTimeOffset? LastReconnectedOn { get { throw null; } }
