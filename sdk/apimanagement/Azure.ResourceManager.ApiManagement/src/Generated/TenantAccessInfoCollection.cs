@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantAccessInfoResource" /> and their operations.
-    /// Each <see cref="TenantAccessInfoResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get a <see cref="TenantAccessInfoCollection" /> instance call the GetTenantAccessInfos method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="TenantAccessInfoResource"/> and their operations.
+    /// Each <see cref="TenantAccessInfoResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get a <see cref="TenantAccessInfoCollection"/> instance call the GetTenantAccessInfos method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class TenantAccessInfoCollection : ArmCollection, IEnumerable<TenantAccessInfoResource>, IAsyncEnumerable<TenantAccessInfoResource>
     {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="filter"> Not used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantAccessInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantAccessInfoResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="filter"> Not used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantAccessInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantAccessInfoResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);

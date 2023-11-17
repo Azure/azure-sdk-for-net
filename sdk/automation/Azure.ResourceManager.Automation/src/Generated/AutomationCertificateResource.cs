@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationCertificate method.
     /// </summary>
     public partial class AutomationCertificateResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationCertificateResource(ArmClient client, AutomationCertificateData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementProductPolicyResource" /> and their operations.
-    /// Each <see cref="ApiManagementProductPolicyResource" /> in the collection will belong to the same instance of <see cref="ApiManagementProductResource" />.
-    /// To get an <see cref="ApiManagementProductPolicyCollection" /> instance call the GetApiManagementProductPolicies method from an instance of <see cref="ApiManagementProductResource" />.
+    /// A class representing a collection of <see cref="ApiManagementProductPolicyResource"/> and their operations.
+    /// Each <see cref="ApiManagementProductPolicyResource"/> in the collection will belong to the same instance of <see cref="ApiManagementProductResource"/>.
+    /// To get an <see cref="ApiManagementProductPolicyCollection"/> instance call the GetApiManagementProductPolicies method from an instance of <see cref="ApiManagementProductResource"/>.
     /// </summary>
     public partial class ApiManagementProductPolicyCollection : ArmCollection, IEnumerable<ApiManagementProductPolicyResource>, IAsyncEnumerable<ApiManagementProductPolicyResource>
     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementProductPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementProductPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementProductPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductPolicyProductPolicyRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementProductPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementProductPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementProductPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductPolicyProductPolicyRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

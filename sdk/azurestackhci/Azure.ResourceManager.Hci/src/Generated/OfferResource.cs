@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing an Offer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OfferResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOfferResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PublisherResource" /> using the GetOffer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OfferResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOfferResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PublisherResource"/> using the GetOffer method.
     /// </summary>
     public partial class OfferResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OfferResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OfferResource(ArmClient client, OfferData data) : this(client, data.Id)

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="AutomationPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationPrivateEndpointConnectionCollection" /> instance call the GetAutomationPrivateEndpointConnections method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="AutomationPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationPrivateEndpointConnectionCollection"/> instance call the GetAutomationPrivateEndpointConnections method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<AutomationPrivateEndpointConnectionResource>, IAsyncEnumerable<AutomationPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

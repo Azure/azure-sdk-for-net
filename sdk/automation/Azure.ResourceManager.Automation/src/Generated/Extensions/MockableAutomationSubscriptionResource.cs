@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationAccountResource> GetAutomationAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomationAccountRestClient.CreateListRequest(Id.SubscriptionId);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationAccountResource> GetAutomationAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomationAccountRestClient.CreateListRequest(Id.SubscriptionId);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeletedAutomationAccount"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => deletedAutomationAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeletedAutomationAccount"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => deletedAutomationAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

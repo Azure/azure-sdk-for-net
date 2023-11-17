@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementAuthorizationServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementAuthorizationServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementAuthorizationServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementAuthorizationServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementAuthorizationServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementAuthorizationServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementAuthorizationServer method.
     /// </summary>
     public partial class ApiManagementAuthorizationServerResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementAuthorizationServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementAuthorizationServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementAuthorizationServerResource(ArmClient client, ApiManagementAuthorizationServerData data) : this(client, data.Id)
