@@ -5,10 +5,7 @@ using System.Threading;
 
 namespace System.ClientModel;
 
-// Type is sealed given need to use atomicity in reading/writing credential
-// data.  We won't want a type to inherit, add credential data, and in so doing,
-// lose atomicity of get/update operations.
-public sealed class KeyCredential
+public class KeyCredential
 {
     private string _key;
 

@@ -19,7 +19,7 @@ namespace System.ClientModel
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
-    public sealed partial class KeyCredential
+    public partial class KeyCredential
     {
         public KeyCredential(string key) { }
         public string GetValue() { throw null; }

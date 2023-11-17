@@ -10,18 +10,16 @@ namespace Azure
     /// Key credential used to authenticate to an Azure Service.
     /// It provides the ability to update the key without creating a new client.
     /// </summary>
-    public class AzureKeyCredential
+    public class AzureKeyCredential : KeyCredential
     {
-        private readonly KeyCredential _credential;
-
         /// <summary>
         /// Key used to authenticate to an Azure service.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Key
         {
-            get => _credential.GetValue();
-            private set => _credential.Update(value);
+            get => GetValue();
+            private set => Update(value);
         }
 
         /// <summary>
@@ -34,20 +32,8 @@ namespace Azure
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="key"/> is empty.
         /// </exception>
-        public AzureKeyCredential(string key) => _credential = new KeyCredential(key);
-
-        /// <summary>
-        /// Updates the service key.
-        /// This is intended to be used when you've regenerated your service key
-        /// and want to update long lived clients.
-        /// </summary>
-        /// <param name="key">Key to authenticate the service against.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when the <paramref name="key"/> is null.
-        /// </exception>
-        /// <exception cref="System.ArgumentException">
-        /// Thrown when the <paramref name="key"/> is empty.
-        /// </exception>
-        public void Update(string key) => _credential.Update(key);
+        public AzureKeyCredential(string key) : base(key)
+        {
+        }
     }
 }
