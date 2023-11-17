@@ -317,7 +317,7 @@ namespace System.ClientModel.Primitives
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
-        public virtual System.ClientModel.Primitives.MessageClassifier MessageClassifier { get { throw null; } protected internal set { } }
+        public System.ClientModel.Primitives.MessageClassifier? MessageClassifier { get { throw null; } protected internal set { } }
         public virtual System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public virtual System.ClientModel.Primitives.PipelineResponse Response { get { throw null; } protected internal set { } }
         public virtual void Dispose() { }

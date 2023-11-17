@@ -119,9 +119,12 @@ namespace Azure.Core.Pipeline
             // TODO: Note: Azure.Core-based libraries are going to need to somehow create the
             // message by passing in the request context to create message so that
             // message.ApplyContext() will be applied.  This is a bit of a tangle, but
-            // I think we can solve it with a little reworkd.
+            // I think we can solve it with a little rework.
 
-            message.ApplyRequestContext(context, classifier);
+            if (context != null)
+            {
+                message.ApplyRequestContext(context, classifier);
+            }
 
             return message;
         }

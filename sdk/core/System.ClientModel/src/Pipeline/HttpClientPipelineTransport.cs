@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -171,7 +171,10 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
             message.Response.ContentStream = contentStream;
         }
 
-        message.Response.IsError = message.MessageClassifier.IsError(message);
+        if (message.MessageClassifier != null)
+        {
+            message.Response.IsError = message.MessageClassifier.IsError(message);
+        }
     }
 
     /// <summary>

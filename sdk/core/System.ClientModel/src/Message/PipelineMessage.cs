@@ -41,6 +41,8 @@ public class PipelineMessage : IDisposable
 
     public virtual CancellationToken CancellationToken { get; set; }
 
+    public MessageClassifier? MessageClassifier { get; protected internal set; }
+
     private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
     public bool TryGetProperty(Type type, out object? value) =>
@@ -48,22 +50,6 @@ public class PipelineMessage : IDisposable
 
     public void SetProperty(Type type, object value) =>
         _propertyBag.Set((ulong)type.TypeHandle.Value, value);
-
-    private MessageClassifier? _messageClassifer;
-    public virtual MessageClassifier MessageClassifier
-    {
-        get
-        {
-            if (_messageClassifer is null)
-            {
-                throw new InvalidOperationException("MessageClassifer cannot be accessed before it is set on the message.");
-            }
-            return _messageClassifer;
-        }
-
-        // TODO: lets revisit this per need of client to set classifier for operation
-        protected internal set => _messageClassifer = value;
-    }
 
     #endregion
 
