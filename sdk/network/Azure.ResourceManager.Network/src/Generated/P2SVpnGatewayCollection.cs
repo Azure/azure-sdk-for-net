@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="P2SVpnGatewayResource" /> and their operations.
-    /// Each <see cref="P2SVpnGatewayResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="P2SVpnGatewayCollection" /> instance call the GetP2SVpnGateways method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="P2SVpnGatewayResource"/> and their operations.
+    /// Each <see cref="P2SVpnGatewayResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="P2SVpnGatewayCollection"/> instance call the GetP2SVpnGateways method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class P2SVpnGatewayCollection : ArmCollection, IEnumerable<P2SVpnGatewayResource>, IAsyncEnumerable<P2SVpnGatewayResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="P2SVpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<P2SVpnGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _p2sVpnGatewayP2sVpnGatewaysRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="P2SVpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<P2SVpnGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _p2sVpnGatewayP2sVpnGatewaysRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

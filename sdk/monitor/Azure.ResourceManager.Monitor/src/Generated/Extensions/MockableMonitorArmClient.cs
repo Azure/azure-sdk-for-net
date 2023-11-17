@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         /// <summary> Gets an object representing a VmInsightsOnboardingStatusResource along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(ResourceIdentifier scope)
         {
             return new VmInsightsOnboardingStatusResource(Client, scope.AppendProviderResource("Microsoft.Insights", "vmInsightsOnboardingStatuses", "default"));
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorMetric> GetMonitorMetrics(ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorSingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorSingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorMetricNamespace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorMetricNamespace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorMetricNamespace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorMetricNamespace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -449,11 +449,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
         /// <summary>
-        /// Gets an object representing an <see cref="AutoscaleSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoscaleSettingResource.CreateResourceIdentifier" /> to create an <see cref="AutoscaleSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutoscaleSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutoscaleSettingResource.CreateResourceIdentifier" /> to create an <see cref="AutoscaleSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoscaleSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutoscaleSettingResource"/> object. </returns>
         public virtual AutoscaleSettingResource GetAutoscaleSettingResource(ResourceIdentifier id)
         {
             AutoscaleSettingResource.ValidateResourceId(id);
@@ -461,11 +461,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AlertRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AlertRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AlertRuleResource"/> object. </returns>
         public virtual AlertRuleResource GetAlertRuleResource(ResourceIdentifier id)
         {
             AlertRuleResource.ValidateResourceId(id);
@@ -473,11 +473,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogProfileResource.CreateResourceIdentifier" /> to create a <see cref="LogProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogProfileResource.CreateResourceIdentifier" /> to create a <see cref="LogProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogProfileResource"/> object. </returns>
         public virtual LogProfileResource GetLogProfileResource(ResourceIdentifier id)
         {
             LogProfileResource.ValidateResourceId(id);
@@ -485,11 +485,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
         public virtual DiagnosticSettingResource GetDiagnosticSettingResource(ResourceIdentifier id)
         {
             DiagnosticSettingResource.ValidateResourceId(id);
@@ -497,11 +497,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingsCategoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticSettingsCategoryResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingsCategoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticSettingsCategoryResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingsCategoryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>
         public virtual DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(ResourceIdentifier id)
         {
             DiagnosticSettingsCategoryResource.ValidateResourceId(id);
@@ -509,11 +509,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ActionGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ActionGroupResource.CreateResourceIdentifier" /> to create an <see cref="ActionGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ActionGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ActionGroupResource.CreateResourceIdentifier" /> to create an <see cref="ActionGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActionGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ActionGroupResource"/> object. </returns>
         public virtual ActionGroupResource GetActionGroupResource(ResourceIdentifier id)
         {
             ActionGroupResource.ValidateResourceId(id);
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MetricAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetricAlertResource.CreateResourceIdentifier" /> to create a <see cref="MetricAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MetricAlertResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MetricAlertResource.CreateResourceIdentifier" /> to create a <see cref="MetricAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetricAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MetricAlertResource"/> object. </returns>
         public virtual MetricAlertResource GetMetricAlertResource(ResourceIdentifier id)
         {
             MetricAlertResource.ValidateResourceId(id);
@@ -533,11 +533,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScheduledQueryRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledQueryRuleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledQueryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScheduledQueryRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduledQueryRuleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledQueryRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduledQueryRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScheduledQueryRuleResource"/> object. </returns>
         public virtual ScheduledQueryRuleResource GetScheduledQueryRuleResource(ResourceIdentifier id)
         {
             ScheduledQueryRuleResource.ValidateResourceId(id);
@@ -545,11 +545,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VmInsightsOnboardingStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VmInsightsOnboardingStatusResource.CreateResourceIdentifier" /> to create a <see cref="VmInsightsOnboardingStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VmInsightsOnboardingStatusResource.CreateResourceIdentifier" /> to create a <see cref="VmInsightsOnboardingStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(ResourceIdentifier id)
         {
             VmInsightsOnboardingStatusResource.ValidateResourceId(id);
@@ -557,11 +557,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource"/> object. </returns>
         public virtual MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(ResourceIdentifier id)
         {
             MonitorPrivateLinkScopeResource.ValidateResourceId(id);
@@ -569,11 +569,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkResource"/> object. </returns>
         public virtual MonitorPrivateLinkResource GetMonitorPrivateLinkResource(ResourceIdentifier id)
         {
             MonitorPrivateLinkResource.ValidateResourceId(id);
@@ -581,11 +581,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource"/> object. </returns>
         public virtual MonitorPrivateEndpointConnectionResource GetMonitorPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             MonitorPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -593,11 +593,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkScopedResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopedResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateLinkScopedResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopedResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource"/> object. </returns>
         public virtual MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(ResourceIdentifier id)
         {
             MonitorPrivateLinkScopedResource.ValidateResourceId(id);
@@ -605,11 +605,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ActivityLogAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ActivityLogAlertResource.CreateResourceIdentifier" /> to create an <see cref="ActivityLogAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ActivityLogAlertResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ActivityLogAlertResource.CreateResourceIdentifier" /> to create an <see cref="ActivityLogAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActivityLogAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ActivityLogAlertResource"/> object. </returns>
         public virtual ActivityLogAlertResource GetActivityLogAlertResource(ResourceIdentifier id)
         {
             ActivityLogAlertResource.ValidateResourceId(id);
@@ -617,11 +617,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataCollectionEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataCollectionEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataCollectionEndpointResource"/> object. </returns>
         public virtual DataCollectionEndpointResource GetDataCollectionEndpointResource(ResourceIdentifier id)
         {
             DataCollectionEndpointResource.ValidateResourceId(id);
@@ -629,11 +629,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionRuleAssociationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionRuleAssociationResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleAssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataCollectionRuleAssociationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataCollectionRuleAssociationResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleAssociationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource"/> object. </returns>
         public virtual DataCollectionRuleAssociationResource GetDataCollectionRuleAssociationResource(ResourceIdentifier id)
         {
             DataCollectionRuleAssociationResource.ValidateResourceId(id);
@@ -641,11 +641,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataCollectionRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataCollectionRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataCollectionRuleResource"/> object. </returns>
         public virtual DataCollectionRuleResource GetDataCollectionRuleResource(ResourceIdentifier id)
         {
             DataCollectionRuleResource.ValidateResourceId(id);
@@ -653,11 +653,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitorWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MonitorWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MonitorWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitorWorkspaceResource"/> object. </returns>
         public virtual MonitorWorkspaceResource GetMonitorWorkspaceResource(ResourceIdentifier id)
         {
             MonitorWorkspaceResource.ValidateResourceId(id);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PeeringRegisteredPrefixResource" /> and their operations.
-    /// Each <see cref="PeeringRegisteredPrefixResource" /> in the collection will belong to the same instance of <see cref="PeeringResource" />.
-    /// To get a <see cref="PeeringRegisteredPrefixCollection" /> instance call the GetPeeringRegisteredPrefixes method from an instance of <see cref="PeeringResource" />.
+    /// A class representing a collection of <see cref="PeeringRegisteredPrefixResource"/> and their operations.
+    /// Each <see cref="PeeringRegisteredPrefixResource"/> in the collection will belong to the same instance of <see cref="PeeringResource"/>.
+    /// To get a <see cref="PeeringRegisteredPrefixCollection"/> instance call the GetPeeringRegisteredPrefixes method from an instance of <see cref="PeeringResource"/>.
     /// </summary>
     public partial class PeeringRegisteredPrefixCollection : ArmCollection, IEnumerable<PeeringRegisteredPrefixResource>, IAsyncEnumerable<PeeringRegisteredPrefixResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringRegisteredPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringRegisteredPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringRegisteredPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringRegisteredPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringRegisteredPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringRegisteredPrefixResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
