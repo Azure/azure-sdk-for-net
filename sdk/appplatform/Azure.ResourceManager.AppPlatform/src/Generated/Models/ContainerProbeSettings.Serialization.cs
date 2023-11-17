@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class ContainerProbeSettings : IUtf8JsonSerializable
+    internal partial class ContainerProbeSettings : IUtf8JsonSerializable, IJsonModel<ContainerProbeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerProbeSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerProbeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerProbeSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerProbeSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsProbeDisabled))
             {
                 writer.WritePropertyName("disableProbe"u8);
                 writer.WriteBooleanValue(IsProbeDisabled.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerProbeSettings DeserializeContainerProbeSettings(JsonElement element)
+        ContainerProbeSettings IJsonModel<ContainerProbeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerProbeSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerProbeSettings(document.RootElement, options);
+        }
+
+        internal static ContainerProbeSettings DeserializeContainerProbeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> disableProbe = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disableProbe"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     disableProbe = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerProbeSettings(Optional.ToNullable(disableProbe));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerProbeSettings(Optional.ToNullable(disableProbe), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerProbeSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerProbeSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerProbeSettings IPersistableModel<ContainerProbeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerProbeSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerProbeSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerProbeSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Properties that define an Analytics item that is associated to an Application Insights component. </summary>
     public partial class ApplicationInsightsComponentAnalyticsItem
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItem. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAnalyticsItem"/>. </summary>
         public ApplicationInsightsComponentAnalyticsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAnalyticsItem"/>. </summary>
         /// <param name="id"> Internally assigned unique id of the item definition. </param>
         /// <param name="name"> The user-defined name of the item. </param>
         /// <param name="content"> The content of this item. </param>
@@ -25,7 +60,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="timeCreated"> Date and time in UTC when this item was created. </param>
         /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this item. </param>
         /// <param name="properties"> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </param>
-        internal ApplicationInsightsComponentAnalyticsItem(string id, string name, string content, string version, ItemScope? scope, ItemType? itemType, string timeCreated, string timeModified, ApplicationInsightsComponentAnalyticsItemProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentAnalyticsItem(string id, string name, string content, string version, ItemScope? scope, ItemType? itemType, string timeCreated, string timeModified, ApplicationInsightsComponentAnalyticsItemProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -36,6 +72,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             TimeCreated = timeCreated;
             TimeModified = timeModified;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Internally assigned unique id of the item definition. </summary>

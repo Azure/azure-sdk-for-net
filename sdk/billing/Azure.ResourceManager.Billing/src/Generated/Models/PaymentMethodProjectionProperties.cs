@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The properties of a payment method projection. </summary>
     public partial class PaymentMethodProjectionProperties
     {
-        /// <summary> Initializes a new instance of PaymentMethodProjectionProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PaymentMethodProjectionProperties"/>. </summary>
         public PaymentMethodProjectionProperties()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
 
-        /// <summary> Initializes a new instance of PaymentMethodProjectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentMethodProjectionProperties"/>. </summary>
         /// <param name="paymentMethodId"> Id of payment method. </param>
         /// <param name="family"> The family of payment method. </param>
         /// <param name="paymentMethodProjectionPropertiesType"> The type of payment method. </param>
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="displayName"> The display name of the payment method. </param>
         /// <param name="logos"> The list of logos for the payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
-        internal PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId, PaymentMethodFamily? family, string paymentMethodProjectionPropertiesType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId, PaymentMethodFamily? family, string paymentMethodProjectionPropertiesType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PaymentMethodId = paymentMethodId;
             Family = family;
@@ -40,6 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             DisplayName = displayName;
             Logos = logos;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Id of payment method. </summary>

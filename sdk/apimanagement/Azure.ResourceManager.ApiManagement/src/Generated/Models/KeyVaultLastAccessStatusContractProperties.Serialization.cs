@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class KeyVaultLastAccessStatusContractProperties : IUtf8JsonSerializable
+    public partial class KeyVaultLastAccessStatusContractProperties : IUtf8JsonSerializable, IJsonModel<KeyVaultLastAccessStatusContractProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultLastAccessStatusContractProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<KeyVaultLastAccessStatusContractProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<KeyVaultLastAccessStatusContractProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<KeyVaultLastAccessStatusContractProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("timeStampUtc"u8);
                 writer.WriteStringValue(TimeStampUtc.Value, "O");
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultLastAccessStatusContractProperties DeserializeKeyVaultLastAccessStatusContractProperties(JsonElement element)
+        KeyVaultLastAccessStatusContractProperties IJsonModel<KeyVaultLastAccessStatusContractProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultLastAccessStatusContractProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultLastAccessStatusContractProperties(document.RootElement, options);
+        }
+
+        internal static KeyVaultLastAccessStatusContractProperties DeserializeKeyVaultLastAccessStatusContractProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> timeStampUtc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -64,8 +105,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     timeStampUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeyVaultLastAccessStatusContractProperties(code.Value, message.Value, Optional.ToNullable(timeStampUtc));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KeyVaultLastAccessStatusContractProperties(code.Value, message.Value, Optional.ToNullable(timeStampUtc), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KeyVaultLastAccessStatusContractProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultLastAccessStatusContractProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KeyVaultLastAccessStatusContractProperties IPersistableModel<KeyVaultLastAccessStatusContractProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultLastAccessStatusContractProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKeyVaultLastAccessStatusContractProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<KeyVaultLastAccessStatusContractProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

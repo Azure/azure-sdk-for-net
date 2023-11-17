@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The TenantResourceGetBillingBenefitsSavingsPlansOptions. </summary>
     public partial class TenantResourceGetBillingBenefitsSavingsPlansOptions
     {
-        /// <summary> Initializes a new instance of TenantResourceGetBillingBenefitsSavingsPlansOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceGetBillingBenefitsSavingsPlansOptions"/>. </summary>
         public TenantResourceGetBillingBenefitsSavingsPlansOptions()
         {
         }

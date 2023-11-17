@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleSchedule : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleSchedule : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleSchedule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AlertProcessingRuleSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AlertProcessingRuleSchedule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AlertProcessingRuleSchedule>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EffectiveFrom))
             {
@@ -42,11 +51,40 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingRuleSchedule DeserializeAlertProcessingRuleSchedule(JsonElement element)
+        AlertProcessingRuleSchedule IJsonModel<AlertProcessingRuleSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertProcessingRuleSchedule(document.RootElement, options);
+        }
+
+        internal static AlertProcessingRuleSchedule DeserializeAlertProcessingRuleSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +93,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<DateTimeOffset> effectiveUntil = default;
             Optional<string> timeZone = default;
             Optional<IList<AlertProcessingRuleRecurrence>> recurrences = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("effectiveFrom"u8))
@@ -94,8 +134,38 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     recurrences = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, Optional.ToList(recurrences));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, Optional.ToList(recurrences), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AlertProcessingRuleSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AlertProcessingRuleSchedule IPersistableModel<AlertProcessingRuleSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAlertProcessingRuleSchedule(document.RootElement, options);
+        }
+
+        string IPersistableModel<AlertProcessingRuleSchedule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

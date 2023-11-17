@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -13,7 +14,39 @@ namespace Azure.Communication.CallingServer
     /// <summary> The RecognizeRequest. </summary>
     internal partial class RecognizeRequestInternal
     {
-        /// <summary> Initializes a new instance of RecognizeRequestInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
         /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
@@ -23,6 +56,28 @@ namespace Azure.Communication.CallingServer
 
             RecognizeInputType = recognizeInputType;
             RecognizeOptions = recognizeOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
+        /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
+        /// <param name="playPrompt"> The source of the audio to be played for recognition. </param>
+        /// <param name="interruptCallMediaOperation"> If set recognize can barge into other existing queued-up/currently-processing requests. </param>
+        /// <param name="recognizeOptions"> Defines options for recognition. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecognizeRequestInternal(RecognizeInputType recognizeInputType, PlaySourceInternal playPrompt, bool? interruptCallMediaOperation, RecognizeOptionsInternal recognizeOptions, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RecognizeInputType = recognizeInputType;
+            PlayPrompt = playPrompt;
+            InterruptCallMediaOperation = interruptCallMediaOperation;
+            RecognizeOptions = recognizeOptions;
+            OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/> for deserialization. </summary>
+        internal RecognizeRequestInternal()
+        {
         }
 
         /// <summary> Determines the type of the recognition. </summary>

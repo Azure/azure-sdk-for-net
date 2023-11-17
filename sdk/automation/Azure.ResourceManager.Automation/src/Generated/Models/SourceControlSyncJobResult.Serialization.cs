@@ -6,15 +6,126 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SourceControlSyncJobResult
+    public partial class SourceControlSyncJobResult : IUtf8JsonSerializable, IJsonModel<SourceControlSyncJobResult>
     {
-        internal static SourceControlSyncJobResult DeserializeSourceControlSyncJobResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlSyncJobResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SourceControlSyncJobResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SourceControlSyncJobResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SourceControlSyncJobResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SourceControlSyncJobId))
+            {
+                writer.WritePropertyName("sourceControlSyncJobId"u8);
+                writer.WriteStringValue(SourceControlSyncJobId);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    if (StartOn != null)
+                    {
+                        writer.WritePropertyName("startTime"u8);
+                        writer.WriteStringValue(StartOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("startTime");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    if (EndOn != null)
+                    {
+                        writer.WritePropertyName("endTime"u8);
+                        writer.WriteStringValue(EndOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("endTime");
+                    }
+                }
+            }
+            if (Optional.IsDefined(SyncType))
+            {
+                writer.WritePropertyName("syncType"u8);
+                writer.WriteStringValue(SyncType.Value.ToString());
+            }
+            if (Optional.IsDefined(Exception))
+            {
+                writer.WritePropertyName("exception"u8);
+                writer.WriteStringValue(Exception);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SourceControlSyncJobResult IJsonModel<SourceControlSyncJobResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSourceControlSyncJobResult(document.RootElement, options);
+        }
+
+        internal static SourceControlSyncJobResult DeserializeSourceControlSyncJobResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +138,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset?> endTime = default;
             Optional<SourceControlSyncType> syncType = default;
             Optional<string> exception = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,8 +220,38 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SourceControlSyncJobResult(id.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), exception.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SourceControlSyncJobResult(id.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), exception.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SourceControlSyncJobResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SourceControlSyncJobResult IPersistableModel<SourceControlSyncJobResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSourceControlSyncJobResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<SourceControlSyncJobResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

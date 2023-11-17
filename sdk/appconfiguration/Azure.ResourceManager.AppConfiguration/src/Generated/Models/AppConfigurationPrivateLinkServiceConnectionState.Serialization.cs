@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class AppConfigurationPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class AppConfigurationPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IJsonModel<AppConfigurationPrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationPrivateLinkServiceConnectionState>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppConfigurationPrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppConfigurationPrivateLinkServiceConnectionState>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppConfigurationPrivateLinkServiceConnectionState>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -25,11 +36,48 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ActionsRequired))
+                {
+                    writer.WritePropertyName("actionsRequired"u8);
+                    writer.WriteStringValue(ActionsRequired.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppConfigurationPrivateLinkServiceConnectionState DeserializeAppConfigurationPrivateLinkServiceConnectionState(JsonElement element)
+        AppConfigurationPrivateLinkServiceConnectionState IJsonModel<AppConfigurationPrivateLinkServiceConnectionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppConfigurationPrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppConfigurationPrivateLinkServiceConnectionState(document.RootElement, options);
+        }
+
+        internal static AppConfigurationPrivateLinkServiceConnectionState DeserializeAppConfigurationPrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +85,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             Optional<AppConfigurationPrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<AppConfigurationActionsRequired> actionsRequired = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -62,8 +112,38 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     actionsRequired = new AppConfigurationActionsRequired(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppConfigurationPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppConfigurationPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppConfigurationPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppConfigurationPrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppConfigurationPrivateLinkServiceConnectionState IPersistableModel<AppConfigurationPrivateLinkServiceConnectionState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppConfigurationPrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppConfigurationPrivateLinkServiceConnectionState(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppConfigurationPrivateLinkServiceConnectionState>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

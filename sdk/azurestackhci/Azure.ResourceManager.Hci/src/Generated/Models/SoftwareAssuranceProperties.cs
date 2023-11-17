@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Software Assurance properties of the cluster. </summary>
     public partial class SoftwareAssuranceProperties
     {
-        /// <summary> Initializes a new instance of SoftwareAssuranceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceProperties"/>. </summary>
         public SoftwareAssuranceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareAssuranceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceProperties"/>. </summary>
         /// <param name="softwareAssuranceStatus"> Status of the Software Assurance for the cluster. </param>
         /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
         /// <param name="lastUpdated"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
-        internal SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus, SoftwareAssuranceIntent? softwareAssuranceIntent, DateTimeOffset? lastUpdated)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus, SoftwareAssuranceIntent? softwareAssuranceIntent, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SoftwareAssuranceStatus = softwareAssuranceStatus;
             SoftwareAssuranceIntent = softwareAssuranceIntent;
             LastUpdated = lastUpdated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status of the Software Assurance for the cluster. </summary>

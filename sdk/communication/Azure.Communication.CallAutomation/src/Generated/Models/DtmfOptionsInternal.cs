@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,55 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Options for DTMF recognition. </summary>
     internal partial class DtmfOptionsInternal
     {
-        /// <summary> Initializes a new instance of DtmfOptionsInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DtmfOptionsInternal"/>. </summary>
         public DtmfOptionsInternal()
         {
             StopTones = new ChangeTrackingList<DtmfTone>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DtmfOptionsInternal"/>. </summary>
+        /// <param name="interToneTimeoutInSeconds"> Time to wait between DTMF inputs to stop recognizing. </param>
+        /// <param name="maxTonesToCollect"> Maximum number of DTMF tones to be collected. </param>
+        /// <param name="stopTones"> List of tones that will stop recognizing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DtmfOptionsInternal(int? interToneTimeoutInSeconds, int? maxTonesToCollect, IReadOnlyList<DtmfTone> stopTones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InterToneTimeoutInSeconds = interToneTimeoutInSeconds;
+            MaxTonesToCollect = maxTonesToCollect;
+            StopTones = stopTones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Time to wait between DTMF inputs to stop recognizing. </summary>

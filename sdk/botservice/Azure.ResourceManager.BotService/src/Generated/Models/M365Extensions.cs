@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -13,18 +15,19 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> M365 Extensions definition. </summary>
     public partial class M365Extensions : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of M365Extensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="M365Extensions"/>. </summary>
         public M365Extensions()
         {
             ChannelName = "M365Extensions";
         }
 
-        /// <summary> Initializes a new instance of M365Extensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="M365Extensions"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        internal M365Extensions(string channelName, ETag? etag, string provisioningState, AzureLocation? location) : base(channelName, etag, provisioningState, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal M365Extensions(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(channelName, etag, provisioningState, location, serializedAdditionalRawData)
         {
             ChannelName = channelName ?? "M365Extensions";
         }
