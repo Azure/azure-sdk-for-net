@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ClusterAvailableVersion
+    public partial class ClusterAvailableVersion : IUtf8JsonSerializable, IJsonModel<ClusterAvailableVersion>
     {
-        internal static ClusterAvailableVersion DeserializeClusterAvailableVersion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterAvailableVersion>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ClusterAvailableVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ClusterAvailableVersion>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ClusterAvailableVersion>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SupportExpiryDate))
+                {
+                    writer.WritePropertyName("supportExpiryDate"u8);
+                    writer.WriteStringValue(SupportExpiryDate);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TargetClusterVersion))
+                {
+                    writer.WritePropertyName("targetClusterVersion"u8);
+                    writer.WriteStringValue(TargetClusterVersion);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ClusterAvailableVersion IJsonModel<ClusterAvailableVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterAvailableVersion(document.RootElement, options);
+        }
+
+        internal static ClusterAvailableVersion DeserializeClusterAvailableVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> supportExpiryDate = default;
             Optional<string> targetClusterVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportExpiryDate"u8))
@@ -32,8 +96,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     targetClusterVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterAvailableVersion(supportExpiryDate.Value, targetClusterVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterAvailableVersion(supportExpiryDate.Value, targetClusterVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterAvailableVersion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClusterAvailableVersion IPersistableModel<ClusterAvailableVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClusterAvailableVersion(document.RootElement, options);
+        }
+
+        string IPersistableModel<ClusterAvailableVersion>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

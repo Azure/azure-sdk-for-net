@@ -5,15 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringReceivedRoute
+    public partial class PeeringReceivedRoute : IUtf8JsonSerializable, IJsonModel<PeeringReceivedRoute>
     {
-        internal static PeeringReceivedRoute DeserializePeeringReceivedRoute(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringReceivedRoute>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PeeringReceivedRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PeeringReceivedRoute>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PeeringReceivedRoute>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Prefix))
+                {
+                    writer.WritePropertyName("prefix"u8);
+                    writer.WriteStringValue(Prefix);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NextHop))
+                {
+                    writer.WritePropertyName("nextHop"u8);
+                    writer.WriteStringValue(NextHop);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AsPath))
+                {
+                    writer.WritePropertyName("asPath"u8);
+                    writer.WriteStringValue(AsPath);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OriginAsValidationState))
+                {
+                    writer.WritePropertyName("originAsValidationState"u8);
+                    writer.WriteStringValue(OriginAsValidationState);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RpkiValidationState))
+                {
+                    writer.WritePropertyName("rpkiValidationState"u8);
+                    writer.WriteStringValue(RpkiValidationState);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TrustAnchor))
+                {
+                    writer.WritePropertyName("trustAnchor"u8);
+                    writer.WriteStringValue(TrustAnchor);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ReceivedTimestamp))
+                {
+                    writer.WritePropertyName("receivedTimestamp"u8);
+                    writer.WriteStringValue(ReceivedTimestamp);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PeeringReceivedRoute IJsonModel<PeeringReceivedRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringReceivedRoute(document.RootElement, options);
+        }
+
+        internal static PeeringReceivedRoute DeserializePeeringReceivedRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +127,8 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> rpkiValidationState = default;
             Optional<string> trustAnchor = default;
             Optional<string> receivedTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"u8))
@@ -62,8 +166,38 @@ namespace Azure.ResourceManager.Peering.Models
                     receivedTimestamp = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeeringReceivedRoute(prefix.Value, nextHop.Value, asPath.Value, originAsValidationState.Value, rpkiValidationState.Value, trustAnchor.Value, receivedTimestamp.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PeeringReceivedRoute(prefix.Value, nextHop.Value, asPath.Value, originAsValidationState.Value, rpkiValidationState.Value, trustAnchor.Value, receivedTimestamp.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeeringReceivedRoute>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PeeringReceivedRoute IPersistableModel<PeeringReceivedRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePeeringReceivedRoute(document.RootElement, options);
+        }
+
+        string IPersistableModel<PeeringReceivedRoute>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

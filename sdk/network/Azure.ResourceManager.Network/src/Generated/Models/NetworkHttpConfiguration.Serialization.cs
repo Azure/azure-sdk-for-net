@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkHttpConfiguration : IUtf8JsonSerializable
+    public partial class NetworkHttpConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkHttpConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkHttpConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetworkHttpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkHttpConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkHttpConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Method))
             {
@@ -40,7 +51,120 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        NetworkHttpConfiguration IJsonModel<NetworkHttpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkHttpConfiguration(document.RootElement, options);
+        }
+
+        internal static NetworkHttpConfiguration DeserializeNetworkHttpConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<NetworkWatcherHttpMethod> method = default;
+            Optional<IList<NetworkWatcherHttpHeader>> headers = default;
+            Optional<IList<int>> validStatusCodes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("method"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    method = new NetworkWatcherHttpMethod(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("headers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
+                    }
+                    headers = array;
+                    continue;
+                }
+                if (property.NameEquals("validStatusCodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    validStatusCodes = array;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkHttpConfiguration(Optional.ToNullable(method), Optional.ToList(headers), Optional.ToList(validStatusCodes), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<NetworkHttpConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkHttpConfiguration IPersistableModel<NetworkHttpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkHttpConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkHttpConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

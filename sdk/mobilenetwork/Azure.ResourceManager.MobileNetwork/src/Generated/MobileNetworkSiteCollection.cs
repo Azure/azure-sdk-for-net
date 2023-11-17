@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSiteSitesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSiteSitesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSiteResource(Client, MobileNetworkSiteData.DeserializeMobileNetworkSiteData(e)), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, "MobileNetworkSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkSiteResource(Client, MobileNetworkSiteData.DeserializeMobileNetworkSiteData(e)), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, "MobileNetworkSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSiteSitesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSiteSitesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSiteResource(Client, MobileNetworkSiteData.DeserializeMobileNetworkSiteData(e)), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, "MobileNetworkSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkSiteResource(Client, MobileNetworkSiteData.DeserializeMobileNetworkSiteData(e)), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, "MobileNetworkSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

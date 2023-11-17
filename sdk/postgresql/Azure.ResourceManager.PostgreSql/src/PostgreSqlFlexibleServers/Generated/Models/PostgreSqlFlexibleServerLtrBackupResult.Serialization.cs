@@ -6,15 +6,119 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerLtrBackupResult
+    public partial class PostgreSqlFlexibleServerLtrBackupResult : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerLtrBackupResult>
     {
-        internal static PostgreSqlFlexibleServerLtrBackupResult DeserializePostgreSqlFlexibleServerLtrBackupResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerLtrBackupResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PostgreSqlFlexibleServerLtrBackupResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PostgreSqlFlexibleServerLtrBackupResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PostgreSqlFlexibleServerLtrBackupResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DatasourceSizeInBytes))
+            {
+                writer.WritePropertyName("datasourceSizeInBytes"u8);
+                writer.WriteNumberValue(DatasourceSizeInBytes.Value);
+            }
+            if (Optional.IsDefined(DataTransferredInBytes))
+            {
+                writer.WritePropertyName("dataTransferredInBytes"u8);
+                writer.WriteNumberValue(DataTransferredInBytes.Value);
+            }
+            if (Optional.IsDefined(BackupName))
+            {
+                writer.WritePropertyName("backupName"u8);
+                writer.WriteStringValue(BackupName);
+            }
+            if (Optional.IsDefined(BackupMetadata))
+            {
+                writer.WritePropertyName("backupMetadata"u8);
+                writer.WriteStringValue(BackupMetadata);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsDefined(PercentComplete))
+            {
+                writer.WritePropertyName("percentComplete"u8);
+                writer.WriteNumberValue(PercentComplete.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorCode))
+                {
+                    writer.WritePropertyName("errorCode"u8);
+                    writer.WriteStringValue(ErrorCode);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PostgreSqlFlexibleServerLtrBackupResult IJsonModel<PostgreSqlFlexibleServerLtrBackupResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement, options);
+        }
+
+        internal static PostgreSqlFlexibleServerLtrBackupResult DeserializePostgreSqlFlexibleServerLtrBackupResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +133,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<double> percentComplete = default;
             Optional<string> errorCode = default;
             Optional<string> errorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -117,8 +223,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlFlexibleServerLtrBackupResult(Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupName.Value, backupMetadata.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostgreSqlFlexibleServerLtrBackupResult(Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupName.Value, backupMetadata.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerLtrBackupResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PostgreSqlFlexibleServerLtrBackupResult IPersistableModel<PostgreSqlFlexibleServerLtrBackupResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<PostgreSqlFlexibleServerLtrBackupResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

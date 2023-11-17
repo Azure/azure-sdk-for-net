@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,22 +14,56 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application gateway backendhealth http settings. </summary>
     public partial class ApplicationGatewayBackendHealthServer
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthServer. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthServer"/>. </summary>
         internal ApplicationGatewayBackendHealthServer()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthServer"/>. </summary>
         /// <param name="address"> IP address or FQDN of backend server. </param>
         /// <param name="ipConfiguration"> Reference to IP configuration of backend server. </param>
         /// <param name="health"> Health of backend server. </param>
         /// <param name="healthProbeLog"> Health Probe Log. </param>
-        internal ApplicationGatewayBackendHealthServer(string address, NetworkInterfaceIPConfigurationData ipConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayBackendHealthServer(string address, NetworkInterfaceIPConfigurationData ipConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             IPConfiguration = ipConfiguration;
             Health = health;
             HealthProbeLog = healthProbeLog;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP address or FQDN of backend server. </summary>

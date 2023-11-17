@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackRuleResource(Client, LocalRulestackRuleData.DeserializeLocalRulestackRuleData(e)), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, "LocalRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LocalRulestackRuleResource(Client, LocalRulestackRuleData.DeserializeLocalRulestackRuleData(e)), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, "LocalRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackRuleResource(Client, LocalRulestackRuleData.DeserializeLocalRulestackRuleData(e)), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, "LocalRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LocalRulestackRuleResource(Client, LocalRulestackRuleData.DeserializeLocalRulestackRuleData(e)), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, "LocalRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

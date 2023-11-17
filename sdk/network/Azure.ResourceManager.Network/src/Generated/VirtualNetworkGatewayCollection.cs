@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkGatewayResource(Client, VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(e)), _virtualNetworkGatewayClientDiagnostics, Pipeline, "VirtualNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualNetworkGatewayResource(Client, VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(e)), _virtualNetworkGatewayClientDiagnostics, Pipeline, "VirtualNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkGatewayResource(Client, VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(e)), _virtualNetworkGatewayClientDiagnostics, Pipeline, "VirtualNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualNetworkGatewayResource(Client, VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(e)), _virtualNetworkGatewayClientDiagnostics, Pipeline, "VirtualNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

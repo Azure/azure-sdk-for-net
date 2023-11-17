@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class NotificationRegistrationProperties : IUtf8JsonSerializable
+    public partial class NotificationRegistrationProperties : IUtf8JsonSerializable, IJsonModel<NotificationRegistrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationRegistrationProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NotificationRegistrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NotificationRegistrationProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NotificationRegistrationProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NotificationMode))
             {
@@ -51,11 +61,40 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationRegistrationProperties DeserializeNotificationRegistrationProperties(JsonElement element)
+        NotificationRegistrationProperties IJsonModel<NotificationRegistrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationRegistrationProperties(document.RootElement, options);
+        }
+
+        internal static NotificationRegistrationProperties DeserializeNotificationRegistrationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +104,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<string>> includedEvents = default;
             Optional<IList<NotificationEndpoint>> notificationEndpoints = default;
             Optional<ProviderHubProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationMode"u8))
@@ -122,8 +163,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NotificationRegistrationProperties(Optional.ToNullable(notificationMode), Optional.ToNullable(messageScope), Optional.ToList(includedEvents), Optional.ToList(notificationEndpoints), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NotificationRegistrationProperties(Optional.ToNullable(notificationMode), Optional.ToNullable(messageScope), Optional.ToList(includedEvents), Optional.ToList(notificationEndpoints), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotificationRegistrationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NotificationRegistrationProperties IPersistableModel<NotificationRegistrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNotificationRegistrationProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<NotificationRegistrationProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

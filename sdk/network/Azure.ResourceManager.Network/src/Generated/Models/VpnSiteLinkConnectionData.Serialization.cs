@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -14,11 +17,26 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnSiteLinkConnectionData : IUtf8JsonSerializable
+    public partial class VpnSiteLinkConnectionData : IUtf8JsonSerializable, IJsonModel<VpnSiteLinkConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnSiteLinkConnectionData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VpnSiteLinkConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VpnSiteLinkConnectionData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VpnSiteLinkConnectionData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -28,6 +46,14 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ResourceType.Value);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -46,10 +72,34 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("vpnLinkConnectionMode"u8);
                 writer.WriteStringValue(VpnLinkConnectionMode.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConnectionStatus))
+                {
+                    writer.WritePropertyName("connectionStatus"u8);
+                    writer.WriteStringValue(ConnectionStatus.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(VpnConnectionProtocolType))
             {
                 writer.WritePropertyName("vpnConnectionProtocolType"u8);
                 writer.WriteStringValue(VpnConnectionProtocolType.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IngressBytesTransferred))
+                {
+                    writer.WritePropertyName("ingressBytesTransferred"u8);
+                    writer.WriteNumberValue(IngressBytesTransferred.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EgressBytesTransferred))
+                {
+                    writer.WritePropertyName("egressBytesTransferred"u8);
+                    writer.WriteNumberValue(EgressBytesTransferred.Value);
+                }
             }
             if (Optional.IsDefined(ConnectionBandwidth))
             {
@@ -101,6 +151,14 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
                 writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(IngressNatRules))
             {
                 writer.WritePropertyName("ingressNatRules"u8);
@@ -122,11 +180,40 @@ namespace Azure.ResourceManager.Network
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VpnSiteLinkConnectionData DeserializeVpnSiteLinkConnectionData(JsonElement element)
+        VpnSiteLinkConnectionData IJsonModel<VpnSiteLinkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VpnSiteLinkConnectionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnSiteLinkConnectionData(document.RootElement, options);
+        }
+
+        internal static VpnSiteLinkConnectionData DeserializeVpnSiteLinkConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -153,6 +240,8 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IList<WritableSubResource>> ingressNatRules = default;
             Optional<IList<WritableSubResource>> egressNatRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -377,8 +466,38 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToList(vpnGatewayCustomBgpAddresses), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToList(vpnGatewayCustomBgpAddresses), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
         }
+
+        BinaryData IPersistableModel<VpnSiteLinkConnectionData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VpnSiteLinkConnectionData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VpnSiteLinkConnectionData IPersistableModel<VpnSiteLinkConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VpnSiteLinkConnectionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVpnSiteLinkConnectionData(document.RootElement, options);
+        }
+
+        string IPersistableModel<VpnSiteLinkConnectionData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

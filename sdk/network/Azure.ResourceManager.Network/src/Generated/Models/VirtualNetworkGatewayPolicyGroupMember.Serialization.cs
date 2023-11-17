@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkGatewayPolicyGroupMember : IUtf8JsonSerializable
+    public partial class VirtualNetworkGatewayPolicyGroupMember : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayPolicyGroupMember>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayPolicyGroupMember>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualNetworkGatewayPolicyGroupMember>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualNetworkGatewayPolicyGroupMember>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualNetworkGatewayPolicyGroupMember>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("attributeValue"u8);
                 writer.WriteStringValue(AttributeValue);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkGatewayPolicyGroupMember DeserializeVirtualNetworkGatewayPolicyGroupMember(JsonElement element)
+        VirtualNetworkGatewayPolicyGroupMember IJsonModel<VirtualNetworkGatewayPolicyGroupMember>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayPolicyGroupMember)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkGatewayPolicyGroupMember(document.RootElement, options);
+        }
+
+        internal static VirtualNetworkGatewayPolicyGroupMember DeserializeVirtualNetworkGatewayPolicyGroupMember(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<VpnPolicyMemberAttributeType> attributeType = default;
             Optional<string> attributeValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.Network.Models
                     attributeValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualNetworkGatewayPolicyGroupMember(name.Value, Optional.ToNullable(attributeType), attributeValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualNetworkGatewayPolicyGroupMember(name.Value, Optional.ToNullable(attributeType), attributeValue.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualNetworkGatewayPolicyGroupMember>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayPolicyGroupMember)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualNetworkGatewayPolicyGroupMember IPersistableModel<VirtualNetworkGatewayPolicyGroupMember>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayPolicyGroupMember)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworkGatewayPolicyGroupMember(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualNetworkGatewayPolicyGroupMember>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

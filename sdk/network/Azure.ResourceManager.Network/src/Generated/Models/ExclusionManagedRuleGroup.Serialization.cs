@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExclusionManagedRuleGroup : IUtf8JsonSerializable
+    public partial class ExclusionManagedRuleGroup : IUtf8JsonSerializable, IJsonModel<ExclusionManagedRuleGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExclusionManagedRuleGroup>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ExclusionManagedRuleGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExclusionManagedRuleGroup>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExclusionManagedRuleGroup>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
@@ -28,17 +38,48 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExclusionManagedRuleGroup DeserializeExclusionManagedRuleGroup(JsonElement element)
+        ExclusionManagedRuleGroup IJsonModel<ExclusionManagedRuleGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExclusionManagedRuleGroup(document.RootElement, options);
+        }
+
+        internal static ExclusionManagedRuleGroup DeserializeExclusionManagedRuleGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string ruleGroupName = default;
             Optional<IList<ExclusionManagedRule>> rules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleGroupName"u8))
@@ -60,8 +101,38 @@ namespace Azure.ResourceManager.Network.Models
                     rules = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExclusionManagedRuleGroup(ruleGroupName, Optional.ToList(rules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExclusionManagedRuleGroup(ruleGroupName, Optional.ToList(rules), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExclusionManagedRuleGroup>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExclusionManagedRuleGroup IPersistableModel<ExclusionManagedRuleGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExclusionManagedRuleGroup(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExclusionManagedRuleGroup>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

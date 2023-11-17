@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ManagementEventRuleCondition : IUtf8JsonSerializable
+    public partial class ManagementEventRuleCondition : IUtf8JsonSerializable, IJsonModel<ManagementEventRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementEventRuleCondition>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagementEventRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagementEventRuleCondition>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagementEventRuleCondition>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Aggregation))
             {
@@ -27,11 +38,40 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagementEventRuleCondition DeserializeManagementEventRuleCondition(JsonElement element)
+        ManagementEventRuleCondition IJsonModel<ManagementEventRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementEventRuleCondition(document.RootElement, options);
+        }
+
+        internal static ManagementEventRuleCondition DeserializeManagementEventRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<ManagementEventAggregationCondition> aggregation = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregation"u8))
@@ -64,8 +106,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagementEventRuleCondition(odataType, dataSource.Value, aggregation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagementEventRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData, aggregation.Value);
         }
+
+        BinaryData IPersistableModel<ManagementEventRuleCondition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagementEventRuleCondition IPersistableModel<ManagementEventRuleCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagementEventRuleCondition(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagementEventRuleCondition>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

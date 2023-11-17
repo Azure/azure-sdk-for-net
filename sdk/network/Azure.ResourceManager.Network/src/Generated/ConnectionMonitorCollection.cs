@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ConnectionMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ConnectionMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

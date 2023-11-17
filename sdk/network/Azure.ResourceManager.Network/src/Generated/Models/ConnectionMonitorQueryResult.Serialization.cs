@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorQueryResult
+    public partial class ConnectionMonitorQueryResult : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorQueryResult>
     {
-        internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorQueryResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConnectionMonitorQueryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectionMonitorQueryResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SourceStatus))
+            {
+                writer.WritePropertyName("sourceStatus"u8);
+                writer.WriteStringValue(SourceStatus.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(States))
+            {
+                writer.WritePropertyName("states"u8);
+                writer.WriteStartArray();
+                foreach (var item in States)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectionMonitorQueryResult IJsonModel<ConnectionMonitorQueryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionMonitorQueryResult(document.RootElement, options);
+        }
+
+        internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
             Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceStatus"u8))
@@ -46,8 +108,38 @@ namespace Azure.ResourceManager.Network.Models
                     states = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectionMonitorQueryResult(Optional.ToNullable(sourceStatus), Optional.ToList(states));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectionMonitorQueryResult(Optional.ToNullable(sourceStatus), Optional.ToList(states), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectionMonitorQueryResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectionMonitorQueryResult IPersistableModel<ConnectionMonitorQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectionMonitorQueryResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectionMonitorQueryResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

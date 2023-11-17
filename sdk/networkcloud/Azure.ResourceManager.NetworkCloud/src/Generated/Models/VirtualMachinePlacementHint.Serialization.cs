@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class VirtualMachinePlacementHint : IUtf8JsonSerializable
+    public partial class VirtualMachinePlacementHint : IUtf8JsonSerializable, IJsonModel<VirtualMachinePlacementHint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachinePlacementHint>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualMachinePlacementHint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualMachinePlacementHint>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualMachinePlacementHint>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("hintType"u8);
             writer.WriteStringValue(HintType.ToString());
@@ -23,11 +34,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(SchedulingExecution.ToString());
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachinePlacementHint DeserializeVirtualMachinePlacementHint(JsonElement element)
+        VirtualMachinePlacementHint IJsonModel<VirtualMachinePlacementHint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachinePlacementHint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachinePlacementHint(document.RootElement, options);
+        }
+
+        internal static VirtualMachinePlacementHint DeserializeVirtualMachinePlacementHint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ResourceIdentifier resourceId = default;
             VirtualMachineSchedulingExecution schedulingExecution = default;
             VirtualMachinePlacementHintPodAffinityScope scope = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hintType"u8))
@@ -58,8 +100,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     scope = new VirtualMachinePlacementHintPodAffinityScope(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachinePlacementHint(hintType, resourceId, schedulingExecution, scope);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachinePlacementHint(hintType, resourceId, schedulingExecution, scope, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachinePlacementHint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachinePlacementHint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualMachinePlacementHint IPersistableModel<VirtualMachinePlacementHint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachinePlacementHint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualMachinePlacementHint(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualMachinePlacementHint>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
@@ -14,5 +15,52 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// <summary> Represents a pose. </summary>
     public readonly partial struct TrajectoryPose
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrajectoryPose"/>. </summary>
+        /// <param name="rotationWrapper"> The pose's rotation. </param>
+        /// <param name="translationWrapper"> The pose's translation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrajectoryPose(Quaternion rotationWrapper, Vector3 translationWrapper, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RotationWrapper = rotationWrapper;
+            TranslationWrapper = translationWrapper;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrajectoryPose"/> for deserialization. </summary>
+        public TrajectoryPose()
+        {
+        }
     }
 }

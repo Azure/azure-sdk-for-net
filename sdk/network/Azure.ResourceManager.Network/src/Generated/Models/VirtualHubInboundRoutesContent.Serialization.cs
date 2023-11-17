@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualHubInboundRoutesContent : IUtf8JsonSerializable
+    public partial class VirtualHubInboundRoutesContent : IUtf8JsonSerializable, IJsonModel<VirtualHubInboundRoutesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHubInboundRoutesContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualHubInboundRoutesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualHubInboundRoutesContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualHubInboundRoutesContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceUri))
             {
@@ -25,7 +36,96 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteStringValue(ConnectionType);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VirtualHubInboundRoutesContent IJsonModel<VirtualHubInboundRoutesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualHubInboundRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualHubInboundRoutesContent(document.RootElement, options);
+        }
+
+        internal static VirtualHubInboundRoutesContent DeserializeVirtualHubInboundRoutesContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Uri> resourceUri = default;
+            Optional<string> connectionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("connectionType"u8))
+                {
+                    connectionType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualHubInboundRoutesContent(resourceUri.Value, connectionType.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<VirtualHubInboundRoutesContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualHubInboundRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualHubInboundRoutesContent IPersistableModel<VirtualHubInboundRoutesContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualHubInboundRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualHubInboundRoutesContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualHubInboundRoutesContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

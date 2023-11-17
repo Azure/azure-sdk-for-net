@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, requestors, assignees, workflowNameKeyword, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, requestors, assignees, workflowNameKeyword, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowTasksClient.GetWorkflowTasks", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowTasksClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, requestors, assignees, workflowNameKeyword, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, requestors, assignees, workflowNameKeyword, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowTasksClient.GetWorkflowTasks", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowTasksClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetWorkflowTasksRequest(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, IEnumerable<string> requestors, IEnumerable<string> assignees, string workflowNameKeyword, RequestContext context)

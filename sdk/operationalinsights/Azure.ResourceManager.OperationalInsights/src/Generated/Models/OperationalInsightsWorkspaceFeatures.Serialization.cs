@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspaceFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspaceFeatures>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OperationalInsightsWorkspaceFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OperationalInsightsWorkspaceFeatures>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsDataExportEnabled))
             {
@@ -92,8 +101,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element)
+        OperationalInsightsWorkspaceFeatures IJsonModel<OperationalInsightsWorkspaceFeatures>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -162,5 +185,30 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             additionalProperties = additionalPropertiesDictionary;
             return new OperationalInsightsWorkspaceFeatures(Optional.ToNullable(enableDataExport), Optional.ToNullable(immediatePurgeDataOn30Days), Optional.ToNullable(enableLogAccessUsingOnlyResourcePermissions), clusterResourceId.Value, Optional.ToNullable(disableLocalAuth), additionalProperties);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsWorkspaceFeatures>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OperationalInsightsWorkspaceFeatures IPersistableModel<OperationalInsightsWorkspaceFeatures>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
+        }
+
+        string IPersistableModel<OperationalInsightsWorkspaceFeatures>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class DirectPeeringLocationProperties : IUtf8JsonSerializable
+    public partial class DirectPeeringLocationProperties : IUtf8JsonSerializable, IJsonModel<DirectPeeringLocationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectPeeringLocationProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DirectPeeringLocationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DirectPeeringLocationProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DirectPeeringLocationProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PeeringFacilities))
             {
@@ -36,17 +46,48 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DirectPeeringLocationProperties DeserializeDirectPeeringLocationProperties(JsonElement element)
+        DirectPeeringLocationProperties IJsonModel<DirectPeeringLocationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDirectPeeringLocationProperties(document.RootElement, options);
+        }
+
+        internal static DirectPeeringLocationProperties DeserializeDirectPeeringLocationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<DirectPeeringFacility>> peeringFacilities = default;
             Optional<IList<PeeringBandwidthOffer>> bandwidthOffers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("peeringFacilities"u8))
@@ -77,8 +118,38 @@ namespace Azure.ResourceManager.Peering.Models
                     bandwidthOffers = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DirectPeeringLocationProperties(Optional.ToList(peeringFacilities), Optional.ToList(bandwidthOffers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DirectPeeringLocationProperties(Optional.ToList(peeringFacilities), Optional.ToList(bandwidthOffers), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DirectPeeringLocationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DirectPeeringLocationProperties IPersistableModel<DirectPeeringLocationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDirectPeeringLocationProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<DirectPeeringLocationProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

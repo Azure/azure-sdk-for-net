@@ -5,32 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class StaticRoutesConfig : IUtf8JsonSerializable
+    public partial class StaticRoutesConfig : IUtf8JsonSerializable, IJsonModel<StaticRoutesConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticRoutesConfig>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StaticRoutesConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StaticRoutesConfig>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StaticRoutesConfig>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PropagateStaticRoutes))
+                {
+                    writer.WritePropertyName("propagateStaticRoutes"u8);
+                    writer.WriteBooleanValue(PropagateStaticRoutes.Value);
+                }
+            }
             if (Optional.IsDefined(VnetLocalRouteOverrideCriteria))
             {
                 writer.WritePropertyName("vnetLocalRouteOverrideCriteria"u8);
                 writer.WriteStringValue(VnetLocalRouteOverrideCriteria.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StaticRoutesConfig DeserializeStaticRoutesConfig(JsonElement element)
+        StaticRoutesConfig IJsonModel<StaticRoutesConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticRoutesConfig(document.RootElement, options);
+        }
+
+        internal static StaticRoutesConfig DeserializeStaticRoutesConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> propagateStaticRoutes = default;
             Optional<VnetLocalRouteOverrideCriterion> vnetLocalRouteOverrideCriteria = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propagateStaticRoutes"u8))
@@ -51,8 +101,38 @@ namespace Azure.ResourceManager.Network.Models
                     vnetLocalRouteOverrideCriteria = new VnetLocalRouteOverrideCriterion(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StaticRoutesConfig(Optional.ToNullable(propagateStaticRoutes), Optional.ToNullable(vnetLocalRouteOverrideCriteria));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StaticRoutesConfig(Optional.ToNullable(propagateStaticRoutes), Optional.ToNullable(vnetLocalRouteOverrideCriteria), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StaticRoutesConfig>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StaticRoutesConfig IPersistableModel<StaticRoutesConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStaticRoutesConfig(document.RootElement, options);
+        }
+
+        string IPersistableModel<StaticRoutesConfig>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

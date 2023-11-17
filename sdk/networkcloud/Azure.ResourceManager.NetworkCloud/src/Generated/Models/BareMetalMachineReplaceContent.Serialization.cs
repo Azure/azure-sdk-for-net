@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BareMetalMachineReplaceContent : IUtf8JsonSerializable
+    public partial class BareMetalMachineReplaceContent : IUtf8JsonSerializable, IJsonModel<BareMetalMachineReplaceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineReplaceContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BareMetalMachineReplaceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BareMetalMachineReplaceContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BareMetalMachineReplaceContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BmcCredentials))
             {
@@ -40,7 +51,114 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        BareMetalMachineReplaceContent IJsonModel<BareMetalMachineReplaceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BareMetalMachineReplaceContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBareMetalMachineReplaceContent(document.RootElement, options);
+        }
+
+        internal static BareMetalMachineReplaceContent DeserializeBareMetalMachineReplaceContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AdministrativeCredentials> bmcCredentials = default;
+            Optional<string> bmcMacAddress = default;
+            Optional<string> bootMacAddress = default;
+            Optional<string> machineName = default;
+            Optional<string> serialNumber = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("bmcCredentials"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("bmcMacAddress"u8))
+                {
+                    bmcMacAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("bootMacAddress"u8))
+                {
+                    bootMacAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("machineName"u8))
+                {
+                    machineName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serialNumber"u8))
+                {
+                    serialNumber = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BareMetalMachineReplaceContent(bmcCredentials.Value, bmcMacAddress.Value, bootMacAddress.Value, machineName.Value, serialNumber.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<BareMetalMachineReplaceContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BareMetalMachineReplaceContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BareMetalMachineReplaceContent IPersistableModel<BareMetalMachineReplaceContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BareMetalMachineReplaceContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBareMetalMachineReplaceContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<BareMetalMachineReplaceContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

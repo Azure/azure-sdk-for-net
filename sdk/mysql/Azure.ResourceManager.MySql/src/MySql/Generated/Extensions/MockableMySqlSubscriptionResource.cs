@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         public virtual AsyncPageable<MySqlServerResource> GetMySqlServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), MySqlServerServersClientDiagnostics, Pipeline, "MockableMySqlSubscriptionResource.GetMySqlServers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), MySqlServerServersClientDiagnostics, Pipeline, "MockableMySqlSubscriptionResource.GetMySqlServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         public virtual Pageable<MySqlServerResource> GetMySqlServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), MySqlServerServersClientDiagnostics, Pipeline, "MockableMySqlSubscriptionResource.GetMySqlServers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), MySqlServerServersClientDiagnostics, Pipeline, "MockableMySqlSubscriptionResource.GetMySqlServers", "value", null, cancellationToken);
         }
 
         /// <summary>

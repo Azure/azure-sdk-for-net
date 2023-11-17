@@ -5,16 +5,220 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KubernetesClusterNode
+    public partial class KubernetesClusterNode : IUtf8JsonSerializable, IJsonModel<KubernetesClusterNode>
     {
-        internal static KubernetesClusterNode DeserializeKubernetesClusterNode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterNode>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<KubernetesClusterNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<KubernetesClusterNode>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<KubernetesClusterNode>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AgentPoolId))
+                {
+                    writer.WritePropertyName("agentPoolId"u8);
+                    writer.WriteStringValue(AgentPoolId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AvailabilityZone))
+                {
+                    writer.WritePropertyName("availabilityZone"u8);
+                    writer.WriteStringValue(AvailabilityZone);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BareMetalMachineId))
+                {
+                    writer.WritePropertyName("bareMetalMachineId"u8);
+                    writer.WriteStringValue(BareMetalMachineId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CpuCores))
+                {
+                    writer.WritePropertyName("cpuCores"u8);
+                    writer.WriteNumberValue(CpuCores.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DetailedStatus))
+                {
+                    writer.WritePropertyName("detailedStatus"u8);
+                    writer.WriteStringValue(DetailedStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DetailedStatusMessage))
+                {
+                    writer.WritePropertyName("detailedStatusMessage"u8);
+                    writer.WriteStringValue(DetailedStatusMessage);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DiskSizeGB))
+                {
+                    writer.WritePropertyName("diskSizeGB"u8);
+                    writer.WriteNumberValue(DiskSizeGB.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Image))
+                {
+                    writer.WritePropertyName("image"u8);
+                    writer.WriteStringValue(Image);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KubernetesVersion))
+                {
+                    writer.WritePropertyName("kubernetesVersion"u8);
+                    writer.WriteStringValue(KubernetesVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Labels))
+                {
+                    writer.WritePropertyName("labels"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Labels)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MemorySizeGB))
+                {
+                    writer.WritePropertyName("memorySizeGB"u8);
+                    writer.WriteNumberValue(MemorySizeGB.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Mode))
+                {
+                    writer.WritePropertyName("mode"u8);
+                    writer.WriteStringValue(Mode.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NetworkAttachments))
+                {
+                    writer.WritePropertyName("networkAttachments"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NetworkAttachments)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PowerState))
+                {
+                    writer.WritePropertyName("powerState"u8);
+                    writer.WriteStringValue(PowerState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Role))
+                {
+                    writer.WritePropertyName("role"u8);
+                    writer.WriteStringValue(Role.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Taints))
+                {
+                    writer.WritePropertyName("taints"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Taints)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VmSkuName))
+                {
+                    writer.WritePropertyName("vmSkuName"u8);
+                    writer.WriteStringValue(VmSkuName);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KubernetesClusterNode IJsonModel<KubernetesClusterNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesClusterNode(document.RootElement, options);
+        }
+
+        internal static KubernetesClusterNode DeserializeKubernetesClusterNode(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +241,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<KubernetesNodeRole> role = default;
             Optional<IReadOnlyList<KubernetesLabel>> taints = default;
             Optional<string> vmSkuName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentPoolId"u8))
@@ -184,8 +390,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     vmSkuName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Optional.ToList(labels), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, Optional.ToList(networkAttachments), Optional.ToNullable(powerState), Optional.ToNullable(role), Optional.ToList(taints), vmSkuName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Optional.ToList(labels), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, Optional.ToList(networkAttachments), Optional.ToNullable(powerState), Optional.ToNullable(role), Optional.ToList(taints), vmSkuName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesClusterNode>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KubernetesClusterNode IPersistableModel<KubernetesClusterNode>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKubernetesClusterNode(document.RootElement, options);
+        }
+
+        string IPersistableModel<KubernetesClusterNode>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

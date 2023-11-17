@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains FQDN of the DNS record associated with the public IP address. </summary>
     public partial class PublicIPAddressDnsSettings
     {
-        /// <summary> Initializes a new instance of PublicIPAddressDnsSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressDnsSettings"/>. </summary>
         public PublicIPAddressDnsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressDnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressDnsSettings"/>. </summary>
         /// <param name="domainNameLabel"> The domain name label. The concatenation of the domain name label and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address. If a domain name label is specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system. </param>
         /// <param name="domainNameLabelScope"> The domain name label scope. If a domain name label and a domain name label scope are specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system with a hashed value includes in FQDN. </param>
         /// <param name="fqdn"> The Fully Qualified Domain Name of the A DNS record associated with the public IP. This is the concatenation of the domainNameLabel and the regionalized DNS zone. </param>
         /// <param name="reverseFqdn"> The reverse FQDN. A user-visible, fully qualified domain name that resolves to this public IP address. If the reverseFqdn is specified, then a PTR DNS record is created pointing from the IP address in the in-addr.arpa domain to the reverse FQDN. </param>
-        internal PublicIPAddressDnsSettings(string domainNameLabel, PublicIPAddressDnsSettingsDomainNameLabelScope? domainNameLabelScope, string fqdn, string reverseFqdn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublicIPAddressDnsSettings(string domainNameLabel, PublicIPAddressDnsSettingsDomainNameLabelScope? domainNameLabelScope, string fqdn, string reverseFqdn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DomainNameLabel = domainNameLabel;
             DomainNameLabelScope = domainNameLabelScope;
             Fqdn = fqdn;
             ReverseFqdn = reverseFqdn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The domain name label. The concatenation of the domain name label and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address. If a domain name label is specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system. </summary>

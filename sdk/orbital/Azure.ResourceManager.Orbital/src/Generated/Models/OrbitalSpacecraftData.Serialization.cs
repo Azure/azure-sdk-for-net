@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -14,11 +17,26 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    public partial class OrbitalSpacecraftData : IUtf8JsonSerializable
+    public partial class OrbitalSpacecraftData : IUtf8JsonSerializable, IJsonModel<OrbitalSpacecraftData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalSpacecraftData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OrbitalSpacecraftData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OrbitalSpacecraftData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OrbitalSpacecraftData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -32,6 +50,29 @@ namespace Azure.ResourceManager.Orbital
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
@@ -70,11 +111,40 @@ namespace Azure.ResourceManager.Orbital
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OrbitalSpacecraftData DeserializeOrbitalSpacecraftData(JsonElement element)
+        OrbitalSpacecraftData IJsonModel<OrbitalSpacecraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrbitalSpacecraftData(document.RootElement, options);
+        }
+
+        internal static OrbitalSpacecraftData DeserializeOrbitalSpacecraftData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +162,8 @@ namespace Azure.ResourceManager.Orbital
             Optional<string> tleLine1 = default;
             Optional<string> tleLine2 = default;
             Optional<IList<OrbitalSpacecraftLink>> links = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -201,8 +273,38 @@ namespace Azure.ResourceManager.Orbital
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OrbitalSpacecraftData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), noradId.Value, titleLine.Value, tleLine1.Value, tleLine2.Value, Optional.ToList(links));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OrbitalSpacecraftData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), noradId.Value, titleLine.Value, tleLine1.Value, tleLine2.Value, Optional.ToList(links), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OrbitalSpacecraftData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OrbitalSpacecraftData IPersistableModel<OrbitalSpacecraftData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOrbitalSpacecraftData(document.RootElement, options);
+        }
+
+        string IPersistableModel<OrbitalSpacecraftData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

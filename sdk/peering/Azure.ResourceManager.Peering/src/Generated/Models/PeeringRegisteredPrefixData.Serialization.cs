@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,11 +16,41 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeeringRegisteredPrefixData : IUtf8JsonSerializable
+    public partial class PeeringRegisteredPrefixData : IUtf8JsonSerializable, IJsonModel<PeeringRegisteredPrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringRegisteredPrefixData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PeeringRegisteredPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PeeringRegisteredPrefixData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PeeringRegisteredPrefixData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Prefix))
@@ -24,12 +58,73 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrefixValidationState))
+                {
+                    writer.WritePropertyName("prefixValidationState"u8);
+                    writer.WriteStringValue(PrefixValidationState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PeeringServicePrefixKey))
+                {
+                    writer.WritePropertyName("peeringServicePrefixKey"u8);
+                    writer.WriteStringValue(PeeringServicePrefixKey);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeeringRegisteredPrefixData DeserializePeeringRegisteredPrefixData(JsonElement element)
+        PeeringRegisteredPrefixData IJsonModel<PeeringRegisteredPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeeringRegisteredPrefixData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringRegisteredPrefixData(document.RootElement, options);
+        }
+
+        internal static PeeringRegisteredPrefixData DeserializePeeringRegisteredPrefixData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +138,8 @@ namespace Azure.ResourceManager.Peering
             Optional<string> peeringServicePrefixKey = default;
             Optional<string> errorMessage = default;
             Optional<PeeringProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -114,8 +211,38 @@ namespace Azure.ResourceManager.Peering
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeeringRegisteredPrefixData(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(prefixValidationState), peeringServicePrefixKey.Value, errorMessage.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PeeringRegisteredPrefixData(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(prefixValidationState), peeringServicePrefixKey.Value, errorMessage.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeeringRegisteredPrefixData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeeringRegisteredPrefixData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PeeringRegisteredPrefixData IPersistableModel<PeeringRegisteredPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeeringRegisteredPrefixData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePeeringRegisteredPrefixData(document.RootElement, options);
+        }
+
+        string IPersistableModel<PeeringRegisteredPrefixData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

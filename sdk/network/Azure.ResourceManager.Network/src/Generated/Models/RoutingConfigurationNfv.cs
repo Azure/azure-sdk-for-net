@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NFV version of Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
     public partial class RoutingConfigurationNfv
     {
-        /// <summary> Initializes a new instance of RoutingConfigurationNfv. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationNfv"/>. </summary>
         public RoutingConfigurationNfv()
         {
         }
 
-        /// <summary> Initializes a new instance of RoutingConfigurationNfv. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationNfv"/>. </summary>
         /// <param name="associatedRouteTable"> The resource id RouteTable associated with this RoutingConfiguration. </param>
         /// <param name="propagatedRouteTables"> The list of RouteTables to advertise the routes to. </param>
         /// <param name="inboundRouteMap"> The resource id of the RouteMap associated with this RoutingConfiguration for inbound learned routes. </param>
         /// <param name="outboundRouteMap"> The resource id of the RouteMap associated with this RoutingConfiguration for outbound advertised routes. </param>
-        internal RoutingConfigurationNfv(RoutingConfigurationNfvSubResource associatedRouteTable, PropagatedRouteTableNfv propagatedRouteTables, RoutingConfigurationNfvSubResource inboundRouteMap, RoutingConfigurationNfvSubResource outboundRouteMap)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingConfigurationNfv(RoutingConfigurationNfvSubResource associatedRouteTable, PropagatedRouteTableNfv propagatedRouteTables, RoutingConfigurationNfvSubResource inboundRouteMap, RoutingConfigurationNfvSubResource outboundRouteMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssociatedRouteTable = associatedRouteTable;
             PropagatedRouteTables = propagatedRouteTables;
             InboundRouteMap = inboundRouteMap;
             OutboundRouteMap = outboundRouteMap;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id RouteTable associated with this RoutingConfiguration. </summary>

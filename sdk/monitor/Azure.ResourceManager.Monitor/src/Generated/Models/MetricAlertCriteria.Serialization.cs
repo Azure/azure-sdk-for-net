@@ -5,15 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertCriteria : IUtf8JsonSerializable
+    public partial class MetricAlertCriteria : IUtf8JsonSerializable, IJsonModel<MetricAlertCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertCriteria>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MetricAlertCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MetricAlertCriteria>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MetricAlertCriteria>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType.ToString());
@@ -32,8 +42,22 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricAlertCriteria DeserializeMetricAlertCriteria(JsonElement element)
+        MetricAlertCriteria IJsonModel<MetricAlertCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricAlertCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricAlertCriteria(document.RootElement, options);
+        }
+
+        internal static MetricAlertCriteria DeserializeMetricAlertCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,5 +73,30 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             return UnknownMetricAlertCriteria.DeserializeUnknownMetricAlertCriteria(element);
         }
+
+        BinaryData IPersistableModel<MetricAlertCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricAlertCriteria)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MetricAlertCriteria IPersistableModel<MetricAlertCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricAlertCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMetricAlertCriteria(document.RootElement, options);
+        }
+
+        string IPersistableModel<MetricAlertCriteria>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
