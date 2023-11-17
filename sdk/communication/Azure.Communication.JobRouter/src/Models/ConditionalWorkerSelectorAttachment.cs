@@ -29,6 +29,7 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(condition, nameof(condition));
 
+            Kind = WorkerSelectorAttachmentKind.Conditional;
             Condition = condition;
         }
 

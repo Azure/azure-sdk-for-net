@@ -80,13 +80,6 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
-        /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
-        public virtual GenericResourceCollection GetGenericResources()
-        {
-            return GetCachedClient(client => new GenericResourceCollection(client, Id));
-        }
-
         /// <summary> Gets a collection of TenantPolicyDefinitionResources in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicyDefinitionResources and their operations over a TenantPolicyDefinitionResource. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
@@ -244,6 +237,13 @@ namespace Azure.ResourceManager.Resources
         public virtual Response<DataPolicyManifestResource> GetDataPolicyManifest(string policyMode, CancellationToken cancellationToken = default)
         {
             return GetDataPolicyManifests().Get(policyMode, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
+        /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
+        public virtual GenericResourceCollection GetGenericResources()
+        {
+            return GetCachedClient(client => new GenericResourceCollection(client, Id));
         }
 
         /// <summary> Gets a collection of SubscriptionResources in the Tenant. </summary>

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
+
 ### Other Changes
 
 ## 5.10.0 (2023-11-07)

@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeDocumentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>");
+AnalyzeResult responseData = operation.Value;
+]]></code>
+This sample shows how to call AnalyzeDocumentAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
+{
+    UrlSource = new Uri("http://localhost:3000"),
+    Base64Source = BinaryData.FromObjectAsJson(new object()),
+};
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", analyzeRequest: analyzeRequest, pages: "<pages>", locale: "<locale>", stringIndexType: StringIndexType.TextElements, features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: ContentFormat.Text);
+AnalyzeResult responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="AnalyzeDocument(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeDocument.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>");
+AnalyzeResult responseData = operation.Value;
+]]></code>
+This sample shows how to call AnalyzeDocument with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
+{
+    UrlSource = new Uri("http://localhost:3000"),
+    Base64Source = BinaryData.FromObjectAsJson(new object()),
+};
+Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", analyzeRequest: analyzeRequest, pages: "<pages>", locale: "<locale>", stringIndexType: StringIndexType.TextElements, features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: ContentFormat.Text);
+AnalyzeResult responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="AnalyzeDocumentAsync(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeDocumentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+using RequestContent content = null;
+Operation<BinaryData> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("stringIndexType").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+]]></code>
+This sample shows how to call AnalyzeDocumentAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    urlSource = "http://localhost:3000",
+    base64Source = new object(),
+});
+Operation<BinaryData> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", content, pages: "<pages>", locale: "<locale>", stringIndexType: "textElements", features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: "text");
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("stringIndexType").ToString());
+Console.WriteLine(result.GetProperty("contentFormat").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("angle").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("rowCount").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("columnCount").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("rowIndex").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("columnIndex").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("rowSpan").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("columnSpan").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("isHandwritten").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("similarFontFamily").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("fontStyle").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("fontWeight").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("color").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("backgroundColor").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("locale").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("docType").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueDate").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSignature").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueDate").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valuePhoneNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("poBox").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("road").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("city").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("postalCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("suburb").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="AnalyzeDocument(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeDocument and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+using RequestContent content = null;
+Operation<BinaryData> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("stringIndexType").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+]]></code>
+This sample shows how to call AnalyzeDocument with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    urlSource = "http://localhost:3000",
+    base64Source = new object(),
+});
+Operation<BinaryData> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", content, pages: "<pages>", locale: "<locale>", stringIndexType: "textElements", features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: "text");
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("stringIndexType").ToString());
+Console.WriteLine(result.GetProperty("contentFormat").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("angle").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("rowCount").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("columnCount").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("rowIndex").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("columnIndex").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("rowSpan").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("columnSpan").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("isHandwritten").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("similarFontFamily").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("fontStyle").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("fontWeight").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("color").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("backgroundColor").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("locale").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("docType").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueDate").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSignature").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueDate").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valuePhoneNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("poBox").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("road").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("city").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("postalCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("suburb").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,CancellationToken)">
+      <example>
+This sample shows how to call ClassifyDocumentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", classifyRequest);
+AnalyzeResult responseData = operation.Value;
+]]></code>
+This sample shows how to call ClassifyDocumentAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+{
+    UrlSource = new Uri("http://localhost:3000"),
+    Base64Source = BinaryData.FromObjectAsJson(new object()),
+};
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", classifyRequest, stringIndexType: StringIndexType.TextElements, split: SplitMode.Auto);
+AnalyzeResult responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="ClassifyDocument(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,CancellationToken)">
+      <example>
+This sample shows how to call ClassifyDocument.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
+Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", classifyRequest);
+AnalyzeResult responseData = operation.Value;
+]]></code>
+This sample shows how to call ClassifyDocument with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+{
+    UrlSource = new Uri("http://localhost:3000"),
+    Base64Source = BinaryData.FromObjectAsJson(new object()),
+};
+Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", classifyRequest, stringIndexType: StringIndexType.TextElements, split: SplitMode.Auto);
+AnalyzeResult responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="ClassifyDocumentAsync(WaitUntil,string,RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call ClassifyDocumentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("stringIndexType").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+]]></code>
+This sample shows how to call ClassifyDocumentAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    urlSource = "http://localhost:3000",
+    base64Source = new object(),
+});
+Operation<BinaryData> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", content, stringIndexType: "textElements", split: "auto");
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("stringIndexType").ToString());
+Console.WriteLine(result.GetProperty("contentFormat").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("angle").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("rowCount").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("columnCount").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("rowIndex").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("columnIndex").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("rowSpan").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("columnSpan").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("isHandwritten").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("similarFontFamily").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("fontStyle").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("fontWeight").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("color").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("backgroundColor").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("locale").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("docType").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueDate").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSignature").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueDate").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valuePhoneNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("poBox").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("road").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("city").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("postalCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("suburb").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="ClassifyDocument(WaitUntil,string,RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call ClassifyDocument and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("stringIndexType").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+]]></code>
+This sample shows how to call ClassifyDocument with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    urlSource = "http://localhost:3000",
+    base64Source = new object(),
+});
+Operation<BinaryData> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", content, stringIndexType: "textElements", split: "auto");
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("stringIndexType").ToString());
+Console.WriteLine(result.GetProperty("contentFormat").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("angle").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("words")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("selectionMarks")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("lines")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("barcodes")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("span").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("span").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("pages")[0].GetProperty("formulas")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("paragraphs")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("rowCount").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("columnCount").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("rowIndex").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("columnIndex").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("rowSpan").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("columnSpan").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("cells")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("caption").GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("tables")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("caption").GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("sections")[0].GetProperty("elements")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("key").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("value").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("isHandwritten").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("similarFontFamily").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("fontStyle").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("fontWeight").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("color").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("backgroundColor").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("styles")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("locale").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("languages")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("docType").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueDate").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSignature").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueDate").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valuePhoneNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("poBox").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("road").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("city").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("postalCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("suburb").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("confidence").ToString());
+Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -85,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
 
-                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                    destination.Add(tag.Key, Convert.ToString(tag.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                 }
             }
         }
