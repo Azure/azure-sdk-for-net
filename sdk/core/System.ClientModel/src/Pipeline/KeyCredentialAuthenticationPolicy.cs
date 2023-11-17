@@ -9,8 +9,9 @@ namespace System.ClientModel.Primitives;
 public class KeyCredentialAuthenticationPolicy : PipelinePolicy
 {
     private readonly string _headerName;
-    private readonly KeyCredential _credential;
     private readonly string? _keyPrefix;
+
+    private readonly KeyCredential _credential;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="KeyCredentialAuthenticationPolicy"/> class.
@@ -27,13 +28,14 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         ClientUtilities.AssertNotNullOrEmpty(headerName, nameof(headerName));
 
         _credential = credential;
+
         _headerName = headerName;
         _keyPrefix = keyPrefix;
     }
 
     public override void Process(PipelineMessage message, PipelineProcessor pipeline)
     {
-        string key = _credential.Key;
+        string key = _credential.GetValue();
 
         message.Request.Headers.Set(_headerName, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
 
@@ -42,7 +44,7 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
 
     public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
     {
-        string key = _credential.Key;
+        string key = _credential.GetValue();
 
         message.Request.Headers.Set(_headerName, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
 

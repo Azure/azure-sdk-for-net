@@ -21,9 +21,9 @@ public class MapsClientTests
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-        OutputMessage<IPAddressCountryPair> result = client.GetCountryCode(ipAddress);
+        OutputMessage<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
 
-        Assert.AreEqual("US", result.Value.CountryRegion.IsoCode);
-        Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), result.Value.IpAddress);
+        Assert.AreEqual("US", output.Value.CountryRegion.IsoCode);
+        Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), output.Value.IpAddress);
     }
 }

@@ -22,7 +22,7 @@ namespace System.ClientModel
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
-        public string Key { get { throw null; } }
+        public string GetValue() { throw null; }
         public void Update(string key) { }
     }
     public static partial class ModelReaderWriter
