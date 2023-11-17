@@ -15,74 +15,49 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
-using NUnit.Framework;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
     [ShareClientTestFixture]
-    public class PageBlobToShareFileTests : StartTransferCopyTestBase
-        <BlobServiceClient,
-        BlobContainerClient,
-        PageBlobClient,
-        BlobClientOptions,
-        ShareServiceClient,
+    public class ShareFileToPageBlobTests : StartTransferCopyTestBase
+        <ShareServiceClient,
         ShareClient,
         ShareFileClient,
         ShareClientOptions,
+        BlobServiceClient,
+        BlobContainerClient,
+        PageBlobClient,
+        BlobClientOptions,
         StorageTestEnvironment>
     {
         public const int MaxReliabilityRetries = 5;
-        private const string _fileResourcePrefix = "test-file-";
-        private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
+        private const string _blobResourcePrefix = "test-blob-";
+        private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
         protected readonly object _serviceVersion;
 
-        public PageBlobToShareFileTests(
+        public ShareFileToPageBlobTests(
             bool async,
             object serviceVersion)
-            : base(async, _expectedOverwriteExceptionMessage, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, _expectedOverwriteExceptionMessage, _blobResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
         {
             _serviceVersion = serviceVersion;
-            SourceClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, (BlobClientOptions.ServiceVersion)serviceVersion);
-            DestinationClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, (ShareClientOptions.ServiceVersion)serviceVersion);
+            SourceClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, (ShareClientOptions.ServiceVersion)serviceVersion);
+            DestinationClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, (BlobClientOptions.ServiceVersion)serviceVersion);
         }
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(
-            BlobServiceClient service = default,
-            string containerName = default)
-            => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
-
-        /// <summary>
-        /// Gets the specific storage resource from the given client
-        /// e.g. ShareFileClient to a ShareFileStorageResource, BlockBlobClient to a BlockBlobStorageResource.
-        /// </summary>
-        /// <param name="objectClient">The object client to create the storage resource object.</param>
-        /// <returns></returns>
-        protected override StorageResourceItem GetSourceStorageResourceItem(PageBlobClient blob)
-        {
-            return new PageBlobStorageResource(blob);
-        }
-
-        /// <summary>
-        /// Calls the OpenRead method on the client.
-        ///
-        /// This is mainly used to verify the contents of the Object Client.
-        /// </summary>
-        /// <param name="objectClient">The object client to get the Open Read Stream from.</param>
-        /// <returns></returns>
-        protected override Task<Stream> SourceOpenReadAsync(PageBlobClient objectClient)
-            => objectClient.OpenReadAsync();
-
-        /// <summary>
-        /// Checks if the Object Client exists.
-        /// </summary>
-        /// <param name="objectClient">Object Client to call exists on.</param>
-        /// <returns></returns>
-        protected override async Task<bool> SourceExistsAsync(PageBlobClient objectClient)
+        protected override async Task<bool> DestinationExistsAsync(PageBlobClient objectClient)
             => await objectClient.ExistsAsync();
 
-        protected override async Task<PageBlobClient> GetSourceObjectClientAsync(
+        protected override Task<Stream> DestinationOpenReadAsync(PageBlobClient objectClient)
+            => objectClient.OpenReadAsync();
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+            => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
+
+        protected override async Task<PageBlobClient> GetDestinationObjectClientAsync(
             BlobContainerClient container,
             long? objectLength = null,
             bool createResource = false,
@@ -130,10 +105,19 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
         }
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
-            => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
+        protected override StorageResourceItem GetDestinationStorageResourceItem(PageBlobClient objectClient)
+            => new PageBlobStorageResource(objectClient);
 
-        protected override async Task<ShareFileClient> GetDestinationObjectClientAsync(ShareClient container, long? objectLength = null, bool createResource = false, string objectName = null, ShareClientOptions options = null, Stream contents = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+            => await SourceClientBuilder.GetTestShareAsync(service, containerName);
+
+        protected override async Task<ShareFileClient> GetSourceObjectClientAsync(
+            ShareClient container,
+            long? objectLength = null,
+            bool createResource = false,
+            string objectName = null,
+            ShareClientOptions options = null,
+            Stream contents = null)
         {
             objectName ??= GetNewObjectName();
             ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
@@ -154,14 +138,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));
         }
 
-        protected override StorageResourceItem GetDestinationStorageResourceItem(ShareFileClient objectClient)
+        protected override StorageResourceItem GetSourceStorageResourceItem(ShareFileClient objectClient)
             => new ShareFileStorageResource(objectClient);
 
-        protected override Task<Stream> DestinationOpenReadAsync(ShareFileClient objectClient)
-            => objectClient.OpenReadAsync();
-
-        protected override async Task<bool> DestinationExistsAsync(ShareFileClient objectClient)
+        protected override async Task<bool> SourceExistsAsync(ShareFileClient objectClient)
             => await objectClient.ExistsAsync();
+
+        protected override Task<Stream> SourceOpenReadAsync(ShareFileClient objectClient)
+            => objectClient.OpenReadAsync();
 
         public BlobClientOptions GetBlobOptions()
         {
