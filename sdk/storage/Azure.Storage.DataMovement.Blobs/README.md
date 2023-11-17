@@ -154,7 +154,7 @@ await tranfer.WaitForCompletionAsync();
 Azure.Storage.DataMovement.Blobs exposes `BlobsStorageResourceProvider` to create `StorageResource` instances for each type of blob (block, page, append) as well as a blob container. The resource provider should be initialized with a credential to properly authenticate the storage resources. The following demonstrates this using an `Azure.Core` token credential.
 
 ```C# Snippet:MakeProvider_TokenCredential
-BlobStorageResourceProvider blobs = new(tokenCredential);
+BlobsStorageResourceProvider blobs = new(tokenCredential);
 ```
 
 For workflows that require specific credentials for specific Blob Storage resources, the resource provider can be initialized with a delegate to construct the appropriate credential from the resource's URI. The following demonstrates a provider that produces a sas scoped to the resource from a `StorageSharedKeyCredential`.
@@ -177,7 +177,7 @@ BlobStorageResourceProvider blobs = new(GenerateSas);
 
 To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer`.
 
-```C# Snippet:MakeProvider_SasFactory
+```C# Snippet:ResourceConstruction_Blobs
 StorageResource container = blobs.FromContainer(
     "http://myaccount.blob.core.windows.net/container");
 
@@ -195,7 +195,7 @@ StorageResource blockBlob = blobs.FromBlob(
 
 Storage resources can also be initialized with the appropriate client object from Azure.Storage.Blobs. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `BlobsStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.
 
-```C# Snippet:ResourceConstruction_Blobs
+```C# Snippet:ResourceConstruction_FromClients_Blobs
 BlobsStorageResourceProvider blobs = new();
 StorageResource containerResource = blobs.FromClient(blobContainerClient);
 StorageResource blockBlobResource = blobs.FromClient(blockBlobClient);
