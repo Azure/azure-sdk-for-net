@@ -25,6 +25,9 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.csproj" />
   </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) != 'net462'">
+    <ProjectReference Include="..\samples\aspnethostedservice\Azure.Messaging.EventHubs.Samples.Processor.HostedService.csproj" />
+  </ItemGroup>
 
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Testing.projitems" Label="Testing" />
