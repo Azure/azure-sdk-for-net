@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ElasticSan
     public partial class ElasticSanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ElasticSanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="elasticSanName"> The elasticSanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}";
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An object representing collection of ElasticSanVolumeGroupResources and their operations over a ElasticSanVolumeGroupResource. </returns>
         public virtual ElasticSanVolumeGroupCollection GetElasticSanVolumeGroups()
         {
-            return GetCachedClient(Client => new ElasticSanVolumeGroupCollection(Client, Id));
+            return GetCachedClient(client => new ElasticSanVolumeGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ElasticSanVolumeGroupResource>> GetElasticSanVolumeGroupAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ElasticSanVolumeGroupResource> GetElasticSanVolumeGroup(string volumeGroupName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An object representing collection of ElasticSanPrivateEndpointConnectionResources and their operations over a ElasticSanPrivateEndpointConnectionResource. </returns>
         public virtual ElasticSanPrivateEndpointConnectionCollection GetElasticSanPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new ElasticSanPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ElasticSanPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -169,8 +172,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the Private Endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ElasticSanPrivateEndpointConnectionResource>> GetElasticSanPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -192,8 +195,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the Private Endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ElasticSanPrivateEndpointConnectionResource> GetElasticSanPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {

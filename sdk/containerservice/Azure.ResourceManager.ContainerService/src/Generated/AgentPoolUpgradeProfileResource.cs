@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService
     public partial class AgentPoolUpgradeProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AgentPoolUpgradeProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="agentPoolName"> The agentPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default";

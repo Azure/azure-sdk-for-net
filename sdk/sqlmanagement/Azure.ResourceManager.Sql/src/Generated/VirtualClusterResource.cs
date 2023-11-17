@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Sql
     public partial class VirtualClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualClusterName"> The virtualClusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualClusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}";

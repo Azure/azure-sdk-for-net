@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor
     public partial class FrontDoorNetworkExperimentProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorNetworkExperimentProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}";
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An object representing collection of FrontDoorExperimentResources and their operations over a FrontDoorExperimentResource. </returns>
         public virtual FrontDoorExperimentCollection GetFrontDoorExperiments()
         {
-            return GetCachedClient(Client => new FrontDoorExperimentCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorExperimentCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorExperimentResource>> GetFrontDoorExperimentAsync(string experimentName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorExperimentResource> GetFrontDoorExperiment(string experimentName, CancellationToken cancellationToken = default)
         {

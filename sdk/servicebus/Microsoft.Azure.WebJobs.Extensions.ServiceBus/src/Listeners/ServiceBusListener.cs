@@ -63,11 +63,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         // Serialize execution of StopAsync to avoid calling Unregister* concurrently
         private readonly SemaphoreSlim _stopAsyncSemaphore = new SemaphoreSlim(1, 1);
         private readonly string _functionId;
-        private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
         private Lazy<string> _details;
         private Lazy<MessagingClientDiagnostics> _clientDiagnostics;
         private readonly IDrainModeManager _drainModeManager;
+        private readonly MessagingProvider _messagingProvider;
 
         public ServiceBusListener(
             string functionId,
@@ -94,6 +94,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
             _functionId = functionId;
             _drainModeManager = drainModeManager;
+            _messagingProvider = messagingProvider;
 
             _client = new Lazy<ServiceBusClient>(
                 () => clientFactory.CreateClientFromSetting(connection));
@@ -304,12 +305,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _stoppingCancellationTokenSource.Cancel();
             _functionExecutionCancellationTokenSource.Cancel();
 
-            if (_batchReceiver.IsValueCreated)
-            {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                _batchReceiver.Value.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-            }
+            // ServiceBusClient and receivers will be disposed in CachedClientCleanupService, so as not to dispose it while it's still in
+            // use by other listeners. Processors are disposed here as they cannot be shared amongst listeners.
 
             if (_messageProcessor.IsValueCreated)
             {
@@ -325,16 +322,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
-            if (_client.IsValueCreated)
-            {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                _client.Value.DisposeAsync().AsTask().GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-            }
-
             _stopAsyncSemaphore.Dispose();
             _stoppingCancellationTokenSource.Dispose();
-            _batchReceiveRegistration.Dispose();
             _concurrencyUpdateManager?.Dispose();
 
             // No need to dispose the _functionExecutionCancellationTokenSource since we don't create it as a linked token and
@@ -355,6 +344,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _stoppingCancellationTokenSource.Token))
             {
                 var actions = new ServiceBusMessageActions(args);
+                _messagingProvider.ActionsCache.TryAdd(args.Message.LockToken, (args.Message, actions));
+
                 if (!await _messageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
                 {
                     return;
@@ -374,6 +365,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 finally
                 {
                     receiveActions.EndExecutionScope();
+                    _messagingProvider.ActionsCache.TryRemove(args.Message.LockToken, out _);
                 }
             }
         }
@@ -388,6 +380,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _stoppingCancellationTokenSource.Token))
             {
                 var actions = new ServiceBusSessionMessageActions(args);
+                _messagingProvider.ActionsCache.TryAdd(args.Message.LockToken, (args.Message, actions));
+
                 if (!await _sessionMessageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token)
                     .ConfigureAwait(false))
                 {
@@ -413,6 +407,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 finally
                 {
                     receiveActions.EndExecutionScope();
+                    _messagingProvider.ActionsCache.TryRemove(args.Message.LockToken, out _);
                 }
             }
         }
@@ -494,6 +489,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         var messageActions = _isSessionsEnabled
                             ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver)
                             : new ServiceBusMessageActions(receiver);
+
+                        foreach (var message in messages)
+                        {
+                            _messagingProvider.ActionsCache.TryAdd(message.LockToken, (message, messageActions));
+                        }
+
                         var receiveActions = new ServiceBusReceiveActions(receiver);
 
                         ServiceBusReceivedMessage[] messagesArray = _supportMinBatchSize ? Array.Empty<ServiceBusReceivedMessage>() : messages.ToArray();
@@ -656,55 +657,67 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             ActivityKind.Consumer,
                             MessagingDiagnosticOperation.Process);
 
-            scope.SetMessageData(messagesArray);
-
-            scope.Start();
-            FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), _functionExecutionCancellationTokenSource.Token).ConfigureAwait(false);
-            if (result.Exception != null)
+            try
             {
-                scope.Failed(result.Exception);
-            }
-            receiveActions.EndExecutionScope();
+                scope.SetMessageData(messagesArray);
 
-            var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
-            // Complete batch of messages only if the execution was successful
-            if (_autoCompleteMessages && result.Succeeded)
-            {
-                List<Task> completeTasks = new List<Task>();
-                foreach (ServiceBusReceivedMessage message in processedMessages)
+                scope.Start();
+                FunctionResult result = await _triggerExecutor
+                    .TryExecuteAsync(input.GetTriggerFunctionData(), _functionExecutionCancellationTokenSource.Token).ConfigureAwait(false);
+                if (result.Exception != null)
                 {
-                    // Skip messages that were settled in the user's function
-                    if (input.MessageActions.SettledMessages.ContainsKey(message))
-                    {
-                        continue;
-                    }
-
-                    // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
-                    completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
+                    scope.Failed(result.Exception);
                 }
 
-                await Task.WhenAll(completeTasks).ConfigureAwait(false);
-            }
-            else if (!result.Succeeded)
-            {
-                // For failed executions, we abandon the messages regardless of the autoCompleteMessages configuration.
-                // This matches the behavior that happens for single dispatch functions as the processor does the same thing
-                // in the Service Bus SDK.
+                receiveActions.EndExecutionScope();
 
-                List<Task> abandonTasks = new();
-                foreach (ServiceBusReceivedMessage message in processedMessages)
+                var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
+                // Complete batch of messages only if the execution was successful
+                if (_autoCompleteMessages && result.Succeeded)
                 {
-                    // skip messages that were settled in the user's function
-                    if (input.MessageActions.SettledMessages.ContainsKey(message))
+                    List<Task> completeTasks = new List<Task>(messagesArray.Length + receiveActions.Messages.Keys.Count);
+                    foreach (ServiceBusReceivedMessage message in processedMessages)
                     {
-                        continue;
+                        // Skip messages that were settled in the user's function
+                        if (input.MessageActions.SettledMessages.ContainsKey(message))
+                        {
+                            continue;
+                        }
+
+                        // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
+                        completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
                     }
 
-                    // Pass CancellationToken.None to allow abandon to finish even when shutting down
-                    abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
+                    await Task.WhenAll(completeTasks).ConfigureAwait(false);
                 }
+                else if (!result.Succeeded)
+                {
+                    // For failed executions, we abandon the messages regardless of the autoCompleteMessages configuration.
+                    // This matches the behavior that happens for single dispatch functions as the processor does the same thing
+                    // in the Service Bus SDK.
 
-                await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                    List<Task> abandonTasks = new();
+                    foreach (ServiceBusReceivedMessage message in processedMessages)
+                    {
+                        // skip messages that were settled in the user's function
+                        if (input.MessageActions.SettledMessages.ContainsKey(message))
+                        {
+                            continue;
+                        }
+
+                        // Pass CancellationToken.None to allow abandon to finish even when shutting down
+                        abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
+                    }
+
+                    await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                }
+            }
+            finally
+            {
+                foreach (var message in input.Messages)
+                {
+                    _messagingProvider.ActionsCache.TryRemove(message.LockToken, out _);
+                }
             }
         }
 

@@ -2,37 +2,56 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
-    internal partial class CheckpointerExtensions
+    internal static partial class CheckpointerExtensions
     {
+        internal static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
+        {
+            if (!string.IsNullOrEmpty(options?.CheckpointerPath))
+            {
+                return new LocalTransferCheckpointer(options.CheckpointerPath);
+            }
+            else
+            {
+                // Default TransferCheckpointer
+                return new LocalTransferCheckpointer(default);
+            }
+        }
+
+        internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
+
+        internal static async Task<DataTransferStatus> GetJobStatusAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            CancellationToken cancellationToken = default)
+        {
+            using (Stream stream = await checkpointer.ReadJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.JobStatusIndex,
+                DataMovementConstants.IntSizeInBytes,
+                cancellationToken).ConfigureAwait(false))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+                JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
+                return jobPlanStatus.ToDataTransferStatus();
+            }
+        }
+
         internal static async Task<bool> IsResumableAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken)
         {
-            DataTransferState transferState = (DataTransferState) await checkpointer.GetByteValue(
-                transferId,
-                DataMovementConstants.JobPartPlanFile.AtomicJobStatusStateIndex,
-                cancellationToken).ConfigureAwait(false);
-
-            byte hasFailedItemsByte = await checkpointer.GetByteValue(
-                transferId,
-                DataMovementConstants.JobPartPlanFile.AtomicJobStatusHasFailedIndex,
-                cancellationToken).ConfigureAwait(false);
-            bool hasFailedItems = Convert.ToBoolean(hasFailedItemsByte);
-
-            byte hasSkippedItemsByte = await checkpointer.GetByteValue(
-                transferId,
-                DataMovementConstants.JobPartPlanFile.AtomicJobStatusHasSkippedIndex,
-                cancellationToken).ConfigureAwait(false);
-            bool hasSkippedItems = Convert.ToBoolean(hasSkippedItemsByte);
+            DataTransferStatus jobStatus = await checkpointer.GetJobStatusAsync(transferId, cancellationToken).ConfigureAwait(false);
 
             // Transfers marked as fully completed are not resumable
-            return transferState != DataTransferState.Completed || hasFailedItems || hasSkippedItems;
+            return jobStatus.State != DataTransferState.Completed || jobStatus.HasFailedItems || jobStatus.HasSkippedItems;
         }
 
         internal static async Task<DataTransferProperties> GetDataTransferPropertiesAsync(
@@ -40,26 +59,57 @@ namespace Azure.Storage.DataMovement
             string transferId,
             CancellationToken cancellationToken)
         {
-            (string sourceResourceId, string destResourceId) = await checkpointer.GetResourceIdsAsync(
-                    transferId,
-                    cancellationToken).ConfigureAwait(false);
-
-            (string sourcePath, string destPath) = await checkpointer.GetResourcePathsAsync(
+            JobPlanHeader header;
+            using (Stream stream = await checkpointer.ReadJobPlanFileAsync(
                 transferId,
-                cancellationToken).ConfigureAwait(false);
-
-            bool isContainer =
-                (await checkpointer.CurrentJobPartCountAsync(transferId, cancellationToken).ConfigureAwait(false)) > 1;
+                offset: 0,
+                length: 0,  // Read whole file
+                cancellationToken).ConfigureAwait(false))
+            {
+                header = JobPlanHeader.Deserialize(stream);
+            }
 
             return new DataTransferProperties
             {
                 TransferId = transferId,
-                SourceTypeId = sourceResourceId,
-                SourcePath = sourcePath,
-                DestinationTypeId = destResourceId,
-                DestinationPath = destPath,
-                IsContainer = isContainer,
+                SourceUri = new Uri(header.ParentSourcePath),
+                SourceProviderId = header.SourceProviderId,
+                SourceCheckpointData = header.SourceCheckpointData,
+                DestinationUri = new Uri(header.ParentDestinationPath),
+                DestinationProviderId = header.DestinationProviderId,
+                DestinationCheckpointData = header.DestinationCheckpointData,
+                IsContainer = header.IsContainer,
             };
+        }
+
+        internal static async Task<bool> IsEnumerationCompleteAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            CancellationToken cancellationToken = default)
+        {
+            using (Stream stream = await checkpointer.ReadJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.EnumerationCompleteIndex,
+                DataMovementConstants.OneByte,
+                cancellationToken).ConfigureAwait(false))
+            {
+                return Convert.ToBoolean(stream.ReadByte());
+            }
+        }
+
+        internal static async Task OnEnumerationCompleteAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            CancellationToken cancellationToken = default)
+        {
+            byte[] enumerationComplete = { Convert.ToByte(true) };
+            await checkpointer.WriteToJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.EnumerationCompleteIndex,
+                enumerationComplete,
+                bufferOffset: 0,
+                length: 1,
+                cancellationToken).ConfigureAwait(false);
         }
     }
 }

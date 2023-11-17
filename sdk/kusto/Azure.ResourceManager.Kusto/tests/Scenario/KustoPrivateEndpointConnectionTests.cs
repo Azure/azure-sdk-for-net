@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         [SetUp]
         protected async Task SetUp()
         {
-            await BaseSetUp(cluster: true);
+            await BaseSetUp();
         }
 
         [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]

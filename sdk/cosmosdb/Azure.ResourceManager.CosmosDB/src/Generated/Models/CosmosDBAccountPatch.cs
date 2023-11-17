@@ -145,5 +145,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? EnableBurstCapacity { get; set; }
         /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
         public CosmosDBMinimalTlsVersion? MinimalTlsVersion { get; set; }
+        /// <summary> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </summary>
+        public CustomerManagedKeyStatus? CustomerManagedKeyStatus { get; set; }
+        /// <summary> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </summary>
+        public bool? EnablePriorityBasedExecution { get; set; }
+        /// <summary> Enum to indicate default Priority Level of request for Priority Based Execution. </summary>
+        public DefaultPriorityLevel? DefaultPriorityLevel { get; set; }
     }
 }

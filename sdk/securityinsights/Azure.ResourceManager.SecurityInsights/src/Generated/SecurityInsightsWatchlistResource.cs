@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityInsights
     public partial class SecurityInsightsWatchlistResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsWatchlistResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="watchlistAlias"> The watchlistAlias. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}";
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An object representing collection of SecurityInsightsWatchlistItemResources and their operations over a SecurityInsightsWatchlistItemResource. </returns>
         public virtual SecurityInsightsWatchlistItemCollection GetSecurityInsightsWatchlistItems()
         {
-            return GetCachedClient(Client => new SecurityInsightsWatchlistItemCollection(Client, Id));
+            return GetCachedClient(client => new SecurityInsightsWatchlistItemCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityInsightsWatchlistItemResource>> GetSecurityInsightsWatchlistItemAsync(string watchlistItemId, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityInsightsWatchlistItemResource> GetSecurityInsightsWatchlistItem(string watchlistItemId, CancellationToken cancellationToken = default)
         {

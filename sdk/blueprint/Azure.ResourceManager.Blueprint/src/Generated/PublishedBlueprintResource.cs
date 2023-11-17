@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Blueprint
     public partial class PublishedBlueprintResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PublishedBlueprintResource"/> instance. </summary>
+        /// <param name="resourceScope"> The resourceScope. </param>
+        /// <param name="blueprintName"> The blueprintName. </param>
+        /// <param name="versionId"> The versionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceScope, string blueprintName, string versionId)
         {
             var resourceId = $"{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}";
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> An object representing collection of BlueprintVersionArtifactResources and their operations over a BlueprintVersionArtifactResource. </returns>
         public virtual BlueprintVersionArtifactCollection GetBlueprintVersionArtifacts()
         {
-            return GetCachedClient(Client => new BlueprintVersionArtifactCollection(Client, Id));
+            return GetCachedClient(client => new BlueprintVersionArtifactCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +111,8 @@ namespace Azure.ResourceManager.Blueprint
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BlueprintVersionArtifactResource>> GetBlueprintVersionArtifactAsync(string artifactName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +134,8 @@ namespace Azure.ResourceManager.Blueprint
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BlueprintVersionArtifactResource> GetBlueprintVersionArtifact(string artifactName, CancellationToken cancellationToken = default)
         {

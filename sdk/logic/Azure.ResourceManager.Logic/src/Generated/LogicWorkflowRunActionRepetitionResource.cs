@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Logic
     public partial class LogicWorkflowRunActionRepetitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowRunActionRepetitionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        /// <param name="runName"> The runName. </param>
+        /// <param name="actionName"> The actionName. </param>
+        /// <param name="repetitionName"> The repetitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, string repetitionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}";
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of LogicWorkflowRunActionRepetitionRequestHistoryResources and their operations over a LogicWorkflowRunActionRepetitionRequestHistoryResource. </returns>
         public virtual LogicWorkflowRunActionRepetitionRequestHistoryCollection GetLogicWorkflowRunActionRepetitionRequestHistories()
         {
-            return GetCachedClient(Client => new LogicWorkflowRunActionRepetitionRequestHistoryCollection(Client, Id));
+            return GetCachedClient(client => new LogicWorkflowRunActionRepetitionRequestHistoryCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +116,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="requestHistoryName"> The request history name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="requestHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogicWorkflowRunActionRepetitionRequestHistoryResource>> GetLogicWorkflowRunActionRepetitionRequestHistoryAsync(string requestHistoryName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +139,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="requestHistoryName"> The request history name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="requestHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogicWorkflowRunActionRepetitionRequestHistoryResource> GetLogicWorkflowRunActionRepetitionRequestHistory(string requestHistoryName, CancellationToken cancellationToken = default)
         {

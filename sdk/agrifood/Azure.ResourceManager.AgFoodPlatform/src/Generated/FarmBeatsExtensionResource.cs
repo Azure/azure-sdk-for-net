@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
     public partial class FarmBeatsExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FarmBeatsExtensionResource"/> instance. </summary>
+        /// <param name="farmBeatsExtensionId"> The farmBeatsExtensionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string farmBeatsExtensionId)
         {
             var resourceId = $"/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}";

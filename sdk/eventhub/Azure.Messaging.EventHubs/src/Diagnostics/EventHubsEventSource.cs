@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="retryCount">The number of retries that were used for service communication.</param>
         /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         ///
-        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.  Service Retry Count: {3}; Duration: '{4:0.00}' seconds")]
+        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.  Service Retry Count: {3}; Duration: '{4:0.00}' seconds.")]
         public virtual void EventPublishComplete(string eventHubName,
                                                  string partitionIdOrKey,
                                                  string operationId,
@@ -175,16 +175,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="endingSequenceNumber">The sequence number of the last event in the batch.</param>
         /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Starting sequence number: '{7}', Ending sequence number: '{8}'; Duration: '{6:0.00}' seconds")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Duration: '{6:0.00}' seconds; Starting sequence number: '{7}', Ending sequence number: '{8}'.")]
         public virtual void EventReceiveComplete(string eventHubName,
                                                  string consumerGroup,
                                                  string partitionId,
                                                  string operationId,
                                                  int retryCount,
                                                  int eventCount,
+                                                 double durationSeconds,
                                                  string startingSequenceNumber,
-                                                 string endingSequenceNumber,
-                                                 double durationSeconds)
+                                                 string endingSequenceNumber)
         {
             if (IsEnabled())
             {

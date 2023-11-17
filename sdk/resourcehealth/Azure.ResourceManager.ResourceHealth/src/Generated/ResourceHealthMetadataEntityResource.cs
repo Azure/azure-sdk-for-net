@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ResourceHealth
     public partial class ResourceHealthMetadataEntityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceHealthMetadataEntityResource"/> instance. </summary>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string name)
         {
             var resourceId = $"/providers/Microsoft.ResourceHealth/metadata/{name}";

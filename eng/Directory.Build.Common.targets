@@ -126,6 +126,11 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <!-- disable enhanced analysis-->
+  <ItemGroup Condition="'$(DisableEnhancedAnalysis)' == 'true'">
+    <EditorConfigFiles Include="$(RepoEngPath)/globalconfigs/disable_enhanced_analysis.globalconfig" />
+  </ItemGroup>
+
   <!-- Enable SourceLink -->
   <ItemGroup Condition="'$(EnableSourceLink)' == 'true'">
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
@@ -201,6 +206,7 @@
     <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />

@@ -227,7 +227,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -239,7 +239,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     advancedResourceSet = new
     {
@@ -248,7 +248,7 @@ RequestContent content = RequestContent.Create(new
     },
     pathPatternConfig = new
     {
-        acceptedPatterns = new List<object>()
+        acceptedPatterns = new object[]
         {
             new
             {
@@ -260,7 +260,7 @@ RequestContent content = RequestContent.Create(new
                 path = "<path>",
             }
         },
-        complexReplacers = new List<object>()
+        complexReplacers = new object[]
         {
             new
             {
@@ -278,14 +278,14 @@ RequestContent content = RequestContent.Create(new
         enableDefaultPatterns = true,
         lastUpdatedTimestamp = 1234L,
         modifiedBy = "<modifiedBy>",
-        normalizationRules = new List<object>()
+        normalizationRules = new object[]
         {
             new
             {
                 description = "<description>",
                 disabled = true,
                 dynamicReplacement = true,
-                entityTypes = new List<object>()
+                entityTypes = new object[]
                 {
                     "<entityTypes>"
                 },
@@ -309,7 +309,7 @@ RequestContent content = RequestContent.Create(new
                 version = 123.45,
             }
         },
-        regexReplacers = new List<object>()
+        regexReplacers = new object[]
         {
             new
             {
@@ -324,16 +324,16 @@ RequestContent content = RequestContent.Create(new
                 replaceWith = "<replaceWith>",
             }
         },
-        rejectedPatterns = new List<object>()
+        rejectedPatterns = new object[]
         {
             null
         },
-        scopedRules = new List<object>()
+        scopedRules = new object[]
         {
             new
             {
                 bindingUrl = "<bindingUrl>",
-                rules = new List<object>()
+                rules = new object[]
                 {
                     new
                     {
@@ -448,7 +448,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateResourceSetRule(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -460,7 +460,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     advancedResourceSet = new
     {
@@ -469,7 +469,7 @@ RequestContent content = RequestContent.Create(new
     },
     pathPatternConfig = new
     {
-        acceptedPatterns = new List<object>()
+        acceptedPatterns = new object[]
         {
             new
             {
@@ -481,7 +481,7 @@ RequestContent content = RequestContent.Create(new
                 path = "<path>",
             }
         },
-        complexReplacers = new List<object>()
+        complexReplacers = new object[]
         {
             new
             {
@@ -499,14 +499,14 @@ RequestContent content = RequestContent.Create(new
         enableDefaultPatterns = true,
         lastUpdatedTimestamp = 1234L,
         modifiedBy = "<modifiedBy>",
-        normalizationRules = new List<object>()
+        normalizationRules = new object[]
         {
             new
             {
                 description = "<description>",
                 disabled = true,
                 dynamicReplacement = true,
-                entityTypes = new List<object>()
+                entityTypes = new object[]
                 {
                     "<entityTypes>"
                 },
@@ -530,7 +530,7 @@ RequestContent content = RequestContent.Create(new
                 version = 123.45,
             }
         },
-        regexReplacers = new List<object>()
+        regexReplacers = new object[]
         {
             new
             {
@@ -545,16 +545,16 @@ RequestContent content = RequestContent.Create(new
                 replaceWith = "<replaceWith>",
             }
         },
-        rejectedPatterns = new List<object>()
+        rejectedPatterns = new object[]
         {
             null
         },
-        scopedRules = new List<object>()
+        scopedRules = new object[]
         {
             new
             {
                 bindingUrl = "<bindingUrl>",
-                rules = new List<object>()
+                rules = new object[]
                 {
                     new
                     {
@@ -670,6 +670,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
 Response response = await client.DeleteResourceSetRuleAsync();
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteResourceSetRuleAsync with all request content.
@@ -679,6 +680,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
 Response response = await client.DeleteResourceSetRuleAsync();
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -691,6 +693,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
 Response response = client.DeleteResourceSetRule();
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteResourceSetRule with all request content.
@@ -700,6 +703,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
 Response response = client.DeleteResourceSetRule();
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>

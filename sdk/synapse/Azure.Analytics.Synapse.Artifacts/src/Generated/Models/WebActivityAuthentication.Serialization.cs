@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
+                writer.WriteObjectValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string type = default;
             Optional<SecretBase> pfx = default;
-            Optional<string> username = default;
+            Optional<object> username = default;
             Optional<SecretBase> password = default;
             Optional<object> resource = default;
             Optional<object> userTenant = default;
@@ -84,7 +84,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("username"u8))
                 {
-                    username = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    username = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("password"u8))

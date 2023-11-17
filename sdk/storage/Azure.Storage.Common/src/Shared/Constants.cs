@@ -24,9 +24,8 @@ namespace Azure.Storage
         /// <summary>
         /// Gets the default service version to use when building shared access
         /// signatures.
-        /// TODO https://github.com/Azure/azure-sdk-for-net/issues/38841.
         /// </summary>
-        public const string DefaultSasVersion = "2023-08-03";
+        public const string DefaultSasVersion = "2024-02-04";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.

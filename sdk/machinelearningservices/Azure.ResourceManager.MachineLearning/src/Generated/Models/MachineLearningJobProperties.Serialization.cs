@@ -76,6 +76,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
+            if (Optional.IsDefined(NotificationSetting))
+            {
+                if (NotificationSetting != null)
+                {
+                    writer.WritePropertyName("notificationSetting"u8);
+                    writer.WriteObjectValue(NotificationSetting);
+                }
+                else
+                {
+                    writer.WriteNull("notificationSetting");
+                }
+            }
+            if (Optional.IsCollectionDefined(SecretsConfiguration))
+            {
+                if (SecretsConfiguration != null)
+                {
+                    writer.WritePropertyName("secretsConfiguration"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in SecretsConfiguration)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("secretsConfiguration");
+                }
+            }
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -157,7 +187,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element);
                     case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element);
+                    case "Labeling": return LabelingJobProperties.DeserializeLabelingJobProperties(element);
                     case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element);
+                    case "Spark": return SparkJob.DeserializeSparkJob(element);
                     case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element);
                 }
             }
@@ -168,6 +200,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningIdentityConfiguration> identity = default;
             Optional<bool> isArchived = default;
             JobType jobType = default;
+            Optional<NotificationSetting> notificationSetting = default;
+            Optional<IDictionary<string, SecretConfiguration>> secretsConfiguration = default;
             Optional<IDictionary<string, MachineLearningJobService>> services = default;
             Optional<MachineLearningJobStatus> status = default;
             Optional<string> description = default;
@@ -232,6 +266,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("jobType"u8))
                 {
                     jobType = new JobType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("notificationSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        notificationSetting = null;
+                        continue;
+                    }
+                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("secretsConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        secretsConfiguration = null;
+                        continue;
+                    }
+                    Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value));
+                    }
+                    secretsConfiguration = dictionary;
                     continue;
                 }
                 if (property.NameEquals("services"u8))
@@ -299,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningJobProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status));
+            return new MachineLearningJobProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status));
         }
     }
 }

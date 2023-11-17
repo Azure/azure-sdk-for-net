@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Network
     public partial class ManagementGroupNetworkManagerConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupNetworkManagerConnectionResource"/> instance. </summary>
+        /// <param name="managementGroupId"> The managementGroupId. </param>
+        /// <param name="networkManagerConnectionName"> The networkManagerConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string networkManagerConnectionName)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}";

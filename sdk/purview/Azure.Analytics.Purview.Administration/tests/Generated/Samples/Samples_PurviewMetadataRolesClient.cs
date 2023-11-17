@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Analytics.Purview.Administration;
 using Azure.Core;
 using Azure.Identity;
@@ -15,11 +16,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Administration.Samples
 {
-    public class Samples_PurviewMetadataRolesClient
+    public partial class Samples_PurviewMetadataRolesClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataRoles()
+        public void Example_GetMetadataRoles_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataRoles_Async()
+        public async Task Example_GetMetadataRoles_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -58,7 +59,24 @@ namespace Azure.Analytics.Purview.Administration.Samples
             foreach (BinaryData item in client.GetMetadataRoles(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("roleType").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("version").ToString());
             }
         }
 
@@ -73,7 +91,24 @@ namespace Azure.Analytics.Purview.Administration.Samples
             await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("roleType").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("version").ToString());
             }
         }
     }

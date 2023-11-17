@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppContainers
     public partial class ContainerAppJobExecutionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppJobExecutionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="jobName"> The jobName. </param>
+        /// <param name="jobExecutionName"> The jobExecutionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName, string jobExecutionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}";

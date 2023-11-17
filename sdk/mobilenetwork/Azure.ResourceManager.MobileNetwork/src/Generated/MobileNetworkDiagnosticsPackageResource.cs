@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MobileNetwork
     public partial class MobileNetworkDiagnosticsPackageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkDiagnosticsPackageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="packetCoreControlPlaneName"> The packetCoreControlPlaneName. </param>
+        /// <param name="diagnosticsPackageName"> The diagnosticsPackageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string diagnosticsPackageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}";

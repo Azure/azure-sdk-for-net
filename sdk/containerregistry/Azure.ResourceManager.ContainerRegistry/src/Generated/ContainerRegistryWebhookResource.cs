@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ContainerRegistry
     public partial class ContainerRegistryWebhookResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerRegistryWebhookResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="webhookName"> The webhookName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string webhookName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/webhooks/{webhookName}";

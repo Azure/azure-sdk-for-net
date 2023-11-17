@@ -9,13 +9,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     subject = new
     {
         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     },
-    actions = new List<object>()
+    actions = new object[]
     {
         new
         {
@@ -36,17 +36,17 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     subject = new
     {
         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        groupIds = new List<object>()
+        groupIds = new object[]
         {
             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
         },
     },
-    actions = new List<object>()
+    actions = new object[]
     {
         new
         {
@@ -76,13 +76,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     subject = new
     {
         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     },
-    actions = new List<object>()
+    actions = new object[]
     {
         new
         {
@@ -103,17 +103,17 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     subject = new
     {
         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        groupIds = new List<object>()
+        groupIds = new object[]
         {
             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
         },
     },
-    actions = new List<object>()
+    actions = new object[]
     {
         new
         {
@@ -203,7 +203,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
@@ -220,7 +220,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
@@ -245,7 +245,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
@@ -262,7 +262,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
@@ -346,6 +346,7 @@ TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
 Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteRoleAssignmentByIdAsync with all parameters.
@@ -355,6 +356,7 @@ TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
 Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", scope: "<scope>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -367,6 +369,7 @@ TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
 Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteRoleAssignmentById with all parameters.
@@ -376,6 +379,7 @@ TokenCredential credential = new DefaultAzureCredential();
 RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
 Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", scope: "<scope>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>

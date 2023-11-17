@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Logic.Samples
             string assemblyArtifactName = "testAssembly";
             IntegrationAccountAssemblyDefinitionData data = new IntegrationAccountAssemblyDefinitionData(new AzureLocation("westus"), new IntegrationAccountAssemblyProperties("System.IdentityModel.Tokens.Jwt")
             {
-                Content = BinaryData.FromString("Base64 encoded Assembly Content"),
+                Content = BinaryData.FromString("\"Base64 encoded Assembly Content\""),
                 Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),

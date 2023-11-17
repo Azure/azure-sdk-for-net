@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Sql
     public partial class RestorableDroppedDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorableDroppedDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="restorableDroppedDatabaseId"> The restorableDroppedDatabaseId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string restorableDroppedDatabaseId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}";

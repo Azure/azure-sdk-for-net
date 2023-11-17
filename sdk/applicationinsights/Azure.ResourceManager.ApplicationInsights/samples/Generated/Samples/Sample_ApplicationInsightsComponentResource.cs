@@ -179,7 +179,7 @@ new ComponentPurgeBodyFilters()
 {
 Column = "TimeGenerated",
 Operator = ">",
-Value = BinaryData.FromString("2017-09-01T00:00:00"),
+Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 }
             });
             ComponentPurgeResponse result = await applicationInsightsComponent.PurgeAsync(body);

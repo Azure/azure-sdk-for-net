@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class AppConfigurationStoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public AppConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku sku) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.AppConfigurationCreateMode? CreateMode { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
@@ -257,6 +257,36 @@ namespace Azure.ResourceManager.AppConfiguration
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.AppConfiguration.Mocking
+{
+    public partial class MockableAppConfigurationArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppConfigurationArmClient() { }
+        public virtual Azure.ResourceManager.AppConfiguration.AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.AppConfigurationPrivateEndpointConnectionResource GetAppConfigurationPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.AppConfigurationPrivateLinkResource GetAppConfigurationPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.AppConfigurationStoreResource GetAppConfigurationStoreResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableAppConfigurationResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppConfigurationResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.AppConfigurationStoreResource> GetAppConfigurationStore(string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.AppConfigurationStoreResource>> GetAppConfigurationStoreAsync(string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.AppConfigurationStoreCollection GetAppConfigurationStores() { throw null; }
+    }
+    public partial class MockableAppConfigurationSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppConfigurationSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppConfiguration.AppConfigurationStoreResource> GetAppConfigurationStores(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppConfiguration.AppConfigurationStoreResource> GetAppConfigurationStoresAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStore(Azure.Core.AzureLocation location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource>> GetDeletedAppConfigurationStoreAsync(Azure.Core.AzureLocation location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores() { throw null; }
     }
 }
 namespace Azure.ResourceManager.AppConfiguration.Models

@@ -25,10 +25,6 @@ namespace Azure.Storage.DataMovement.Blobs
             Tags = other?.Tags;
             HttpHeaders = other?.HttpHeaders;
             AccessTier = other?.AccessTier;
-            DestinationImmutabilityPolicy = other?.DestinationImmutabilityPolicy;
-            LegalHold = other?.LegalHold;
-            UploadTransferValidationOptions = other?.UploadTransferValidationOptions;
-            DownloadTransferValidationOptions = other?.DownloadTransferValidationOptions;
         }
 
         /// <summary>
@@ -63,46 +59,5 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Applies to upload and copy transfers.
         /// </summary>
         public AccessTier? AccessTier { get; set; }
-
-        /// <summary>
-        /// Optional. See <see cref="BlobImmutabilityPolicy"/>.
-        ///
-        /// Applies to upload transfers.
-        /// </summary>
-        public BlobImmutabilityPolicy DestinationImmutabilityPolicy { get; set; }
-
-        /// <summary>
-        /// Optional. Indicates if a legal hold should be placed on the blob.
-        ///
-        /// Applies to upload transfers.
-        /// </summary>
-        public bool? LegalHold { get; set; }
-
-        /// <summary>
-        /// Optional. Options for transfer validation settings on this operation.
-        /// When transfer validation options are set in the client, setting this parameter
-        /// acts as an override.
-        /// This operation does not allow <see cref="UploadTransferValidationOptions.PrecalculatedChecksum"/>
-        /// to be set.
-        ///
-        /// Applies to upload transfers.
-        /// </summary>
-        public UploadTransferValidationOptions UploadTransferValidationOptions { get; set; }
-
-        /// <summary>
-        /// Optional. Options for transfer validation settings on this operation.
-        /// When transfer validation options are set in the client, setting this parameter
-        /// acts as an override.
-        /// Set <see cref="DownloadTransferValidationOptions.AutoValidateChecksum"/> to false if you
-        /// would like to skip SDK checksum validation and validate the checksum found
-        /// in the <see cref="Response"/> object yourself.
-        /// Range must be provided explicitly, stating a range withing Azure
-        /// Storage size limits for requesting a transactional hash. See the
-        /// <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob">
-        /// REST documentation</a> for range limitation details.
-        ///
-        /// Applies to download transfers.
-        /// </summary>
-        public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; set; }
     }
 }

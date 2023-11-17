@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Monitor
     public partial class ActivityLogAlertResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ActivityLogAlertResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="activityLogAlertName"> The activityLogAlertName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string activityLogAlertName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}";
