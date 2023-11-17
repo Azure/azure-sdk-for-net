@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningBatchDeploymentResource" /> and their operations.
-    /// Each <see cref="MachineLearningBatchDeploymentResource" /> in the collection will belong to the same instance of <see cref="MachineLearningBatchEndpointResource" />.
-    /// To get a <see cref="MachineLearningBatchDeploymentCollection" /> instance call the GetMachineLearningBatchDeployments method from an instance of <see cref="MachineLearningBatchEndpointResource" />.
+    /// A class representing a collection of <see cref="MachineLearningBatchDeploymentResource"/> and their operations.
+    /// Each <see cref="MachineLearningBatchDeploymentResource"/> in the collection will belong to the same instance of <see cref="MachineLearningBatchEndpointResource"/>.
+    /// To get a <see cref="MachineLearningBatchDeploymentCollection"/> instance call the GetMachineLearningBatchDeployments method from an instance of <see cref="MachineLearningBatchEndpointResource"/>.
     /// </summary>
     public partial class MachineLearningBatchDeploymentCollection : ArmCollection, IEnumerable<MachineLearningBatchDeploymentResource>, IAsyncEnumerable<MachineLearningBatchDeploymentResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningBatchDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningBatchDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningBatchDeploymentResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningBatchDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningBatchDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningBatchDeploymentResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);

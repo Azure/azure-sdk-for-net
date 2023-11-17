@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccountAssemblyDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountAssemblyDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountAssemblyDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource" /> using the GetIntegrationAccountAssemblyDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountAssemblyDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountAssemblyDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource"/> using the GetIntegrationAccountAssemblyDefinition method.
     /// </summary>
     public partial class IntegrationAccountAssemblyDefinitionResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountAssemblyDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountAssemblyDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountAssemblyDefinitionResource(ArmClient client, IntegrationAccountAssemblyDefinitionData data) : this(client, data.Id)

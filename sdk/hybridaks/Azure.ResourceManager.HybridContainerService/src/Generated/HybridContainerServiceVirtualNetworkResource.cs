@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A Class representing a HybridContainerServiceVirtualNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridContainerServiceVirtualNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridContainerServiceVirtualNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHybridContainerServiceVirtualNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridContainerServiceVirtualNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridContainerServiceVirtualNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHybridContainerServiceVirtualNetwork method.
     /// </summary>
     public partial class HybridContainerServiceVirtualNetworkResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridContainerServiceVirtualNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridContainerServiceVirtualNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridContainerServiceVirtualNetworkResource(ArmClient client, HybridContainerServiceVirtualNetworkData data) : this(client, data.Id)

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscription(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);

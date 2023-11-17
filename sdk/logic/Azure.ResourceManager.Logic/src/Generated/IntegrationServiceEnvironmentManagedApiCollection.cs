@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IntegrationServiceEnvironmentManagedApiResource" /> and their operations.
-    /// Each <see cref="IntegrationServiceEnvironmentManagedApiResource" /> in the collection will belong to the same instance of <see cref="IntegrationServiceEnvironmentResource" />.
-    /// To get an <see cref="IntegrationServiceEnvironmentManagedApiCollection" /> instance call the GetIntegrationServiceEnvironmentManagedApis method from an instance of <see cref="IntegrationServiceEnvironmentResource" />.
+    /// A class representing a collection of <see cref="IntegrationServiceEnvironmentManagedApiResource"/> and their operations.
+    /// Each <see cref="IntegrationServiceEnvironmentManagedApiResource"/> in the collection will belong to the same instance of <see cref="IntegrationServiceEnvironmentResource"/>.
+    /// To get an <see cref="IntegrationServiceEnvironmentManagedApiCollection"/> instance call the GetIntegrationServiceEnvironmentManagedApis method from an instance of <see cref="IntegrationServiceEnvironmentResource"/>.
     /// </summary>
     public partial class IntegrationServiceEnvironmentManagedApiCollection : ArmCollection, IEnumerable<IntegrationServiceEnvironmentManagedApiResource>, IAsyncEnumerable<IntegrationServiceEnvironmentManagedApiResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentManagedApiResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentManagedApiResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationServiceEnvironmentManagedApiResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentManagedApiRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationServiceEnvironmentManagedApiResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IntegrationServiceEnvironmentManagedApiResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationServiceEnvironmentManagedApiResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentManagedApiRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

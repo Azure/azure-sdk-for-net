@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccountMap along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountMapResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountMapResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource" /> using the GetIntegrationAccountMap method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountMapResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountMapResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource"/> using the GetIntegrationAccountMap method.
     /// </summary>
     public partial class IntegrationAccountMapResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountMapResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountMapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountMapResource(ArmClient client, IntegrationAccountMapData data) : this(client, data.Id)

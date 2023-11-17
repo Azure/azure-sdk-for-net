@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a KustoPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KustoPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKustoPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource" /> using the GetKustoPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KustoPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKustoPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource"/> using the GetKustoPrivateEndpointConnection method.
     /// </summary>
     public partial class KustoPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kusto
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KustoPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KustoPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KustoPrivateEndpointConnectionResource(ArmClient client, KustoPrivateEndpointConnectionData data) : this(client, data.Id)

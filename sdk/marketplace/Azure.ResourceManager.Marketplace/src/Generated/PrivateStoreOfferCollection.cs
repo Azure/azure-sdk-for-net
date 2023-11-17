@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateStoreOfferResource" /> and their operations.
-    /// Each <see cref="PrivateStoreOfferResource" /> in the collection will belong to the same instance of <see cref="PrivateStoreCollectionInfoResource" />.
-    /// To get a <see cref="PrivateStoreOfferCollection" /> instance call the GetPrivateStoreOffers method from an instance of <see cref="PrivateStoreCollectionInfoResource" />.
+    /// A class representing a collection of <see cref="PrivateStoreOfferResource"/> and their operations.
+    /// Each <see cref="PrivateStoreOfferResource"/> in the collection will belong to the same instance of <see cref="PrivateStoreCollectionInfoResource"/>.
+    /// To get a <see cref="PrivateStoreOfferCollection"/> instance call the GetPrivateStoreOffers method from an instance of <see cref="PrivateStoreCollectionInfoResource"/>.
     /// </summary>
     public partial class PrivateStoreOfferCollection : ArmCollection, IEnumerable<PrivateStoreOfferResource>, IAsyncEnumerable<PrivateStoreOfferResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateStoreOfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateStoreOfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreOfferResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateStoreOfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateStoreOfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreOfferResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
