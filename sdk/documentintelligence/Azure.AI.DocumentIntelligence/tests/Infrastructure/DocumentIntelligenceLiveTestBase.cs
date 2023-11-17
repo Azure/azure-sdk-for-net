@@ -21,24 +21,42 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         protected string ServiceVersionString { get; } = "2023-10-31-preview";
 
-        protected DocumentIntelligenceClient CreateDocumentIntelligenceClient()
+        protected DocumentIntelligenceClient CreateDocumentIntelligenceClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
 
-            var nonInstrumentedClient = new DocumentIntelligenceClient(endpoint, credential, options);
+            DocumentIntelligenceClient nonInstrumentedClient;
+
+            if (useTokenCredential)
+            {
+                nonInstrumentedClient = new DocumentIntelligenceClient(endpoint, TestEnvironment.Credential, options);
+            }
+            else
+            {
+                var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+                nonInstrumentedClient = new DocumentIntelligenceClient(endpoint, credential, options);
+            }
 
             return InstrumentClient(nonInstrumentedClient);
         }
 
-        protected DocumentIntelligenceAdministrationClient CreateDocumentIntelligenceAdministrationClient()
+        protected DocumentIntelligenceAdministrationClient CreateDocumentIntelligenceAdministrationClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
 
-            var nonInstrumentedClient = new DocumentIntelligenceAdministrationClient(endpoint, credential, options);
+            DocumentIntelligenceAdministrationClient nonInstrumentedClient;
+
+            if (useTokenCredential)
+            {
+                nonInstrumentedClient = new DocumentIntelligenceAdministrationClient(endpoint, TestEnvironment.Credential, options);
+            }
+            else
+            {
+                var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+                nonInstrumentedClient = new DocumentIntelligenceAdministrationClient(endpoint, credential, options);
+            }
 
             return InstrumentClient(nonInstrumentedClient);
         }

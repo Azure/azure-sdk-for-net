@@ -5,7 +5,6 @@
 Azure AI Document Intelligence is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
 - Layout - Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
-- General document - Analyze key-value pairs in addition to general layout from documents.
 - Read - Read information about textual elements, such as page words and lines in addition to text language information.
 - Prebuilt - Analyze data from certain types of common documents using prebuilt models. Supported documents include receipts, invoices, business cards, identity documents, US W2 tax forms, and more.
 - Custom analysis - Build custom document models to analyze text, field values, selection marks, table structures, styles, and paragraphs from documents. Custom models are built with your own data, so they're tailored to your documents.
@@ -169,18 +168,18 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 The following section provides several code snippets illustrating common patterns used in the Document Intelligence .NET API. Most of the snippets below make use of asynchronous service calls, but keep in mind that the Azure.AI.DocumentIntelligence package supports both synchronous and asynchronous APIs.
 
-* [Use the Prebuilt General Document Model](#use-the-prebuilt-general-document-model)
+* [Extract Layout](#extract-layout)
 * [Use Prebuilt Models](#use-prebuilt-models)
 * [Build a Custom Model](#build-a-custom-model)
 * [Manage Models](#manage-models)
 * [Build a Document Classifier](#build-a-document-classifier)
 * [Classify a Document](#classify-a-document)
 
-### Use the Prebuilt General Document Model
+### Extract Layout
 
-Analyze text, selection marks, table structures, styles, paragraphs, and key-value pairs from documents using the prebuilt general document model.
+Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
 
-```C# Snippet:DocumentIntelligenceAnalyzePrebuiltDocumentFromUriAsync
+```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
 var content = new AnalyzeDocumentContent()
@@ -188,21 +187,8 @@ var content = new AnalyzeDocumentContent()
     UrlSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content);
 AnalyzeResult result = operation.Value;
-
-Console.WriteLine("Detected key-value pairs:");
-foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
-{
-    if (kvp.Value == null)
-    {
-        Console.WriteLine($"  Found key '{kvp.Key.Content}' with no value");
-    }
-    else
-    {
-        Console.WriteLine($"  Found key '{kvp.Key.Content}' with value '{kvp.Value.Content}'");
-    }
-}
 
 foreach (DocumentPage page in result.Pages)
 {
@@ -212,6 +198,7 @@ foreach (DocumentPage page in result.Pages)
     for (int i = 0; i < page.Lines.Count; i++)
     {
         DocumentLine line = page.Lines[i];
+
         Console.WriteLine($"  Line {i}:");
         Console.WriteLine($"    Content: '{line.Content}'");
 
@@ -241,21 +228,52 @@ foreach (DocumentPage page in result.Pages)
     }
 }
 
-Console.WriteLine("Detected tables:");
+for (int i = 0; i < result.Paragraphs.Count; i++)
+{
+    DocumentParagraph paragraph = result.Paragraphs[i];
+
+    Console.WriteLine($"Paragraph {i}:");
+    Console.WriteLine($"  Content: {paragraph.Content}");
+
+    if (paragraph.Role != null)
+    {
+        Console.WriteLine($"  Role: {paragraph.Role}");
+    }
+}
+
+foreach (DocumentStyle style in result.Styles)
+{
+    // Check the style and style confidence to see if text is handwritten.
+    // Note that value '0.8' is used as an example.
+
+    bool isHandwritten = style.IsHandwritten.HasValue && style.IsHandwritten == true;
+
+    if (isHandwritten && style.Confidence > 0.8)
+    {
+        Console.WriteLine($"Handwritten content found:");
+
+        foreach (DocumentSpan span in style.Spans)
+        {
+            var handwrittenContent = result.Content.Substring(span.Offset, span.Length);
+            Console.WriteLine($"  {handwrittenContent}");
+        }
+    }
+}
+
 for (int i = 0; i < result.Tables.Count; i++)
 {
     DocumentTable table = result.Tables[i];
 
-    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+    Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
 
     foreach (DocumentTableCell cell in table.Cells)
     {
-        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) is a '{cell.Kind}' with content: '{cell.Content}'");
+        Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) is a '{cell.Kind}' with content: {cell.Content}");
     }
 }
 ```
 
-For more information, see [here][analyze_prebuilt_document].
+For more information, see [here][extract_layout].
 
 ### Use Prebuilt Models
 
@@ -570,7 +588,7 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 Samples showing how to use the Document Intelligence library are available in this GitHub repository. Samples are provided for each main functional area:
 
-- [Analyze with the prebuilt general document model][analyze_prebuilt_document]
+- [Extract the layout of a document][extract_layout]
 - [Analyze a document with a prebuilt model][analyze_prebuilt]
 - [Build a custom model][build_a_custom_model]
 - [Manage models][manage_models]
@@ -620,7 +638,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
-[analyze_prebuilt_document]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_AnalyzePrebuiltDocument.md
+[extract_layout]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_ExtractLayout.md
 [analyze_prebuilt]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_AnalyzeWithPrebuiltModel.md
 [build_a_custom_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_BuildCustomModel.md
 [build_a_document_classifier]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/Sample_BuildDocumentClassifier.md
