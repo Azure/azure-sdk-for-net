@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DataProtectionBackupVaultResource" /> object. </returns>
         public static DataProtectionBackupVaultResource GetDataProtectionBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupVaultResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DataProtectionBackupPolicyResource" /> object. </returns>
         public static DataProtectionBackupPolicyResource GetDataProtectionBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupPolicyResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource" /> object. </returns>
         public static DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupInstanceResource(id);
         }
 
@@ -93,9 +102,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource" /> object. </returns>
         public static DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupRecoveryPointResource(id);
         }
 
@@ -109,9 +121,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DataProtectionBackupJobResource" /> object. </returns>
         public static DataProtectionBackupJobResource GetDataProtectionBackupJobResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupJobResource(id);
         }
 
@@ -125,9 +140,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DeletedDataProtectionBackupInstanceResource" /> object. </returns>
         public static DeletedDataProtectionBackupInstanceResource GetDeletedDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataProtectionBackupArmClient(client).GetDeletedDataProtectionBackupInstanceResource(id);
         }
 
@@ -141,9 +159,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ResourceGuardResource" /> object. </returns>
         public static ResourceGuardResource GetResourceGuardResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataProtectionBackupArmClient(client).GetResourceGuardResource(id);
         }
 
@@ -157,9 +178,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource" /> object. </returns>
         public static ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataProtectionBackupArmClient(client).GetResourceGuardProxyBaseResource(id);
         }
 
@@ -171,9 +195,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DataProtectionBackupVaultResources and their operations over a DataProtectionBackupVaultResource. </returns>
         public static DataProtectionBackupVaultCollection GetDataProtectionBackupVaults(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDataProtectionBackupVaults();
         }
 
@@ -197,11 +224,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataProtectionBackupVaultResource>> GetDataProtectionBackupVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDataProtectionBackupVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -225,11 +254,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataProtectionBackupVaultResource> GetDataProtectionBackupVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDataProtectionBackupVault(vaultName, cancellationToken);
         }
 
@@ -241,9 +272,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ResourceGuardResources and their operations over a ResourceGuardResource. </returns>
         public static ResourceGuardCollection GetResourceGuards(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetResourceGuards();
         }
 
@@ -267,11 +301,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ResourceGuardResource>> GetResourceGuardAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetResourceGuardAsync(resourceGuardsName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -295,11 +331,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ResourceGuardResource> GetResourceGuard(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetResourceGuard(resourceGuardsName, cancellationToken);
         }
 
@@ -324,9 +362,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> Check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataProtectionBackupNameAvailabilityResult>> CheckDataProtectionBackupVaultNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -351,9 +391,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> Check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DataProtectionBackupNameAvailabilityResult> CheckDataProtectionBackupVaultNameAvailability(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailability(location, content, cancellationToken);
         }
 
@@ -376,9 +418,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDataProtectionBackupVaultsAsync(cancellationToken);
         }
 
@@ -401,9 +446,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDataProtectionBackupVaults(cancellationToken);
         }
 
@@ -428,9 +476,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="location"> The String to use. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).CheckDataProtectionBackupFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -455,9 +505,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="location"> The String to use. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
         }
 
@@ -480,9 +532,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetResourceGuardsAsync(cancellationToken);
         }
 
@@ -505,9 +560,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceGuardResource> GetResourceGuards(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetResourceGuards(cancellationToken);
         }
     }
