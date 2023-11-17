@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUsageModel
+    public partial class StorageCacheUsageModel : IUtf8JsonSerializable, IJsonModel<StorageCacheUsageModel>
     {
-        internal static StorageCacheUsageModel DeserializeStorageCacheUsageModel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheUsageModel>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StorageCacheUsageModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StorageCacheUsageModel>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StorageCacheUsageModel>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Display))
+            {
+                writer.WritePropertyName("display"u8);
+                writer.WriteObjectValue(Display);
+            }
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName);
+            }
+            if (Optional.IsDefined(TargetType))
+            {
+                writer.WritePropertyName("targetType"u8);
+                writer.WriteStringValue(TargetType);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageCacheUsageModel IJsonModel<StorageCacheUsageModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageCacheUsageModel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheUsageModel(document.RootElement, options);
+        }
+
+        internal static StorageCacheUsageModel DeserializeStorageCacheUsageModel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<StorageCacheUsageModelDisplay> display = default;
             Optional<string> modelName = default;
             Optional<string> targetType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("display"u8))
@@ -42,8 +105,38 @@ namespace Azure.ResourceManager.StorageCache.Models
                     targetType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageCacheUsageModel(display.Value, modelName.Value, targetType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageCacheUsageModel(display.Value, modelName.Value, targetType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageCacheUsageModel>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageCacheUsageModel)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StorageCacheUsageModel IPersistableModel<StorageCacheUsageModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageCacheUsageModel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStorageCacheUsageModel(document.RootElement, options);
+        }
+
+        string IPersistableModel<StorageCacheUsageModel>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

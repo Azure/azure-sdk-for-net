@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DiagnosticDataset : IUtf8JsonSerializable
+    public partial class DiagnosticDataset : IUtf8JsonSerializable, IJsonModel<DiagnosticDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticDataset>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DiagnosticDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DiagnosticDataset>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DiagnosticDataset>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Table))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiagnosticDataset DeserializeDiagnosticDataset(JsonElement element)
+        DiagnosticDataset IJsonModel<DiagnosticDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiagnosticDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiagnosticDataset(document.RootElement, options);
+        }
+
+        internal static DiagnosticDataset DeserializeDiagnosticDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataTableResponseObject> table = default;
             Optional<DiagnosticDataRendering> renderingProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("table"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.AppService.Models
                     renderingProperties = DiagnosticDataRendering.DeserializeDiagnosticDataRendering(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiagnosticDataset(table.Value, renderingProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DiagnosticDataset(table.Value, renderingProperties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiagnosticDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiagnosticDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DiagnosticDataset IPersistableModel<DiagnosticDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiagnosticDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDiagnosticDataset(document.RootElement, options);
+        }
+
+        string IPersistableModel<DiagnosticDataset>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

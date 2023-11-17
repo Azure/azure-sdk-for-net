@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The AmazonRdsForOracle database dataset. </summary>
     public partial class AmazonRdsForOracleTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of AmazonRdsForOracleTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AmazonRdsForOracleTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AmazonRdsForOracleTable";
         }
 
-        /// <summary> Initializes a new instance of AmazonRdsForOracleTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             Type = type ?? "AmazonRdsForOracleTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/> for deserialization. </summary>
+        internal AmazonRdsForOracleTableDataset()
+        {
         }
 
         /// <summary> The schema name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </summary>

@@ -5,21 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class StorageAccountGetKeysResult
+    internal partial class StorageAccountGetKeysResult : IUtf8JsonSerializable, IJsonModel<StorageAccountGetKeysResult>
     {
-        internal static StorageAccountGetKeysResult DeserializeStorageAccountGetKeysResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountGetKeysResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StorageAccountGetKeysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StorageAccountGetKeysResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StorageAccountGetKeysResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Keys))
+                {
+                    writer.WritePropertyName("keys"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Keys)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageAccountGetKeysResult IJsonModel<StorageAccountGetKeysResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageAccountGetKeysResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountGetKeysResult(document.RootElement, options);
+        }
+
+        internal static StorageAccountGetKeysResult DeserializeStorageAccountGetKeysResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<StorageAccountKey>> keys = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"u8))
@@ -36,8 +96,38 @@ namespace Azure.ResourceManager.Storage.Models
                     keys = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageAccountGetKeysResult(Optional.ToList(keys));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageAccountGetKeysResult(Optional.ToList(keys), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageAccountGetKeysResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageAccountGetKeysResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StorageAccountGetKeysResult IPersistableModel<StorageAccountGetKeysResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageAccountGetKeysResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStorageAccountGetKeysResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<StorageAccountGetKeysResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

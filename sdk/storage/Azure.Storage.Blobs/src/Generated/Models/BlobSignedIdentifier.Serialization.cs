@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobSignedIdentifier : IXmlSerializable
+    public partial class BlobSignedIdentifier : IXmlSerializable, IPersistableModel<BlobSignedIdentifier>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -23,7 +27,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobSignedIdentifier DeserializeBlobSignedIdentifier(XElement element)
+        internal static BlobSignedIdentifier DeserializeBlobSignedIdentifier(XElement element, ModelReaderWriterOptions options = null)
         {
             string id = default;
             BlobAccessPolicy accessPolicy = default;
@@ -35,7 +39,43 @@ namespace Azure.Storage.Blobs.Models
             {
                 accessPolicy = BlobAccessPolicy.DeserializeBlobAccessPolicy(accessPolicyElement);
             }
-            return new BlobSignedIdentifier(id, accessPolicy);
+            return new BlobSignedIdentifier(id, accessPolicy, default);
         }
+
+        BinaryData IPersistableModel<BlobSignedIdentifier>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<BlobSignedIdentifier>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobSignedIdentifier IPersistableModel<BlobSignedIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobSignedIdentifier)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeBlobSignedIdentifier(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<BlobSignedIdentifier>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

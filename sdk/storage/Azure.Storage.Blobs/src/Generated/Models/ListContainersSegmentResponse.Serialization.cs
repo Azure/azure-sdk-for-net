@@ -5,14 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ListContainersSegmentResponse
+    internal partial class ListContainersSegmentResponse : IXmlSerializable, IPersistableModel<ListContainersSegmentResponse>
     {
-        internal static ListContainersSegmentResponse DeserializeListContainersSegmentResponse(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            if (Optional.IsDefined(Prefix))
+            {
+                writer.WriteStartElement("Prefix");
+                writer.WriteValue(Prefix);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxResults))
+            {
+                writer.WriteStartElement("MaxResults");
+                writer.WriteValue(MaxResults.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("Containers");
+            foreach (var item in ContainerItems)
+            {
+                writer.WriteObjectValue(item, "Container");
+            }
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static ListContainersSegmentResponse DeserializeListContainersSegmentResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string prefix = default;
@@ -49,7 +94,43 @@ namespace Azure.Storage.Blobs.Models
                 }
                 containerItems = array;
             }
-            return new ListContainersSegmentResponse(serviceEndpoint, prefix, marker, maxResults, containerItems, nextMarker);
+            return new ListContainersSegmentResponse(serviceEndpoint, prefix, marker, maxResults, containerItems, nextMarker, default);
         }
+
+        BinaryData IPersistableModel<ListContainersSegmentResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ListContainersSegmentResponse>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ListContainersSegmentResponse IPersistableModel<ListContainersSegmentResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ListContainersSegmentResponse)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeListContainersSegmentResponse(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<ListContainersSegmentResponse>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

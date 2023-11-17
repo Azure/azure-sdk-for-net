@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,11 +16,26 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LibraryRequirementsConverter))]
-    public partial class LibraryRequirements : IUtf8JsonSerializable
+    public partial class LibraryRequirements : IUtf8JsonSerializable, IJsonModel<LibraryRequirements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LibraryRequirements>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LibraryRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LibraryRequirements>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LibraryRequirements>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Time))
+                {
+                    writer.WritePropertyName("time"u8);
+                    writer.WriteStringValue(Time.Value, "O");
+                }
+            }
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
@@ -28,11 +46,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LibraryRequirements DeserializeLibraryRequirements(JsonElement element)
+        LibraryRequirements IJsonModel<LibraryRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LibraryRequirements)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLibraryRequirements(document.RootElement, options);
+        }
+
+        internal static LibraryRequirements DeserializeLibraryRequirements(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +87,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset> time = default;
             Optional<string> content = default;
             Optional<string> filename = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -61,9 +110,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     filename = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LibraryRequirements>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LibraryRequirements)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LibraryRequirements IPersistableModel<LibraryRequirements>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LibraryRequirements)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLibraryRequirements(document.RootElement, options);
+        }
+
+        string IPersistableModel<LibraryRequirements>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class LibraryRequirementsConverter : JsonConverter<LibraryRequirements>
         {

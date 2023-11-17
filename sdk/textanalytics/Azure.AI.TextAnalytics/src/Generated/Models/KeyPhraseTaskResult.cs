@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The KeyPhraseTaskResult. </summary>
     internal partial class KeyPhraseTaskResult : AnalyzeTextTaskResult
     {
-        /// <summary> Initializes a new instance of KeyPhraseTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal KeyPhraseTaskResult(KeyPhraseResult results)
@@ -24,13 +25,19 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextTaskResultsKind.KeyPhraseExtractionResults;
         }
 
-        /// <summary> Initializes a new instance of KeyPhraseTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskResult"/>. </summary>
         /// <param name="kind"> Enumeration of supported Text Analysis task results. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
-        internal KeyPhraseTaskResult(AnalyzeTextTaskResultsKind kind, KeyPhraseResult results) : base(kind)
+        internal KeyPhraseTaskResult(AnalyzeTextTaskResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, KeyPhraseResult results) : base(kind, serializedAdditionalRawData)
         {
             Results = results;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskResult"/> for deserialization. </summary>
+        internal KeyPhraseTaskResult()
+        {
         }
 
         /// <summary> Gets the results. </summary>

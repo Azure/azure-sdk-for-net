@@ -15,7 +15,39 @@ namespace Azure.AI.Translation.Document
     /// <summary> Definition for the input batch translation request. </summary>
     public partial class DocumentTranslationInput
     {
-        /// <summary> Initializes a new instance of DocumentTranslationInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationInput"/>. </summary>
         /// <param name="source"> Source of the input documents. </param>
         /// <param name="targets"> Location of the destination for the output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="targets"/> is null. </exception>
@@ -26,6 +58,24 @@ namespace Azure.AI.Translation.Document
 
             Source = source;
             Targets = targets.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationInput"/>. </summary>
+        /// <param name="source"> Source of the input documents. </param>
+        /// <param name="targets"> Location of the destination for the output. </param>
+        /// <param name="storageUriKind"> Storage type of the input documents source string. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentTranslationInput(TranslationSource source, IList<TranslationTarget> targets, StorageInputUriKind? storageUriKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Source = source;
+            Targets = targets;
+            StorageUriKind = storageUriKind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationInput"/> for deserialization. </summary>
+        internal DocumentTranslationInput()
+        {
         }
 
         /// <summary> Source of the input documents. </summary>

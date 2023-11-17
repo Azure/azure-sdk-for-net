@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,151 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PipelineRunConverter))]
-    public partial class PipelineRun
+    public partial class PipelineRun : IUtf8JsonSerializable, IJsonModel<PipelineRun>
     {
-        internal static PipelineRun DeserializePipelineRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineRun>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PipelineRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PipelineRun>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PipelineRun>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RunId))
+                {
+                    writer.WritePropertyName("runId"u8);
+                    writer.WriteStringValue(RunId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RunGroupId))
+                {
+                    writer.WritePropertyName("runGroupId"u8);
+                    writer.WriteStringValue(RunGroupId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsLatest))
+                {
+                    writer.WritePropertyName("isLatest"u8);
+                    writer.WriteBooleanValue(IsLatest.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PipelineName))
+                {
+                    writer.WritePropertyName("pipelineName"u8);
+                    writer.WriteStringValue(PipelineName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Parameters))
+                {
+                    writer.WritePropertyName("parameters"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Parameters)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InvokedBy))
+                {
+                    writer.WritePropertyName("invokedBy"u8);
+                    writer.WriteObjectValue(InvokedBy);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastUpdated))
+                {
+                    writer.WritePropertyName("lastUpdated"u8);
+                    writer.WriteStringValue(LastUpdated.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RunStart))
+                {
+                    writer.WritePropertyName("runStart"u8);
+                    writer.WriteStringValue(RunStart.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RunEnd))
+                {
+                    if (RunEnd != null)
+                    {
+                        writer.WritePropertyName("runEnd"u8);
+                        writer.WriteStringValue(RunEnd.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("runEnd");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DurationInMs))
+                {
+                    writer.WritePropertyName("durationInMs"u8);
+                    writer.WriteNumberValue(DurationInMs.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        PipelineRun IJsonModel<PipelineRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineRun)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineRun(document.RootElement, options);
+        }
+
+        internal static PipelineRun DeserializePipelineRun(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -138,11 +281,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new PipelineRun(runId.Value, runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
         }
 
+        BinaryData IPersistableModel<PipelineRun>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineRun)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PipelineRun IPersistableModel<PipelineRun>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineRun)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePipelineRun(document.RootElement, options);
+        }
+
+        string IPersistableModel<PipelineRun>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+
         internal partial class PipelineRunConverter : JsonConverter<PipelineRun>
         {
             public override void Write(Utf8JsonWriter writer, PipelineRun model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PipelineRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Teradata database dataset. </summary>
     public partial class TeradataTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of TeradataTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeradataTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public TeradataTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "TeradataTable";
         }
 
-        /// <summary> Initializes a new instance of TeradataTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeradataTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Database = database;
             Table = table;
             Type = type ?? "TeradataTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TeradataTableDataset"/> for deserialization. </summary>
+        internal TeradataTableDataset()
+        {
         }
 
         /// <summary> The database name of Teradata. Type: string (or Expression with resultType string). </summary>

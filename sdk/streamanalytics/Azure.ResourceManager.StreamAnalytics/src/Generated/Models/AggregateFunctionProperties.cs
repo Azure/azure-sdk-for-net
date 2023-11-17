@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 
@@ -13,13 +14,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties that are associated with an aggregate function. </summary>
     public partial class AggregateFunctionProperties : StreamingJobFunctionProperties
     {
-        /// <summary> Initializes a new instance of AggregateFunctionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateFunctionProperties"/>. </summary>
         public AggregateFunctionProperties()
         {
             FunctionPropertiesType = "Aggregate";
         }
 
-        /// <summary> Initializes a new instance of AggregateFunctionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateFunctionProperties"/>. </summary>
         /// <param name="functionPropertiesType"> Indicates the type of function. </param>
         /// <param name="etag"> The current entity tag for the function. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
         /// <param name="inputs"></param>
@@ -29,7 +30,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// Please note <see cref="StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EMachineLearningStudioFunctionBinding"/>, <see cref="MachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
-        internal AggregateFunctionProperties(string functionPropertiesType, ETag? etag, IList<StreamingJobFunctionInput> inputs, StreamingJobFunctionOutput output, StreamingJobFunctionBinding binding) : base(functionPropertiesType, etag, inputs, output, binding)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AggregateFunctionProperties(string functionPropertiesType, ETag? etag, IList<StreamingJobFunctionInput> inputs, StreamingJobFunctionOutput output, StreamingJobFunctionBinding binding, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(functionPropertiesType, etag, inputs, output, binding, serializedAdditionalRawData)
         {
             FunctionPropertiesType = functionPropertiesType ?? "Aggregate";
         }

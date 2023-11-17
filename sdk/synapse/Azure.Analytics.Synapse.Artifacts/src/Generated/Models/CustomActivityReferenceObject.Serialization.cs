@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CustomActivityReferenceObjectConverter))]
-    public partial class CustomActivityReferenceObject : IUtf8JsonSerializable
+    public partial class CustomActivityReferenceObject : IUtf8JsonSerializable, IJsonModel<CustomActivityReferenceObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomActivityReferenceObject>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CustomActivityReferenceObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CustomActivityReferenceObject>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CustomActivityReferenceObject>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LinkedServices))
             {
@@ -39,17 +48,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomActivityReferenceObject DeserializeCustomActivityReferenceObject(JsonElement element)
+        CustomActivityReferenceObject IJsonModel<CustomActivityReferenceObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomActivityReferenceObject)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomActivityReferenceObject(document.RootElement, options);
+        }
+
+        internal static CustomActivityReferenceObject DeserializeCustomActivityReferenceObject(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<LinkedServiceReference>> linkedServices = default;
             Optional<IList<DatasetReference>> datasets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServices"u8))
@@ -80,9 +120,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     datasets = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomActivityReferenceObject>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomActivityReferenceObject)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomActivityReferenceObject IPersistableModel<CustomActivityReferenceObject>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomActivityReferenceObject)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomActivityReferenceObject(document.RootElement, options);
+        }
+
+        string IPersistableModel<CustomActivityReferenceObject>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class CustomActivityReferenceObjectConverter : JsonConverter<CustomActivityReferenceObject>
         {

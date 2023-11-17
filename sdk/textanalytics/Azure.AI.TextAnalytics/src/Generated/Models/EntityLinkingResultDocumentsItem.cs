@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The EntityLinkingResultDocumentsItem. </summary>
     internal partial class EntityLinkingResultDocumentsItem : LinkedEntitiesDocumentResult
     {
-        /// <summary> Initializes a new instance of EntityLinkingResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Recognized well known entities in the document. </param>
@@ -27,12 +27,18 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(entities, nameof(entities));
         }
 
-        /// <summary> Initializes a new instance of EntityLinkingResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="entities"> Recognized well known entities in the document. </param>
-        internal EntityLinkingResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<LinkedEntity> entities) : base(id, warnings, statistics, entities)
+        internal EntityLinkingResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<LinkedEntity> entities) : base(id, warnings, statistics, serializedAdditionalRawData, entities)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingResultDocumentsItem"/> for deserialization. </summary>
+        internal EntityLinkingResultDocumentsItem()
         {
         }
     }

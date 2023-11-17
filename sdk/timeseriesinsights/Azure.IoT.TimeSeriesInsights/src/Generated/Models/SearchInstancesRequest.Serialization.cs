@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class SearchInstancesRequest : IUtf8JsonSerializable
+    internal partial class SearchInstancesRequest : IUtf8JsonSerializable, IJsonModel<SearchInstancesRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchInstancesRequest>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SearchInstancesRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SearchInstancesRequest>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SearchInstancesRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("searchString"u8);
             writer.WriteStringValue(SearchString);
@@ -37,7 +48,121 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("hierarchies"u8);
                 writer.WriteObjectValue(Hierarchies);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SearchInstancesRequest IJsonModel<SearchInstancesRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchInstancesRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchInstancesRequest(document.RootElement, options);
+        }
+
+        internal static SearchInstancesRequest DeserializeSearchInstancesRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string searchString = default;
+            Optional<IList<string>> path = default;
+            Optional<SearchInstancesParameters> instances = default;
+            Optional<SearchInstancesHierarchiesParameters> hierarchies = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("searchString"u8))
+                {
+                    searchString = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("path"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    path = array;
+                    continue;
+                }
+                if (property.NameEquals("instances"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instances = SearchInstancesParameters.DeserializeSearchInstancesParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("hierarchies"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hierarchies = SearchInstancesHierarchiesParameters.DeserializeSearchInstancesHierarchiesParameters(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchInstancesRequest(searchString, Optional.ToList(path), instances.Value, hierarchies.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SearchInstancesRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchInstancesRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SearchInstancesRequest IPersistableModel<SearchInstancesRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchInstancesRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSearchInstancesRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<SearchInstancesRequest>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

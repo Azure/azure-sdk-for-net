@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class DiscoveredOnvifDevice : IUtf8JsonSerializable
+    public partial class DiscoveredOnvifDevice : IUtf8JsonSerializable, IJsonModel<DiscoveredOnvifDevice>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveredOnvifDevice>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DiscoveredOnvifDevice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DiscoveredOnvifDevice>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DiscoveredOnvifDevice>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceIdentifier))
             {
@@ -46,11 +56,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiscoveredOnvifDevice DeserializeDiscoveredOnvifDevice(JsonElement element)
+        DiscoveredOnvifDevice IJsonModel<DiscoveredOnvifDevice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiscoveredOnvifDevice)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiscoveredOnvifDevice(document.RootElement, options);
+        }
+
+        internal static DiscoveredOnvifDevice DeserializeDiscoveredOnvifDevice(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +98,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> remoteIPAddress = default;
             Optional<IList<string>> scopes = default;
             Optional<IList<string>> endpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceIdentifier"u8))
@@ -99,8 +140,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     endpoints = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, Optional.ToList(scopes), Optional.ToList(endpoints));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, Optional.ToList(scopes), Optional.ToList(endpoints), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiscoveredOnvifDevice>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiscoveredOnvifDevice)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DiscoveredOnvifDevice IPersistableModel<DiscoveredOnvifDevice>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DiscoveredOnvifDevice)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDiscoveredOnvifDevice(document.RootElement, options);
+        }
+
+        string IPersistableModel<DiscoveredOnvifDevice>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

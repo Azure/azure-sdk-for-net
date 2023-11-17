@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Parameters object for a text analysis task using custom models. </summary>
     internal partial class CustomTaskParameters : TaskParameters
     {
-        /// <summary> Initializes a new instance of CustomTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomTaskParameters"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
@@ -26,14 +27,20 @@ namespace Azure.AI.TextAnalytics.Models
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of CustomTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        internal CustomTaskParameters(bool? loggingOptOut, string projectName, string deploymentName) : base(loggingOptOut)
+        internal CustomTaskParameters(bool? loggingOptOut, IDictionary<string, BinaryData> serializedAdditionalRawData, string projectName, string deploymentName) : base(loggingOptOut, serializedAdditionalRawData)
         {
             ProjectName = projectName;
             DeploymentName = deploymentName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomTaskParameters"/> for deserialization. </summary>
+        internal CustomTaskParameters()
+        {
         }
 
         /// <summary> This field indicates the project name for the model. </summary>

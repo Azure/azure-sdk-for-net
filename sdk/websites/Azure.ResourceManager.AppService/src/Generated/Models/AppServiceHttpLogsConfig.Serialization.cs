@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceHttpLogsConfig : IUtf8JsonSerializable
+    public partial class AppServiceHttpLogsConfig : IUtf8JsonSerializable, IJsonModel<AppServiceHttpLogsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceHttpLogsConfig>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppServiceHttpLogsConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppServiceHttpLogsConfig>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppServiceHttpLogsConfig>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FileSystem))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceHttpLogsConfig DeserializeAppServiceHttpLogsConfig(JsonElement element)
+        AppServiceHttpLogsConfig IJsonModel<AppServiceHttpLogsConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceHttpLogsConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceHttpLogsConfig(document.RootElement, options);
+        }
+
+        internal static AppServiceHttpLogsConfig DeserializeAppServiceHttpLogsConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<FileSystemHttpLogsConfig> fileSystem = default;
             Optional<AppServiceBlobStorageHttpLogsConfig> azureBlobStorage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileSystem"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.AppService.Models
                     azureBlobStorage = AppServiceBlobStorageHttpLogsConfig.DeserializeAppServiceBlobStorageHttpLogsConfig(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceHttpLogsConfig(fileSystem.Value, azureBlobStorage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceHttpLogsConfig(fileSystem.Value, azureBlobStorage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceHttpLogsConfig>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceHttpLogsConfig)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceHttpLogsConfig IPersistableModel<AppServiceHttpLogsConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceHttpLogsConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceHttpLogsConfig(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppServiceHttpLogsConfig>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

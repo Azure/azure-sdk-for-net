@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceForwardProxy : IUtf8JsonSerializable
+    public partial class AppServiceForwardProxy : IUtf8JsonSerializable, IJsonModel<AppServiceForwardProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceForwardProxy>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppServiceForwardProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppServiceForwardProxy>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppServiceForwardProxy>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Convention))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceForwardProxy DeserializeAppServiceForwardProxy(JsonElement element)
+        AppServiceForwardProxy IJsonModel<AppServiceForwardProxy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceForwardProxy(document.RootElement, options);
+        }
+
+        internal static AppServiceForwardProxy DeserializeAppServiceForwardProxy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ForwardProxyConvention> convention = default;
             Optional<string> customHostHeaderName = default;
             Optional<string> customProtoHeaderName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("convention"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.AppService.Models
                     customProtoHeaderName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceForwardProxy(Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceForwardProxy(Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceForwardProxy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceForwardProxy IPersistableModel<AppServiceForwardProxy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceForwardProxy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceForwardProxy(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppServiceForwardProxy>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

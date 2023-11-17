@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(EvaluateDataFlowExpressionRequestConverter))]
-    public partial class EvaluateDataFlowExpressionRequest : IUtf8JsonSerializable
+    public partial class EvaluateDataFlowExpressionRequest : IUtf8JsonSerializable, IJsonModel<EvaluateDataFlowExpressionRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvaluateDataFlowExpressionRequest>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EvaluateDataFlowExpressionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EvaluateDataFlowExpressionRequest>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EvaluateDataFlowExpressionRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
@@ -43,11 +53,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EvaluateDataFlowExpressionRequest DeserializeEvaluateDataFlowExpressionRequest(JsonElement element)
+        EvaluateDataFlowExpressionRequest IJsonModel<EvaluateDataFlowExpressionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EvaluateDataFlowExpressionRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEvaluateDataFlowExpressionRequest(document.RootElement, options);
+        }
+
+        internal static EvaluateDataFlowExpressionRequest DeserializeEvaluateDataFlowExpressionRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +96,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> streamName = default;
             Optional<int> rowLimits = default;
             Optional<string> expression = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -88,9 +129,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     expression = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EvaluateDataFlowExpressionRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToNullable(rowLimits), expression.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EvaluateDataFlowExpressionRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToNullable(rowLimits), expression.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EvaluateDataFlowExpressionRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EvaluateDataFlowExpressionRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EvaluateDataFlowExpressionRequest IPersistableModel<EvaluateDataFlowExpressionRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EvaluateDataFlowExpressionRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEvaluateDataFlowExpressionRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<EvaluateDataFlowExpressionRequest>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class EvaluateDataFlowExpressionRequestConverter : JsonConverter<EvaluateDataFlowExpressionRequest>
         {

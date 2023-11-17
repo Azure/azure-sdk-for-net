@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiLabelClassificationTaskParameters : IUtf8JsonSerializable
+    internal partial class CustomMultiLabelClassificationTaskParameters : IUtf8JsonSerializable, IJsonModel<CustomMultiLabelClassificationTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomMultiLabelClassificationTaskParameters>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CustomMultiLabelClassificationTaskParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CustomMultiLabelClassificationTaskParameters>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CustomMultiLabelClassificationTaskParameters>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -24,11 +35,40 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomMultiLabelClassificationTaskParameters DeserializeCustomMultiLabelClassificationTaskParameters(JsonElement element)
+        CustomMultiLabelClassificationTaskParameters IJsonModel<CustomMultiLabelClassificationTaskParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomMultiLabelClassificationTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomMultiLabelClassificationTaskParameters(document.RootElement, options);
+        }
+
+        internal static CustomMultiLabelClassificationTaskParameters DeserializeCustomMultiLabelClassificationTaskParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.AI.TextAnalytics.Models
             string projectName = default;
             string deploymentName = default;
             Optional<bool> loggingOptOut = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectName"u8))
@@ -57,8 +99,38 @@ namespace Azure.AI.TextAnalytics.Models
                     loggingOptOut = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomMultiLabelClassificationTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomMultiLabelClassificationTaskParameters(Optional.ToNullable(loggingOptOut), serializedAdditionalRawData, projectName, deploymentName);
         }
+
+        BinaryData IPersistableModel<CustomMultiLabelClassificationTaskParameters>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomMultiLabelClassificationTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomMultiLabelClassificationTaskParameters IPersistableModel<CustomMultiLabelClassificationTaskParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomMultiLabelClassificationTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomMultiLabelClassificationTaskParameters(document.RootElement, options);
+        }
+
+        string IPersistableModel<CustomMultiLabelClassificationTaskParameters>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
