@@ -8,7 +8,9 @@
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents options to modify a search request for operator information. </summary>
+    #pragma warning disable AZC0030
     public partial class OperatorInformationRequestOptions
+    #pragma warning restore AZC0030
     {
         /// <summary> Initializes a new instance of OperatorInformationRequestOptions. </summary>
         public OperatorInformationRequestOptions()
