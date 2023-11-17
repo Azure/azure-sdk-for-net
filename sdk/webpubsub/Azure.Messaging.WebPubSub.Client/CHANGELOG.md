@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2023-12-01)
 ### Breaking Changes
 - Change type of `AckId` and `SequenceId` from `ulong` to `long`
 - Update `SendMessageFailedException`. Remove `AckMessageError` and add `Code` property
