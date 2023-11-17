@@ -46,6 +46,8 @@ namespace System.ClientModel
         /// <param name="stream">The stream to write to.</param>
         /// <param name="cancellationToken">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
+
+        /// <inheritdoc/>
         public abstract void Dispose();
 
         private sealed class ModelMessageBody<T> : InputContent where T: IPersistableModel<T>

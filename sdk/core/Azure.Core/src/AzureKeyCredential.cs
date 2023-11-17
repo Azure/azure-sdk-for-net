@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.ComponentModel;
-using System.Threading;
-using Azure.Core;
 
 namespace Azure
 {
@@ -13,7 +12,7 @@ namespace Azure
     /// </summary>
     public class AzureKeyCredential
     {
-        private string _key;
+        private readonly KeyCredential _credential;
 
         /// <summary>
         /// Key used to authenticate to an Azure service.
@@ -21,8 +20,8 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Key
         {
-            get => Volatile.Read(ref _key);
-            private set => Volatile.Write(ref _key, value);
+            get => _credential.GetValue();
+            private set => _credential.Update(value);
         }
 
         /// <summary>
@@ -35,9 +34,7 @@ namespace Azure
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="key"/> is empty.
         /// </exception>
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        public AzureKeyCredential(string key) => Update(key);
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        public AzureKeyCredential(string key) => _credential = new KeyCredential(key);
 
         /// <summary>
         /// Updates the service key.
@@ -51,10 +48,6 @@ namespace Azure
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="key"/> is empty.
         /// </exception>
-        public void Update(string key)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-            Key = key;
-        }
+        public void Update(string key) => _credential.Update(key);
     }
 }
