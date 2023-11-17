@@ -102,7 +102,10 @@ namespace Azure.Core.Pipeline
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
-            started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+            if (_suppressNestedClientActivities)
+            {
+                started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
+            }
         }
 
         public void SetDisplayName(string displayName)
@@ -261,7 +264,7 @@ namespace Azure.Core.Pipeline
                     _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
 #else
                     _tagCollection ??= new ActivityTagsCollection();
-                    _tagCollection.Add(name, value!);
+                    _tagCollection[name] = value!;
 #endif
                 }
                 else
@@ -550,7 +553,7 @@ namespace Azure.Core.Pipeline
 #else
                 if (_activitySource?.HasListeners() == true)
                 {
-                    _currentActivity?.AddTag(name, value);
+                    _currentActivity?.SetTag(name, value);
                 }
                 else
                 {

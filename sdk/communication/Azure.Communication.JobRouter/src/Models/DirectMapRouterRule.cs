@@ -11,14 +11,14 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of DirectMapRouterRule. </summary>
         public DirectMapRouterRule()
         {
-            Kind = "direct-map-rule";
+            Kind = RouterRuleKind.DirectMap;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

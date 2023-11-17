@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Resources.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableResourcesSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _templateSpecClientDiagnostics;
+        private TemplateSpecsRestOperations _templateSpecRestClient;
+        private ClientDiagnostics _armDeploymentScriptDeploymentScriptsClientDiagnostics;
+        private DeploymentScriptsRestOperations _armDeploymentScriptDeploymentScriptsRestClient;
         private ClientDiagnostics _armApplicationApplicationsClientDiagnostics;
         private ApplicationsRestOperations _armApplicationApplicationsRestClient;
         private ClientDiagnostics _jitRequestClientDiagnostics;
         private JitRequestsRestOperations _jitRequestRestClient;
-        private ClientDiagnostics _armDeploymentScriptDeploymentScriptsClientDiagnostics;
-        private DeploymentScriptsRestOperations _armDeploymentScriptDeploymentScriptsRestClient;
-        private ClientDiagnostics _templateSpecClientDiagnostics;
-        private TemplateSpecsRestOperations _templateSpecRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableResourcesSubscriptionResource"/> class for mocking. </summary>
         protected MockableResourcesSubscriptionResource()
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         {
         }
 
+        private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecResource.ResourceType.Namespace, Diagnostics);
+        private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TemplateSpecResource.ResourceType));
+        private ClientDiagnostics ArmDeploymentScriptDeploymentScriptsClientDiagnostics => _armDeploymentScriptDeploymentScriptsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentScriptResource.ResourceType.Namespace, Diagnostics);
+        private DeploymentScriptsRestOperations ArmDeploymentScriptDeploymentScriptsRestClient => _armDeploymentScriptDeploymentScriptsRestClient ??= new DeploymentScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentScriptResource.ResourceType));
         private ClientDiagnostics ArmApplicationApplicationsClientDiagnostics => _armApplicationApplicationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmApplicationResource.ResourceType.Namespace, Diagnostics);
         private ApplicationsRestOperations ArmApplicationApplicationsRestClient => _armApplicationApplicationsRestClient ??= new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmApplicationResource.ResourceType));
         private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequestResource.ResourceType.Namespace, Diagnostics);
         private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitRequestResource.ResourceType));
-        private ClientDiagnostics ArmDeploymentScriptDeploymentScriptsClientDiagnostics => _armDeploymentScriptDeploymentScriptsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentScriptResource.ResourceType.Namespace, Diagnostics);
-        private DeploymentScriptsRestOperations ArmDeploymentScriptDeploymentScriptsRestClient => _armDeploymentScriptDeploymentScriptsRestClient ??= new DeploymentScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentScriptResource.ResourceType));
-        private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecResource.ResourceType.Namespace, Diagnostics);
-        private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TemplateSpecResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -108,6 +108,96 @@ namespace Azure.ResourceManager.Resources.Mocking
         public virtual Response<ArmDeploymentResource> GetArmDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
             return GetArmDeployments().Get(deploymentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Template Specs within the specified subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TemplateSpecResource> GetTemplateSpecsAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        {
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), TemplateSpecClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetTemplateSpecs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Template Specs within the specified subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TemplateSpecResource> GetTemplateSpecs(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        {
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), TemplateSpecClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetTemplateSpecs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all deployment scripts for a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentScripts_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(CancellationToken cancellationToken = default)
+        {
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), ArmDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetArmDeploymentScripts", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all deployment scripts for a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentScripts_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArmDeploymentScriptResource> GetArmDeploymentScripts(CancellationToken cancellationToken = default)
+        {
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), ArmDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetArmDeploymentScripts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -194,96 +284,6 @@ namespace Azure.ResourceManager.Resources.Mocking
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => JitRequestRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new JitRequestResource(Client, JitRequestData.DeserializeJitRequestData(e)), JitRequestClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetJitRequestDefinitions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all deployment scripts for a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentScripts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(CancellationToken cancellationToken = default)
-        {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), ArmDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetArmDeploymentScripts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all deployment scripts for a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentScripts_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ArmDeploymentScriptResource> GetArmDeploymentScripts(CancellationToken cancellationToken = default)
-        {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), ArmDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetArmDeploymentScripts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the Template Specs within the specified subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TemplateSpecs_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TemplateSpecResource> GetTemplateSpecsAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
-        {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), TemplateSpecClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetTemplateSpecs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the Template Specs within the specified subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TemplateSpecs_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TemplateSpecResource> GetTemplateSpecs(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
-        {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), TemplateSpecClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetTemplateSpecs", "value", "nextLink", cancellationToken);
         }
     }
 }

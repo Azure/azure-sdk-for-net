@@ -14,14 +14,8 @@ namespace Azure.Communication.JobRouter
     public partial class ScoringRuleOptions
     {
         /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
-        internal ScoringRuleOptions()
-        {
-            ScoringParameters = new ChangeTrackingList<ScoringRuleParameterSelector>();
-        }
-
-        /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
         /// <param name="batchSize"> Set batch size when 'isBatchScoringEnabled' is set to true. Defaults to 20 if not configured. </param>
-        /// <param name="scoringParameters"> List of extra parameters from the job that will be sent as part of the payload to scoring rule. If not set, the job's labels (sent in the payload as `job`) and the job's worker selectors (sent in the payload as `selectors`) are added to the payload of the scoring rule by default. Note: Worker labels are always sent with scoring payload. </param>
+        /// <param name="scoringParameters"> List of extra parameters from a job that will be sent as part of the payload to scoring rule. If not set, a job's labels (sent in the payload as `job`) and a job's worker selectors (sent in the payload as `selectors`) are added to the payload of the scoring rule by default. Note: Worker labels are always sent with scoring payload. </param>
         /// <param name="isBatchScoringEnabled"> If set to true, will score workers in batches, and the parameter name of the worker labels will be sent as `workers`. By default, set to false and the parameter name for the worker labels will be sent as `worker`. Note: If enabled, use 'batchSize' to set batch size. </param>
         /// <param name="descendingOrder"> If false, will sort scores by ascending order. By default, set to true. </param>
         internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? isBatchScoringEnabled, bool? descendingOrder)

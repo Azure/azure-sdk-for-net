@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(condition, nameof(condition));
             Argument.AssertNotNull(workerSelectors, nameof(workerSelectors));
 
-            Kind = "conditional";
+            Kind = WorkerSelectorAttachmentKind.Conditional;
             Condition = condition;
             WorkerSelectors = workerSelectors.ToList();
         }
@@ -33,14 +33,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
-        internal ConditionalWorkerSelectorAttachment(string kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind)
+        internal ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind)
         {
             Condition = condition;
             WorkerSelectors = workerSelectors;
         }
 
         /// <summary>
-        /// The condition that must be true for the worker selectors to be attached
+        /// The condition that must be true for the worker selectors to be attached.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="operationTimeout"> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </param>
         /// <param name="useTempFileRename"> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn't support rename operation. Type: boolean (or Expression with resultType boolean). </param>
-        internal SftpWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> operationTimeout, DataFactoryElement<bool> useTempFileRename) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal SftpWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> operationTimeout, DataFactoryElement<bool> useTempFileRename) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             OperationTimeout = operationTimeout;
             UseTempFileRename = useTempFileRename;
