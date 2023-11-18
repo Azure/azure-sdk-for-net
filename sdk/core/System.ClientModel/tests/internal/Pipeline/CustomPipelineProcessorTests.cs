@@ -5,7 +5,6 @@ using NUnit.Framework;
 using System.ClientModel.Internal.Primitives;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests;

@@ -50,7 +50,7 @@ public partial class ClientPipeline
         {
             if (GetNextPolicy(out PipelinePolicy next))
             {
-                next.ProcessAsync(_message, this);
+                next.Process(_message, this);
                 return true;
             }
 
