@@ -41,7 +41,7 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             Assert.False(testService.ManualResetEvent.Wait(System.TimeSpan.FromSeconds(5)));
             var connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
 
-            QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(), connectionString, "deadletter-queue-name", QueueMessageEncoding.Base64);
+            QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(), connectionString, Startup_ReceiveBinaryMessage_Success.DlqQueueName, QueueMessageEncoding.Base64);
             QueueMessage message = await queueClient.ReceiveMessageAsync();
             Assert.AreEqual(inputMessage, message.MessageText);
         }

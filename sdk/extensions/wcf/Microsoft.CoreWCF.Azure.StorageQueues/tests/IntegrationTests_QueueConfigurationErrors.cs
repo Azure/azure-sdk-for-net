@@ -28,7 +28,7 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
         {
             host = ServiceHelper.CreateWebHostBuilder<Startup2_ConflictingQueueName>().Build();
             System.ArgumentException exception = Assert.Throws<System.ArgumentException>(() => host.Start());
-            Assert.That(exception.Message, Is.EqualTo("Queue Name passed in as queuename on connection string and End point Uri do not match."));
+            Assert.That(exception.Message, Is.EqualTo($"Queue name mismatch. The connection string is using queue name '{Startup2_ConflictingQueueName.QueueName}', and the channel uri is using queue name 'conflicting-queue-name'. When specifying the queue name using both methods, they must match."));
         }
 
         [Test]
@@ -36,7 +36,8 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
         {
             host = ServiceHelper.CreateWebHostBuilder<Startup2_NoQueueName>().Build();
             System.ArgumentException exception = Assert.Throws<System.ArgumentException>(() => host.Start());
-            Assert.That(exception.Message, Is.EqualTo("Queue name could not be found."));
+            var expectedExceptionMessage = $"The endpoint Uri '{TestHelper.GetEndpointWithNoQueueName()}' should have two path segments when not using an Azure dns hostname.";
+            Assert.That(exception.Message, Is.EqualTo(expectedExceptionMessage));
         }
     }
 }

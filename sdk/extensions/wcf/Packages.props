@@ -1,0 +1,18 @@
+<Project>
+	<!-- This file is called Packages.props instead of Directory.Packages.props as this repo has included an earlier
+       version of Microsoft.Build.CentralPackageVersions directly into the repo and that uses a different naming
+       convention. See https://github.com/Azure/azure-sdk-for-net/pull/7705 -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove(Packages.props, $(MSBuildThisFileDirectory)..))" />
+	<ItemGroup>
+		<PackageReference Update="CoreWCF.Queue" Version="1.5.1" />
+		<PackageReference Update="System.IO.Pipelines" Version="6.0.3" />
+		<PackageReference Update="Microsoft.AspNetCore" Version="2.1.0" />
+		<PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="6.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Primitives" Version="6.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Http" Version="6.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+		<PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
+		<PackageReference Update="Azure.Storage.Files.Shares" Version="12.17.1" />
+		<PackageReference Update="Azure.Storage.Queues" Version="12.17.1" />
+	</ItemGroup>
+</Project>

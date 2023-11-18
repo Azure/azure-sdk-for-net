@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.WCF.Azure.StorageQueues;
 using NUnit.Framework;
 using System;
+using Microsoft.WCF.Azure;
 
 namespace CoreWCF
 {
@@ -34,7 +35,7 @@ namespace CoreWCF
         [Test]
         public void DefaultQueueConfiguration_ReceiveBinaryMessage_Success_EndToEnd()
         {
-            var queueName = "azure-queue";
+            var queueName = Startup_EndToEnd_BinaryEncoding.QueueName;
             var azuriteFixture = AzuriteNUnitFixture.Instance;
             var connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
             var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + queueName)
@@ -43,15 +44,19 @@ namespace CoreWCF
             };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
 
-            AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, AzureQueueStorageMessageEncoding.Binary);
+            AzureQueueStorageBinding azureQueueStorageBinding = new();
+            azureQueueStorageBinding.MessageEncoding = AzureQueueStorageMessageEncoding.Binary;
+            azureQueueStorageBinding.Security.Transport.ClientCredentialType = AzureClientCredentialType.ConnectionString;
             var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(
                 azureQueueStorageBinding,
                 new System.ServiceModel.EndpointAddress(endpointUrlString));
 
-            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new System.ServiceModel.Security.X509ServiceCertificateAuthentication
+            var credentials = channelFactory.UseAzureCredentials();
+            credentials.ServiceCertificate.SslCertificateAuthentication = new System.ServiceModel.Security.X509ServiceCertificateAuthentication
             {
                 CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.None
             };
+            credentials.ConnectionString = connectionString;
 
             var channel = channelFactory.CreateChannel();
             ((System.ServiceModel.Channels.IChannel)channel).Open();
@@ -65,7 +70,7 @@ namespace CoreWCF
         [Test]
         public void DefaultQueueConfiguration_ReceiveBinaryMessage_Success_EndToEnd_conflict()
         {
-            var queueName = "azure-queue";
+            var queueName = Startup_EndToEnd_BinaryEncoding.QueueName;
             var azuriteFixture = AzuriteNUnitFixture.Instance;
             var connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
             var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + queueName)
@@ -74,15 +79,19 @@ namespace CoreWCF
             };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
 
-            AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, AzureQueueStorageMessageEncoding.Text);
+            AzureQueueStorageBinding azureQueueStorageBinding = new();
+            azureQueueStorageBinding.Security.Transport.ClientCredentialType = AzureClientCredentialType.ConnectionString;
+            azureQueueStorageBinding.MessageEncoding = AzureQueueStorageMessageEncoding.Text;
             var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(
                 azureQueueStorageBinding,
                 new System.ServiceModel.EndpointAddress(endpointUrlString));
 
-            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new System.ServiceModel.Security.X509ServiceCertificateAuthentication
+            var credentials = channelFactory.UseAzureCredentials();
+            credentials.ServiceCertificate.SslCertificateAuthentication = new System.ServiceModel.Security.X509ServiceCertificateAuthentication
             {
                 CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.None
             };
+            credentials.ConnectionString = connectionString;
 
             var channel = channelFactory.CreateChannel();
             ((System.ServiceModel.Channels.IChannel)channel).Open();

@@ -2,13 +2,17 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
 using Contracts;
-using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
+using CoreWCF;
+using CoreWCF.Channels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
@@ -19,7 +23,7 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
         [SetUp]
         public void Setup()
         {
-            host = ServiceHelper.CreateWebHostBuilder<Startup_BinaryServiceQueueTextClientQueue>().Build();
+            host = ServiceHelper.CreateWebHostBuilder<Startup_TextServiceQueueBinaryClientQueue>().Build();
             host.Start();
         }
 
@@ -31,18 +35,25 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
         }
 
         [Test]
-        public async Task Test_DeadLetterQueueBinaryServiceQueueTextClientQueue()
+        public async Task Test_DeadLetterQueueTextServiceQueueBinaryClientQueue()
         {
             var queue = host.Services.GetRequiredService<QueueClient>();
-            string inputMessage = "\"<s:Envelope xmlns:s=\\\"http://www.w3.org/2003/05/soap-envelope\\\" xmlns:a=\\\"http://www.w3.org/2005/08/addressing\\\"><s:Header><a:Action s:mustUnderstand=\\\"1\\\">http://tempuri.org/ITestContract/Create</a:Action></s:Header><s:Body><Create xmlns=\\\"http://tempuri.org/\\\"><name>test</name></Create></s:Body></s:Envelope>\"";
-            var a = await queue.SendMessageAsync(inputMessage);
-
+            var body = XDocument.Parse("<Create xmlns=\"http://tempuri.org/\"><name>test</name></Create>");
+            var message = Message.CreateMessage(MessageVersion.CreateVersion(EnvelopeVersion.Soap12), "http://tempuri.org/ITestContract/Create", body.CreateReader());
+            var bmebe = new BinaryMessageEncodingBindingElement();
+            var encoderFactory = bmebe.CreateMessageEncoderFactory();
+            var bufferManager = BufferManager.CreateBufferManager(64 * 1024, 64 * 1024);
+            ReadOnlyMemory<byte> encodedMessage = encoderFactory.Encoder.WriteMessage(message, int.MaxValue, bufferManager);
+            BinaryData queueBody = new BinaryData(encodedMessage);
+            var receipt = await queue.SendMessageAsync(queueBody);
             var testService = host.Services.GetRequiredService<TestService>();
-            Assert.False(testService.ManualResetEvent.Wait(System.TimeSpan.FromSeconds(5)));
+            Assert.False(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
             var connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
-            QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(),connectionString, "deadletter-queue-name", QueueMessageEncoding.None);
-            QueueMessage message = await queueClient.ReceiveMessageAsync();
-            Assert.AreEqual(inputMessage, message.MessageText);
+            QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(), connectionString, Startup_TextServiceQueueBinaryClientQueue.DlqQueueName, QueueMessageEncoding.Base64);
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            var response = await queueClient.ReceiveMessageAsync(default, cts.Token);
+            Assert.NotNull(response.Value);
+            Assert.AreEqual(queueBody.ToArray(), response.Value.Body.ToArray());
         }
     }
 }

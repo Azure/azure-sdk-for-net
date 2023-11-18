@@ -11,9 +11,8 @@ using System.Threading;
 using System.ServiceModel.Security;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Test.Shared;
-using Microsoft.WCF.Azure.StorageQueues;
 
-namespace WCF.AzureQueueStorage.Tests
+namespace Microsoft.WCF.Azure.StorageQueues.Tests
 {
     public class IntegrationTests
     {
@@ -100,13 +99,26 @@ namespace WCF.AzureQueueStorage.Tests
                 Scheme = "net.aqs"
             };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
-            AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, azureQueueStorageMessageEncoding);
-            var channelFactory = new ChannelFactory<ITestContract>(azureQueueStorageBinding, new EndpointAddress(endpointUrlString));
-
-            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication
+            AzureQueueStorageBinding azureQueueStorageBinding = new()
             {
-                CertificateValidationMode = X509CertificateValidationMode.None
+                Security = new()
+                {
+                    Transport = new()
+                    {
+                        ClientCredentialType = AzureClientCredentialType.ConnectionString
+                    }
+                },
+                MessageEncoding = azureQueueStorageMessageEncoding
             };
+            var channelFactory = new ChannelFactory<ITestContract>(azureQueueStorageBinding, new EndpointAddress(endpointUrlString));
+            channelFactory.UseAzureCredentials(creds =>
+            {
+                creds.ConnectionString = connectionString;
+                creds.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication
+                {
+                    CertificateValidationMode = X509CertificateValidationMode.None
+                };
+            });
 
             var channel = channelFactory.CreateChannel();
             ((System.ServiceModel.Channels.IChannel)channel).Open();

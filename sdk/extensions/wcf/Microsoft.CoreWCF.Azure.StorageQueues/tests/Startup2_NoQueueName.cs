@@ -4,6 +4,7 @@
 using Azure.Storage.Queues;
 using Contracts;
 using CoreWCF.Configuration;
+using CoreWCF.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,15 +12,15 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
     public class Startup2_NoQueueName
     {
-        private readonly string queueName = "queue-name";
-        private readonly string deadLetterQueueName = "deadletter-queue-name";
+        public static string QueueName { get; } = TestHelper.GenerateUniqueQueueName();
+        public static string DlqQueueName { get; } = "dlq-" + QueueName;
         private string connectionString = null;
         private string endpointUrlString = null;
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<TestService>();
-            TestHelper.ConfigureService(services, typeof(TestService).FullName, queueName, out connectionString, out endpointUrlString, "", true);
+            TestHelper.ConfigureService(services, typeof(TestService).FullName, QueueName, out connectionString, out endpointUrlString, "", true);
         }
 
         public void Configure(IApplicationBuilder app)
@@ -29,8 +30,14 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             app.UseServiceModel(services =>
             {
                 services.AddService<TestService>();
-                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName),
-                endpointUrlString);
+                var binding = new AzureQueueStorageBinding(DlqQueueName);
+                binding.Security.Transport.ClientCredentialType = AzureClientCredentialType.ConnectionString;
+                services.AddServiceEndpoint<TestService, ITestContract>(binding, endpointUrlString);
+                services.UseAzureCredentials<TestService>(credentials =>
+                {
+                    credentials.ConnectionString = connectionString;
+                    credentials.ClientCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.None;
+                });
             });
         }
     }

@@ -64,11 +64,23 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             services.AddSingleton(queueClient);
         }
 
+        internal static string GenerateUniqueQueueName() => Guid.NewGuid().ToString("D").ToLowerInvariant();
+
+        internal static string GetEndpointWithNoQueueName()
+        {
+            var azuriteFixture = AzuriteNUnitFixture.Instance;
+            UriBuilder endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint)
+            {
+                Scheme = "net.aqs"
+            };
+            return endpointUriBuilder.Uri.AbsoluteUri;
+        }
+
         internal static QueueClient GetQueueClient(
-            HttpPipelineTransport transport,
-            string connectionString,
-            string queueName,
-            QueueMessageEncoding queueMessageEncoding)
+        HttpPipelineTransport transport,
+        string connectionString,
+        string queueName,
+        QueueMessageEncoding queueMessageEncoding)
         {
             //var transport = azuriteFixture.GetTransport();
             //var connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
