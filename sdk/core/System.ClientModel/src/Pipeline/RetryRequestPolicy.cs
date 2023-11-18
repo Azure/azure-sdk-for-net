@@ -94,19 +94,19 @@ public class RetryRequestPolicy : PipelinePolicy
     {
         TryGetRetryCount(message, out int retryCount);
 
-        if (retryCount < _maxRetries)
+        if (retryCount >= _maxRetries)
         {
-            if (exception != null)
-            {
-                //
-                //return message.ResponseClassifier.IsRetriable(message, exception);
-            }
-
-            // Response.IsError is true if we get here
-            return message.ResponseClassifier.IsRetriableResponse(message);
+            // out of retries
+            return false;
         }
 
-        // out of retries
+        if (message.MessageClassifier is MessageClassifier classifier)
+        {
+            return exception is null ?
+                classifier.IsRetriable(message) :
+                classifier.IsRetriable(message, exception);
+        }
+
         return false;
     }
 
@@ -115,7 +115,7 @@ public class RetryRequestPolicy : PipelinePolicy
 
     private static bool TryGetRetryCount(PipelineMessage message, out int retryCount)
     {
-        if ( message.TryGetProperty(typeof(RetryCountPropertyKey), out object? value) && value is int count)
+        if (message.TryGetProperty(typeof(RetryCountPropertyKey), out object? value) && value is int count)
         {
             retryCount = count;
             return true;

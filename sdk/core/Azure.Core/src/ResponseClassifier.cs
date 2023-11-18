@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
-using System.IO;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 
 namespace Azure.Core
 {
