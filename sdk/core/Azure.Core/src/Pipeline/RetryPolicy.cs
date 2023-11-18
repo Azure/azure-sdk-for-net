@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.ExceptionServices;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -167,53 +166,6 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-        {
-            await Task.Delay(time, cancellationToken).ConfigureAwait(false);
-        }
-
-        internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
-        {
-            cancellationToken.WaitHandle.WaitOne(time);
-        }
-
-        /// <summary>
-        /// This method can be overriden to control whether a request should be retried. It will be called for any response where
-        /// <see cref="PipelineResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
-        /// This method will only be called for sync methods.
-        /// </summary>
-        /// <param name="message">The message containing the request and response.</param>
-        /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
-        /// <returns>Whether or not to retry.</returns>
-        protected internal virtual bool ShouldRetry(HttpMessage message, Exception? exception) => ShouldRetryInternal(message, exception);
-
-        /// <summary>
-        /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
-        /// <see cref="PipelineResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
-        /// This method will only be called for async methods.
-        /// </summary>
-        /// <param name="message">The message containing the request and response.</param>
-        /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
-        /// <returns>Whether or not to retry.</returns>
-        protected internal virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception? exception) => new(ShouldRetryInternal(message, exception));
-
-        private bool ShouldRetryInternal(HttpMessage message, Exception? exception)
-        {
-            if (message.RetryNumber < _maxRetries)
-            {
-                if (exception != null)
-                {
-                    return message.ResponseClassifier.IsRetriable(message, exception);
-                }
-
-                // Response.IsError is true if we get here
-                return message.ResponseClassifier.IsRetriableResponse(message);
-            }
-
-            // out of retries
-            return false;
-        }
-
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
         /// </summary>
@@ -235,7 +187,7 @@ namespace Azure.Core.Pipeline
         /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual void OnSendingRequest(HttpMessage message)
+        protected virtual void OnSendingRequest(HttpMessage message)
         {
         }
 
@@ -244,14 +196,14 @@ namespace Azure.Core.Pipeline
         /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
+        protected virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
 
         /// <summary>
         /// This method can be overridden to introduce logic that runs after the request is sent through the pipeline and control is returned to the retry
         /// policy. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual void OnRequestSent(HttpMessage message)
+        protected virtual void OnRequestSent(HttpMessage message)
         {
         }
 
@@ -260,7 +212,7 @@ namespace Azure.Core.Pipeline
         /// policy. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
+        protected virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
         private TimeSpan GetNextDelayInternal(HttpMessage message)
         {

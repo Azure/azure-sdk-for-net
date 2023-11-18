@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System.Buffers;
-using System.IO;
 using System.ClientModel.Internal;
-using System.ClientModel.Internal.Primitives;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Pipeline policy to buffer response content or add a timeout to response content managed by the client
+/// Pipeline policy to buffer response content or add a timeout to response content
+/// managed by the client.
 /// </summary>
 public class ResponseBufferingPolicy : PipelinePolicy
 {
