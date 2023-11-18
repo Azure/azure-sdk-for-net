@@ -16,14 +16,24 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of ContentFilterCitedDetectionResult. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
-        /// <param name="url"> The internet location associated with the detection. </param>
         /// <param name="license"> The license description associated with the detection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="license"/> is null. </exception>
-        internal ContentFilterCitedDetectionResult(bool filtered, bool detected, Uri url, string license)
+        /// <exception cref="ArgumentNullException"> <paramref name="license"/> is null. </exception>
+        internal ContentFilterCitedDetectionResult(bool filtered, bool detected, string license)
         {
-            Argument.AssertNotNull(url, nameof(url));
             Argument.AssertNotNull(license, nameof(license));
 
+            Filtered = filtered;
+            Detected = detected;
+            License = license;
+        }
+
+        /// <summary> Initializes a new instance of ContentFilterCitedDetectionResult. </summary>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
+        /// <param name="url"> The internet location associated with the detection. </param>
+        /// <param name="license"> The license description associated with the detection. </param>
+        internal ContentFilterCitedDetectionResult(bool filtered, bool detected, Uri url, string license)
+        {
             Filtered = filtered;
             Detected = detected;
             Url = url;

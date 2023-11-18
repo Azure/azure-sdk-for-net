@@ -10,80 +10,79 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Azure.AI.OpenAI;
+
+// CUSTOM CODE NOTE: Depending on the model being used, "Content" may either be a plain string or an array of
+// content items. This is internally represented as BinaryData, but automatically storing and reserializing the
+// permutations of data is exceptionally non-trivial. Instead, we hide the "Content" property entirely and replace
+// its serialization with direct emission of the appropriate underlying data type.
+
+[CodeGenSuppress("ChatRequestUserMessage", typeof(BinaryData))]
+
+public partial class ChatRequestUserMessage : ChatRequestMessage
 {
-    // CUSTOM CODE NOTE: Depending on the model being used, "Content" may either be a plain string or an array of
-    // content items. This is internally represented as BinaryData, but automatically storing and reserializing the
-    // permutations of data is exceptionally non-trivial. Instead, we hide the "Content" property entirely and replace
-    // its serialization with direct emission of the appropriate underlying data type.
+    private string _stringContent = null;
+    private IEnumerable<ChatMessageContentItem> _listContent = null;
 
-    [CodeGenSuppress("ChatRequestUserMessage", typeof(BinaryData))]
-
-    public partial class ChatRequestUserMessage : ChatRequestMessage
+    /// <summary>
+    /// Creates a new instance of ChatRequestUserMessage using plain text content.
+    /// </summary>
+    /// <param name="content"> The plain text content associated with the message. </param>
+    /// <exception cref="ArgumentException">
+    /// <paramref name="content"/> is null or empty.
+    /// </exception>
+    public ChatRequestUserMessage(string content)
+        : this(ChatRole.User, content: null, name: null)
     {
-        private string _stringContent = null;
-        private IEnumerable<ChatMessageContentItem> _listContent = null;
+        Argument.AssertNotNullOrEmpty(content, nameof(content));
+        _stringContent = content;
+    }
 
-        /// <summary>
-        /// Creates a new instance of ChatRequestUserMessage using plain text content.
-        /// </summary>
-        /// <param name="content"> The plain text content associated with the message. </param>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="content"/> is null or empty.
-        /// </exception>
-        public ChatRequestUserMessage(string content)
-            : this(ChatRole.User, content: null, name: null)
+    /// <summary>
+    /// Creates a new instance of ChatRequestUserMessage using a collection of structured content.
+    /// </summary>
+    /// <param name="content"> The collection fo structured content associated with the message. </param>
+    /// <exception cref="ArgumentException">
+    /// <paramref name="content"/> is null or empty.
+    /// </exception>
+    public ChatRequestUserMessage(IEnumerable<ChatMessageContentItem> content)
+        : this(ChatRole.User, content: null, name: null)
+    {
+        Argument.AssertNotNullOrEmpty(content, nameof(content));
+        _listContent = content;
+    }
+
+    /// <summary>
+    /// Creates a new instance of ChatRequestUserMessage using a collection of structured content.
+    /// </summary>
+    /// <param name="content"> The collection fo structured content associated with the message. </param>
+    /// <exception cref="ArgumentException">
+    /// <paramref name="content"/> is null or empty.
+    /// </exception>
+    public ChatRequestUserMessage(params ChatMessageContentItem[] content)
+        : this(ChatRole.User, content: null, name: null)
+    {
+        Argument.AssertNotNullOrEmpty(content, nameof(content));
+        _listContent = content;
+    }
+
+    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeContent))]
+    internal BinaryData Content { get; }
+
+    internal void SerializeContent(Utf8JsonWriter writer)
+    {
+        if (!string.IsNullOrEmpty(_stringContent))
         {
-            Argument.AssertNotNullOrEmpty(content, nameof(content));
-            _stringContent = content;
+            writer.WriteStringValue(_stringContent);
         }
-
-        /// <summary>
-        /// Creates a new instance of ChatRequestUserMessage using a collection of structured content.
-        /// </summary>
-        /// <param name="content"> The collection fo structured content associated with the message. </param>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="content"/> is null or empty.
-        /// </exception>
-        public ChatRequestUserMessage(IEnumerable<ChatMessageContentItem> content)
-            : this(ChatRole.User, content: null, name: null)
+        else
         {
-            Argument.AssertNotNullOrEmpty(content, nameof(content));
-            _listContent = content;
-        }
-
-        /// <summary>
-        /// Creates a new instance of ChatRequestUserMessage using a collection of structured content.
-        /// </summary>
-        /// <param name="content"> The collection fo structured content associated with the message. </param>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="content"/> is null or empty.
-        /// </exception>
-        public ChatRequestUserMessage(params ChatMessageContentItem[] content)
-            : this(ChatRole.User, content: null, name: null)
-        {
-            Argument.AssertNotNullOrEmpty(content, nameof(content));
-            _listContent = content;
-        }
-
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeContent))]
-        internal BinaryData Content { get; }
-
-        internal void SerializeContent(Utf8JsonWriter writer)
-        {
-            if (!string.IsNullOrEmpty(_stringContent))
+            writer.WriteStartArray();
+            foreach (ChatMessageContentItem item in _listContent)
             {
-                writer.WriteStringValue(_stringContent);
+                writer.WriteObjectValue(item);
             }
-            else
-            {
-                writer.WriteStartArray();
-                foreach (ChatMessageContentItem item in _listContent)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            writer.WriteEndArray();
         }
     }
 }

@@ -535,6 +535,39 @@ Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
 Console.WriteLine(translation.Text);
 ```
 
+### Chat with images using gpt-4-vision-preview
+
+The `gpt-4-vision-preview` model allows you to use images as input components into chat completions.
+
+To do this, provide distinct content items on the user message(s) for the chat completions request:
+
+```C# Snippet:AddImageToChat
+const string rawImageUri = "<URI to your image>";
+ChatCompletionsOptions chatCompletionsOptions = new()
+{
+    DeploymentName = "gpt-4-vision-preview",
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant that describes images."),
+        new ChatRequestUserMessage(
+            new ChatMessageTextContentItem("Hi! Please describe this image"),
+            new ChatMessageImageContentItem(new Uri(rawImageUri))),
+    },
+};
+```
+
+Chat Completions will then proceed as usual, though the model may report the more informative `finish_details` in lieu
+of `finish_reason`:
+
+```C# Snippet:GetResponseFromImages
+Response<ChatCompletions> chatResponse = await client.GetChatCompletionsAsync(chatCompletionsOptions);
+ChatChoice choice = chatResponse.Value.Choices[0];
+if (choice.FinishDetails is StopFinishDetails stopDetails)
+{
+    Console.WriteLine($"{choice.Message.Role}: {choice.Message.Content}");
+}
+```
+
 ## Troubleshooting
 
 When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.

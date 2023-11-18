@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -93,6 +94,8 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public string FunctionArgumentsUpdate { get; }
 
+        public ChatCompletionsToolCall ToolCallUpdate { get; }
+
         /// <summary>
         /// Gets an optional name associated with the role of the streamed Chat Completion, typically as previously
         /// specified in a system message.
@@ -139,6 +142,9 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public int? ChoiceIndex { get; }
 
+        /// <inheritdoc cref="ChatCompletions.SystemFingerprint"/>
+        public string SystemFingerprint { get; }
+
         /// <summary>
         /// Gets additional data associated with this update that is specific to use with Azure OpenAI and that
         /// service's extended capabilities.
@@ -148,6 +154,7 @@ namespace Azure.AI.OpenAI
         internal StreamingChatCompletionsUpdate(
             string id,
             DateTimeOffset created,
+            string systemFingerprint = null,
             int? choiceIndex = null,
             ChatRole? role = null,
             string authorName = null,
@@ -155,10 +162,12 @@ namespace Azure.AI.OpenAI
             CompletionsFinishReason? finishReason = null,
             string functionName = null,
             string functionArgumentsUpdate = null,
+            ChatCompletionsToolCall toolCallUpdate = null,
             AzureChatExtensionsMessageContext azureExtensionsContext = null)
         {
             Id = id;
             Created = created;
+            SystemFingerprint = systemFingerprint;
             ChoiceIndex = choiceIndex;
             Role = role;
             AuthorName = authorName;
@@ -166,6 +175,7 @@ namespace Azure.AI.OpenAI
             FinishReason = finishReason;
             FunctionName = functionName;
             FunctionArgumentsUpdate = functionArgumentsUpdate;
+            ToolCallUpdate = toolCallUpdate;
             AzureExtensionsContext = azureExtensionsContext;
         }
     }

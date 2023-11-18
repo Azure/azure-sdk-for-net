@@ -16,7 +16,8 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of ChatChoice. </summary>
         /// <param name="message"> The chat message associated with this chat completions choice. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
-        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <param name="finishReason"> The reason that this chat completions choice completed. </param>
+        /// <param name="finishDetails"> The reason, with details, that this choice completed. </param>
         /// <param name="deltaMessage"> For streamed choices, the internal representation of a 'delta' payload. </param>
         /// <param name="contentFilterResults"> The category annotations for this chat choice's content filtering. </param>
         /// <param name="enhancements"> The enhancements for this choice. </param>
@@ -25,16 +26,18 @@ namespace Azure.AI.OpenAI
             ChatResponseMessage message = null,
             int index = default,
             CompletionsFinishReason finishReason = default,
+            ChatFinishDetails finishDetails = null,
             ChatResponseMessage deltaMessage = null,
             ContentFilterResultsForChoice contentFilterResults = null,
             AzureChatEnhancements enhancements = null)
         {
-            return new ChatChoice(message, index, finishReason, deltaMessage, contentFilterResults, enhancements);
+            return new ChatChoice(message, index, finishReason, finishDetails, deltaMessage, contentFilterResults, enhancements);
         }
 
         public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(
             string id,
             DateTimeOffset created,
+            string systemFingerprint,
             int? choiceIndex = null,
             ChatRole? role = null,
             string authorName = null,
@@ -42,11 +45,13 @@ namespace Azure.AI.OpenAI
             CompletionsFinishReason? finishReason = null,
             string functionName = null,
             string functionArgumentsUpdate = null,
+            ChatCompletionsToolCall toolCall = null,
             AzureChatExtensionsMessageContext azureExtensionsContext = null)
         {
             return new StreamingChatCompletionsUpdate(
                 id,
                 created,
+                systemFingerprint,
                 choiceIndex,
                 role,
                 authorName,
@@ -54,6 +59,7 @@ namespace Azure.AI.OpenAI
                 finishReason,
                 functionName,
                 functionArgumentsUpdate,
+                toolCall,
                 azureExtensionsContext);
         }
 

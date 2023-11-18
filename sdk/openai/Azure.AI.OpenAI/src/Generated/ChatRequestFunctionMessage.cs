@@ -16,11 +16,10 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of ChatRequestFunctionMessage. </summary>
         /// <param name="name"> The name of the function that was called to produce output. </param>
         /// <param name="content"> The output of the function as requested by the function call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ChatRequestFunctionMessage(string name, string content)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
 
             Role = ChatRole.Function;
             Name = name;

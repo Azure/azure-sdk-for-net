@@ -22,6 +22,7 @@ namespace Azure.AI.OpenAI
             Optional<ChatResponseMessage> message = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
+            Optional<ChatFinishDetails> finishDetails = default;
             Optional<ChatResponseMessage> delta = default;
             Optional<ContentFilterResultsForChoice> contentFilterResults = default;
             AzureChatEnhancements enhancements = default;
@@ -51,6 +52,15 @@ namespace Azure.AI.OpenAI
                     finishReason = new CompletionsFinishReason(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("finish_details"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    finishDetails = ChatFinishDetails.DeserializeChatFinishDetails(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("delta"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -75,7 +85,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatChoice(message.Value, index, finishReason, delta.Value, contentFilterResults.Value, enhancements);
+            return new ChatChoice(message.Value, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

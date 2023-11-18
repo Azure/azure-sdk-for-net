@@ -14,31 +14,31 @@ namespace Azure.AI.OpenAI
     public partial class ChatMessageImageContentItem : ChatMessageContentItem
     {
         /// <summary> Initializes a new instance of ChatMessageImageContentItem. </summary>
-        /// <param name="url"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ChatMessageImageContentItem(Uri url)
+        /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
+        public ChatMessageImageContentItem(ChatMessageImageUrl imageUrl)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
 
             Type = "image_url";
-            Url = url;
+            ImageUrl = imageUrl;
         }
 
         /// <summary> Initializes a new instance of ChatMessageImageContentItem. </summary>
         /// <param name="type"> The discriminated object type. </param>
-        /// <param name="url"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
+        /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
         /// <param name="detail">
         /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
         /// accuracy.
         /// </param>
-        internal ChatMessageImageContentItem(string type, Uri url, ChatMessageImageDetailLevel? detail) : base(type)
+        internal ChatMessageImageContentItem(string type, ChatMessageImageUrl imageUrl, ChatMessageImageDetailLevel? detail) : base(type)
         {
-            Url = url;
+            ImageUrl = imageUrl;
             Detail = detail;
         }
 
         /// <summary> An internet location, which must be accessible to the model,from which the image may be retrieved. </summary>
-        public Uri Url { get; }
+        public ChatMessageImageUrl ImageUrl { get; }
         /// <summary>
         /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
         /// accuracy.

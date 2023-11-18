@@ -289,7 +289,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.AzureGroundingEnhancementCoordinatePoint AzureGroundingEnhancementCoordinatePoint(float x = 0f, float y = 0f) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementLine AzureGroundingEnhancementLine(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementLineSpan> spans = null) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementLineSpan AzureGroundingEnhancementLineSpan(string text = null, int offset = 0, int length = 0, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementCoordinatePoint> polygon = null) { throw null; }
-        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatResponseMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason), Azure.AI.OpenAI.ChatResponseMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.AzureChatEnhancements enhancements = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatResponseMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason), Azure.AI.OpenAI.ChatFinishDetails finishDetails = null, Azure.AI.OpenAI.ChatResponseMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.AzureChatEnhancements enhancements = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatChoice> choices = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.ChatResponseMessage ChatResponseMessage(Azure.AI.OpenAI.ChatRole role = default(Azure.AI.OpenAI.ChatRole), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatCompletionsToolCall> toolCalls = null, Azure.AI.OpenAI.FunctionCall functionCall = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
         public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?)) { throw null; }
@@ -307,13 +307,15 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.OpenAI.ImageGenerationData ImageGenerationData(System.Uri url = null, string base64Data = null, string revisedPrompt = null) { throw null; }
-        public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, System.DateTimeOffset created, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
+        public static Azure.AI.OpenAI.StopFinishDetails StopFinishDetails(string stop = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, System.DateTimeOffset created, string systemFingerprint, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.ChatCompletionsToolCall toolCall = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
     }
     public partial class ChatChoice
     {
         internal ChatChoice() { }
         public Azure.AI.OpenAI.ContentFilterResultsForChoice ContentFilterResults { get { throw null; } }
         public Azure.AI.OpenAI.AzureChatEnhancements Enhancements { get { throw null; } }
+        public Azure.AI.OpenAI.ChatFinishDetails FinishDetails { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
         public int Index { get { throw null; } }
         public Azure.AI.OpenAI.ChatResponseMessage Message { get { throw null; } }
@@ -389,15 +391,20 @@ namespace Azure.AI.OpenAI
     {
         protected ChatCompletionsToolDefinition() { }
     }
+    public abstract partial class ChatFinishDetails
+    {
+        protected ChatFinishDetails() { }
+    }
     public abstract partial class ChatMessageContentItem
     {
         protected ChatMessageContentItem() { }
     }
     public partial class ChatMessageImageContentItem : Azure.AI.OpenAI.ChatMessageContentItem
     {
-        public ChatMessageImageContentItem(System.Uri url) { }
+        public ChatMessageImageContentItem(Azure.AI.OpenAI.ChatMessageImageUrl imageUrl) { }
+        public ChatMessageImageContentItem(System.Uri imageUri) { }
         public Azure.AI.OpenAI.ChatMessageImageDetailLevel? Detail { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } }
+        public Azure.AI.OpenAI.ChatMessageImageUrl ImageUrl { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChatMessageImageDetailLevel : System.IEquatable<Azure.AI.OpenAI.ChatMessageImageDetailLevel>
@@ -417,6 +424,11 @@ namespace Azure.AI.OpenAI
         public static implicit operator Azure.AI.OpenAI.ChatMessageImageDetailLevel (string value) { throw null; }
         public static bool operator !=(Azure.AI.OpenAI.ChatMessageImageDetailLevel left, Azure.AI.OpenAI.ChatMessageImageDetailLevel right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ChatMessageImageUrl
+    {
+        public ChatMessageImageUrl(System.Uri url) { }
+        public System.Uri Url { get { throw null; } }
     }
     public partial class ChatMessageTextContentItem : Azure.AI.OpenAI.ChatMessageContentItem
     {
@@ -518,6 +530,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.CompletionsFinishReason FunctionCall { get { throw null; } }
         public static Azure.AI.OpenAI.CompletionsFinishReason Stopped { get { throw null; } }
         public static Azure.AI.OpenAI.CompletionsFinishReason TokenLimitReached { get { throw null; } }
+        public static Azure.AI.OpenAI.CompletionsFinishReason ToolCalls { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.CompletionsFinishReason other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -806,6 +819,10 @@ namespace Azure.AI.OpenAI
         public static bool operator !=(Azure.AI.OpenAI.ImageSize left, Azure.AI.OpenAI.ImageSize right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MaxTokensFinishDetails : Azure.AI.OpenAI.ChatFinishDetails
+    {
+        internal MaxTokensFinishDetails() { }
+    }
     public partial class OnYourDataApiKeyAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions
     {
         public OnYourDataApiKeyAuthenticationOptions() { }
@@ -921,6 +938,11 @@ namespace Azure.AI.OpenAI
         public string UrlFieldName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
     }
+    public partial class StopFinishDetails : Azure.AI.OpenAI.ChatFinishDetails
+    {
+        internal StopFinishDetails() { }
+        public string Stop { get { throw null; } }
+    }
     public partial class StreamingChatCompletionsUpdate
     {
         internal StreamingChatCompletionsUpdate() { }
@@ -934,6 +956,8 @@ namespace Azure.AI.OpenAI
         public string FunctionName { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.OpenAI.ChatRole? Role { get { throw null; } }
+        public string SystemFingerprint { get { throw null; } }
+        public Azure.AI.OpenAI.ChatCompletionsToolCall ToolCallUpdate { get { throw null; } }
     }
     public partial class StreamingResponse<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IDisposable
     {

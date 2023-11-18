@@ -6,32 +6,31 @@
 using System.Net.Http;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Azure.AI.OpenAI;
+
+public partial class AudioTranscriptionOptions
 {
-    public partial class AudioTranscriptionOptions
+    internal virtual RequestContent ToRequestContent()
     {
-        internal virtual RequestContent ToRequestContent()
+        var content = new MultipartFormDataRequestContent();
+        content.Add(new StringContent(DeploymentName), "model");
+        content.Add(new ByteArrayContent(AudioData.ToArray()), "file", "@file.wav");
+        if (Optional.IsDefined(ResponseFormat))
         {
-            var content = new MultipartFormDataRequestContent();
-            content.Add(new StringContent(DeploymentName), "model");
-            content.Add(new ByteArrayContent(AudioData.ToArray()), "file", "@file.wav");
-            if (Optional.IsDefined(ResponseFormat))
-            {
-                content.Add(new StringContent(ResponseFormat.ToString()), "response_format");
-            }
-            if (Optional.IsDefined(Prompt))
-            {
-                content.Add(new StringContent(Prompt), "prompt");
-            }
-            if (Optional.IsDefined(Temperature))
-            {
-                content.Add(new StringContent($"{Temperature}"), "temperature");
-            }
-            if (Optional.IsDefined(Language))
-            {
-                content.Add(new StringContent(Language), "language");
-            }
-            return content;
+            content.Add(new StringContent(ResponseFormat.ToString()), "response_format");
         }
+        if (Optional.IsDefined(Prompt))
+        {
+            content.Add(new StringContent(Prompt), "prompt");
+        }
+        if (Optional.IsDefined(Temperature))
+        {
+            content.Add(new StringContent($"{Temperature}"), "temperature");
+        }
+        if (Optional.IsDefined(Language))
+        {
+            content.Add(new StringContent(Language), "language");
+        }
+        return content;
     }
 }

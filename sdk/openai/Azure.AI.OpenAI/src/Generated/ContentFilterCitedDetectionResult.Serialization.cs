@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -21,7 +22,7 @@ namespace Azure.AI.OpenAI
             }
             bool filtered = default;
             bool detected = default;
-            Uri url = default;
+            Optional<Uri> url = default;
             string license = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,6 +38,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("URL"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
@@ -46,7 +51,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ContentFilterCitedDetectionResult(filtered, detected, url, license);
+            return new ContentFilterCitedDetectionResult(filtered, detected, url.Value, license);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -3,13 +3,11 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI
-{
-    public partial class AudioTranscription
-    {
-        // CUSTOM CODE NOTE: included to demote visibility of 'task'
+namespace Azure.AI.OpenAI;
 
-        /// <summary> The label that describes which operation type generated the accompanying response data. </summary>
-        internal AudioTaskLabel? InternalAudioTaskLabel { get; }
-    }
+public partial class AudioTranscription
+{
+    // CUSTOM CODE NOTE: included to demote visibility of 'task'
+
+    internal AudioTaskLabel? InternalAudioTaskLabel { get; }
 }

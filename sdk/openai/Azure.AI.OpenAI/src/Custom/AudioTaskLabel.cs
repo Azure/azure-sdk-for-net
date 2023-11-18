@@ -3,10 +3,9 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI
+namespace Azure.AI.OpenAI;
+
+internal readonly partial struct AudioTaskLabel
 {
-    internal readonly partial struct AudioTaskLabel
-    {
-        // CUSTOM CODE NOTE: here to demote visibility to internal.
-    }
+    // CUSTOM CODE NOTE: here to demote visibility to internal.
 }

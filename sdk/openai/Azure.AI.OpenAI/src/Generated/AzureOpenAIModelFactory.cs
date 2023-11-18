@@ -228,19 +228,9 @@ namespace Azure.AI.OpenAI
         /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
         /// <param name="url"> The internet location associated with the detection. </param>
         /// <param name="license"> The license description associated with the detection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="license"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ContentFilterCitedDetectionResult"/> instance for mocking. </returns>
         public static ContentFilterCitedDetectionResult ContentFilterCitedDetectionResult(bool filtered = default, bool detected = default, Uri url = null, string license = null)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (license == null)
-            {
-                throw new ArgumentNullException(nameof(license));
-            }
-
             return new ContentFilterCitedDetectionResult(filtered, detected, url, license);
         }
 
@@ -335,6 +325,14 @@ namespace Azure.AI.OpenAI
             messages ??= new List<ChatResponseMessage>();
 
             return new AzureChatExtensionsMessageContext(messages?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of StopFinishDetails. </summary>
+        /// <param name="stop"> The token sequence that the model terminated with. </param>
+        /// <returns> A new <see cref="OpenAI.StopFinishDetails"/> instance for mocking. </returns>
+        public static StopFinishDetails StopFinishDetails(string stop = null)
+        {
+            return new StopFinishDetails("stop", stop);
         }
 
         /// <summary> Initializes a new instance of AzureChatEnhancements. </summary>

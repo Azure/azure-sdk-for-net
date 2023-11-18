@@ -10,25 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatMessageImageContentItem : IUtf8JsonSerializable
+    public partial class ChatMessageImageUrl : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("image_url"u8);
-            writer.WriteObjectValue(ImageUrl);
-            if (Optional.IsDefined(Detail))
-            {
-                writer.WritePropertyName("detail"u8);
-                writer.WriteStringValue(Detail.Value.ToString());
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WritePropertyName("url"u8);
+            writer.WriteStringValue(Url.AbsoluteUri);
             writer.WriteEndObject();
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal override RequestContent ToRequestContent()
+        internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

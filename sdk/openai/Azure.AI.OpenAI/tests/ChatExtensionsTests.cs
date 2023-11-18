@@ -11,10 +11,10 @@ using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests;
 
-public class AzureChatExtensionsTests : OpenAITestBase
+public class ChatExtensionsTests : OpenAITestBase
 {
-    public AzureChatExtensionsTests(bool isAsync)
-        : base(isAsync)//, RecordedTestMode.Live)
+    public ChatExtensionsTests(bool isAsync)
+        : base(Scenario.ChatCompletions, isAsync)//, RecordedTestMode.Live)
     {
     }
 
@@ -25,18 +25,16 @@ public class AzureChatExtensionsTests : OpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase(OpenAIClientServiceTarget.Azure)]
-    public async Task BasicSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
+    [TestCase(Service.Azure)]
+    public async Task BasicSearchExtensionWorks(Service serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
             serviceTarget,
-            OpenAIClientScenario.ChatCompletions);
+            Scenario.ChatCompletions);
 
         OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
         apiKeyAuthentication.SetKey(GetCognitiveSearchApiKey().Key);
-        //OnYourDataKeyAndKeyIdAuthenticationOptions keyOptions = new();
-        //keyOptions.SetKey(GetCognitiveSearchApiKey().Key);
         AzureCognitiveSearchChatExtensionConfiguration searchExtension = new()
         {
             SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
@@ -78,13 +76,13 @@ public class AzureChatExtensionsTests : OpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase(OpenAIClientServiceTarget.Azure)]
-    public async Task StreamingSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
+    [TestCase(Service.Azure)]
+    public async Task StreamingSearchExtensionWorks(Service serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
             serviceTarget,
-            OpenAIClientScenario.ChatCompletions);
+            Scenario.ChatCompletions);
 
         OnYourDataApiKeyAuthenticationOptions apiKeyAuthentication = new();
         apiKeyAuthentication.SetKey(GetCognitiveSearchApiKey().Key);

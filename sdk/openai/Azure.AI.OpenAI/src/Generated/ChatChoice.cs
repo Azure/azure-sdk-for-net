@@ -39,6 +39,10 @@ namespace Azure.AI.OpenAI
         /// <param name="message"> The chat message for a given chat completions prompt. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <param name="finishDetails">
+        /// The reason the model stopped generating tokens, together with any applicable details.
+        /// This structured representation replaces 'finish_reason' for some models.
+        /// </param>
         /// <param name="internalStreamingDeltaMessage"> The delta message content for a streaming response. </param>
         /// <param name="contentFilterResults">
         /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
@@ -50,11 +54,12 @@ namespace Azure.AI.OpenAI
         /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
         /// request is configured to use enhancements.
         /// </param>
-        internal ChatChoice(ChatResponseMessage message, int index, CompletionsFinishReason? finishReason, ChatResponseMessage internalStreamingDeltaMessage, ContentFilterResultsForChoice contentFilterResults, AzureChatEnhancements enhancements)
+        internal ChatChoice(ChatResponseMessage message, int index, CompletionsFinishReason? finishReason, ChatFinishDetails finishDetails, ChatResponseMessage internalStreamingDeltaMessage, ContentFilterResultsForChoice contentFilterResults, AzureChatEnhancements enhancements)
         {
             Message = message;
             Index = index;
             FinishReason = finishReason;
+            FinishDetails = finishDetails;
             InternalStreamingDeltaMessage = internalStreamingDeltaMessage;
             ContentFilterResults = contentFilterResults;
             Enhancements = enhancements;
@@ -66,6 +71,13 @@ namespace Azure.AI.OpenAI
         public int Index { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>
         public CompletionsFinishReason? FinishReason { get; }
+        /// <summary>
+        /// The reason the model stopped generating tokens, together with any applicable details.
+        /// This structured representation replaces 'finish_reason' for some models.
+        /// Please note <see cref="ChatFinishDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="StopFinishDetails"/> and <see cref="MaxTokensFinishDetails"/>.
+        /// </summary>
+        public ChatFinishDetails FinishDetails { get; }
         /// <summary>
         /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that

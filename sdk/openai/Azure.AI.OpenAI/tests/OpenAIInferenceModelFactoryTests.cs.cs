@@ -194,15 +194,18 @@ namespace Azure.AI.OpenAI.Tests
                 AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
                     expectedId,
                     DateTime.Now,
+                    systemFingerprint: null,
                     role: ChatRole.Assistant,
                     contentUpdate: "hello"),
                 AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
                     expectedId,
                     DateTime.Now,
+                    systemFingerprint: null,
                     contentUpdate: " world"),
                 AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
                     expectedId,
                     DateTime.Now,
+                    systemFingerprint: null,
                     finishReason: CompletionsFinishReason.Stopped),
             };
 

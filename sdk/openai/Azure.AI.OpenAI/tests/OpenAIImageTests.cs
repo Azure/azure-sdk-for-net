@@ -12,17 +12,17 @@ namespace Azure.AI.OpenAI.Tests
     public class OpenAIImageTests : OpenAITestBase
     {
         public OpenAIImageTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Live)
+            : base(Scenario.ImageGenerations, isAsync)//, RecordedTestMode.Live)
         {
         }
 
         [RecordedTest]
-        [TestCase(OpenAIClientServiceTarget.Azure)]
-        [TestCase(OpenAIClientServiceTarget.NonAzure)]
-        public async Task CanGenerateImages(OpenAIClientServiceTarget serviceTarget)
+        [TestCase(Service.Azure)]
+        [TestCase(Service.NonAzure)]
+        public async Task CanGenerateImages(Service serviceTarget)
         {
-            OpenAIClient client = GetDevelopmentTestClient(serviceTarget, "AOAI_DALLE3_ENDPOINT", "AOAI_DALLE3_API_KEY");
-            string deploymentName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ImageGenerations);
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentName = GetDeploymentOrModelName(serviceTarget);
 
             const string prompt = "a simplistic picture of a cyberpunk money dreaming of electric bananas";
             var requestOptions = new ImageGenerationOptions()
