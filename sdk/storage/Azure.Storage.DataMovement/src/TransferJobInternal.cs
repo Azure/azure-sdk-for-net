@@ -344,6 +344,8 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus jobPartStatus = args.TransferStatus;
             DataTransferState jobState = _dataTransfer._state.GetTransferStatus().State;
 
+            Console.WriteLine($"JobPartEvent - {jobPartStatus.State}, {jobPartStatus.HasSkippedItems}, {jobPartStatus.HasFailedItems} | Job {jobState}");
+
             // Keep track of paused, failed, and skipped which we will use to determine final job status
             // Since this is each Job Part coming in, the state of skipped or failed is mutually exclusive.
             if (jobPartStatus.State == DataTransferState.Paused)
