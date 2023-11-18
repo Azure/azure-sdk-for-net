@@ -21,18 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private string GetStorageAccountAccessKey(ResourceGroupResource resourceGroup)
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return "Sanitized";
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    var storageAccountName =Recording.GenerateAssetName("adfstorage");
-                    return GetStorageAccountAccessKey(resourceGroup, storageAccountName).Result;
-                }
-            }
+            var storageAccountName = Recording.GenerateAssetName("adfstorage");
+            return GetStorageAccountAccessKey(resourceGroup, storageAccountName).Result;
         }
 
         private async Task<DataFactoryDatasetResource> CreateDefaultDataset(DataFactoryResource dataFactory, string datasetName, string linkedServiceName)
@@ -80,22 +70,21 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.IsFalse(flag);
         }
 
-        public async Task DatasetCreateTest(string name, Func<DataFactoryResource, string, Task<DataFactoryLinkedServiceResource>> linkedServiceFunc, Func<string, DataFactoryDatasetData> dataFunc)
+        public async Task DatasetCreate(string name, Func<DataFactoryResource, string, Task<DataFactoryLinkedServiceResource>> linkedServiceFunc, Func<string, DataFactoryDatasetData> dataFunc)
         {
             // Get the resource group
             string rgName = Recording.GenerateAssetName($"adf-rg-{name}-");
             var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
             // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName("adf-");
+            string dataFactoryName = Recording.GenerateAssetName($"adf-{name}-");
             DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
             // Create a LinkedService
             string accessKey = GetStorageAccountAccessKey(resourceGroup);
-            string linkedServiceName = Recording.GenerateAssetName("adf-linkedservice-");
+            string linkedServiceName = Recording.GenerateAssetName($"adf-linkedservice-{name}-");
             await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            linkedServiceName = Recording.GenerateAssetName($"linkedservice-{name}-");
             await linkedServiceFunc(dataFactory, linkedServiceName);
             // Create Dataset
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
+            string datasetName = Recording.GenerateAssetName($"adf-dataset-{name}-");
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dataFunc(linkedServiceName));
             Assert.NotNull(result.Value.Id);
         }
@@ -114,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureBlob_Create()
         {
-            await DatasetCreateTest("blob", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("blob", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -155,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureDatabricksDeltaLake_Create()
         {
-            await DatasetCreateTest("databricks", CreateAzureDatabricksDeltaLakeLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("databricks", CreateAzureDatabricksDeltaLakeLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureDatabricksDeltaLakeDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -179,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureTable_Create()
         {
-            await DatasetCreateTest("table", CreateAzureTableStorageLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("table", CreateAzureTableStorageLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "table$Date$Time") { });
             });
@@ -196,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureSqlTable_Create()
         {
-            await DatasetCreateTest("asql", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("asql", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -216,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureSqlMITable_Create()
         {
-            await DatasetCreateTest("asqlmi", CreateAzureSqlMILinkedService, (string linkedServiceName) =>
+            await DatasetCreate("asqlmi", CreateAzureSqlMILinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -240,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureSqlDWTable_Create()
         {
-            await DatasetCreateTest("asqlmw", CreateAzureSqlDWLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("asqlmw", CreateAzureSqlDWLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureSqlDWTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -260,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_SqlServerTable_Create()
         {
-            await DatasetCreateTest("sql", CreateSqlServerLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("sql", CreateSqlServerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new SqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -273,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_CustomDataset_Create()
         {
-            await DatasetCreateTest("custom", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("custom", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new CustomDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -298,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [Ignore("test issue")]
         public async Task Dataset_OracleTable_Create()
         {
-            await DatasetCreateTest("oracle", CreateOracleLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("oracle", CreateOracleLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new OracleTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -320,7 +309,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AmazonRdsForOracleTable_Create()
         {
-            await DatasetCreateTest("rds", CreateAmazonRdsForOracleLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("rds", CreateAmazonRdsForOracleLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AmazonRdsForOracleTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -345,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_OData_Create()
         {
-            await DatasetCreateTest("odata", CreateODataLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("odata", CreateODataLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new ODataResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -365,7 +354,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_CassandraTable_Create()
         {
-            await DatasetCreateTest("cassandra", CreateCassandraLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("cassandra", CreateCassandraLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new CassandraTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -389,7 +378,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_CosmosDb_Create()
         {
-            await DatasetCreateTest("cosmosdb", CreateCosmosDBLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("cosmosdb", CreateCosmosDBLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new CosmosDBSqlApiCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fake collection") { });
             });
@@ -406,7 +395,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_FileShare_Create()
         {
-            await DatasetCreateTest("file", CreateFileServerLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("file", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new FileShareDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -432,7 +421,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AmazonS3Object_Create()
         {
-            await DatasetCreateTest("s3", CreateAmazonS3LinkedService, (string linkedServiceName) =>
+            await DatasetCreate("s3", CreateAmazonS3LinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AmazonS3Dataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "sample name")
                 {
@@ -456,7 +445,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_MongoDb_Create()
         {
-            await DatasetCreateTest("mongodb", CreateMongoDBLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("mongodb", CreateMongoDBLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new MongoDBCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "faketable") { });
             });
@@ -466,7 +455,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_RelationalTable_Create()
         {
-            await DatasetCreateTest("rt", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("rt", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new RelationalTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { TableName = "$EncryptedString$MyEncryptedTableName" });
             });
@@ -485,7 +474,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_WebTable_Create()
         {
-            await DatasetCreateTest("web", CreateWebLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("web", CreateWebLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new WebTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), 1)
                 {
@@ -505,7 +494,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureDataLakeStoreFile_Create()
         {
-            await DatasetCreateTest("dlake", CreateAzureDataLakeStoreLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("dlake", CreateAzureDataLakeStoreLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureDataLakeStoreDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -527,7 +516,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureSearchIndex_Create()
         {
-            await DatasetCreateTest("search", CreateAzureSearchLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("search", CreateAzureSearchLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureSearchIndexDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakedIndexName") { });
             });
@@ -544,7 +533,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_HttpFile_Create()
         {
-            await DatasetCreateTest("http", CreateHttpLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("http", CreateHttpLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new DataFactoryHttpDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -566,7 +555,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureMySqlTable_Create()
         {
-            await DatasetCreateTest("amysql", CreateAzureMySqlLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("amysql", CreateAzureMySqlLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureMySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -593,7 +582,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_SalesforceObject_Create()
         {
-            await DatasetCreateTest("salesforce", CreateSalesforceLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("salesforce", CreateSalesforceLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new SalesforceObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -620,7 +609,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_SalesforceServiceCloudObject()
         {
-            await DatasetCreateTest("salesforcec", CreateSalesforceServiceCloudLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("salesforcec", CreateSalesforceServiceCloudLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new SalesforceServiceCloudObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -633,7 +622,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzureBlobDataset_Create()
         {
-            await DatasetCreateTest("blob", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("blob", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
@@ -672,7 +661,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_SapCloudForCustomerResource_Create()
         {
-            await DatasetCreateTest("sapc", CreateSapCloudForCustomerLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("sapc", CreateSapCloudForCustomerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new SapCloudForCustomerResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "LeadCollection"));
             });
@@ -696,7 +685,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AmazonMwsObject_Create()
         {
-            await DatasetCreateTest("mws", CreateAmazonMwsLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("mws", CreateAmazonMwsLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AmazonMwsObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -716,7 +705,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_AzurePostgreSqlTable_Create()
         {
-            await DatasetCreateTest("apsql", CreateAzurePostgreSqlLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("apsql", CreateAzurePostgreSqlLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new AzurePostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -733,7 +722,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_ConcurObject_Create()
         {
-            await DatasetCreateTest("concur", CreateConcurLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("concur", CreateConcurLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new ConcurObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -753,7 +742,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_CouchbaseTable_Create()
         {
-            await DatasetCreateTest("couchbase", CreateCouchbaseLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("couchbase", CreateCouchbaseLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new CouchbaseTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -773,7 +762,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_DrillTable_Create()
         {
-            await DatasetCreateTest("drill", CreateDrillLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("drill", CreateDrillLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new DrillTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -790,7 +779,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_EloquaObject_Create()
         {
-            await DatasetCreateTest("eloqua", CreateEloquaLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("eloqua", CreateEloquaLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new EloquaObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -807,7 +796,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_GoogleBigQueryObject_Create()
         {
-            await DatasetCreateTest("gbigquery", CreateGoogleBigQueryLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("gbigquery", CreateGoogleBigQueryLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new GoogleBigQueryObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -827,7 +816,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_GreenplumTable_Create()
         {
-            await DatasetCreateTest("greenp", CreateGreenplumLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("greenp", CreateGreenplumLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new GreenplumTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -850,7 +839,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_HBaseObject_Create()
         {
-            await DatasetCreateTest("hbase", CreateHBaseLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("hbase", CreateHBaseLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new HBaseObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -867,7 +856,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_HiveObject_Create()
         {
-            await DatasetCreateTest("hive", CreateHiveLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("hive", CreateHiveLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new HiveObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
@@ -884,12 +873,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_HubspotObject_Create()
         {
-            await DatasetCreateTest("hubspot", CreateHubspotLinkedService, (string linkedServiceName) =>
+            await DatasetCreate("hubspot", CreateHubspotLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new HubspotObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
             });
         }
-        /*
+
         private async Task<DataFactoryLinkedServiceResource> CreateImpalaLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
             DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new ImpalaLinkedService("host", ImpalaAuthenticationType.Anonymous) { });
@@ -899,24 +888,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_ImpalaObject()
+        public async Task Dataset_ImpalaObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateImpalaLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ImpalaObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("impala", CreateImpalaLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new ImpalaObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateJiraLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -928,24 +905,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_JiraObject()
+        public async Task Dataset_JiraObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateJiraLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new JiraObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("jira", CreateJiraLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new JiraObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
         private async Task<DataFactoryLinkedServiceResource> CreateMagentoLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
@@ -956,24 +921,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_MagentoObject()
+        public async Task Dataset_MagentoObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateMagentoLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MagentoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("magento", CreateMagentoLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new MagentoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateMariaDBLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -988,24 +941,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_MariaDBTable()
+        public async Task Dataset_MariaDBTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateMariaDBLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MariaDBTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("mariadb", CreateMariaDBLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new MariaDBTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateAzureMariaDBLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1020,24 +961,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_AzureMariaDBTable()
+        public async Task Dataset_AzureMariaDBTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzureMariaDBLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureMariaDBTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("amariadb", CreateAzureMariaDBLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new AzureMariaDBTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateMarketoLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1049,27 +978,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_MarketoObject()
+        public async Task Dataset_MarketoObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateMarketoLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MarketoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("marketo", CreateMarketoLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new MarketoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
-        private async Task<DataFactoryLinkedServiceResource> PaypalLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
+        private async Task<DataFactoryLinkedServiceResource> CreatePaypalLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
             DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new PaypalLinkedService("host", "client") { });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
@@ -1078,24 +995,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_PaypalObject()
+        public async Task Dataset_PaypalObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await PaypalLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PaypalObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("paypal", CreatePaypalLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new PaypalObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreatePhoenixLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1107,24 +1012,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_PhoenixObject()
+        public async Task Dataset_PhoenixObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreatePhoenixLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PhoenixObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("phoenix", CreatePhoenixLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new PhoenixObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreatePrestoLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1136,24 +1029,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_PrestoObject()
+        public async Task Dataset_PrestoObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreatePrestoLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PrestoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("presto", CreatePrestoLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new PrestoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateQuickBooksLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1174,24 +1055,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_QuickBooksObject()
+        public async Task Dataset_QuickBooksObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateQuickBooksLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new QuickBooksObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("quickbooks", CreateQuickBooksLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new QuickBooksObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateServiceNowLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1207,24 +1076,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_ServiceNowObject()
+        public async Task Dataset_ServiceNowObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateServiceNowLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ServiceNowObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("servicenow", CreateServiceNowLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new ServiceNowObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateShopifyLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1236,24 +1093,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_ShopifyObject()
+        public async Task Dataset_ShopifyObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateShopifyLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ShopifyObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("shopify", CreateShopifyLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new ShopifyObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateSparkLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1265,24 +1110,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SparkObject()
+        public async Task Dataset_SparkObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSparkLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SparkObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("spark", CreateSparkLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new SparkObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateSquareLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1303,24 +1136,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SquareObject()
+        public async Task Dataset_SquareObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSquareLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SquareObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("square", CreateSquareLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new SquareObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateXeroLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1340,24 +1161,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_XeroObject()
+        public async Task Dataset_XeroObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateXeroLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new XeroObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("xero", CreateXeroLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new XeroObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateZohoLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1376,24 +1185,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_ZohoObject()
+        public async Task Dataset_ZohoObject_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateZohoLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ZohoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("zoho", CreateZohoLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new ZohoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateSapEccLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1405,24 +1202,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SapEccResource()
+        public async Task Dataset_SapEccResource_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSapEccLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapEccResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "dd04tentitySet") { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("sapecc", CreateSapEccLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new SapEccResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "dd04tentitySet") { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateNetezzaLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1437,24 +1222,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_NetezzaTable()
+        public async Task Dataset_NetezzaTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateNetezzaLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new NetezzaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("netezza", CreateNetezzaLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new NetezzaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
         private async Task<DataFactoryLinkedServiceResource> CreateVerticaLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
@@ -1468,24 +1241,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_VerticaTable()
+        public async Task Dataset_VerticaTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateVerticaLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new VerticaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("vertica", CreateVerticaLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new VerticaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { });
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateSapOpenHubLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1506,28 +1267,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SapOpenHubTable()
+        public async Task Dataset_SapOpenHubTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSapOpenHubLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapOpenHubTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeohdname")
+            await DatasetCreate("sapopenhub", CreateSapOpenHubLinkedService, (string linkedServiceName) =>
             {
-                ExcludeLastRequest = true,
-                BaseRequestId = 231
+                return new DataFactoryDatasetData(new SapOpenHubTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeohdname")
+                {
+                    ExcludeLastRequest = true,
+                    BaseRequestId = 231
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateRestServiceLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1544,29 +1293,17 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_RestResource()
+        public async Task Dataset_RestResource_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateRestServiceLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new RestResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("rest", CreateRestServiceLinkedService, (string linkedServiceName) =>
             {
-                RelativeUri = "\"https://fakeurl/\"",
-                AdditionalHeaders = { { "x-user-defined", BinaryData.FromString("\"helloworld\"") } },
-                PaginationRules = { { "AbsoluteUrl", BinaryData.FromString("\"$.paging.next\"") } }
+                return new DataFactoryDatasetData(new RestResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    RelativeUri = "\"https://fakeurl/\"",
+                    AdditionalHeaders = { { "x-user-defined", BinaryData.FromString("\"helloworld\"") } },
+                    PaginationRules = { { "AbsoluteUrl", BinaryData.FromString("\"$.paging.next\"") } }
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateOffice365LinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1580,120 +1317,84 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_Excel()
+        public async Task Dataset_Excel_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateOffice365LinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ExcelDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("excel", CreateOffice365LinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "releases-1.xlsx", Container = "exceltest" },
-                Compression = new DatasetCompression("Gzip") { Level = "Fasttest" },
-                SheetName = "test01",
-                Range = "A4:H9",
-                NullValue = "N/A",
-                FirstRowAsHeader = true
-            })
-            {
-                Properties = {
-                    Schema = new List<DatasetSchemaDataElement> {
-                        new DatasetSchemaDataElement() { SchemaColumnName = "title", SchemaColumnType = "string" },
-                        new DatasetSchemaDataElement() { SchemaColumnName = "movieID", SchemaColumnType = "string" }
-                    }
-                }
-            };
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Dataset_Excel_SheetIndex()
-        {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateOffice365LinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ExcelDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
-            {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "releases-1.xlsx", Container = "exceltest" },
-                Compression = new DatasetCompression("Gzip") { Level = "Fasttest" },
-                SheetName = "test01",
-                Range = "A4:H9",
-                NullValue = "N/A",
-                FirstRowAsHeader = true,
-                SheetIndex = 1
-            })
-            {
-                Properties = {
-                    Schema = new List<DatasetSchemaDataElement> {
-                        new DatasetSchemaDataElement() { SchemaColumnName = "title", SchemaColumnType = "string" },
-                        new DatasetSchemaDataElement() { SchemaColumnName = "movieID", SchemaColumnType = "string" }
-                    }
-                }
-            };
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Dataset_Parquet()
-        {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzureBlobStorageLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ParquetDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
-            {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.parquet", Container = "ContainerName", FolderPath = "dataflow/test/input" },
-                CompressionCodec = "gzip"
-            })
-            {
-                Properties = {
-                    Schema = new List<DatasetSchemaDataElement> {
-                        new DatasetSchemaDataElement() {
-                            SchemaColumnName = "col1",
-                            SchemaColumnType = "INT_32"
-                        },
-                        new DatasetSchemaDataElement() {
-                            SchemaColumnName = "col2",
-                            SchemaColumnType = "Decimal",
-                            AdditionalProperties = { { "scale",BinaryData.FromString("2")},{"precision",BinaryData.FromString("38") } }
+                return new DataFactoryDatasetData(new ExcelDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "releases-1.xlsx", Container = "exceltest" },
+                    Compression = new DatasetCompression("Gzip") { Level = "Fasttest" },
+                    SheetName = "test01",
+                    Range = "A4:H9",
+                    NullValue = "N/A",
+                    FirstRowAsHeader = true
+                })
+                {
+                    Properties = {
+                        Schema = new List<DatasetSchemaDataElement> {
+                            new DatasetSchemaDataElement() { SchemaColumnName = "title", SchemaColumnType = "string" },
+                            new DatasetSchemaDataElement() { SchemaColumnName = "movieID", SchemaColumnType = "string" }
                         }
                     }
-                }
-            };
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Excel_SheetIndex_Create()
+        {
+            await DatasetCreate("excelsheet", CreateOffice365LinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new ExcelDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "releases-1.xlsx", Container = "exceltest" },
+                    Compression = new DatasetCompression("Gzip") { Level = "Fasttest" },
+                    SheetName = "test01",
+                    Range = "A4:H9",
+                    NullValue = "N/A",
+                    FirstRowAsHeader = true,
+                    SheetIndex = 1
+                })
+                {
+                    Properties = {
+                        Schema = new List<DatasetSchemaDataElement> {
+                            new DatasetSchemaDataElement() { SchemaColumnName = "title", SchemaColumnType = "string" },
+                            new DatasetSchemaDataElement() { SchemaColumnName = "movieID", SchemaColumnType = "string" }
+                        }
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Parquet_Create()
+        {
+            await DatasetCreate("parquet", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new ParquetDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.parquet", Container = "ContainerName", FolderPath = "dataflow/test/input" },
+                    CompressionCodec = "gzip"
+                })
+                {
+                    Properties = {
+                        Schema = new List<DatasetSchemaDataElement> {
+                            new DatasetSchemaDataElement() {
+                                SchemaColumnName = "col1",
+                                SchemaColumnType = "INT_32"
+                            },
+                            new DatasetSchemaDataElement() {
+                                SchemaColumnName = "col2",
+                                SchemaColumnType = "Decimal",
+                                AdditionalProperties = { { "scale",BinaryData.FromString("2")},{"precision",BinaryData.FromString("38") } }
+                            }
+                        }
+                    }
+                };
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateSapTableLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1712,55 +1413,33 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SapTableResource()
+        public async Task Dataset_SapTableResource_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSapTableLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapTableResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "tablename") { });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+            await DatasetCreate("saptable", CreateSapTableLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new SapTableResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "tablename") { });
+            });
         }
 
         [Test]
         [RecordedTest]
         public async Task Dataset_DelimitedText_Schema()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateFileServerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("delimitedtext", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "test01", Container = "ContainerName", FolderPath = "xxxxx" },
-                ColumnDelimiter = "\\n",
-                RowDelimiter = "\\t",
-                EncodingName = "UTF-8",
-                CompressionCodec = "bzip2",
-                CompressionLevel = "farest",
-                QuoteChar = "",
-                EscapeChar = "",
-                FirstRowAsHeader = false,
-                NullValue = "",
-                Schema = new List<DatasetSchemaDataElement> {
+                return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "test01", Container = "ContainerName", FolderPath = "xxxxx" },
+                    ColumnDelimiter = "\\n",
+                    RowDelimiter = "\\t",
+                    EncodingName = "UTF-8",
+                    CompressionCodec = "bzip2",
+                    CompressionLevel = "farest",
+                    QuoteChar = "",
+                    EscapeChar = "",
+                    FirstRowAsHeader = false,
+                    NullValue = "",
+                    Schema = new List<DatasetSchemaDataElement> {
                     new DatasetSchemaDataElement() {
                         SchemaColumnName = "col1",
                         SchemaColumnType = "INT_32"
@@ -1771,172 +1450,110 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         AdditionalProperties = { { "scale",BinaryData.FromString("2")},{"precision",BinaryData.FromString("38") } }
                     }
                 }
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_Xml()
+        public async Task Dataset_Xml_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateFileServerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("xml", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "test.json", Container = "ContainerName", FolderPath = "testfolder" },
-                EncodingName = "UTF-8",
-                NullValue = null,
-                Compression = new DatasetCompression("Gzip") { Level = "optional" }
+                return new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "test.json", Container = "ContainerName", FolderPath = "testfolder" },
+                    EncodingName = "UTF-8",
+                    NullValue = null,
+                    Compression = new DatasetCompression("Gzip") { Level = "optional" }
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_Binary()
+        public async Task Dataset_Binary_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzureBlobStorageLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("binary", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.parquet", Container = "ContainerName", FolderPath = "testfolder" },
-                Compression = new DatasetCompression("Deflate") { Level = "fartest" }
+                return new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.parquet", Container = "ContainerName", FolderPath = "testfolder" },
+                    Compression = new DatasetCompression("Deflate") { Level = "fartest" }
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_Binary_Compression()
+        public async Task Dataset_Binary_Compression_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzureBlobStorageLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("binaryzip", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "testTgz01", Container = "ContainerName", FolderPath = "testfolder" },
-                Compression = new DatasetCompression("TarGzip") { Level = "optional" }
+                return new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "testTgz01", Container = "ContainerName", FolderPath = "testfolder" },
+                    Compression = new DatasetCompression("TarGzip") { Level = "optional" }
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_Orc()
+        public async Task Dataset_Orc_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateOracleLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new OrcDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("orc", CreateOracleLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.orc", Container = "ContainerName", FolderPath = "testfolder" },
-                OrcCompressionCodec = "snappy",
-            })
-            {
-                Properties = {
-                    Schema = new List<DatasetSchemaDataElement> {
-                        new DatasetSchemaDataElement() {
-                            SchemaColumnName = "col1",
-                            SchemaColumnType = "INT_32"
-                        },
-                        new DatasetSchemaDataElement() {
-                            SchemaColumnName = "col2",
-                            SchemaColumnType = "Decimal",
-                            AdditionalProperties = { { "scale",BinaryData.FromString("2")},{"precision",BinaryData.FromString("38") } }
+                return new DataFactoryDatasetData(new OrcDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.orc", Container = "ContainerName", FolderPath = "testfolder" },
+                    OrcCompressionCodec = "snappy",
+                })
+                {
+                    Properties = {
+                        Schema = new List<DatasetSchemaDataElement> {
+                            new DatasetSchemaDataElement() {
+                                SchemaColumnName = "col1",
+                                SchemaColumnType = "INT_32"
+                            },
+                            new DatasetSchemaDataElement() {
+                                SchemaColumnName = "col2",
+                                SchemaColumnType = "Decimal",
+                                AdditionalProperties = { { "scale",BinaryData.FromString("2")},{"precision",BinaryData.FromString("38") } }
+                            }
                         }
                     }
-                }
-            };
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                };
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_Orc_OrcCompressionCodec()
+        public async Task Dataset_Orc_OrcCompressionCodec_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateOracleLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new OrcDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("orczip", CreateOracleLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.orc", Container = "ContainerName", FolderPath = "testfolder" },
-                OrcCompressionCodec = "lzo",
-            })
-            {
-                Properties = {
-                    Schema = new List<DatasetSchemaDataElement> {
-                        new DatasetSchemaDataElement() {
-                            SchemaColumnName = "col1",
-                            SchemaColumnType = "INT_32"
-                        },
-                        new DatasetSchemaDataElement() {
-                            SchemaColumnName = "col2",
-                            SchemaColumnType = "Decimal",
-                            AdditionalProperties = { { "scale",BinaryData.FromString("2")},{"precision",BinaryData.FromString("38") } }
+                return new DataFactoryDatasetData(new OrcDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.orc", Container = "ContainerName", FolderPath = "testfolder" },
+                    OrcCompressionCodec = "lzo",
+                })
+                {
+                    Properties = {
+                        Schema = new List<DatasetSchemaDataElement> {
+                            new DatasetSchemaDataElement() {
+                                SchemaColumnName = "col1",
+                                SchemaColumnType = "INT_32"
+                            },
+                            new DatasetSchemaDataElement() {
+                                SchemaColumnName = "col2",
+                                SchemaColumnType = "Decimal",
+                                AdditionalProperties = { { "scale",BinaryData.FromString("2")},{"precision",BinaryData.FromString("38") } }
+                            }
                         }
                     }
-                }
-            };
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                };
+            });
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateTeradataLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1954,28 +1571,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_TeradataTable()
+        public async Task Dataset_TeradataTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateTeradataLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new TeradataTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("teradata", CreateTeradataLinkedService, (string linkedServiceName) =>
             {
-                Database = "AdventureWorksDW2012",
-                Table = "DimAccount"
+                return new DataFactoryDatasetData(new TeradataTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Database = "AdventureWorksDW2012",
+                    Table = "DimAccount"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateDynamicsCrmLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -1995,27 +1600,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_DynamicsCrmEntity()
+        public async Task Dataset_DynamicsCrmEntity_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateDynamicsCrmLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DynamicsCrmEntityDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("dynamicscrm", CreateDynamicsCrmLinkedService, (string linkedServiceName) =>
             {
-                EntityName = "test"
+                return new DataFactoryDatasetData(new DynamicsCrmEntityDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    EntityName = "test"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateCommonDataServiceForAppsLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2032,27 +1625,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_CommonDataServiceForAppsEntity()
+        public async Task Dataset_CommonDataServiceForAppsEntity_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateCommonDataServiceForAppsLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new CommonDataServiceForAppsEntityDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("cds4apps", CreateCommonDataServiceForAppsLinkedService, (string linkedServiceName) =>
             {
-                EntityName = "test"
+                return new DataFactoryDatasetData(new CommonDataServiceForAppsEntityDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    EntityName = "test"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateInformixLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2064,27 +1645,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_InformixTable()
+        public async Task Dataset_InformixTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateInformixLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new InformixTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("informix", CreateInformixLinkedService, (string linkedServiceName) =>
             {
-                TableName = "test"
+                return new DataFactoryDatasetData(new InformixTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    TableName = "test"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateMicrosoftAccessLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2096,52 +1665,28 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_MicrosoftAccessTable()
+        public async Task Dataset_MicrosoftAccessTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateMicrosoftAccessLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MicrosoftAccessTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("access", CreateMicrosoftAccessLinkedService, (string linkedServiceName) =>
             {
-                TableName = "test"
+                return new DataFactoryDatasetData(new MicrosoftAccessTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    TableName = "test"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_AzurePostgreSqlTable_TableName()
+        public async Task Dataset_AzurePostgreSqlTable_TableName_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzurePostgreSqlLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzurePostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("apsqln", CreateAzurePostgreSqlLinkedService, (string linkedServiceName) =>
             {
-                TableName = "$EncryptedString$MyEncryptedTableName"
+                return new DataFactoryDatasetData(new AzurePostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    TableName = "$EncryptedString$MyEncryptedTableName"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateMySqlLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2153,53 +1698,29 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_MySqlTable()
+        public async Task Dataset_MySqlTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateMySqlLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("mysql", CreateMySqlLinkedService, (string linkedServiceName) =>
             {
-                TableName = "$EncryptedString$MyEncryptedTableName"
+                return new DataFactoryDatasetData(new MySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    TableName = "$EncryptedString$MyEncryptedTableName"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_AzurePostgreSqlTable_TableNameSchema()
+        public async Task Dataset_AzurePostgreSqlTable_TableNameSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzurePostgreSqlLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzurePostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("apsqls", CreateAzurePostgreSqlLinkedService, (string linkedServiceName) =>
             {
-                TableName = "$EncryptedString$MyEncryptedTableName",
-                SchemaTypePropertiesSchema = "$EncryptedString$MyEncryptedTableName"
+                return new DataFactoryDatasetData(new AzurePostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    TableName = "$EncryptedString$MyEncryptedTableName",
+                    SchemaTypePropertiesSchema = "$EncryptedString$MyEncryptedTableName"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
         private async Task<DataFactoryLinkedServiceResource> CreateOdbcLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
@@ -2210,27 +1731,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_OdbcTable()
+        public async Task Dataset_OdbcTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateOdbcLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new OdbcTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("odbc", CreateOdbcLinkedService, (string linkedServiceName) =>
             {
-                TableName = "$EncryptedString$MyEncryptedTableName"
+                return new DataFactoryDatasetData(new OdbcTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    TableName = "$EncryptedString$MyEncryptedTableName"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateAzureDataExplorerLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2247,27 +1756,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_AzureDataExplorerTable()
+        public async Task Dataset_AzureDataExplorerTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzureDataExplorerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureDataExplorerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("ade", CreateAzureDataExplorerLinkedService, (string linkedServiceName) =>
             {
-                Table = "mytable"
+                return new DataFactoryDatasetData(new AzureDataExplorerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "mytable"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateSapBWLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2283,26 +1780,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SapBwCube()
+        public async Task Dataset_SapBwCube_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSapBWLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapBWCubeDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("sapbw", CreateSapBWLinkedService, (string linkedServiceName) =>
             {
+                return new DataFactoryDatasetData(new SapBWCubeDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateSybaseLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2318,84 +1803,48 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SybaseTable()
+        public async Task Dataset_SybaseTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSybaseLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SybaseTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("sybase", CreateSybaseLinkedService, (string linkedServiceName) =>
             {
-                TableName = "$EncryptedString$MyEncryptedTableName"
+                return new DataFactoryDatasetData(new SybaseTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    TableName = "$EncryptedString$MyEncryptedTableName"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_OracleTable_Description()
+        public async Task Dataset_OracleTable_Description_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateOracleLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new OracleTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("oracledes", CreateOracleLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
-            })
-            {
-                Properties ={
-                    Description ="Example of Oracle with parameter, description, and expression"
-                }
-            };
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                return new DataFactoryDatasetData(new OracleTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                })
+                {
+                    Properties = {
+                        Description ="Example of Oracle with parameter, description, and expression"
+                    }
+                };
+            });
         }
 
         [Test]
         [RecordedTest]
         public async Task Dataset_AzureSqlTable_TableSchema()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzureSqlDatabaseLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("asqlt", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
         private async Task<DataFactoryLinkedServiceResource> CreateAmazonRdsForSqlServerLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
@@ -2409,341 +1858,184 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         }
         [Test]
         [RecordedTest]
-        public async Task Dataset_AmazonRdsForSqlServerTable()
+        public async Task Dataset_AmazonRdsForSqlServerTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAmazonRdsForSqlServerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonRdsForSqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("rdssql", CreateAmazonRdsForSqlServerLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
-            }
-            );
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                return new DataFactoryDatasetData(new AmazonRdsForSqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_AzureSqlDWTable_TableSchema()
+        public async Task Dataset_AzureSqlDWTable_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzureSqlDWLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlDWTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("asqldws", CreateAzureSqlDWLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new AzureSqlDWTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SqlServerTable_TableSchema()
+        public async Task Dataset_SqlServerTable_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSqlServerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("sqlt", CreateSqlServerLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new SqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_DrillTable_TableSchema()
+        public async Task Dataset_DrillTable_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateDrillLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DrillTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("drillt", CreateDrillLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new DrillTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_GoogleBigQueryObject_TableSchema()
+        public async Task Dataset_GoogleBigQueryObject_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateGoogleBigQueryLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new GoogleBigQueryObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("bigqueryt", CreateGoogleBigQueryLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                DatasetType = "dbo"
+                return new DataFactoryDatasetData(new GoogleBigQueryObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    DatasetType = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_GreenplumTable_TableSchema()
+        public async Task Dataset_GreenplumTable_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateGreenplumLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new GreenplumTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("greenplumt", CreateGreenplumLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new GreenplumTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_HiveObject_TableSchema()
+        public async Task Dataset_HiveObject_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateHiveLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new HiveObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("hivet", CreateHiveLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new HiveObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_ImpalaObject_TableSchema()
+        public async Task Dataset_ImpalaObject_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateImpalaLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ImpalaObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("impalat", CreateImpalaLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new ImpalaObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_PhoenixObject_TableSchema()
+        public async Task Dataset_PhoenixObject_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreatePhoenixLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PhoenixObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("phoenixt", CreatePhoenixLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new PhoenixObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_PrestoObject_TableSchema()
+        public async Task Dataset_PrestoObject_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreatePrestoLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PrestoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("prestot", CreatePrestoLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new PrestoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SparkObject_TableSchema()
+        public async Task Dataset_SparkObject_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSparkLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SparkObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("sparkt", CreateSparkLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new SparkObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_VerticaTable_TableSchema()
+        public async Task Dataset_VerticaTable_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateVerticaLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new VerticaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("verticalt", CreateVerticaLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new VerticaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_NetezzaTable_TableSchema()
+        public async Task Dataset_NetezzaTable_TableSchema_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateNetezzaLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new NetezzaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("netezzat", CreateNetezzaLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new NetezzaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreatePostgreSqlLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2758,28 +2050,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_PostgreSqlTable()
+        public async Task Dataset_PostgreSqlTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreatePostgreSqlLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("psql", CreatePostgreSqlLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new PostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
         private async Task<DataFactoryLinkedServiceResource> CreateAmazonRedshiftLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
@@ -2794,28 +2074,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         }
         [Test]
         [RecordedTest]
-        public async Task Dataset_AmazonRedshiftTable()
+        public async Task Dataset_AmazonRedshiftTable_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAmazonRedshiftLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonRedshiftTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("redshift", CreateAmazonRedshiftLinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new AmazonRedshiftTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateDb2LinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -2829,169 +2097,97 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         }
         [Test]
         [RecordedTest]
-        public async Task Dataset_Db2Table()
+        public async Task Dataset_Db2Table_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateDb2LinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new Db2TableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("db2", CreateDb2LinkedService, (string linkedServiceName) =>
             {
-                Table = "testtable",
-                SchemaTypePropertiesSchema = "dbo"
+                return new DataFactoryDatasetData(new Db2TableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "testtable",
+                    SchemaTypePropertiesSchema = "dbo"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_AzureMySqlTable_Table()
+        public async Task Dataset_AzureMySqlTable_Table_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateAzureMySqlLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureMySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("amysqlt", CreateAzureMySqlLinkedService, (string linkedServiceName) =>
             {
-                Table = "$EncryptedString$MyEncryptedTable",
+                return new DataFactoryDatasetData(new AzureMySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Table = "$EncryptedString$MyEncryptedTable",
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_DelimitedText()
+        public async Task Dataset_DelimitedText_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateFileServerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("delimitedtexta", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AzureFileStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FolderPath = "folder/subfolder", AdditionalProperties = { { "bucketname", BinaryData.FromString("\"bucketname\"") } } },
-                ColumnDelimiter = ",",
-                CompressionCodec = "Gzip",
-                QuoteChar = "\\",
-                FirstRowAsHeader = true,
+                return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AzureFileStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FolderPath = "folder/subfolder", AdditionalProperties = { { "bucketname", BinaryData.FromString("\"bucketname\"") } } },
+                    ColumnDelimiter = ",",
+                    CompressionCodec = "Gzip",
+                    QuoteChar = "\\",
+                    FirstRowAsHeader = true,
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_DelimitedText_GoogleCloudStorageLocation()
+        public async Task Dataset_DelimitedText_GoogleCloudStorageLocation_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateFileServerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("delimitedtextg", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new GoogleCloudStorageLocation() { DatasetLocationType = "GoogleCloudStorageLocation", FolderPath = "folder/subfolder", BucketName = "buckname" },
-                ColumnDelimiter = ",",
-                CompressionCodec = "Gzip",
-                QuoteChar = "\\",
-                FirstRowAsHeader = true,
+                return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new GoogleCloudStorageLocation() { DatasetLocationType = "GoogleCloudStorageLocation", FolderPath = "folder/subfolder", BucketName = "buckname" },
+                    ColumnDelimiter = ",",
+                    CompressionCodec = "Gzip",
+                    QuoteChar = "\\",
+                    FirstRowAsHeader = true,
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_DelimitedText_AmazonS3CompatibleLocation()
+        public async Task Dataset_DelimitedText_AmazonS3CompatibleLocation_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateFileServerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("delimitedtexts", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new AmazonS3CompatibleLocation() { DatasetLocationType = "AmazonS3CompatibleLocation", Version = "version", BucketName = "buckname" },
-                ColumnDelimiter = ",",
-                CompressionCodec = "Gzip",
-                QuoteChar = "\\",
-                FirstRowAsHeader = true,
+                return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new AmazonS3CompatibleLocation() { DatasetLocationType = "AmazonS3CompatibleLocation", Version = "version", BucketName = "buckname" },
+                    ColumnDelimiter = ",",
+                    CompressionCodec = "Gzip",
+                    QuoteChar = "\\",
+                    FirstRowAsHeader = true,
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_DelimitedText_OracleCloudStorageLocation()
+        public async Task Dataset_DelimitedText_OracleCloudStorageLocation_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateFileServerLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("delimitedtexto", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
-                DataLocation = new OracleCloudStorageLocation() { DatasetLocationType = "OracleCloudStorageLocation", Version = "version", BucketName = "buckname" },
-                ColumnDelimiter = ",",
-                CompressionCodec = "Gzip",
-                QuoteChar = "\\",
-                FirstRowAsHeader = true,
+                return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    DataLocation = new OracleCloudStorageLocation() { DatasetLocationType = "OracleCloudStorageLocation", Version = "version", BucketName = "buckname" },
+                    ColumnDelimiter = ",",
+                    CompressionCodec = "Gzip",
+                    QuoteChar = "\\",
+                    FirstRowAsHeader = true,
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateSharePointOnlineListLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -3004,27 +2200,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SharePointOnlineListResource()
+        public async Task Dataset_SharePointOnlineListResource_Create()
         {
-            // Get the resource group
-            resourceGroup = Client.GetResourceGroupResource(resourceGroupIdentifier);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-            string datasetName = Recording.GenerateAssetName("adf-dataset-");
-            string linkedServiceName = Recording.GenerateAssetName("linkedSerivce-");
-            await CreateSharePointOnlineListLinkedService(dataFactory, linkedServiceName);
-
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SharePointOnlineListResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+            await DatasetCreate("sharepoint", CreateSharePointOnlineListLinkedService, (string linkedServiceName) =>
             {
-                ListName = "listname"
+                return new DataFactoryDatasetData(new SharePointOnlineListResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    ListName = "listname"
+                });
             });
-            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }*/
+        }
     }
 }
