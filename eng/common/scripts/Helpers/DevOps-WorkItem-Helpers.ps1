@@ -331,7 +331,8 @@ function CreateWorkItemParent($id, $parentId, $oldParentId, $outputCommand = $tr
 
   Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
 }
-function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, $parentId, $outputCommand = $true)
+
+function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, $parentId, $relatedId = $null, $outputCommand = $true)
 {
   $parameters = $ReleaseDevOpsCommonParametersWithProject
   $parameters += "--title", "`"${title}`""
@@ -348,16 +349,27 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
 
   $workItem = Invoke-AzBoardsCmd "work-item create" $parameters $outputCommand
 
-  if ($parentId) {
-    $parameters = $ReleaseDevOpsCommonParameters
-    $parameters += "--id", $workItem.id
-    $parameters += "--relation-type", "parent"
-    $parameters += "--target-id", $parentId
-
-    Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
+  if ($parentId)
+  {
+    CreateWorkItemRelation $workItem.id $parentId "parent" outputCommand
   }
-
+  
+  # Add a work item as related if given.
+  if ($relatedId)
+  {
+    CreateWorkItemRelation $$workItem.id $relatedId "Related" outputCommand
+  }
   return $workItem
+}
+
+function CreateWorkItemRelation($id, $relatedId, $relationType, $outputCommand = $true)
+{
+  parameters = $ReleaseDevOpsCommonParameters
+  $parameters += "--id", $id
+  $parameters += "--relation-type", $relationType
+  $parameters += "--target-id", $relatedId
+
+  Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
 }
 
 function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputCommand = $true)
@@ -387,7 +399,7 @@ function UpdatePackageWorkItemReleaseState($id, $state, $releaseType, $outputCom
   return UpdateWorkItem -id $id -state $state -fields $fields -outputCommand $outputCommand
 }
 
-function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPrompt = $false, $outputCommand = $false)
+function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPrompt = $false, $outputCommand = $false, $relatedId = $null)
 {
   $workItem = FindPackageWorkItem -lang $lang -packageName $pkg.Package -version $verMajorMinor -includeClosed $true -outputCommand $outputCommand
 
@@ -430,13 +442,13 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
     }
 
 
-    $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -extraFields $extraFields -outputCommand $outputCommand
+    $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -extraFields $extraFields -outputCommand $outputCommand -relatedId $relatedId
   }
 
   return $workItem
 }
 
-function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingItem, $assignedTo = $null, $extraFields = $null, $outputCommand = $true)
+function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingItem, $assignedTo = $null, $extraFields = $null, $outputCommand = $true, $relatedId = $null)
 {
   if (!$lang -or !$pkg -or !$verMajorMinor) {
     Write-Host "Cannot create or update because one of lang, pkg or verMajorMinor aren't set. [$lang|$($pkg.Package)|$verMajorMinor]"
@@ -501,7 +513,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   }
 
   $parentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
-  $workItem = CreateWorkItem $title "Package" "Release" "Release" $fields $assignedTo $parentItem.id -outputCommand $outputCommand
+  $workItem = CreateWorkItem $title "Package" "Release" "Release" $fields $assignedTo $parentItem.id -outputCommand $outputCommand -relatedId $relatedId
   Write-Host "[$($workItem.id)]$lang - $pkgName($verMajorMinor) - Created"
   return $workItem
 }

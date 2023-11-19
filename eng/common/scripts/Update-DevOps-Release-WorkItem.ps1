@@ -13,6 +13,7 @@ param(
   [string]$packageRepoPath = "NA",
   [string]$packageType = "client",
   [string]$packageNewLibrary = "true",
+  [string]$relatedWorkItemId = $null,
   [string]$devops_pat = $env:DEVOPS_PAT
 )
 #Requires -Version 6.0
@@ -70,7 +71,7 @@ $plannedVersions = @(
   }
 )
 
-$workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false
+$workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false -relatedId $relatedWorkItemId
 
 if (!$workItem) {
   Write-Host "Something failed as we don't have a work-item so exiting."
