@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Storage;
@@ -24,8 +25,12 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/>
+        /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/>.
+        ///
+        /// Note that use of this method is not recommended as it constructs a <see cref="ShareServiceClient"/> without authentication details, ignoring the
+        /// <see cref="TokenCredential"/> configured using the client factory builder's UseCredential method. Use <see cref="AddFileServiceClientWithCredential{TBuilder}"/> instead.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<ShareServiceClient, ShareClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
             where TBuilder : IAzureClientFactoryBuilder
         {
