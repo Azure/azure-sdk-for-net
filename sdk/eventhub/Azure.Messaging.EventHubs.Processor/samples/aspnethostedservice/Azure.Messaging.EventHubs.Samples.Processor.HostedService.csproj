@@ -3,17 +3,13 @@
   <PropertyGroup>
     <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" VersionOverride="5.9.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="C:\source-control\OS\azure-sdk-for-net\sdk\eventhub\Azure.Messaging.EventHubs.Processor\samples\README.md" />
   </ItemGroup>
 
 </Project>
