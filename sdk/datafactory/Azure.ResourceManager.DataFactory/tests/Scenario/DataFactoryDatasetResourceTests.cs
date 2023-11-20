@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_SalesforceServiceCloudObject()
+        public async Task Dataset_SalesforceServiceCloudObject_Create()
         {
             await DatasetCreate("salesforcec", CreateSalesforceServiceCloudLinkedService, (string linkedServiceName) =>
             {
@@ -635,12 +635,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         FilePattern = BinaryData.FromString("\"setOfObjects\""),
                         EncodingName = "utf-8",
                         JsonNodeReference = "$.root",
-                        JsonPathDefinition = BinaryData.FromObjectAsJson(@"{
-                        ""PartitionKey"": ""$.PartitionKey"",
-                        ""RowKey"": ""$.RowKey"",
-                        ""p1"": ""p1"",
-                        ""p2"": ""p2""
-                    }")
+                        JsonPathDefinition = BinaryData.FromObjectAsJson(new
+                        {
+                            PartitionKey = "$.PartitionKey",
+                            RowKey = "$.RowKey",
+                            p1 = "p1",
+                            p2 = "p2"
+                        })
                     }
                 });
             });
@@ -1423,7 +1424,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_DelimitedText_Schema()
+        public async Task Dataset_DelimitedText_Schema_Create()
         {
             await DatasetCreate("delimitedtext", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
@@ -1835,7 +1836,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Dataset_AzureSqlTable_TableSchema()
+        public async Task Dataset_AzureSqlTable_TableSchema_Create()
         {
             await DatasetCreate("asqlt", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
             {
