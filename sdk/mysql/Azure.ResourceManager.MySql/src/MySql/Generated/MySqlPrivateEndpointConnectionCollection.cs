@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MySql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="MySqlPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="MySqlServerResource" />.
-    /// To get a <see cref="MySqlPrivateEndpointConnectionCollection" /> instance call the GetMySqlPrivateEndpointConnections method from an instance of <see cref="MySqlServerResource" />.
+    /// A class representing a collection of <see cref="MySqlPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="MySqlPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="MySqlServerResource"/>.
+    /// To get a <see cref="MySqlPrivateEndpointConnectionCollection"/> instance call the GetMySqlPrivateEndpointConnections method from an instance of <see cref="MySqlServerResource"/>.
     /// </summary>
     public partial class MySqlPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MySqlPrivateEndpointConnectionResource>, IAsyncEnumerable<MySqlPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

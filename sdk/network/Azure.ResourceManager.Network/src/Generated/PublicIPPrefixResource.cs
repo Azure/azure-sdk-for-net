@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a PublicIPPrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PublicIPPrefixResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPublicIPPrefixResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPublicIPPrefix method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublicIPPrefixResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPublicIPPrefixResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPublicIPPrefix method.
     /// </summary>
     public partial class PublicIPPrefixResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PublicIPPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublicIPPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublicIPPrefixResource(ArmClient client, PublicIPPrefixData data) : this(client, data.Id)

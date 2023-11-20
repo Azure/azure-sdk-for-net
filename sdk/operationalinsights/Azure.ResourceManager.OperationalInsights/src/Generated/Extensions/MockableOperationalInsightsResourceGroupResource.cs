@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

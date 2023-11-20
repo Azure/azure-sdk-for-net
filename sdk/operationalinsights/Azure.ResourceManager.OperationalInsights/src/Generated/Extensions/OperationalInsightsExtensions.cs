@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource"/> object. </returns>
         public static LogAnalyticsQueryPackResource GetLogAnalyticsQueryPackResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LogAnalyticsQueryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogAnalyticsQueryResource"/> object. </returns>
         public static LogAnalyticsQueryResource GetLogAnalyticsQueryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationalInsightsDataExportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalInsightsDataExportResource"/> object. </returns>
         public static OperationalInsightsDataExportResource GetOperationalInsightsDataExportResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationalInsightsDataSourceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalInsightsDataSourceResource"/> object. </returns>
         public static OperationalInsightsDataSourceResource GetOperationalInsightsDataSourceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationalInsightsLinkedServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalInsightsLinkedServiceResource"/> object. </returns>
         public static OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationalInsightsLinkedStorageAccountsResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalInsightsLinkedStorageAccountsResource"/> object. </returns>
         public static OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageInsightResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageInsightResource"/> object. </returns>
         public static StorageInsightResource GetStorageInsightResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationalInsightsSavedSearchResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalInsightsSavedSearchResource"/> object. </returns>
         public static OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationalInsightsClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalInsightsClusterResource"/> object. </returns>
         public static OperationalInsightsClusterResource GetOperationalInsightsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationalInsightsWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalInsightsWorkspaceResource"/> object. </returns>
         public static OperationalInsightsWorkspaceResource GetOperationalInsightsWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationalInsightsTableResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalInsightsTableResource"/> object. </returns>
         public static OperationalInsightsTableResource GetOperationalInsightsTableResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LogAnalyticsQueryPackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsClusterResource> GetOperationalInsightsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsClusterResource> GetOperationalInsightsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PacketCaptureResource" /> and their operations.
-    /// Each <see cref="PacketCaptureResource" /> in the collection will belong to the same instance of <see cref="NetworkWatcherResource" />.
-    /// To get a <see cref="PacketCaptureCollection" /> instance call the GetPacketCaptures method from an instance of <see cref="NetworkWatcherResource" />.
+    /// A class representing a collection of <see cref="PacketCaptureResource"/> and their operations.
+    /// Each <see cref="PacketCaptureResource"/> in the collection will belong to the same instance of <see cref="NetworkWatcherResource"/>.
+    /// To get a <see cref="PacketCaptureCollection"/> instance call the GetPacketCaptures method from an instance of <see cref="NetworkWatcherResource"/>.
     /// </summary>
     public partial class PacketCaptureCollection : ArmCollection, IEnumerable<PacketCaptureResource>, IAsyncEnumerable<PacketCaptureResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PacketCaptureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PacketCaptureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PacketCaptureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCaptureRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PacketCaptureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PacketCaptureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PacketCaptureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCaptureRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

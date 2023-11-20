@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an AzureFirewall along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AzureFirewallResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAzureFirewallResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAzureFirewall method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AzureFirewallResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAzureFirewallResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAzureFirewall method.
     /// </summary>
     public partial class AzureFirewallResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AzureFirewallResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureFirewallResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AzureFirewallResource(ArmClient client, AzureFirewallData data) : this(client, data.Id)

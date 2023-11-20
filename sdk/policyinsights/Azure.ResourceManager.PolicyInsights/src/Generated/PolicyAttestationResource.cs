@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
     /// A Class representing a PolicyAttestation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PolicyAttestationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPolicyAttestationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPolicyAttestation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicyAttestationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPolicyAttestationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetPolicyAttestation method.
     /// </summary>
     public partial class PolicyAttestationResource : ArmResource
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PolicyAttestationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyAttestationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyAttestationResource(ArmClient client, PolicyAttestationData data) : this(client, data.Id)

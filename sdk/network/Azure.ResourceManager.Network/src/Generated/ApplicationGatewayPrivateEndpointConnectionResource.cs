@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ApplicationGatewayPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApplicationGatewayPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApplicationGatewayPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApplicationGatewayResource" /> using the GetApplicationGatewayPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApplicationGatewayPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApplicationGatewayResource"/> using the GetApplicationGatewayPrivateEndpointConnection method.
     /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApplicationGatewayPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApplicationGatewayPrivateEndpointConnectionResource(ArmClient client, ApplicationGatewayPrivateEndpointConnectionData data) : this(client, data.Id)

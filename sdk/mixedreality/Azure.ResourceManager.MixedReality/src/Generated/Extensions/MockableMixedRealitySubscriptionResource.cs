@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SpatialAnchorsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RemoteRenderingAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RemoteRenderingAccountResource> GetRemoteRenderingAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RemoteRenderingAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RemoteRenderingAccountResource> GetRemoteRenderingAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

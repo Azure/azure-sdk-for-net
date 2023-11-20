@@ -21,9 +21,9 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlMigrationResource" /> and their operations.
-    /// Each <see cref="PostgreSqlMigrationResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource" />.
-    /// To get a <see cref="PostgreSqlMigrationCollection" /> instance call the GetPostgreSqlMigrations method from an instance of <see cref="PostgreSqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlMigrationResource"/> and their operations.
+    /// Each <see cref="PostgreSqlMigrationResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="PostgreSqlMigrationCollection"/> instance call the GetPostgreSqlMigrations method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
     public partial class PostgreSqlMigrationCollection : ArmCollection, IEnumerable<PostgreSqlMigrationResource>, IAsyncEnumerable<PostgreSqlMigrationResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlMigrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlMigrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlMigrationResource> GetAllAsync(PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlMigrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlMigrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlMigrationResource> GetAll(PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
