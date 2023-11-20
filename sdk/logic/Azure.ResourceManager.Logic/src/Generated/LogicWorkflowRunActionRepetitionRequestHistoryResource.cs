@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing a LogicWorkflowRunActionRepetitionRequestHistory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowRunActionRepetitionRequestHistoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunActionRepetitionResource" /> using the GetLogicWorkflowRunActionRepetitionRequestHistory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicWorkflowRunActionRepetitionRequestHistoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunActionRepetitionResource"/> using the GetLogicWorkflowRunActionRepetitionRequestHistory method.
     /// </summary>
     public partial class LogicWorkflowRunActionRepetitionRequestHistoryResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowRunActionRepetitionRequestHistoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicWorkflowRunActionRepetitionRequestHistoryResource(ArmClient client, LogicWorkflowRequestHistoryData data) : this(client, data.Id)

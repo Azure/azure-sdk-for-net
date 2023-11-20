@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConfigurationGroupValueResource" /> and their operations.
-    /// Each <see cref="ConfigurationGroupValueResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ConfigurationGroupValueCollection" /> instance call the GetConfigurationGroupValues method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ConfigurationGroupValueResource"/> and their operations.
+    /// Each <see cref="ConfigurationGroupValueResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConfigurationGroupValueCollection"/> instance call the GetConfigurationGroupValues method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ConfigurationGroupValueCollection : ArmCollection, IEnumerable<ConfigurationGroupValueResource>, IAsyncEnumerable<ConfigurationGroupValueResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigurationGroupValueResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationGroupValueRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigurationGroupValueResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationGroupValueRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing a HybridComputePrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridComputePrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridComputePrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HybridComputePrivateLinkScopeResource" /> using the GetHybridComputePrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputePrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputePrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridComputePrivateLinkScopeResource"/> using the GetHybridComputePrivateLinkResource method.
     /// </summary>
     public partial class HybridComputePrivateLinkResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridComputePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputePrivateLinkResource(ArmClient client, HybridComputePrivateLinkResourceData data) : this(client, data.Id)

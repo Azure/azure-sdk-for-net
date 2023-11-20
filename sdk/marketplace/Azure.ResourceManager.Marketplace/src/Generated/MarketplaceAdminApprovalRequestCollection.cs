@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MarketplaceAdminApprovalRequestResource" /> and their operations.
-    /// Each <see cref="MarketplaceAdminApprovalRequestResource" /> in the collection will belong to the same instance of <see cref="PrivateStoreResource" />.
-    /// To get a <see cref="MarketplaceAdminApprovalRequestCollection" /> instance call the GetMarketplaceAdminApprovalRequests method from an instance of <see cref="PrivateStoreResource" />.
+    /// A class representing a collection of <see cref="MarketplaceAdminApprovalRequestResource"/> and their operations.
+    /// Each <see cref="MarketplaceAdminApprovalRequestResource"/> in the collection will belong to the same instance of <see cref="PrivateStoreResource"/>.
+    /// To get a <see cref="MarketplaceAdminApprovalRequestCollection"/> instance call the GetMarketplaceAdminApprovalRequests method from an instance of <see cref="PrivateStoreResource"/>.
     /// </summary>
     public partial class MarketplaceAdminApprovalRequestCollection : ArmCollection, IEnumerable<MarketplaceAdminApprovalRequestResource>, IAsyncEnumerable<MarketplaceAdminApprovalRequestResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MarketplaceAdminApprovalRequestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MarketplaceAdminApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceAdminApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceAdminApprovalRequestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MarketplaceAdminApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceAdminApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));

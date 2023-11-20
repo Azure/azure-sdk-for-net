@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
     /// A Class representing a MarketplaceAdminApprovalRequest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MarketplaceAdminApprovalRequestResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMarketplaceAdminApprovalRequestResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource" /> using the GetMarketplaceAdminApprovalRequest method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MarketplaceAdminApprovalRequestResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMarketplaceAdminApprovalRequestResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource"/> using the GetMarketplaceAdminApprovalRequest method.
     /// </summary>
     public partial class MarketplaceAdminApprovalRequestResource : ArmResource
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MarketplaceAdminApprovalRequestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceAdminApprovalRequestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MarketplaceAdminApprovalRequestResource(ArmClient client, MarketplaceAdminApprovalRequestData data) : this(client, data.Id)

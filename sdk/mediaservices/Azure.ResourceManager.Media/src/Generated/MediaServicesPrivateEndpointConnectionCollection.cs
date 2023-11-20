@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaServicesPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="MediaServicesPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
-    /// To get a <see cref="MediaServicesPrivateEndpointConnectionCollection" /> instance call the GetMediaServicesPrivateEndpointConnections method from an instance of <see cref="MediaServicesAccountResource" />.
+    /// A class representing a collection of <see cref="MediaServicesPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="MediaServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
+    /// To get a <see cref="MediaServicesPrivateEndpointConnectionCollection"/> instance call the GetMediaServicesPrivateEndpointConnections method from an instance of <see cref="MediaServicesAccountResource"/>.
     /// </summary>
     public partial class MediaServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MediaServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<MediaServicesPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaServicesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaServicesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
