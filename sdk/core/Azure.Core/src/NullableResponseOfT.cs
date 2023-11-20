@@ -19,7 +19,7 @@ namespace Azure
         /// <summary>
         /// Gets a value indicating whether the current instance has a valid value of its underlying type.
         /// </summary>
-#if NET6_0_OR_GREATER // technically available since .NET 5.0 but there's no define for this
+#if NET5_0_OR_GREATER 
         [MemberNotNullWhen(returnValue: true, member: nameof(Value))]
 #endif
         public abstract bool HasValue { get; }
