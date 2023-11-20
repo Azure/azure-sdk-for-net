@@ -72,7 +72,7 @@ $plannedVersions = @(
   }
 )
 $ignoreReleasePlannerTests = $true
-if ($tag -eq "Release Planner App Test") {
+if ($tag -and  $tag.Contains("Release Planner App Test")) {
   $ignoreReleasePlannerTests = $false
 }
 
