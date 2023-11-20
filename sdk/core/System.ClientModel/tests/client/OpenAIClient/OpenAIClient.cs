@@ -50,9 +50,16 @@ public class OpenAIClient
 
         using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
-        PipelineResponse response = _pipeline.ProcessMessage(message, options);
-        OutputMessage result = OutputMessage.FromResponse(response);
-        return result;
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response;
+
+        if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
+        {
+            throw new ClientRequestException(response);
+        }
+
+        return OutputMessage.FromResponse(response);
     }
 
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)

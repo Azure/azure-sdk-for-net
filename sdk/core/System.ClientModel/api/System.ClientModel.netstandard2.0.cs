@@ -183,13 +183,6 @@ namespace System.ClientModel.Internal
         public static implicit operator T (System.ClientModel.Internal.OptionalProperty<T> optional) { throw null; }
         public static implicit operator System.ClientModel.Internal.OptionalProperty<T> (T value) { throw null; }
     }
-    public static partial class PipelineProtocolExtensions
-    {
-        public static System.ClientModel.NullableOutputMessage<bool> ProcessHeadAsBoolMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ClientModel.NullableOutputMessage<bool>> ProcessHeadAsBoolMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext) { throw null; }
-        public static System.ClientModel.Primitives.PipelineResponse ProcessMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> ProcessMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class Utf8JsonContentWriter : System.IDisposable
     {
         public Utf8JsonContentWriter() { }
