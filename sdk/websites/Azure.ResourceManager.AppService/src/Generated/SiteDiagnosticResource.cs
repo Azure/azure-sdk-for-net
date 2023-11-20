@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteDiagnostic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteDiagnosticResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteDiagnosticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteDiagnostic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteDiagnosticResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteDiagnosticResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteDiagnostic method.
     /// </summary>
     public partial class SiteDiagnosticResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteDiagnosticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteDiagnosticResource(ArmClient client, DiagnosticCategoryData data) : this(client, data.Id)

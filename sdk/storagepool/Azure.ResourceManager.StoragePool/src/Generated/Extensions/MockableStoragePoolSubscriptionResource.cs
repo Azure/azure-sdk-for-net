@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPoolResource> GetDiskPools(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskPoolZoneInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolZonesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskPoolZoneInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPoolZoneInfo> GetDiskPoolZones(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolZonesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StoragePoolSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StoragePoolSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StoragePoolSkuInfo> GetResourceSkus(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, location);

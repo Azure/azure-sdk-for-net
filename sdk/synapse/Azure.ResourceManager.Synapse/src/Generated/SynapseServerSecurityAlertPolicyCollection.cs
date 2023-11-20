@@ -21,9 +21,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseServerSecurityAlertPolicyResource" /> and their operations.
-    /// Each <see cref="SynapseServerSecurityAlertPolicyResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource" />.
-    /// To get a <see cref="SynapseServerSecurityAlertPolicyCollection" /> instance call the GetSynapseServerSecurityAlertPolicies method from an instance of <see cref="SynapseWorkspaceResource" />.
+    /// A class representing a collection of <see cref="SynapseServerSecurityAlertPolicyResource"/> and their operations.
+    /// Each <see cref="SynapseServerSecurityAlertPolicyResource"/> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource"/>.
+    /// To get a <see cref="SynapseServerSecurityAlertPolicyCollection"/> instance call the GetSynapseServerSecurityAlertPolicies method from an instance of <see cref="SynapseWorkspaceResource"/>.
     /// </summary>
     public partial class SynapseServerSecurityAlertPolicyCollection : ArmCollection, IEnumerable<SynapseServerSecurityAlertPolicyResource>, IAsyncEnumerable<SynapseServerSecurityAlertPolicyResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseServerSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseServerSecurityAlertPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseServerSecurityAlertPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseServerSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseServerSecurityAlertPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseServerSecurityAlertPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

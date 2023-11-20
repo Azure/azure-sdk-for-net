@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppServicePlanResource" /> and their operations.
-    /// Each <see cref="AppServicePlanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AppServicePlanCollection" /> instance call the GetAppServicePlans method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AppServicePlanResource"/> and their operations.
+    /// Each <see cref="AppServicePlanResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AppServicePlanCollection"/> instance call the GetAppServicePlans method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AppServicePlanCollection : ArmCollection, IEnumerable<AppServicePlanResource>, IAsyncEnumerable<AppServicePlanResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppServicePlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServicePlanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppServicePlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServicePlanResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

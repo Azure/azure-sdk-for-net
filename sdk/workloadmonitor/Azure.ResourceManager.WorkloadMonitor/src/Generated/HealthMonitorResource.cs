@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary>
     /// A Class representing a HealthMonitor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHealthMonitor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHealthMonitor method.
     /// </summary>
     public partial class HealthMonitorResource : ArmResource
     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthMonitorResource(ArmClient client, HealthMonitorData data) : this(client, data.Id)
