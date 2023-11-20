@@ -2,8 +2,6 @@
 
 `System.ClientModel` provides shared primitives, abstractions, and helpers for .NET service client libraries.
 
-`System.ClientModel` allows client libraries built from its components to expose common functionality in a consistent fashion, so that once you learn how to use these APIs in one client library, you'll know how to use them in other client libraries as well.
-
 ## Getting started
 
 Typically, you will not need to install `System.ClientModel`.
@@ -24,6 +22,26 @@ The main shared concepts of `System.ClientModel` include:
 - Providing APIs to read and write models in different formats.
 
 ## Examples
+
+### Simple ModelReaderWriter usage
+
+Example writing an instance of a model.
+
+```C# Snippet:Readme_Write_Simple
+InputModel model = new InputModel();
+BinaryData data = ModelReaderWriter.Write(model);
+```
+
+Example reading a model json
+
+```C# Snippet:Readme_Read_Simple
+string json = @"{
+  ""x"": 1,
+  ""y"": 2,
+  ""z"": 3
+}";
+OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json));
+```
 
 ## Next steps
 
