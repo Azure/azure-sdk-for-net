@@ -4,10 +4,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
     /// <summary>
     /// Manages a thread-safe collection of DocumentIngress objects with a fixed capacity.

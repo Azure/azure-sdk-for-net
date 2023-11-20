@@ -13,6 +13,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Samples
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_NetworkVirtualApplianceConnectionPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/NetworkVirtualApplianceConnectionPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkVirtualApplianceConnectionPut.json
             // this example is just showing the usage of "NetworkVirtualApplianceConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,10 +55,10 @@ namespace Azure.ResourceManager.Network.Samples
 "169.254.16.13","169.254.16.14"
 },
                 EnableInternetSecurity = false,
-                RoutingConfiguration = new RoutingConfigurationNfv()
+                ConnectionRoutingConfiguration = new RoutingConfiguration()
                 {
-                    AssociatedRouteTableResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
-                    PropagatedRouteTables = new PropagatedRouteTableNfv()
+                    AssociatedRouteTableId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
+                    PropagatedRouteTables = new PropagatedRouteTable()
                     {
                         Labels =
 {
@@ -65,14 +66,14 @@ namespace Azure.ResourceManager.Network.Samples
 },
                         Ids =
 {
-new RoutingConfigurationNfvSubResource()
+new WritableSubResource()
 {
-ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
 }
 },
                     },
-                    InboundRouteMapResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
-                    OutboundRouteMapResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
+                    InboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
+                    OutboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
                 Name = "connection1",
             };
@@ -91,7 +92,7 @@ ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NetworkVirtualApplianceConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/NetworkVirtualApplianceConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkVirtualApplianceConnectionGet.json
             // this example is just showing the usage of "NetworkVirtualApplianceConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +127,7 @@ ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_NetworkVirtualApplianceConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/NetworkVirtualApplianceConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkVirtualApplianceConnectionGet.json
             // this example is just showing the usage of "NetworkVirtualApplianceConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +158,7 @@ ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_NetworkVirtualApplianceConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/NetworkVirtualApplianceConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkVirtualApplianceConnectionGet.json
             // this example is just showing the usage of "NetworkVirtualApplianceConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -200,7 +201,7 @@ ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_NetworkVirtualApplianceConnectionList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/NetworkVirtualApplianceConnectionList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkVirtualApplianceConnectionList.json
             // this example is just showing the usage of "NetworkVirtualApplianceConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

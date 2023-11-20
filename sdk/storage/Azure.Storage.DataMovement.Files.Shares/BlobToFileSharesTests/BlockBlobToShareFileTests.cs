@@ -15,11 +15,11 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Files.Shares.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [BlobsClientTestFixture]
+    [ShareClientTestFixture]
     public class BlockBlobToShareFileTests : StartTransferCopyTestBase
         <BlobServiceClient,
         BlobContainerClient,
@@ -58,15 +58,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         /// <param name="objectClient">The object client to create the storage resource object.</param>
         /// <returns></returns>
         protected override StorageResourceItem GetSourceStorageResourceItem(BlockBlobClient blob)
-        {
-            return new BlockBlobStorageResource(blob);
-        }
+            => new BlockBlobStorageResource(blob);
 
         /// <summary>
         /// Calls the OpenRead method on the BlockBlobClient.
         ///
         /// This is mainly used to verify the contents of the Object Client.
         /// </summary>
+        ///
         /// <param name="objectClient">The object client to get the Open Read Stream from.</param>
         /// <returns></returns>
         protected override Task<Stream> SourceOpenReadAsync(BlockBlobClient objectClient)

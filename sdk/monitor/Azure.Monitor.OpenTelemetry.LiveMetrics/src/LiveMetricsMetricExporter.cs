@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,7 +30,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         {
             var list = new List<Models.MetricPoint>(capacity: (int)batch.Count); // TODO: POSSIBLE OVERFLOW EXCEPTION (long -> int)
 
-            //Debug.Assert(batch.Count == 11);
             foreach (var metric in batch)
             {
                 foreach (ref readonly var metricPoint in metric.GetMetricPoints())
@@ -43,23 +41,30 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         case MetricType.LongSum:
                             list.Add(new Models.MetricPoint
                             {
-                                Name = LiveMetricConstants.Mappings[metric.Name],
+                                Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
+                                // potential for minor precision loss implicitly going from long->double
+                                // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
                                 Value = metricPoint.GetSumLong(),
                                 Weight = 1
                             });
                             break;
                         case MetricType.Histogram:
+                            long histogramCount = metricPoint.GetHistogramCount();
+
                             list.Add(new Models.MetricPoint
                             {
-                                Name = LiveMetricConstants.Mappings[metric.Name],
-                                Value = (float)metricPoint.GetHistogramSum(),
-                                Weight = (int)metricPoint.GetHistogramCount() // TODO: POSSIBLE OVERFLOW EXCEPTION (long -> int)
+                                Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
+                                // When you convert double to float, the double value is rounded to the nearest float value.
+                                // If the double value is too small or too large to fit into the float type, the result is zero or infinity.
+                                // see: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#explicit-numeric-conversions
+                                Value = (float)(metricPoint.GetHistogramSum() / histogramCount),
+                                Weight = histogramCount <= int.MaxValue ? (int?)histogramCount : null // TODO: POSSIBLE OVERFLOW EXCEPTION (long -> int)
                             });
                             break;
                         case MetricType.DoubleGauge:
                             list.Add(new Models.MetricPoint
                             {
-                                Name = LiveMetricConstants.Mappings[metric.Name],
+                                Name = LiveMetricConstants.InstrumentNameToMetricId[metric.Name],
                                 Value = (float)metricPoint.GetGaugeLastValueDouble(),
                                 Weight = 1
                             });
@@ -70,7 +75,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                     }
                 }
             }
-            //Debug.Assert(list.Count == 11);
 
             _metricPoints.Enqueue(list);
             Debug.Write($"Enqueue {_metricPoints.Count}. Count {list.Count}\n");
