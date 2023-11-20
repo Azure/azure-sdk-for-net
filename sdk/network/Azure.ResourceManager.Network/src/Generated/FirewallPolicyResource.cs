@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Retrieves the current status of IDPS signatures for the relevant policy
+        /// Retrieves the current status of IDPS signatures for the relevant policy. Maximal amount of returned signatures is 1000.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Retrieves the current status of IDPS signatures for the relevant policy
+        /// Retrieves the current status of IDPS signatures for the relevant policy. Maximal amount of returned signatures is 1000.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
