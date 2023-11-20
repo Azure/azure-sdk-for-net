@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.SchemaRegistry
 {
-    /// <summary> The ContentType. </summary>
+    /// <summary> The content type for the schema. </summary>
     internal readonly partial struct ContentType : IEquatable<ContentType>
     {
         /// <summary> Initializes a new instance of <see cref="ContentType"/>. </summary>
