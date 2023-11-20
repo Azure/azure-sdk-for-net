@@ -11,12 +11,6 @@ namespace Azure.Data.SchemaRegistry.Models
     internal readonly partial struct SchemaId
     {
         /// <summary> Initializes a new instance of SchemaId. </summary>
-        internal SchemaId()
-        {
-            Id = id;
-        }
-
-        /// <summary> Initializes a new instance of SchemaId. </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
         internal SchemaId(string id)
         {
