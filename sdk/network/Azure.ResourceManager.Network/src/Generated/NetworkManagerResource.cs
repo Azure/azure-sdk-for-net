@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkManager along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkManagerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkManagerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkManager method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkManagerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkManagerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkManager method.
     /// </summary>
     public partial class NetworkManagerResource : ArmResource
     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkManagerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkManagerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkManagerResource(ArmClient client, NetworkManagerData data) : this(client, data.Id)
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActiveConnectivityConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ActiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActiveConnectivityConfiguration> GetActiveConnectivityConfigurationsAsync(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveConnectivityConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActiveConnectivityConfiguration> GetActiveConnectivityConfigurations(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActiveBaseSecurityAdminRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ActiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActiveBaseSecurityAdminRule> GetActiveSecurityAdminRulesAsync(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveBaseSecurityAdminRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActiveBaseSecurityAdminRule> GetActiveSecurityAdminRules(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkManagerDeploymentStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkManagerDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatusAsync(NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkManagerDeploymentStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkManagerDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatus(NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

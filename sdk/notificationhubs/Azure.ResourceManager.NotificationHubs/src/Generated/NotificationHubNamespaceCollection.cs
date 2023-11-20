@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NotificationHubNamespaceResource" /> and their operations.
-    /// Each <see cref="NotificationHubNamespaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="NotificationHubNamespaceCollection" /> instance call the GetNotificationHubNamespaces method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="NotificationHubNamespaceResource"/> and their operations.
+    /// Each <see cref="NotificationHubNamespaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NotificationHubNamespaceCollection"/> instance call the GetNotificationHubNamespaces method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class NotificationHubNamespaceCollection : ArmCollection, IEnumerable<NotificationHubNamespaceResource>, IAsyncEnumerable<NotificationHubNamespaceResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubNamespaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubNamespaceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);

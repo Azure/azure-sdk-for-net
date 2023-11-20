@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a PrivateDnsZoneGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateDnsZoneGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateDnsZoneGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateEndpointResource" /> using the GetPrivateDnsZoneGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateDnsZoneGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPrivateDnsZoneGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateEndpointResource"/> using the GetPrivateDnsZoneGroup method.
     /// </summary>
     public partial class PrivateDnsZoneGroupResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateDnsZoneGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsZoneGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PrivateDnsZoneGroupResource(ArmClient client, PrivateDnsZoneGroupData data) : this(client, data.Id)

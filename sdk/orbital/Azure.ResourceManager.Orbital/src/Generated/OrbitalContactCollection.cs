@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Orbital
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OrbitalContactResource" /> and their operations.
-    /// Each <see cref="OrbitalContactResource" /> in the collection will belong to the same instance of <see cref="OrbitalSpacecraftResource" />.
-    /// To get an <see cref="OrbitalContactCollection" /> instance call the GetOrbitalContacts method from an instance of <see cref="OrbitalSpacecraftResource" />.
+    /// A class representing a collection of <see cref="OrbitalContactResource"/> and their operations.
+    /// Each <see cref="OrbitalContactResource"/> in the collection will belong to the same instance of <see cref="OrbitalSpacecraftResource"/>.
+    /// To get an <see cref="OrbitalContactCollection"/> instance call the GetOrbitalContacts method from an instance of <see cref="OrbitalSpacecraftResource"/>.
     /// </summary>
     public partial class OrbitalContactCollection : ArmCollection, IEnumerable<OrbitalContactResource>, IAsyncEnumerable<OrbitalContactResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrbitalContactResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OrbitalContactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalContactResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactContactsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrbitalContactResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OrbitalContactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalContactResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactContactsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken);

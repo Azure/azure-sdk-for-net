@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing a StorageInsight along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageInsightResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageInsightResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetStorageInsight method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageInsightResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageInsightResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetStorageInsight method.
     /// </summary>
     public partial class StorageInsightResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageInsightResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageInsightResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageInsightResource(ArmClient client, StorageInsightData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PowerBIDedicated
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DedicatedCapacityResource" /> and their operations.
-    /// Each <see cref="DedicatedCapacityResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DedicatedCapacityCollection" /> instance call the GetDedicatedCapacities method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DedicatedCapacityResource"/> and their operations.
+    /// Each <see cref="DedicatedCapacityResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DedicatedCapacityCollection"/> instance call the GetDedicatedCapacities method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DedicatedCapacityCollection : ArmCollection, IEnumerable<DedicatedCapacityResource>, IAsyncEnumerable<DedicatedCapacityResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DedicatedCapacityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DedicatedCapacityResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
