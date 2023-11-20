@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerJobCredentialResource" /> and their operations.
-    /// Each <see cref="SqlServerJobCredentialResource" /> in the collection will belong to the same instance of <see cref="SqlServerJobAgentResource" />.
-    /// To get a <see cref="SqlServerJobCredentialCollection" /> instance call the GetSqlServerJobCredentials method from an instance of <see cref="SqlServerJobAgentResource" />.
+    /// A class representing a collection of <see cref="SqlServerJobCredentialResource"/> and their operations.
+    /// Each <see cref="SqlServerJobCredentialResource"/> in the collection will belong to the same instance of <see cref="SqlServerJobAgentResource"/>.
+    /// To get a <see cref="SqlServerJobCredentialCollection"/> instance call the GetSqlServerJobCredentials method from an instance of <see cref="SqlServerJobAgentResource"/>.
     /// </summary>
     public partial class SqlServerJobCredentialCollection : ArmCollection, IEnumerable<SqlServerJobCredentialResource>, IAsyncEnumerable<SqlServerJobCredentialResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerJobCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobCredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobCredentialJobCredentialsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobCredentialResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobCredentialJobCredentialsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

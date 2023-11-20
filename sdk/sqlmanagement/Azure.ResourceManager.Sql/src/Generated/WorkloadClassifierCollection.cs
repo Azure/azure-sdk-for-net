@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkloadClassifierResource" /> and their operations.
-    /// Each <see cref="WorkloadClassifierResource" /> in the collection will belong to the same instance of <see cref="WorkloadGroupResource" />.
-    /// To get a <see cref="WorkloadClassifierCollection" /> instance call the GetWorkloadClassifiers method from an instance of <see cref="WorkloadGroupResource" />.
+    /// A class representing a collection of <see cref="WorkloadClassifierResource"/> and their operations.
+    /// Each <see cref="WorkloadClassifierResource"/> in the collection will belong to the same instance of <see cref="WorkloadGroupResource"/>.
+    /// To get a <see cref="WorkloadClassifierCollection"/> instance call the GetWorkloadClassifiers method from an instance of <see cref="WorkloadGroupResource"/>.
     /// </summary>
     public partial class WorkloadClassifierCollection : ArmCollection, IEnumerable<WorkloadClassifierResource>, IAsyncEnumerable<WorkloadClassifierResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadClassifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadClassifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadClassifierRestClient.CreateListByWorkloadGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadClassifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadClassifierResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadClassifierRestClient.CreateListByWorkloadGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

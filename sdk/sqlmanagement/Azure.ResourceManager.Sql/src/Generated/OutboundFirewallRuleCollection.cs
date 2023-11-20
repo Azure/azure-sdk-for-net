@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OutboundFirewallRuleResource" /> and their operations.
-    /// Each <see cref="OutboundFirewallRuleResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get an <see cref="OutboundFirewallRuleCollection" /> instance call the GetOutboundFirewallRules method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="OutboundFirewallRuleResource"/> and their operations.
+    /// Each <see cref="OutboundFirewallRuleResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get an <see cref="OutboundFirewallRuleCollection"/> instance call the GetOutboundFirewallRules method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class OutboundFirewallRuleCollection : ArmCollection, IEnumerable<OutboundFirewallRuleResource>, IAsyncEnumerable<OutboundFirewallRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OutboundFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundFirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OutboundFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundFirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

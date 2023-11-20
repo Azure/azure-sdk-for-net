@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SignalRCustomCertificateResource" /> and their operations.
-    /// Each <see cref="SignalRCustomCertificateResource" /> in the collection will belong to the same instance of <see cref="SignalRResource" />.
-    /// To get a <see cref="SignalRCustomCertificateCollection" /> instance call the GetSignalRCustomCertificates method from an instance of <see cref="SignalRResource" />.
+    /// A class representing a collection of <see cref="SignalRCustomCertificateResource"/> and their operations.
+    /// Each <see cref="SignalRCustomCertificateResource"/> in the collection will belong to the same instance of <see cref="SignalRResource"/>.
+    /// To get a <see cref="SignalRCustomCertificateCollection"/> instance call the GetSignalRCustomCertificates method from an instance of <see cref="SignalRResource"/>.
     /// </summary>
     public partial class SignalRCustomCertificateCollection : ArmCollection, IEnumerable<SignalRCustomCertificateResource>, IAsyncEnumerable<SignalRCustomCertificateResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRCustomCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRCustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRCustomCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRCustomCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRCustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRCustomCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RedisEnterpriseDatabaseResource" /> and their operations.
-    /// Each <see cref="RedisEnterpriseDatabaseResource" /> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource" />.
-    /// To get a <see cref="RedisEnterpriseDatabaseCollection" /> instance call the GetRedisEnterpriseDatabases method from an instance of <see cref="RedisEnterpriseClusterResource" />.
+    /// A class representing a collection of <see cref="RedisEnterpriseDatabaseResource"/> and their operations.
+    /// Each <see cref="RedisEnterpriseDatabaseResource"/> in the collection will belong to the same instance of <see cref="RedisEnterpriseClusterResource"/>.
+    /// To get a <see cref="RedisEnterpriseDatabaseCollection"/> instance call the GetRedisEnterpriseDatabases method from an instance of <see cref="RedisEnterpriseClusterResource"/>.
     /// </summary>
     public partial class RedisEnterpriseDatabaseCollection : ArmCollection, IEnumerable<RedisEnterpriseDatabaseResource>, IAsyncEnumerable<RedisEnterpriseDatabaseResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisEnterpriseDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisEnterpriseDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterpriseDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisEnterpriseDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisEnterpriseDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterpriseDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedServerDnsAliasResource" /> and their operations.
-    /// Each <see cref="ManagedServerDnsAliasResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
-    /// To get a <see cref="ManagedServerDnsAliasCollection" /> instance call the GetManagedServerDnsAliases method from an instance of <see cref="ManagedInstanceResource" />.
+    /// A class representing a collection of <see cref="ManagedServerDnsAliasResource"/> and their operations.
+    /// Each <see cref="ManagedServerDnsAliasResource"/> in the collection will belong to the same instance of <see cref="ManagedInstanceResource"/>.
+    /// To get a <see cref="ManagedServerDnsAliasCollection"/> instance call the GetManagedServerDnsAliases method from an instance of <see cref="ManagedInstanceResource"/>.
     /// </summary>
     public partial class ManagedServerDnsAliasCollection : ArmCollection, IEnumerable<ManagedServerDnsAliasResource>, IAsyncEnumerable<ManagedServerDnsAliasResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedServerDnsAliasResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedServerDnsAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedServerDnsAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedServerDnsAliasResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedServerDnsAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedServerDnsAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

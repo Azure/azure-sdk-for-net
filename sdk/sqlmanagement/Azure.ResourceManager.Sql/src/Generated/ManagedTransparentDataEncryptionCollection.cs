@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedTransparentDataEncryptionResource" /> and their operations.
-    /// Each <see cref="ManagedTransparentDataEncryptionResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
-    /// To get a <see cref="ManagedTransparentDataEncryptionCollection" /> instance call the GetManagedTransparentDataEncryptions method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// A class representing a collection of <see cref="ManagedTransparentDataEncryptionResource"/> and their operations.
+    /// Each <see cref="ManagedTransparentDataEncryptionResource"/> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource"/>.
+    /// To get a <see cref="ManagedTransparentDataEncryptionCollection"/> instance call the GetManagedTransparentDataEncryptions method from an instance of <see cref="ManagedDatabaseResource"/>.
     /// </summary>
     public partial class ManagedTransparentDataEncryptionCollection : ArmCollection, IEnumerable<ManagedTransparentDataEncryptionResource>, IAsyncEnumerable<ManagedTransparentDataEncryptionResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedTransparentDataEncryptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedTransparentDataEncryptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedTransparentDataEncryptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedTransparentDataEncryptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

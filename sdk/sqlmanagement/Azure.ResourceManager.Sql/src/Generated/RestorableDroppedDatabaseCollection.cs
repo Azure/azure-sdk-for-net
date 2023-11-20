@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RestorableDroppedDatabaseResource" /> and their operations.
-    /// Each <see cref="RestorableDroppedDatabaseResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="RestorableDroppedDatabaseCollection" /> instance call the GetRestorableDroppedDatabases method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="RestorableDroppedDatabaseResource"/> and their operations.
+    /// Each <see cref="RestorableDroppedDatabaseResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="RestorableDroppedDatabaseCollection"/> instance call the GetRestorableDroppedDatabases method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class RestorableDroppedDatabaseCollection : ArmCollection, IEnumerable<RestorableDroppedDatabaseResource>, IAsyncEnumerable<RestorableDroppedDatabaseResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableDroppedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RestorableDroppedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorableDroppedDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableDroppedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RestorableDroppedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorableDroppedDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

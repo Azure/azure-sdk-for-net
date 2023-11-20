@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Search
 {
     /// <summary>
     /// A Class representing a SearchPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SearchPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSearchPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource" /> using the GetSearchPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SearchPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSearchPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource"/> using the GetSearchPrivateEndpointConnection method.
     /// </summary>
     public partial class SearchPrivateEndpointConnectionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Search
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SearchPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SearchPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SearchPrivateEndpointConnectionResource(ArmClient client, SearchPrivateEndpointConnectionData data) : this(client, data.Id)

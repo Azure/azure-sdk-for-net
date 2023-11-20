@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedInstanceOperation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceOperationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedInstanceOperation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceOperationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceOperation method.
     /// </summary>
     public partial class ManagedInstanceOperationResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceOperationResource(ArmClient client, ManagedInstanceOperationData data) : this(client, data.Id)
