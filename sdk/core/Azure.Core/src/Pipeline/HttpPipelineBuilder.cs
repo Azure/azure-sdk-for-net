@@ -102,7 +102,7 @@ namespace Azure.Core.Pipeline
                                                         buildOptions.PerCallPolicies.Count +
                                                         buildOptions.PerRetryPolicies.Count);
 
-            void AddCustomerPolicies(HttpPipelinePosition position)
+            void AddUserPolicies(HttpPipelinePosition position)
             {
                 if (buildOptions.ClientOptions.Policies != null)
                 {
@@ -141,7 +141,7 @@ namespace Azure.Core.Pipeline
 
             AddNonNullPolicies(buildOptions.PerCallPolicies.ToArray());
 
-            AddCustomerPolicies(HttpPipelinePosition.PerCall);
+            AddUserPolicies(HttpPipelinePosition.PerCall);
 
             var perCallIndex = policies.Count;
 
@@ -170,7 +170,7 @@ namespace Azure.Core.Pipeline
 
             AddNonNullPolicies(buildOptions.PerRetryPolicies.ToArray());
 
-            AddCustomerPolicies(HttpPipelinePosition.PerRetry);
+            AddUserPolicies(HttpPipelinePosition.PerRetry);
 
             var perRetryIndex = policies.Count;
 
@@ -185,7 +185,7 @@ namespace Azure.Core.Pipeline
 
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(buildOptions.ClientOptions.GetType().Assembly), sanitizer));
 
-            AddCustomerPolicies(HttpPipelinePosition.BeforeTransport);
+            AddUserPolicies(HttpPipelinePosition.BeforeTransport);
 
             // Override the provided Transport with the provided transport options if the transport has not been set after default construction and options are not null.
             HttpPipelineTransport transport = buildOptions.ClientOptions.Transport;

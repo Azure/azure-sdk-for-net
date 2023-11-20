@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -76,18 +75,17 @@ namespace Azure.Core
         // TODO: revisit this per not shadowing anymore
         public ResponseClassifier ResponseClassifier
         {
-            get => (ResponseClassifier)base.MessageClassifier;
-            set => base.MessageClassifier = value;
-        }
+            get
+            {
+                if (MessageClassifier is not ResponseClassifier classifier)
+                {
+                    throw new InvalidOperationException($"Invalid ResponseClassifier set on message: '{base.MessageClassifier}'.");
+                }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override MessageClassifier MessageClassifier
-        {
-            get => base.MessageClassifier;
-            protected set => base.MessageClassifier = value;
+                return classifier;
+            }
+
+            set => MessageClassifier = value;
         }
 
         /// <summary>
@@ -124,16 +122,9 @@ namespace Azure.Core
         /// </summary>
         public MessageProcessingContext ProcessingContext => new(this);
 
-        internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
+        internal void ApplyRequestContext(RequestContext context, ResponseClassifier? classifier)
         {
-            if (context == null)
-            {
-                return;
-            }
-
             context.Freeze();
-
-            context.Apply(this);
 
             // Azure-specific extensibility piece
             if (context.Policies?.Count > 0)
@@ -146,6 +137,8 @@ namespace Azure.Core
             {
                 ResponseClassifier = context.Apply(classifier);
             }
+
+            context.Apply(this);
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }

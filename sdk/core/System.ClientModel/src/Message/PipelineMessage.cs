@@ -41,6 +41,15 @@ public class PipelineMessage : IDisposable
 
     public virtual CancellationToken CancellationToken { get; set; }
 
+    public MessageClassifier? MessageClassifier { get; protected internal set; }
+
+    public void Apply(RequestOptions options, MessageClassifier? messageClassifier = default)
+    {
+        // This design moves the client-author API (options.Apply) off the
+        // client-user type RequestOptions.
+        options.Apply(this, messageClassifier);
+    }
+
     private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
     public bool TryGetProperty(Type type, out object? value) =>
@@ -49,21 +58,16 @@ public class PipelineMessage : IDisposable
     public void SetProperty(Type type, object value) =>
         _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
-    private MessageClassifier? _messageClassifer;
-    public virtual MessageClassifier MessageClassifier
-    {
-        get
-        {
-            if (_messageClassifer is null)
-            {
-                throw new InvalidOperationException("MessageClassifer cannot be accessed before it is set on the message.");
-            }
-            return _messageClassifer;
-        }
+    #endregion
 
-        // TODO: lets revisit this per need of client to set classifier for operation
-        protected internal set => _messageClassifer = value;
-    }
+    #region Per-request pipeline
+
+    internal bool CustomRequestPipeline =>
+        PerCallPolicies is not null || PerTryPolicies is not null;
+
+    internal PipelinePolicy[]? PerCallPolicies { get; set; }
+
+    internal PipelinePolicy[]? PerTryPolicies { get; set; }
 
     #endregion
 

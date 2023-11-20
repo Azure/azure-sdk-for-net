@@ -484,8 +484,6 @@ namespace Azure.Core
         public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.ClientModel.Primitives.PipelineRequest)) { }
         public bool BufferResponse { get { throw null; } set { } }
         public new bool HasResponse { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ClientModel.Primitives.MessageClassifier MessageClassifier { get { throw null; } protected set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public new Azure.Core.Request Request { get { throw null; } }
