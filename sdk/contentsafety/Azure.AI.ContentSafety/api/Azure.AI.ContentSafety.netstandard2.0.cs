@@ -163,7 +163,7 @@ namespace Azure.AI.ContentSafety
     }
     public partial class TextBlocklist
     {
-        internal TextBlocklist() { }
+        public TextBlocklist(string blocklistName) { }
         public string BlocklistName { get { throw null; } }
         public string Description { get { throw null; } set { } }
     }

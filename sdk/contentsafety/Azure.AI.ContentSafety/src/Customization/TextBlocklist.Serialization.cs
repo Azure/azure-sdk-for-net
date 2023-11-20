@@ -14,9 +14,7 @@ namespace Azure.AI.ContentSafety
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("blocklistName"u8);
-            writer.WriteStringValue(BlocklistName);
-            if (_isDiscriptionChanged)
+            if (_descriptionChanged)
             {
                 writer.WritePropertyName("description"u8);
                 if (_description != null)

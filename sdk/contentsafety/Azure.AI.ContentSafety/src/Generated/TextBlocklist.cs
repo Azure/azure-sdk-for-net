@@ -13,16 +13,6 @@ namespace Azure.AI.ContentSafety
     /// <summary> Text Blocklist. </summary>
     public partial class TextBlocklist
     {
-        /// <summary> Initializes a new instance of TextBlocklist. </summary>
-        /// <param name="blocklistName"> Text blocklist name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> is null. </exception>
-        internal TextBlocklist(string blocklistName)
-        {
-            Argument.AssertNotNull(blocklistName, nameof(blocklistName));
-
-            BlocklistName = blocklistName;
-        }
-
         /// <summary> Text blocklist name. </summary>
         public string BlocklistName { get; }
     }

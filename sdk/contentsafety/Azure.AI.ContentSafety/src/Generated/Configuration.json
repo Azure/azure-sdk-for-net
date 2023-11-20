@@ -1,0 +1,11 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.AI.ContentSafety",
+  "library-name": "Azure.AI.ContentSafety",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/ContentSafety/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/ContentSafety/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "use-overloads-between-protocol-and-convenience": true,
+  "model-namespace": false
+}

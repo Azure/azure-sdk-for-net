@@ -12,7 +12,17 @@ namespace Azure.AI.ContentSafety
     public partial class TextBlocklist
     {
         private string _description;
-        private bool _isDiscriptionChanged = false;
+        private bool _descriptionChanged = false;
+
+        /// <summary> Initializes a new instance of TextBlocklist. </summary>
+        /// <param name="blocklistName"> Text blocklist name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> is null. </exception>
+        public TextBlocklist(string blocklistName)
+        {
+            Argument.AssertNotNull(blocklistName, nameof(blocklistName));
+
+            BlocklistName = blocklistName;
+        }
 
         /// <summary> Initializes a new instance of TextBlocklist. </summary>
         /// <param name="blocklistName"> Text blocklist name. </param>
@@ -29,7 +39,7 @@ namespace Azure.AI.ContentSafety
             get => _description;
             set
             {
-                _isDiscriptionChanged = true;
+                _descriptionChanged = true;
                 _description = value;
             }
         }
