@@ -14,6 +14,7 @@ using Azure.ResourceManager.Attestation.Tests.Helpers;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
+using System.Linq;
 
 namespace Azure.ResourceManager.Attestation.Tests
 {
@@ -42,8 +43,12 @@ namespace Azure.ResourceManager.Attestation.Tests
             var endpoint = await GetEndpointResource(resourceGroup, providerResource.Data.Id);
             var endppintCollection = providerResource.GetAttestationPrivateEndpointConnections();
             //1.CreateOrUpdate
+            var connections = await endppintCollection.GetAllAsync().ToEnumerableAsync();
+            string privateEndpointConnectionName = connections.FirstOrDefault().Data.Name;
+            var privateEndpointConnectionData = connections.FirstOrDefault().Data;
+            privateEndpointConnectionData.ConnectionState.Description = "Update descriptions";
             var input = ResourceDataHelper.GetPrivateEndpointConnectionData();
-            var endpointResource = (await endppintCollection.CreateOrUpdateAsync(WaitUntil.Completed, endpointName, input)).Value;
+            var endpointResource = (await endppintCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionData.Id, privateEndpointConnectionData)).Value;
             Assert.AreEqual(endpointName, endpointResource.Data.Name);
             //2.Get
             var endpointResource2 = (await endpointResource.GetAsync()).Value;

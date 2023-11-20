@@ -20,6 +20,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+no-property-type-replacement: PrivateEndpoint
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
