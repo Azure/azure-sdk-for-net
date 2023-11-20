@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateStoreResource" /> and their operations.
-    /// Each <see cref="PrivateStoreResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="PrivateStoreCollection" /> instance call the GetPrivateStores method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="PrivateStoreResource"/> and their operations.
+    /// Each <see cref="PrivateStoreResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="PrivateStoreCollection"/> instance call the GetPrivateStores method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class PrivateStoreCollection : ArmCollection, IEnumerable<PrivateStoreResource>, IAsyncEnumerable<PrivateStoreResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="useCache"> Determines if to use cache or DB for serving this request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreResource> GetAllAsync(string useCache = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="useCache"> Determines if to use cache or DB for serving this request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreResource> GetAll(string useCache = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);

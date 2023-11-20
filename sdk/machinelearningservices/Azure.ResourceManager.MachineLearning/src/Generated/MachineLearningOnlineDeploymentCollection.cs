@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningOnlineDeploymentResource" /> and their operations.
-    /// Each <see cref="MachineLearningOnlineDeploymentResource" /> in the collection will belong to the same instance of <see cref="MachineLearningOnlineEndpointResource" />.
-    /// To get a <see cref="MachineLearningOnlineDeploymentCollection" /> instance call the GetMachineLearningOnlineDeployments method from an instance of <see cref="MachineLearningOnlineEndpointResource" />.
+    /// A class representing a collection of <see cref="MachineLearningOnlineDeploymentResource"/> and their operations.
+    /// Each <see cref="MachineLearningOnlineDeploymentResource"/> in the collection will belong to the same instance of <see cref="MachineLearningOnlineEndpointResource"/>.
+    /// To get a <see cref="MachineLearningOnlineDeploymentCollection"/> instance call the GetMachineLearningOnlineDeployments method from an instance of <see cref="MachineLearningOnlineEndpointResource"/>.
     /// </summary>
     public partial class MachineLearningOnlineDeploymentCollection : ArmCollection, IEnumerable<MachineLearningOnlineDeploymentResource>, IAsyncEnumerable<MachineLearningOnlineDeploymentResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningOnlineDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningOnlineDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningOnlineDeploymentResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningOnlineDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningOnlineDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningOnlineDeploymentResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);

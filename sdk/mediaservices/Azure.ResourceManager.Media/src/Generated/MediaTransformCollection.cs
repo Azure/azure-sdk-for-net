@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaTransformResource" /> and their operations.
-    /// Each <see cref="MediaTransformResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
-    /// To get a <see cref="MediaTransformCollection" /> instance call the GetMediaTransforms method from an instance of <see cref="MediaServicesAccountResource" />.
+    /// A class representing a collection of <see cref="MediaTransformResource"/> and their operations.
+    /// Each <see cref="MediaTransformResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
+    /// To get a <see cref="MediaTransformCollection"/> instance call the GetMediaTransforms method from an instance of <see cref="MediaServicesAccountResource"/>.
     /// </summary>
     public partial class MediaTransformCollection : ArmCollection, IEnumerable<MediaTransformResource>, IAsyncEnumerable<MediaTransformResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaTransformResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaTransformResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaTransformResource> GetAllAsync(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaTransformResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaTransformResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaTransformResource> GetAll(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);

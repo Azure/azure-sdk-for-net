@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A Class representing a ProvisionedCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProvisionedClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProvisionedClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetProvisionedCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProvisionedClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProvisionedClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetProvisionedCluster method.
     /// </summary>
     public partial class ProvisionedClusterResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProvisionedClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProvisionedClusterResource(ArmClient client, ProvisionedClusterData data) : this(client, data.Id)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Gets an object representing a ProvisionedClusterUpgradeProfileResource along with the instance operations that can be performed on it in the ProvisionedCluster. </summary>
-        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
         public virtual ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfile()
         {
             return new ProvisionedClusterUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));

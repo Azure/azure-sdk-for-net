@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccountBatchConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountBatchConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountBatchConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource" /> using the GetIntegrationAccountBatchConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountBatchConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountBatchConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource"/> using the GetIntegrationAccountBatchConfiguration method.
     /// </summary>
     public partial class IntegrationAccountBatchConfigurationResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountBatchConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountBatchConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountBatchConfigurationResource(ArmClient client, IntegrationAccountBatchConfigurationData data) : this(client, data.Id)
