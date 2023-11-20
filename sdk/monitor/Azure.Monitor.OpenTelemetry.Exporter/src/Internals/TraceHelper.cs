@@ -85,8 +85,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (tag.Key.Length <= SchemaConstants.KVP_MaxKeyLength && tag.Value != null)
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
-
-                    destination.Add(tag.Key, Convert.ToString(tag.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                    // In case of duplicate keys, only the first occurence will be exported.
+#if NET6_0_OR_GREATER
+                    destination.TryAdd(tag.Key, Convert.ToString(tag.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+#else
+                    if (!destination.ContainsKey(tag.Key))
+                    {
+                        destination.Add(tag.Key, Convert.ToString(tag.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                    }
+#endif
                 }
             }
         }
