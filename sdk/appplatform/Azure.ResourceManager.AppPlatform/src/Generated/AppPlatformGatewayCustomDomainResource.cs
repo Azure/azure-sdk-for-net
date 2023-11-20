@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformGatewayCustomDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformGatewayCustomDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformGatewayCustomDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformGatewayResource" /> using the GetAppPlatformGatewayCustomDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformGatewayCustomDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformGatewayCustomDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformGatewayResource"/> using the GetAppPlatformGatewayCustomDomain method.
     /// </summary>
     public partial class AppPlatformGatewayCustomDomainResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformGatewayCustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformGatewayCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformGatewayCustomDomainResource(ArmClient client, AppPlatformGatewayCustomDomainData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementUserResource" /> and their operations.
-    /// Each <see cref="ApiManagementUserResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiManagementUserCollection" /> instance call the GetApiManagementUsers method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="ApiManagementUserResource"/> and their operations.
+    /// Each <see cref="ApiManagementUserResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementUserCollection"/> instance call the GetApiManagementUsers method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementUserCollection : ArmCollection, IEnumerable<ApiManagementUserResource>, IAsyncEnumerable<ApiManagementUserResource>
     {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="expandGroups"> Detailed Group in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementUserResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementUserResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, bool? expandGroups = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementUserUserRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="expandGroups"> Detailed Group in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementUserResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementUserResource> GetAll(string filter = null, int? top = null, int? skip = null, bool? expandGroups = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementUserUserRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups);

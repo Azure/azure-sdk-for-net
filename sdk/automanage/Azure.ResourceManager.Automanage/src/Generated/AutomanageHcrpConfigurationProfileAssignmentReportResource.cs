@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageHcrpConfigurationProfileAssignmentReport along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageHcrpConfigurationProfileAssignmentReportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> using the GetAutomanageHcrpConfigurationProfileAssignmentReport method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageHcrpConfigurationProfileAssignmentReportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> using the GetAutomanageHcrpConfigurationProfileAssignmentReport method.
     /// </summary>
     public partial class AutomanageHcrpConfigurationProfileAssignmentReportResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automanage
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageHcrpConfigurationProfileAssignmentReportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageHcrpConfigurationProfileAssignmentReportResource(ArmClient client, AutomanageConfigurationProfileAssignmentReportData data) : this(client, data.Id)

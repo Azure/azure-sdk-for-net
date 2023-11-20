@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformServiceResource> GetAppPlatformServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AppPlatformServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformServiceResource> GetAppPlatformServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AppPlatformServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailableAppPlatformSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableAppPlatformSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailableAppPlatformSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableAppPlatformSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);

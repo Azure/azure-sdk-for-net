@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformGatewayRouteConfigResource" /> and their operations.
-    /// Each <see cref="AppPlatformGatewayRouteConfigResource" /> in the collection will belong to the same instance of <see cref="AppPlatformGatewayResource" />.
-    /// To get an <see cref="AppPlatformGatewayRouteConfigCollection" /> instance call the GetAppPlatformGatewayRouteConfigs method from an instance of <see cref="AppPlatformGatewayResource" />.
+    /// A class representing a collection of <see cref="AppPlatformGatewayRouteConfigResource"/> and their operations.
+    /// Each <see cref="AppPlatformGatewayRouteConfigResource"/> in the collection will belong to the same instance of <see cref="AppPlatformGatewayResource"/>.
+    /// To get an <see cref="AppPlatformGatewayRouteConfigCollection"/> instance call the GetAppPlatformGatewayRouteConfigs method from an instance of <see cref="AppPlatformGatewayResource"/>.
     /// </summary>
     public partial class AppPlatformGatewayRouteConfigCollection : ArmCollection, IEnumerable<AppPlatformGatewayRouteConfigResource>, IAsyncEnumerable<AppPlatformGatewayRouteConfigResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformGatewayRouteConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformGatewayRouteConfigResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformGatewayRouteConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformGatewayRouteConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformGatewayRouteConfigResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformGatewayRouteConfigResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

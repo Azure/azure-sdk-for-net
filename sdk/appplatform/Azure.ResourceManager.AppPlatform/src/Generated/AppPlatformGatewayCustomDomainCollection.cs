@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformGatewayCustomDomainResource" /> and their operations.
-    /// Each <see cref="AppPlatformGatewayCustomDomainResource" /> in the collection will belong to the same instance of <see cref="AppPlatformGatewayResource" />.
-    /// To get an <see cref="AppPlatformGatewayCustomDomainCollection" /> instance call the GetAppPlatformGatewayCustomDomains method from an instance of <see cref="AppPlatformGatewayResource" />.
+    /// A class representing a collection of <see cref="AppPlatformGatewayCustomDomainResource"/> and their operations.
+    /// Each <see cref="AppPlatformGatewayCustomDomainResource"/> in the collection will belong to the same instance of <see cref="AppPlatformGatewayResource"/>.
+    /// To get an <see cref="AppPlatformGatewayCustomDomainCollection"/> instance call the GetAppPlatformGatewayCustomDomains method from an instance of <see cref="AppPlatformGatewayResource"/>.
     /// </summary>
     public partial class AppPlatformGatewayCustomDomainCollection : ArmCollection, IEnumerable<AppPlatformGatewayCustomDomainResource>, IAsyncEnumerable<AppPlatformGatewayCustomDomainResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformGatewayCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformGatewayCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformGatewayCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformGatewayCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformGatewayCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformGatewayCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
