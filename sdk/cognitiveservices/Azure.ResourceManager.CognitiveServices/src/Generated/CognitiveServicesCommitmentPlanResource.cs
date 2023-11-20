@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A Class representing a CognitiveServicesCommitmentPlan along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CognitiveServicesCommitmentPlanResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCognitiveServicesCommitmentPlanResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCognitiveServicesCommitmentPlan method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesCommitmentPlanResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCognitiveServicesCommitmentPlanResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCognitiveServicesCommitmentPlan method.
     /// </summary>
     public partial class CognitiveServicesCommitmentPlanResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CognitiveServicesCommitmentPlanResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesCommitmentPlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CognitiveServicesCommitmentPlanResource(ArmClient client, CommitmentPlanData data) : this(client, data.Id)

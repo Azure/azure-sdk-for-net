@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiOperationTag along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiOperationTagResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiOperationTagResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiOperationResource" /> using the GetApiOperationTag method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiOperationTagResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiOperationTagResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiOperationResource"/> using the GetApiOperationTag method.
     /// </summary>
     public partial class ApiOperationTagResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiOperationTagResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiOperationTagResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiOperationTagResource(ArmClient client, TagContractData data) : this(client, data.Id)

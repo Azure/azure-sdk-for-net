@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageBestPracticeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageBestPracticeResource"/> object. </returns>
         public static AutomanageBestPracticeResource GetAutomanageBestPracticeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource"/> object. </returns>
         public static AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource"/> object. </returns>
         public static AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> object. </returns>
         public static AutomanageVmConfigurationProfileAssignmentResource GetAutomanageVmConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> object. </returns>
         public static AutomanageHcrpConfigurationProfileAssignmentResource GetAutomanageHcrpConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> object. </returns>
         public static AutomanageHciClusterConfigurationProfileAssignmentResource GetAutomanageHciClusterConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> object. </returns>
         public static AutomanageVmConfigurationProfileAssignmentReportResource GetAutomanageVmConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> object. </returns>
         public static AutomanageHcrpConfigurationProfileAssignmentReportResource GetAutomanageHcrpConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> object. </returns>
         public static AutomanageHciClusterConfigurationProfileAssignmentReportResource GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomanageServicePrincipalData> GetServicePrincipals(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

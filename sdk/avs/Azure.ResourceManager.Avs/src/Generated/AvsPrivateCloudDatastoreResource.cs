@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an AvsPrivateCloudDatastore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvsPrivateCloudDatastoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvsPrivateCloudDatastoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource" /> using the GetAvsPrivateCloudDatastore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudDatastoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudDatastoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource"/> using the GetAvsPrivateCloudDatastore method.
     /// </summary>
     public partial class AvsPrivateCloudDatastoreResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvsPrivateCloudDatastoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudDatastoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPrivateCloudDatastoreResource(ArmClient client, AvsPrivateCloudDatastoreData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationWebhookResource" /> and their operations.
-    /// Each <see cref="AutomationWebhookResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationWebhookCollection" /> instance call the GetAutomationWebhooks method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationWebhookResource"/> and their operations.
+    /// Each <see cref="AutomationWebhookResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationWebhookCollection"/> instance call the GetAutomationWebhooks method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationWebhookCollection : ArmCollection, IEnumerable<AutomationWebhookResource>, IAsyncEnumerable<AutomationWebhookResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationWebhookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationWebhookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationWebhookResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationWebhookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationWebhookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationWebhookResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);

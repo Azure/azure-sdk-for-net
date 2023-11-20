@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
     /// A Class representing a ScVmmCloud along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScVmmCloudResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScVmmCloudResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetScVmmCloud method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmCloudResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScVmmCloudResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScVmmCloud method.
     /// </summary>
     public partial class ScVmmCloudResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScVmmCloudResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScVmmCloudResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScVmmCloudResource(ArmClient client, ScVmmCloudData data) : this(client, data.Id)
