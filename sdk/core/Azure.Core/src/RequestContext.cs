@@ -171,5 +171,7 @@ namespace Azure
 
             return new ChainingClassifier(_statusCodes, _handlers, classifier);
         }
+
+        internal void Apply(HttpMessage message) => base.Apply(message);
     }
 }

@@ -43,6 +43,13 @@ public class PipelineMessage : IDisposable
 
     public MessageClassifier? MessageClassifier { get; protected internal set; }
 
+    public void Apply(RequestOptions options, MessageClassifier? messageClassifier = default)
+    {
+        // This design moves the client-author API (options.Apply) off the
+        // client-user type RequestOptions.
+        options.Apply(this, messageClassifier);
+    }
+
     private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
     public bool TryGetProperty(Type type, out object? value) =>

@@ -26,7 +26,7 @@ public class ClientPipelineTests
         requestOptions.AddPolicy(new ObservablePolicy("B"), PipelinePosition.PerTry);
 
         PipelineMessage message = pipeline.CreateMessage();
-        requestOptions.Apply(message);
+        message.Apply(requestOptions);
         pipeline.Send(message);
 
         List<string> observations = ObservablePolicy.GetData(message);

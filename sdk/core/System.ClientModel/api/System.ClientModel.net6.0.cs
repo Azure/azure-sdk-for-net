@@ -68,7 +68,7 @@ namespace System.ClientModel
         public virtual System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public virtual System.ClientModel.Primitives.MessageHeaders RequestHeaders { get { throw null; } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.MessageClassifier? messageClassifier = null) { }
+        protected internal void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.MessageClassifier? messageClassifier = null) { }
     }
     public abstract partial class ServiceClientOptions
     {
@@ -320,6 +320,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.MessageClassifier? MessageClassifier { get { throw null; } protected internal set { } }
         public virtual System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public virtual System.ClientModel.Primitives.PipelineResponse Response { get { throw null; } protected internal set { } }
+        public void Apply(System.ClientModel.RequestOptions options, System.ClientModel.Primitives.MessageClassifier? messageClassifier = null) { }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
