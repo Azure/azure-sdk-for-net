@@ -14,6 +14,7 @@ param(
   [string]$packageType = "client",
   [string]$packageNewLibrary = "true",
   [string]$relatedWorkItemId = $null,
+  [string]$tag = $null,
   [string]$devops_pat = $env:DEVOPS_PAT
 )
 #Requires -Version 6.0
@@ -70,8 +71,12 @@ $plannedVersions = @(
     Date = $plannedDate
   }
 )
+$ignoreReleasePlannerTests = $true
+if ($tag -eq "Release Planner App Test") {
+  $ignoreReleasePlannerTests = $false
+}
 
-$workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false -relatedId $relatedWorkItemId
+$workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false -relatedId $relatedWorkItemId -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests
 
 if (!$workItem) {
   Write-Host "Something failed as we don't have a work-item so exiting."
