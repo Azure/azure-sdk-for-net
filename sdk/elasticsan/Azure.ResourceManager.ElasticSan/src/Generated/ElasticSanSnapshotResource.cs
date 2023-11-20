@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A Class representing an ElasticSanSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanSnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource" /> using the GetElasticSanSnapshot method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanSnapshotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource"/> using the GetElasticSanSnapshot method.
     /// </summary>
     public partial class ElasticSanSnapshotResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticSanSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanSnapshotResource(ArmClient client, ElasticSanSnapshotData data) : this(client, data.Id)

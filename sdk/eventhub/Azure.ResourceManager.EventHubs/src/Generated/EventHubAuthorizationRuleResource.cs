@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubResource" /> using the GetEventHubAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubResource"/> using the GetEventHubAuthorizationRule method.
     /// </summary>
     public partial class EventHubAuthorizationRuleResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubAuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : this(client, data.Id)

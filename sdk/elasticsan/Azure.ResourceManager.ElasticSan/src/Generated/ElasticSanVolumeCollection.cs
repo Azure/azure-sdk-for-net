@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ElasticSanVolumeResource" /> and their operations.
-    /// Each <see cref="ElasticSanVolumeResource" /> in the collection will belong to the same instance of <see cref="ElasticSanVolumeGroupResource" />.
-    /// To get an <see cref="ElasticSanVolumeCollection" /> instance call the GetElasticSanVolumes method from an instance of <see cref="ElasticSanVolumeGroupResource" />.
+    /// A class representing a collection of <see cref="ElasticSanVolumeResource"/> and their operations.
+    /// Each <see cref="ElasticSanVolumeResource"/> in the collection will belong to the same instance of <see cref="ElasticSanVolumeGroupResource"/>.
+    /// To get an <see cref="ElasticSanVolumeCollection"/> instance call the GetElasticSanVolumes method from an instance of <see cref="ElasticSanVolumeGroupResource"/>.
     /// </summary>
     public partial class ElasticSanVolumeCollection : ArmCollection, IEnumerable<ElasticSanVolumeResource>, IAsyncEnumerable<ElasticSanVolumeResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticSanVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticSanVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanVolumeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticSanVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticSanVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanVolumeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

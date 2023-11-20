@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
     /// A Class representing an EdgeOrder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EdgeOrderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEdgeOrderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEdgeOrder method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeOrderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEdgeOrderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEdgeOrder method.
     /// </summary>
     public partial class EdgeOrderResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EdgeOrderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeOrderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeOrderResource(ArmClient client, EdgeOrderData data) : this(client, data.Id)

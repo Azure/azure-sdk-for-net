@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
     /// A Class representing a DigitalTwinsPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DigitalTwinsPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDigitalTwinsPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource" /> using the GetDigitalTwinsPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DigitalTwinsPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDigitalTwinsPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource"/> using the GetDigitalTwinsPrivateEndpointConnection method.
     /// </summary>
     public partial class DigitalTwinsPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DigitalTwinsPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DigitalTwinsPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DigitalTwinsPrivateEndpointConnectionResource(ArmClient client, DigitalTwinsPrivateEndpointConnectionData data) : this(client, data.Id)
