@@ -18,26 +18,15 @@ public class OpenAIClient
 
     public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options = default)
     {
-        ClientUtilities.AssertNotNull(endpoint, nameof(endpoint));
-        ClientUtilities.AssertNotNull(credential, nameof(credential));
+        if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
+        if (credential is null) throw new ArgumentNullException(nameof(credential));
+
         options ??= new OpenAIClientOptions();
 
         _endpoint = endpoint;
         _credential = credential;
 
-        if (options.PerCallPolicies is null)
-        {
-            options.PerCallPolicies = new PipelinePolicy[1];
-        }
-        else
-        {
-            var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
-            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan());
-        }
-
-        options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
-
-        _pipeline = ClientPipeline.Create(options);
+        _pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
     }
 
     public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
@@ -67,7 +56,7 @@ public class OpenAIClient
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        options.Apply(message, MessageClassifier200);
+        message.Apply(options, MessageClassifier200);
 
         PipelineRequest request = message.Request;
         request.Method = "POST";

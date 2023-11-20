@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -171,5 +171,7 @@ namespace Azure
 
             return new ChainingClassifier(_statusCodes, _handlers, classifier);
         }
+
+        internal void Apply(HttpMessage message) => base.Apply(message);
     }
 }

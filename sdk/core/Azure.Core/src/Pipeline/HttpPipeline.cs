@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -85,23 +84,20 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="Request"/> instance.
         /// </summary>
         /// <returns>The request.</returns>
-        public Request CreateRequest()
-            => _transport.CreateRequest();
+        public Request CreateRequest() => _transport.CreateRequest();
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage()
-            => new HttpMessage(CreateRequest(), ResponseClassifier);
+        public HttpMessage CreateMessage()  => new(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
         // Note: we don't have to remove nullability from RequestContext, for better or worse.
-        public HttpMessage CreateMessage(RequestContext? context)
-            => CreateMessage(context, default);
+        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -119,9 +115,12 @@ namespace Azure.Core.Pipeline
             // TODO: Note: Azure.Core-based libraries are going to need to somehow create the
             // message by passing in the request context to create message so that
             // message.ApplyContext() will be applied.  This is a bit of a tangle, but
-            // I think we can solve it with a little reworkd.
+            // I think we can solve it with a little rework.
 
-            message.ApplyRequestContext(context, classifier);
+            if (context != null)
+            {
+                message.ApplyRequestContext(context, classifier);
+            }
 
             return message;
         }
