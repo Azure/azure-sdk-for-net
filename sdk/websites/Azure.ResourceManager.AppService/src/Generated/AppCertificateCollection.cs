@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppCertificateResource" /> and their operations.
-    /// Each <see cref="AppCertificateResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AppCertificateCollection" /> instance call the GetAppCertificates method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AppCertificateResource"/> and their operations.
+    /// Each <see cref="AppCertificateResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AppCertificateCollection"/> instance call the GetAppCertificates method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AppCertificateCollection : ArmCollection, IEnumerable<AppCertificateResource>, IAsyncEnumerable<AppCertificateResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appCertificateCertificatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appCertificateCertificatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

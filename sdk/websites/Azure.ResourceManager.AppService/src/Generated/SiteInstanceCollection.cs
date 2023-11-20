@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteInstanceResource" /> and their operations.
-    /// Each <see cref="SiteInstanceResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteInstanceCollection" /> instance call the GetSiteInstances method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="SiteInstanceResource"/> and their operations.
+    /// Each <see cref="SiteInstanceResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="SiteInstanceCollection"/> instance call the GetSiteInstances method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class SiteInstanceCollection : ArmCollection, IEnumerable<SiteInstanceResource>, IAsyncEnumerable<SiteInstanceResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceWebAppsRestClient.CreateListInstanceIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceWebAppsRestClient.CreateListInstanceIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

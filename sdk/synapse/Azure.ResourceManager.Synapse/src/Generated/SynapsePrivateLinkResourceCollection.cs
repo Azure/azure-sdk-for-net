@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapsePrivateLinkResource" /> and their operations.
-    /// Each <see cref="SynapsePrivateLinkResource" /> in the collection will belong to the same instance of <see cref="SynapsePrivateLinkHubResource" />.
-    /// To get a <see cref="SynapsePrivateLinkResourceCollection" /> instance call the GetSynapsePrivateLinkResources method from an instance of <see cref="SynapsePrivateLinkHubResource" />.
+    /// A class representing a collection of <see cref="SynapsePrivateLinkResource"/> and their operations.
+    /// Each <see cref="SynapsePrivateLinkResource"/> in the collection will belong to the same instance of <see cref="SynapsePrivateLinkHubResource"/>.
+    /// To get a <see cref="SynapsePrivateLinkResourceCollection"/> instance call the GetSynapsePrivateLinkResources method from an instance of <see cref="SynapsePrivateLinkHubResource"/>.
     /// </summary>
     public partial class SynapsePrivateLinkResourceCollection : ArmCollection, IEnumerable<SynapsePrivateLinkResource>, IAsyncEnumerable<SynapsePrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapsePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapsePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapsePrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapsePrivateLinkResourcePrivateLinkHubPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapsePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapsePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapsePrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapsePrivateLinkResourcePrivateLinkHubPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

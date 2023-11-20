@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseAttachedDatabaseConfigurationResource" /> and their operations.
-    /// Each <see cref="SynapseAttachedDatabaseConfigurationResource" /> in the collection will belong to the same instance of <see cref="SynapseKustoPoolResource" />.
-    /// To get a <see cref="SynapseAttachedDatabaseConfigurationCollection" /> instance call the GetSynapseAttachedDatabaseConfigurations method from an instance of <see cref="SynapseKustoPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseAttachedDatabaseConfigurationResource"/> and their operations.
+    /// Each <see cref="SynapseAttachedDatabaseConfigurationResource"/> in the collection will belong to the same instance of <see cref="SynapseKustoPoolResource"/>.
+    /// To get a <see cref="SynapseAttachedDatabaseConfigurationCollection"/> instance call the GetSynapseAttachedDatabaseConfigurations method from an instance of <see cref="SynapseKustoPoolResource"/>.
     /// </summary>
     public partial class SynapseAttachedDatabaseConfigurationCollection : ArmCollection, IEnumerable<SynapseAttachedDatabaseConfigurationResource>, IAsyncEnumerable<SynapseAttachedDatabaseConfigurationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseAttachedDatabaseConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseAttachedDatabaseConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseAttachedDatabaseConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateListByKustoPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseAttachedDatabaseConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseAttachedDatabaseConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseAttachedDatabaseConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateListByKustoPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

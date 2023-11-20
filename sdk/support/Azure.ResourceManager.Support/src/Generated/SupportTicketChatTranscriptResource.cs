@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportTicketChatTranscript along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportTicketChatTranscriptResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportTicketChatTranscriptResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionSupportTicketResource" /> using the GetSupportTicketChatTranscript method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketChatTranscriptResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportTicketChatTranscriptResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionSupportTicketResource"/> using the GetSupportTicketChatTranscript method.
     /// </summary>
     public partial class SupportTicketChatTranscriptResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Support
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportTicketChatTranscriptResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportTicketChatTranscriptResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportTicketChatTranscriptResource(ArmClient client, ChatTranscriptDetailData data) : this(client, data.Id)

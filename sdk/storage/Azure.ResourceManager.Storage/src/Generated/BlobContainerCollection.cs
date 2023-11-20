@@ -21,9 +21,9 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BlobContainerResource" /> and their operations.
-    /// Each <see cref="BlobContainerResource" /> in the collection will belong to the same instance of <see cref="BlobServiceResource" />.
-    /// To get a <see cref="BlobContainerCollection" /> instance call the GetBlobContainers method from an instance of <see cref="BlobServiceResource" />.
+    /// A class representing a collection of <see cref="BlobContainerResource"/> and their operations.
+    /// Each <see cref="BlobContainerResource"/> in the collection will belong to the same instance of <see cref="BlobServiceResource"/>.
+    /// To get a <see cref="BlobContainerCollection"/> instance call the GetBlobContainers method from an instance of <see cref="BlobServiceResource"/>.
     /// </summary>
     public partial class BlobContainerCollection : ArmCollection, IEnumerable<BlobContainerResource>, IAsyncEnumerable<BlobContainerResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BlobContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BlobContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);

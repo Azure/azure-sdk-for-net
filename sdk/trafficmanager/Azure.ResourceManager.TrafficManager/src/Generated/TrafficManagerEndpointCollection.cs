@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TrafficManagerEndpointResource" /> and their operations.
-    /// Each <see cref="TrafficManagerEndpointResource" /> in the collection will belong to the same instance of <see cref="TrafficManagerProfileResource" />.
-    /// To get a <see cref="TrafficManagerEndpointCollection" /> instance call the GetTrafficManagerEndpoints method from an instance of <see cref="TrafficManagerProfileResource" />.
+    /// A class representing a collection of <see cref="TrafficManagerEndpointResource"/> and their operations.
+    /// Each <see cref="TrafficManagerEndpointResource"/> in the collection will belong to the same instance of <see cref="TrafficManagerProfileResource"/>.
+    /// To get a <see cref="TrafficManagerEndpointCollection"/> instance call the GetTrafficManagerEndpoints method from an instance of <see cref="TrafficManagerProfileResource"/>.
     /// </summary>
     public partial class TrafficManagerEndpointCollection : ArmCollection
     {

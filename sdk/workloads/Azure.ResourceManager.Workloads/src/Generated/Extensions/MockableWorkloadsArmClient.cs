@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Workloads.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SapVirtualInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapVirtualInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapVirtualInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapVirtualInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapVirtualInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapVirtualInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SapVirtualInstanceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapVirtualInstanceResource"/> object. </returns>
         public virtual SapVirtualInstanceResource GetSapVirtualInstanceResource(ResourceIdentifier id)
         {
             SapVirtualInstanceResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Workloads.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SapCentralServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapCentralServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapCentralServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapCentralServerInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapCentralServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapCentralServerInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SapCentralServerInstanceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapCentralServerInstanceResource"/> object. </returns>
         public virtual SapCentralServerInstanceResource GetSapCentralServerInstanceResource(ResourceIdentifier id)
         {
             SapCentralServerInstanceResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Workloads.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SapDatabaseInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapDatabaseInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDatabaseInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapDatabaseInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapDatabaseInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDatabaseInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SapDatabaseInstanceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapDatabaseInstanceResource"/> object. </returns>
         public virtual SapDatabaseInstanceResource GetSapDatabaseInstanceResource(ResourceIdentifier id)
         {
             SapDatabaseInstanceResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Workloads.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SapApplicationServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapApplicationServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapApplicationServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapApplicationServerInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapApplicationServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapApplicationServerInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SapApplicationServerInstanceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapApplicationServerInstanceResource"/> object. </returns>
         public virtual SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(ResourceIdentifier id)
         {
             SapApplicationServerInstanceResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Workloads.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SapMonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapMonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SapMonitorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapMonitorResource"/> object. </returns>
         public virtual SapMonitorResource GetSapMonitorResource(ResourceIdentifier id)
         {
             SapMonitorResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Workloads.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SapProviderInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapProviderInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapProviderInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapProviderInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapProviderInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapProviderInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SapProviderInstanceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapProviderInstanceResource"/> object. </returns>
         public virtual SapProviderInstanceResource GetSapProviderInstanceResource(ResourceIdentifier id)
         {
             SapProviderInstanceResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Workloads.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SapLandscapeMonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SapLandscapeMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapLandscapeMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapLandscapeMonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapLandscapeMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapLandscapeMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapLandscapeMonitorResource"/> object. </returns>
         public virtual SapLandscapeMonitorResource GetSapLandscapeMonitorResource(ResourceIdentifier id)
         {
             SapLandscapeMonitorResource.ValidateResourceId(id);
