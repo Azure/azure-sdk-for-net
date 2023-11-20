@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
@@ -25,7 +25,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static explicit operator BaseModel(OutputMessage result)
         {
-            ClientUtilities.AssertNotNull(result, nameof(result));
+            if (result is null) throw new ArgumentNullException(nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);

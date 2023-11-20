@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Linq;
-using System.ClientModel.Internal;
 
 namespace OpenAI;
 
@@ -34,9 +34,9 @@ public partial class Completions
     /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="choices"/> or <paramref name="usage"/> is null. </exception>
     internal Completions(string id, DateTimeOffset created, IEnumerable<Choice> choices, CompletionsUsage usage)
     {
-        ClientUtilities.AssertNotNull(id, nameof(id));
-        ClientUtilities.AssertNotNull(choices, nameof(choices));
-        ClientUtilities.AssertNotNull(usage, nameof(usage));
+        if (id is null) throw new ArgumentNullException(nameof(id));
+        if (choices is null) throw new ArgumentNullException(nameof(choices));
+        if (usage is null) throw new ArgumentNullException(nameof(usage));
 
         Id = id;
         Created = created;

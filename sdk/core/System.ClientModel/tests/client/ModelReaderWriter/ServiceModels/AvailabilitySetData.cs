@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
-using System.ClientModel.Tests.Client.Models.ResourceManager;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
@@ -34,7 +32,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         public static explicit operator AvailabilitySetData(OutputMessage result)
         {
-            ClientUtilities.AssertNotNull(result, nameof(result));
+            if (result is null) throw new ArgumentNullException(nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);

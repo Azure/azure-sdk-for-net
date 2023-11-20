@@ -3,10 +3,9 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
@@ -106,7 +105,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static explicit operator ModelAsStruct(OutputMessage result)
         {
-            ClientUtilities.AssertNotNull(result, nameof(result));
+            if (result is null) throw new ArgumentNullException(nameof(result));
 
             using JsonDocument doc = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterHelper.WireOptions);

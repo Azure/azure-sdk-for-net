@@ -5,9 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ClientModel.Internal;
 
 namespace OpenAI;
 
@@ -22,10 +22,10 @@ public partial class CompletionsLogProbabilityModel
     /// <exception cref="ArgumentNullException"> <paramref name="tokens"/>, <paramref name="tokenLogProbabilities"/>, <paramref name="topLogProbabilities"/> or <paramref name="textOffsets"/> is null. </exception>
     internal CompletionsLogProbabilityModel(IEnumerable<string> tokens, IEnumerable<float?> tokenLogProbabilities, IEnumerable<IDictionary<string, float?>> topLogProbabilities, IEnumerable<int> textOffsets)
     {
-        ClientUtilities.AssertNotNull(tokens, nameof(tokens));
-        ClientUtilities.AssertNotNull(tokenLogProbabilities, nameof(tokenLogProbabilities));
-        ClientUtilities.AssertNotNull(topLogProbabilities, nameof(topLogProbabilities));
-        ClientUtilities.AssertNotNull(textOffsets, nameof(textOffsets));
+        if (tokens is null) throw new ArgumentNullException(nameof(tokens));
+        if (tokenLogProbabilities is null) throw new ArgumentNullException(nameof(tokenLogProbabilities));
+        if (topLogProbabilities is null) throw new ArgumentNullException(nameof(topLogProbabilities));
+        if (textOffsets is null) throw new ArgumentNullException(nameof(textOffsets));
 
         Tokens = tokens.ToList();
         TokenLogProbabilities = tokenLogProbabilities.ToList();

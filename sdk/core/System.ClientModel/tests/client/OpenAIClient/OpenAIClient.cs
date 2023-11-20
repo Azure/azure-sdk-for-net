@@ -18,8 +18,9 @@ public class OpenAIClient
 
     public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options = default)
     {
-        ClientUtilities.AssertNotNull(endpoint, nameof(endpoint));
-        ClientUtilities.AssertNotNull(credential, nameof(credential));
+        if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
+        if (credential is null) throw new ArgumentNullException(nameof(credential));
+
         options ??= new OpenAIClientOptions();
 
         _endpoint = endpoint;
@@ -42,8 +43,9 @@ public class OpenAIClient
 
     public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
     {
-        ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-        ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
+        if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
+        if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
+        if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
         RequestOptions context = FromCancellationToken(cancellationToken);
         OutputMessage result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
@@ -54,8 +56,9 @@ public class OpenAIClient
 
     public virtual OutputMessage GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
     {
-        ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-        ClientUtilities.AssertNotNull(content, nameof(content));
+        if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
+        if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
+        if (content is null) throw new ArgumentNullException(nameof(content));
 
         using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
