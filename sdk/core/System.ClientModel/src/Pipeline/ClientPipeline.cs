@@ -126,9 +126,9 @@ public partial class ClientPipeline
 
     private PipelineProcessor GetProcessor(PipelineMessage message)
     {
-        if (message.CustomPipeline)
+        if (message.CustomRequestPipeline)
         {
-            return new CustomPipelineProcessor(message,
+            return new RequestOptionsProcessor(message,
                 _policies,
                 message.PerCallPolicies,
                 message.PerTryPolicies,

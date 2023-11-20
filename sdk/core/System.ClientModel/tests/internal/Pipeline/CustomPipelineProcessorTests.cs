@@ -17,8 +17,8 @@ public class CustomPipelineProcessorTests
         PipelineRequest request = new HttpPipelineRequest();
         PipelineMessage message = new PipelineMessage(request);
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: ReadOnlyMemory<PipelinePolicy>.Empty,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
@@ -35,8 +35,8 @@ public class CustomPipelineProcessorTests
 
         var perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: new PipelinePolicy[1],
+            ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 1,
@@ -47,8 +47,8 @@ public class CustomPipelineProcessorTests
 
         perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: new PipelinePolicy[1],
+            ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
@@ -59,8 +59,8 @@ public class CustomPipelineProcessorTests
 
         var perTryEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: new PipelinePolicy[1],
+            ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
@@ -79,8 +79,8 @@ public class CustomPipelineProcessorTests
         PipelinePolicy[] policies = new PipelinePolicy[1];
         policies[0] = new ObservablePolicy("A");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: ReadOnlyMemory<PipelinePolicy>.Empty,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
@@ -104,8 +104,8 @@ public class CustomPipelineProcessorTests
         PipelinePolicy[] policies = new PipelinePolicy[1];
         policies[0] = new ObservablePolicy("A");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: ReadOnlyMemory<PipelinePolicy>.Empty,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
             perCallIndex: 0,
@@ -132,8 +132,8 @@ public class CustomPipelineProcessorTests
         PipelinePolicy[] perTry = new PipelinePolicy[1];
         perTry[0] = new ObservablePolicy("B");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: ReadOnlyMemory<PipelinePolicy>.Empty,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
             perCallIndex: 0,
@@ -165,8 +165,8 @@ public class CustomPipelineProcessorTests
         policies[1] = new ObservablePolicy("D");
         policies[2] = new ObservablePolicy("E");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
@@ -205,8 +205,8 @@ public class CustomPipelineProcessorTests
         policies[1] = new ObservablePolicy("D");
         policies[2] = new ObservablePolicy("E");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
@@ -245,8 +245,8 @@ public class CustomPipelineProcessorTests
         policies[0] = new ObservablePolicy("D");
         policies[1] = new ObservablePolicy("E");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
@@ -285,8 +285,8 @@ public class CustomPipelineProcessorTests
         policies[1] = new ObservablePolicy("D");
         policies[2] = new ObservablePolicy("E");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
             perCallIndex: 0,
@@ -325,8 +325,8 @@ public class CustomPipelineProcessorTests
         policies[1] = new ObservablePolicy("D");
         policies[2] = new ObservablePolicy("E");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
             perCallIndex: 0,
@@ -365,8 +365,8 @@ public class CustomPipelineProcessorTests
         policies[0] = new ObservablePolicy("D");
         policies[1] = new ObservablePolicy("E");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
             perCallIndex: 0,
@@ -408,8 +408,8 @@ public class CustomPipelineProcessorTests
         perTry[0] = new ObservablePolicy("E");
         perTry[1] = new ObservablePolicy("F");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
             perCallIndex: 0,
@@ -453,8 +453,8 @@ public class CustomPipelineProcessorTests
         perTry[0] = new ObservablePolicy("E");
         perTry[1] = new ObservablePolicy("F");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
             perCallIndex: 2,
@@ -500,8 +500,8 @@ public class CustomPipelineProcessorTests
         perTry[0] = new ObservablePolicy("G");
         perTry[1] = new ObservablePolicy("H");
 
-        ClientPipeline.CustomPipelineProcessor processor = new(message,
-            original: original,
+        ClientPipeline.RequestOptionsProcessor processor = new(message,
+            fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
             perCallIndex: 1,
