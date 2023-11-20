@@ -3,7 +3,7 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Internal;
+using TestHelpers.Internal;
 using System.ClientModel.Primitives;
 using System.Text;
 using System.Threading;
@@ -31,26 +31,39 @@ public class OpenAIClient
 
     public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
     {
-        ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-        ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
+        if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
+        if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
+        if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
-        RequestOptions context = FromCancellationToken(cancellationToken);
-        OutputMessage result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
+        RequestOptions options = FromCancellationToken(cancellationToken);
+        InputContent content = InputContent.Create(completionsOptions);
+
+        OutputMessage result = GetCompletions(deploymentId, content, options);
+
         PipelineResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
+
         return OutputMessage.FromValue(completions, response);
     }
 
     public virtual OutputMessage GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
     {
-        ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-        ClientUtilities.AssertNotNull(content, nameof(content));
+        if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
+        if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
+        if (content is null) throw new ArgumentNullException(nameof(content));
 
         using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
-        PipelineResponse response = _pipeline.ProcessMessage(message, options);
-        OutputMessage result = OutputMessage.FromResponse(response);
-        return result;
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response;
+
+        if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
+        {
+            throw new ClientRequestException(response);
+        }
+
+        return OutputMessage.FromResponse(response);
     }
 
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)

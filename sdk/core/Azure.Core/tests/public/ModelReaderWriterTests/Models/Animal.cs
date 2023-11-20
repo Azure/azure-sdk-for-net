@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
+using System.Collections.Generic;
 using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 {

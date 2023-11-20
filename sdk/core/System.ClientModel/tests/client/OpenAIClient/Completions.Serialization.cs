@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
+using TestHelpers.Internal;
 using System.Text.Json;
 
 namespace OpenAI;

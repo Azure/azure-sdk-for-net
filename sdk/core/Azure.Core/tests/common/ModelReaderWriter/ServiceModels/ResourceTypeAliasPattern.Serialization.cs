@@ -8,8 +8,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
 using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {

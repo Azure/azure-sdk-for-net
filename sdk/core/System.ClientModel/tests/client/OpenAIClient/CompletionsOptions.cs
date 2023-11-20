@@ -5,9 +5,10 @@
 
 #nullable disable
 
+using System;
+using TestHelpers.Internal;
 using System.Collections.Generic;
 using System.Linq;
-using System.ClientModel.Internal;
 
 namespace OpenAI;
 
@@ -23,7 +24,7 @@ public partial class CompletionsOptions
     /// <exception cref="ArgumentNullException"> <paramref name="prompts"/> is null. </exception>
     public CompletionsOptions(IEnumerable<string> prompts)
     {
-        ClientUtilities.AssertNotNull(prompts, nameof(prompts));
+        if (prompts is null) throw new ArgumentNullException(nameof(prompts));
 
         Prompts = prompts.ToList();
         InternalStringKeyedTokenSelectionBiases = new OptionalDictionary<string, int>();

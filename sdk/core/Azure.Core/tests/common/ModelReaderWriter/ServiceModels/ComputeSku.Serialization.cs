@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
+using System.Linq;
 using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {

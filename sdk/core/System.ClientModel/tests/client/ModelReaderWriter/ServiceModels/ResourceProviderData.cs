@@ -5,9 +5,8 @@
 
 #nullable disable
 
+using TestHelpers.Internal;
 using System.Collections.Generic;
-using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
@@ -30,7 +29,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 
         public static explicit operator ResourceProviderData(OutputMessage result)
         {
-            ClientUtilities.AssertNotNull(result, nameof(result));
+            if (result is null) throw new ArgumentNullException(nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);

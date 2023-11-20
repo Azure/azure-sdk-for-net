@@ -5,9 +5,11 @@ using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Internal;
+namespace System.ClientModel.Internal.Remove;
 
-public static class PipelineProtocolExtensions
+// TODO: Delete this eventually.  I am keeping this as internal for now, to validate behavior and APIs I don't have
+// tests for yet.
+internal static class PipelineProtocolExtensions
 {
     public static async ValueTask<PipelineResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
     {
