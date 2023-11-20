@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterResource> GetDevCentersAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterResource> GetDevCenters(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterProjectResource> GetDevCenterProjects(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterProjectProjectsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterNetworkConnectionNetworkConnectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);

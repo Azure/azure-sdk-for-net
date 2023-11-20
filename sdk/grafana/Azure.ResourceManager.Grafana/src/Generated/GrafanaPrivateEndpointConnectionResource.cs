@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// A Class representing a GrafanaPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GrafanaPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGrafanaPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedGrafanaResource" /> using the GetGrafanaPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GrafanaPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGrafanaPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedGrafanaResource"/> using the GetGrafanaPrivateEndpointConnection method.
     /// </summary>
     public partial class GrafanaPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Grafana
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GrafanaPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GrafanaPrivateEndpointConnectionResource(ArmClient client, GrafanaPrivateEndpointConnectionData data) : this(client, data.Id)

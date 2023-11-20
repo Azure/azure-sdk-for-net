@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource" /> using the GetDevTestLabSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabSchedule method.
     /// </summary>
     public partial class DevTestLabScheduleResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabScheduleResource(ArmClient client, DevTestLabScheduleData data) : this(client, data.Id)
