@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> and their operations.
-    /// Each <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource" />.
-    /// To get a <see cref="ContainerServiceTrustedAccessRoleBindingCollection" /> instance call the GetContainerServiceTrustedAccessRoleBindings method from an instance of <see cref="ContainerServiceManagedClusterResource" />.
+    /// A class representing a collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> and their operations.
+    /// Each <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource"/>.
+    /// To get a <see cref="ContainerServiceTrustedAccessRoleBindingCollection"/> instance call the GetContainerServiceTrustedAccessRoleBindings method from an instance of <see cref="ContainerServiceManagedClusterResource"/>.
     /// </summary>
     public partial class ContainerServiceTrustedAccessRoleBindingCollection : ArmCollection, IEnumerable<ContainerServiceTrustedAccessRoleBindingResource>, IAsyncEnumerable<ContainerServiceTrustedAccessRoleBindingResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceTrustedAccessRoleBindingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceTrustedAccessRoleBindingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

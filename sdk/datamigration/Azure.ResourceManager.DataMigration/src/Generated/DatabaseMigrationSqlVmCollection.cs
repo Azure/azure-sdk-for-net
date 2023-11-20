@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatabaseMigrationSqlVmResource" /> and their operations.
-    /// Each <see cref="DatabaseMigrationSqlVmResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DatabaseMigrationSqlVmCollection" /> instance call the GetDatabaseMigrationSqlVms method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DatabaseMigrationSqlVmResource"/> and their operations.
+    /// Each <see cref="DatabaseMigrationSqlVmResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DatabaseMigrationSqlVmCollection"/> instance call the GetDatabaseMigrationSqlVms method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DatabaseMigrationSqlVmCollection : ArmCollection
     {

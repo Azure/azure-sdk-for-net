@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
     /// A Class representing a VmInstanceHybridIdentityMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VmInstanceHybridIdentityMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVmInstanceHybridIdentityMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VMwareVmInstanceResource" /> using the GetVmInstanceHybridIdentityMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VmInstanceHybridIdentityMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVmInstanceHybridIdentityMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VMwareVmInstanceResource"/> using the GetVmInstanceHybridIdentityMetadata method.
     /// </summary>
     public partial class VmInstanceHybridIdentityMetadataResource : ArmResource
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VmInstanceHybridIdentityMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VmInstanceHybridIdentityMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VmInstanceHybridIdentityMetadataResource(ArmClient client, VmInstanceHybridIdentityMetadataData data) : this(client, data.Id)

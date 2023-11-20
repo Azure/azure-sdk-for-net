@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a DatabaseMigrationSqlVm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatabaseMigrationSqlVmResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatabaseMigrationSqlVmResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDatabaseMigrationSqlVm method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseMigrationSqlVmResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseMigrationSqlVmResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDatabaseMigrationSqlVm method.
     /// </summary>
     public partial class DatabaseMigrationSqlVmResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatabaseMigrationSqlVmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlVmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseMigrationSqlVmResource(ArmClient client, DatabaseMigrationSqlVmData data) : this(client, data.Id)
