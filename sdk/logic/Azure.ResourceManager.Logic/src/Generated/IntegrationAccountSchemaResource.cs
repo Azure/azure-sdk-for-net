@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccountSchema along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountSchemaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountSchemaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource" /> using the GetIntegrationAccountSchema method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountSchemaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountSchemaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource"/> using the GetIntegrationAccountSchema method.
     /// </summary>
     public partial class IntegrationAccountSchemaResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountSchemaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountSchemaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountSchemaResource(ArmClient client, IntegrationAccountSchemaData data) : this(client, data.Id)
