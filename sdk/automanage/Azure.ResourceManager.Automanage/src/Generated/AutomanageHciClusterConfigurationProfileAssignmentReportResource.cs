@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageHciClusterConfigurationProfileAssignmentReport along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageHciClusterConfigurationProfileAssignmentReportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> using the GetAutomanageHciClusterConfigurationProfileAssignmentReport method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageHciClusterConfigurationProfileAssignmentReportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> using the GetAutomanageHciClusterConfigurationProfileAssignmentReport method.
     /// </summary>
     public partial class AutomanageHciClusterConfigurationProfileAssignmentReportResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automanage
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageHciClusterConfigurationProfileAssignmentReportResource(ArmClient client, AutomanageConfigurationProfileAssignmentReportData data) : this(client, data.Id)

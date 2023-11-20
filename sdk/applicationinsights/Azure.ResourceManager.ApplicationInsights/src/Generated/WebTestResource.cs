@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A Class representing a WebTest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebTestResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebTestResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetWebTest method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebTestResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebTestResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWebTest method.
     /// </summary>
     public partial class WebTestResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebTestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebTestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebTestResource(ArmClient client, WebTestData data) : this(client, data.Id)

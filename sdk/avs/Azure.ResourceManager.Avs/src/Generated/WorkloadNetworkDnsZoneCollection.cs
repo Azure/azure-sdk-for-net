@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkloadNetworkDnsZoneResource" /> and their operations.
-    /// Each <see cref="WorkloadNetworkDnsZoneResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="WorkloadNetworkDnsZoneCollection" /> instance call the GetWorkloadNetworkDnsZones method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="WorkloadNetworkDnsZoneResource"/> and their operations.
+    /// Each <see cref="WorkloadNetworkDnsZoneResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="WorkloadNetworkDnsZoneCollection"/> instance call the GetWorkloadNetworkDnsZones method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class WorkloadNetworkDnsZoneCollection : ArmCollection, IEnumerable<WorkloadNetworkDnsZoneResource>, IAsyncEnumerable<WorkloadNetworkDnsZoneResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadNetworkDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadNetworkDnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkDnsZoneResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateListDnsZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadNetworkDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadNetworkDnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkDnsZoneResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateListDnsZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

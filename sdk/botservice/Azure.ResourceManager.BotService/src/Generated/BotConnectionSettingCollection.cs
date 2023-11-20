@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.BotService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BotConnectionSettingResource" /> and their operations.
-    /// Each <see cref="BotConnectionSettingResource" /> in the collection will belong to the same instance of <see cref="BotResource" />.
-    /// To get a <see cref="BotConnectionSettingCollection" /> instance call the GetBotConnectionSettings method from an instance of <see cref="BotResource" />.
+    /// A class representing a collection of <see cref="BotConnectionSettingResource"/> and their operations.
+    /// Each <see cref="BotConnectionSettingResource"/> in the collection will belong to the same instance of <see cref="BotResource"/>.
+    /// To get a <see cref="BotConnectionSettingCollection"/> instance call the GetBotConnectionSettings method from an instance of <see cref="BotResource"/>.
     /// </summary>
     public partial class BotConnectionSettingCollection : ArmCollection, IEnumerable<BotConnectionSettingResource>, IAsyncEnumerable<BotConnectionSettingResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotConnectionSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BotConnectionSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotConnectionSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotConnectionSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BotConnectionSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotConnectionSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
