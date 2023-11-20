@@ -102,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>("key1", "value2"));
 
             // Act
-            var result = TraceHelper.AddProperties(destination, ref tagObjects);
+            var result = TraceHelper.AddPropertiesToTelemetry(destination, ref tagObjects);
 
             // Assert
             Assert.True(destination.TryGetValue("key1", out var value));
