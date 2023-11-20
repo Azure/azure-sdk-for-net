@@ -38,6 +38,7 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />
   </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" />
     <PackageReference Include="System.Net.Http" />
