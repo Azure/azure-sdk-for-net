@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsDefined(RoutingConfiguration))
+            if (Optional.IsDefined(ConnectionRoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration);
+                writer.WriteObjectValue(ConnectionRoutingConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
+                            routingConfiguration = Models.RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
                             continue;
                         }
                     }

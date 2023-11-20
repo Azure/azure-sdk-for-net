@@ -189,6 +189,7 @@ rename-mapping:
   SyncMode: BackendAddressSyncMode
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   IPRule: BastionHostIPRule
+  NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps

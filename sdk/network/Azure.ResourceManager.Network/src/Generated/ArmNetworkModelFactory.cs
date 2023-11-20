@@ -4913,13 +4913,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tunnelIdentifier"> Unique identifier for the connection. </param>
         /// <param name="bgpPeerAddress"> List of bgpPeerAddresses for the NVA instances. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        /// <param name="connectionRoutingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceConnectionData"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string namePropertiesName = null, NetworkProvisioningState? provisioningState = null, long? asn = null, long? tunnelIdentifier = null, IEnumerable<string> bgpPeerAddress = null, bool? enableInternetSecurity = null, RoutingConfiguration routingConfiguration = null)
+        public static NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string namePropertiesName = null, NetworkProvisioningState? provisioningState = null, long? asn = null, long? tunnelIdentifier = null, IEnumerable<string> bgpPeerAddress = null, bool? enableInternetSecurity = null, RoutingConfiguration connectionRoutingConfiguration = null)
         {
             bgpPeerAddress ??= new List<string>();
 
-            return new NetworkVirtualApplianceConnectionData(id, name, resourceType, namePropertiesName, provisioningState, asn, tunnelIdentifier, bgpPeerAddress?.ToList(), enableInternetSecurity, routingConfiguration);
+            return new NetworkVirtualApplianceConnectionData(id, name, resourceType, namePropertiesName, provisioningState, asn, tunnelIdentifier, bgpPeerAddress?.ToList(), enableInternetSecurity, connectionRoutingConfiguration);
         }
 
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>

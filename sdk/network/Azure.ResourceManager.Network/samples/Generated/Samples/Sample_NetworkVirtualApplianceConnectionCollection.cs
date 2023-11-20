@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Samples
 "169.254.16.13","169.254.16.14"
 },
                 EnableInternetSecurity = false,
-                RoutingConfiguration = new RoutingConfiguration()
+                ConnectionRoutingConfiguration = new RoutingConfiguration()
                 {
                     AssociatedRouteTableId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
                     PropagatedRouteTables = new PropagatedRouteTable()
