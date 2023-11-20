@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure
 {
@@ -23,7 +24,7 @@ namespace Azure
         public override bool HasValue => true;
 
         /// <inheritdoc />
-        public override T Value => Value;
+        public abstract override T Value { get; }
 
         /// <summary>
         /// Returns the value of this <see cref="Response{T}"/> object.
