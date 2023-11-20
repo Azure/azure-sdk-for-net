@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Attestation
     /// <summary>
     /// A class representing the AttestationProvider data model.
     /// Attestation service response message.
-    /// Serialized Name: AttestationProvider
     /// </summary>
     public partial class AttestationProviderData : TrackedResourceData
     {
@@ -34,26 +33,11 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="trustModel">
-        /// Trust model for the attestation provider.
-        /// Serialized Name: AttestationProvider.properties.trustModel
-        /// </param>
-        /// <param name="status">
-        /// Status of attestation service.
-        /// Serialized Name: AttestationProvider.properties.status
-        /// </param>
-        /// <param name="attestUri">
-        /// Gets the uri of attestation service
-        /// Serialized Name: AttestationProvider.properties.attestUri
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Controls whether traffic from the public network is allowed to access the Attestation Provider APIs.
-        /// Serialized Name: AttestationProvider.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// List of private endpoint connections associated with the attestation provider.
-        /// Serialized Name: AttestationProvider.properties.privateEndpointConnections
-        /// </param>
+        /// <param name="trustModel"> Trust model for the attestation provider. </param>
+        /// <param name="status"> Status of attestation service. </param>
+        /// <param name="attestUri"> Gets the uri of attestation service. </param>
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
         internal AttestationProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string trustModel, AttestationServiceStatus? status, Uri attestUri, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             TrustModel = trustModel;
@@ -63,30 +47,15 @@ namespace Azure.ResourceManager.Attestation
             PrivateEndpointConnections = privateEndpointConnections;
         }
 
-        /// <summary>
-        /// Trust model for the attestation provider.
-        /// Serialized Name: AttestationProvider.properties.trustModel
-        /// </summary>
+        /// <summary> Trust model for the attestation provider. </summary>
         public string TrustModel { get; set; }
-        /// <summary>
-        /// Status of attestation service.
-        /// Serialized Name: AttestationProvider.properties.status
-        /// </summary>
+        /// <summary> Status of attestation service. </summary>
         public AttestationServiceStatus? Status { get; set; }
-        /// <summary>
-        /// Gets the uri of attestation service
-        /// Serialized Name: AttestationProvider.properties.attestUri
-        /// </summary>
+        /// <summary> Gets the uri of attestation service. </summary>
         public Uri AttestUri { get; set; }
-        /// <summary>
-        /// Controls whether traffic from the public network is allowed to access the Attestation Provider APIs.
-        /// Serialized Name: AttestationProvider.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// List of private endpoint connections associated with the attestation provider.
-        /// Serialized Name: AttestationProvider.properties.privateEndpointConnections
-        /// </summary>
+        /// <summary> List of private endpoint connections associated with the attestation provider. </summary>
         public IReadOnlyList<AttestationPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

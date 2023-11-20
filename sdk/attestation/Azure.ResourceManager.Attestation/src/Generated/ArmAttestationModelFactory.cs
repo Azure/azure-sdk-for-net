@@ -24,26 +24,11 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="trustModel">
-        /// Trust model for the attestation provider.
-        /// Serialized Name: AttestationProvider.properties.trustModel
-        /// </param>
-        /// <param name="status">
-        /// Status of attestation service.
-        /// Serialized Name: AttestationProvider.properties.status
-        /// </param>
-        /// <param name="attestUri">
-        /// Gets the uri of attestation service
-        /// Serialized Name: AttestationProvider.properties.attestUri
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Controls whether traffic from the public network is allowed to access the Attestation Provider APIs.
-        /// Serialized Name: AttestationProvider.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// List of private endpoint connections associated with the attestation provider.
-        /// Serialized Name: AttestationProvider.properties.privateEndpointConnections
-        /// </param>
+        /// <param name="trustModel"> Trust model for the attestation provider. </param>
+        /// <param name="status"> Status of attestation service. </param>
+        /// <param name="attestUri"> Gets the uri of attestation service. </param>
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
         /// <returns> A new <see cref="Attestation.AttestationProviderData"/> instance for mocking. </returns>
         public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string trustModel = null, AttestationServiceStatus? status = null, Uri attestUri = null, PublicNetworkAccessType? publicNetworkAccess = null, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = null)
         {
@@ -53,46 +38,14 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationProviderData(id, name, resourceType, systemData, tags, location, trustModel, status, attestUri, publicNetworkAccess, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointStringId">
-        /// The resource of private end point.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
-        /// </param>
-        /// <param name="connectionState">
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
-        /// </param>
-        /// <returns> A new <see cref="Attestation.AttestationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string privateEndpointStringId = null, AttestationPrivateLinkServiceConnectionState connectionState = null, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = null)
-        {
-            return new AttestationPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointStringId != null ? new PrivateEndpoint(privateEndpointStringId) : null, connectionState, provisioningState);
-        }
-
         /// <summary> Initializes a new instance of AttestationPrivateLinkResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId">
-        /// The private link resource group id.
-        /// Serialized Name: PrivateLinkResource.properties.groupId
-        /// </param>
-        /// <param name="requiredMembers">
-        /// The private link resource required member names.
-        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
-        /// </param>
-        /// <param name="requiredZoneNames">
-        /// The private link resource Private link DNS zone name.
-        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
-        /// </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <returns> A new <see cref="Models.AttestationPrivateLinkResource"/> instance for mocking. </returns>
         public static AttestationPrivateLinkResource AttestationPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {

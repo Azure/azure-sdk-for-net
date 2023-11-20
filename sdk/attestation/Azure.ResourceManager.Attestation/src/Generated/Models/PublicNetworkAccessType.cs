@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// The public network access type for API calls to the Attestation Provider.
-    /// Serialized Name: PublicNetworkAccessType
-    /// </summary>
+    /// <summary> The public network access type for API calls to the Attestation Provider. </summary>
     public readonly partial struct PublicNetworkAccessType : IEquatable<PublicNetworkAccessType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Attestation.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enables public network connectivity to the Attestation Provider REST APIs.
-        /// Serialized Name: PublicNetworkAccessType.Enabled
-        /// </summary>
+        /// <summary> Enables public network connectivity to the Attestation Provider REST APIs. </summary>
         public static PublicNetworkAccessType Enabled { get; } = new PublicNetworkAccessType(EnabledValue);
-        /// <summary>
-        /// Disables public network connectivity to the Attestation Provider REST APIs.
-        /// Serialized Name: PublicNetworkAccessType.Disabled
-        /// </summary>
+        /// <summary> Disables public network connectivity to the Attestation Provider REST APIs. </summary>
         public static PublicNetworkAccessType Disabled { get; } = new PublicNetworkAccessType(DisabledValue);
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(PublicNetworkAccessType left, PublicNetworkAccessType right) => left.Equals(right);

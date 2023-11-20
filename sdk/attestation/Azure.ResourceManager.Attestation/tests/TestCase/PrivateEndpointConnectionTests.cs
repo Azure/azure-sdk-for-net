@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Attestation.Tests
             var privateEndpointConnectionData = connections.FirstOrDefault().Data;
             privateEndpointConnectionData.ConnectionState.Description = "Update descriptions";
             var input = ResourceDataHelper.GetPrivateEndpointConnectionData();
-            var endpointResource = (await endppintCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionData.Id, privateEndpointConnectionData)).Value;
+            var endpointResource = (await endppintCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionData.Name, privateEndpointConnectionData)).Value;
             Assert.AreEqual(endpointName, endpointResource.Data.Name);
             //2.Get
             var endpointResource2 = (await endpointResource.GetAsync()).Value;

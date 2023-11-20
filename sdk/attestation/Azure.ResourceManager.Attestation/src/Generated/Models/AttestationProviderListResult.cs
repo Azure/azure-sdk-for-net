@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// Attestation Providers List.
-    /// Serialized Name: AttestationProviderListResult
-    /// </summary>
+    /// <summary> Attestation Providers List. </summary>
     internal partial class AttestationProviderListResult
     {
         /// <summary> Initializes a new instance of AttestationProviderListResult. </summary>
@@ -25,29 +22,17 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Initializes a new instance of AttestationProviderListResult. </summary>
-        /// <param name="systemData">
-        /// The system metadata relating to this resource
-        /// Serialized Name: AttestationProviderListResult.systemData
-        /// </param>
-        /// <param name="value">
-        /// Attestation Provider array.
-        /// Serialized Name: AttestationProviderListResult.value
-        /// </param>
+        /// <param name="systemData"> The system metadata relating to this resource. </param>
+        /// <param name="value"> Attestation Provider array. </param>
         internal AttestationProviderListResult(SystemData systemData, IReadOnlyList<AttestationProviderData> value)
         {
             SystemData = systemData;
             Value = value;
         }
 
-        /// <summary>
-        /// The system metadata relating to this resource
-        /// Serialized Name: AttestationProviderListResult.systemData
-        /// </summary>
+        /// <summary> The system metadata relating to this resource. </summary>
         public SystemData SystemData { get; }
-        /// <summary>
-        /// Attestation Provider array.
-        /// Serialized Name: AttestationProviderListResult.value
-        /// </summary>
+        /// <summary> Attestation Provider array. </summary>
         public IReadOnlyList<AttestationProviderData> Value { get; }
     }
 }

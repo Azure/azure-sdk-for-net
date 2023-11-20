@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// Client supplied parameters used to create a new attestation provider.
-    /// Serialized Name: AttestationServiceCreationSpecificParams
-    /// </summary>
+    /// <summary> Client supplied parameters used to create a new attestation provider. </summary>
     public partial class AttestationServiceCreationSpecificParams
     {
         /// <summary> Initializes a new instance of AttestationServiceCreationSpecificParams. </summary>
@@ -20,15 +17,9 @@ namespace Azure.ResourceManager.Attestation.Models
         {
         }
 
-        /// <summary>
-        /// Controls whether traffic from the public network is allowed to access the Attestation Provider APIs.
-        /// Serialized Name: AttestationServiceCreationSpecificParams.publicNetworkAccess
-        /// </summary>
+        /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations
-        /// Serialized Name: AttestationServiceCreationSpecificParams.policySigningCertificates
-        /// </summary>
+        /// <summary> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </summary>
         internal JsonWebKeySet PolicySigningCertificates { get; set; }
         /// <summary>
         /// The value of the "keys" parameter is an array of JWK values.  By
@@ -36,7 +27,6 @@ namespace Azure.ResourceManager.Attestation.Models
         /// an order of preference among them, although applications of JWK Sets
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
-        /// Serialized Name: JsonWebKeySet.keys
         /// </summary>
         public IList<JsonWebKey> PolicySigningCertificatesKeys
         {

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// The JsonWebKeySet.
-    /// Serialized Name: JsonWebKeySet
-    /// </summary>
+    /// <summary> The JsonWebKeySet. </summary>
     internal partial class JsonWebKeySet
     {
         /// <summary> Initializes a new instance of JsonWebKeySet. </summary>
@@ -28,7 +25,6 @@ namespace Azure.ResourceManager.Attestation.Models
         /// an order of preference among them, although applications of JWK Sets
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
-        /// Serialized Name: JsonWebKeySet.keys
         /// </summary>
         public IList<JsonWebKey> Keys { get; }
     }

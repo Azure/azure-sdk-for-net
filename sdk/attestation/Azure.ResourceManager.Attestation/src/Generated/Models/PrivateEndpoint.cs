@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// The Private Endpoint resource.
-    /// Serialized Name: PrivateEndpoint
-    /// </summary>
+    /// <summary> The Private Endpoint resource. </summary>
     internal partial class PrivateEndpoint
     {
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
-        /// <param name="stringId">
-        /// The ARM identifier for Private Endpoint
-        /// Serialized Name: PrivateEndpoint.id
-        /// </param>
+        /// <param name="stringId"> The ARM identifier for Private Endpoint. </param>
         internal PrivateEndpoint(string stringId)
         {
             StringId = stringId;
         }
 
-        /// <summary>
-        /// The ARM identifier for Private Endpoint
-        /// Serialized Name: PrivateEndpoint.id
-        /// </summary>
+        /// <summary> The ARM identifier for Private Endpoint. </summary>
         public string StringId { get; }
     }
 }

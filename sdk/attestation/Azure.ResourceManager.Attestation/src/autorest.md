@@ -19,8 +19,6 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-mgmt-debug:
-  show-serialized-names: true
 
 no-property-type-replacement: PrivateEndpoint
 format-by-name-rules:

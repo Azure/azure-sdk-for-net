@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// Parameters for patching an attestation provider
-    /// Serialized Name: AttestationServicePatchParams
-    /// </summary>
+    /// <summary> Parameters for patching an attestation provider. </summary>
     public partial class AttestationProviderPatch
     {
         /// <summary> Initializes a new instance of AttestationProviderPatch. </summary>
@@ -22,20 +19,11 @@ namespace Azure.ResourceManager.Attestation.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// The tags that will be assigned to the attestation provider.
-        /// Serialized Name: AttestationServicePatchParams.tags
-        /// </summary>
+        /// <summary> The tags that will be assigned to the attestation provider. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Properties of the attestation provider
-        /// Serialized Name: AttestationServicePatchParams.properties
-        /// </summary>
+        /// <summary> Properties of the attestation provider. </summary>
         internal AttestationServicePatchSpecificParams Properties { get; set; }
-        /// <summary>
-        /// Controls whether traffic from the public network is allowed to access the Attestation Provider APIs.
-        /// Serialized Name: AttestationServicePatchSpecificParams.publicNetworkAccess
-        /// </summary>
+        /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
         public PublicNetworkAccessType? AttestationServicePatchSpecificParamsPublicNetworkAccess
         {
             get => Properties is null ? default : Properties.PublicNetworkAccess;

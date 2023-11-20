@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// A list of private link resources
-    /// Serialized Name: PrivateLinkResourceListResult
-    /// </summary>
+    /// <summary> A list of private link resources. </summary>
     internal partial class AttestationPrivateLinkResourceListResult
     {
         /// <summary> Initializes a new instance of AttestationPrivateLinkResourceListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Initializes a new instance of AttestationPrivateLinkResourceListResult. </summary>
-        /// <param name="value">
-        /// Array of private link resources
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </param>
+        /// <param name="value"> Array of private link resources. </param>
         internal AttestationPrivateLinkResourceListResult(IReadOnlyList<AttestationPrivateLinkResource> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// Array of private link resources
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </summary>
+        /// <summary> Array of private link resources. </summary>
         public IReadOnlyList<AttestationPrivateLinkResource> Value { get; }
     }
 }

@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.Attestation
     /// <summary>
     /// A class representing the AttestationPrivateEndpointConnection data model.
     /// The Private Endpoint Connection resource.
-    /// Serialized Name: PrivateEndpointConnection
     /// </summary>
     public partial class AttestationPrivateEndpointConnectionData : ResourceData
     {
@@ -28,18 +27,9 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint">
-        /// The resource of private end point.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
-        /// </param>
-        /// <param name="connectionState">
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
-        /// </param>
+        /// <param name="privateEndpoint"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         internal AttestationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpoint privateEndpoint, AttestationPrivateLinkServiceConnectionState connectionState, AttestationPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
@@ -47,29 +37,17 @@ namespace Azure.ResourceManager.Attestation
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// The resource of private end point.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
-        /// </summary>
+        /// <summary> The resource of private end point. </summary>
         internal PrivateEndpoint PrivateEndpoint { get; set; }
-        /// <summary>
-        /// The ARM identifier for Private Endpoint
-        /// Serialized Name: PrivateEndpoint.id
-        /// </summary>
+        /// <summary> The ARM identifier for Private Endpoint. </summary>
         public string PrivateEndpointStringId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.StringId;
         }
 
-        /// <summary>
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </summary>
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public AttestationPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary>
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public AttestationPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

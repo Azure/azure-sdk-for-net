@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// Status of attestation service.
-    /// Serialized Name: AttestationServiceStatus
-    /// </summary>
+    /// <summary> Status of attestation service. </summary>
     public readonly partial struct AttestationServiceStatus : IEquatable<AttestationServiceStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Attestation.Models
         private const string NotReadyValue = "NotReady";
         private const string ErrorValue = "Error";
 
-        /// <summary>
-        /// Ready
-        /// Serialized Name: AttestationServiceStatus.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         public static AttestationServiceStatus Ready { get; } = new AttestationServiceStatus(ReadyValue);
-        /// <summary>
-        /// NotReady
-        /// Serialized Name: AttestationServiceStatus.NotReady
-        /// </summary>
+        /// <summary> NotReady. </summary>
         public static AttestationServiceStatus NotReady { get; } = new AttestationServiceStatus(NotReadyValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: AttestationServiceStatus.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static AttestationServiceStatus Error { get; } = new AttestationServiceStatus(ErrorValue);
         /// <summary> Determines if two <see cref="AttestationServiceStatus"/> values are the same. </summary>
         public static bool operator ==(AttestationServiceStatus left, AttestationServiceStatus right) => left.Equals(right);

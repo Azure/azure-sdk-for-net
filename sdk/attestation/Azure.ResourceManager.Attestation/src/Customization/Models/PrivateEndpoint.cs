@@ -8,10 +8,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    public partial class PrivateEndpoint
+    internal partial class PrivateEndpoint
     {
         /// <summary> Resource Id. </summary>
-        [CodeGenMember("Id")]
         public string Id { get; set; }
     }
 }

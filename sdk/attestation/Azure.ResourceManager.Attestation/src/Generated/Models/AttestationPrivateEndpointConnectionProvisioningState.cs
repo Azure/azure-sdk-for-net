@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary>
-    /// The current provisioning state.
-    /// Serialized Name: PrivateEndpointConnectionProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state. </summary>
     public readonly partial struct AttestationPrivateEndpointConnectionProvisioningState : IEquatable<AttestationPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Attestation.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Succeeded { get; } = new AttestationPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Creating { get; } = new AttestationPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Deleting { get; } = new AttestationPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Failed { get; } = new AttestationPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AttestationPrivateEndpointConnectionProvisioningState left, AttestationPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
