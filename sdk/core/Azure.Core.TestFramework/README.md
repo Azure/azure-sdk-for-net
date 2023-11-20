@@ -251,6 +251,8 @@ test-proxy push -a <path-to-assets.json>
 
 On completion of the push, a newly created tag will be stamped into the `assets.json` file. This new tag must be committed and pushed to your package directory along with any other changes.
 
+☑️ Permission is required for updating the asserts repository. If you failed in test-proxy push, please [join a partner write team](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/785/Externalizing-Recordings-(Asset-Sync)?anchor=permissions-to-%60azure/azure-sdk-assets%60).
+
 ### Sanitizing
 
 Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.
