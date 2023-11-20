@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseWorkloadClassifierResource" /> and their operations.
-    /// Each <see cref="SynapseWorkloadClassifierResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkloadGroupResource" />.
-    /// To get a <see cref="SynapseWorkloadClassifierCollection" /> instance call the GetSynapseWorkloadClassifiers method from an instance of <see cref="SynapseWorkloadGroupResource" />.
+    /// A class representing a collection of <see cref="SynapseWorkloadClassifierResource"/> and their operations.
+    /// Each <see cref="SynapseWorkloadClassifierResource"/> in the collection will belong to the same instance of <see cref="SynapseWorkloadGroupResource"/>.
+    /// To get a <see cref="SynapseWorkloadClassifierCollection"/> instance call the GetSynapseWorkloadClassifiers method from an instance of <see cref="SynapseWorkloadGroupResource"/>.
     /// </summary>
     public partial class SynapseWorkloadClassifierCollection : ArmCollection, IEnumerable<SynapseWorkloadClassifierResource>, IAsyncEnumerable<SynapseWorkloadClassifierResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseWorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseWorkloadClassifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseWorkloadClassifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseWorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseWorkloadClassifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseWorkloadClassifierResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

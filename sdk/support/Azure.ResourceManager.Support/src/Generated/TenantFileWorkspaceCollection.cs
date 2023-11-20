@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantFileWorkspaceResource" /> and their operations.
-    /// Each <see cref="TenantFileWorkspaceResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TenantFileWorkspaceCollection" /> instance call the GetTenantFileWorkspaces method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="TenantFileWorkspaceResource"/> and their operations.
+    /// Each <see cref="TenantFileWorkspaceResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantFileWorkspaceCollection"/> instance call the GetTenantFileWorkspaces method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantFileWorkspaceCollection : ArmCollection
     {

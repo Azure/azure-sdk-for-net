@@ -22,9 +22,9 @@ using Azure.ResourceManager.Subscription.Models;
 namespace Azure.ResourceManager.Subscription
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionAliasResource" /> and their operations.
-    /// Each <see cref="SubscriptionAliasResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="SubscriptionAliasCollection" /> instance call the GetSubscriptionAliases method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="SubscriptionAliasResource"/> and their operations.
+    /// Each <see cref="SubscriptionAliasResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="SubscriptionAliasCollection"/> instance call the GetSubscriptionAliases method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class SubscriptionAliasCollection : ArmCollection, IEnumerable<SubscriptionAliasResource>, IAsyncEnumerable<SubscriptionAliasResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionAliasResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionAliasResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();

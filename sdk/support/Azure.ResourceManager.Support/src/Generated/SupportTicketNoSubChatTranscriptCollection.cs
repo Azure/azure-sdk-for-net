@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SupportTicketNoSubChatTranscriptResource" /> and their operations.
-    /// Each <see cref="SupportTicketNoSubChatTranscriptResource" /> in the collection will belong to the same instance of <see cref="TenantSupportTicketResource" />.
-    /// To get a <see cref="SupportTicketNoSubChatTranscriptCollection" /> instance call the GetSupportTicketNoSubChatTranscripts method from an instance of <see cref="TenantSupportTicketResource" />.
+    /// A class representing a collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> and their operations.
+    /// Each <see cref="SupportTicketNoSubChatTranscriptResource"/> in the collection will belong to the same instance of <see cref="TenantSupportTicketResource"/>.
+    /// To get a <see cref="SupportTicketNoSubChatTranscriptCollection"/> instance call the GetSupportTicketNoSubChatTranscripts method from an instance of <see cref="TenantSupportTicketResource"/>.
     /// </summary>
     public partial class SupportTicketNoSubChatTranscriptCollection : ArmCollection, IEnumerable<SupportTicketNoSubChatTranscriptResource>, IAsyncEnumerable<SupportTicketNoSubChatTranscriptResource>
     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportTicketNoSubChatTranscriptResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketNoSubChatTranscriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubChatTranscriptSupportTicketChatTranscriptsNoSubscriptionRestClient.CreateListRequest(Id.Name);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupportTicketNoSubChatTranscriptResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketNoSubChatTranscriptResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubChatTranscriptSupportTicketChatTranscriptsNoSubscriptionRestClient.CreateListRequest(Id.Name);

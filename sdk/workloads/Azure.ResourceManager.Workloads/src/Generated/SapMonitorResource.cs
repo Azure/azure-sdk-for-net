@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapMonitor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSapMonitor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSapMonitor method.
     /// </summary>
     public partial class SapMonitorResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapMonitorResource(ArmClient client, SapMonitorData data) : this(client, data.Id)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary> Gets an object representing a SapLandscapeMonitorResource along with the instance operations that can be performed on it in the SapMonitor. </summary>
-        /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapLandscapeMonitorResource"/> object. </returns>
         public virtual SapLandscapeMonitorResource GetSapLandscapeMonitor()
         {
             return new SapLandscapeMonitorResource(Client, Id.AppendChildResource("sapLandscapeMonitor", "default"));

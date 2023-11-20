@@ -18,9 +18,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseSqlPoolConnectionPolicyResource" /> and their operations.
-    /// Each <see cref="SynapseSqlPoolConnectionPolicyResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource" />.
-    /// To get a <see cref="SynapseSqlPoolConnectionPolicyCollection" /> instance call the GetSynapseSqlPoolConnectionPolicies method from an instance of <see cref="SynapseSqlPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseSqlPoolConnectionPolicyResource"/> and their operations.
+    /// Each <see cref="SynapseSqlPoolConnectionPolicyResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource"/>.
+    /// To get a <see cref="SynapseSqlPoolConnectionPolicyCollection"/> instance call the GetSynapseSqlPoolConnectionPolicies method from an instance of <see cref="SynapseSqlPoolResource"/>.
     /// </summary>
     public partial class SynapseSqlPoolConnectionPolicyCollection : ArmCollection
     {

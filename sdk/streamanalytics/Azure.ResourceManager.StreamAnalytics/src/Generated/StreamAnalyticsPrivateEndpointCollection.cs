@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamAnalyticsPrivateEndpointResource" /> and their operations.
-    /// Each <see cref="StreamAnalyticsPrivateEndpointResource" /> in the collection will belong to the same instance of <see cref="StreamAnalyticsClusterResource" />.
-    /// To get a <see cref="StreamAnalyticsPrivateEndpointCollection" /> instance call the GetStreamAnalyticsPrivateEndpoints method from an instance of <see cref="StreamAnalyticsClusterResource" />.
+    /// A class representing a collection of <see cref="StreamAnalyticsPrivateEndpointResource"/> and their operations.
+    /// Each <see cref="StreamAnalyticsPrivateEndpointResource"/> in the collection will belong to the same instance of <see cref="StreamAnalyticsClusterResource"/>.
+    /// To get a <see cref="StreamAnalyticsPrivateEndpointCollection"/> instance call the GetStreamAnalyticsPrivateEndpoints method from an instance of <see cref="StreamAnalyticsClusterResource"/>.
     /// </summary>
     public partial class StreamAnalyticsPrivateEndpointCollection : ArmCollection, IEnumerable<StreamAnalyticsPrivateEndpointResource>, IAsyncEnumerable<StreamAnalyticsPrivateEndpointResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamAnalyticsPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamAnalyticsPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

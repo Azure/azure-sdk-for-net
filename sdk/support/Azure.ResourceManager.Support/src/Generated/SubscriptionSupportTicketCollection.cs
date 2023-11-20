@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionSupportTicketResource" /> and their operations.
-    /// Each <see cref="SubscriptionSupportTicketResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SubscriptionSupportTicketCollection" /> instance call the GetSubscriptionSupportTickets method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SubscriptionSupportTicketResource"/> and their operations.
+    /// Each <see cref="SubscriptionSupportTicketResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionSupportTicketCollection"/> instance call the GetSubscriptionSupportTickets method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionSupportTicketCollection : ArmCollection, IEnumerable<SubscriptionSupportTicketResource>, IAsyncEnumerable<SubscriptionSupportTicketResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
         /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionSupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionSupportTicketResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSupportTicketSupportTicketsRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
         /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionSupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionSupportTicketResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSupportTicketSupportTicketsRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
