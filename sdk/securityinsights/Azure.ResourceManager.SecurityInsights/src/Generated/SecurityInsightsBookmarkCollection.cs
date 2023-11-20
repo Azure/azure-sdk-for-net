@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityInsightsBookmarkResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsBookmarkResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
-    /// To get a <see cref="SecurityInsightsBookmarkCollection" /> instance call the GetSecurityInsightsBookmarks method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
+    /// A class representing a collection of <see cref="SecurityInsightsBookmarkResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsBookmarkResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// To get a <see cref="SecurityInsightsBookmarkCollection"/> instance call the GetSecurityInsightsBookmarks method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
     /// </summary>
     public partial class SecurityInsightsBookmarkCollection : ArmCollection, IEnumerable<SecurityInsightsBookmarkResource>, IAsyncEnumerable<SecurityInsightsBookmarkResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsBookmarkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityInsightsBookmarkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsBookmarkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsBookmarkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsBookmarkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsBookmarkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

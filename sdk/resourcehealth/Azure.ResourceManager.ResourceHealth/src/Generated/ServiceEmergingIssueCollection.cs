@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceEmergingIssueResource" /> and their operations.
-    /// Each <see cref="ServiceEmergingIssueResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="ServiceEmergingIssueCollection" /> instance call the GetServiceEmergingIssues method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="ServiceEmergingIssueResource"/> and their operations.
+    /// Each <see cref="ServiceEmergingIssueResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="ServiceEmergingIssueCollection"/> instance call the GetServiceEmergingIssues method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class ServiceEmergingIssueCollection : ArmCollection, IEnumerable<ServiceEmergingIssueResource>, IAsyncEnumerable<ServiceEmergingIssueResource>
     {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceEmergingIssueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceEmergingIssueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceEmergingIssueResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListRequest();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceEmergingIssueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceEmergingIssueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceEmergingIssueResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListRequest();

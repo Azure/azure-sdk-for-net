@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A Class representing a DataReplicationReplicationExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataReplicationReplicationExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataReplicationReplicationExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource" /> using the GetDataReplicationReplicationExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationReplicationExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationReplicationExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationReplicationExtension method.
     /// </summary>
     public partial class DataReplicationReplicationExtensionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataReplicationReplicationExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationReplicationExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationReplicationExtensionResource(ArmClient client, DataReplicationReplicationExtensionData data) : this(client, data.Id)

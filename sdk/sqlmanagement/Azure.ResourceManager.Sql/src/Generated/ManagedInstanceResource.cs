@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetManagedInstance method.
     /// </summary>
     public partial class ManagedInstanceResource : ArmResource
     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceResource(ArmClient client, ManagedInstanceData data) : this(client, data.Id)
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets an object representing a SqlAgentConfigurationResource along with the instance operations that can be performed on it in the ManagedInstance. </summary>
-        /// <returns> Returns a <see cref="SqlAgentConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SqlAgentConfigurationResource"/> object. </returns>
         public virtual SqlAgentConfigurationResource GetSqlAgentConfiguration()
         {
             return new SqlAgentConfigurationResource(Client, Id.AppendChildResource("sqlAgent", "current"));
@@ -1434,7 +1434,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerTrustGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerTrustGroupResource> GetSqlServerTrustGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerTrustGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerTrustGroupResource> GetSqlServerTrustGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1478,7 +1478,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseResource> GetInaccessibleManagedDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseResource> GetInaccessibleManagedDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1592,7 +1592,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlOutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1614,7 +1614,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlOutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlOutboundEnvironmentEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1773,7 +1773,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TopQueries"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(ManagedInstanceResourceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new ManagedInstanceResourceGetTopQueriesOptions();
@@ -1798,7 +1798,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TopQueries"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TopQueries> GetTopQueries(ManagedInstanceResourceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new ManagedInstanceResourceGetTopQueriesOptions();

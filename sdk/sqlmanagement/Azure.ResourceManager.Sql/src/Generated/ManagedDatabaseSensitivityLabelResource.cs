@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedDatabaseSensitivityLabel along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDatabaseSensitivityLabelResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseSensitivityLabelResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseColumnResource" /> using the GetManagedDatabaseSensitivityLabel method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedDatabaseSensitivityLabelResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedDatabaseSensitivityLabelResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseColumnResource"/> using the GetManagedDatabaseSensitivityLabel method.
     /// </summary>
     public partial class ManagedDatabaseSensitivityLabelResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseSensitivityLabelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSensitivityLabelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedDatabaseSensitivityLabelResource(ArmClient client, SensitivityLabelData data) : this(client, data.Id)

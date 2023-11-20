@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing an OutboundFirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OutboundFirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOutboundFirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetOutboundFirewallRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OutboundFirewallRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOutboundFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetOutboundFirewallRule method.
     /// </summary>
     public partial class OutboundFirewallRuleResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OutboundFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OutboundFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OutboundFirewallRuleResource(ArmClient client, OutboundFirewallRuleData data) : this(client, data.Id)

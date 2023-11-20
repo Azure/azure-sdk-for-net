@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
     /// A Class representing a SphereProduct along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SphereProductResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSphereProductResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource" /> using the GetSphereProduct method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereProductResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSphereProductResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource"/> using the GetSphereProduct method.
     /// </summary>
     public partial class SphereProductResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sphere
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SphereProductResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereProductResource(ArmClient client, SphereProductData data) : this(client, data.Id)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeviceGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeviceGroupResource> GenerateDefaultDeviceGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereDeviceGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeviceGroupResource> GenerateDefaultDeviceGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
