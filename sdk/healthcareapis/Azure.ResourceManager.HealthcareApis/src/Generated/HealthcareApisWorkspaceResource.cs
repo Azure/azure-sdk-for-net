@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A Class representing a HealthcareApisWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthcareApisWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthcareApisWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHealthcareApisWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHealthcareApisWorkspace method.
     /// </summary>
     public partial class HealthcareApisWorkspaceResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthcareApisWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthcareApisWorkspaceResource(ArmClient client, HealthcareApisWorkspaceData data) : this(client, data.Id)

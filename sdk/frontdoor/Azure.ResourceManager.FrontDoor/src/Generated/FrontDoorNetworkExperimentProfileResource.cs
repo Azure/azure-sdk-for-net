@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
     /// A Class representing a FrontDoorNetworkExperimentProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorNetworkExperimentProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorNetworkExperimentProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFrontDoorNetworkExperimentProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorNetworkExperimentProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorNetworkExperimentProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFrontDoorNetworkExperimentProfile method.
     /// </summary>
     public partial class FrontDoorNetworkExperimentProfileResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorNetworkExperimentProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorNetworkExperimentProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorNetworkExperimentProfileResource(ArmClient client, FrontDoorNetworkExperimentProfileData data) : this(client, data.Id)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PreconfiguredEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PreconfiguredEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PreconfiguredEndpoint> GetPreconfiguredEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PreconfiguredEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PreconfiguredEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PreconfiguredEndpoint> GetPreconfiguredEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateEndpointConnectionProxyResource" /> and their operations.
-    /// Each <see cref="PrivateEndpointConnectionProxyResource" /> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource" />.
-    /// To get a <see cref="PrivateEndpointConnectionProxyCollection" /> instance call the GetPrivateEndpointConnectionProxies method from an instance of <see cref="DeviceUpdateAccountResource" />.
+    /// A class representing a collection of <see cref="PrivateEndpointConnectionProxyResource"/> and their operations.
+    /// Each <see cref="PrivateEndpointConnectionProxyResource"/> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource"/>.
+    /// To get a <see cref="PrivateEndpointConnectionProxyCollection"/> instance call the GetPrivateEndpointConnectionProxies method from an instance of <see cref="DeviceUpdateAccountResource"/>.
     /// </summary>
     public partial class PrivateEndpointConnectionProxyCollection : ArmCollection, IEnumerable<PrivateEndpointConnectionProxyResource>, IAsyncEnumerable<PrivateEndpointConnectionProxyResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateEndpointConnectionProxyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateEndpointConnectionProxyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateEndpointConnectionProxyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionProxyRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointConnectionProxyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateEndpointConnectionProxyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateEndpointConnectionProxyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionProxyRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
