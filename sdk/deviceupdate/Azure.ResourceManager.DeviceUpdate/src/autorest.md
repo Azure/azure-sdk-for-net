@@ -86,5 +86,9 @@ directive:
       $.Account.properties.properties.properties.sku['x-ms-enum'].name = 'Sku';
   - from: swagger-document
     where: $.definitions.Encryption
+    transform: $.UserAssignedIdentity['x-ms-format'] = 'arm-id'
+  - from: swagger-document
+    where: $.definitions.Encryption
     transform: $['x-ms-client-name'] = 'DeviceUpdateEncryption'
+
 ```
