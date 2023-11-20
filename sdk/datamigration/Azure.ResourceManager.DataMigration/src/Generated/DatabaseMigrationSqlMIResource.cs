@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a DatabaseMigrationSqlMI along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatabaseMigrationSqlMIResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatabaseMigrationSqlMIResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDatabaseMigrationSqlMI method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseMigrationSqlMIResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseMigrationSqlMIResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDatabaseMigrationSqlMI method.
     /// </summary>
     public partial class DatabaseMigrationSqlMIResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatabaseMigrationSqlMIResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlMIResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseMigrationSqlMIResource(ArmClient client, DatabaseMigrationSqlMIData data) : this(client, data.Id)

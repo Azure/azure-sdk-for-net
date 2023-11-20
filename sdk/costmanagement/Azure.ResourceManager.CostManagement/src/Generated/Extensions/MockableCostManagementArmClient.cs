@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitRecommendationModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitRecommendationModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitRecommendationModel> GetBenefitRecommendations(ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementDimension> GetDimensions(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -623,11 +623,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             }
         }
         /// <summary>
-        /// Gets an object representing a <see cref="CostManagementExportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CostManagementExportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementExportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CostManagementExportResource"/> object. </returns>
         public virtual CostManagementExportResource GetCostManagementExportResource(ResourceIdentifier id)
         {
             CostManagementExportResource.ValidateResourceId(id);
@@ -635,11 +635,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
         public virtual TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(ResourceIdentifier id)
         {
             TenantsCostManagementViewsResource.ValidateResourceId(id);
@@ -647,11 +647,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementViewsResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
         public virtual CostManagementViewsResource GetCostManagementViewsResource(ResourceIdentifier id)
         {
             CostManagementViewsResource.ValidateResourceId(id);
@@ -659,11 +659,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CostManagementAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CostManagementAlertResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CostManagementAlertResource"/> object. </returns>
         public virtual CostManagementAlertResource GetCostManagementAlertResource(ResourceIdentifier id)
         {
             CostManagementAlertResource.ValidateResourceId(id);
@@ -671,11 +671,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="TenantScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="TenantScheduledActionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantScheduledActionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantScheduledActionResource"/> object. </returns>
         public virtual TenantScheduledActionResource GetTenantScheduledActionResource(ResourceIdentifier id)
         {
             TenantScheduledActionResource.ValidateResourceId(id);
@@ -683,11 +683,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduledActionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
         public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
         {
             ScheduledActionResource.ValidateResourceId(id);

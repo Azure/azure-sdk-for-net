@@ -18,9 +18,9 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RestorePointResource" /> and their operations.
-    /// Each <see cref="RestorePointResource" /> in the collection will belong to the same instance of <see cref="RestorePointGroupResource" />.
-    /// To get a <see cref="RestorePointCollection" /> instance call the GetRestorePoints method from an instance of <see cref="RestorePointGroupResource" />.
+    /// A class representing a collection of <see cref="RestorePointResource"/> and their operations.
+    /// Each <see cref="RestorePointResource"/> in the collection will belong to the same instance of <see cref="RestorePointGroupResource"/>.
+    /// To get a <see cref="RestorePointCollection"/> instance call the GetRestorePoints method from an instance of <see cref="RestorePointGroupResource"/>.
     /// </summary>
     public partial class RestorePointCollection : ArmCollection
     {
