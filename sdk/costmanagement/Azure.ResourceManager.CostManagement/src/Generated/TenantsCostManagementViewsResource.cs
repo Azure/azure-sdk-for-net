@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.CostManagement
     public partial class TenantsCostManagementViewsResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantsCostManagementViewsResource"/> instance. </summary>
+        /// <param name="viewName"> The viewName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string viewName)
         {
             var resourceId = $"/providers/Microsoft.CostManagement/views/{viewName}";

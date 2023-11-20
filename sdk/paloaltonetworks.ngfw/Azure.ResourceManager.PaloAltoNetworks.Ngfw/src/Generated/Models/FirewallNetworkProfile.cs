@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             PublicIPs = publicIPs.ToList();
             EnableEgressNat = enableEgressNat;
             EgressNatIP = new ChangeTrackingList<IPAddressInfo>();
+            TrustedRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FirewallNetworkProfile. </summary>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="publicIPs"> List of IPs associated with the Firewall. </param>
         /// <param name="enableEgressNat"> Enable egress NAT, enabled by default. </param>
         /// <param name="egressNatIP"> Egress nat IP to use. </param>
-        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP)
+        /// <param name="trustedRanges"> Non-RFC 1918 address. </param>
+        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP, IList<string> trustedRanges)
         {
             VnetConfiguration = vnetConfiguration;
             VwanConfiguration = vwanConfiguration;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             PublicIPs = publicIPs;
             EnableEgressNat = enableEgressNat;
             EgressNatIP = egressNatIP;
+            TrustedRanges = trustedRanges;
         }
 
         /// <summary> Vnet configurations. </summary>
@@ -59,5 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public AllowEgressNatType EnableEgressNat { get; set; }
         /// <summary> Egress nat IP to use. </summary>
         public IList<IPAddressInfo> EgressNatIP { get; }
+        /// <summary> Non-RFC 1918 address. </summary>
+        public IList<string> TrustedRanges { get; }
     }
 }

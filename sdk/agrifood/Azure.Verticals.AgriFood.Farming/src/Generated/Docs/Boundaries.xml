@@ -80,7 +80,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -91,7 +91,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     geometry = new
     {
@@ -160,7 +160,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -171,7 +171,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     geometry = new
     {
@@ -500,7 +500,7 @@ This sample shows how to call SearchAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 await foreach (BinaryData item in client.SearchAsync(content))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -512,7 +512,7 @@ This sample shows how to call SearchAsync with all request content and parse the
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     ids = new object[]
     {
@@ -592,7 +592,7 @@ This sample shows how to call Search and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 foreach (BinaryData item in client.Search(content))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -604,7 +604,7 @@ This sample shows how to call Search with all request content and parse the resu
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     ids = new object[]
     {
@@ -766,7 +766,7 @@ This sample shows how to call SearchByPartyIdAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 await foreach (BinaryData item in client.SearchByPartyIdAsync("<partyId>", content))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -778,7 +778,7 @@ This sample shows how to call SearchByPartyIdAsync with all parameters and reque
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     ids = new object[]
     {
@@ -858,7 +858,7 @@ This sample shows how to call SearchByPartyId and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 foreach (BinaryData item in client.SearchByPartyId("<partyId>", content))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -870,7 +870,7 @@ This sample shows how to call SearchByPartyId with all parameters and request co
 TokenCredential credential = new DefaultAzureCredential();
 Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     ids = new object[]
     {

@@ -22,8 +22,7 @@ namespace Azure.Search.Documents.Models
             double searchScore = default;
             Optional<double?> searchRerankerScore = default;
             Optional<IReadOnlyDictionary<string, IList<string>>> searchHighlights = default;
-            Optional<IReadOnlyList<CaptionResult>> searchCaptions = default;
-            Optional<IReadOnlyList<DocumentDebugInfo>> searchDocumentDebugInfo = default;
+            Optional<IReadOnlyList<QueryCaptionResult>> searchCaptions = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -76,33 +75,18 @@ namespace Azure.Search.Documents.Models
                         searchCaptions = null;
                         continue;
                     }
-                    List<CaptionResult> array = new List<CaptionResult>();
+                    List<QueryCaptionResult> array = new List<QueryCaptionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CaptionResult.DeserializeCaptionResult(item));
+                        array.Add(QueryCaptionResult.DeserializeQueryCaptionResult(item));
                     }
                     searchCaptions = array;
-                    continue;
-                }
-                if (property.NameEquals("@search.documentDebugInfo"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        searchDocumentDebugInfo = null;
-                        continue;
-                    }
-                    List<DocumentDebugInfo> array = new List<DocumentDebugInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(item));
-                    }
-                    searchDocumentDebugInfo = array;
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchResult(searchScore, Optional.ToNullable(searchRerankerScore), Optional.ToDictionary(searchHighlights), Optional.ToList(searchCaptions), Optional.ToList(searchDocumentDebugInfo), additionalProperties);
+            return new SearchResult(searchScore, Optional.ToNullable(searchRerankerScore), Optional.ToDictionary(searchHighlights), Optional.ToList(searchCaptions), additionalProperties);
         }
     }
 }

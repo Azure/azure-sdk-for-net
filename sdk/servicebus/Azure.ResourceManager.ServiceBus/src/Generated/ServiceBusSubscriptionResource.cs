@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusSubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="topicName"> The topicName. </param>
+        /// <param name="subscriptionName"> The subscriptionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string topicName, string subscriptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}";
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusRuleResources and their operations over a ServiceBusRuleResource. </returns>
         public virtual ServiceBusRuleCollection GetServiceBusRules()
         {
-            return GetCachedClient(Client => new ServiceBusRuleCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +113,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusRuleResource>> GetServiceBusRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +136,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusRuleResource> GetServiceBusRule(string ruleName, CancellationToken cancellationToken = default)
         {

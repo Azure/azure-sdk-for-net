@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -110,7 +109,7 @@ namespace Azure.Communication.CallAutomation
         {
             DialogOptionsInternal dialogOptionsInternal = new DialogOptionsInternal(
                 startDialogOptions.BotAppId,
-                startDialogOptions.DialogContext.ToDictionary(entry => entry.Key, entry => (object)JsonSerializer.Serialize(entry.Value)));
+                startDialogOptions.DialogContext);
             StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(dialogOptionsInternal, startDialogOptions.DialogInputType)
             {
                 OperationContext = startDialogOptions.OperationContext == default ? Guid.NewGuid().ToString() : startDialogOptions.OperationContext

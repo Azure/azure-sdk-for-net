@@ -1,12 +1,31 @@
 # Release History
 
-## 7.17.0-beta.1 (Unreleased)
+## 7.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
+
+### Other Changes
+
+## 7.17.0 (2023-11-14)
+
+### Breaking Changes
+
+The following breaking changes were made for the experimental support of Open Telemetry:
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.ServiceBus` to `Azure.Messaging.ServiceBus.Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+
+## 7.16.2 (2023-10-11)
+
+### Bugs Fixed
+
+- Fixed issue where `ActivitySource` activities were not being created even when the experimental 
+  flag was set.
 
 ### Other Changes
 

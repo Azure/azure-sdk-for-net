@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.AppService
     public partial class TopLevelDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TopLevelDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}";

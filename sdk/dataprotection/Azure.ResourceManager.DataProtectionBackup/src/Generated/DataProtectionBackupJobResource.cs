@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
     public partial class DataProtectionBackupJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataProtectionBackupJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="jobId"> The jobId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string jobId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}";

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class MongoDBRoleDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MongoDBRoleDefinitionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="mongoRoleDefinitionId"> The mongoRoleDefinitionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string mongoRoleDefinitionId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}";

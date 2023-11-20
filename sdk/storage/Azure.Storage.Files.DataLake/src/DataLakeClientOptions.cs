@@ -131,7 +131,12 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// The 2023-11-03 service version.
             /// </summary>
-            V2023_11_03 = 20
+            V2023_11_03 = 20,
+
+            /// <summary>
+            /// The 2024-02-04 service version.
+            /// </summary>
+            V2024_02_04 = 21
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -362,7 +367,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
         /// </summary>
-        /// <value>If <c>null</c>, <see cref="DataLakeAudience.PublicAudience" /> will be assumed.</value>
+        /// <value>If <c>null</c>, <see cref="DataLakeAudience.DefaultAudience" /> will be assumed.</value>
         public DataLakeAudience? Audience { get; set; }
     }
 }

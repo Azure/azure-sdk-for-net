@@ -13,7 +13,6 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -85,16 +84,20 @@ namespace Azure.Search.Documents.Tests
                 dataSource.Name,
                 resources.IndexName);
 
-            SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
-                indexer);
+            await serviceClient.CreateIndexerAsync(indexer);
+
+            // Wait till the indexer is done.
+            await WaitForIndexingAsync(serviceClient, indexer.Name);
+
+            // Remove this workaround once the service issue is fixed: https://github.com/Azure/azure-sdk-for-net/issues/39104#issuecomment-1749469582
+            // Tracking issue: https://msdata.visualstudio.com/Azure%20Search/_workitems/edit/2737454
+            SearchIndexer actualIndexer = await serviceClient.GetIndexerAsync(indexer.Name);
 
             // Update the indexer.
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
                 onlyIfUnchanged: true);
-
-            await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Run the indexer.
             await serviceClient.RunIndexerAsync(
@@ -625,7 +628,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task RoundtripAllSkills()
         {
             // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/15108
@@ -650,8 +652,6 @@ namespace Azure.Search.Documents.Tests
 
                     Type _ when t == typeof(TextTranslationSkill) => new TextTranslationSkill(inputs, outputs, TextTranslationSkillLanguage.En),
                     Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
-                    Type _ when t == typeof(AzureMachineLearningSkill) => new AzureMachineLearningSkill(inputs, outputs, new Uri("https://microsoft.com")),
-                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri("https://test-sample.openai.azure.com"), ApiKey = "api-key", DeploymentId = "model" },
                     _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
                 };
             }
@@ -713,8 +713,6 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(SplitSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "textItems" }),
                     Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
                     Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
-                    Type _ when t == typeof(AzureMachineLearningSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
-                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => CreateSkill(t, new[] { "text" }, new[] { "embedding" }),
                     _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .ToList();

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.StorageSync
     public partial class StorageSyncRegisteredServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageSyncRegisteredServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSyncServiceName"> The storageSyncServiceName. </param>
+        /// <param name="serverId"> The serverId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}";

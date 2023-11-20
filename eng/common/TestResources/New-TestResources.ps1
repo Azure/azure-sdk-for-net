@@ -290,7 +290,14 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
         }
     }
 
-    return $deploymentOutputs
+    # Force capitalization of all keys to avoid Azure Pipelines confusion with
+    # variable auto-capitalization and OS env var capitalization differences
+    $capitalized = @{}
+    foreach ($item in $deploymentOutputs.GetEnumerator()) {
+        $capitalized[$item.Name.ToUpperInvariant()] = $item.Value
+    }
+
+    return $capitalized
 }
 
 function SetDeploymentOutputs(
@@ -771,7 +778,6 @@ try {
                     -TemplateParameterObject $templateFileParameters `
                     -Force:$Force
         }
-
         if ($deployment.ProvisioningState -ne 'Succeeded') {
             Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
             Write-Host @'
@@ -803,6 +809,9 @@ try {
             Write-Verbose "Removing compiled bicep file $($templateFile.jsonFilePath)"
             Remove-Item $templateFile.jsonFilePath
         }
+
+        Write-Host "Deleting ARM deployment as it may contain secrets. Deployed resources will not be affected."
+        $null = $deployment | Remove-AzResourceGroupDeployment
     }
 
 } finally {

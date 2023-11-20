@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -42,7 +43,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -57,7 +58,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entity = new
                 {
@@ -234,7 +235,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entity = new
                 {
@@ -637,7 +638,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateEntities(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -652,7 +653,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateEntitiesAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -667,7 +668,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entities = new object[]
             {
@@ -847,7 +848,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entities = new object[]
             {
@@ -1207,7 +1208,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.AddClassification(content);
 
             Console.WriteLine(response.Status);
@@ -1221,7 +1222,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.AddClassificationAsync(content);
 
             Console.WriteLine(response.Status);
@@ -1235,7 +1236,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 classification = new
                 {
@@ -1281,7 +1282,7 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 classification = new
                 {
@@ -1553,7 +1554,7 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1568,7 +1569,7 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1583,7 +1584,7 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1660,7 +1661,7 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2111,7 +2112,7 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -2128,7 +2129,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -2145,7 +2146,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -2187,7 +2188,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -2229,7 +2230,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -2246,7 +2247,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -2263,7 +2264,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -2305,7 +2306,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -2573,7 +2574,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2588,7 +2589,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2603,7 +2604,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entity = new
                 {
@@ -2780,7 +2781,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entity = new
                 {
@@ -3189,7 +3190,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -3206,7 +3207,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -3223,7 +3224,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -3265,7 +3266,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -3307,7 +3308,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -3324,7 +3325,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -3341,7 +3342,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -3383,7 +3384,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -3425,7 +3426,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.SetClassifications(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3440,7 +3441,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.SetClassificationsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3455,7 +3456,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 guidHeaderMap = new
                 {
@@ -3545,7 +3546,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 guidHeaderMap = new
                 {
@@ -3977,7 +3978,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.DeleteBusinessMetadata("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -3991,7 +3992,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.DeleteBusinessMetadataAsync("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4005,7 +4006,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             });
@@ -4022,7 +4023,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             });
@@ -4039,7 +4040,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.AddOrUpdateBusinessMetadata("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4053,7 +4054,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4067,7 +4068,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             });
@@ -4084,7 +4085,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             });
@@ -4101,7 +4102,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", content);
 
             Console.WriteLine(response.Status);
@@ -4115,7 +4116,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
 
             Console.WriteLine(response.Status);
@@ -4129,7 +4130,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             });
@@ -4146,7 +4147,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             });
@@ -4163,7 +4164,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", content);
 
             Console.WriteLine(response.Status);
@@ -4177,7 +4178,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
 
             Console.WriteLine(response.Status);
@@ -4191,7 +4192,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             });
@@ -4208,7 +4209,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             });
@@ -4293,7 +4294,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.ImportBusinessMetadata(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4308,7 +4309,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.ImportBusinessMetadataAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4323,7 +4324,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.ImportBusinessMetadata(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4345,7 +4346,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.ImportBusinessMetadataAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4367,7 +4368,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.DeleteLabels("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4381,7 +4382,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.DeleteLabelsAsync("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4395,7 +4396,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4412,7 +4413,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4429,7 +4430,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.SetLabels("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4443,7 +4444,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.SetLabelsAsync("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4457,7 +4458,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4474,7 +4475,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4491,7 +4492,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.AddLabel("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4505,7 +4506,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.AddLabelAsync("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -4519,7 +4520,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4536,7 +4537,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4553,7 +4554,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -4567,7 +4568,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -4581,7 +4582,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4598,7 +4599,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4615,7 +4616,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.SetLabelsByUniqueAttribute("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -4629,7 +4630,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -4643,7 +4644,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4660,7 +4661,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4677,7 +4678,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.AddLabelsByUniqueAttribute("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -4691,7 +4692,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -4705,7 +4706,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });
@@ -4722,7 +4723,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<body>"
             });

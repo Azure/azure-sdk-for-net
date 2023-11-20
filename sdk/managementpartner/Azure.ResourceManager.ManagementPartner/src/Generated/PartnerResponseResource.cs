@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ManagementPartner
     public partial class PartnerResponseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PartnerResponseResource"/> instance. </summary>
+        /// <param name="partnerId"> The partnerId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string partnerId)
         {
             var resourceId = $"/providers/Microsoft.ManagementPartner/partners/{partnerId}";
