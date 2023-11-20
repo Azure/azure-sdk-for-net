@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> A private link resource. </summary>
+    /// <summary>
+    /// A private link resource
+    /// Serialized Name: PrivateLinkResource
+    /// </summary>
     public partial class AttestationPrivateLinkResource : ResourceData
     {
         /// <summary> Initializes a new instance of AttestationPrivateLinkResource. </summary>
@@ -26,9 +29,18 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <param name="groupId">
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties.groupId
+        /// </param>
+        /// <param name="requiredMembers">
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
+        /// </param>
+        /// <param name="requiredZoneNames">
+        /// The private link resource Private link DNS zone name.
+        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
+        /// </param>
         internal AttestationPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
@@ -36,11 +48,20 @@ namespace Azure.ResourceManager.Attestation.Models
             RequiredZoneNames = requiredZoneNames;
         }
 
-        /// <summary> The private link resource group id. </summary>
+        /// <summary>
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties.groupId
+        /// </summary>
         public string GroupId { get; }
-        /// <summary> The private link resource required member names. </summary>
+        /// <summary>
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
+        /// </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> The private link resource Private link DNS zone name. </summary>
+        /// <summary>
+        /// The private link resource Private link DNS zone name.
+        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
+        /// </summary>
         public IList<string> RequiredZoneNames { get; }
     }
 }

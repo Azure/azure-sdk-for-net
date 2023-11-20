@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> The JsonWebKey. </summary>
+    /// <summary>
+    /// The JsonWebKey.
+    /// Serialized Name: JsonWebKey
+    /// </summary>
     public partial class JsonWebKey
     {
         /// <summary> Initializes a new instance of JsonWebKey. </summary>
@@ -21,6 +24,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// either be registered in the IANA "JSON Web Key Types" registry
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.  The "kty" value is a case-sensitive string.
+        /// Serialized Name: JsonWebKey.kty
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
         public JsonWebKey(string kty)
@@ -37,19 +41,38 @@ namespace Azure.ResourceManager.Attestation.Models
         /// IANA "JSON Web Signature and Encryption Algorithms" registry
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.
+        /// Serialized Name: JsonWebKey.alg
         /// </summary>
         public string Alg { get; set; }
-        /// <summary> The "crv" (curve) parameter identifies the curve type. </summary>
+        /// <summary>
+        /// The "crv" (curve) parameter identifies the curve type
+        /// Serialized Name: JsonWebKey.crv
+        /// </summary>
         public string Crv { get; set; }
-        /// <summary> RSA private exponent or ECC private key. </summary>
+        /// <summary>
+        /// RSA private exponent or ECC private key
+        /// Serialized Name: JsonWebKey.d
+        /// </summary>
         public string D { get; set; }
-        /// <summary> RSA Private Key Parameter. </summary>
+        /// <summary>
+        /// RSA Private Key Parameter
+        /// Serialized Name: JsonWebKey.dp
+        /// </summary>
         public string Dp { get; set; }
-        /// <summary> RSA Private Key Parameter. </summary>
+        /// <summary>
+        /// RSA Private Key Parameter
+        /// Serialized Name: JsonWebKey.dq
+        /// </summary>
         public string Dq { get; set; }
-        /// <summary> RSA public exponent, in Base64. </summary>
+        /// <summary>
+        /// RSA public exponent, in Base64
+        /// Serialized Name: JsonWebKey.e
+        /// </summary>
         public string E { get; set; }
-        /// <summary> Symmetric key. </summary>
+        /// <summary>
+        /// Symmetric key
+        /// Serialized Name: JsonWebKey.k
+        /// </summary>
         public string K { get; set; }
         /// <summary>
         /// The "kid" (key ID) parameter is used to match a specific key.  This
@@ -61,6 +84,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// they have different "kty" (key type) values but are considered to be
         /// equivalent alternatives by the application using them.)  The "kid"
         /// value is a case-sensitive string.
+        /// Serialized Name: JsonWebKey.kid
         /// </summary>
         public string Kid { get; set; }
         /// <summary>
@@ -69,24 +93,41 @@ namespace Azure.ResourceManager.Attestation.Models
         /// either be registered in the IANA "JSON Web Key Types" registry
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.  The "kty" value is a case-sensitive string.
+        /// Serialized Name: JsonWebKey.kty
         /// </summary>
         public string Kty { get; }
-        /// <summary> RSA modulus, in Base64. </summary>
+        /// <summary>
+        /// RSA modulus, in Base64
+        /// Serialized Name: JsonWebKey.n
+        /// </summary>
         public string N { get; set; }
-        /// <summary> RSA secret prime. </summary>
+        /// <summary>
+        /// RSA secret prime
+        /// Serialized Name: JsonWebKey.p
+        /// </summary>
         public string P { get; set; }
-        /// <summary> RSA secret prime, with p &lt; q. </summary>
+        /// <summary>
+        /// RSA secret prime, with p &lt; q
+        /// Serialized Name: JsonWebKey.q
+        /// </summary>
         public string Q { get; set; }
-        /// <summary> RSA Private Key Parameter. </summary>
+        /// <summary>
+        /// RSA Private Key Parameter
+        /// Serialized Name: JsonWebKey.qi
+        /// </summary>
         public string Qi { get; set; }
         /// <summary>
         /// Use ("public key use") identifies the intended use of
         /// the public key. The "use" parameter is employed to indicate whether
         /// a public key is used for encrypting data or verifying the signature
         /// on data. Values are commonly "sig" (signature) or "enc" (encryption).
+        /// Serialized Name: JsonWebKey.use
         /// </summary>
         public string Use { get; set; }
-        /// <summary> X coordinate for the Elliptic Curve point. </summary>
+        /// <summary>
+        /// X coordinate for the Elliptic Curve point
+        /// Serialized Name: JsonWebKey.x
+        /// </summary>
         public string X { get; set; }
         /// <summary>
         /// The "x5c" (X.509 certificate chain) parameter contains a chain of one
@@ -96,9 +137,13 @@ namespace Azure.ResourceManager.Attestation.Models
         /// not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
         /// The PKIX certificate containing the key value MUST be the first
         /// certificate.
+        /// Serialized Name: JsonWebKey.x5c
         /// </summary>
         public IList<string> X5C { get; }
-        /// <summary> Y coordinate for the Elliptic Curve point. </summary>
+        /// <summary>
+        /// Y coordinate for the Elliptic Curve point
+        /// Serialized Name: JsonWebKey.y
+        /// </summary>
         public string Y { get; set; }
     }
 }

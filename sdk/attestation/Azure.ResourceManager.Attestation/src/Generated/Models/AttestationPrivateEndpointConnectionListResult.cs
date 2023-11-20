@@ -11,7 +11,10 @@ using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
+    /// <summary>
+    /// List of private endpoint connection associated with the specified storage account
+    /// Serialized Name: PrivateEndpointConnectionListResult
+    /// </summary>
     internal partial class AttestationPrivateEndpointConnectionListResult
     {
         /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionListResult. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionListResult. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
+        /// <param name="value">
+        /// Array of private endpoint connections
+        /// Serialized Name: PrivateEndpointConnectionListResult.value
+        /// </param>
         internal AttestationPrivateEndpointConnectionListResult(IReadOnlyList<AttestationPrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
+        /// <summary>
+        /// Array of private endpoint connections
+        /// Serialized Name: PrivateEndpointConnectionListResult.value
+        /// </summary>
         public IReadOnlyList<AttestationPrivateEndpointConnectionData> Value { get; }
     }
 }

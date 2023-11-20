@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> The private endpoint connection status. </summary>
+    /// <summary>
+    /// The private endpoint connection status.
+    /// Serialized Name: PrivateEndpointServiceConnectionStatus
+    /// </summary>
     public readonly partial struct AttestationPrivateEndpointServiceConnectionStatus : IEquatable<AttestationPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Attestation.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Pending
+        /// </summary>
         public static AttestationPrivateEndpointServiceConnectionStatus Pending { get; } = new AttestationPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Approved
+        /// </summary>
         public static AttestationPrivateEndpointServiceConnectionStatus Approved { get; } = new AttestationPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Rejected
+        /// </summary>
         public static AttestationPrivateEndpointServiceConnectionStatus Rejected { get; } = new AttestationPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(AttestationPrivateEndpointServiceConnectionStatus left, AttestationPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

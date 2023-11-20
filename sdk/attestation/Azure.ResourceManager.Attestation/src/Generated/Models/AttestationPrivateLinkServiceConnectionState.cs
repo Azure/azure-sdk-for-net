@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+    /// <summary>
+    /// A collection of information about the state of the connection between service consumer and provider.
+    /// Serialized Name: PrivateLinkServiceConnectionState
+    /// </summary>
     public partial class AttestationPrivateLinkServiceConnectionState
     {
         /// <summary> Initializes a new instance of AttestationPrivateLinkServiceConnectionState. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Initializes a new instance of AttestationPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <param name="status">
+        /// Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service.
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </param>
+        /// <param name="description">
+        /// The reason for approval/rejection of the connection.
+        /// Serialized Name: PrivateLinkServiceConnectionState.description
+        /// </param>
+        /// <param name="actionsRequired">
+        /// A message indicating if changes on the service provider require any updates on the consumer.
+        /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
+        /// </param>
         internal AttestationPrivateLinkServiceConnectionState(AttestationPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
         {
             Status = status;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Attestation.Models
             ActionsRequired = actionsRequired;
         }
 
-        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
+        /// <summary>
+        /// Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service.
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </summary>
         public AttestationPrivateEndpointServiceConnectionStatus? Status { get; set; }
-        /// <summary> The reason for approval/rejection of the connection. </summary>
+        /// <summary>
+        /// The reason for approval/rejection of the connection.
+        /// Serialized Name: PrivateLinkServiceConnectionState.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
+        /// <summary>
+        /// A message indicating if changes on the service provider require any updates on the consumer.
+        /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
+        /// </summary>
         public string ActionsRequired { get; set; }
     }
 }

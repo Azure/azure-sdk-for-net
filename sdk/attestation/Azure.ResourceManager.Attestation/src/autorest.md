@@ -19,6 +19,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+mgmt-debug:
+  show-serialized-names: true
 
 no-property-type-replacement: PrivateEndpoint
 format-by-name-rules:
@@ -50,5 +52,8 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  PrivateEndpoint.id: stringId
 
 ```

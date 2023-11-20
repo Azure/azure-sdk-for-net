@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> Client supplied parameters used to patch an existing attestation provider. </summary>
+    /// <summary>
+    /// Client supplied parameters used to patch an existing attestation provider.
+    /// Serialized Name: AttestationServicePatchSpecificParams
+    /// </summary>
     internal partial class AttestationServicePatchSpecificParams
     {
         /// <summary> Initializes a new instance of AttestationServicePatchSpecificParams. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.Attestation.Models
         {
         }
 
-        /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
+        /// <summary>
+        /// Controls whether traffic from the public network is allowed to access the Attestation Provider APIs.
+        /// Serialized Name: AttestationServicePatchSpecificParams.publicNetworkAccess
+        /// </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
     }
 }
