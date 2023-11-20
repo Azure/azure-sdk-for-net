@@ -486,6 +486,7 @@ namespace Azure.Storage.DataMovement
             }
 
             // If there are no more pending job parts, complete the job
+            Console.WriteLine($"Checking completion. Job part count - {_pendingJobParts}");
             if (_pendingJobParts == 0)
             {
                 if (_jobPartPaused)
