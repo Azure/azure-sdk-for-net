@@ -96,7 +96,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void DuplicateTagsOnProperties()
         {
             // Arrange
-
             IDictionary<string, string> destination = new Dictionary<string, string>();
             var tagObjects = AzMonList.Initialize();
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>("key1", "value1"));
