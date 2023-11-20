@@ -17,18 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            _resourceGroupIdentifier = rgLro.Value.Id;
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
         public async Task TestSetUp()
         {
+            string rgName = Recording.GenerateAssetName("DataFactory-RG-");
+            var rgLro = await Client.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            _resourceGroupIdentifier = rgLro.Value.Id;
             _resourceGroup = await Client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
@@ -36,6 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
+            await TestSetUp();
             string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
             DataFactoryData data = new DataFactoryData(_resourceGroup.Data.Location);
             var dataFactory = await _resourceGroup.GetDataFactories().CreateOrUpdateAsync(WaitUntil.Completed, dataFactoryName, data);
@@ -47,6 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Exist()
         {
+            await TestSetUp();
             string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
             var dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
             bool flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
@@ -57,6 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
+            await TestSetUp();
             string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
             await CreateDataFactory(_resourceGroup, dataFactoryName);
             var dataFactory = await _resourceGroup.GetDataFactories().GetAsync(dataFactoryName);
@@ -68,6 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
+            await TestSetUp();
             string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
             await CreateDataFactory(_resourceGroup, dataFactoryName);
             var list = await _resourceGroup.GetDataFactories().GetAllAsync().ToEnumerableAsync();
@@ -78,6 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
+            await TestSetUp();
             string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
             var dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
             bool flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);

@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -16,34 +16,24 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class DataFactoryTriggerTests : DataFactoryManagementTestBase
     {
-        private ResourceIdentifier _dataFactoryIdentifier;
-        private DataFactoryResource _dataFactory;
         public DataFactoryTriggerTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
+        public async Task<DataFactoryResource> TestSetUp()
         {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
-            _dataFactoryIdentifier = dataFactoryLro.Id;
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
+            string rgName = Recording.GenerateAssetName("DataFactory-RG-");
+            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            return await CreateDataFactory((Client.GetResourceGroupResource(rgLro.Value.Data.Id)), dataFactoryName);
         }
 
         private async Task<DataFactoryTriggerResource> CreateDefaultTrigger(DataFactoryResource dataFactory, string triggerName)
         {
             string pipelineName1 = Recording.GenerateAssetName("pipeline-");
 
-            await CreateDefaultEmptyPipeLine(pipelineName1);
+            await CreateDefaultEmptyPipeLine(dataFactory,pipelineName1);
 
             ScheduleTriggerRecurrence recurrence = new ScheduleTriggerRecurrence()
             {
@@ -63,14 +53,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     }
                 }
             });
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
             return result.Value;
         }
 
         private async Task<DataFactoryTriggerResource> CreateDefaultTumblingWindowTrigger(DataFactoryResource dataFactory, string triggerName)
         {
             string pipelineName = Recording.GenerateAssetName("pipeline-");
-            await CreateDefaultEmptyPipeLine(pipelineName);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
 
             TriggerPipelineReference references = new TriggerPipelineReference()
             {
@@ -78,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
 
             DataFactoryTriggerData dataTrigger = new DataFactoryTriggerData(new TumblingWindowTrigger(references, TumblingWindowFrequency.Hour, 12, DateTimeOffset.Parse("2023-10-31T00:00:00Z"), 50));
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, dataTrigger);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, dataTrigger);
             return result.Value;
         }
 
@@ -86,8 +76,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
-            var trigger = await CreateDefaultTrigger(_dataFactory, triggerName);
+            var trigger = await CreateDefaultTrigger(dataFactory, triggerName);
             Assert.IsNotNull(trigger);
             Assert.AreEqual(triggerName, trigger.Data.Name);
         }
@@ -96,9 +87,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Exist()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
-            await CreateDefaultTrigger(_dataFactory, triggerName);
-            bool flag = await _dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
+            await CreateDefaultTrigger(dataFactory, triggerName);
+            bool flag = await dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
             Assert.IsTrue(flag);
         }
 
@@ -106,9 +98,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
-            await CreateDefaultTrigger(_dataFactory, triggerName);
-            var trigger = await _dataFactory.GetDataFactoryTriggers().GetAsync(triggerName);
+            await CreateDefaultTrigger(dataFactory, triggerName);
+            var trigger = await dataFactory.GetDataFactoryTriggers().GetAsync(triggerName);
             Assert.IsNotNull(trigger);
             Assert.AreEqual(triggerName, trigger.Value.Data.Name);
         }
@@ -117,9 +110,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
-            await CreateDefaultTrigger(_dataFactory, triggerName);
-            var list = await _dataFactory.GetDataFactoryTriggers().GetAllAsync().ToEnumerableAsync();
+            await CreateDefaultTrigger(dataFactory, triggerName);
+            var list = await dataFactory.GetDataFactoryTriggers().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
 
@@ -127,36 +121,38 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
-            var trigger = await CreateDefaultTrigger(_dataFactory, triggerName);
-            bool flag = await _dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
+            var trigger = await CreateDefaultTrigger(dataFactory, triggerName);
+            bool flag = await dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
             Assert.IsTrue(flag);
 
             await trigger.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
+            flag = await dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
             Assert.IsFalse(flag);
         }
 
-        private async Task<DataFactoryPipelineResource> CreateDefaultEmptyPipeLine(string pipelineName)
+        private async Task<DataFactoryPipelineResource> CreateDefaultEmptyPipeLine(DataFactoryResource dataFactory, string pipelineName)
         {
             DataFactoryPipelineData data = new DataFactoryPipelineData() { };
-            var pipeline = await _dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
+            var pipeline = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             return pipeline.Value;
         }
 
         private async Task<DataFactoryDatasetResource> CreateDefaultAzureBlobStorageLinkedServiceOrDatasets(string linkedServiceName, string datasetName)
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             DataFactoryLinkedServiceData lkBlobSource = new DataFactoryLinkedServiceData(new AzureBlobStorageLinkedService()
             {
                 ConnectionString = "DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net"
             });
-            await _dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkBlobSource);
+            await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkBlobSource);
 
             if (string.IsNullOrEmpty(datasetName))
                 return null;
 
             DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
-            var result = await _dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
+            var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
 
@@ -164,14 +160,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Trigger_ChainingTrigger()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
             string pipelineName1 = Recording.GenerateAssetName("pipeline-");
             string pipelineName2 = Recording.GenerateAssetName("pipeline-");
             string pipelineName3 = Recording.GenerateAssetName("pipeline-");
 
-            await CreateDefaultEmptyPipeLine(pipelineName1);
-            await CreateDefaultEmptyPipeLine(pipelineName2);
-            await CreateDefaultEmptyPipeLine(pipelineName3);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName1);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName2);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName3);
 
             TriggerPipelineReference reference = new TriggerPipelineReference()
             {
@@ -181,28 +178,29 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 new DataFactoryPipelineReference(DataFactoryPipelineReferenceType.PipelineReference,pipelineName2)
             }, ""));
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_BlobTrigger()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
             string linkedServiceName = Recording.GenerateAssetName("linkedService_");
             string pipelineName1 = Recording.GenerateAssetName("pipeline-");
             string pipelineName2 = Recording.GenerateAssetName("pipeline-");
             string pipelineName3 = Recording.GenerateAssetName("pipeline-");
 
-            await CreateDefaultEmptyPipeLine(pipelineName1);
-            await CreateDefaultEmptyPipeLine(pipelineName2);
-            await CreateDefaultEmptyPipeLine(pipelineName3);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName1);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName2);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName3);
 
             DataFactoryLinkedServiceData lkBlobSource = new DataFactoryLinkedServiceData(new AzureBlobStorageLinkedService()
             {
                 ConnectionString = "DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net"
             });
-            await _dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkBlobSource);
+            await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkBlobSource);
 
             TriggerPipelineReference reference = new TriggerPipelineReference()
             {
@@ -227,21 +225,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     new TriggerPipelineReference(){ PipelineReference = new DataFactoryPipelineReference(DataFactoryPipelineReferenceType.PipelineReference, pipelineName3)}
                 }
             });
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_BlobEventsTrigger()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
             string pipelineName1 = Recording.GenerateAssetName("pipeline-");
             string pipelineName2 = Recording.GenerateAssetName("pipeline-");
             string pipelineName3 = Recording.GenerateAssetName("pipeline-");
 
-            await CreateDefaultEmptyPipeLine(pipelineName1);
-            await CreateDefaultEmptyPipeLine(pipelineName2);
-            await CreateDefaultEmptyPipeLine(pipelineName3);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName1);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName2);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName3);
 
             DataFactoryTriggerData data = new DataFactoryTriggerData(new DataFactoryBlobEventsTrigger(new List<DataFactoryBlobEventType>() {
                 DataFactoryBlobEventType.MicrosoftStorageBlobCreated,
@@ -264,21 +263,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     new TriggerPipelineReference(){ PipelineReference = new DataFactoryPipelineReference(DataFactoryPipelineReferenceType.PipelineReference, pipelineName3)}
                 }
             });
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_ScheduleTrigger()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
             string pipelineName1 = Recording.GenerateAssetName("pipeline-");
             string pipelineName2 = Recording.GenerateAssetName("pipeline-");
             string pipelineName3 = Recording.GenerateAssetName("pipeline-");
 
-            await CreateDefaultEmptyPipeLine(pipelineName1);
-            await CreateDefaultEmptyPipeLine(pipelineName2);
-            await CreateDefaultEmptyPipeLine(pipelineName3);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName1);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName2);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName3);
 
             ScheduleTriggerRecurrence recurrence = new ScheduleTriggerRecurrence()
             {
@@ -305,17 +305,18 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     new TriggerPipelineReference(){ PipelineReference = new DataFactoryPipelineReference(DataFactoryPipelineReferenceType.PipelineReference, pipelineName3)}
                 }
             });
-            var result = _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_TumblingWindowTrigger_Hour()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
-            await CreateDefaultEmptyPipeLine(pipelineName);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
 
             TriggerPipelineReference references = new TriggerPipelineReference()
             {
@@ -336,17 +337,18 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     IntervalInSeconds = 30
                 }
             });
-            var result = _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_TumblingWindowTrigger_Month()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
-            await CreateDefaultEmptyPipeLine(pipelineName);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
 
             TriggerPipelineReference references = new TriggerPipelineReference()
             {
@@ -367,19 +369,20 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     IntervalInSeconds = 30
                 }
             });
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_TumblingWindowTrigger_Dependency()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
             string referenceTriggerName = Recording.GenerateAssetName("trigger-");
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
-            await CreateDefaultEmptyPipeLine(pipelineName);
-            await CreateDefaultTumblingWindowTrigger(_dataFactory, referenceTriggerName);
+            await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
+            await CreateDefaultTumblingWindowTrigger(dataFactory, referenceTriggerName);
 
             TriggerPipelineReference references = new TriggerPipelineReference()
             {
@@ -413,13 +416,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     }
                 }
             });
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_CustomEventsTrigger()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
 
             DataFactoryTriggerData data = new DataFactoryTriggerData(new CustomEventsTrigger(new List<BinaryData>() { BinaryData.FromString("\"Microsoft.Storage.BlobCreated\"") }, "/subscriptions/b371d9e7-d3c2-4b1a-83ec-84e1f50c2222")
@@ -431,35 +435,37 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     BinaryData.FromString("\"123\"")
                 }
             });
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_RerunTumblingWindowTrigger()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string triggerName = Recording.GenerateAssetName("trigger-");
             string referenceTriggerName = Recording.GenerateAssetName("trigger-");
-            await CreateDefaultTumblingWindowTrigger(_dataFactory, referenceTriggerName);
-            var state1 = await _dataFactory.GetDataFactoryTriggerAsync(referenceTriggerName);
+            await CreateDefaultTumblingWindowTrigger(dataFactory, referenceTriggerName);
+            var state1 = await dataFactory.GetDataFactoryTriggerAsync(referenceTriggerName);
             await state1.Value.StartAsync(WaitUntil.Completed);
             DataFactoryTriggerData data = new DataFactoryTriggerData(new RerunTumblingWindowTrigger(
                 BinaryData.FromString($"{{\"type\": \"TriggerReference\",\"referenceName\": \"{referenceTriggerName}\"}}"),
                 DateTimeOffset.Parse("2023-11-01T00:00:00.0000000Z"),
                 DateTimeOffset.Parse("2023-11-02T12:00:00.0000000Z"), 50));
-            var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            var result = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
         [Test]
         [RecordedTest]
         public async Task Trigger_TriggerRun()
         {
+            DataFactoryResource dataFactory = await TestSetUp();
             string referenceTriggerName = Recording.GenerateAssetName("trigger-");
 
-            await CreateDefaultTumblingWindowTrigger(_dataFactory, referenceTriggerName);
-            var state = await _dataFactory.GetDataFactoryTriggerAsync(referenceTriggerName);
+            await CreateDefaultTumblingWindowTrigger(dataFactory, referenceTriggerName);
+            var state = await dataFactory.GetDataFactoryTriggerAsync(referenceTriggerName);
             await state.Value.StartAsync(WaitUntil.Completed);
-            var list = _dataFactory.GetTriggerRunsAsync(new RunFilterContent(DateTimeOffset.Parse("2017-04-14T13:00:00Z"), DateTimeOffset.Parse("2030-04-14T13:00:00Z")));
+            var list = dataFactory.GetTriggerRunsAsync(new RunFilterContent(DateTimeOffset.Parse("2017-04-14T13:00:00Z"), DateTimeOffset.Parse("2030-04-14T13:00:00Z")));
 
             await foreach (var item in list)
             {

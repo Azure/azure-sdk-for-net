@@ -12,30 +12,20 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class ManagedIntegrationRuntimeResourceTests : DataFactoryManagementTestBase
     {
-        private ResourceIdentifier _dataFactoryIdentifier;
-        private DataFactoryResource _dataFactory;
         public ManagedIntegrationRuntimeResourceTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
+        private async Task<DataFactoryResource> TestSetup()
         {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            string rgName = Recording.GenerateAssetName("DataFactory-RG-");
+            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
+            var rgLro = await Client.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
             var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
-            _dataFactoryIdentifier = dataFactoryLro.Id;
-            await StopSessionRecordingAsync();
+            return await Client.GetDataFactoryResource(dataFactoryLro.Id).GetAsync();
         }
 
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
-        }
-
-        private async Task<DataFactoryIntegrationRuntimeResource> CreateDefaultManagedIntegrationRuntime(string integrationRuntimeName)
+        private async Task<DataFactoryIntegrationRuntimeResource> CreateDefaultManagedIntegrationRuntime(DataFactoryResource dataFactory, string integrationRuntimeName)
         {
             ManagedIntegrationRuntime properties = new ManagedIntegrationRuntime()
             {
@@ -51,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 }
             };
             DataFactoryIntegrationRuntimeData data = new DataFactoryIntegrationRuntimeData(properties);
-            var integrationRuntime = await _dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
+            var integrationRuntime = await dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
             return integrationRuntime.Value;
         }
 
@@ -59,8 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
+            DataFactoryResource dataFactory = await TestSetup();
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
+            var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
             Assert.IsNotNull(integrationRuntime);
         }
 
@@ -68,9 +59,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Exist()
         {
+            DataFactoryResource dataFactory = await TestSetup();
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
-            bool flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            bool flag = await dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsTrue(flag);
         }
 
@@ -78,9 +70,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
+            DataFactoryResource dataFactory = await TestSetup();
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
-            var integrationRuntime = await _dataFactory.GetDataFactoryIntegrationRuntimes().GetAsync(integrationRuntimeName);
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            var integrationRuntime = await dataFactory.GetDataFactoryIntegrationRuntimes().GetAsync(integrationRuntimeName);
             Assert.IsNotNull(integrationRuntime);
         }
 
@@ -88,9 +81,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
+            DataFactoryResource dataFactory = await TestSetup();
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
-            var list = await _dataFactory.GetDataFactoryIntegrationRuntimes().GetAllAsync().ToEnumerableAsync();
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            var list = await dataFactory.GetDataFactoryIntegrationRuntimes().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);
         }
 
@@ -98,13 +92,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
+            DataFactoryResource dataFactory = await TestSetup();
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
-            var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);
-            bool flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
+            var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            bool flag = await dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsTrue(flag);
 
             await integrationRuntime.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
+            flag = await dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsFalse(flag);
         }
 
@@ -112,6 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task IntegrationRuntime_Managed()
         {
+            DataFactoryResource dataFactory = await TestSetup();
             string integrationRuntimeName = Recording.GenerateAssetName("integraionRuntime-");
             DataFactoryIntegrationRuntimeData data = new DataFactoryIntegrationRuntimeData(new ManagedIntegrationRuntime()
             {
@@ -130,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 }
             });
 
-            var result = await _dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
+            var result = await dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
             Assert.IsNotNull(result.Value.Id);
         }
     }

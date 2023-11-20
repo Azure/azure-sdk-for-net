@@ -19,21 +19,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
-             _managedVirtualNetworkName = SessionRecording.GenerateAssetName("managedVirtualNetwork-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
-            _dataFactoryIdentifier = dataFactoryLro.Id;
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task TestSetUp()
         {
+            string rgName = Recording.GenerateAssetName("DataFactory-RG-");
+            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
+            _managedVirtualNetworkName = Recording.GenerateAssetName("managedVirtualNetwork-");
+            var rgLro = await Client.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
+            _dataFactoryIdentifier = dataFactoryLro.Id;
             _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
         }
 
@@ -80,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             await CreateDefaultManagedVirtualNetworkResource(_managedVirtualNetworkName);
             var list = await _dataFactory.GetDataFactoryManagedVirtualNetworks().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1,list.Count);
+            Assert.AreEqual(1, list.Count);
         }
     }
 }

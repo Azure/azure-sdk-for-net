@@ -17,53 +17,17 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class DataFactoryPipelineTests : DataFactoryManagementTestBase
     {
-        private ResourceIdentifier _resourceGroupIdentifier;
-        private ResourceGroupResource _resourceGroup;
         public DataFactoryPipelineTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
+        public async Task<DataFactoryResource> TestSetup()
         {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _resourceGroupIdentifier = ResourceGroupResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName);
-            }
-            else
-            {
-                using (SessionRecording.DisableRecording())
-                {
-                    var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-                    var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                    _resourceGroupIdentifier = rgLro.Value.Data.Id;
-                }
-            }
-            await StopSessionRecordingAsync();
-        }
-
-        [TearDown]
-        public async Task TestCaseDoneTearDown()
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return;
-            }
-            try
-            {
-                using (Recording.DisableRecording())
-                {
-                    await foreach (var dataFactoryResource in _resourceGroup.GetDataFactories().GetAllAsync())
-                    {
-                        await dataFactoryResource.DeleteAsync(WaitUntil.Completed);
-                    }
-                }
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-            }
+            string rgName = Recording.GenerateAssetName("DataFactory-RG-");
+            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            return await CreateDataFactory((Client.GetResourceGroupResource(rgLro.Value.Data.Id)), dataFactoryName);
         }
 
         private async Task<DataFactoryPipelineResource> CreateDefaultEmptyPipeLine(DataFactoryResource dataFactory, string pipelineName)
@@ -77,11 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             var pipeline = await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
@@ -93,11 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Exist()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
@@ -109,11 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
@@ -126,11 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
@@ -142,11 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             var pipeline = await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
@@ -1446,11 +1390,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Pipeline_AzureDatabricksDeltaLake()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -1497,18 +1437,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_MongoDbAtlas_CosmosDbMongoDbApi()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -1562,18 +1497,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_MongoDbAtlas_MongoDbV2()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -1627,18 +1557,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SqlService_SqlDW()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -1683,18 +1608,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_HDInsightHive()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -1716,18 +1636,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -1817,18 +1732,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Blob_Expression()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -1948,18 +1858,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Web_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2004,18 +1909,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SqlServerStoredProcedure()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2037,18 +1937,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureSql_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2104,18 +1999,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SqlServer_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2169,18 +2059,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AmazonRdsFOrSqlServer_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2234,18 +2119,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Relational_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2292,18 +2172,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_HDInsightPig()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2336,18 +2211,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_HDInsightHive_StorageLinkedService()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2378,18 +2248,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_HDInsightMapReduce()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2429,18 +2294,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_HDInsightSpark()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2474,18 +2334,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Cassandra_AzureTable()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2527,18 +2382,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_MongoDb_AzureBlob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2582,18 +2432,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SqlServer_Blob_StoredProcedure()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2646,18 +2491,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Blob_FileSystem()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2701,18 +2541,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureSqlServer_SqlServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2761,18 +2596,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Blob_AzureQueue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2818,19 +2648,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("test issue")]
         public async Task Pipeline_SqlDW_SqlDW_StoredProcedure()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2887,18 +2711,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SqlDW_SqlDW()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -2946,18 +2765,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureDataLakeStore()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3001,18 +2815,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Http_AzureSearchIndex()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3058,18 +2867,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_HDInsightStreaming()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3103,18 +2907,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_FileSystem()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3157,18 +2956,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Blob_AzureTable()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3210,18 +3004,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_FileSystem_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3264,18 +3053,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Hdfs_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3321,18 +3105,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Lookup_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3354,18 +3133,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Lookup_SqlServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3390,18 +3164,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Lookup_AzureSqlServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3426,18 +3195,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Lookup_FileSystem()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3458,18 +3222,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_GetMetadata_AzureSqlServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3495,18 +3254,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Web()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3523,18 +3277,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Web_Authentication()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3560,18 +3309,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Custom()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3620,18 +3364,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_IfCondition()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3663,18 +3402,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Switch()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3713,18 +3447,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Foreach()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3753,18 +3482,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Until()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string untilTaskName = Recording.GenerateAssetName("task-");
@@ -3796,18 +3520,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureMLUpdateResource()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string azureMLTaskName = Recording.GenerateAssetName("task-");
@@ -3830,18 +3549,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureMLBatchExecution()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string azureMLServiceTaskName = Recording.GenerateAssetName("task-");
@@ -3872,18 +3586,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DataLakeAnalyticsUSQL()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string azureDataLakeAnalyticsTaskName = Recording.GenerateAssetName("task-");
@@ -3903,18 +3612,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureMySql_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -3953,18 +3657,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Salesforce_Salesforce()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4006,18 +3705,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Dynamics_Dynamics()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4058,18 +3752,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SAPCloudForCustomer_AzureDataLakeStore()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4116,18 +3805,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AmazonMWS_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4166,18 +3850,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzurePostgreSql_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4216,18 +3895,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Concur_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4266,18 +3940,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Couchbase_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4316,18 +3985,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Drill_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4366,18 +4030,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Eloqua_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4416,19 +4075,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("test issue")]
         public async Task Pipeline_GoogleBigQuery_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4467,18 +4120,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Greenplum_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4517,18 +4165,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_HBase_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4567,18 +4210,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Hive_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4617,18 +4255,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Hubspot_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4667,18 +4300,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Impala_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4717,18 +4345,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Jira_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4767,18 +4390,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Magento_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4817,18 +4435,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_MariaDB_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4867,18 +4480,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureMariaDB_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4917,18 +4525,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Marketo_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -4967,18 +4570,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Paypal_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5017,18 +4615,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Phoenix_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5067,18 +4660,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Presto_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5117,18 +4705,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_QuickBooks_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5167,18 +4750,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_ServiceNow_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5217,18 +4795,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Shopify_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5267,18 +4840,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Spark_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5317,18 +4885,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Square_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5367,18 +4930,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Xero_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5417,18 +4975,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Zoho_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5467,18 +5020,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SAPECC_AzureDataLakeStore()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5525,18 +5073,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DynamicsAX_AzureDataLakeStore()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5583,18 +5126,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Netezza_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5633,18 +5171,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Vertica_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5683,18 +5216,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Databricks()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5720,18 +5248,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Blob_UserProperties()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5773,18 +5296,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Blob_UserProperties_Empty()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5825,18 +5343,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SapOpenHub_AzureDataLakeStore()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5885,18 +5398,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_WebHook()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5924,18 +5432,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Validation()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -5961,18 +5464,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SapTable_AzureDataLakeStore()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6018,18 +5516,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Avro_Settings()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6082,18 +5575,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Excel_Settings()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6146,18 +5634,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Orc_Settings()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6205,18 +5688,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_Settings_LogStorageSettings()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6291,18 +5769,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_Settings_LogSettings()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6383,18 +5856,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_UnZip_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6491,18 +5959,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_AzureBlobFS_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6564,18 +6027,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_FileSystem_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6639,18 +6097,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_FTPServer_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6714,18 +6167,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_Hdfs_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6790,18 +6238,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_Http_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6863,18 +6306,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_AmazonS3_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -6937,18 +6375,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_SftpServer_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7012,18 +6445,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_CosmosDbSqlApi()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7070,18 +6498,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Json()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7177,18 +6600,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Xml()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7288,18 +6706,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Binary()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7485,19 +6898,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("test issue")]
         public async Task Pipeline_Teradata_Binary()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7545,18 +6952,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SqlMI()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7599,18 +7001,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SalesforceServiceCloud()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7651,18 +7048,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_CommonDataServiceForApps()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7704,18 +7096,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Informix()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7754,18 +7141,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_MicrosoftAccess()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7804,18 +7186,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SapTable_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7873,18 +7250,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Db2_AzurePostgreSql()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7927,18 +7299,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AmazonRdsForOracle_AzurePostgreSql()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -7983,18 +7350,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Oracle_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8040,19 +7402,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("test issue")]
         public async Task Pipeline_NetezzaPartition_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8102,18 +7458,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_OData_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8160,18 +7511,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Sybase_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8217,18 +7563,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_MySql_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8274,18 +7615,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DB2_AzureMysql()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8330,18 +7666,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Odbc_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8387,18 +7718,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AmazonRedshift_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8444,18 +7770,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureDataExplorer_AzureDataExplorer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8503,18 +7824,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureDataExplorer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8535,18 +7851,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_AzureDataExplorer_TimeOut()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8568,18 +7879,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SapBw_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8625,18 +7931,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_ExecuteDataFlow()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8686,18 +7987,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_ExecuteDataFlow_Compute()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8747,18 +8043,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_GoogleCloud()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8827,18 +8118,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_AmazonS3Compatible()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8910,18 +8196,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_OracleCloud()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -8993,18 +8274,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_AzureFile()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9073,18 +8349,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_ExecuteSSISPacakge()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9111,18 +8382,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_SqlDW()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9187,18 +8453,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SapHana_DelimitedText()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9255,18 +8516,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Binary_Binary()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9316,18 +8572,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SharePointOnlineList_Blob()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9374,18 +8625,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_DelimitedText_SqlServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9437,18 +8683,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_SQLMI_SQLMI()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9511,18 +8752,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_ExecuteWarnglingDataflow_Sinks()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskPowerQueryName = "powerquery1";
@@ -9589,18 +8825,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_ExecuteWarnglingDataflow_Queries()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskPowerQueryName = "powerquery1";
@@ -9659,18 +8890,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Script()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9704,18 +8930,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task Pipeline_Office365_AzureDataLakeStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string pipelineName = Recording.GenerateAssetName("pipeline-");
 
             string taskName = Recording.GenerateAssetName("task-");
@@ -9775,7 +8996,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             Assert.IsNotNull(result.Value.Id);
-            await TestCaseDoneTearDown();
         }
     }
 }

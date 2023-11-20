@@ -18,68 +18,26 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
         private string _accessKey;
-        private ResourceIdentifier _resourceGroupIdentifier;
-        private ResourceGroupResource _resourceGroup;
         public LinkedServiceResourceTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
+        public async Task<DataFactoryResource> TestSetup()
         {
-            var rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            var storageAccountName = SessionRecording.GenerateAssetName("datafactory");
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _resourceGroupIdentifier = ResourceGroupResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName);
-                _accessKey = "Sanitized";
-            }
-            else
-            {
-                var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-                var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                _resourceGroupIdentifier = rgLro.Value.Data.Id;
-                _accessKey = await GetStorageAccountAccessKey(rgLro.Value, storageAccountName);
-            }
-            await StopSessionRecordingAsync();
-        }
-
-        [TearDown]
-        public async Task GlobalTearDown()
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return;
-            }
-            try
-            {
-                using (Recording.DisableRecording())
-                {
-                    await foreach (var storageAccount in _resourceGroup.GetStorageAccounts().GetAllAsync())
-                    {
-                        await storageAccount.DeleteAsync(WaitUntil.Completed);
-                    }
-
-                    await foreach (var dataFactory in _resourceGroup.GetDataFactories().GetAllAsync())
-                    {
-                        await dataFactory.DeleteAsync(WaitUntil.Completed);
-                    }
-                }
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-            }
+            var rgName = Recording.GenerateAssetName("DataFactory-RG-");
+            var storageAccountName = Recording.GenerateAssetName("datafactory");
+            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            _accessKey = await GetStorageAccountAccessKey(rgLro.Value, storageAccountName);
+            return await CreateDataFactory((Client.GetResourceGroupResource(rgLro.Value.Data.Id)), dataFactoryName);
         }
 
         [Test]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
@@ -91,11 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Exist()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
@@ -107,11 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
@@ -124,11 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
@@ -141,11 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
@@ -198,11 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task LinkedService_AzureBlobFS_ServicePrincipalCredential()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -220,18 +158,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureBlobFS_Credential()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -257,18 +190,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureDatabricksDeltaLake()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -281,18 +209,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -303,18 +226,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureStorage_SasUrl()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -325,18 +243,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureStorage_SasUrl_AzureKeyVault()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -351,18 +264,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureBlobStorage_ServicePrincipal()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -376,18 +284,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureBlobStorage_AzureKeyVault()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -401,18 +304,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SqlServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -431,18 +329,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonRdsForSqlServer_Credential()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -464,18 +357,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonRdsForSqlServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -490,18 +378,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureSqlDatabase()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -512,18 +395,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureSqlDatabase_AzureCloudType()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -534,18 +412,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureSqlDatabase_AzureKeyVault()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -563,11 +436,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task LinkedService_AzureSqlMI()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -581,18 +450,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureSqlDW()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -603,18 +467,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureSqlDW_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -627,18 +486,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureML()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -646,18 +500,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMLLinkedService("https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs", new DataFactorySecretString("fakeKey")));
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureMLService()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -678,18 +527,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureML_updateResourceEndpoint()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -700,18 +544,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureML_servicePrincipalId()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -725,18 +564,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.IsNotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureDataLakeAnalytics()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -750,18 +584,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_HDInsight()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceAzureBlobName = Recording.GenerateAssetName("LinkedService");
@@ -774,18 +603,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_HDInsight_hcatalogLinkedServiceName()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceLogName1 = Recording.GenerateAssetName("LinkedService");
@@ -804,18 +628,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_HDInsightOnDemand()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceHDInsightName = Recording.GenerateAssetName("LinkedService");
@@ -833,18 +652,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureBatch()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceAzureBlobName = Recording.GenerateAssetName("LinkedService");
@@ -856,18 +670,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SqlServer_encryptedCredential()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -886,18 +695,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Oracle()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -915,18 +719,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Oracle_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -947,18 +746,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonRdsForOracle()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -976,18 +770,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonRdsForOracle_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1008,18 +797,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_FileServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1041,18 +825,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_CosmosDb()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1063,18 +842,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_CosmosDb_accountEndpoint()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1087,18 +861,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_CosmosDb_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -1112,18 +881,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_CosmosDb_servicePrincipalId()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1140,18 +904,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Teradata()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1174,18 +933,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Teradata_connectionString()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1207,18 +961,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_ODBC()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1240,18 +989,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Informix()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1273,18 +1017,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_MicrosoftAccess()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1306,18 +1045,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Hdfs()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1338,18 +1072,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Web()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1361,18 +1090,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Web1()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1390,11 +1114,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task LinkedService_Cassandra()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1417,18 +1137,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Dynamics()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1449,18 +1164,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Dynamics_S2S_Key()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1480,18 +1190,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Dynamics_S2S_Cert()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1513,18 +1218,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Dynamics_organizationName()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1540,18 +1240,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_DynamicsCrm()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1567,18 +1262,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_DynamicsCrm_S2S_Key()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1598,18 +1288,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_DynamicsCrm_S2S_Cert()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1631,18 +1316,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_CommonDataServiceForApps_S2S_Key()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1662,18 +1342,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_CommonDataServiceForApps_S2S_Cert()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1695,18 +1370,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_CommonDataServiceForApps()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1722,18 +1392,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Salesforce_Token()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1749,18 +1414,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Salesforce()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1775,18 +1435,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Salesforce_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -1804,18 +1459,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SalesforceServiceCloud_Token()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1831,18 +1481,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SalesforceServiceCloud()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1857,18 +1502,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SalesforceMarketingCloud()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1881,18 +1521,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SalesforceMarketingCloud_connection()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1904,18 +1539,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_MongoDb()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -1939,18 +1569,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonRedshift()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1968,18 +1593,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonS3()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -1996,18 +1616,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonS3_sessionToken()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2026,18 +1641,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonS3Compatible()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2056,18 +1666,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureDataLakeStore()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2084,18 +1689,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureSearch()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2111,18 +1711,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_FtpServer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2140,18 +1735,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Sftp()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2171,18 +1761,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SapBW()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2199,18 +1784,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SapHana()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2229,18 +1809,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureMySql()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2248,18 +1823,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMySqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress.mysql.database.azure.com;Port=3306;Database=myDataBase;Uid=myUsername@myServerAddress;Pwd=myPassword;SslMode=Required;")) { });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureMySql_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -2272,18 +1842,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AmazonMWS()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2298,18 +1863,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzurePostgreSql()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -2322,18 +1882,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzurePostgreSql_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -2347,18 +1902,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Concur()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2372,18 +1922,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Couchbase()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2394,18 +1939,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Couchbase_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -2419,18 +1959,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Drill()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2441,18 +1976,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Drill_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -2466,18 +1996,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Eloqua()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2491,18 +2016,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_GoogleAdWords()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2522,18 +2042,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Greenplum()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2544,18 +2059,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Greenplum_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -2575,11 +2085,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task LinkedService_HBase()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2593,18 +2099,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Hive()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2628,18 +2129,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Hubspot()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2655,18 +2151,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Impala()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2683,18 +2174,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Jira()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2706,18 +2192,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Magento()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2728,18 +2209,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Mariadb()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2750,18 +2226,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_MongoDbAtlas()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2769,18 +2240,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MongoDBAtlasLinkedService(DataFactoryElement<string>.FromSecretString("mongodb://username:password@localhost:27017/?authSource=admin"), "database") { });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureMariadb()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2791,18 +2257,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Mariadb_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -2816,18 +2277,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Marketo()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2841,18 +2297,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Paypal()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2866,18 +2317,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Phoenix()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2893,18 +2339,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Presto()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2921,18 +2362,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_QuickBooks()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2949,18 +2385,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_ServiceNow()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2972,18 +2403,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Shopify()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -2997,18 +2423,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Spark()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -3029,18 +2450,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Square()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3057,18 +2473,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Square_ConnectionProperties()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3090,18 +2501,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Xero()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3117,18 +2523,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Xero_ConnectionProperties()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3152,18 +2553,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Zoho()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3178,18 +2574,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Zoho_ConnectionProperties()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3209,18 +2600,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_GoogleAdWords_ConnectionProperties()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3239,18 +2625,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Netezza()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -3264,18 +2645,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Vertica()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3286,18 +2662,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Vertica_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -3311,18 +2682,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureDatabricks()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3334,7 +2700,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
@@ -3342,11 +2707,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         public async Task LinkedService_AzureDatabricks_Script()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3373,11 +2734,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task LinkedService_AzureDatabricks_workspaceResourceId()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3394,18 +2751,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureDatabricks_newClusterSparkEnvVars()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3428,11 +2780,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task LinkedService_Db2_Connection()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
@@ -3450,18 +2798,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SapOpenHub_MessageServerService()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3478,18 +2821,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_RestService()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3502,18 +2840,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SapTable()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3528,18 +2861,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureDataExplorer()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3552,18 +2880,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureFileStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3577,18 +2900,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureFileStorage_ConnectionString()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3599,18 +2917,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureFileStorage_FileShare()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3623,18 +2936,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureFileStorage_AccountKey()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -3648,18 +2956,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureFileStorage_SasUri()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3670,18 +2973,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_AzureFileStorage_SasToken()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -3695,18 +2993,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_GoogleCloudStorage()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3719,18 +3012,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_SharePointOnlineList()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3738,18 +3026,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SharePointOnlineListLinkedService("http://localhost/webhdfs/v1/", "tenantId", "servicePrincipalId", new DataFactorySecretString("ServicePrincipalKey")) { }) { Properties = { Description = "test description" } };
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_CosmosDbMongoDbApi()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3760,18 +3043,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_TeamDesk()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3783,18 +3061,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Quickbase()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3802,18 +3075,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new QuickbaseLinkedService("testUrl", new DataFactorySecretString("FakeuerToken")) { });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Smartsheet()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3821,18 +3089,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SmartsheetLinkedService(new DataFactorySecretString("FakeapiToken")) { });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_Zendesk()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3843,17 +3106,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
         [Test]
         [RecordedTest]
         public async Task LinkedService_Dataworld()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3861,18 +3119,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DataworldLinkedService(new DataFactorySecretString("FakeapiToken")) { });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_RestService_CertificateValidation()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3888,18 +3141,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_GoogleSheets()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3907,18 +3155,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GoogleSheetsLinkedService(new DataFactorySecretString("FakeapiToken")) { });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_MySql()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -3931,18 +3174,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_PostgreSql()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             var linkedService = dataFactory.GetDataFactoryLinkedServices();
@@ -3950,18 +3188,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Port=5432;Database=myDataBase;User Id=myUsername;Password=myPassword;\r\n")) { });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
         public async Task LinkedService_PostgreSql_AzureKeyValue()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            DataFactoryResource dataFactory = await TestSetup();
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
 
             string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
@@ -3974,7 +3207,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
     }
 }

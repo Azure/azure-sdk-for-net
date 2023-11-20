@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             await CreateOrUpdateGlobalParameter(_dataFactory);
             var list = await _dataFactory.GetDataFactoryGlobalParameters().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(_globalParameterName,list.FirstOrDefault().Data.Name);
+            Assert.AreEqual(_globalParameterName, list.FirstOrDefault().Data.Name);
         }
 
         [Test]
