@@ -290,7 +290,7 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
         }
     }
 
-    # Force capitalize all keys to avoid azure pipelines confusion with
+    # Force capitalization of all keys to avoid Azure Pipelines confusion with
     # variable auto-capitalization and OS env var capitalization differences
     $capitalized = @{}
     foreach ($item in $deploymentOutputs.GetEnumerator()) {
