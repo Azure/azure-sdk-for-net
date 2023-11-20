@@ -25,6 +25,8 @@ The main shared concepts of `System.ClientModel` include:
 
 ### Simple ModelReaderWriter usage
 
+As a library author you can implement `IPersistableModel<T>` or `IJsonModel<T>` which will give library users the ability to read and write your models.
+
 Example writing an instance of a model.
 
 ```C# Snippet:Readme_Write_Simple
