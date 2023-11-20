@@ -369,13 +369,13 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
 
   if ($parentId)
   {
-    CreateWorkItemRelation $workItem.id $parentId "parent" outputCommand
+    CreateWorkItemRelation $workItem.id $parentId "parent" $outputCommand
   }
   
   # Add a work item as related if given.
   if ($relatedId)
   {
-    CreateWorkItemRelation $workItem.id $relatedId "Related" outputCommand
+    CreateWorkItemRelation $workItem.id $relatedId "Related" $outputCommand
   }
   return $workItem
 }
