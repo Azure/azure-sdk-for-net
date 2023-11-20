@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerJobAgent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerJobAgentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerJobAgentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerJobAgent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerJobAgentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerJobAgentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerJobAgent method.
     /// </summary>
     public partial class SqlServerJobAgentResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerJobAgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerJobAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerJobAgentResource(ArmClient client, SqlServerJobAgentData data) : this(client, data.Id)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobExecutionResource> GetJobExecutionsByAgent(SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();

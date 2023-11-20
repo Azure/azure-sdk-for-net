@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AdaptiveApplicationControlGroupResource" /> and their operations.
-    /// Each <see cref="AdaptiveApplicationControlGroupResource" /> in the collection will belong to the same instance of <see cref="SecurityCenterLocationResource" />.
-    /// To get an <see cref="AdaptiveApplicationControlGroupCollection" /> instance call the GetAdaptiveApplicationControlGroups method from an instance of <see cref="SecurityCenterLocationResource" />.
+    /// A class representing a collection of <see cref="AdaptiveApplicationControlGroupResource"/> and their operations.
+    /// Each <see cref="AdaptiveApplicationControlGroupResource"/> in the collection will belong to the same instance of <see cref="SecurityCenterLocationResource"/>.
+    /// To get an <see cref="AdaptiveApplicationControlGroupCollection"/> instance call the GetAdaptiveApplicationControlGroups method from an instance of <see cref="SecurityCenterLocationResource"/>.
     /// </summary>
     public partial class AdaptiveApplicationControlGroupCollection : ArmCollection
     {

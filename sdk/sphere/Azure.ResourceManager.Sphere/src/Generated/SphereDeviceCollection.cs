@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SphereDeviceResource" /> and their operations.
-    /// Each <see cref="SphereDeviceResource" /> in the collection will belong to the same instance of <see cref="SphereDeviceGroupResource" />.
-    /// To get a <see cref="SphereDeviceCollection" /> instance call the GetSphereDevices method from an instance of <see cref="SphereDeviceGroupResource" />.
+    /// A class representing a collection of <see cref="SphereDeviceResource"/> and their operations.
+    /// Each <see cref="SphereDeviceResource"/> in the collection will belong to the same instance of <see cref="SphereDeviceGroupResource"/>.
+    /// To get a <see cref="SphereDeviceCollection"/> instance call the GetSphereDevices method from an instance of <see cref="SphereDeviceGroupResource"/>.
     /// </summary>
     public partial class SphereDeviceCollection : ArmCollection, IEnumerable<SphereDeviceResource>, IAsyncEnumerable<SphereDeviceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeviceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeviceDevicesRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeviceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeviceDevicesRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
