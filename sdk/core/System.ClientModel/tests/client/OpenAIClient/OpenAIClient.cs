@@ -3,7 +3,7 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Internal;
+using TestHelpers.Internal;
 using System.ClientModel.Primitives;
 using System.Text;
 using System.Threading;
@@ -35,10 +35,14 @@ public class OpenAIClient
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
         if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
-        RequestOptions context = FromCancellationToken(cancellationToken);
-        OutputMessage result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
+        RequestOptions options = FromCancellationToken(cancellationToken);
+        InputContent content = InputContent.Create(completionsOptions);
+
+        OutputMessage result = GetCompletions(deploymentId, content, options);
+
         PipelineResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
+
         return OutputMessage.FromValue(completions, response);
     }
 

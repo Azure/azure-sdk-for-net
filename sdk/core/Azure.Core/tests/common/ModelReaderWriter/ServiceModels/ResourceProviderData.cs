@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {

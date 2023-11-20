@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.ClientModel.Internal;
+using TestHelpers.Internal;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Collections.Generic;
 using System.Text.Json;

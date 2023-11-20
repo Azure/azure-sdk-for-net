@@ -3,7 +3,7 @@
 
 #nullable disable
 
-using System.ClientModel.Internal;
+using TestHelpers.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;

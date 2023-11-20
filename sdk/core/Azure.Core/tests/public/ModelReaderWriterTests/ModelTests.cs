@@ -3,13 +3,13 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using NUnit.Framework;
+using TestHelpers.Internal;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 {

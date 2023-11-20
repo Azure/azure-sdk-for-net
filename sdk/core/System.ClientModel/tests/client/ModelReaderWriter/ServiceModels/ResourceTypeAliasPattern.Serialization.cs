@@ -6,8 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
 using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {

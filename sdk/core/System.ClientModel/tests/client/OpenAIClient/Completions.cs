@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Internal;
+using TestHelpers.Internal;
 using System.Collections.Generic;
 using System.Linq;
 

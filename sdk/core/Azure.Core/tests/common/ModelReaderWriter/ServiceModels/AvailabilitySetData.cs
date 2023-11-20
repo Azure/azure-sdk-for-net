@@ -5,10 +5,10 @@
 
 #nullable disable
 
-using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Tests.Models.ResourceManager.Resources;
+using TestHelpers.Internal;
 
 namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {

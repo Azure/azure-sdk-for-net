@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Internal;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -11,6 +10,7 @@ using System.Xml;
 using Azure.Core.Tests.Common;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
 using NUnit.Framework;
+using TestHelpers.Internal;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 {
