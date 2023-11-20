@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a SecurityAdminConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityAdminConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityAdminConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource" /> using the GetSecurityAdminConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityAdminConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityAdminConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetSecurityAdminConfiguration method.
     /// </summary>
     public partial class SecurityAdminConfigurationResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityAdminConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityAdminConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityAdminConfigurationResource(ArmClient client, SecurityAdminConfigurationData data) : this(client, data.Id)

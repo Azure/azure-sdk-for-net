@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EnergyServices
 {
     /// <summary>
     /// A Class representing an EnergyService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EnergyServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEnergyServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEnergyService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EnergyServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEnergyServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEnergyService method.
     /// </summary>
     public partial class EnergyServiceResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EnergyServices
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EnergyServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EnergyServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EnergyServiceResource(ArmClient client, EnergyServiceData data) : this(client, data.Id)

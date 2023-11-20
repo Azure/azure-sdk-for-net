@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetAppSubvolumeInfoResource" /> and their operations.
-    /// Each <see cref="NetAppSubvolumeInfoResource" /> in the collection will belong to the same instance of <see cref="NetAppVolumeResource" />.
-    /// To get a <see cref="NetAppSubvolumeInfoCollection" /> instance call the GetNetAppSubvolumeInfos method from an instance of <see cref="NetAppVolumeResource" />.
+    /// A class representing a collection of <see cref="NetAppSubvolumeInfoResource"/> and their operations.
+    /// Each <see cref="NetAppSubvolumeInfoResource"/> in the collection will belong to the same instance of <see cref="NetAppVolumeResource"/>.
+    /// To get a <see cref="NetAppSubvolumeInfoCollection"/> instance call the GetNetAppSubvolumeInfos method from an instance of <see cref="NetAppVolumeResource"/>.
     /// </summary>
     public partial class NetAppSubvolumeInfoCollection : ArmCollection, IEnumerable<NetAppSubvolumeInfoResource>, IAsyncEnumerable<NetAppSubvolumeInfoResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppSubvolumeInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppSubvolumeInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppSubvolumeInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppSubvolumeInfoSubvolumesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppSubvolumeInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppSubvolumeInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppSubvolumeInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppSubvolumeInfoSubvolumesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

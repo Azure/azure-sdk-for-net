@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PacketCoreDataPlaneResource" /> and their operations.
-    /// Each <see cref="PacketCoreDataPlaneResource" /> in the collection will belong to the same instance of <see cref="PacketCoreControlPlaneResource" />.
-    /// To get a <see cref="PacketCoreDataPlaneCollection" /> instance call the GetPacketCoreDataPlanes method from an instance of <see cref="PacketCoreControlPlaneResource" />.
+    /// A class representing a collection of <see cref="PacketCoreDataPlaneResource"/> and their operations.
+    /// Each <see cref="PacketCoreDataPlaneResource"/> in the collection will belong to the same instance of <see cref="PacketCoreControlPlaneResource"/>.
+    /// To get a <see cref="PacketCoreDataPlaneCollection"/> instance call the GetPacketCoreDataPlanes method from an instance of <see cref="PacketCoreControlPlaneResource"/>.
     /// </summary>
     public partial class PacketCoreDataPlaneCollection : ArmCollection, IEnumerable<PacketCoreDataPlaneResource>, IAsyncEnumerable<PacketCoreDataPlaneResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PacketCoreDataPlaneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PacketCoreDataPlaneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PacketCoreDataPlaneResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PacketCoreDataPlaneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PacketCoreDataPlaneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PacketCoreDataPlaneResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
