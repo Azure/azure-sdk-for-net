@@ -81,16 +81,6 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Internal
 {
-    public partial class ClientUtilities
-    {
-        public ClientUtilities() { }
-        public static void AssertInRange<T>(T value, T minimum, T maximum, string name) where T : notnull, System.IComparable<T> { }
-        public static void AssertNotNullOrEmpty(string value, string name) { }
-        public static void AssertNotNull<T>(T value, string name) { }
-        public static System.Exception CreateOperationCanceledException(System.Exception? innerException, System.Threading.CancellationToken cancellationToken, string? message = null) { throw null; }
-        public static bool ShouldWrapInOperationCanceledException(System.Exception exception, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
-    }
     public partial interface IUtf8JsonContentWriteable
     {
         void Write(System.Text.Json.Utf8JsonWriter writer);
