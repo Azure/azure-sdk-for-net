@@ -16,6 +16,8 @@ namespace Azure.Core.Tests
             public override Response GetRawResponse() {
                 throw new NotImplementedException();
             }
+
+            public override int Value => 42;
         }
 
         [Test]
@@ -23,7 +25,7 @@ namespace Azure.Core.Tests
         {
             var response = new MyResponse();
 
-            Assert.DoesNotThrow(() => response.Value);
+            Assert.Equals(42, response.Value);
         }
     }
 }

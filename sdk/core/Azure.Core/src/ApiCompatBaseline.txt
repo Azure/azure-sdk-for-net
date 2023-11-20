@@ -1,0 +1,4 @@
+Compat issues with assembly Azure.Core:
+CannotMakeMemberAbstract : Member 'public T Azure.Response<T>.Value' is abstract in the implementation but is not abstract in the contract.
+CannotMakeMemberAbstract : Member 'public T Azure.Response<T>.Value.get()' is abstract in the implementation but is not abstract in the contract.
+Total Issues: 2
