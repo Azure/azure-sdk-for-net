@@ -100,9 +100,7 @@ rename-mapping:
   AuthenticationMethod: NetworkAuthenticationMethod
   ConnectionStateSnapshot.connectionState: NetworkConnectionState
   ConnectivityInformation.connectionStatus: NetworkConnectionStatus
-  DscpConfigurationPropertiesFormat.protocol: NetworkProtocolType
   CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
-  ProtocolCustomSettingsFormat: ProtocolCustomSettings
   ServiceEndpointPropertiesFormat: ServiceEndpointProperties
   ConnectionStatus: NetworkConnectionStatus
   IssueType: ConnectivityIssueType
