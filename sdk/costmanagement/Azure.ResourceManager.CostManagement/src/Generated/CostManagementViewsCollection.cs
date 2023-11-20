@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CostManagementViewsResource" /> and their operations.
-    /// Each <see cref="CostManagementViewsResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="CostManagementViewsCollection" /> instance call the GetCostManagementViews method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="CostManagementViewsResource"/> and their operations.
+    /// Each <see cref="CostManagementViewsResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CostManagementViewsCollection"/> instance call the GetCostManagementViews method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class CostManagementViewsCollection : ArmCollection, IEnumerable<CostManagementViewsResource>, IAsyncEnumerable<CostManagementViewsResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CostManagementViewsResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CostManagementViewsResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementViewsResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostManagementViewsResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CostManagementViewsResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementViewsResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);

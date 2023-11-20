@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatadogSingleSignOnResource" /> and their operations.
-    /// Each <see cref="DatadogSingleSignOnResource" /> in the collection will belong to the same instance of <see cref="DatadogMonitorResource" />.
-    /// To get a <see cref="DatadogSingleSignOnResourceCollection" /> instance call the GetDatadogSingleSignOnResources method from an instance of <see cref="DatadogMonitorResource" />.
+    /// A class representing a collection of <see cref="DatadogSingleSignOnResource"/> and their operations.
+    /// Each <see cref="DatadogSingleSignOnResource"/> in the collection will belong to the same instance of <see cref="DatadogMonitorResource"/>.
+    /// To get a <see cref="DatadogSingleSignOnResourceCollection"/> instance call the GetDatadogSingleSignOnResources method from an instance of <see cref="DatadogMonitorResource"/>.
     /// </summary>
     public partial class DatadogSingleSignOnResourceCollection : ArmCollection, IEnumerable<DatadogSingleSignOnResource>, IAsyncEnumerable<DatadogSingleSignOnResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatadogSingleSignOnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogSingleSignOnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatadogSingleSignOnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogSingleSignOnResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

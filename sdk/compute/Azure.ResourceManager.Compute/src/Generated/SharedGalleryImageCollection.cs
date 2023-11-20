@@ -21,9 +21,9 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SharedGalleryImageResource" /> and their operations.
-    /// Each <see cref="SharedGalleryImageResource" /> in the collection will belong to the same instance of <see cref="SharedGalleryResource" />.
-    /// To get a <see cref="SharedGalleryImageCollection" /> instance call the GetSharedGalleryImages method from an instance of <see cref="SharedGalleryResource" />.
+    /// A class representing a collection of <see cref="SharedGalleryImageResource"/> and their operations.
+    /// Each <see cref="SharedGalleryImageResource"/> in the collection will belong to the same instance of <see cref="SharedGalleryResource"/>.
+    /// To get a <see cref="SharedGalleryImageCollection"/> instance call the GetSharedGalleryImages method from an instance of <see cref="SharedGalleryResource"/>.
     /// </summary>
     public partial class SharedGalleryImageCollection : ArmCollection, IEnumerable<SharedGalleryImageResource>, IAsyncEnumerable<SharedGalleryImageResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SharedGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SharedGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SharedGalleryImageResource> GetAllAsync(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SharedGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SharedGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SharedGalleryImageResource> GetAll(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
