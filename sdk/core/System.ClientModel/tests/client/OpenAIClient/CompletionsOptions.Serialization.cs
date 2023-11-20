@@ -5,17 +5,17 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
-using System.Text.Json;
-using System.Buffers;
+using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+using TestHelpers.Internal;
 
 namespace OpenAI;
 
-public partial class CompletionsOptions : IUtf8JsonContentWriteable
+public partial class CompletionsOptions : IJsonModel<CompletionsOptions>
 {
-    void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer)
+    private void Write(Utf8JsonWriter writer)
     {
         writer.WriteStartObject();
         writer.WritePropertyName("prompt"u8);
@@ -109,11 +109,22 @@ public partial class CompletionsOptions : IUtf8JsonContentWriteable
         writer.WriteEndObject();
     }
 
-    /// <summary> Convert to a message content that can be used on a request. </summary>
-    internal virtual InputContent ToRequestContent()
+    string IPersistableModel<CompletionsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        => "J";
+
+    void IJsonModel<CompletionsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        => Write(writer);
+
+    BinaryData IPersistableModel<CompletionsOptions>.Write(ModelReaderWriterOptions options)
+        => ModelReaderWriter.Write(this, options);
+    
+    CompletionsOptions IJsonModel<CompletionsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
-        using Utf8JsonContentWriter writer = new();
-        writer.Write(this);
-        return InputContent.Create(writer.WrittenContent);
+        throw new NotImplementedException();
+    }
+
+    CompletionsOptions IPersistableModel<CompletionsOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+    {
+        throw new NotImplementedException();
     }
 }

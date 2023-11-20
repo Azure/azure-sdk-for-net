@@ -11,7 +11,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void MapAndStaticPropertySameObject()
         {
-            Assert.IsTrue(ReferenceEquals(ModelReaderWriterHelper.WireOptions, ModelReaderWriterHelper.WireOptions));
+            Assert.IsTrue(ReferenceEquals(ModelWriterTests.WireOptions, ModelWriterTests.WireOptions));
             Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Json, ModelReaderWriterOptions.Json));
             Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Xml, ModelReaderWriterOptions.Xml));
         }
@@ -19,7 +19,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void MapShouldHaveRightValues()
         {
-            var options = ModelReaderWriterHelper.WireOptions;
+            var options = ModelWriterTests.WireOptions;
             Assert.AreEqual("W", options.Format);
 
             options = ModelReaderWriterOptions.Json;

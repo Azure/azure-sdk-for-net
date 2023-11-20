@@ -5,8 +5,7 @@
 
 #nullable disable
 
-using System.ClientModel.Internal;
-using System.Xml.Linq;
+using System;
 
 namespace OpenAI;
 
@@ -25,7 +24,7 @@ public partial class Choice
     /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
     internal Choice(string text, int index, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
     {
-        ClientUtilities.AssertNotNull(text, nameof(text));
+        if (text is null) throw new ArgumentNullException(nameof(text));
 
         Text = text;
         Index = index;

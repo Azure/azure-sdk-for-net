@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-public class ClientUtilities
+internal class ClientUtilities
 {
     #region Argument validation
     public static void AssertNotNull<T>(T value, string name)

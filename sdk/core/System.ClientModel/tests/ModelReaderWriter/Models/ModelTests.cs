@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.ClientModel.Primitives;
 using System.Reflection;
 using System.Text.Json;
-using System.ClientModel.Internal;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -181,12 +180,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             if (ModelInstance is IJsonModel<T> jsonModel && IsXmlWireFormat)
             {
-                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterHelper.WireOptions));
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterTests.WireOptions));
                 Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });
                 bool exceptionCaught = false;
                 try
                 {
-                    jsonModel.Create(ref reader, ModelReaderWriterHelper.WireOptions);
+                    jsonModel.Create(ref reader, ModelReaderWriterTests.WireOptions);
                 }
                 catch (InvalidOperationException)
                 {

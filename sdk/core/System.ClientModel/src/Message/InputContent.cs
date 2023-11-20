@@ -11,6 +11,8 @@ namespace System.ClientModel
 {
     public abstract class InputContent : IDisposable
     {
+        private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
+
         /// <summary>
         /// Creates an instance of <see cref="InputContent"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
@@ -25,7 +27,7 @@ namespace System.ClientModel
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="InputContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
         public static InputContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T: IPersistableModel<T>
-            => new ModelMessageBody<T>(model, options ?? ModelReaderWriterHelper.WireOptions);
+            => new ModelMessageBody<T>(model, options ?? ModelWriteWireOptions);
 
         /// <summary>
         /// Attempts to compute the length of the underlying body content, if available.

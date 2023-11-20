@@ -3,17 +3,16 @@
 
 using System;
 using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Buffers;
 using Azure.Core.Serialization;
-using System.ClientModel.Internal;
 
 namespace Azure.Core
 {
@@ -22,6 +21,8 @@ namespace Azure.Core
     /// </summary>
     public abstract class RequestContent : InputContent
     {
+        private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
+
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
 
@@ -91,7 +92,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IPersistableModel{T}"/>.</returns>
         public static new RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T: IPersistableModel<T>
-            => new AzureRequestBodyContent(InputContent.Create(model, options ?? ModelReaderWriterHelper.WireOptions));
+            => new AzureRequestBodyContent(InputContent.Create(model, options ?? ModelWriteWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.

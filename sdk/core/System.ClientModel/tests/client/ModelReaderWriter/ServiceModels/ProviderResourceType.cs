@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.ClientModel.Internal;
+using TestHelpers.Internal;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {

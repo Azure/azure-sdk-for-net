@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace System.ClientModel.Internal;
+#nullable enable
+
+namespace TestHelpers.Internal;
 
 internal class TypeFormatters
 {
