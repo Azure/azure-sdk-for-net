@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure
 {
@@ -18,6 +19,9 @@ namespace Azure
         /// <summary>
         /// Gets a value indicating whether the current instance has a valid value of its underlying type.
         /// </summary>
+#if NET6_0_OR_GREATER // technically available since .NET 5.0 but there's no define for this
+        [MemberNotNullWhen(returnValue: true, member: nameof(Value))]
+#endif
         public abstract bool HasValue { get; }
 
         /// <summary>
