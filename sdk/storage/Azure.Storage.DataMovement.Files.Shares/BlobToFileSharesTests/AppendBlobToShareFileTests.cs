@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Blobs.Specialized;
@@ -20,7 +20,7 @@ using DMBlob::Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [BlobsClientTestFixture]
+    [ShareClientTestFixture]
     public class AppendBlobToShareFileTests : StartTransferCopyTestBase
         <BlobServiceClient,
         BlobContainerClient,
