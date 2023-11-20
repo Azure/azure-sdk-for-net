@@ -12,7 +12,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-
     <!--
       netcoreapp2.1 is out of support but we'll keep is as a target for a bit
       to give customers time to migrate without losing perf optimizations
@@ -39,7 +38,6 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />
   </ItemGroup>
-  
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" />
     <PackageReference Include="System.Net.Http" />
