@@ -25,7 +25,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'userAssignedIdentity': 'arm-id'
 
 acronym-mapping:
   CPU: Cpu
@@ -77,7 +76,7 @@ directive:
         "additionalProperties": {
           "type": "string"
         }
-      }
+      }      
   - from: deviceupdate.json
     where: $.definitions
     transform: >
@@ -86,9 +85,8 @@ directive:
       $.Account.properties.properties.properties.sku['x-ms-enum'].name = 'Sku';
   - from: swagger-document
     where: $.definitions.Encryption
-    transform: $.UserAssignedIdentity['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.Encryption
-    transform: $['x-ms-client-name'] = 'DeviceUpdateEncryption'
+    transform: >
+      $['x-ms-client-name'] = 'DeviceUpdateEncryption';
+      $.properties.userAssignedIdentity['x-ms-format'] = 'arm-id'
 
 ```
