@@ -1,4 +1,4 @@
-# System.ClientModel shared client library for .NET
+# System.ClientModel client library for .NET
 
 `System.ClientModel` provides shared primitives, abstractions, and helpers for .NET service client libraries.
 
@@ -10,6 +10,10 @@ it will be installed for you when you install one of the client libraries using 
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/).
+
+```dotnetcli
+dotnet add package System.ClientModel
+```
 
 ### Prerequisites
 
