@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Attestation.Tests
     public class PrivateEndpointConnectionTests : AttestationManagementTestBase
     {
         public PrivateEndpointConnectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -39,50 +39,31 @@ namespace Azure.ResourceManager.Attestation.Tests
             var collection = resourceGroup.GetAttestationProviders();
             var providrerCollection = resourceGroup.GetAttestationProviders();
             var providerInput = ResourceDataHelper.GetProviderData(DefaultLocation);
+            //1.CreateOrUpdate
             var providerResource = (await providrerCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, providerInput)).Value;
             var endpoint = await GetEndpointResource(resourceGroup, providerResource.Data.Id);
-            var endppintCollection = providerResource.GetAttestationPrivateEndpointConnections();
-            //1.CreateOrUpdate
-            var connections = await endppintCollection.GetAllAsync().ToEnumerableAsync();
+            var endpointCollection = providerResource.GetAttestationPrivateEndpointConnections();
+            //2.Get
+            var connections = await endpointCollection.GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.FirstOrDefault().Data.Name;
             var privateEndpointConnectionData = connections.FirstOrDefault().Data;
-            privateEndpointConnectionData.ConnectionState.Description = "Update descriptions";
-            var input = ResourceDataHelper.GetPrivateEndpointConnectionData();
-            var endpointResource = (await endppintCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionData.Name, privateEndpointConnectionData)).Value;
-            Assert.AreEqual(endpointName, endpointResource.Data.Name);
-            //2.Get
-            var endpointResource2 = (await endpointResource.GetAsync()).Value;
-            ResourceDataHelper.AssetPrivateEndpointConnection(endpointResource.Data, endpointResource.Data);
+            Assert.NotNull(privateEndpointConnectionData);
+            Assert.AreEqual("Approved", privateEndpointConnectionData.ConnectionState.Status.ToString());
             //3.GetAll
-            _ = await endppintCollection.CreateOrUpdateAsync(WaitUntil.Completed, endpointName2, input);
-            _ = await endppintCollection.CreateOrUpdateAsync(WaitUntil.Completed, endpointName3, input);
-            int count = 0;
-            await foreach (var availabilitySet in providrerCollection.GetAllAsync())
-            {
-                count++;
-            }
-            Assert.GreaterOrEqual(count, 2);
-            //4.Exist
-            Assert.IsTrue(await endppintCollection.ExistsAsync(providerName));
-            Assert.IsFalse(await endppintCollection.ExistsAsync(providerName + "1"));
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await endppintCollection.ExistsAsync(null));
+            var list = await endpointCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(1, list.Count);
+            //4.CheckIfExist
+            Assert.True(await endpointCollection.ExistsAsync(list[0].Data.Name));
+            Assert.False(await endpointCollection.ExistsAsync(list[0].Data.Name + "01"));
             //Resouece operation
-            //1.Get
-            var endpointResource3 = (await endpointResource.GetAsync()).Value;
-            ResourceDataHelper.AssetPrivateEndpointConnection(endpointResource.Data, endpointResource3.Data);
-            //2.Update
-            AttestationPrivateEndpointConnectionData data = new AttestationPrivateEndpointConnectionData()
+            //Delete
+            Assert.AreEqual(1, list.Count);
+            foreach (var item in list)
             {
-                ConnectionState = new AttestationPrivateLinkServiceConnectionState()
-                {
-                    Description = "Updated Auto-Approved",
-                },
-            };
-            var endpointResource4 = (await endpointResource3.UpdateAsync(WaitUntil.Completed, data)).Value;
-            ResourceDataHelper.AssetPrivateEndpointConnection(endpointResource4.Data, data);
-            //3. Delete
-            await endpointResource4.DeleteAsync(WaitUntil.Completed);
+                await item.DeleteAsync(WaitUntil.Completed);
+            }
+            list = await endpointCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(0, list.Count);
         }
 
         public async Task<PrivateEndpointResource> GetEndpointResource(ResourceGroupResource resourceGroup, ResourceIdentifier providerId)

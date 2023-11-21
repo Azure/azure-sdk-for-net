@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Attestation.Tests
     public class AttestationProviderTest : AttestationManagementTestBase
     {
         public AttestationProviderTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
