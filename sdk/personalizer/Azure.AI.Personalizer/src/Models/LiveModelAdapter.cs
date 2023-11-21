@@ -58,22 +58,11 @@ namespace Azure.AI.Personalizer
             liveModel.QueueActionTakenEvent(eventId);
         }
 
-        #region IDisposable Support
-        private bool isDisposed = false;
-
-        private void Dispose(bool disposing)
+        /// <summary> Dispose liveModel </summary>
+        protected override void DisposeManagedObjects()
         {
-            if (!this.isDisposed)
-            {
-                liveModel.Dispose();
-            }
-            this.isDisposed = true;
+            liveModel.Dispose();
+            base.DisposeManagedObjects();
         }
-
-        public void Dispose()
-        {
-            this.Dispose(true);
-        }
-        #endregion
     }
 }
