@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
-using System.ClientModel.Internal.Primitives;
 using System.Net.Http;
 
 namespace Azure.Core.Pipeline
@@ -29,7 +27,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        private sealed class HttpClientTransportResponse : HttpPipelineResponse
+        private sealed class HttpClientTransportResponse : PipelineResponse
         {
             public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse)
                 : base(httpResponse)
@@ -38,6 +36,23 @@ namespace Azure.Core.Pipeline
             }
 
             public string ClientRequestId { get; internal set; }
+
+            public override int Status => throw new NotImplementedException();
+
+            public override string ReasonPhrase => throw new NotImplementedException();
+
+            public override MessageHeaders Headers => throw new NotImplementedException();
+
+            public override Stream? ContentStream
+            {
+                get => throw new NotImplementedException();
+                protected set => throw new NotImplementedException();
+            }
+
+            public override void Dispose()
+            {
+                throw new NotImplementedException();
+            }
 
             internal void SetContentStream(Stream? stream)
             {

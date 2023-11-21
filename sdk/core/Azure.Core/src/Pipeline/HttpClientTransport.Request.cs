@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.ClientModel.Primitives;
-using System.ClientModel.Internal.Primitives;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 
@@ -28,7 +28,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        private sealed class HttpClientTransportRequest : HttpPipelineRequest
+        private sealed class HttpClientTransportRequest : PipelineRequest
         {
             private RequestUriBuilder? _uriBuilder;
 
@@ -64,6 +64,13 @@ namespace Azure.Core.Pipeline
                 }
             }
 
+            public override string Method { get => throw new NotImplementedException();
+                set => throw new NotImplementedException(); }
+            public override InputContent? Content { get => throw new NotImplementedException();
+                set => throw new NotImplementedException(); }
+
+            public override MessageHeaders Headers => throw new NotImplementedException();
+
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 
             internal static void AddAzureProperties(HttpMessage message, HttpRequestMessage httpRequest)
@@ -91,6 +98,11 @@ namespace Azure.Core.Pipeline
 #else
                 httpRequest.Properties[name] = value;
 #endif
+            }
+
+            public override void Dispose()
+            {
+                throw new NotImplementedException();
             }
         }
 

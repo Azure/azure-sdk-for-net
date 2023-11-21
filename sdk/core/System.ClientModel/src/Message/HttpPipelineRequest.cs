@@ -15,49 +15,9 @@ namespace System.ClientModel.Internal.Primitives;
 
 // This adds the Http dependency, and some implementation
 
-internal class HttpPipelineRequest : PipelineRequest, IDisposable
+internal class HttpPipelineRequest : PipelineRequest
 {
     private const string AuthorizationHeaderName = "Authorization";
-
-    private Uri? _uri;
-    private InputContent? _content;
-
-    private readonly PipelineRequestHeaders _headers;
-
-    protected internal HttpPipelineRequest()
-    {
-        Method = HttpMethod.Get.Method;
-        _headers = new PipelineRequestHeaders();
-    }
-
-    public override Uri Uri
-    {
-        get
-        {
-            if (_uri is null)
-            {
-                throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
-            }
-
-            return _uri;
-        }
-
-        set => _uri = value;
-    }
-
-    public override InputContent? Content
-    {
-        get => _content;
-        set => _content = value;
-    }
-
-    public override string Method
-    {
-        get;
-        set;
-    }
-
-    public override MessageHeaders Headers => _headers;
 
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
@@ -85,7 +45,7 @@ internal class HttpPipelineRequest : PipelineRequest, IDisposable
         Uri uri = Uri;
         HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
 
-        MessageBodyAdapter? httpContent = _content != null ? new MessageBodyAdapter(_content, cancellationToken) : null;
+        MessageBodyAdapter? httpContent = Content != null ? new MessageBodyAdapter(Content, cancellationToken) : null;
         httpRequest.Content = httpContent;
 #if NETSTANDARD
         httpRequest.Headers.ExpectContinue = false;
@@ -155,18 +115,6 @@ internal class HttpPipelineRequest : PipelineRequest, IDisposable
         protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
             => _content.WriteTo(stream, cancellationToken);
 #endif
-    }
-
-    public override void Dispose()
-    {
-        var content = _content;
-        if (content != null)
-        {
-            _content = null;
-            content.Dispose();
-        }
-
-        GC.SuppressFinalize(this);
     }
 
     public override string ToString() => BuildRequestMessage(default).ToString();
