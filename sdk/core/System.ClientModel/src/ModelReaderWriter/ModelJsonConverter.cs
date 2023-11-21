@@ -10,9 +10,7 @@ namespace System.ClientModel.Primitives
     /// <summary>
     /// A generic converter which allows <see cref="JsonSerializer"/> to be able to write and read any models that implement <see cref="IJsonModel{T}"/>.
     /// </summary>
-#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
     [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
-#endif
 #pragma warning disable AZC0014 // Avoid using banned types in public API
     public class ModelJsonConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
