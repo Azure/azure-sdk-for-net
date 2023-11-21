@@ -176,6 +176,7 @@ stages:
             displayName: 'Run APIScan'
             inputs:
               softwareFolder: $(Build.ArtifactStagingDirectory)
+              # SoftwareName cannot change as it is used for looking up baselining data
               softwareName: 'Azure SDK Libraries'
               softwareVersionNum: '$(OfficialBuildId)'
               isLargeApp: false
