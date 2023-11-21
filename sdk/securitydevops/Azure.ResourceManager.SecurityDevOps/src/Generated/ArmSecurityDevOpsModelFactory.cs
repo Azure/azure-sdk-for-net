@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSecurityDevOpsModelFactory
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.AzureDevOpsConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AzureDevOpsConnectorData(id, name, resourceType, systemData, tags, location, properties);
+            return new AzureDevOpsConnectorData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsRepoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.AzureDevOpsRepoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <returns> A new <see cref="SecurityDevOps.AzureDevOpsRepoData"/> instance for mocking. </returns>
         public static AzureDevOpsRepoData AzureDevOpsRepoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsRepoProperties properties = null)
         {
-            return new AzureDevOpsRepoData(id, name, resourceType, systemData, properties);
+            return new AzureDevOpsRepoData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureDevOpsConnectorStats"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <returns> A new <see cref="Models.AzureDevOpsConnectorStats"/> instance for mocking. </returns>
         public static AzureDevOpsConnectorStats AzureDevOpsConnectorStats(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsConnectorStatsProperties properties = null)
         {
-            return new AzureDevOpsConnectorStats(id, name, resourceType, systemData, properties);
+            return new AzureDevOpsConnectorStats(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.AzureDevOpsOrgData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <returns> A new <see cref="SecurityDevOps.AzureDevOpsOrgData"/> instance for mocking. </returns>
         public static AzureDevOpsOrgData AzureDevOpsOrgData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsOrgProperties properties = null)
         {
-            return new AzureDevOpsOrgData(id, name, resourceType, systemData, properties);
+            return new AzureDevOpsOrgData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.AzureDevOpsProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <returns> A new <see cref="SecurityDevOps.AzureDevOpsProjectData"/> instance for mocking. </returns>
         public static AzureDevOpsProjectData AzureDevOpsProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureDevOpsProjectProperties properties = null)
         {
-            return new AzureDevOpsProjectData(id, name, resourceType, systemData, properties);
+            return new AzureDevOpsProjectData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.GitHubConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GitHubConnectorData(id, name, resourceType, systemData, tags, location, properties);
+            return new GitHubConnectorData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GitHubRepoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.GitHubRepoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <returns> A new <see cref="SecurityDevOps.GitHubRepoData"/> instance for mocking. </returns>
         public static GitHubRepoData GitHubRepoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitHubRepoProperties properties = null)
         {
-            return new GitHubRepoData(id, name, resourceType, systemData, properties);
+            return new GitHubRepoData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GitHubConnectorStats"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <returns> A new <see cref="Models.GitHubConnectorStats"/> instance for mocking. </returns>
         public static GitHubConnectorStats GitHubConnectorStats(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitHubConnectorStatsProperties properties = null)
         {
-            return new GitHubConnectorStats(id, name, resourceType, systemData, properties);
+            return new GitHubConnectorStats(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GitHubOwnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDevOps.GitHubOwnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <returns> A new <see cref="SecurityDevOps.GitHubOwnerData"/> instance for mocking. </returns>
         public static GitHubOwnerData GitHubOwnerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GitHubOwnerProperties properties = null)
         {
-            return new GitHubOwnerData(id, name, resourceType, systemData, properties);
+            return new GitHubOwnerData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
     }
 }

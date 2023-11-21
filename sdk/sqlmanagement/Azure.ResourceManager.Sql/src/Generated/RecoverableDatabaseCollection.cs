@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoverableDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoverableDatabaseRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoverableDatabaseResource(Client, RecoverableDatabaseData.DeserializeRecoverableDatabaseData(e)), _recoverableDatabaseClientDiagnostics, Pipeline, "RecoverableDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RecoverableDatabaseResource(Client, RecoverableDatabaseData.DeserializeRecoverableDatabaseData(e)), _recoverableDatabaseClientDiagnostics, Pipeline, "RecoverableDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoverableDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoverableDatabaseRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoverableDatabaseResource(Client, RecoverableDatabaseData.DeserializeRecoverableDatabaseData(e)), _recoverableDatabaseClientDiagnostics, Pipeline, "RecoverableDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RecoverableDatabaseResource(Client, RecoverableDatabaseData.DeserializeRecoverableDatabaseData(e)), _recoverableDatabaseClientDiagnostics, Pipeline, "RecoverableDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

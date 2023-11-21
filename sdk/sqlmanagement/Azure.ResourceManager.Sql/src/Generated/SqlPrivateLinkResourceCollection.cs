@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlPrivateLinkResource(Client, SqlPrivateLinkResourceData.DeserializeSqlPrivateLinkResourceData(e)), _sqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "SqlPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlPrivateLinkResource(Client, SqlPrivateLinkResourceData.DeserializeSqlPrivateLinkResourceData(e)), _sqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "SqlPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlPrivateLinkResource(Client, SqlPrivateLinkResourceData.DeserializeSqlPrivateLinkResourceData(e)), _sqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "SqlPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlPrivateLinkResource(Client, SqlPrivateLinkResourceData.DeserializeSqlPrivateLinkResourceData(e)), _sqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "SqlPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

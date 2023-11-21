@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,46 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The TopologySingleResource. </summary>
     public partial class TopologySingleResource
     {
-        /// <summary> Initializes a new instance of TopologySingleResource. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResource"/>. </summary>
         internal TopologySingleResource()
         {
             Parents = new ChangeTrackingList<TopologySingleResourceParent>();
             Children = new ChangeTrackingList<TopologySingleResourceChild>();
         }
 
-        /// <summary> Initializes a new instance of TopologySingleResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResource"/>. </summary>
         /// <param name="resourceId"> Azure resource id. </param>
         /// <param name="severity"> The security severity of the resource. </param>
         /// <param name="recommendationsExist"> Indicates if the resource has security recommendations. </param>
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="location"> The location of this resource. </param>
         /// <param name="parents"> Azure resources connected to this resource which are in higher level in the topology view. </param>
         /// <param name="children"> Azure resources connected to this resource which are in lower level in the topology view. </param>
-        internal TopologySingleResource(ResourceIdentifier resourceId, string severity, bool? recommendationsExist, string networkZones, int? topologyScore, AzureLocation? location, IReadOnlyList<TopologySingleResourceParent> parents, IReadOnlyList<TopologySingleResourceChild> children)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopologySingleResource(ResourceIdentifier resourceId, string severity, bool? recommendationsExist, string networkZones, int? topologyScore, AzureLocation? location, IReadOnlyList<TopologySingleResourceParent> parents, IReadOnlyList<TopologySingleResourceChild> children, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Severity = severity;
@@ -39,6 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Location = location;
             Parents = parents;
             Children = children;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure resource id. </summary>
