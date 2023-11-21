@@ -288,7 +288,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelComputLength()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 1000000, i =>
             {
@@ -300,7 +300,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelCopy()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 10000, i =>
             {
@@ -313,7 +313,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelCopyAsync()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 10000, async i =>
             {
@@ -321,6 +321,36 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
                 await writer.CopyToAsync(stream, default);
                 Assert.AreEqual(_modelSize, stream.Length);
             });
+        }
+
+        [Test]
+        public async Task CancellationToken()
+        {
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            writer.TryComputeLength(out var length);
+            using MemoryStream stream = new MemoryStream();
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            var task = Task.Run(() => writer.CopyTo(stream, tokenSource.Token));
+            while (stream.Position == 0) { } // wait for the stream to start filling
+            tokenSource.Cancel();
+            await task;
+            Assert.Greater(stream.Length, 0);
+            Assert.Less(stream.Length, length);
+        }
+
+        [Test]
+        public async Task CancellationTokenAsync()
+        {
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            writer.TryComputeLength(out var length);
+            using MemoryStream stream = new MemoryStream();
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            var task = Task.Run(() => writer.CopyToAsync(stream, tokenSource.Token));
+            while (stream.Position == 0) { } // wait for the stream to start filling
+            tokenSource.Cancel();
+            await task;
+            Assert.Greater(stream.Length, 0);
+            Assert.Less(stream.Length, length);
         }
 
         private class ExplodingModel : IJsonModel<ExplodingModel>
