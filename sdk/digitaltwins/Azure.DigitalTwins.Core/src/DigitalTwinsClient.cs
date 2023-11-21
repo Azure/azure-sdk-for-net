@@ -2,17 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using System.ClientModel;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Azure.DigitalTwins.Core.Models;
 using static Azure.DigitalTwins.Core.StreamHelper;
 
 namespace Azure.DigitalTwins.Core
