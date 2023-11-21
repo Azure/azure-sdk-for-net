@@ -30,7 +30,7 @@ if (!(Get-Command az -ErrorAction SilentlyContinue)) {
 
 Write-Host "Connecting to Azure Devops"
 LoginToAzureDevops $devops_pat
-az devops login
+echo $devops_pat | az devops login
 Write-Host "Install or update azure devops cli extension"
 az extension show -n azure-devops *> $null
 if (!$?){
