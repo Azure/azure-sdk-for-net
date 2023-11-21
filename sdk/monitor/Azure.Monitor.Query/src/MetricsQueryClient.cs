@@ -126,7 +126,7 @@ namespace Azure.Monitor.Query
             {
                 return _metricsRestClient.List(resourceId,
                     timespan: options?.TimeRange?.ToIsoString(),
-                    interval: options?.Granularity,
+                    interval: options?.GranularityDuration,
                     filter: options?.Filter,
                     top: options?.Size,
                     aggregation: GetAggregation(options),
@@ -187,7 +187,7 @@ namespace Azure.Monitor.Query
             {
                 return await _metricsRestClient.ListAsync(resourceId,
                     timespan: options?.TimeRange?.ToIsoString(),
-                    interval: options?.Granularity,
+                    interval: options?.GranularityDuration,
                     filter: options?.Filter,
                     top: options?.Size,
                     aggregation: GetAggregation(options),

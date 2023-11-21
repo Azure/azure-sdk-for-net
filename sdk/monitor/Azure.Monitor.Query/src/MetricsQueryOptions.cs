@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Monitor.Query.Models;
 
@@ -23,7 +24,13 @@ namespace Azure.Monitor.Query
         /// Gets or sets the interval at which to sample metrics.
         /// </summary>
         [CodeGenMember("Interval")]
-        public TimeSpan? Granularity { get; set; }
+        public string GranularityDuration { get; set; }
+
+        /// <summary>
+        /// pass
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public TimeSpan? Granularity { get => TimeSpan.Parse(GranularityDuration); set => GranularityDuration = value.ToString(); } //convert to iso 8601 duration
 
         /// <summary>
         /// <para>
