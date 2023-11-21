@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudServiceOSFamilyResource" /> and their operations.
-    /// Each <see cref="CloudServiceOSFamilyResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="CloudServiceOSFamilyCollection" /> instance call the GetCloudServiceOSFamilies method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="CloudServiceOSFamilyResource"/> and their operations.
+    /// Each <see cref="CloudServiceOSFamilyResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="CloudServiceOSFamilyCollection"/> instance call the GetCloudServiceOSFamilies method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class CloudServiceOSFamilyCollection : ArmCollection, IEnumerable<CloudServiceOSFamilyResource>, IAsyncEnumerable<CloudServiceOSFamilyResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceOSFamilyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudServiceOSFamilyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudServiceOSFamilyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.CreateListOSFamiliesRequest(Id.SubscriptionId, new AzureLocation(_location));
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceOSFamilyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudServiceOSFamilyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudServiceOSFamilyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.CreateListOSFamiliesRequest(Id.SubscriptionId, new AzureLocation(_location));

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseDataMaskingRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseDataMaskingRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseDataMaskingRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseDataMaskingPolicyResource" /> using the GetSynapseDataMaskingRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseDataMaskingRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseDataMaskingRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseDataMaskingPolicyResource"/> using the GetSynapseDataMaskingRule method.
     /// </summary>
     public partial class SynapseDataMaskingRuleResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseDataMaskingRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseDataMaskingRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseDataMaskingRuleResource(ArmClient client, SynapseDataMaskingRuleData data) : this(client, data.Id)

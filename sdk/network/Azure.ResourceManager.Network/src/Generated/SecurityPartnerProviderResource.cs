@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a SecurityPartnerProvider along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityPartnerProviderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityPartnerProviderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSecurityPartnerProvider method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityPartnerProviderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityPartnerProviderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityPartnerProvider method.
     /// </summary>
     public partial class SecurityPartnerProviderResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityPartnerProviderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityPartnerProviderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityPartnerProviderResource(ArmClient client, SecurityPartnerProviderData data) : this(client, data.Id)

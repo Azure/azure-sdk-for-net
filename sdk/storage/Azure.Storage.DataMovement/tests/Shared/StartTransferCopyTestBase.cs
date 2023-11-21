@@ -339,8 +339,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransferOptions options = new DataTransferOptions()
             {
-                InitialTransferSize = 100,
-                MaximumTransferChunkSize = 200,
+                InitialTransferSize = Constants.KB / 2,
+                MaximumTransferChunkSize = Constants.KB / 2,
             };
 
             // Arrange

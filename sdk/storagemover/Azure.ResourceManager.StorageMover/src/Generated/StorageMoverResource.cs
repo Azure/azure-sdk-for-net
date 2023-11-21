@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
     /// A Class representing a StorageMover along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageMoverResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageMoverResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetStorageMover method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageMoverResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageMoverResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStorageMover method.
     /// </summary>
     public partial class StorageMoverResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StorageMover
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageMoverResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageMoverResource(ArmClient client, StorageMoverData data) : this(client, data.Id)

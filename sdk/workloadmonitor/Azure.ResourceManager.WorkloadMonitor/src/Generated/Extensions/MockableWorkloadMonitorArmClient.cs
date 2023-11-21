@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.WorkloadMonitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthMonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthMonitorResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthMonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthMonitorResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthMonitorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HealthMonitorResource"/> object. </returns>
         public virtual HealthMonitorResource GetHealthMonitorResource(ResourceIdentifier id)
         {
             HealthMonitorResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.WorkloadMonitor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthMonitorStateChangeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthMonitorStateChangeResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorStateChangeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthMonitorStateChangeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthMonitorStateChangeResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorStateChangeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthMonitorStateChangeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HealthMonitorStateChangeResource"/> object. </returns>
         public virtual HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(ResourceIdentifier id)
         {
             HealthMonitorStateChangeResource.ValidateResourceId(id);

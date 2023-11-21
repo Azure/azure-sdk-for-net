@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing a RoleManagementPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RoleManagementPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRoleManagementPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetRoleManagementPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleManagementPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRoleManagementPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleManagementPolicy method.
     /// </summary>
     public partial class RoleManagementPolicyResource : ArmResource
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RoleManagementPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleManagementPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleManagementPolicyResource(ArmClient client, RoleManagementPolicyData data) : this(client, data.Id)

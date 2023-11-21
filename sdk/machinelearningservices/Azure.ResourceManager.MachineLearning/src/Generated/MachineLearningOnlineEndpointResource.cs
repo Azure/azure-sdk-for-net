@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningOnlineEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningOnlineEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningOnlineEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningOnlineEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningOnlineEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningOnlineEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningOnlineEndpoint method.
     /// </summary>
     public partial class MachineLearningOnlineEndpointResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningOnlineEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningOnlineEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningOnlineEndpointResource(ArmClient client, MachineLearningOnlineEndpointData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
     /// A Class representing a PrivateStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateStoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetPrivateStore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateStoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPrivateStoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetPrivateStore method.
     /// </summary>
     public partial class PrivateStoreResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PrivateStoreResource(ArmClient client, PrivateStoreData data) : this(client, data.Id)
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateStoreOfferResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreOfferResult> QueryOffersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryOffersRequest(Guid.Parse(Id.Name));
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateStoreOfferResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreOfferResult> QueryOffers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryOffersRequest(Guid.Parse(Id.Name));
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateStoreOfferResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreOfferResult> QueryUserOffersAsync(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryUserOffersRequest(Guid.Parse(Id.Name), content);
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateStoreOfferResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreOfferResult> QueryUserOffers(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryUserOffersRequest(Guid.Parse(Id.Name), content);
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MarketplaceSubscription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MarketplaceSubscription"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptionsAsync(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Guid.Parse(Id.Name), nextPageToken);
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceSubscription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MarketplaceSubscription"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptions(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Guid.Parse(Id.Name), nextPageToken);
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"> The QueryUserRulesContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MarketplaceRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MarketplaceRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceRule> QueryUserRulesAsync(QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), content);
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"> The QueryUserRulesContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MarketplaceRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceRule> QueryUserRules(QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), content);

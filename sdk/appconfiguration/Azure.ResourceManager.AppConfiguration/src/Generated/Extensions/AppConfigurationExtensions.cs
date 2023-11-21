@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationStoreResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppConfigurationStoreResource"/> object. </returns>
         public static AppConfigurationStoreResource GetAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationStoreResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource"/> object. </returns>
         public static DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppConfigurationArmClient(client).GetDeletedAppConfigurationStoreResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource"/> object. </returns>
         public static AppConfigurationPrivateEndpointConnectionResource GetAppConfigurationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationPrivateEndpointConnectionResource(id);
         }
 
@@ -93,9 +102,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource"/> object. </returns>
         public static AppConfigurationPrivateLinkResource GetAppConfigurationPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationPrivateLinkResource(id);
         }
 
@@ -109,9 +121,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource"/> object. </returns>
         public static AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationKeyValueResource(id);
         }
 
@@ -123,9 +138,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of AppConfigurationStoreResources and their operations over a AppConfigurationStoreResource. </returns>
         public static AppConfigurationStoreCollection GetAppConfigurationStores(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStores();
         }
 
@@ -149,11 +167,13 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AppConfigurationStoreResource>> GetAppConfigurationStoreAsync(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStoreAsync(configStoreName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -177,11 +197,13 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AppConfigurationStoreResource> GetAppConfigurationStore(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStore(configStoreName, cancellationToken);
         }
 
@@ -193,9 +215,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of DeletedAppConfigurationStoreResources and their operations over a DeletedAppConfigurationStoreResource. </returns>
         public static DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStores();
         }
 
@@ -220,11 +245,13 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DeletedAppConfigurationStoreResource>> GetDeletedAppConfigurationStoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStoreAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -249,11 +276,13 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStore(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStore(location, configStoreName, cancellationToken);
         }
 
@@ -277,9 +306,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetAppConfigurationStoresAsync(skipToken, cancellationToken);
         }
 
@@ -303,9 +335,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetAppConfigurationStores(skipToken, cancellationToken);
         }
 
@@ -329,9 +364,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -355,9 +392,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }
     }

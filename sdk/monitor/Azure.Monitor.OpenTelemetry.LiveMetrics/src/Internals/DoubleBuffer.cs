@@ -4,7 +4,7 @@
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
     /// <summary>
     /// Implements a double buffering mechanism for handling DocumentIngress objects.

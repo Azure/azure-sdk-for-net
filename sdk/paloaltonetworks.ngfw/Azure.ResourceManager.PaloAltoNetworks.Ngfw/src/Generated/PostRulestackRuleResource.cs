@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a PostRulestackRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostRulestackRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostRulestackRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource" /> using the GetPostRulestackRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostRulestackRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostRulestackRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource"/> using the GetPostRulestackRule method.
     /// </summary>
     public partial class PostRulestackRuleResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostRulestackRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostRulestackRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostRulestackRuleResource(ArmClient client, PostRulestackRuleData data) : this(client, data.Id)

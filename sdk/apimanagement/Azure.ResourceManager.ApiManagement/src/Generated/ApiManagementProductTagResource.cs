@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementProductTag along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementProductTagResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementProductTagResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource" /> using the GetApiManagementProductTag method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementProductTagResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementProductTagResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource"/> using the GetApiManagementProductTag method.
     /// </summary>
     public partial class ApiManagementProductTagResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementProductTagResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementProductTagResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementProductTagResource(ArmClient client, TagContractData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Nginx
 {
     /// <summary>
     /// A Class representing a NginxDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NginxDeploymentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNginxDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNginxDeployment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NginxDeploymentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNginxDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNginxDeployment method.
     /// </summary>
     public partial class NginxDeploymentResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Nginx
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NginxDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NginxDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NginxDeploymentResource(ArmClient client, NginxDeploymentData data) : this(client, data.Id)

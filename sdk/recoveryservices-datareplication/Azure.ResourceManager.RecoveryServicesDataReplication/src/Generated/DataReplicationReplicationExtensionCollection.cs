@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataReplicationReplicationExtensionResource" /> and their operations.
-    /// Each <see cref="DataReplicationReplicationExtensionResource" /> in the collection will belong to the same instance of <see cref="DataReplicationVaultResource" />.
-    /// To get a <see cref="DataReplicationReplicationExtensionCollection" /> instance call the GetDataReplicationReplicationExtensions method from an instance of <see cref="DataReplicationVaultResource" />.
+    /// A class representing a collection of <see cref="DataReplicationReplicationExtensionResource"/> and their operations.
+    /// Each <see cref="DataReplicationReplicationExtensionResource"/> in the collection will belong to the same instance of <see cref="DataReplicationVaultResource"/>.
+    /// To get a <see cref="DataReplicationReplicationExtensionCollection"/> instance call the GetDataReplicationReplicationExtensions method from an instance of <see cref="DataReplicationVaultResource"/>.
     /// </summary>
     public partial class DataReplicationReplicationExtensionCollection : ArmCollection, IEnumerable<DataReplicationReplicationExtensionResource>, IAsyncEnumerable<DataReplicationReplicationExtensionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationReplicationExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataReplicationReplicationExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationReplicationExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationReplicationExtensionReplicationExtensionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationReplicationExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationReplicationExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationReplicationExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationReplicationExtensionReplicationExtensionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

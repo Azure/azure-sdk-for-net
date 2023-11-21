@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
     /// A Class representing an EventHubConsumerGroupInfo along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubConsumerGroupInfoResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubConsumerGroupInfoResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource" /> using the GetEventHubConsumerGroupInfo method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubConsumerGroupInfoResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubConsumerGroupInfoResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource"/> using the GetEventHubConsumerGroupInfo method.
     /// </summary>
     public partial class EventHubConsumerGroupInfoResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotHub
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubConsumerGroupInfoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubConsumerGroupInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubConsumerGroupInfoResource(ArmClient client, EventHubConsumerGroupInfoData data) : this(client, data.Id)

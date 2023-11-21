@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementBackendResource" /> and their operations.
-    /// Each <see cref="ApiManagementBackendResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiManagementBackendCollection" /> instance call the GetApiManagementBackends method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="ApiManagementBackendResource"/> and their operations.
+    /// Each <see cref="ApiManagementBackendResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementBackendCollection"/> instance call the GetApiManagementBackends method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementBackendCollection : ArmCollection, IEnumerable<ApiManagementBackendResource>, IAsyncEnumerable<ApiManagementBackendResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementBackendResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementBackendResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementBackendResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementBackendBackendRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementBackendResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementBackendResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementBackendResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementBackendBackendRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);

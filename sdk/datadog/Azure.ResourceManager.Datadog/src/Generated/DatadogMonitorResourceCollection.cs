@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatadogMonitorResource" /> and their operations.
-    /// Each <see cref="DatadogMonitorResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DatadogMonitorResourceCollection" /> instance call the GetDatadogMonitorResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DatadogMonitorResource"/> and their operations.
+    /// Each <see cref="DatadogMonitorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DatadogMonitorResourceCollection"/> instance call the GetDatadogMonitorResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DatadogMonitorResourceCollection : ArmCollection, IEnumerable<DatadogMonitorResource>, IAsyncEnumerable<DatadogMonitorResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatadogMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatadogMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

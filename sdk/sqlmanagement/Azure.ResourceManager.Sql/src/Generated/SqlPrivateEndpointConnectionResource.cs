@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlPrivateEndpointConnection method.
     /// </summary>
     public partial class SqlPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlPrivateEndpointConnectionResource(ArmClient client, SqlPrivateEndpointConnectionData data) : this(client, data.Id)

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
     /// A Class representing a DataProtectionBackupVault along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataProtectionBackupVaultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataProtectionBackupVaultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataProtectionBackupVault method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionBackupVaultResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataProtectionBackupVaultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataProtectionBackupVault method.
     /// </summary>
     public partial class DataProtectionBackupVaultResource : ArmResource
     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataProtectionBackupVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataProtectionBackupVaultResource(ArmClient client, DataProtectionBackupVaultData data) : this(client, data.Id)

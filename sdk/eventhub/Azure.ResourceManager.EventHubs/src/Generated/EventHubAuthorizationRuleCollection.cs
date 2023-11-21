@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventHubAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="EventHubAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="EventHubResource" />.
-    /// To get an <see cref="EventHubAuthorizationRuleCollection" /> instance call the GetEventHubAuthorizationRules method from an instance of <see cref="EventHubResource" />.
+    /// A class representing a collection of <see cref="EventHubAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="EventHubAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="EventHubResource"/>.
+    /// To get an <see cref="EventHubAuthorizationRuleCollection"/> instance call the GetEventHubAuthorizationRules method from an instance of <see cref="EventHubResource"/>.
     /// </summary>
     public partial class EventHubAuthorizationRuleCollection : ArmCollection, IEnumerable<EventHubAuthorizationRuleResource>, IAsyncEnumerable<EventHubAuthorizationRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventHubAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubAuthorizationRuleEventHubsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventHubAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubAuthorizationRuleEventHubsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

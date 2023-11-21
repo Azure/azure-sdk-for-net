@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SapCentralServerInstanceResource" /> and their operations.
-    /// Each <see cref="SapCentralServerInstanceResource" /> in the collection will belong to the same instance of <see cref="SapVirtualInstanceResource" />.
-    /// To get a <see cref="SapCentralServerInstanceCollection" /> instance call the GetSapCentralServerInstances method from an instance of <see cref="SapVirtualInstanceResource" />.
+    /// A class representing a collection of <see cref="SapCentralServerInstanceResource"/> and their operations.
+    /// Each <see cref="SapCentralServerInstanceResource"/> in the collection will belong to the same instance of <see cref="SapVirtualInstanceResource"/>.
+    /// To get a <see cref="SapCentralServerInstanceCollection"/> instance call the GetSapCentralServerInstances method from an instance of <see cref="SapVirtualInstanceResource"/>.
     /// </summary>
     public partial class SapCentralServerInstanceCollection : ArmCollection, IEnumerable<SapCentralServerInstanceResource>, IAsyncEnumerable<SapCentralServerInstanceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapCentralServerInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SapCentralServerInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapCentralServerInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapCentralServerInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapCentralServerInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapCentralServerInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

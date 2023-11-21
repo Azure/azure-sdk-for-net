@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DetectedChangeData> GetResourceChangesAsync(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DetectedChangeData> GetResourceChanges(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));

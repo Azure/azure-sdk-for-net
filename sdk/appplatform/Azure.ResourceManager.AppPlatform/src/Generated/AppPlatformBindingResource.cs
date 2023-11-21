@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBindingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformAppResource" /> using the GetAppPlatformBinding method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBindingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformAppResource"/> using the GetAppPlatformBinding method.
     /// </summary>
     public partial class AppPlatformBindingResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBindingResource(ArmClient client, AppPlatformBindingData data) : this(client, data.Id)

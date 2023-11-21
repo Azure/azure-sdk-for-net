@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MetadataEntityResource" /> and their operations.
-    /// Each <see cref="MetadataEntityResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="MetadataEntityCollection" /> instance call the GetMetadataEntities method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="MetadataEntityResource"/> and their operations.
+    /// Each <see cref="MetadataEntityResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="MetadataEntityCollection"/> instance call the GetMetadataEntities method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class MetadataEntityCollection : ArmCollection, IEnumerable<MetadataEntityResource>, IAsyncEnumerable<MetadataEntityResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetadataEntityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MetadataEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetadataEntityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetadataEntityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MetadataEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetadataEntityResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();

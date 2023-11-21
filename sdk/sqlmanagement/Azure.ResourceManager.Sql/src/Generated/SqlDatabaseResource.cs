@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlDatabase method.
     /// </summary>
     public partial class SqlDatabaseResource : ArmResource
     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlDatabaseResource(ArmClient client, SqlDatabaseData data) : this(client, data.Id)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets an object representing a DataMaskingPolicyResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="DataMaskingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataMaskingPolicyResource"/> object. </returns>
         public virtual DataMaskingPolicyResource GetDataMaskingPolicy()
         {
             return new DataMaskingPolicyResource(Client, Id.AppendChildResource("dataMaskingPolicies", "Default"));
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets an object representing a SqlDatabaseAutomaticTuningResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="SqlDatabaseAutomaticTuningResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SqlDatabaseAutomaticTuningResource"/> object. </returns>
         public virtual SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuning()
         {
             return new SqlDatabaseAutomaticTuningResource(Client, Id.AppendChildResource("automaticTuning", "current"));
@@ -502,14 +502,14 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets an object representing a MaintenanceWindowOptionResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MaintenanceWindowOptionResource"/> object. </returns>
         public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOption()
         {
             return new MaintenanceWindowOptionResource(Client, Id.AppendChildResource("maintenanceWindowOptions", "current"));
         }
 
         /// <summary> Gets an object representing a MaintenanceWindowsResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="MaintenanceWindowsResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MaintenanceWindowsResource"/> object. </returns>
         public virtual MaintenanceWindowsResource GetMaintenanceWindows()
         {
             return new MaintenanceWindowsResource(Client, Id.AppendChildResource("maintenanceWindows", "current"));
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1367,7 +1367,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlDatabaseColumnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseColumnResource> GetDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlDatabaseColumnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseColumnResource> GetDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
@@ -1600,7 +1600,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ImportExportExtensionsOperationResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ImportExportExtensionsOperationResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ImportExportExtensionsOperationResult> GetDatabaseExtensionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseExtensionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImportExportExtensionsOperationResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ImportExportExtensionsOperationResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ImportExportExtensionsOperationResult> GetDatabaseExtensions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseExtensionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1706,7 +1706,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseOperationData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatabaseOperationData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseOperationData> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1728,7 +1728,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseOperationData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatabaseOperationData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseOperationData> GetDatabaseOperations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatabaseUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseUsage> GetDatabaseUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseUsagesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1772,7 +1772,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatabaseUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseUsage> GetDatabaseUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseUsagesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1797,7 +1797,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
@@ -1822,7 +1822,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
@@ -1915,7 +1915,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
@@ -1940,7 +1940,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
@@ -2030,7 +2030,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlSynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlSynapseLinkWorkspace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlSynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -2052,7 +2052,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlSynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlSynapseLinkWorkspace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlSynapseLinkWorkspace> GetSynapseLinkWorkspaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

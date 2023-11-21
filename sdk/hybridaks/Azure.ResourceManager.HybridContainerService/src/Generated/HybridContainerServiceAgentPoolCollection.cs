@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridContainerServiceAgentPoolResource" /> and their operations.
-    /// Each <see cref="HybridContainerServiceAgentPoolResource" /> in the collection will belong to the same instance of <see cref="ProvisionedClusterResource" />.
-    /// To get a <see cref="HybridContainerServiceAgentPoolCollection" /> instance call the GetHybridContainerServiceAgentPools method from an instance of <see cref="ProvisionedClusterResource" />.
+    /// A class representing a collection of <see cref="HybridContainerServiceAgentPoolResource"/> and their operations.
+    /// Each <see cref="HybridContainerServiceAgentPoolResource"/> in the collection will belong to the same instance of <see cref="ProvisionedClusterResource"/>.
+    /// To get a <see cref="HybridContainerServiceAgentPoolCollection"/> instance call the GetHybridContainerServiceAgentPools method from an instance of <see cref="ProvisionedClusterResource"/>.
     /// </summary>
     public partial class HybridContainerServiceAgentPoolCollection : ArmCollection, IEnumerable<HybridContainerServiceAgentPoolResource>, IAsyncEnumerable<HybridContainerServiceAgentPoolResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridContainerServiceAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HybridContainerServiceAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridContainerServiceAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridContainerServiceAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridContainerServiceAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridContainerServiceAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

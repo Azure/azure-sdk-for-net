@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FrontDoorOriginResource" /> and their operations.
-    /// Each <see cref="FrontDoorOriginResource" /> in the collection will belong to the same instance of <see cref="FrontDoorOriginGroupResource" />.
-    /// To get a <see cref="FrontDoorOriginCollection" /> instance call the GetFrontDoorOrigins method from an instance of <see cref="FrontDoorOriginGroupResource" />.
+    /// A class representing a collection of <see cref="FrontDoorOriginResource"/> and their operations.
+    /// Each <see cref="FrontDoorOriginResource"/> in the collection will belong to the same instance of <see cref="FrontDoorOriginGroupResource"/>.
+    /// To get a <see cref="FrontDoorOriginCollection"/> instance call the GetFrontDoorOrigins method from an instance of <see cref="FrontDoorOriginGroupResource"/>.
     /// </summary>
     public partial class FrontDoorOriginCollection : ArmCollection, IEnumerable<FrontDoorOriginResource>, IAsyncEnumerable<FrontDoorOriginResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorOriginResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorOriginResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorOriginResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginRestClient.CreateListByOriginGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorOriginResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorOriginResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorOriginResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginRestClient.CreateListByOriginGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

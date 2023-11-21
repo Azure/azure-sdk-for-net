@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a MonitorPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMonitorPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MonitorPrivateLinkScopeResource" /> using the GetMonitorPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitorPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMonitorPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MonitorPrivateLinkScopeResource"/> using the GetMonitorPrivateEndpointConnection method.
     /// </summary>
     public partial class MonitorPrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MonitorPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MonitorPrivateEndpointConnectionResource(ArmClient client, MonitorPrivateEndpointConnectionData data) : this(client, data.Id)

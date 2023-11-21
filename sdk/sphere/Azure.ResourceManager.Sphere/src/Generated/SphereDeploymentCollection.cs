@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SphereDeploymentResource" /> and their operations.
-    /// Each <see cref="SphereDeploymentResource" /> in the collection will belong to the same instance of <see cref="SphereDeviceGroupResource" />.
-    /// To get a <see cref="SphereDeploymentCollection" /> instance call the GetSphereDeployments method from an instance of <see cref="SphereDeviceGroupResource" />.
+    /// A class representing a collection of <see cref="SphereDeploymentResource"/> and their operations.
+    /// Each <see cref="SphereDeploymentResource"/> in the collection will belong to the same instance of <see cref="SphereDeviceGroupResource"/>.
+    /// To get a <see cref="SphereDeploymentCollection"/> instance call the GetSphereDeployments method from an instance of <see cref="SphereDeviceGroupResource"/>.
     /// </summary>
     public partial class SphereDeploymentCollection : ArmCollection, IEnumerable<SphereDeploymentResource>, IAsyncEnumerable<SphereDeploymentResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeploymentResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeploymentResource> GetAll(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);

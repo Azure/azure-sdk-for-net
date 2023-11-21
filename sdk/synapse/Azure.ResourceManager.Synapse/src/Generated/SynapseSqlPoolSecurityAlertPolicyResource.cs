@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSqlPoolSecurityAlertPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSqlPoolSecurityAlertPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseSqlPoolSecurityAlertPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSqlPoolSecurityAlertPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseSqlPoolSecurityAlertPolicy method.
     /// </summary>
     public partial class SynapseSqlPoolSecurityAlertPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSqlPoolSecurityAlertPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSqlPoolSecurityAlertPolicyResource(ArmClient client, SynapseSqlPoolSecurityAlertPolicyData data) : this(client, data.Id)

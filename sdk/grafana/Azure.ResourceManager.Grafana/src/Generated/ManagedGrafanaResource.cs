@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// A Class representing a ManagedGrafana along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedGrafanaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedGrafanaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedGrafana method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedGrafanaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedGrafanaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetManagedGrafana method.
     /// </summary>
     public partial class ManagedGrafanaResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Grafana
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedGrafanaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedGrafanaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedGrafanaResource(ArmClient client, ManagedGrafanaData data) : this(client, data.Id)
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Grafana
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GrafanaAvailablePlugin" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GrafanaAvailablePlugin"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GrafanaAvailablePlugin> FetchAvailablePluginsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateFetchAvailablePluginsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Grafana
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GrafanaAvailablePlugin" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GrafanaAvailablePlugin"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GrafanaAvailablePlugin> FetchAvailablePlugins(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateFetchAvailablePluginsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a DiskEncryptionSet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiskEncryptionSetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiskEncryptionSetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskEncryptionSet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskEncryptionSetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiskEncryptionSetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiskEncryptionSet method.
     /// </summary>
     public partial class DiskEncryptionSetResource : ArmResource
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiskEncryptionSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskEncryptionSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiskEncryptionSetResource(ArmClient client, DiskEncryptionSetData data) : this(client, data.Id)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAssociatedResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskEncryptionSetRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAssociatedResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskEncryptionSetRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotProcessModuleResource" /> and their operations.
-    /// Each <see cref="SiteSlotProcessModuleResource" /> in the collection will belong to the same instance of <see cref="SiteSlotProcessResource" />.
-    /// To get a <see cref="SiteSlotProcessModuleCollection" /> instance call the GetSiteSlotProcessModules method from an instance of <see cref="SiteSlotProcessResource" />.
+    /// A class representing a collection of <see cref="SiteSlotProcessModuleResource"/> and their operations.
+    /// Each <see cref="SiteSlotProcessModuleResource"/> in the collection will belong to the same instance of <see cref="SiteSlotProcessResource"/>.
+    /// To get a <see cref="SiteSlotProcessModuleCollection"/> instance call the GetSiteSlotProcessModules method from an instance of <see cref="SiteSlotProcessResource"/>.
     /// </summary>
     public partial class SiteSlotProcessModuleCollection : ArmCollection, IEnumerable<SiteSlotProcessModuleResource>, IAsyncEnumerable<SiteSlotProcessModuleResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteSlotProcessModuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotProcessModuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotProcessModuleWebAppsRestClient.CreateListProcessModulesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteSlotProcessModuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotProcessModuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotProcessModuleWebAppsRestClient.CreateListProcessModulesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

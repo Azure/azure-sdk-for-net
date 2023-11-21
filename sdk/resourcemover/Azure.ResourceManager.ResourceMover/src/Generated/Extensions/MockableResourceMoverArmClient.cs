@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MoverResourceSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MoverResourceSetResource.CreateResourceIdentifier" /> to create a <see cref="MoverResourceSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MoverResourceSetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MoverResourceSetResource.CreateResourceIdentifier" /> to create a <see cref="MoverResourceSetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MoverResourceSetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MoverResourceSetResource"/> object. </returns>
         public virtual MoverResourceSetResource GetMoverResourceSetResource(ResourceIdentifier id)
         {
             MoverResourceSetResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MoverResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MoverResource.CreateResourceIdentifier" /> to create a <see cref="MoverResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MoverResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MoverResource.CreateResourceIdentifier" /> to create a <see cref="MoverResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MoverResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MoverResource"/> object. </returns>
         public virtual MoverResource GetMoverResource(ResourceIdentifier id)
         {
             MoverResource.ValidateResourceId(id);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GuestConfigurationHcrpAssignmentResource" /> and their operations.
-    /// Each <see cref="GuestConfigurationHcrpAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="GuestConfigurationHcrpAssignmentCollection" /> instance call the GetGuestConfigurationHcrpAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="GuestConfigurationHcrpAssignmentResource"/> and their operations.
+    /// Each <see cref="GuestConfigurationHcrpAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="GuestConfigurationHcrpAssignmentCollection"/> instance call the GetGuestConfigurationHcrpAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class GuestConfigurationHcrpAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationHcrpAssignmentResource>, IAsyncEnumerable<GuestConfigurationHcrpAssignmentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationHcrpAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GuestConfigurationHcrpAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GuestConfigurationHcrpAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationHcrpAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GuestConfigurationHcrpAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GuestConfigurationHcrpAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

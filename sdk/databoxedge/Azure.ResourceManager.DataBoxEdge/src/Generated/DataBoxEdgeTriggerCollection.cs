@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeTriggerResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeTriggerResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource" />.
-    /// To get a <see cref="DataBoxEdgeTriggerCollection" /> instance call the GetDataBoxEdgeTriggers method from an instance of <see cref="DataBoxEdgeDeviceResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeTriggerResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeTriggerResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource"/>.
+    /// To get a <see cref="DataBoxEdgeTriggerCollection"/> instance call the GetDataBoxEdgeTriggers method from an instance of <see cref="DataBoxEdgeDeviceResource"/>.
     /// </summary>
     public partial class DataBoxEdgeTriggerCollection : ArmCollection, IEnumerable<DataBoxEdgeTriggerResource>, IAsyncEnumerable<DataBoxEdgeTriggerResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeTriggerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeTriggerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);

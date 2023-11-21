@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a FirewallPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirewallPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFirewallPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFirewallPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FirewallPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFirewallPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFirewallPolicy method.
     /// </summary>
     public partial class FirewallPolicyResource : ArmResource
     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FirewallPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirewallPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FirewallPolicyResource(ArmClient client, FirewallPolicyData data) : this(client, data.Id)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets an object representing a PolicySignaturesOverridesForIdpsResource along with the instance operations that can be performed on it in the FirewallPolicy. </summary>
-        /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource"/> object. </returns>
         public virtual PolicySignaturesOverridesForIdpsResource GetPolicySignaturesOverridesForIdps()
         {
             return new PolicySignaturesOverridesForIdpsResource(Client, Id.AppendChildResource("signatureOverrides", "default"));
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Retrieves the current status of IDPS signatures for the relevant policy
+        /// Retrieves the current status of IDPS signatures for the relevant policy. Maximal amount of returned signatures is 1000.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Retrieves the current status of IDPS signatures for the relevant policy
+        /// Retrieves the current status of IDPS signatures for the relevant policy. Maximal amount of returned signatures is 1000.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

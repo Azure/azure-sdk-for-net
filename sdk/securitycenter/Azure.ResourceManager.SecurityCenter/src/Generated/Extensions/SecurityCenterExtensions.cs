@@ -49,9 +49,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of ComplianceResultResources and their operations over a ComplianceResultResource. </returns>
         public static ComplianceResultCollection GetComplianceResults(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetComplianceResults(scope);
         }
 
@@ -76,11 +79,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="complianceResultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(this ArmClient client, ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableSecurityCenterArmClient(client).GetComplianceResultAsync(scope, complianceResultName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -105,11 +110,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="complianceResultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ComplianceResultResource> GetComplianceResult(this ArmClient client, ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetComplianceResult(scope, complianceResultName, cancellationToken);
         }
 
@@ -122,9 +129,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
         public static AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetAdvancedThreatProtectionSetting(scope);
         }
 
@@ -137,9 +147,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of DeviceSecurityGroupResources and their operations over a DeviceSecurityGroupResource. </returns>
         public static DeviceSecurityGroupCollection GetDeviceSecurityGroups(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetDeviceSecurityGroups(scope);
         }
 
@@ -164,11 +177,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="deviceSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(this ArmClient client, ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableSecurityCenterArmClient(client).GetDeviceSecurityGroupAsync(scope, deviceSecurityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -193,11 +208,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="deviceSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(this ArmClient client, ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetDeviceSecurityGroup(scope, deviceSecurityGroupName, cancellationToken);
         }
 
@@ -210,9 +227,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of SecurityComplianceResources and their operations over a SecurityComplianceResource. </returns>
         public static SecurityComplianceCollection GetSecurityCompliances(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityCompliances(scope);
         }
 
@@ -237,11 +257,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="complianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableSecurityCenterArmClient(client).GetSecurityComplianceAsync(scope, complianceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -266,11 +288,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="complianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityComplianceResource> GetSecurityCompliance(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityCompliance(scope, complianceName, cancellationToken);
         }
 
@@ -283,9 +307,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of SecurityAssessmentResources and their operations over a SecurityAssessmentResource. </returns>
         public static SecurityAssessmentCollection GetSecurityAssessments(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityAssessments(scope);
         }
 
@@ -311,11 +338,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(this ArmClient client, ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableSecurityCenterArmClient(client).GetSecurityAssessmentAsync(scope, assessmentName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -341,11 +370,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityAssessmentResource> GetSecurityAssessment(this ArmClient client, ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityAssessment(scope, assessmentName, expand, cancellationToken);
         }
 
@@ -358,9 +389,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of GovernanceRuleResources and their operations over a GovernanceRuleResource. </returns>
         public static GovernanceRuleCollection GetGovernanceRules(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetGovernanceRules(scope);
         }
 
@@ -385,11 +419,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<GovernanceRuleResource>> GetGovernanceRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableSecurityCenterArmClient(client).GetGovernanceRuleAsync(scope, ruleId, cancellationToken).ConfigureAwait(false);
         }
 
@@ -414,11 +450,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<GovernanceRuleResource> GetGovernanceRule(this ArmClient client, ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetGovernanceRule(scope, ruleId, cancellationToken);
         }
 
@@ -431,9 +469,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
         public static SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScans(scope);
         }
 
@@ -459,11 +500,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="scanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanAsync(scope, scanId, workspaceId, cancellationToken).ConfigureAwait(false);
         }
 
@@ -489,11 +532,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="scanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScan(scope, scanId, workspaceId, cancellationToken);
         }
 
@@ -506,9 +551,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
         public static SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(this ArmClient client, ResourceIdentifier scope)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRules(scope);
         }
 
@@ -534,11 +582,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId"> The rule Id. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRuleAsync(scope, ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
         }
 
@@ -564,11 +614,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId"> The rule Id. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRule(scope, ruleId, workspaceId, cancellationToken);
         }
 
@@ -594,9 +646,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
         /// <param name="informationProtectionPolicy"> Information protection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="informationProtectionPolicy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="informationProtectionPolicy"/> is null. </exception>
         public static async Task<Response<InformationProtectionPolicy>> CreateOrUpdateInformationProtectionPolicyAsync(this ArmClient client, ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return await GetMockableSecurityCenterArmClient(client).CreateOrUpdateInformationProtectionPolicyAsync(scope, informationProtectionPolicyName, informationProtectionPolicy, cancellationToken).ConfigureAwait(false);
         }
 
@@ -622,9 +676,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
         /// <param name="informationProtectionPolicy"> Information protection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="informationProtectionPolicy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="informationProtectionPolicy"/> is null. </exception>
         public static Response<InformationProtectionPolicy> CreateOrUpdateInformationProtectionPolicy(this ArmClient client, ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).CreateOrUpdateInformationProtectionPolicy(scope, informationProtectionPolicyName, informationProtectionPolicy, cancellationToken);
         }
 
@@ -648,8 +704,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<InformationProtectionPolicy> GetInformationProtectionPoliciesAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetInformationProtectionPoliciesAsync(scope, cancellationToken);
         }
 
@@ -673,8 +732,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<InformationProtectionPolicy> GetInformationProtectionPolicies(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetInformationProtectionPolicies(scope, cancellationToken);
         }
 
@@ -698,8 +760,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<SecuritySubAssessmentResource> GetSecuritySubAssessmentsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecuritySubAssessmentsAsync(scope, cancellationToken);
         }
 
@@ -723,8 +788,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<SecuritySubAssessmentResource> GetSecuritySubAssessments(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecuritySubAssessments(scope, cancellationToken);
         }
 
@@ -748,8 +816,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<SecurityAssessmentResource> GetSecurityAssessmentsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityAssessmentsAsync(scope, cancellationToken);
         }
 
@@ -773,8 +844,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<SecurityAssessmentResource> GetSecurityAssessments(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityAssessments(scope, cancellationToken);
         }
 
@@ -788,9 +862,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomAssessmentAutomationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CustomAssessmentAutomationResource"/> object. </returns>
         public static CustomAssessmentAutomationResource GetCustomAssessmentAutomationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetCustomAssessmentAutomationResource(id);
         }
 
@@ -804,9 +881,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomEntityStoreAssignmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CustomEntityStoreAssignmentResource"/> object. </returns>
         public static CustomEntityStoreAssignmentResource GetCustomEntityStoreAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetCustomEntityStoreAssignmentResource(id);
         }
 
@@ -820,9 +900,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComplianceResultResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ComplianceResultResource"/> object. </returns>
         public static ComplianceResultResource GetComplianceResultResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetComplianceResultResource(id);
         }
 
@@ -836,9 +919,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityCenterPricingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityCenterPricingResource"/> object. </returns>
         public static SecurityCenterPricingResource GetSecurityCenterPricingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityCenterPricingResource(id);
         }
 
@@ -852,9 +938,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
         public static AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetAdvancedThreatProtectionSettingResource(id);
         }
 
@@ -868,9 +957,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceSecurityGroupResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceSecurityGroupResource"/> object. </returns>
         public static DeviceSecurityGroupResource GetDeviceSecurityGroupResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetDeviceSecurityGroupResource(id);
         }
 
@@ -884,9 +976,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotSecuritySolutionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IotSecuritySolutionResource"/> object. </returns>
         public static IotSecuritySolutionResource GetIotSecuritySolutionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetIotSecuritySolutionResource(id);
         }
 
@@ -900,9 +995,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
         public static IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetIotSecuritySolutionAnalyticsModelResource(id);
         }
 
@@ -916,9 +1014,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotSecurityAggregatedAlertResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IotSecurityAggregatedAlertResource"/> object. </returns>
         public static IotSecurityAggregatedAlertResource GetIotSecurityAggregatedAlertResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetIotSecurityAggregatedAlertResource(id);
         }
 
@@ -932,9 +1033,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotSecurityAggregatedRecommendationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IotSecurityAggregatedRecommendationResource"/> object. </returns>
         public static IotSecurityAggregatedRecommendationResource GetIotSecurityAggregatedRecommendationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetIotSecurityAggregatedRecommendationResource(id);
         }
 
@@ -948,9 +1052,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityCenterLocationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityCenterLocationResource"/> object. </returns>
         public static SecurityCenterLocationResource GetSecurityCenterLocationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityCenterLocationResource(id);
         }
 
@@ -964,9 +1071,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionSecurityTaskResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionSecurityTaskResource"/> object. </returns>
         public static SubscriptionSecurityTaskResource GetSubscriptionSecurityTaskResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSubscriptionSecurityTaskResource(id);
         }
 
@@ -980,9 +1090,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupSecurityTaskResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ResourceGroupSecurityTaskResource"/> object. </returns>
         public static ResourceGroupSecurityTaskResource GetResourceGroupSecurityTaskResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetResourceGroupSecurityTaskResource(id);
         }
 
@@ -996,9 +1109,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoProvisioningSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutoProvisioningSettingResource"/> object. </returns>
         public static AutoProvisioningSettingResource GetAutoProvisioningSettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetAutoProvisioningSettingResource(id);
         }
 
@@ -1012,9 +1128,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityComplianceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityComplianceResource"/> object. </returns>
         public static SecurityComplianceResource GetSecurityComplianceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityComplianceResource(id);
         }
 
@@ -1028,9 +1147,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityContactResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityContactResource"/> object. </returns>
         public static SecurityContactResource GetSecurityContactResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityContactResource(id);
         }
 
@@ -1044,9 +1166,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityWorkspaceSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityWorkspaceSettingResource"/> object. </returns>
         public static SecurityWorkspaceSettingResource GetSecurityWorkspaceSettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityWorkspaceSettingResource(id);
         }
 
@@ -1060,9 +1185,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegulatoryComplianceStandardResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RegulatoryComplianceStandardResource"/> object. </returns>
         public static RegulatoryComplianceStandardResource GetRegulatoryComplianceStandardResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetRegulatoryComplianceStandardResource(id);
         }
 
@@ -1076,9 +1204,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegulatoryComplianceControlResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RegulatoryComplianceControlResource"/> object. </returns>
         public static RegulatoryComplianceControlResource GetRegulatoryComplianceControlResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetRegulatoryComplianceControlResource(id);
         }
 
@@ -1092,9 +1223,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegulatoryComplianceAssessmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RegulatoryComplianceAssessmentResource"/> object. </returns>
         public static RegulatoryComplianceAssessmentResource GetRegulatoryComplianceAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetRegulatoryComplianceAssessmentResource(id);
         }
 
@@ -1108,9 +1242,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecuritySubAssessmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecuritySubAssessmentResource"/> object. </returns>
         public static SecuritySubAssessmentResource GetSecuritySubAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecuritySubAssessmentResource(id);
         }
 
@@ -1124,9 +1261,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityAutomationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityAutomationResource"/> object. </returns>
         public static SecurityAutomationResource GetSecurityAutomationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityAutomationResource(id);
         }
 
@@ -1140,9 +1280,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityAlertsSuppressionRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityAlertsSuppressionRuleResource"/> object. </returns>
         public static SecurityAlertsSuppressionRuleResource GetSecurityAlertsSuppressionRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityAlertsSuppressionRuleResource(id);
         }
 
@@ -1156,9 +1299,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
         public static ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetServerVulnerabilityAssessmentResource(id);
         }
 
@@ -1172,9 +1318,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantAssessmentMetadataResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantAssessmentMetadataResource"/> object. </returns>
         public static TenantAssessmentMetadataResource GetTenantAssessmentMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetTenantAssessmentMetadataResource(id);
         }
 
@@ -1188,9 +1337,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionAssessmentMetadataResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionAssessmentMetadataResource"/> object. </returns>
         public static SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSubscriptionAssessmentMetadataResource(id);
         }
 
@@ -1204,9 +1356,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityAssessmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityAssessmentResource"/> object. </returns>
         public static SecurityAssessmentResource GetSecurityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityAssessmentResource(id);
         }
 
@@ -1220,9 +1375,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdaptiveApplicationControlGroupResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdaptiveApplicationControlGroupResource"/> object. </returns>
         public static AdaptiveApplicationControlGroupResource GetAdaptiveApplicationControlGroupResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetAdaptiveApplicationControlGroupResource(id);
         }
 
@@ -1236,9 +1394,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdaptiveNetworkHardeningResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdaptiveNetworkHardeningResource"/> object. </returns>
         public static AdaptiveNetworkHardeningResource GetAdaptiveNetworkHardeningResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetAdaptiveNetworkHardeningResource(id);
         }
 
@@ -1252,9 +1413,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JitNetworkAccessPolicyResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="JitNetworkAccessPolicyResource"/> object. </returns>
         public static JitNetworkAccessPolicyResource GetJitNetworkAccessPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetJitNetworkAccessPolicyResource(id);
         }
 
@@ -1268,9 +1432,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecureScoreResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecureScoreResource"/> object. </returns>
         public static SecureScoreResource GetSecureScoreResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecureScoreResource(id);
         }
 
@@ -1284,9 +1451,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityCloudConnectorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityCloudConnectorResource"/> object. </returns>
         public static SecurityCloudConnectorResource GetSecurityCloudConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityCloudConnectorResource(id);
         }
 
@@ -1300,9 +1470,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionSecurityAlertResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionSecurityAlertResource"/> object. </returns>
         public static SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSubscriptionSecurityAlertResource(id);
         }
 
@@ -1316,9 +1489,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupSecurityAlertResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ResourceGroupSecurityAlertResource"/> object. </returns>
         public static ResourceGroupSecurityAlertResource GetResourceGroupSecurityAlertResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetResourceGroupSecurityAlertResource(id);
         }
 
@@ -1332,9 +1508,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecuritySettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecuritySettingResource"/> object. </returns>
         public static SecuritySettingResource GetSecuritySettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecuritySettingResource(id);
         }
 
@@ -1348,9 +1527,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IngestionSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IngestionSettingResource"/> object. </returns>
         public static IngestionSettingResource GetIngestionSettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetIngestionSettingResource(id);
         }
 
@@ -1364,9 +1546,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SoftwareInventoryResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SoftwareInventoryResource"/> object. </returns>
         public static SoftwareInventoryResource GetSoftwareInventoryResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSoftwareInventoryResource(id);
         }
 
@@ -1380,9 +1565,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityConnectorResource"/> object. </returns>
         public static SecurityConnectorResource GetSecurityConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityConnectorResource(id);
         }
 
@@ -1396,9 +1584,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GovernanceRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GovernanceRuleResource"/> object. </returns>
         public static GovernanceRuleResource GetGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetGovernanceRuleResource(id);
         }
 
@@ -1412,9 +1603,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GovernanceAssignmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GovernanceAssignmentResource"/> object. </returns>
         public static GovernanceAssignmentResource GetGovernanceAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetGovernanceAssignmentResource(id);
         }
 
@@ -1428,9 +1622,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionSecurityApplicationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionSecurityApplicationResource"/> object. </returns>
         public static SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSubscriptionSecurityApplicationResource(id);
         }
 
@@ -1444,9 +1641,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorApplicationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityConnectorApplicationResource"/> object. </returns>
         public static SecurityConnectorApplicationResource GetSecurityConnectorApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSecurityConnectorApplicationResource(id);
         }
 
@@ -1460,9 +1660,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource"/> object. </returns>
         public static SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanResource(id);
         }
 
@@ -1476,9 +1679,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
         public static SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRuleResource(id);
         }
 
@@ -1490,9 +1696,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of CustomAssessmentAutomationResources and their operations over a CustomAssessmentAutomationResource. </returns>
         public static CustomAssessmentAutomationCollection GetCustomAssessmentAutomations(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetCustomAssessmentAutomations();
         }
 
@@ -1516,11 +1725,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="customAssessmentAutomationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customAssessmentAutomationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CustomAssessmentAutomationResource>> GetCustomAssessmentAutomationAsync(this ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetCustomAssessmentAutomationAsync(customAssessmentAutomationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1544,11 +1755,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="customAssessmentAutomationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customAssessmentAutomationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<CustomAssessmentAutomationResource> GetCustomAssessmentAutomation(this ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetCustomAssessmentAutomation(customAssessmentAutomationName, cancellationToken);
         }
 
@@ -1560,9 +1773,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of CustomEntityStoreAssignmentResources and their operations over a CustomEntityStoreAssignmentResource. </returns>
         public static CustomEntityStoreAssignmentCollection GetCustomEntityStoreAssignments(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetCustomEntityStoreAssignments();
         }
 
@@ -1586,11 +1802,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="customEntityStoreAssignmentName"> Name of the custom entity store assignment. Generated name is GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customEntityStoreAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CustomEntityStoreAssignmentResource>> GetCustomEntityStoreAssignmentAsync(this ResourceGroupResource resourceGroupResource, string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetCustomEntityStoreAssignmentAsync(customEntityStoreAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1614,11 +1832,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="customEntityStoreAssignmentName"> Name of the custom entity store assignment. Generated name is GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customEntityStoreAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignment(this ResourceGroupResource resourceGroupResource, string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetCustomEntityStoreAssignment(customEntityStoreAssignmentName, cancellationToken);
         }
 
@@ -1630,9 +1850,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of IotSecuritySolutionResources and their operations over a IotSecuritySolutionResource. </returns>
         public static IotSecuritySolutionCollection GetIotSecuritySolutions(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetIotSecuritySolutions();
         }
 
@@ -1656,11 +1879,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="solutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<IotSecuritySolutionResource>> GetIotSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetIotSecuritySolutionAsync(solutionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1684,11 +1909,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="solutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<IotSecuritySolutionResource> GetIotSecuritySolution(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetIotSecuritySolution(solutionName, cancellationToken);
         }
 
@@ -1701,9 +1928,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ResourceGroupSecurityTaskResources and their operations over a ResourceGroupSecurityTaskResource. </returns>
         public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
         }
 
@@ -1728,11 +1958,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTaskAsync(ascLocation, taskName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1757,11 +1989,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTask(ascLocation, taskName, cancellationToken);
         }
 
@@ -1773,9 +2007,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of SecurityAutomationResources and their operations over a SecurityAutomationResource. </returns>
         public static SecurityAutomationCollection GetSecurityAutomations(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityAutomations();
         }
 
@@ -1799,11 +2036,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="automationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityAutomationResource>> GetSecurityAutomationAsync(this ResourceGroupResource resourceGroupResource, string automationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityAutomationAsync(automationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1827,11 +2066,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="automationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityAutomationResource> GetSecurityAutomation(this ResourceGroupResource resourceGroupResource, string automationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityAutomation(automationName, cancellationToken);
         }
 
@@ -1846,11 +2087,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of ServerVulnerabilityAssessmentResources and their operations over a ServerVulnerabilityAssessmentResource. </returns>
         public static ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName);
         }
 
@@ -1876,11 +2119,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetServerVulnerabilityAssessmentAsync(resourceNamespace, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1906,11 +2151,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetServerVulnerabilityAssessment(resourceNamespace, resourceType, resourceName, cancellationToken);
         }
 
@@ -1925,11 +2172,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of AdaptiveNetworkHardeningResources and their operations over a AdaptiveNetworkHardeningResource. </returns>
         public static AdaptiveNetworkHardeningCollection GetAdaptiveNetworkHardenings(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAdaptiveNetworkHardenings(resourceNamespace, resourceType, resourceName);
         }
 
@@ -1956,11 +2205,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AdaptiveNetworkHardeningResource>> GetAdaptiveNetworkHardeningAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAdaptiveNetworkHardeningAsync(resourceNamespace, resourceType, resourceName, adaptiveNetworkHardeningResourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1987,11 +2238,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AdaptiveNetworkHardeningResource> GetAdaptiveNetworkHardening(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAdaptiveNetworkHardening(resourceNamespace, resourceType, resourceName, adaptiveNetworkHardeningResourceName, cancellationToken);
         }
 
@@ -2004,9 +2257,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of JitNetworkAccessPolicyResources and their operations over a JitNetworkAccessPolicyResource. </returns>
         public static JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicies(ascLocation);
         }
 
@@ -2031,11 +2287,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="jitNetworkAccessPolicyName"> Name of a Just-in-Time access configuration policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<JitNetworkAccessPolicyResource>> GetJitNetworkAccessPolicyAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicyAsync(ascLocation, jitNetworkAccessPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2060,11 +2318,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="jitNetworkAccessPolicyName"> Name of a Just-in-Time access configuration policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicy(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicy(ascLocation, jitNetworkAccessPolicyName, cancellationToken);
         }
 
@@ -2077,9 +2337,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ResourceGroupSecurityAlertResources and their operations over a ResourceGroupSecurityAlertResource. </returns>
         public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
         }
 
@@ -2104,11 +2367,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlertAsync(ascLocation, alertName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2133,11 +2398,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlert(ascLocation, alertName, cancellationToken);
         }
 
@@ -2152,11 +2419,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of SoftwareInventoryResources and their operations over a SoftwareInventoryResource. </returns>
         public static SoftwareInventoryCollection GetSoftwareInventories(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSoftwareInventories(resourceNamespace, resourceType, resourceName);
         }
 
@@ -2183,11 +2452,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="softwareName"> Name of the installed software. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SoftwareInventoryResource>> GetSoftwareInventoryAsync(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSoftwareInventoryAsync(resourceNamespace, resourceType, resourceName, softwareName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2214,11 +2485,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="softwareName"> Name of the installed software. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SoftwareInventoryResource> GetSoftwareInventory(this ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSoftwareInventory(resourceNamespace, resourceType, resourceName, softwareName, cancellationToken);
         }
 
@@ -2230,9 +2503,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of SecurityConnectorResources and their operations over a SecurityConnectorResource. </returns>
         public static SecurityConnectorCollection GetSecurityConnectors(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityConnectors();
         }
 
@@ -2256,11 +2532,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="securityConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityConnectorResource>> GetSecurityConnectorAsync(this ResourceGroupResource resourceGroupResource, string securityConnectorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityConnectorAsync(securityConnectorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2284,11 +2562,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="securityConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityConnectorResource> GetSecurityConnector(this ResourceGroupResource resourceGroupResource, string securityConnectorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityConnector(securityConnectorName, cancellationToken);
         }
 
@@ -2313,8 +2593,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         public static async Task<Response<SecurityCenterAllowedConnection>> GetAllowedConnectionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAllowedConnectionAsync(ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2339,8 +2622,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         public static Response<SecurityCenterAllowedConnection> GetAllowedConnection(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAllowedConnection(ascLocation, connectionType, cancellationToken);
         }
 
@@ -2366,9 +2652,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="topologyResourceName"/> is null. </exception>
         public static async Task<Response<SecurityTopologyResource>> GetTopologyAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetTopologyAsync(ascLocation, topologyResourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2394,9 +2682,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="topologyResourceName"/> is null. </exception>
         public static Response<SecurityTopologyResource> GetTopology(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetTopology(ascLocation, topologyResourceName, cancellationToken);
         }
 
@@ -2419,9 +2709,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
         }
 
@@ -2444,9 +2737,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicies(cancellationToken);
         }
 
@@ -2472,9 +2768,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
         public static async Task<Response<DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2500,9 +2798,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
         public static Response<DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetDiscoveredSecuritySolution(ascLocation, discoveredSecuritySolutionName, cancellationToken);
         }
 
@@ -2528,9 +2828,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="externalSecuritySolutionsName"/> is null. </exception>
         public static async Task<Response<ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetExternalSecuritySolutionAsync(ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2556,9 +2858,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="externalSecuritySolutionsName"/> is null. </exception>
         public static Response<ExternalSecuritySolution> GetExternalSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetExternalSecuritySolution(ascLocation, externalSecuritySolutionsName, cancellationToken);
         }
 
@@ -2584,9 +2888,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="securitySolutionName"> Name of security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="securitySolutionName"/> is null. </exception>
         public static async Task<Response<SecuritySolution>> GetSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecuritySolutionAsync(ascLocation, securitySolutionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2612,9 +2918,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="securitySolutionName"> Name of security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="securitySolutionName"/> is null. </exception>
         public static Response<SecuritySolution> GetSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecuritySolution(ascLocation, securitySolutionName, cancellationToken);
         }
 
@@ -2637,9 +2945,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityAlertData> GetAlertsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAlertsByResourceGroupAsync(cancellationToken);
         }
 
@@ -2662,9 +2973,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityAlertData> GetAlertsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
         }
 
@@ -2676,9 +2990,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SecurityCenterPricingResources and their operations over a SecurityCenterPricingResource. </returns>
         public static SecurityCenterPricingCollection GetSecurityCenterPricings(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterPricings();
         }
 
@@ -2702,11 +3019,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="pricingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(this SubscriptionResource subscriptionResource, string pricingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterPricingAsync(pricingName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2730,11 +3049,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="pricingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityCenterPricingResource> GetSecurityCenterPricing(this SubscriptionResource subscriptionResource, string pricingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterPricing(pricingName, cancellationToken);
         }
 
@@ -2746,9 +3067,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SecurityCenterLocationResources and their operations over a SecurityCenterLocationResource. </returns>
         public static SecurityCenterLocationCollection GetSecurityCenterLocations(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterLocations();
         }
 
@@ -2772,9 +3096,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityCenterLocationResource>> GetSecurityCenterLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterLocationAsync(ascLocation, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2798,9 +3125,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityCenterLocationResource> GetSecurityCenterLocation(this SubscriptionResource subscriptionResource, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterLocation(ascLocation, cancellationToken);
         }
 
@@ -2812,9 +3142,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of AutoProvisioningSettingResources and their operations over a AutoProvisioningSettingResource. </returns>
         public static AutoProvisioningSettingCollection GetAutoProvisioningSettings(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAutoProvisioningSettings();
         }
 
@@ -2838,11 +3171,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="settingName"> Auto provisioning setting key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="settingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AutoProvisioningSettingResource>> GetAutoProvisioningSettingAsync(this SubscriptionResource subscriptionResource, string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAutoProvisioningSettingAsync(settingName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2866,11 +3201,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="settingName"> Auto provisioning setting key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="settingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AutoProvisioningSettingResource> GetAutoProvisioningSetting(this SubscriptionResource subscriptionResource, string settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAutoProvisioningSetting(settingName, cancellationToken);
         }
 
@@ -2882,9 +3219,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SecurityContactResources and their operations over a SecurityContactResource. </returns>
         public static SecurityContactCollection GetSecurityContacts(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContacts();
         }
 
@@ -2908,11 +3248,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="securityContactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityContactResource>> GetSecurityContactAsync(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContactAsync(securityContactName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2936,11 +3278,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="securityContactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityContactResource> GetSecurityContact(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContact(securityContactName, cancellationToken);
         }
 
@@ -2952,9 +3296,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SecurityWorkspaceSettingResources and their operations over a SecurityWorkspaceSettingResource. </returns>
         public static SecurityWorkspaceSettingCollection GetSecurityWorkspaceSettings(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityWorkspaceSettings();
         }
 
@@ -2978,11 +3325,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="workspaceSettingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityWorkspaceSettingResource>> GetSecurityWorkspaceSettingAsync(this SubscriptionResource subscriptionResource, string workspaceSettingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityWorkspaceSettingAsync(workspaceSettingName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3006,11 +3355,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="workspaceSettingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityWorkspaceSettingResource> GetSecurityWorkspaceSetting(this SubscriptionResource subscriptionResource, string workspaceSettingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityWorkspaceSetting(workspaceSettingName, cancellationToken);
         }
 
@@ -3022,9 +3373,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of RegulatoryComplianceStandardResources and their operations over a RegulatoryComplianceStandardResource. </returns>
         public static RegulatoryComplianceStandardCollection GetRegulatoryComplianceStandards(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetRegulatoryComplianceStandards();
         }
 
@@ -3048,11 +3402,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RegulatoryComplianceStandardResource>> GetRegulatoryComplianceStandardAsync(this SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetRegulatoryComplianceStandardAsync(regulatoryComplianceStandardName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3076,11 +3432,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<RegulatoryComplianceStandardResource> GetRegulatoryComplianceStandard(this SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetRegulatoryComplianceStandard(regulatoryComplianceStandardName, cancellationToken);
         }
 
@@ -3092,9 +3450,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SecurityAlertsSuppressionRuleResources and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
         public static SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityAlertsSuppressionRules();
         }
 
@@ -3118,11 +3479,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityAlertsSuppressionRuleResource>> GetSecurityAlertsSuppressionRuleAsync(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityAlertsSuppressionRuleAsync(alertsSuppressionRuleName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3146,11 +3509,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityAlertsSuppressionRuleResource> GetSecurityAlertsSuppressionRule(this SubscriptionResource subscriptionResource, string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityAlertsSuppressionRule(alertsSuppressionRuleName, cancellationToken);
         }
 
@@ -3162,9 +3527,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SubscriptionAssessmentMetadataResources and their operations over a SubscriptionAssessmentMetadataResource. </returns>
         public static SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllSubscriptionAssessmentMetadata();
         }
 
@@ -3188,11 +3556,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(this SubscriptionResource subscriptionResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionAssessmentMetadataAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3216,11 +3586,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this SubscriptionResource subscriptionResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionAssessmentMetadata(assessmentMetadataName, cancellationToken);
         }
 
@@ -3232,9 +3604,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SecureScoreResources and their operations over a SecureScoreResource. </returns>
         public static SecureScoreCollection GetSecureScores(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScores();
         }
 
@@ -3258,11 +3633,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="secureScoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecureScoreResource>> GetSecureScoreAsync(this SubscriptionResource subscriptionResource, string secureScoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScoreAsync(secureScoreName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3286,11 +3663,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="secureScoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecureScoreResource> GetSecureScore(this SubscriptionResource subscriptionResource, string secureScoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScore(secureScoreName, cancellationToken);
         }
 
@@ -3302,9 +3681,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SecurityCloudConnectorResources and their operations over a SecurityCloudConnectorResource. </returns>
         public static SecurityCloudConnectorCollection GetSecurityCloudConnectors(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCloudConnectors();
         }
 
@@ -3328,11 +3710,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="connectorName"> Name of the cloud account connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCloudConnectorAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3356,11 +3740,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="connectorName"> Name of the cloud account connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SecurityCloudConnectorResource> GetSecurityCloudConnector(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCloudConnector(connectorName, cancellationToken);
         }
 
@@ -3372,9 +3758,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SecuritySettingResources and their operations over a SecuritySettingResource. </returns>
         public static SecuritySettingCollection GetSecuritySettings(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySettings();
         }
 
@@ -3398,9 +3787,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="settingName"> The name of the setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SecuritySettingResource>> GetSecuritySettingAsync(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySettingAsync(settingName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3424,9 +3816,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="settingName"> The name of the setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<SecuritySettingResource> GetSecuritySetting(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySetting(settingName, cancellationToken);
         }
 
@@ -3438,9 +3833,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of IngestionSettingResources and their operations over a IngestionSettingResource. </returns>
         public static IngestionSettingCollection GetIngestionSettings(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetIngestionSettings();
         }
 
@@ -3464,11 +3862,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ingestionSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="ingestionSettingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<IngestionSettingResource>> GetIngestionSettingAsync(this SubscriptionResource subscriptionResource, string ingestionSettingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetIngestionSettingAsync(ingestionSettingName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3492,11 +3892,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ingestionSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="ingestionSettingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<IngestionSettingResource> GetIngestionSetting(this SubscriptionResource subscriptionResource, string ingestionSettingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetIngestionSetting(ingestionSettingName, cancellationToken);
         }
 
@@ -3508,9 +3910,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of SubscriptionSecurityApplicationResources and their operations over a SubscriptionSecurityApplicationResource. </returns>
         public static SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications(this SubscriptionResource subscriptionResource)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplications();
         }
 
@@ -3534,11 +3939,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionSecurityApplicationResource>> GetSubscriptionSecurityApplicationAsync(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplicationAsync(applicationId, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3562,11 +3969,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplication(applicationId, cancellationToken);
         }
 
@@ -3589,9 +3998,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="MdeOnboarding"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MdeOnboarding> GetMdeOnboardingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetMdeOnboardingsAsync(cancellationToken);
         }
 
@@ -3614,9 +4026,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MdeOnboarding"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MdeOnboarding> GetMdeOnboardings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetMdeOnboardings(cancellationToken);
         }
 
@@ -3639,8 +4054,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<MdeOnboarding>> GetMdeOnboardingAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetMdeOnboardingAsync(cancellationToken).ConfigureAwait(false);
         }
 
@@ -3663,8 +4081,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<MdeOnboarding> GetMdeOnboarding(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetMdeOnboarding(cancellationToken);
         }
 
@@ -3687,9 +4108,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetCustomAssessmentAutomationsAsync(cancellationToken);
         }
 
@@ -3712,9 +4136,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetCustomAssessmentAutomations(cancellationToken);
         }
 
@@ -3737,9 +4164,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetCustomEntityStoreAssignmentsAsync(cancellationToken);
         }
 
@@ -3762,9 +4192,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetCustomEntityStoreAssignments(cancellationToken);
         }
 
@@ -3788,9 +4221,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="IotSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotSecuritySolutionResource> GetIotSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetIotSecuritySolutionsAsync(filter, cancellationToken);
         }
 
@@ -3814,9 +4250,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="IotSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotSecuritySolutionResource> GetIotSecuritySolutions(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetIotSecuritySolutions(filter, cancellationToken);
         }
 
@@ -3840,9 +4279,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityTaskData> GetTasksAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTasksAsync(filter, cancellationToken);
         }
 
@@ -3866,9 +4308,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityTaskData> GetTasks(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTasks(filter, cancellationToken);
         }
 
@@ -3891,9 +4336,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityAutomationResource> GetSecurityAutomationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityAutomationsAsync(cancellationToken);
         }
 
@@ -3916,9 +4364,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityAutomationResource> GetSecurityAutomations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityAutomations(cancellationToken);
         }
 
@@ -3943,9 +4394,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="includePathRecommendations"> Include the policy rules. </param>
         /// <param name="summary"> Return output in a summarized form. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AdaptiveApplicationControlGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(this SubscriptionResource subscriptionResource, bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAdaptiveApplicationControlGroupsAsync(includePathRecommendations, summary, cancellationToken);
         }
 
@@ -3970,9 +4424,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="includePathRecommendations"> Include the policy rules. </param>
         /// <param name="summary"> Return output in a summarized form. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdaptiveApplicationControlGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AdaptiveApplicationControlGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(this SubscriptionResource subscriptionResource, bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAdaptiveApplicationControlGroups(includePathRecommendations, summary, cancellationToken);
         }
 
@@ -3995,9 +4452,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllowedConnectionsAsync(cancellationToken);
         }
 
@@ -4020,9 +4480,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityCenterAllowedConnection> GetAllowedConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllowedConnections(cancellationToken);
         }
 
@@ -4045,9 +4508,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecurityTopologyResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityTopologyResource> GetTopologiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTopologiesAsync(cancellationToken);
         }
 
@@ -4070,9 +4536,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecurityTopologyResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityTopologyResource> GetTopologies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTopologies(cancellationToken);
         }
 
@@ -4095,9 +4564,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
         }
 
@@ -4120,9 +4592,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetJitNetworkAccessPolicies(cancellationToken);
         }
 
@@ -4145,9 +4620,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DiscoveredSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetDiscoveredSecuritySolutionsAsync(cancellationToken);
         }
 
@@ -4170,9 +4648,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetDiscoveredSecuritySolutions(cancellationToken);
         }
 
@@ -4195,9 +4676,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllSecuritySolutionsReferenceDataAsync(cancellationToken);
         }
 
@@ -4220,9 +4704,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecuritySolutionsReferenceData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceData(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllSecuritySolutionsReferenceData(cancellationToken);
         }
 
@@ -4245,9 +4732,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ExternalSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetExternalSecuritySolutionsAsync(cancellationToken);
         }
 
@@ -4270,9 +4760,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExternalSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExternalSecuritySolution> GetExternalSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetExternalSecuritySolutions(cancellationToken);
         }
 
@@ -4296,9 +4789,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScoreControlsAsync(expand, cancellationToken);
         }
 
@@ -4322,9 +4818,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecureScoreControlDetails> GetSecureScoreControls(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScoreControls(expand, cancellationToken);
         }
 
@@ -4347,9 +4846,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScoreControlDefinitionsBySubscriptionAsync(cancellationToken);
         }
 
@@ -4372,9 +4874,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScoreControlDefinitionsBySubscription(cancellationToken);
         }
 
@@ -4397,9 +4902,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecuritySolution> GetSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySolutionsAsync(cancellationToken);
         }
 
@@ -4422,9 +4930,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecuritySolution"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecuritySolution> GetSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySolutions(cancellationToken);
         }
 
@@ -4447,9 +4958,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityAlertData> GetAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAlertsAsync(cancellationToken);
         }
 
@@ -4472,9 +4986,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityAlertData> GetAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAlerts(cancellationToken);
         }
 
@@ -4497,9 +5014,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SoftwareInventoryResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SoftwareInventoryResource> GetSoftwareInventoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSoftwareInventoriesAsync(cancellationToken);
         }
 
@@ -4522,9 +5042,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SoftwareInventoryResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SoftwareInventoryResource> GetSoftwareInventories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSoftwareInventories(cancellationToken);
         }
 
@@ -4547,9 +5070,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecurityConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityConnectorResource> GetSecurityConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityConnectorsAsync(cancellationToken);
         }
 
@@ -4572,9 +5098,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecurityConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityConnectorResource> GetSecurityConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityConnectors(cancellationToken);
         }
 
@@ -4586,9 +5115,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of TenantAssessmentMetadataResources and their operations over a TenantAssessmentMetadataResource. </returns>
         public static TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata(this TenantResource tenantResource)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableSecurityCenterTenantResource(tenantResource).GetAllTenantAssessmentMetadata();
         }
 
@@ -4612,11 +5144,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<TenantAssessmentMetadataResource>> GetTenantAssessmentMetadataAsync(this TenantResource tenantResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return await GetMockableSecurityCenterTenantResource(tenantResource).GetTenantAssessmentMetadataAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -4640,11 +5174,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<TenantAssessmentMetadataResource> GetTenantAssessmentMetadata(this TenantResource tenantResource, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableSecurityCenterTenantResource(tenantResource).GetTenantAssessmentMetadata(assessmentMetadataName, cancellationToken);
         }
 
@@ -4667,9 +5203,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableSecurityCenterTenantResource(tenantResource).GetSecureScoreControlDefinitionsAsync(cancellationToken);
         }
 
@@ -4692,9 +5231,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableSecurityCenterTenantResource(tenantResource).GetSecureScoreControlDefinitions(cancellationToken);
         }
     }

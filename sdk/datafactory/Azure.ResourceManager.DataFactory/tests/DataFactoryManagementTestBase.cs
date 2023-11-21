@@ -40,6 +40,14 @@ namespace Azure.ResourceManager.DataFactory.Tests
             Client = GetArmClient();
         }
 
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgName, AzureLocation location)
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupData input = new ResourceGroupData(location);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);

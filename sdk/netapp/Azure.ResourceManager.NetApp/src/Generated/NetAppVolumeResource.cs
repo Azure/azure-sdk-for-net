@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A Class representing a NetAppVolume along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetAppVolumeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetAppVolumeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CapacityPoolResource" /> using the GetNetAppVolume method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppVolumeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetAppVolumeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CapacityPoolResource"/> using the GetNetAppVolume method.
     /// </summary>
     public partial class NetAppVolumeResource : ArmResource
     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetAppVolumeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppVolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetAppVolumeResource(ArmClient client, NetAppVolumeData data) : this(client, data.Id)
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppVolumeReplication" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppVolumeReplication"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppVolumeReplication> GetReplicationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListReplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppVolumeReplication" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppVolumeReplication"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppVolumeReplication> GetReplications(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListReplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

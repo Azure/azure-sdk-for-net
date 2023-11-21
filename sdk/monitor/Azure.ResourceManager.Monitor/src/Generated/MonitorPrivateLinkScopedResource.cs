@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a MonitorPrivateLinkScopedResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorPrivateLinkScopedResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMonitorPrivateLinkScopedResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MonitorPrivateLinkScopeResource" /> using the GetMonitorPrivateLinkScopedResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitorPrivateLinkScopedResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMonitorPrivateLinkScopedResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MonitorPrivateLinkScopeResource"/> using the GetMonitorPrivateLinkScopedResource method.
     /// </summary>
     public partial class MonitorPrivateLinkScopedResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MonitorPrivateLinkScopedResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkScopedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MonitorPrivateLinkScopedResource(ArmClient client, MonitorPrivateLinkScopedResourceData data) : this(client, data.Id)
