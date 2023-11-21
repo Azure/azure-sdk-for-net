@@ -28,27 +28,6 @@ if (!(Get-Command az -ErrorAction SilentlyContinue)) {
 . (Join-Path $PSScriptRoot SemVer.ps1)
 . (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
-Write-Host "Connecting to Azure Devops"
-if (!$devops_pat) {
-  az account show *> $null
-  if (!$?) {
-    Write-Host 'Running az login...'
-    az login *> $null
-  }
-}
-Write-Host "Install or update azure devops cli extension"
-az extension show -n azure-devops *> $null
-if (!$?){
-  Write-Host 'Installing azure-devops extension'
-  az extension add --name azure-devops
-} else {
-  # Force update the extension to the latest version if it was already installed
-  # this is needed to ensure we have the authentication issue fixed from earlier versions
-  az extension update -n azure-devops *> $null
-}
-Write-Host "Checking Devops access"
-CheckDevOpsAccess
-Write-Host "Create package work item"
 &$EngCommonScriptsDir/Update-DevOps-Release-WorkItem.ps1 `
   -language $language `
   -packageName $packageName `

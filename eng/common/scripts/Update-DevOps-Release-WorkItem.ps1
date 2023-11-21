@@ -31,6 +31,7 @@ if (!$?) {
   az login *> $null
 }
 
+Write-Host "Checking Azure DevOps CLI extension"
 az extension show -n azure-devops *> $null
 if (!$?){
   Write-Host 'Installing azure-devops extension'
