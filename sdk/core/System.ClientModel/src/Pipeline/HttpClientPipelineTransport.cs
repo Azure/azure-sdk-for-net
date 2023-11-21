@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal.Primitives;
 
-// Introduces the dependency on System.Net.Http;
-
 internal class HttpClientPipelineTransport : PipelineTransport
 {
     /// <summary>
@@ -22,7 +20,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
     private readonly HttpClient _httpClient;
 
     private readonly Action<PipelineMessage, HttpRequestMessage>? _onSendingRequest;
-    private readonly Action<PipelineMessage, HttpResponseMessage> _onReceivedResponse;
+    private readonly Action<PipelineMessage, HttpResponseMessage>? _onReceivedResponse;
 
     private bool _disposed;
 
@@ -44,7 +42,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
         _httpClient = client;
 
         _onSendingRequest = onSendingRequest;
-        _onReceivedResponse = onReceivedResponse ?? OnReceivedResponse;
+        _onReceivedResponse = onReceivedResponse;
     }
 
     private static HttpClient CreateDefaultClient()
@@ -165,6 +163,8 @@ internal class HttpClientPipelineTransport : PipelineTransport
             throw new ClientRequestException(response: null, e.Message, e);
         }
 
+        message.Response = new HttpPipelineResponse(responseMessage);
+
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
@@ -191,9 +191,6 @@ internal class HttpClientPipelineTransport : PipelineTransport
         }
     }
 
-    private void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        => message.Response = new HttpPipelineResponse(httpResponse);
-
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
         if (message.Request is not PipelineRequest request)
@@ -203,32 +200,6 @@ internal class HttpClientPipelineTransport : PipelineTransport
 
         return HttpPipelineRequest.BuildHttpRequestMessage(request, message.CancellationToken);
     }
-
-/*
-    #region Smuggle Http Types
-    public static void SetHttpRequest(PipelineMessage message, HttpRequestMessage httpRequest)
-        => message.SetProperty(typeof(HttpRequestPropertyKey), httpRequest);
-
-    public static void SetHttpResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        => message.SetProperty(typeof(HttpResponsePropertyKey), httpResponse);
-
-    public static bool TryGetHttpResponse(PipelineMessage message, out HttpResponseMessage httpResponse)
-    {
-        if (message.TryGetProperty(typeof(HttpResponsePropertyKey), out object? value) &&
-            value is HttpResponseMessage response)
-        {
-            httpResponse = response;
-            return true;
-        }
-
-        httpResponse = default!;
-        return false;
-    }
-
-    private struct HttpRequestPropertyKey { }
-    private struct HttpResponsePropertyKey { }
-    #endregion
-*/
 
     #region IDisposable
 
