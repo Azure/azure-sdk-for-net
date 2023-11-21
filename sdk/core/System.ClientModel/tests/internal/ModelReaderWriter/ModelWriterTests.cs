@@ -331,9 +331,18 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             using MemoryStream stream = new MemoryStream();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             var task = Task.Run(() => writer.CopyTo(stream, tokenSource.Token));
-            while (stream.Position == 0) { } // wait for the stream to start filling
-            tokenSource.Cancel();
-            await task;
+            bool exceptionThrown = false;
+            try
+            {
+                while (stream.Position == 0) { } // wait for the stream to start filling
+                tokenSource.Cancel();
+                await task;
+            }
+            catch (OperationCanceledException)
+            {
+                exceptionThrown = true;
+            }
+            Assert.IsTrue(exceptionThrown);
             Assert.Greater(stream.Length, 0);
             Assert.Less(stream.Length, length);
         }
@@ -346,9 +355,18 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             using MemoryStream stream = new MemoryStream();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             var task = Task.Run(() => writer.CopyToAsync(stream, tokenSource.Token));
-            while (stream.Position == 0) { } // wait for the stream to start filling
-            tokenSource.Cancel();
-            await task;
+            bool exceptionThrown = false;
+            try
+            {
+                while (stream.Position == 0) { } // wait for the stream to start filling
+                tokenSource.Cancel();
+                await task;
+            }
+            catch (OperationCanceledException)
+            {
+                exceptionThrown = true;
+            }
+            Assert.IsTrue(exceptionThrown);
             Assert.Greater(stream.Length, 0);
             Assert.Less(stream.Length, length);
         }

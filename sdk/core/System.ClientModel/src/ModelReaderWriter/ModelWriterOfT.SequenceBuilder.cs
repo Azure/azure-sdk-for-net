@@ -153,8 +153,7 @@ namespace System.ClientModel.Internal
             {
                 for (int i = 0; i < _count; i++)
                 {
-                    if (cancellation.IsCancellationRequested)
-                        break;
+                    cancellation.ThrowIfCancellationRequested();
 
                     Buffer buffer = _buffers[i];
                     stream.Write(buffer.Array, 0, buffer.Written);
@@ -165,8 +164,7 @@ namespace System.ClientModel.Internal
             {
                 for (int i = 0; i < _count; i++)
                 {
-                    if (cancellation.IsCancellationRequested)
-                        break;
+                    cancellation.ThrowIfCancellationRequested();
 
                     Buffer buffer = _buffers[i];
                     await stream.WriteAsync(buffer.Array, 0, buffer.Written, cancellation).ConfigureAwait(false);
