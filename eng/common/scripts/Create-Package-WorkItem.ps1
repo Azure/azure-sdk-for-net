@@ -24,6 +24,7 @@ if (!(Get-Command az -ErrorAction SilentlyContinue)) {
   exit 1
 }
 
+. ${PSScriptRoot}\common.ps1
 . (Join-Path $PSScriptRoot SemVer.ps1)
 . (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
