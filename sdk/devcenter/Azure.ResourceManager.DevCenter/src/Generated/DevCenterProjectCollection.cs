@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectProjectsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectProjectsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), _devCenterProjectProjectsClientDiagnostics, Pipeline, "DevCenterProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), _devCenterProjectProjectsClientDiagnostics, Pipeline, "DevCenterProjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectProjectsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectProjectsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), _devCenterProjectProjectsClientDiagnostics, Pipeline, "DevCenterProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevCenterProjectResource(Client, DevCenterProjectData.DeserializeDevCenterProjectData(e)), _devCenterProjectProjectsClientDiagnostics, Pipeline, "DevCenterProjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

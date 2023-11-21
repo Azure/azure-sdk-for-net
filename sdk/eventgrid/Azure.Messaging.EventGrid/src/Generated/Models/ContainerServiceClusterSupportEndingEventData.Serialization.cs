@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,15 +16,65 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerServiceClusterSupportEndingEventDataConverter))]
-    public partial class ContainerServiceClusterSupportEndingEventData
+    public partial class ContainerServiceClusterSupportEndingEventData : IUtf8JsonSerializable, IJsonModel<ContainerServiceClusterSupportEndingEventData>
     {
-        internal static ContainerServiceClusterSupportEndingEventData DeserializeContainerServiceClusterSupportEndingEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceClusterSupportEndingEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceClusterSupportEndingEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ContainerServiceClusterSupportEndingEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerServiceClusterSupportEndingEventData IJsonModel<ContainerServiceClusterSupportEndingEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ContainerServiceClusterSupportEndingEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement, options);
+        }
+
+        internal static ContainerServiceClusterSupportEndingEventData DeserializeContainerServiceClusterSupportEndingEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> kubernetesVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -29,15 +82,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     kubernetesVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceClusterSupportEndingEventData(kubernetesVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceClusterSupportEndingEventData(kubernetesVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceClusterSupportEndingEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContainerServiceClusterSupportEndingEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerServiceClusterSupportEndingEventData IPersistableModel<ContainerServiceClusterSupportEndingEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceClusterSupportEndingEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContainerServiceClusterSupportEndingEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerServiceClusterSupportEndingEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ContainerServiceClusterSupportEndingEventDataConverter : JsonConverter<ContainerServiceClusterSupportEndingEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceClusterSupportEndingEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ContainerServiceClusterSupportEndingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,78 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(StorageTaskCompletedEventDataConverter))]
-    public partial class StorageTaskCompletedEventData
+    public partial class StorageTaskCompletedEventData : IUtf8JsonSerializable, IJsonModel<StorageTaskCompletedEventData>
     {
-        internal static StorageTaskCompletedEventData DeserializeStorageTaskCompletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskCompletedEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageTaskCompletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageTaskCompletedEventData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(CompletedDateTime))
+            {
+                writer.WritePropertyName("completedDateTime"u8);
+                writer.WriteStringValue(CompletedDateTime.Value, "O");
+            }
+            if (Optional.IsDefined(TaskExecutionId))
+            {
+                writer.WritePropertyName("taskExecutionId"u8);
+                writer.WriteStringValue(TaskExecutionId);
+            }
+            if (Optional.IsDefined(TaskName))
+            {
+                writer.WritePropertyName("taskName"u8);
+                writer.WriteStringValue(TaskName);
+            }
+            if (Optional.IsDefined(SummaryReportBlobUri))
+            {
+                writer.WritePropertyName("summaryReportBlobUrl"u8);
+                writer.WriteStringValue(SummaryReportBlobUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageTaskCompletedEventData IJsonModel<StorageTaskCompletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(StorageTaskCompletedEventData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageTaskCompletedEventData(document.RootElement, options);
+        }
+
+        internal static StorageTaskCompletedEventData DeserializeStorageTaskCompletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +97,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> taskExecutionId = default;
             Optional<string> taskName = default;
             Optional<Uri> summaryReportBlobUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -65,15 +138,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     summaryReportBlobUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageTaskCompletedEventData(Optional.ToNullable(status), Optional.ToNullable(completedDateTime), taskExecutionId.Value, taskName.Value, summaryReportBlobUrl.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageTaskCompletedEventData(Optional.ToNullable(status), Optional.ToNullable(completedDateTime), taskExecutionId.Value, taskName.Value, summaryReportBlobUrl.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageTaskCompletedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageTaskCompletedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageTaskCompletedEventData IPersistableModel<StorageTaskCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageTaskCompletedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(StorageTaskCompletedEventData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageTaskCompletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class StorageTaskCompletedEventDataConverter : JsonConverter<StorageTaskCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageTaskCompletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override StorageTaskCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -6,15 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Document analysis parameters. </summary>
     internal partial class AnalyzeDocumentRequest
     {
-        /// <summary> Initializes a new instance of AnalyzeDocumentRequest. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentRequest"/>. </summary>
         public AnalyzeDocumentRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentRequest"/>. </summary>
+        /// <param name="urlSource"> Document URL to analyze.  Either urlSource or base64Source must be specified. </param>
+        /// <param name="base64Source"> Base64 encoding of the document to analyze.  Either urlSource or base64Source must be specified. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeDocumentRequest(Uri urlSource, byte[] base64Source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            UrlSource = urlSource;
+            Base64Source = base64Source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Document URL to analyze.  Either urlSource or base64Source must be specified. </summary>

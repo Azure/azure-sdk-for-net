@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -12,21 +13,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobExceptionTriggered event. </summary>
     public partial class AcsRouterJobExceptionTriggeredEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobExceptionTriggeredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobExceptionTriggeredEventData"/>. </summary>
         internal AcsRouterJobExceptionTriggeredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobExceptionTriggeredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobExceptionTriggeredEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="ruleKey"> Router Job Exception Triggered Rule Key. </param>
         /// <param name="exceptionRuleId"> Router Job Exception Triggered Rule Id. </param>
-        internal AcsRouterJobExceptionTriggeredEventData(string jobId, string channelReference, string channelId, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string ruleKey, string exceptionRuleId) : base(jobId, channelReference, channelId, queueId, labels, tags)
+        internal AcsRouterJobExceptionTriggeredEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string ruleKey, string exceptionRuleId) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
         {
             RuleKey = ruleKey;
             ExceptionRuleId = exceptionRuleId;

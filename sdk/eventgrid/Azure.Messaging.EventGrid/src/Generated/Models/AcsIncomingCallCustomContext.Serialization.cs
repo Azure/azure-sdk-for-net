@@ -5,22 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsIncomingCallCustomContext
+    public partial class AcsIncomingCallCustomContext : IUtf8JsonSerializable, IJsonModel<AcsIncomingCallCustomContext>
     {
-        internal static AcsIncomingCallCustomContext DeserializeAcsIncomingCallCustomContext(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsIncomingCallCustomContext>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AcsIncomingCallCustomContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsIncomingCallCustomContext>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsIncomingCallCustomContext)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(SipHeaders))
+            {
+                writer.WritePropertyName("sipHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in SipHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(VoipHeaders))
+            {
+                writer.WritePropertyName("voipHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in VoipHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsIncomingCallCustomContext IJsonModel<AcsIncomingCallCustomContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsIncomingCallCustomContext>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AcsIncomingCallCustomContext)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsIncomingCallCustomContext(document.RootElement, options);
+        }
+
+        internal static AcsIncomingCallCustomContext DeserializeAcsIncomingCallCustomContext(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyDictionary<string, string>> sipHeaders = default;
             Optional<IReadOnlyDictionary<string, string>> voipHeaders = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sipHeaders"u8))
@@ -51,8 +121,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     voipHeaders = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsIncomingCallCustomContext(Optional.ToDictionary(sipHeaders), Optional.ToDictionary(voipHeaders));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsIncomingCallCustomContext(Optional.ToDictionary(sipHeaders), Optional.ToDictionary(voipHeaders), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsIncomingCallCustomContext>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsIncomingCallCustomContext>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsIncomingCallCustomContext)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AcsIncomingCallCustomContext IPersistableModel<AcsIncomingCallCustomContext>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AcsIncomingCallCustomContext>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAcsIncomingCallCustomContext(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AcsIncomingCallCustomContext)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AcsIncomingCallCustomContext>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

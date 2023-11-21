@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         public virtual AsyncPageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(e)), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(e)), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         public virtual Pageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(e)), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(e)), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateEndpointConnectionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

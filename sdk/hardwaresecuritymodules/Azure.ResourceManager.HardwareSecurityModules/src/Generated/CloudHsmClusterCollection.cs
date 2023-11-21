@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), _cloudHsmClusterClientDiagnostics, Pipeline, "CloudHsmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), _cloudHsmClusterClientDiagnostics, Pipeline, "CloudHsmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), _cloudHsmClusterClientDiagnostics, Pipeline, "CloudHsmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), _cloudHsmClusterClientDiagnostics, Pipeline, "CloudHsmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

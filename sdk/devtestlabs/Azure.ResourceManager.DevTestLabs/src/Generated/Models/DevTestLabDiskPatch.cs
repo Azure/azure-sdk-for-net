@@ -5,13 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A Disk. </summary>
     public partial class DevTestLabDiskPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabDiskPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskPatch"/>. </summary>
         public DevTestLabDiskPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabDiskPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

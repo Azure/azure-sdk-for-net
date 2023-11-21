@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Grafana
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Grafana
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

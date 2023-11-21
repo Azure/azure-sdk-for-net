@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), FrontDoorClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), FrontDoorClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), FrontDoorClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), FrontDoorClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

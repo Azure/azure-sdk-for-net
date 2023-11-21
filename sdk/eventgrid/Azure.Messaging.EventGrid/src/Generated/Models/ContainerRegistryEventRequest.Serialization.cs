@@ -5,15 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ContainerRegistryEventRequest
+    public partial class ContainerRegistryEventRequest : IUtf8JsonSerializable, IJsonModel<ContainerRegistryEventRequest>
     {
-        internal static ContainerRegistryEventRequest DeserializeContainerRegistryEventRequest(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryEventRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerRegistryEventRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEventRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ContainerRegistryEventRequest)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Addr))
+            {
+                writer.WritePropertyName("addr"u8);
+                writer.WriteStringValue(Addr);
+            }
+            if (Optional.IsDefined(Host))
+            {
+                writer.WritePropertyName("host"u8);
+                writer.WriteStringValue(Host);
+            }
+            if (Optional.IsDefined(Method))
+            {
+                writer.WritePropertyName("method"u8);
+                writer.WriteStringValue(Method);
+            }
+            if (Optional.IsDefined(Useragent))
+            {
+                writer.WritePropertyName("useragent"u8);
+                writer.WriteStringValue(Useragent);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerRegistryEventRequest IJsonModel<ContainerRegistryEventRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEventRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ContainerRegistryEventRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryEventRequest(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryEventRequest DeserializeContainerRegistryEventRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +95,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> host = default;
             Optional<string> method = default;
             Optional<string> useragent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -50,8 +124,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     useragent = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryEventRequest(id.Value, addr.Value, host.Value, method.Value, useragent.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryEventRequest(id.Value, addr.Value, host.Value, method.Value, useragent.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerRegistryEventRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEventRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContainerRegistryEventRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistryEventRequest IPersistableModel<ContainerRegistryEventRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEventRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistryEventRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ContainerRegistryEventRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistryEventRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

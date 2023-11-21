@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelRequest(Id.SubscriptionId, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelRequest(Id.SubscriptionId, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtSubscriptionLevelRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtSubscriptionLevelRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelRequest(Id.SubscriptionId, filter, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelRequest(Id.SubscriptionId, filter, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
         }
     }
 }

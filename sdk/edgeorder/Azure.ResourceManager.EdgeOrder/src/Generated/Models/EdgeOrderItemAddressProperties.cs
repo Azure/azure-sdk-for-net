@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Address Properties. </summary>
     public partial class EdgeOrderItemAddressProperties
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemAddressProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/>. </summary>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         public EdgeOrderItemAddressProperties(EdgeOrderAddressContactDetails contactDetails)
@@ -23,15 +56,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ContactDetails = contactDetails;
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemAddressProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/>. </summary>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
-        internal EdgeOrderItemAddressProperties(EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderItemAddressProperties(EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShippingAddress = shippingAddress;
             ContactDetails = contactDetails;
             AddressValidationStatus = addressValidationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/> for deserialization. </summary>
+        internal EdgeOrderItemAddressProperties()
+        {
         }
 
         /// <summary> Shipping details for the address. </summary>
