@@ -15,6 +15,19 @@ public abstract class PipelineResponse : IDisposable
     public static PipelineResponse Create(HttpResponseMessage response)
         => new HttpPipelineResponse(response);
 
+    //public static bool TryGetHttpResponse(PipelineResponse response,
+    //    out HttpResponseMessage httpResponse)
+    //{
+    //    if (response is HttpPipelineResponse httpPipelineResponse)
+    //    {
+    //        httpResponse = httpPipelineResponse.HttpResponse;
+    //        return true;
+    //    }
+
+    //    httpResponse = default!;
+    //    return false;
+    //}
+
     public abstract int Status { get; }
 
     public abstract string ReasonPhrase { get; }

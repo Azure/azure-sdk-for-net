@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
+using System.ClientModel;
 using System.Diagnostics;
 using System.Net;
-using System.ClientModel;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;

@@ -3,17 +3,20 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.ClientModel.Internal.Primitives;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
     public partial class HttpClientTransport
     {
-        private class AzureCoreHttpPipelineTransport : HttpClientPipelineTransport
+        private class AzureCoreHttpPipelineTransport : PipelineTransport
         {
-            public AzureCoreHttpPipelineTransport(HttpClient client) : base(client)
+            private readonly PipelineTransport _httpPipelineTransport;
+
+            public AzureCoreHttpPipelineTransport(HttpClient client)
             {
+                _httpPipelineTransport = Create(client);
             }
 
             /// <inheritdoc />
@@ -30,16 +33,34 @@ namespace Azure.Core.Pipeline
             }
 
             /// <inheritdoc />
-            protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+            protected override void OnReceivedResponse(PipelineMessage message)
             {
                 if (message is not HttpMessage httpMessage)
                 {
                     throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
                 }
 
-                string clientRequestId = httpMessage.Request.ClientRequestId;
-                httpMessage.Response = new ResponseAdapter(new HttpClientTransportResponse(clientRequestId, httpResponse));
+                //if (!PipelineResponse.TryGetHttpResponse(message.Response, out HttpResponseMessage httpResponse))
+                //{
+                //    throw new InvalidOperationException($"Unsupported response type: '{message.Response.GetType()}'.");
+                //}
+
+                httpMessage.Response = new HttpClientTransportResponse(
+                    httpMessage.Request.ClientRequestId,
+                    message.Response);
             }
+
+            public override void Process(PipelineMessage message)
+                => _httpPipelineTransport.Process(message);
+
+            public override async ValueTask ProcessAsync(PipelineMessage message)
+                => await _httpPipelineTransport.ProcessAsync(message).ConfigureAwait(false);
+
+            public override PipelineMessage CreateMessage()
+                => _httpPipelineTransport.CreateMessage();
+
+            public override void Dispose()
+                => _httpPipelineTransport.Dispose();
         }
     }
 }

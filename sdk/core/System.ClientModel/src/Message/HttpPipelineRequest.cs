@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,6 +24,8 @@ internal class HttpPipelineRequest : PipelineRequest
     private InputContent? _content;
 
     private readonly PipelineRequestHeaders _headers;
+
+    private HttpRequestMessage? _httpRequest;
 
     protected internal HttpPipelineRequest()
     {
@@ -58,6 +61,10 @@ internal class HttpPipelineRequest : PipelineRequest
     }
 
     public override MessageHeaders Headers => _headers;
+
+    // We don't dispose this because it is owned outside this type
+    // (Used in a using block by the transport)
+    internal HttpRequestMessage? HttpRequest { get; set; }
 
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
@@ -126,6 +133,8 @@ internal class HttpPipelineRequest : PipelineRequest
                     break;
             }
         }
+
+        request.htt
 
         return httpRequest;
     }

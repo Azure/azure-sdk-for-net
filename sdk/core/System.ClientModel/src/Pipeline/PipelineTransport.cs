@@ -1,13 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal.Primitives;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public abstract class PipelineTransport : PipelinePolicy
+public abstract class PipelineTransport : PipelinePolicy, IDisposable
 {
+    public static PipelineTransport Create(HttpClient client)
+        => new HttpClientPipelineTransport(client);
+
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
@@ -40,4 +45,11 @@ public abstract class PipelineTransport : PipelinePolicy
 
         await ProcessAsync(message).ConfigureAwait(false);
     }
+
+    protected virtual void OnSendingRequest(PipelineMessage message) { }
+
+    protected virtual void OnReceivedResponse(PipelineMessage message) { }
+
+    /// <inheritdoc/>
+    public abstract void Dispose();
 }

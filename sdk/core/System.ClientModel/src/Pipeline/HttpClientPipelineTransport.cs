@@ -11,7 +11,7 @@ namespace System.ClientModel.Internal.Primitives;
 
 // Introduces the dependency on System.Net.Http;
 
-public class HttpClientPipelineTransport : PipelineTransport, IDisposable
+internal class HttpClientPipelineTransport : PipelineTransport
 {
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
@@ -182,15 +182,22 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     /// </summary>
     /// <param name="message"></param>
     /// <param name="httpRequest"></param>
-    protected virtual void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest) { }
+    private void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
+    {
+        message.Request.
+        OnSendingRequest(message);
+    }
 
     /// <summary>
     /// TBD.  Needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
     /// <param name="httpResponse"></param>
-    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        => message.Response = new HttpPipelineResponse(httpResponse);
+    private void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+    {
+        message.Response = new HttpPipelineResponse(httpResponse);
+        OnReceivedResponse(message);
+    }
 
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
@@ -199,8 +206,35 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
 
+        
         return HttpPipelineRequest.BuildHttpRequestMessage(request, message.CancellationToken);
     }
+
+/*
+    #region Smuggle Http Types
+    public static void SetHttpRequest(PipelineMessage message, HttpRequestMessage httpRequest)
+        => message.SetProperty(typeof(HttpRequestPropertyKey), httpRequest);
+
+    public static void SetHttpResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+        => message.SetProperty(typeof(HttpResponsePropertyKey), httpResponse);
+
+    public static bool TryGetHttpResponse(PipelineMessage message, out HttpResponseMessage httpResponse)
+    {
+        if (message.TryGetProperty(typeof(HttpResponsePropertyKey), out object? value) &&
+            value is HttpResponseMessage response)
+        {
+            httpResponse = response;
+            return true;
+        }
+
+        httpResponse = default!;
+        return false;
+    }
+
+    private struct HttpRequestPropertyKey { }
+    private struct HttpResponsePropertyKey { }
+    #endregion
+*/
 
     #region IDisposable
 
@@ -218,7 +252,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         }
     }
 
-    public virtual void Dispose()
+    public override void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);

@@ -48,6 +48,8 @@ internal class HttpPipelineResponse : PipelineResponse
         }
     }
 
+    //internal HttpResponseMessage HttpResponse => _httpResponse;
+
     #region IDisposable
 
     protected virtual void Dispose(bool disposing)
