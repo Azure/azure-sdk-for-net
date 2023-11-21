@@ -29,8 +29,13 @@ if (!(Get-Command az -ErrorAction SilentlyContinue)) {
 . (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
 Write-Host "Connecting to Azure Devops"
-LoginToAzureDevops $devops_pat
-echo $devops_pat | az devops login
+if (!$devops_pat) {
+  az account show *> $null
+  if (!$?) {
+    Write-Host 'Running az login...'
+    az login *> $null
+  }
+}
 Write-Host "Install or update azure devops cli extension"
 az extension show -n azure-devops *> $null
 if (!$?){
@@ -54,7 +59,8 @@ Write-Host "Create package work item"
   -packageRepoPath $packageRepoPath `
   -packageType $packageType `
   -relatedWorkItemId $relatedWorkItemId `
-  -tag $tag
+  -tag $tag `
+  -devops_pat $devops_pat
 
 if ($LASTEXITCODE -ne 0) {
   Write-Error "Updating of the Devops Release WorkItem failed."
