@@ -180,7 +180,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(prompts, nameof(prompts));
 
-            DeploymentName = deploymentName
+            DeploymentName = deploymentName;
             Prompts = prompts.ToList();
         }
 
