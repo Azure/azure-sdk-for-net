@@ -350,7 +350,7 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   }
   if ($tag)
   {
-    If ($fields)
+    if ($fields)
     {
       $fields += "`"System.Tags=${tag}`""
     }
