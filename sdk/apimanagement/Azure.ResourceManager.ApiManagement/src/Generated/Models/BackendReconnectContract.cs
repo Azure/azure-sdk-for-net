@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,20 +15,54 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Reconnect request parameters. </summary>
     public partial class BackendReconnectContract : ResourceData
     {
-        /// <summary> Initializes a new instance of BackendReconnectContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendReconnectContract"/>. </summary>
         public BackendReconnectContract()
         {
         }
 
-        /// <summary> Initializes a new instance of BackendReconnectContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendReconnectContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="after"> Duration in ISO8601 format after which reconnect will be initiated. Minimum duration of the Reconnect is PT2M. </param>
-        internal BackendReconnectContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? after) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendReconnectContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? after, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             After = after;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Duration in ISO8601 format after which reconnect will be initiated. Minimum duration of the Reconnect is PT2M. </summary>

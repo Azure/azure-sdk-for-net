@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.Cdn
                 data.CustomHttpsAvailabilityState,
                 data.CustomDomainHttpsContent,
                 data.ValidationData,
-                data.ProvisioningState);
+                data.ProvisioningState,
+                null);
         }
 
         private string GetName(string param, ResourceIdentifier id)

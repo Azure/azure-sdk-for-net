@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ProfileResourceGetWafLogAnalyticsMetricsOptions. </summary>
     public partial class ProfileResourceGetWafLogAnalyticsMetricsOptions
     {
-        /// <summary> Initializes a new instance of ProfileResourceGetWafLogAnalyticsMetricsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/>. </summary>
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
             Actions = new ChangeTrackingList<WafAction>();
             GroupBy = new ChangeTrackingList<WafRankingGroupBy>();
             RuleTypes = new ChangeTrackingList<WafRuleType>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetWafLogAnalyticsMetricsOptions()
+        {
         }
 
         /// <summary> The ArrayOfWafMetric to use. </summary>

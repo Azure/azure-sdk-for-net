@@ -15,7 +15,39 @@ namespace Azure.Communication.Chat
     /// <summary> Chat message. </summary>
     internal partial class ChatMessageInternal
     {
-        /// <summary> Initializes a new instance of ChatMessageInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessageInternal"/>. </summary>
         /// <param name="id"> The id of the chat message. This id is server generated. </param>
         /// <param name="type"> The chat message type. </param>
         /// <param name="sequenceId"> Sequence of the chat message in the conversation. </param>
@@ -36,7 +68,7 @@ namespace Azure.Communication.Chat
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ChatMessageInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageInternal"/>. </summary>
         /// <param name="id"> The id of the chat message. This id is server generated. </param>
         /// <param name="type"> The chat message type. </param>
         /// <param name="sequenceId"> Sequence of the chat message in the conversation. </param>
@@ -48,7 +80,8 @@ namespace Azure.Communication.Chat
         /// <param name="deletedOn"> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="editedOn"> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="metadata"> Message metadata. </param>
-        internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset? deletedOn, DateTimeOffset? editedOn, IReadOnlyDictionary<string, string> metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset? deletedOn, DateTimeOffset? editedOn, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Type = type;
@@ -61,6 +94,12 @@ namespace Azure.Communication.Chat
             DeletedOn = deletedOn;
             EditedOn = editedOn;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessageInternal"/> for deserialization. </summary>
+        internal ChatMessageInternal()
+        {
         }
 
         /// <summary> The id of the chat message. This id is server generated. </summary>

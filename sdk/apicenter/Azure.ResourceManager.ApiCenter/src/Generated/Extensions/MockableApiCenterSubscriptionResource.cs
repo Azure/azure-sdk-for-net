@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetApiCenterServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetApiCenterServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetApiCenterServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetApiCenterServices", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiIssueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiIssueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiIssueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiIssueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

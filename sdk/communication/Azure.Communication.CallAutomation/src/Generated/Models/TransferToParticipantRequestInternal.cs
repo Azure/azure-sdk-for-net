@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,39 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for transferring call to a participant. </summary>
     internal partial class TransferToParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of TransferToParticipantRequestInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant)
@@ -22,6 +55,28 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
+        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
+        /// <param name="customContext"> Used by customer to send custom context to targets. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="transferee"> Transferee is the participant who is transferring the call. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, CustomContextInternal customContext, string operationContext, CommunicationIdentifierModel transferee, string callbackUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetParticipant = targetParticipant;
+            CustomContext = customContext;
+            OperationContext = operationContext;
+            Transferee = transferee;
+            CallbackUri = callbackUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/> for deserialization. </summary>
+        internal TransferToParticipantRequestInternal()
+        {
         }
 
         /// <summary> The identity of the target where call should be transferred to. </summary>

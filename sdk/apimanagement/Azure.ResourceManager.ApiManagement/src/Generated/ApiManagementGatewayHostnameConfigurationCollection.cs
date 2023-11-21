@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGatewayHostnameConfigurationResource(Client, ApiManagementGatewayHostnameConfigurationData.DeserializeApiManagementGatewayHostnameConfigurationData(e)), _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics, Pipeline, "ApiManagementGatewayHostnameConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementGatewayHostnameConfigurationResource(Client, ApiManagementGatewayHostnameConfigurationData.DeserializeApiManagementGatewayHostnameConfigurationData(e)), _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics, Pipeline, "ApiManagementGatewayHostnameConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGatewayHostnameConfigurationResource(Client, ApiManagementGatewayHostnameConfigurationData.DeserializeApiManagementGatewayHostnameConfigurationData(e)), _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics, Pipeline, "ApiManagementGatewayHostnameConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementGatewayHostnameConfigurationResource(Client, ApiManagementGatewayHostnameConfigurationData.DeserializeApiManagementGatewayHostnameConfigurationData(e)), _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics, Pipeline, "ApiManagementGatewayHostnameConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

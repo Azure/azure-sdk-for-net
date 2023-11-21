@@ -5,15 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class TranscriptionFailed
+    public partial class TranscriptionFailed : IUtf8JsonSerializable, IJsonModel<TranscriptionFailed>
     {
-        internal static TranscriptionFailed DeserializeTranscriptionFailed(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranscriptionFailed>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TranscriptionFailed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TranscriptionFailed)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResultInformation))
+            {
+                writer.WritePropertyName("resultInformation"u8);
+                writer.WriteObjectValue(ResultInformation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TranscriptionUpdateResult))
+            {
+                writer.WritePropertyName("transcriptionUpdateResult"u8);
+                writer.WriteObjectValue(TranscriptionUpdateResult);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TranscriptionFailed IJsonModel<TranscriptionFailed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TranscriptionFailed)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTranscriptionFailed(document.RootElement, options);
+        }
+
+        internal static TranscriptionFailed DeserializeTranscriptionFailed(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +101,8 @@ namespace Azure.Communication.CallAutomation
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<TranscriptionUpdate> transcriptionUpdateResult = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -64,8 +143,44 @@ namespace Azure.Communication.CallAutomation
                     transcriptionUpdateResult = TranscriptionUpdate.DeserializeTranscriptionUpdate(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TranscriptionFailed(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, transcriptionUpdateResult.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TranscriptionFailed(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, transcriptionUpdateResult.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TranscriptionFailed>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TranscriptionFailed)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TranscriptionFailed IPersistableModel<TranscriptionFailed>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTranscriptionFailed(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TranscriptionFailed)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TranscriptionFailed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

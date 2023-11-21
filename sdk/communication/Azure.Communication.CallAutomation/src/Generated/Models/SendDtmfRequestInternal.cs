@@ -16,7 +16,39 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SendDtmfRequest. </summary>
     internal partial class SendDtmfRequestInternal
     {
-        /// <summary> Initializes a new instance of SendDtmfRequestInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SendDtmfRequestInternal"/>. </summary>
         /// <param name="tones"> List of tones to be sent to target participant. </param>
         /// <param name="targetParticipant"> Target participant of send DTMF. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tones"/> or <paramref name="targetParticipant"/> is null. </exception>
@@ -27,6 +59,26 @@ namespace Azure.Communication.CallAutomation
 
             Tones = tones.ToList();
             TargetParticipant = targetParticipant;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendDtmfRequestInternal"/>. </summary>
+        /// <param name="tones"> List of tones to be sent to target participant. </param>
+        /// <param name="targetParticipant"> Target participant of send DTMF. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SendDtmfRequestInternal(IList<DtmfTone> tones, CommunicationIdentifierModel targetParticipant, string operationContext, string callbackUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tones = tones;
+            TargetParticipant = targetParticipant;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendDtmfRequestInternal"/> for deserialization. </summary>
+        internal SendDtmfRequestInternal()
+        {
         }
 
         /// <summary> List of tones to be sent to target participant. </summary>

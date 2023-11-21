@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class AnswersFromTextOptions : IUtf8JsonSerializable
+    public partial class AnswersFromTextOptions : IUtf8JsonSerializable, IJsonModel<AnswersFromTextOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnswersFromTextOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnswersFromTextOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswersFromTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnswersFromTextOptions)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("question"u8);
             writer.WriteStringValue(Question);
@@ -34,7 +46,119 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AnswersFromTextOptions IJsonModel<AnswersFromTextOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswersFromTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AnswersFromTextOptions)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnswersFromTextOptions(document.RootElement, options);
+        }
+
+        internal static AnswersFromTextOptions DeserializeAnswersFromTextOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string question = default;
+            IList<TextDocument> records = default;
+            Optional<string> language = default;
+            Optional<StringIndexType> stringIndexType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("question"u8))
+                {
+                    question = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("records"u8))
+                {
+                    List<TextDocument> array = new List<TextDocument>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TextDocument.DeserializeTextDocument(item));
+                    }
+                    records = array;
+                    continue;
+                }
+                if (property.NameEquals("language"u8))
+                {
+                    language = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnswersFromTextOptions(question, records, language.Value, Optional.ToNullable(stringIndexType), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AnswersFromTextOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswersFromTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnswersFromTextOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnswersFromTextOptions IPersistableModel<AnswersFromTextOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnswersFromTextOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnswersFromTextOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AnswersFromTextOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnswersFromTextOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

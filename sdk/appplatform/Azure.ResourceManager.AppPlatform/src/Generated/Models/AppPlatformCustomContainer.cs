@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,54 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Custom container payload. </summary>
     public partial class AppPlatformCustomContainer
     {
-        /// <summary> Initializes a new instance of AppPlatformCustomContainer. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomContainer"/>. </summary>
         public AppPlatformCustomContainer()
         {
             Command = new ChangeTrackingList<string>();
             Args = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomContainer"/>. </summary>
         /// <param name="server"> The name of the registry that contains the container image. </param>
         /// <param name="containerImage"> Container image of the custom container. This should be in the form of &lt;repository&gt;:&lt;tag&gt; without the server name of the registry. </param>
         /// <param name="command"> Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. </param>
         /// <param name="args"> Arguments to the entrypoint. The docker image's CMD is used if this is not provided. </param>
         /// <param name="imageRegistryCredential"> Credential of the image registry. </param>
         /// <param name="languageFramework"> Language framework of the container image uploaded. </param>
-        internal AppPlatformCustomContainer(string server, string containerImage, IList<string> command, IList<string> args, AppPlatformImageRegistryCredential imageRegistryCredential, string languageFramework)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformCustomContainer(string server, string containerImage, IList<string> command, IList<string> args, AppPlatformImageRegistryCredential imageRegistryCredential, string languageFramework, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Server = server;
             ContainerImage = containerImage;
@@ -35,6 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Args = args;
             ImageRegistryCredential = imageRegistryCredential;
             LanguageFramework = languageFramework;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the registry that contains the container image. </summary>

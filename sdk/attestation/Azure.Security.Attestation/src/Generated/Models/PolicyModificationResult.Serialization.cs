@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,73 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyModificationResultConverter))]
-    public partial class PolicyModificationResult
+    public partial class PolicyModificationResult : IUtf8JsonSerializable, IJsonModel<PolicyModificationResult>
     {
-        internal static PolicyModificationResult DeserializePolicyModificationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyModificationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PolicyModificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyModificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PolicyModificationResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PolicyResolution))
+            {
+                writer.WritePropertyName("x-ms-policy-result"u8);
+                writer.WriteStringValue(PolicyResolution.ToString());
+            }
+            if (Optional.IsDefined(BasePolicyTokenHash))
+            {
+                writer.WritePropertyName("x-ms-policy-token-hash"u8);
+                writer.WriteStringValue(BasePolicyTokenHash);
+            }
+            if (Optional.IsDefined(BasePolicySigner))
+            {
+                writer.WritePropertyName("x-ms-policy-signer"u8);
+                writer.WriteObjectValue(BasePolicySigner);
+            }
+            if (Optional.IsDefined(BasePolicy))
+            {
+                writer.WritePropertyName("x-ms-policy"u8);
+                writer.WriteStringValue(BasePolicy);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyModificationResult IJsonModel<PolicyModificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyModificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PolicyModificationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyModificationResult(document.RootElement, options);
+        }
+
+        internal static PolicyModificationResult DeserializePolicyModificationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +91,8 @@ namespace Azure.Security.Attestation
             Optional<string> xMsPolicyTokenHash = default;
             Optional<JsonWebKey> xMsPolicySigner = default;
             Optional<string> xMsPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-policy-result"u8))
@@ -55,15 +123,51 @@ namespace Azure.Security.Attestation
                     xMsPolicy = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyModificationResult(xMsPolicyResult, xMsPolicyTokenHash.Value, xMsPolicySigner.Value, xMsPolicy.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PolicyModificationResult(xMsPolicyResult, xMsPolicyTokenHash.Value, xMsPolicySigner.Value, xMsPolicy.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyModificationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyModificationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PolicyModificationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PolicyModificationResult IPersistableModel<PolicyModificationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyModificationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicyModificationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PolicyModificationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyModificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class PolicyModificationResultConverter : JsonConverter<PolicyModificationResult>
         {
             public override void Write(Utf8JsonWriter writer, PolicyModificationResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PolicyModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

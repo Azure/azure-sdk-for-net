@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmChangeAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of DetectedChangeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DetectedChangeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <returns> A new <see cref="Models.DetectedChangeData"/> instance for mocking. </returns>
         public static DetectedChangeData DetectedChangeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ChangeProperties properties = null)
         {
-            return new DetectedChangeData(id, name, resourceType, systemData, properties);
+            return new DetectedChangeData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ChangeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChangeProperties"/>. </summary>
         /// <param name="resourceId"> The resource id that the change is attached to. </param>
         /// <param name="changeDetectedOn"> The time when the change is detected. </param>
         /// <param name="initiatedByList">
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             initiatedByList ??= new List<string>();
             propertyChanges ??= new List<PropertyChange>();
 
-            return new ChangeProperties(resourceId, changeDetectedOn, initiatedByList?.ToList(), changeType, propertyChanges?.ToList());
+            return new ChangeProperties(resourceId, changeDetectedOn, initiatedByList?.ToList(), changeType, propertyChanges?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PropertyChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PropertyChange"/>. </summary>
         /// <param name="changeType"> The type of the change. </param>
         /// <param name="changeCategory"> The change category. </param>
         /// <param name="jsonPath"> The json path of the changed property. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <returns> A new <see cref="Models.PropertyChange"/> instance for mocking. </returns>
         public static PropertyChange PropertyChange(ChangeType? changeType = null, ChangeCategory? changeCategory = null, string jsonPath = null, string displayName = null, PropertyChangeLevel? level = null, string description = null, string oldValue = null, string newValue = null, bool? isDataMasked = null)
         {
-            return new PropertyChange(changeType, changeCategory, jsonPath, displayName, level, description, oldValue, newValue, isDataMasked);
+            return new PropertyChange(changeType, changeCategory, jsonPath, displayName, level, description, oldValue, newValue, isDataMasked, serializedAdditionalRawData: null);
         }
     }
 }
