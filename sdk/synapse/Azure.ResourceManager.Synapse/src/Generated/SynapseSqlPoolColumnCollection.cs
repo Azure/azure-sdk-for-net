@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseSqlPoolColumnResource" /> and their operations.
-    /// Each <see cref="SynapseSqlPoolColumnResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolTableResource" />.
-    /// To get a <see cref="SynapseSqlPoolColumnCollection" /> instance call the GetSynapseSqlPoolColumns method from an instance of <see cref="SynapseSqlPoolTableResource" />.
+    /// A class representing a collection of <see cref="SynapseSqlPoolColumnResource"/> and their operations.
+    /// Each <see cref="SynapseSqlPoolColumnResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolTableResource"/>.
+    /// To get a <see cref="SynapseSqlPoolColumnCollection"/> instance call the GetSynapseSqlPoolColumns method from an instance of <see cref="SynapseSqlPoolTableResource"/>.
     /// </summary>
     public partial class SynapseSqlPoolColumnCollection : ArmCollection, IEnumerable<SynapseSqlPoolColumnResource>, IAsyncEnumerable<SynapseSqlPoolColumnResource>
     {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseSqlPoolColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseSqlPoolColumnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseSqlPoolColumnResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseSqlPoolColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseSqlPoolColumnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseSqlPoolColumnResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);

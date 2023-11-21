@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBFirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBFirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBFirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MongoClusterResource" /> using the GetCosmosDBFirewallRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBFirewallRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MongoClusterResource"/> using the GetCosmosDBFirewallRule method.
     /// </summary>
     public partial class CosmosDBFirewallRuleResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBFirewallRuleResource(ArmClient client, CosmosDBFirewallRuleData data) : this(client, data.Id)

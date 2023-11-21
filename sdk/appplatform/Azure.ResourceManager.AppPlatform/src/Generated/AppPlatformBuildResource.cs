@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuild along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuildResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuildResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource" /> using the GetAppPlatformBuild method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuildResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuildResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource"/> using the GetAppPlatformBuild method.
     /// </summary>
     public partial class AppPlatformBuildResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuildResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuildResource(ArmClient client, AppPlatformBuildData data) : this(client, data.Id)

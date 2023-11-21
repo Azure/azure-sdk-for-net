@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
     /// A Class representing a MySqlFlexibleServerConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlFlexibleServerConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlFlexibleServerConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource" /> using the GetMySqlFlexibleServerConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServerConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServerConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerConfiguration method.
     /// </summary>
     public partial class MySqlFlexibleServerConfigurationResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlFlexibleServerConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlFlexibleServerConfigurationResource(ArmClient client, MySqlFlexibleServerConfigurationData data) : this(client, data.Id)

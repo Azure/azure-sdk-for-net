@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Quantum.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="QuantumWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuantumWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="QuantumWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QuantumWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QuantumWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="QuantumWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuantumWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="QuantumWorkspaceResource"/> object. </returns>
         public virtual QuantumWorkspaceResource GetQuantumWorkspaceResource(ResourceIdentifier id)
         {
             QuantumWorkspaceResource.ValidateResourceId(id);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AvsPrivateCloudAddonResource" /> and their operations.
-    /// Each <see cref="AvsPrivateCloudAddonResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get an <see cref="AvsPrivateCloudAddonCollection" /> instance call the GetAvsPrivateCloudAddons method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="AvsPrivateCloudAddonResource"/> and their operations.
+    /// Each <see cref="AvsPrivateCloudAddonResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get an <see cref="AvsPrivateCloudAddonCollection"/> instance call the GetAvsPrivateCloudAddons method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class AvsPrivateCloudAddonCollection : ArmCollection, IEnumerable<AvsPrivateCloudAddonResource>, IAsyncEnumerable<AvsPrivateCloudAddonResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsPrivateCloudAddonResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvsPrivateCloudAddonResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsPrivateCloudAddonResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudAddonAddonsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsPrivateCloudAddonResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvsPrivateCloudAddonResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsPrivateCloudAddonResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudAddonAddonsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

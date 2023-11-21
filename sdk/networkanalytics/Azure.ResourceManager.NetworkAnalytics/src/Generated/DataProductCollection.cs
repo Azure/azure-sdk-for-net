@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataProductResource" /> and their operations.
-    /// Each <see cref="DataProductResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataProductCollection" /> instance call the GetDataProducts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataProductResource"/> and their operations.
+    /// Each <see cref="DataProductResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataProductCollection"/> instance call the GetDataProducts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataProductCollection : ArmCollection, IEnumerable<DataProductResource>, IAsyncEnumerable<DataProductResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataProductResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataProductResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProductResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProductRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataProductResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataProductResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProductResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProductRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

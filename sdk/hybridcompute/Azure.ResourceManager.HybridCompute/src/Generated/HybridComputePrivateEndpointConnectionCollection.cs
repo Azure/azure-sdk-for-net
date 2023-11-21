@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridComputePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="HybridComputePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="HybridComputePrivateLinkScopeResource" />.
-    /// To get a <see cref="HybridComputePrivateEndpointConnectionCollection" /> instance call the GetHybridComputePrivateEndpointConnections method from an instance of <see cref="HybridComputePrivateLinkScopeResource" />.
+    /// A class representing a collection of <see cref="HybridComputePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="HybridComputePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="HybridComputePrivateLinkScopeResource"/>.
+    /// To get a <see cref="HybridComputePrivateEndpointConnectionCollection"/> instance call the GetHybridComputePrivateEndpointConnections method from an instance of <see cref="HybridComputePrivateLinkScopeResource"/>.
     /// </summary>
     public partial class HybridComputePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HybridComputePrivateEndpointConnectionResource>, IAsyncEnumerable<HybridComputePrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridComputePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HybridComputePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridComputePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridComputePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridComputePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridComputePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

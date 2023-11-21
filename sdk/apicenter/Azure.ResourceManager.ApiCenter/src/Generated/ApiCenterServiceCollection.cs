@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiCenterServiceResource" /> and their operations.
-    /// Each <see cref="ApiCenterServiceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="ApiCenterServiceCollection" /> instance call the GetApiCenterServices method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ApiCenterServiceResource"/> and their operations.
+    /// Each <see cref="ApiCenterServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ApiCenterServiceCollection"/> instance call the GetApiCenterServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ApiCenterServiceCollection : ArmCollection, IEnumerable<ApiCenterServiceResource>, IAsyncEnumerable<ApiCenterServiceResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiCenterServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiCenterServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

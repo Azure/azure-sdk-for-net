@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicWorkflowRunActionRepetitionResource" /> and their operations.
-    /// Each <see cref="LogicWorkflowRunActionRepetitionResource" /> in the collection will belong to the same instance of <see cref="LogicWorkflowRunActionResource" />.
-    /// To get a <see cref="LogicWorkflowRunActionRepetitionCollection" /> instance call the GetLogicWorkflowRunActionRepetitions method from an instance of <see cref="LogicWorkflowRunActionResource" />.
+    /// A class representing a collection of <see cref="LogicWorkflowRunActionRepetitionResource"/> and their operations.
+    /// Each <see cref="LogicWorkflowRunActionRepetitionResource"/> in the collection will belong to the same instance of <see cref="LogicWorkflowRunActionResource"/>.
+    /// To get a <see cref="LogicWorkflowRunActionRepetitionCollection"/> instance call the GetLogicWorkflowRunActionRepetitions method from an instance of <see cref="LogicWorkflowRunActionResource"/>.
     /// </summary>
     public partial class LogicWorkflowRunActionRepetitionCollection : ArmCollection, IEnumerable<LogicWorkflowRunActionRepetitionResource>, IAsyncEnumerable<LogicWorkflowRunActionRepetitionResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicWorkflowRunActionRepetitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicWorkflowRunActionRepetitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowRunActionRepetitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicWorkflowRunActionRepetitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicWorkflowRunActionRepetitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowRunActionRepetitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

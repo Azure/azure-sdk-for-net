@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSqlPoolConnectionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSqlPoolConnectionPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSqlPoolConnectionPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseSqlPoolConnectionPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSqlPoolConnectionPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSqlPoolConnectionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseSqlPoolConnectionPolicy method.
     /// </summary>
     public partial class SynapseSqlPoolConnectionPolicyResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSqlPoolConnectionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolConnectionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSqlPoolConnectionPolicyResource(ArmClient client, SynapseSqlPoolConnectionPolicyData data) : this(client, data.Id)

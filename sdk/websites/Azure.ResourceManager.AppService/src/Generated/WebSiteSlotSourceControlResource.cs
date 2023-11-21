@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteSlotSourceControl along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotSourceControlResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotSourceControlResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteSlotSourceControl method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotSourceControlResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteSlotSourceControlResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebSiteSlotSourceControl method.
     /// </summary>
     public partial class WebSiteSlotSourceControlResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotSourceControlResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteSlotSourceControlResource(ArmClient client, SiteSourceControlData data) : this(client, data.Id)

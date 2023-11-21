@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceGuardProxyResource" /> and their operations.
-    /// Each <see cref="ResourceGuardProxyResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ResourceGuardProxyCollection" /> instance call the GetResourceGuardProxies method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ResourceGuardProxyResource"/> and their operations.
+    /// Each <see cref="ResourceGuardProxyResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ResourceGuardProxyCollection"/> instance call the GetResourceGuardProxies method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ResourceGuardProxyCollection : ArmCollection, IEnumerable<ResourceGuardProxyResource>, IAsyncEnumerable<ResourceGuardProxyResource>
     {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardProxyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGuardProxyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProxyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardProxyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardProxyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProxyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);

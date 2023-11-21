@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WcfRelayResource" /> and their operations.
-    /// Each <see cref="WcfRelayResource" /> in the collection will belong to the same instance of <see cref="RelayNamespaceResource" />.
-    /// To get a <see cref="WcfRelayCollection" /> instance call the GetWcfRelays method from an instance of <see cref="RelayNamespaceResource" />.
+    /// A class representing a collection of <see cref="WcfRelayResource"/> and their operations.
+    /// Each <see cref="WcfRelayResource"/> in the collection will belong to the same instance of <see cref="RelayNamespaceResource"/>.
+    /// To get a <see cref="WcfRelayCollection"/> instance call the GetWcfRelays method from an instance of <see cref="RelayNamespaceResource"/>.
     /// </summary>
     public partial class WcfRelayCollection : ArmCollection, IEnumerable<WcfRelayResource>, IAsyncEnumerable<WcfRelayResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WcfRelayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WcfRelayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WcfRelayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WcfRelayResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

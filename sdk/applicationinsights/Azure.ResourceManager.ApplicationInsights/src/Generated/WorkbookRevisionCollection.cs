@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkbookRevisionResource" /> and their operations.
-    /// Each <see cref="WorkbookRevisionResource" /> in the collection will belong to the same instance of <see cref="WorkbookResource" />.
-    /// To get a <see cref="WorkbookRevisionCollection" /> instance call the GetWorkbookRevisions method from an instance of <see cref="WorkbookResource" />.
+    /// A class representing a collection of <see cref="WorkbookRevisionResource"/> and their operations.
+    /// Each <see cref="WorkbookRevisionResource"/> in the collection will belong to the same instance of <see cref="WorkbookResource"/>.
+    /// To get a <see cref="WorkbookRevisionCollection"/> instance call the GetWorkbookRevisions method from an instance of <see cref="WorkbookResource"/>.
     /// </summary>
     public partial class WorkbookRevisionCollection : ArmCollection, IEnumerable<WorkbookRevisionResource>, IAsyncEnumerable<WorkbookRevisionResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkbookRevisionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkbookRevisionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkbookRevisionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookRevisionWorkbooksRestClient.CreateRevisionsListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkbookRevisionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkbookRevisionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkbookRevisionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookRevisionWorkbooksRestClient.CreateRevisionsListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

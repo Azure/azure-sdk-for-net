@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a MigrationConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MigrationConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMigrationConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource" /> using the GetMigrationConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MigrationConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMigrationConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource"/> using the GetMigrationConfiguration method.
     /// </summary>
     public partial class MigrationConfigurationResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MigrationConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MigrationConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MigrationConfigurationResource(ArmClient client, MigrationConfigurationData data) : this(client, data.Id)

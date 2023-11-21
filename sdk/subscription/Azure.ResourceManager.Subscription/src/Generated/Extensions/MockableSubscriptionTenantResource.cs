@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         }
 
         /// <summary> Gets an object representing a TenantPolicyResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public virtual TenantPolicyResource GetTenantPolicy()
         {
             return new TenantPolicyResource(Client, Id.AppendProviderResource("Microsoft.Subscription", "policies", "default"));

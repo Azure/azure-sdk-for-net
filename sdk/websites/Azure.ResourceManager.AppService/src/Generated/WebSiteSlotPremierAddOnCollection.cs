@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotPremierAddOnResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotPremierAddOnResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="WebSiteSlotPremierAddOnCollection" /> instance call the GetWebSiteSlotPremierAddOns method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotPremierAddOnResource"/> and their operations.
+    /// Each <see cref="WebSiteSlotPremierAddOnResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="WebSiteSlotPremierAddOnCollection"/> instance call the GetWebSiteSlotPremierAddOns method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class WebSiteSlotPremierAddOnCollection : ArmCollection
     {

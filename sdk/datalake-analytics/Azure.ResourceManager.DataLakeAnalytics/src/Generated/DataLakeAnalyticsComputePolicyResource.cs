@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
     /// A Class representing a DataLakeAnalyticsComputePolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeAnalyticsComputePolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeAnalyticsComputePolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource" /> using the GetDataLakeAnalyticsComputePolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataLakeAnalyticsComputePolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataLakeAnalyticsComputePolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource"/> using the GetDataLakeAnalyticsComputePolicy method.
     /// </summary>
     public partial class DataLakeAnalyticsComputePolicyResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataLakeAnalyticsComputePolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsComputePolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataLakeAnalyticsComputePolicyResource(ArmClient client, DataLakeAnalyticsComputePolicyData data) : this(client, data.Id)

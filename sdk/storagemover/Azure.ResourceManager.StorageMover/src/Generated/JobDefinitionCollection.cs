@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
-    /// A class representing a collection of <see cref="JobDefinitionResource" /> and their operations.
-    /// Each <see cref="JobDefinitionResource" /> in the collection will belong to the same instance of <see cref="StorageMoverProjectResource" />.
-    /// To get a <see cref="JobDefinitionCollection" /> instance call the GetJobDefinitions method from an instance of <see cref="StorageMoverProjectResource" />.
+    /// A class representing a collection of <see cref="JobDefinitionResource"/> and their operations.
+    /// Each <see cref="JobDefinitionResource"/> in the collection will belong to the same instance of <see cref="StorageMoverProjectResource"/>.
+    /// To get a <see cref="JobDefinitionCollection"/> instance call the GetJobDefinitions method from an instance of <see cref="StorageMoverProjectResource"/>.
     /// </summary>
     public partial class JobDefinitionCollection : ArmCollection, IEnumerable<JobDefinitionResource>, IAsyncEnumerable<JobDefinitionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="JobDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JobDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobDefinitionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="JobDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JobDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobDefinitionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

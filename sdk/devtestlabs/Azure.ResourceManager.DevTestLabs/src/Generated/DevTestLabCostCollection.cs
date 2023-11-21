@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevTestLabCostResource" /> and their operations.
-    /// Each <see cref="DevTestLabCostResource" /> in the collection will belong to the same instance of <see cref="DevTestLabResource" />.
-    /// To get a <see cref="DevTestLabCostCollection" /> instance call the GetDevTestLabCosts method from an instance of <see cref="DevTestLabResource" />.
+    /// A class representing a collection of <see cref="DevTestLabCostResource"/> and their operations.
+    /// Each <see cref="DevTestLabCostResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabCostCollection"/> instance call the GetDevTestLabCosts method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabCostCollection : ArmCollection
     {

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ResourceConnector
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceConnectorApplianceResource" /> and their operations.
-    /// Each <see cref="ResourceConnectorApplianceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ResourceConnectorApplianceCollection" /> instance call the GetResourceConnectorAppliances method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ResourceConnectorApplianceResource"/> and their operations.
+    /// Each <see cref="ResourceConnectorApplianceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ResourceConnectorApplianceCollection"/> instance call the GetResourceConnectorAppliances method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ResourceConnectorApplianceCollection : ArmCollection, IEnumerable<ResourceConnectorApplianceResource>, IAsyncEnumerable<ResourceConnectorApplianceResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceConnectorApplianceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceConnectorApplianceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

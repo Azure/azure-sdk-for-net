@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotResource.CreateResourceIdentifier" /> to create a <see cref="BotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotResource.CreateResourceIdentifier" /> to create a <see cref="BotResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BotResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BotResource"/> object. </returns>
         public virtual BotResource GetBotResource(ResourceIdentifier id)
         {
             BotResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotChannelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotChannelResource.CreateResourceIdentifier" /> to create a <see cref="BotChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BotChannelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotChannelResource.CreateResourceIdentifier" /> to create a <see cref="BotChannelResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BotChannelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BotChannelResource"/> object. </returns>
         public virtual BotChannelResource GetBotChannelResource(ResourceIdentifier id)
         {
             BotChannelResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotConnectionSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotConnectionSettingResource.CreateResourceIdentifier" /> to create a <see cref="BotConnectionSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BotConnectionSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotConnectionSettingResource.CreateResourceIdentifier" /> to create a <see cref="BotConnectionSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BotConnectionSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BotConnectionSettingResource"/> object. </returns>
         public virtual BotConnectionSettingResource GetBotConnectionSettingResource(ResourceIdentifier id)
         {
             BotConnectionSettingResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotServicePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BotServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BotServicePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BotServicePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BotServicePrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BotServicePrivateEndpointConnectionResource"/> object. </returns>
         public virtual BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             BotServicePrivateEndpointConnectionResource.ValidateResourceId(id);

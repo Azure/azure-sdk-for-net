@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthBotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthBotResource.CreateResourceIdentifier" /> to create a <see cref="HealthBotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthBotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthBotResource.CreateResourceIdentifier" /> to create a <see cref="HealthBotResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthBotResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HealthBotResource"/> object. </returns>
         public virtual HealthBotResource GetHealthBotResource(ResourceIdentifier id)
         {
             HealthBotResource.ValidateResourceId(id);
