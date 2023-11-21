@@ -93,26 +93,6 @@ namespace System.ClientModel.Internal.Primitives
         public override void Process(System.ClientModel.Primitives.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    public partial class HttpPipelineRequest : System.ClientModel.Primitives.PipelineRequest, System.IDisposable
-    {
-        protected internal HttpPipelineRequest() { }
-        public override System.ClientModel.InputContent? Content { get { throw null; } set { } }
-        public override System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
-        public override string Method { get { throw null; } set { } }
-        public override System.Uri Uri { get { throw null; } set { } }
-        public override void Dispose() { }
-        public override string ToString() { throw null; }
-    }
-    public partial class HttpPipelineResponse : System.ClientModel.Primitives.PipelineResponse, System.IDisposable
-    {
-        protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.IO.Stream? ContentStream { get { throw null; } protected internal set { } }
-        public override System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
-        public override string ReasonPhrase { get { throw null; } }
-        public override int Status { get { throw null; } }
-        public override void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-    }
 }
 namespace System.ClientModel.Primitives
 {
@@ -221,17 +201,19 @@ namespace System.ClientModel.Primitives
         public abstract System.ClientModel.Primitives.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
+        public static System.ClientModel.Primitives.PipelineRequest Create() { throw null; }
         public abstract void Dispose();
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
         public System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; protected internal set; }
+        public abstract System.IO.Stream? ContentStream { get; set; }
         public abstract System.ClientModel.Primitives.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
+        public static System.ClientModel.Primitives.PipelineResponse Create(System.Net.Http.HttpResponseMessage response) { throw null; }
         public abstract void Dispose();
     }
     public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Net.Http;
 
 namespace System.ClientModel.Internal.Primitives;
 
-public class HttpPipelineResponse : PipelineResponse, IDisposable
+internal class HttpPipelineResponse : PipelineResponse
 {
     private readonly HttpResponseMessage _httpResponse;
 
@@ -22,7 +22,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     private bool _disposed;
 
-    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse)
+    public HttpPipelineResponse(HttpResponseMessage httpResponse)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _httpResponseContent = _httpResponse.Content;
@@ -36,38 +36,10 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override MessageHeaders Headers
         => new PipelineResponseHeaders(_httpResponse, _httpResponseContent);
 
-    //public override MessageBody? Body
-    //{
-    //    get
-    //    {
-    //        _content ??= MessageBody.Empty;
-    //        return _content;
-    //    }
-
-    //    protected internal set
-    //    {
-    //        _content = value;
-
-    //        // Setting _httpResponse.Content to null makes it so when this type
-    //        // disposes _httpResponse later, the content is not also disposed.
-    //        // This works because the transport sets _content to the value of
-    //        // _httpResponse.Content initially, so if this object is disposed
-    //        // without its content being buffered, calling dispose on _content will
-    //        // dispose the network stream.
-
-    //        // TODO: We could feasibly leak a network resource if this setter
-    //        // is called without the caller taking ownership of and disposing the
-    //        // network stream, since at that point, no one is holding a reference
-    //        // to it anymore.  Today, ResponseBufferingPolicy takes care of this.
-
-    //        _httpResponse.Content = null;
-    //    }
-    //}
-
     public override Stream? ContentStream
     {
         get => _contentStream;
-        protected internal set
+        set
         {
             // Make sure we don't dispose the content if the stream was replaced
             _httpResponse.Content = null;
@@ -108,14 +80,10 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
             // intentionally left the network stream undisposed.
 
             var contentStream = _contentStream;
-            //if (content is not null && !content.IsBuffered)
-            if (contentStream is not null)
+            if (contentStream is not null && !TryGetBufferedContent(out _))
             {
-                if (contentStream is not MemoryStream)
-                {
-                    contentStream?.Dispose();
-                    _contentStream = null;
-                }
+                contentStream?.Dispose();
+                _contentStream = null;
             }
 
             _disposed = true;

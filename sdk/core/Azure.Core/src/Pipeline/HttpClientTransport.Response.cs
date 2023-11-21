@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
-using System.ClientModel.Internal.Primitives;
 using System.Net.Http;
 
 namespace Azure.Core.Pipeline
@@ -29,20 +27,36 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        private sealed class HttpClientTransportResponse : HttpPipelineResponse
+        // Adapts an internal ClientModel HttpPipelineResponse.  Doing this instead
+        // of inheriting from HttpPipelineResponse allows us to keep HttpPipelineResponse
+        // internal in ClientModel.
+        private sealed class HttpClientTransportResponse : PipelineResponse
         {
+            private readonly PipelineResponse _httpPipelineResponse;
+
             public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse)
-                : base(httpResponse)
             {
-                ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
+                Argument.AssertNotNull(requestId, nameof(requestId));
+
+                ClientRequestId = requestId;
+                _httpPipelineResponse = Create(httpResponse);
             }
 
             public string ClientRequestId { get; internal set; }
 
-            internal void SetContentStream(Stream? stream)
+            public override int Status => _httpPipelineResponse.Status;
+
+            public override string ReasonPhrase => _httpPipelineResponse.ReasonPhrase;
+
+            public override MessageHeaders Headers => _httpPipelineResponse.Headers;
+
+            public override Stream? ContentStream
             {
-                ContentStream = stream;
+                get => _httpPipelineResponse?.ContentStream;
+                set => _httpPipelineResponse.ContentStream = value;
             }
+
+            public override void Dispose() => _httpPipelineResponse.Dispose();
         }
 
         private sealed class ResponseAdapter : Response
@@ -69,7 +83,7 @@ namespace Azure.Core.Pipeline
             public override Stream? ContentStream
             {
                 get => _pipelineResponse.ContentStream;
-                set => _pipelineResponse.SetContentStream(value);
+                set => _pipelineResponse.ContentStream = value;
             }
 
             protected internal override bool ContainsHeader(string name)

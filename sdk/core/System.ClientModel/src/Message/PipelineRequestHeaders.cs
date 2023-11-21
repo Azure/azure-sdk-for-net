@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.ClientModel.Internal;
 
 namespace System.ClientModel.Primitives;
 
