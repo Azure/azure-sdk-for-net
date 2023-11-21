@@ -25,10 +25,19 @@ if (!(Get-Command az -ErrorAction SilentlyContinue)) {
   exit 1
 }
 
-az account show *> $null
-if (!$?) {
-  Write-Host 'Running az login...'
-  az login *> $null
+. (Join-Path $PSScriptRoot SemVer.ps1)
+. (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
+
+if (!$devops_pat) {
+  az account show *> $null
+  if (!$?) {
+    Write-Host 'Running az login...'
+    az login *> $null
+  }
+}
+else {
+  # Login using PAT
+  LoginToAzureDevops $devops_pat
 }
 
 Write-Host "Checking Azure DevOps CLI extension"
@@ -42,9 +51,6 @@ if (!$?){
   Write-Host 'Updating azure-devops extension'
   az extension update -n azure-devops *> $null
 }
-
-. (Join-Path $PSScriptRoot SemVer.ps1)
-. (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
 Write-Host 'Checking Azure DevOps access'
 CheckDevOpsAccess
