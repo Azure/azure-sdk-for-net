@@ -7,7 +7,7 @@ using System;
 namespace Azure.AI.Personalizer
 {
     /// <summary> An abstract class for Rl.Net.LiveModel </summary>
-    internal abstract class LiveModelBase
+    internal abstract class LiveModelBase : IDisposable
     {
         /// <summary> Init LiveModel </summary>
         public abstract void Init();
