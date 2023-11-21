@@ -7,6 +7,8 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelineRequest : IDisposable
 {
+    // TODO: if we decide to implement more of Http rather than copy,
+    // Will more of this need to be abstract instead of virtual?
     private readonly PipelineRequestHeaders _headers;
 
     private Uri? _uri;

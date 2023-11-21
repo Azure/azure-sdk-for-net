@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal.Primitives;
 using System.IO;
+using System.Net.Http;
 
 namespace System.ClientModel.Primitives;
 
@@ -10,13 +12,16 @@ public abstract class PipelineResponse : IDisposable
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
+    public static PipelineResponse Create(HttpResponseMessage response)
+        => new HttpPipelineResponse(response);
+
     public abstract int Status { get; }
 
-    public abstract string ReasonPhrase {  get; }
+    public abstract string ReasonPhrase { get; }
 
     public abstract MessageHeaders Headers { get; }
 
-    public abstract Stream? ContentStream { get; protected internal set; }
+    public abstract Stream? ContentStream { get; set; }
 
     #region Meta-data properties set by the pipeline.
 

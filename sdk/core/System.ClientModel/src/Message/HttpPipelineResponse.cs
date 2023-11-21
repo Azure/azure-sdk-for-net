@@ -22,7 +22,7 @@ internal class HttpPipelineResponse : PipelineResponse, IDisposable
 
     private bool _disposed;
 
-    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse)
+    public HttpPipelineResponse(HttpResponseMessage httpResponse)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _httpResponseContent = _httpResponse.Content;
@@ -39,7 +39,7 @@ internal class HttpPipelineResponse : PipelineResponse, IDisposable
     public override Stream? ContentStream
     {
         get => _contentStream;
-        protected internal set
+        set
         {
             // Make sure we don't dispose the content if the stream was replaced
             _httpResponse.Content = null;

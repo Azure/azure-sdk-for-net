@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.ClientModel.Primitives;
-using Azure.Core.Pipeline;
+using System.IO;
 
 namespace Azure.Core
 {
@@ -27,7 +26,7 @@ namespace Azure.Core
         public override Stream? ContentStream
         {
             get => _response.ContentStream;
-            protected set => _response.ContentStream = value;
+            set => _response.ContentStream = value;
         }
 
         public override void Dispose()

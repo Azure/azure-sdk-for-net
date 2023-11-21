@@ -142,7 +142,7 @@ public class ClientPipelineTests
             public override Stream? ContentStream
             {
                 get => null;
-                protected set => throw new NotImplementedException();
+                set => throw new NotImplementedException();
             }
 
             public override void Dispose()

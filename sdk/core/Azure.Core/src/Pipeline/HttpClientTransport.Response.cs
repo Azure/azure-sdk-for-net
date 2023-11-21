@@ -29,35 +29,31 @@ namespace Azure.Core.Pipeline
 
         private sealed class HttpClientTransportResponse : PipelineResponse
         {
+            private readonly PipelineResponse _httpPipelineResponse;
+
             public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse)
-                : base(httpResponse)
             {
-                ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
+                Argument.AssertNotNull(requestId, nameof(requestId));
+
+                ClientRequestId = requestId;
+                _httpPipelineResponse = Create(httpResponse);
             }
 
             public string ClientRequestId { get; internal set; }
 
-            public override int Status => throw new NotImplementedException();
+            public override int Status => _httpPipelineResponse.Status;
 
-            public override string ReasonPhrase => throw new NotImplementedException();
+            public override string ReasonPhrase => _httpPipelineResponse.ReasonPhrase;
 
-            public override MessageHeaders Headers => throw new NotImplementedException();
+            public override MessageHeaders Headers => _httpPipelineResponse.Headers;
 
             public override Stream? ContentStream
             {
-                get => throw new NotImplementedException();
-                protected set => throw new NotImplementedException();
+                get => _httpPipelineResponse?.ContentStream;
+                set => _httpPipelineResponse.ContentStream = value;
             }
 
-            public override void Dispose()
-            {
-                throw new NotImplementedException();
-            }
-
-            internal void SetContentStream(Stream? stream)
-            {
-                ContentStream = stream;
-            }
+            public override void Dispose() => _httpPipelineResponse.Dispose();
         }
 
         private sealed class ResponseAdapter : Response
@@ -84,7 +80,7 @@ namespace Azure.Core.Pipeline
             public override Stream? ContentStream
             {
                 get => _pipelineResponse.ContentStream;
-                set => _pipelineResponse.SetContentStream(value);
+                set => _pipelineResponse.ContentStream = value;
             }
 
             protected internal override bool ContainsHeader(string name)
