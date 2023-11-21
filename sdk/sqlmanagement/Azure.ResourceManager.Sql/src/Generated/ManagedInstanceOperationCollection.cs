@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedInstanceOperationResource" /> and their operations.
-    /// Each <see cref="ManagedInstanceOperationResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
-    /// To get a <see cref="ManagedInstanceOperationCollection" /> instance call the GetManagedInstanceOperations method from an instance of <see cref="ManagedInstanceResource" />.
+    /// A class representing a collection of <see cref="ManagedInstanceOperationResource"/> and their operations.
+    /// Each <see cref="ManagedInstanceOperationResource"/> in the collection will belong to the same instance of <see cref="ManagedInstanceResource"/>.
+    /// To get a <see cref="ManagedInstanceOperationCollection"/> instance call the GetManagedInstanceOperations method from an instance of <see cref="ManagedInstanceResource"/>.
     /// </summary>
     public partial class ManagedInstanceOperationCollection : ArmCollection, IEnumerable<ManagedInstanceOperationResource>, IAsyncEnumerable<ManagedInstanceOperationResource>
     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceOperationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedInstanceOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceOperationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceOperationRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceOperationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedInstanceOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceOperationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceOperationRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseWorkspacePrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseWorkspacePrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseWorkspacePrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseWorkspacePrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseWorkspacePrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseWorkspacePrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseWorkspacePrivateLinkResource method.
     /// </summary>
     public partial class SynapseWorkspacePrivateLinkResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseWorkspacePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseWorkspacePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseWorkspacePrivateLinkResource(ArmClient client, SynapsePrivateLinkResourceData data) : this(client, data.Id)

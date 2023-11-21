@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicWorkflowResource" /> and their operations.
-    /// Each <see cref="LogicWorkflowResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="LogicWorkflowCollection" /> instance call the GetLogicWorkflows method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="LogicWorkflowResource"/> and their operations.
+    /// Each <see cref="LogicWorkflowResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="LogicWorkflowCollection"/> instance call the GetLogicWorkflows method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class LogicWorkflowCollection : ArmCollection, IEnumerable<LogicWorkflowResource>, IAsyncEnumerable<LogicWorkflowResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, filter);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, filter);

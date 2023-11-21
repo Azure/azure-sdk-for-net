@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkToNetworkInterconnect along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkToNetworkInterconnectResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkToNetworkInterconnectResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkFabricResource" /> using the GetNetworkToNetworkInterconnect method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkToNetworkInterconnectResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkToNetworkInterconnectResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkFabricResource"/> using the GetNetworkToNetworkInterconnect method.
     /// </summary>
     public partial class NetworkToNetworkInterconnectResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkToNetworkInterconnectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkToNetworkInterconnectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkToNetworkInterconnectResource(ArmClient client, NetworkToNetworkInterconnectData data) : this(client, data.Id)

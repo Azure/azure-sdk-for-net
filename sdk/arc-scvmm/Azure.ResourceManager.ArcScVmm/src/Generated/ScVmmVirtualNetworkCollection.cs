@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScVmmVirtualNetworkResource" /> and their operations.
-    /// Each <see cref="ScVmmVirtualNetworkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ScVmmVirtualNetworkCollection" /> instance call the GetScVmmVirtualNetworks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ScVmmVirtualNetworkResource"/> and their operations.
+    /// Each <see cref="ScVmmVirtualNetworkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ScVmmVirtualNetworkCollection"/> instance call the GetScVmmVirtualNetworks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ScVmmVirtualNetworkCollection : ArmCollection, IEnumerable<ScVmmVirtualNetworkResource>, IAsyncEnumerable<ScVmmVirtualNetworkResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmVirtualNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualNetworkVirtualNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmVirtualNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualNetworkVirtualNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

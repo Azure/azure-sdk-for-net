@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Relay
 {
     /// <summary>
     /// A Class representing a RelayPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RelayPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRelayPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource" /> using the GetRelayPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelayPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRelayPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource"/> using the GetRelayPrivateLinkResource method.
     /// </summary>
     public partial class RelayPrivateLinkResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Relay
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RelayPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelayPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RelayPrivateLinkResource(ArmClient client, RelayPrivateLinkResourceData data) : this(client, data.Id)

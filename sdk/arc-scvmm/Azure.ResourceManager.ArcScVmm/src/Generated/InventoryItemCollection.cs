@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="InventoryItemResource" /> and their operations.
-    /// Each <see cref="InventoryItemResource" /> in the collection will belong to the same instance of <see cref="ScVmmServerResource" />.
-    /// To get an <see cref="InventoryItemCollection" /> instance call the GetInventoryItems method from an instance of <see cref="ScVmmServerResource" />.
+    /// A class representing a collection of <see cref="InventoryItemResource"/> and their operations.
+    /// Each <see cref="InventoryItemResource"/> in the collection will belong to the same instance of <see cref="ScVmmServerResource"/>.
+    /// To get an <see cref="InventoryItemCollection"/> instance call the GetInventoryItems method from an instance of <see cref="ScVmmServerResource"/>.
     /// </summary>
     public partial class InventoryItemCollection : ArmCollection, IEnumerable<InventoryItemResource>, IAsyncEnumerable<InventoryItemResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="InventoryItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InventoryItemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _inventoryItemRestClient.CreateListByVmmServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="InventoryItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InventoryItemResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _inventoryItemRestClient.CreateListByVmmServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

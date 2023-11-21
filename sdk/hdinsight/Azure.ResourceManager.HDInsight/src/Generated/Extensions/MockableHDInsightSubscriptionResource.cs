@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterResource> GetHDInsightClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterResource> GetHDInsightClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightUsage> GetHDInsightUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);

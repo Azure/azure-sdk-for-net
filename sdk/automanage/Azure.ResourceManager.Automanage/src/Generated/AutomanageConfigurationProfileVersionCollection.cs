@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomanageConfigurationProfileVersionResource" /> and their operations.
-    /// Each <see cref="AutomanageConfigurationProfileVersionResource" /> in the collection will belong to the same instance of <see cref="AutomanageConfigurationProfileResource" />.
-    /// To get an <see cref="AutomanageConfigurationProfileVersionCollection" /> instance call the GetAutomanageConfigurationProfileVersions method from an instance of <see cref="AutomanageConfigurationProfileResource" />.
+    /// A class representing a collection of <see cref="AutomanageConfigurationProfileVersionResource"/> and their operations.
+    /// Each <see cref="AutomanageConfigurationProfileVersionResource"/> in the collection will belong to the same instance of <see cref="AutomanageConfigurationProfileResource"/>.
+    /// To get an <see cref="AutomanageConfigurationProfileVersionCollection"/> instance call the GetAutomanageConfigurationProfileVersions method from an instance of <see cref="AutomanageConfigurationProfileResource"/>.
     /// </summary>
     public partial class AutomanageConfigurationProfileVersionCollection : ArmCollection, IEnumerable<AutomanageConfigurationProfileVersionResource>, IAsyncEnumerable<AutomanageConfigurationProfileVersionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageConfigurationProfileVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageConfigurationProfileVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageConfigurationProfileVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageConfigurationProfileVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

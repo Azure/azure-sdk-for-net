@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> and their operations.
-    /// Each <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> in the collection will belong to the same instance of <see cref="AppServicePlanResource" />.
-    /// To get an <see cref="AppServicePlanHybridConnectionNamespaceRelayCollection" /> instance call the GetAppServicePlanHybridConnectionNamespaceRelays method from an instance of <see cref="AppServicePlanResource" />.
+    /// A class representing a collection of <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> and their operations.
+    /// Each <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> in the collection will belong to the same instance of <see cref="AppServicePlanResource"/>.
+    /// To get an <see cref="AppServicePlanHybridConnectionNamespaceRelayCollection"/> instance call the GetAppServicePlanHybridConnectionNamespaceRelays method from an instance of <see cref="AppServicePlanResource"/>.
     /// </summary>
     public partial class AppServicePlanHybridConnectionNamespaceRelayCollection : ArmCollection
     {

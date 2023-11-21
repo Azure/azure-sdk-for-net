@@ -21,9 +21,9 @@ using Azure.ResourceManager.AppService.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="SiteSlotPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="SiteSlotPrivateEndpointConnectionCollection" /> instance call the GetSiteSlotPrivateEndpointConnections method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="SiteSlotPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="SiteSlotPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="SiteSlotPrivateEndpointConnectionCollection"/> instance call the GetSiteSlotPrivateEndpointConnections method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class SiteSlotPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<SiteSlotPrivateEndpointConnectionResource>, IAsyncEnumerable<SiteSlotPrivateEndpointConnectionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteSlotPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotPrivateEndpointConnectionWebAppsRestClient.CreateGetPrivateEndpointConnectionListSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteSlotPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotPrivateEndpointConnectionWebAppsRestClient.CreateGetPrivateEndpointConnectionListSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

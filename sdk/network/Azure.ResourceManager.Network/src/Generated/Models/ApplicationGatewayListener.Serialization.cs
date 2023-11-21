@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -54,6 +55,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("sslProfile"u8);
                 JsonSerializer.Serialize(writer, SslProfile);
             }
+            if (Optional.IsCollectionDefined(HostNames))
+            {
+                writer.WritePropertyName("hostNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in HostNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -74,6 +85,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> sslCertificate = default;
             Optional<WritableSubResource> sslProfile = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<IList<string>> hostNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -171,11 +183,25 @@ namespace Azure.ResourceManager.Network.Models
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("hostNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            hostNames = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayListener(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), sslCertificate, sslProfile, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayListener(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), sslCertificate, sslProfile, Optional.ToNullable(provisioningState), Optional.ToList(hostNames));
         }
     }
 }

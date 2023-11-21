@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Redis
 {
     /// <summary>
     /// A Class representing a RedisLinkedServerWithProperty along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RedisLinkedServerWithPropertyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRedisLinkedServerWithPropertyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RedisResource" /> using the GetRedisLinkedServerWithProperty method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RedisLinkedServerWithPropertyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRedisLinkedServerWithPropertyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RedisResource"/> using the GetRedisLinkedServerWithProperty method.
     /// </summary>
     public partial class RedisLinkedServerWithPropertyResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Redis
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RedisLinkedServerWithPropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisLinkedServerWithPropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RedisLinkedServerWithPropertyResource(ArmClient client, RedisLinkedServerWithPropertyData data) : this(client, data.Id)

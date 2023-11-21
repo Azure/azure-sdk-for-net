@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlFlexibleServerConfigurationResource" /> and their operations.
-    /// Each <see cref="MySqlFlexibleServerConfigurationResource" /> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource" />.
-    /// To get a <see cref="MySqlFlexibleServerConfigurationCollection" /> instance call the GetMySqlFlexibleServerConfigurations method from an instance of <see cref="MySqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="MySqlFlexibleServerConfigurationResource"/> and their operations.
+    /// Each <see cref="MySqlFlexibleServerConfigurationResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// To get a <see cref="MySqlFlexibleServerConfigurationCollection"/> instance call the GetMySqlFlexibleServerConfigurations method from an instance of <see cref="MySqlFlexibleServerResource"/>.
     /// </summary>
     public partial class MySqlFlexibleServerConfigurationCollection : ArmCollection, IEnumerable<MySqlFlexibleServerConfigurationResource>, IAsyncEnumerable<MySqlFlexibleServerConfigurationResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="page"> The page of the server configuration. </param>
         /// <param name="pageSize"> The pageSize of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlFlexibleServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerConfigurationResource> GetAllAsync(string tags = null, string keyword = null, int? page = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="page"> The page of the server configuration. </param>
         /// <param name="pageSize"> The pageSize of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerConfigurationResource> GetAll(string tags = null, string keyword = null, int? page = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);

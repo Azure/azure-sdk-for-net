@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a ComputePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ComputePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetComputePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DiskAccessResource" /> using the GetComputePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetComputePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DiskAccessResource"/> using the GetComputePrivateEndpointConnection method.
     /// </summary>
     public partial class ComputePrivateEndpointConnectionResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ComputePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ComputePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ComputePrivateEndpointConnectionResource(ArmClient client, ComputePrivateEndpointConnectionData data) : this(client, data.Id)

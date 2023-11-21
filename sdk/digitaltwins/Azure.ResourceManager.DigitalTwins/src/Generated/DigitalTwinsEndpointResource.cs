@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
     /// A Class representing a DigitalTwinsEndpointResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DigitalTwinsEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDigitalTwinsEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource" /> using the GetDigitalTwinsEndpointResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DigitalTwinsEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDigitalTwinsEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource"/> using the GetDigitalTwinsEndpointResource method.
     /// </summary>
     public partial class DigitalTwinsEndpointResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DigitalTwinsEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DigitalTwinsEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DigitalTwinsEndpointResource(ArmClient client, DigitalTwinsEndpointResourceData data) : this(client, data.Id)

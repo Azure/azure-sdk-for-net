@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatabaseMigrationSqlMIResource" /> and their operations.
-    /// Each <see cref="DatabaseMigrationSqlMIResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DatabaseMigrationSqlMICollection" /> instance call the GetDatabaseMigrationSqlMIs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DatabaseMigrationSqlMIResource"/> and their operations.
+    /// Each <see cref="DatabaseMigrationSqlMIResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DatabaseMigrationSqlMICollection"/> instance call the GetDatabaseMigrationSqlMIs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DatabaseMigrationSqlMICollection : ArmCollection
     {

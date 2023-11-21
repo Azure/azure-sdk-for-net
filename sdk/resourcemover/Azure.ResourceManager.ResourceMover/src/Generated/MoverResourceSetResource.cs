@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ResourceMover
 {
     /// <summary>
     /// A Class representing a MoverResourceSet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MoverResourceSetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMoverResourceSetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMoverResourceSet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MoverResourceSetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMoverResourceSetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMoverResourceSet method.
     /// </summary>
     public partial class MoverResourceSetResource : ArmResource
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MoverResourceSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MoverResourceSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MoverResourceSetResource(ArmClient client, MoverResourceSetData data) : this(client, data.Id)
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MoverUnresolvedDependency"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MoverUnresolvedDependency"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CloudHsmClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CloudHsmClusterResource"/> object. </returns>
         public static CloudHsmClusterResource GetCloudHsmClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> object. </returns>
         public static HardwareSecurityModulesPrivateEndpointConnectionResource GetHardwareSecurityModulesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DedicatedHsmResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DedicatedHsmResource"/> object. </returns>
         public static DedicatedHsmResource GetDedicatedHsmResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CloudHsmClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CloudHsmClusterResource> GetCloudHsmClustersAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CloudHsmClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CloudHsmClusterResource> GetCloudHsmClusters(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DedicatedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DedicatedHsmResource> GetDedicatedHsmsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DedicatedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DedicatedHsmResource> GetDedicatedHsms(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusQueue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusQueueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusQueueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource" /> using the GetServiceBusQueue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusQueueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusQueueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource"/> using the GetServiceBusQueue method.
     /// </summary>
     public partial class ServiceBusQueueResource : ArmResource
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusQueueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusQueueResource(ArmClient client, ServiceBusQueueData data) : this(client, data.Id)

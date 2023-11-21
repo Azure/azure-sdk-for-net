@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlAgentConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlAgentConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlAgentConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetSqlAgentConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlAgentConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlAgentConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetSqlAgentConfiguration method.
     /// </summary>
     public partial class SqlAgentConfigurationResource : ArmResource
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlAgentConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlAgentConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlAgentConfigurationResource(ArmClient client, SqlAgentConfigurationData data) : this(client, data.Id)

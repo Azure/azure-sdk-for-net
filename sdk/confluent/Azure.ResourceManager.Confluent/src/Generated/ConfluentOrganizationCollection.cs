@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConfluentOrganizationResource" /> and their operations.
-    /// Each <see cref="ConfluentOrganizationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ConfluentOrganizationCollection" /> instance call the GetConfluentOrganizations method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ConfluentOrganizationResource"/> and their operations.
+    /// Each <see cref="ConfluentOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConfluentOrganizationCollection"/> instance call the GetConfluentOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ConfluentOrganizationCollection : ArmCollection, IEnumerable<ConfluentOrganizationResource>, IAsyncEnumerable<ConfluentOrganizationResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfluentOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfluentOrganizationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

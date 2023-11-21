@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridIdentityMetadataResource" /> and their operations.
-    /// Each <see cref="HybridIdentityMetadataResource" /> in the collection will belong to the same instance of <see cref="ProvisionedClusterResource" />.
-    /// To get a <see cref="HybridIdentityMetadataCollection" /> instance call the GetHybridIdentityMetadata method from an instance of <see cref="ProvisionedClusterResource" />.
+    /// A class representing a collection of <see cref="HybridIdentityMetadataResource"/> and their operations.
+    /// Each <see cref="HybridIdentityMetadataResource"/> in the collection will belong to the same instance of <see cref="ProvisionedClusterResource"/>.
+    /// To get a <see cref="HybridIdentityMetadataCollection"/> instance call the GetHybridIdentityMetadata method from an instance of <see cref="ProvisionedClusterResource"/>.
     /// </summary>
     public partial class HybridIdentityMetadataCollection : ArmCollection, IEnumerable<HybridIdentityMetadataResource>, IAsyncEnumerable<HybridIdentityMetadataResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridIdentityMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HybridIdentityMetadataResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridIdentityMetadataResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridIdentityMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridIdentityMetadataResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridIdentityMetadataResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

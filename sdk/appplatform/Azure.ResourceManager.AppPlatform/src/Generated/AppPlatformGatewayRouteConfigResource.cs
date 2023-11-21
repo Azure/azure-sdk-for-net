@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformGatewayRouteConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformGatewayRouteConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformGatewayRouteConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformGatewayResource" /> using the GetAppPlatformGatewayRouteConfig method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformGatewayRouteConfigResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformGatewayRouteConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformGatewayResource"/> using the GetAppPlatformGatewayRouteConfig method.
     /// </summary>
     public partial class AppPlatformGatewayRouteConfigResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformGatewayRouteConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformGatewayRouteConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformGatewayRouteConfigResource(ArmClient client, AppPlatformGatewayRouteConfigData data) : this(client, data.Id)

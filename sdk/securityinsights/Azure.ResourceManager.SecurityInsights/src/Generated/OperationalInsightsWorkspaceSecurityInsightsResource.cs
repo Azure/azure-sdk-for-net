@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class extending from the OperationalInsightsWorkspaceResource in Azure.ResourceManager.SecurityInsights along with the instance operations that can be performed on it.
-    /// You can only construct an <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.OperationalInsights/workspaces.
+    /// You can only construct an <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.OperationalInsights/workspaces.
     /// </summary>
     public partial class OperationalInsightsWorkspaceSecurityInsightsResource : ArmResource
     {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="threatIntelligenceFilteringCriteria"> Filtering criteria for querying threat intelligence indicators. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicatorsAsync(ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="threatIntelligenceFilteringCriteria"> Filtering criteria for querying threat intelligence indicators. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
-        /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicators(ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ThreatIntelligenceMetrics" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ThreatIntelligenceMetrics"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ThreatIntelligenceMetrics> GetAllThreatIntelligenceIndicatorMetricsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorMetricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ThreatIntelligenceMetrics" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ThreatIntelligenceMetrics"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ThreatIntelligenceMetrics> GetAllThreatIntelligenceIndicatorMetrics(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorMetricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

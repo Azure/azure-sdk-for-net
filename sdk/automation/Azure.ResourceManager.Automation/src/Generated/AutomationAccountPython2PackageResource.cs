@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationAccountPython2Package along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationAccountPython2PackageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationAccountPython2PackageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationAccountPython2Package method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationAccountPython2PackageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationAccountPython2PackageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationAccountPython2Package method.
     /// </summary>
     public partial class AutomationAccountPython2PackageResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationAccountPython2PackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationAccountPython2PackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationAccountPython2PackageResource(ArmClient client, AutomationModuleData data) : this(client, data.Id)

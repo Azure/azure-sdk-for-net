@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementGatewayCertificateAuthorityResource" /> and their operations.
-    /// Each <see cref="ApiManagementGatewayCertificateAuthorityResource" /> in the collection will belong to the same instance of <see cref="ApiManagementGatewayResource" />.
-    /// To get an <see cref="ApiManagementGatewayCertificateAuthorityCollection" /> instance call the GetApiManagementGatewayCertificateAuthorities method from an instance of <see cref="ApiManagementGatewayResource" />.
+    /// A class representing a collection of <see cref="ApiManagementGatewayCertificateAuthorityResource"/> and their operations.
+    /// Each <see cref="ApiManagementGatewayCertificateAuthorityResource"/> in the collection will belong to the same instance of <see cref="ApiManagementGatewayResource"/>.
+    /// To get an <see cref="ApiManagementGatewayCertificateAuthorityCollection"/> instance call the GetApiManagementGatewayCertificateAuthorities method from an instance of <see cref="ApiManagementGatewayResource"/>.
     /// </summary>
     public partial class ApiManagementGatewayCertificateAuthorityCollection : ArmCollection, IEnumerable<ApiManagementGatewayCertificateAuthorityResource>, IAsyncEnumerable<ApiManagementGatewayCertificateAuthorityResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementGatewayCertificateAuthorityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementGatewayCertificateAuthorityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementGatewayCertificateAuthorityResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementGatewayCertificateAuthorityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementGatewayCertificateAuthorityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementGatewayCertificateAuthorityResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);

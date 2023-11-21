@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KubernetesClusterExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KubernetesClusterExtensionResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesClusterExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesClusterExtensionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesClusterExtensionResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesClusterExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesClusterExtensionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KubernetesClusterExtensionResource"/> object. </returns>
         public virtual KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(ResourceIdentifier id)
         {
             KubernetesClusterExtensionResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KubernetesFluxConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KubernetesFluxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesFluxConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesFluxConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesFluxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesFluxConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource"/> object. </returns>
         public virtual KubernetesFluxConfigurationResource GetKubernetesFluxConfigurationResource(ResourceIdentifier id)
         {
             KubernetesFluxConfigurationResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KubernetesSourceControlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KubernetesSourceControlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesSourceControlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesSourceControlConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesSourceControlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesSourceControlConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource"/> object. </returns>
         public virtual KubernetesSourceControlConfigurationResource GetKubernetesSourceControlConfigurationResource(ResourceIdentifier id)
         {
             KubernetesSourceControlConfigurationResource.ValidateResourceId(id);

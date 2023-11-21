@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryPrivateEndpointResource" /> and their operations.
-    /// Each <see cref="DataFactoryPrivateEndpointResource" /> in the collection will belong to the same instance of <see cref="DataFactoryManagedVirtualNetworkResource" />.
-    /// To get a <see cref="DataFactoryPrivateEndpointCollection" /> instance call the GetDataFactoryPrivateEndpoints method from an instance of <see cref="DataFactoryManagedVirtualNetworkResource" />.
+    /// A class representing a collection of <see cref="DataFactoryPrivateEndpointResource"/> and their operations.
+    /// Each <see cref="DataFactoryPrivateEndpointResource"/> in the collection will belong to the same instance of <see cref="DataFactoryManagedVirtualNetworkResource"/>.
+    /// To get a <see cref="DataFactoryPrivateEndpointCollection"/> instance call the GetDataFactoryPrivateEndpoints method from an instance of <see cref="DataFactoryManagedVirtualNetworkResource"/>.
     /// </summary>
     public partial class DataFactoryPrivateEndpointCollection : ArmCollection, IEnumerable<DataFactoryPrivateEndpointResource>, IAsyncEnumerable<DataFactoryPrivateEndpointResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

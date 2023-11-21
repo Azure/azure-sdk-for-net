@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a FrontDoorRuleSet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorRuleSetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorRuleSetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProfileResource" /> using the GetFrontDoorRuleSet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorRuleSetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorRuleSetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetFrontDoorRuleSet method.
     /// </summary>
     public partial class FrontDoorRuleSetResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorRuleSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorRuleSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorRuleSetResource(ArmClient client, FrontDoorRuleSetData data) : this(client, data.Id)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

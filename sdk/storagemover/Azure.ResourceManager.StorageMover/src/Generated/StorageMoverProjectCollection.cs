@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageMoverProjectResource" /> and their operations.
-    /// Each <see cref="StorageMoverProjectResource" /> in the collection will belong to the same instance of <see cref="StorageMoverResource" />.
-    /// To get a <see cref="StorageMoverProjectCollection" /> instance call the GetStorageMoverProjects method from an instance of <see cref="StorageMoverResource" />.
+    /// A class representing a collection of <see cref="StorageMoverProjectResource"/> and their operations.
+    /// Each <see cref="StorageMoverProjectResource"/> in the collection will belong to the same instance of <see cref="StorageMoverResource"/>.
+    /// To get a <see cref="StorageMoverProjectCollection"/> instance call the GetStorageMoverProjects method from an instance of <see cref="StorageMoverResource"/>.
     /// </summary>
     public partial class StorageMoverProjectCollection : ArmCollection, IEnumerable<StorageMoverProjectResource>, IAsyncEnumerable<StorageMoverProjectResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageMoverProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageMoverProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageMoverProjectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverProjectProjectsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageMoverProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageMoverProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageMoverProjectResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverProjectProjectsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

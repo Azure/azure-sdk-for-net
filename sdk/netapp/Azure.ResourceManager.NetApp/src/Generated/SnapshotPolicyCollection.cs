@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SnapshotPolicyResource" /> and their operations.
-    /// Each <see cref="SnapshotPolicyResource" /> in the collection will belong to the same instance of <see cref="NetAppAccountResource" />.
-    /// To get a <see cref="SnapshotPolicyCollection" /> instance call the GetSnapshotPolicies method from an instance of <see cref="NetAppAccountResource" />.
+    /// A class representing a collection of <see cref="SnapshotPolicyResource"/> and their operations.
+    /// Each <see cref="SnapshotPolicyResource"/> in the collection will belong to the same instance of <see cref="NetAppAccountResource"/>.
+    /// To get a <see cref="SnapshotPolicyCollection"/> instance call the GetSnapshotPolicies method from an instance of <see cref="NetAppAccountResource"/>.
     /// </summary>
     public partial class SnapshotPolicyCollection : ArmCollection, IEnumerable<SnapshotPolicyResource>, IAsyncEnumerable<SnapshotPolicyResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SnapshotPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SnapshotPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SnapshotPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SnapshotPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

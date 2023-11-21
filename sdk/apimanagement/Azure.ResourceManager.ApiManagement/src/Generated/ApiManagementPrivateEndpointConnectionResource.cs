@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPrivateEndpointConnection method.
     /// </summary>
     public partial class ApiManagementPrivateEndpointConnectionResource : ArmResource
     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementPrivateEndpointConnectionResource(ArmClient client, ApiManagementPrivateEndpointConnectionData data) : this(client, data.Id)

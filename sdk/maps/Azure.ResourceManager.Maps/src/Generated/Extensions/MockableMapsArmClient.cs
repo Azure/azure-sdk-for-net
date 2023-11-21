@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Maps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MapsAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MapsAccountResource.CreateResourceIdentifier" /> to create a <see cref="MapsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MapsAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MapsAccountResource.CreateResourceIdentifier" /> to create a <see cref="MapsAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MapsAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MapsAccountResource"/> object. </returns>
         public virtual MapsAccountResource GetMapsAccountResource(ResourceIdentifier id)
         {
             MapsAccountResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Maps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MapsCreatorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MapsCreatorResource.CreateResourceIdentifier" /> to create a <see cref="MapsCreatorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MapsCreatorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MapsCreatorResource.CreateResourceIdentifier" /> to create a <see cref="MapsCreatorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MapsCreatorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MapsCreatorResource"/> object. </returns>
         public virtual MapsCreatorResource GetMapsCreatorResource(ResourceIdentifier id)
         {
             MapsCreatorResource.ValidateResourceId(id);

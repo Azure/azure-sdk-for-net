@@ -254,7 +254,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0, 10)]
-        [TestCase(100, 10)]
+        [TestCase(Constants.KB / 2, 10)]
         [TestCase(Constants.KB, 10)]
         public async Task DirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
@@ -569,11 +569,12 @@ namespace Azure.Storage.DataMovement.Tests
             long size = Constants.KB;
             int waitTimeInSec = 20;
             string sourceContainerName = GetNewObjectName();
+            string destContainerName = GetNewObjectName();
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync(containerName: sourceContainerName);
             TSourceContainerClient oauthSourceContainer = GetOAuthSourceContainerClient(containerName: sourceContainerName);
 
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-            TDestinationContainerClient oauthDestinationContainer = GetOAuthDestinationContainerClient(containerName: sourceContainerName);
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync(containerName: destContainerName);
+            TDestinationContainerClient oauthDestinationContainer = GetOAuthDestinationContainerClient(containerName: destContainerName);
 
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destFolder";

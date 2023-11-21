@@ -18,9 +18,9 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ComponentLinkedStorageAccountResource" /> and their operations.
-    /// Each <see cref="ComponentLinkedStorageAccountResource" /> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource" />.
-    /// To get a <see cref="ComponentLinkedStorageAccountCollection" /> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource" />.
+    /// A class representing a collection of <see cref="ComponentLinkedStorageAccountResource"/> and their operations.
+    /// Each <see cref="ComponentLinkedStorageAccountResource"/> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource"/>.
+    /// To get a <see cref="ComponentLinkedStorageAccountCollection"/> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource"/>.
     /// </summary>
     public partial class ComponentLinkedStorageAccountCollection : ArmCollection
     {

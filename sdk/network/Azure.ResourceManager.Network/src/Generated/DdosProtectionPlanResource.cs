@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a DdosProtectionPlan along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DdosProtectionPlanResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDdosProtectionPlanResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDdosProtectionPlan method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DdosProtectionPlanResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDdosProtectionPlanResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDdosProtectionPlan method.
     /// </summary>
     public partial class DdosProtectionPlanResource : ArmResource
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DdosProtectionPlanResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DdosProtectionPlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DdosProtectionPlanResource(ArmClient client, DdosProtectionPlanData data) : this(client, data.Id)
