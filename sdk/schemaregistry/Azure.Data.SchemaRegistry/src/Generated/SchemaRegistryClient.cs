@@ -306,7 +306,7 @@ namespace Azure.Data.SchemaRegistry
             Argument.AssertNotNull(schemaContent, nameof(schemaContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContent.Create(schemaContent);
+            using RequestContent content = RequestContentHelper.FromObject(schemaContent);
             Response response = await GetSchemaIdByContentAsync(groupName, name, content, contentType, context).ConfigureAwait(false);
             return response;
         }
@@ -327,7 +327,7 @@ namespace Azure.Data.SchemaRegistry
             Argument.AssertNotNull(schemaContent, nameof(schemaContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContent.Create(schemaContent);
+            using RequestContent content = RequestContentHelper.FromObject(schemaContent);
             Response response = GetSchemaIdByContent(groupName, name, content, contentType, context);
             return response;
         }
@@ -342,7 +342,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSchemaIdByContentAsync(string,string,BinaryData,Core.ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSchemaIdByContentAsync(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -386,7 +386,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSchemaIdByContent(string,string,BinaryData,Core.ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSchemaIdByContent(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -436,7 +436,7 @@ namespace Azure.Data.SchemaRegistry
             Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content0 = RequestContent.Create(content);
+            using RequestContent content0 = RequestContentHelper.FromObject(content);
             Response response = await RegisterSchemaAsync(groupName, name, content0, contentType, context).ConfigureAwait(false);
             return response;
         }
@@ -457,7 +457,7 @@ namespace Azure.Data.SchemaRegistry
             Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content0 = RequestContent.Create(content);
+            using RequestContent content0 = RequestContentHelper.FromObject(content);
             Response response = RegisterSchema(groupName, name, content0, contentType, context);
             return response;
         }
@@ -472,7 +472,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RegisterSchemaAsync(string,string,BinaryData,Core.ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RegisterSchemaAsync(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -516,7 +516,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RegisterSchema(string,string,BinaryData,Core.ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RegisterSchema(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
