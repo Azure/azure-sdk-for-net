@@ -287,7 +287,9 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public async virtual Task InvokeFailedArgAsync(Exception ex)
         {
-            if (ex is not OperationCanceledException)
+            if (ex is not OperationCanceledException &&
+                ex is not TaskCanceledException &&
+                !ex.Message.Contains("The request was canceled."))
             {
                 if (TransferFailedEventHandler != null)
                 {
@@ -440,6 +442,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         protected async Task OnEnumerationComplete()
         {
+            Console.WriteLine("Enumeration complete called.");
             _enumerationComplete = true;
 
             // If there were no job parts enumerated and we haven't already aborted/completed the job.
