@@ -89,14 +89,17 @@ namespace Azure.Storage.DataMovement
         /// <returns>Returns whether or not the status has been changed/set</returns>
         public bool TrySetTransferState(DataTransferState state)
         {
+            Console.WriteLine($"Transfer state change - {state}");
             if (_status.TrySetTransferStateChange(state))
             {
+                Console.WriteLine($"Transfer state actually changed - {state}");
                 if (DataTransferState.Completed == _status.State ||
                     DataTransferState.Paused == _status.State)
                 {
                     // If the _completionSource has been cancelled or the exception
                     // has been set, we don't need to check if TrySetResult returns false
                     // because it's acceptable to cancel or have an error occur before then.
+                    Console.WriteLine($"Setting completion.");
                     CompletionSource.TrySetResult(_status);
                 }
                 return true;

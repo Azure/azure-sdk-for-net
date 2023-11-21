@@ -400,8 +400,10 @@ namespace Azure.Storage.DataMovement
 
         public async Task OnJobStateChangedAsync(DataTransferState state)
         {
+            Console.WriteLine($"Job status change - {state}");
             if (_dataTransfer._state.TrySetTransferState(state))
             {
+                Console.WriteLine($"Job status actually changed - {state}");
                 // If we are in a final state, dispose the JobPartEvent handlers
                 if (state == DataTransferState.Completed ||
                     state == DataTransferState.Paused)
