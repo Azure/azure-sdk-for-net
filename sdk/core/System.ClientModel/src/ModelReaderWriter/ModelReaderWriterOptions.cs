@@ -8,17 +8,17 @@ namespace System.ClientModel
     /// </summary>
     public class ModelReaderWriterOptions
     {
-        private static ModelReaderWriterOptions? _jsonOptions;
+        private static ModelReaderWriterOptions? s_jsonOptions;
         /// <summary>
         /// Default options for writing models into JSON format.
         /// </summary>
-        public static ModelReaderWriterOptions Json => _jsonOptions ??= new ModelReaderWriterOptions("J");
+        public static ModelReaderWriterOptions Json => s_jsonOptions ??= new ModelReaderWriterOptions("J");
 
-        private static ModelReaderWriterOptions? _xmlOptions;
+        private static ModelReaderWriterOptions? s_xmlOptions;
         /// <summary>
         /// Default options for writing models into XML format.
         /// </summary>
-        public static ModelReaderWriterOptions Xml => _xmlOptions ??= new ModelReaderWriterOptions("X");
+        public static ModelReaderWriterOptions Xml => s_xmlOptions ??= new ModelReaderWriterOptions("X");
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/>.
