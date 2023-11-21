@@ -5,7 +5,7 @@
     <Version>1.0.0-beta.1</Version>
     <Nullable>enable</Nullable>
     <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

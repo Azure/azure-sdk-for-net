@@ -13,7 +13,9 @@ namespace System.ClientModel.Primitives
 #if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
     [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
 #endif
+#pragma warning disable AZC0014 // Avoid using banned types in public API
     public class ModelJsonConverter : JsonConverter<IJsonModel<object>>
+#pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
         /// Gets the <see cref="ModelReaderWriterOptions"/> used to read and write models.
@@ -42,14 +44,18 @@ namespace System.ClientModel.Primitives
         }
 
         /// <inheritdoc/>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override IJsonModel<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return (IJsonModel<object>)ModelReaderWriter.Read(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, Options)!;
         }
 
         /// <inheritdoc/>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             value.Write(writer, Options);
         }
