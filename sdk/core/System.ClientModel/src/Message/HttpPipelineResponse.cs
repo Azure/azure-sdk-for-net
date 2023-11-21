@@ -80,14 +80,10 @@ internal class HttpPipelineResponse : PipelineResponse, IDisposable
             // intentionally left the network stream undisposed.
 
             var contentStream = _contentStream;
-            //if (content is not null && !content.IsBuffered)
-            if (contentStream is not null)
+            if (contentStream is not null && !TryGetBufferedContent(out _))
             {
-                if (contentStream is not MemoryStream)
-                {
-                    contentStream?.Dispose();
-                    _contentStream = null;
-                }
+                contentStream?.Dispose();
+                _contentStream = null;
             }
 
             _disposed = true;

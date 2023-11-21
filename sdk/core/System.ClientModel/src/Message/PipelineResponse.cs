@@ -16,6 +16,10 @@ public abstract class PipelineResponse : IDisposable
 
     public abstract MessageHeaders Headers { get; }
 
+    public abstract Stream? ContentStream { get; protected internal set; }
+
+    #region Meta-data properties set by the pipeline.
+
     public BinaryData Content
     {
         get
@@ -25,26 +29,21 @@ public abstract class PipelineResponse : IDisposable
                 return s_emptyBinaryData;
             }
 
-            // TODO: Keep this?
-            // Questions: what assumptions is this making and/or dependencies
-            // is it mandating?
-            MemoryStream? memoryContent = ContentStream as MemoryStream ??
-                throw new InvalidOperationException($"The response is not fully buffered.");
+            if (!TryGetBufferedContent(out MemoryStream bufferedContent))
+            {
+                throw new InvalidOperationException($"The response is not buffered.");
+            }
 
-            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+            if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
             {
                 return new BinaryData(segment.AsMemory());
             }
             else
             {
-                return new BinaryData(memoryContent.ToArray());
+                return new BinaryData(bufferedContent.ToArray());
             }
         }
     }
-
-    public abstract Stream? ContentStream { get; protected internal set; }
-
-    #region Meta-data properties set by the pipeline.
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
@@ -53,6 +52,18 @@ public abstract class PipelineResponse : IDisposable
     public bool IsError { get; internal set; }
 
     #endregion
+
+    internal bool TryGetBufferedContent(out MemoryStream bufferedContent)
+    {
+        if (ContentStream is MemoryStream content)
+        {
+            bufferedContent = content;
+            return true;
+        }
+
+        bufferedContent = default!;
+        return false;
+    }
 
     public abstract void Dispose();
 }

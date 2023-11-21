@@ -64,13 +64,6 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override string Method { get => throw new NotImplementedException();
-                set => throw new NotImplementedException(); }
-            public override InputContent? Content { get => throw new NotImplementedException();
-                set => throw new NotImplementedException(); }
-
-            public override MessageHeaders Headers => throw new NotImplementedException();
-
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 
             internal static void AddAzureProperties(HttpMessage message, HttpRequestMessage httpRequest)
@@ -98,11 +91,6 @@ namespace Azure.Core.Pipeline
 #else
                 httpRequest.Properties[name] = value;
 #endif
-            }
-
-            public override void Dispose()
-            {
-                throw new NotImplementedException();
             }
         }
 
