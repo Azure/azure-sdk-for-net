@@ -79,21 +79,6 @@ namespace System.ClientModel
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
     }
 }
-namespace System.ClientModel.Internal.Primitives
-{
-    public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
-    {
-        public HttpClientPipelineTransport() { }
-        public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
-        public override System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
-        public virtual void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        protected virtual void OnReceivedResponse(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
-        protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
-        public override void Process(System.ClientModel.Primitives.PipelineMessage message) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-    }
-}
 namespace System.ClientModel.Primitives
 {
     public partial class ClientPipeline
@@ -201,6 +186,7 @@ namespace System.ClientModel.Primitives
         public abstract System.Uri Uri { get; set; }
         public static System.ClientModel.Primitives.PipelineRequest Create() { throw null; }
         public abstract void Dispose();
+        public static bool TryGetHttpRequest(System.ClientModel.Primitives.PipelineRequest request, out System.Net.Http.HttpRequestMessage httpRequest) { throw null; }
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
@@ -214,10 +200,14 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.PipelineResponse Create(System.Net.Http.HttpResponseMessage response) { throw null; }
         public abstract void Dispose();
     }
-    public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy
+    public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy, System.IDisposable
     {
         protected PipelineTransport() { }
+        public static System.ClientModel.Primitives.PipelineTransport Create(System.Net.Http.HttpClient client) { throw null; }
         public abstract System.ClientModel.Primitives.PipelineMessage CreateMessage();
+        public virtual void Dispose() { }
+        protected virtual void OnReceivedResponse(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message) { }
         public abstract void Process(System.ClientModel.Primitives.PipelineMessage message);
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message);

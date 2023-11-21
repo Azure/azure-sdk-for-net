@@ -98,7 +98,7 @@ internal class HttpClientPipelineTransport : PipelineTransport
     {
         using HttpRequestMessage httpRequest = BuildRequestMessage(message);
 
-        OnSendingRequest(message, httpRequest);
+        OnSendingRequest(message);
 
         HttpResponseMessage responseMessage;
         Stream? contentStream = null;
@@ -178,17 +178,6 @@ internal class HttpClientPipelineTransport : PipelineTransport
     }
 
     /// <summary>
-    /// TBD. Needed for inheritdoc.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="httpRequest"></param>
-    private void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
-    {
-        message.Request.
-        OnSendingRequest(message);
-    }
-
-    /// <summary>
     /// TBD.  Needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
@@ -206,7 +195,6 @@ internal class HttpClientPipelineTransport : PipelineTransport
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
 
-        
         return HttpPipelineRequest.BuildHttpRequestMessage(request, message.CancellationToken);
     }
 

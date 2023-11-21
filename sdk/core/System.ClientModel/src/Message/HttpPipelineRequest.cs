@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,8 +23,6 @@ internal class HttpPipelineRequest : PipelineRequest
     private InputContent? _content;
 
     private readonly PipelineRequestHeaders _headers;
-
-    private HttpRequestMessage? _httpRequest;
 
     protected internal HttpPipelineRequest()
     {
@@ -133,8 +130,6 @@ internal class HttpPipelineRequest : PipelineRequest
                     break;
             }
         }
-
-        request.htt
 
         return httpRequest;
     }

@@ -51,5 +51,5 @@ public abstract class PipelineTransport : PipelinePolicy, IDisposable
     protected virtual void OnReceivedResponse(PipelineMessage message) { }
 
     /// <inheritdoc/>
-    public abstract void Dispose();
+    public virtual void Dispose() { }
 }

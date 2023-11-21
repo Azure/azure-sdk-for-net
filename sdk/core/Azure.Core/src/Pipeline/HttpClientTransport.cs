@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
@@ -64,7 +65,7 @@ namespace Azure.Core.Pipeline
 
         /// <inheritdoc />
         public sealed override Request CreateRequest()
-            => new RequestAdapter(new HttpClientTransportRequest());
+            => new HttpClientTransportRequest(PipelineRequest.Create());
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
