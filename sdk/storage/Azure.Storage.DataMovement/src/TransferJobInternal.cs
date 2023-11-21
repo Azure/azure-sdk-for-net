@@ -388,6 +388,7 @@ namespace Azure.Storage.DataMovement
                     jobState == DataTransferState.Pausing ||
                     jobState == DataTransferState.Stopping))
             {
+                Console.WriteLine($"Decrementing job part count - {_pendingJobParts}");
                 Interlocked.Decrement(ref _pendingJobParts);
 
                 if (_enumerationComplete)
@@ -511,6 +512,7 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status = jobPart.JobPartStatus;
             if (status.State != DataTransferState.Completed)
             {
+                Console.WriteLine($"Incrementing job part count - {_pendingJobParts}");
                 Interlocked.Increment(ref _pendingJobParts);
             }
         }
