@@ -169,7 +169,7 @@ namespace System.ClientModel.Internal
 
             lock (_readLock)
             {
-                Interlocked.Increment(ref _readCount);
+                _readCount++;
                 ReadersFinished.Reset();
             }
 
@@ -185,7 +185,8 @@ namespace System.ClientModel.Internal
         {
             lock (_readLock)
             {
-                if (Interlocked.Decrement(ref _readCount) == 0)
+                _readCount--;
+                if (_readCount == 0)
                 {
                     // notify we reached zero readers in case dispose is waiting
                     ReadersFinished.Set();
