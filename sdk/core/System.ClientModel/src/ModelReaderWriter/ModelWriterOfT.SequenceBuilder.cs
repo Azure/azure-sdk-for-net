@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives
+namespace System.ClientModel.Internal
 {
     internal partial class ModelWriter<T> : IDisposable
     {

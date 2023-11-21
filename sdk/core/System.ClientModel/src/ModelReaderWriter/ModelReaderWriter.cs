@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel
 {

@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.Samples
 {
-    internal class Readme
+    internal class ReadmeModelReaderWriter
     {
         public void Write_Simple()
         {

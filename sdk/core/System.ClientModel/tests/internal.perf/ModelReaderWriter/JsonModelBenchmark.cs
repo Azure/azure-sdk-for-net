@@ -8,6 +8,7 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models;
 using System.Reflection;
 using System.Text.Json;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {

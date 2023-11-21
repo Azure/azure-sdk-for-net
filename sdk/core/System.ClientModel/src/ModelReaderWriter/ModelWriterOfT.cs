@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -8,7 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives
+namespace System.ClientModel.Internal
 {
     /// <summary>
     /// Provides an efficient way to write <see cref="IJsonModel{T}"/> into a <see cref="BinaryData"/> using multiple pooled buffers.

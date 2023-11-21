@@ -34,7 +34,7 @@ InputModel model = new InputModel();
 BinaryData data = ModelReaderWriter.Write(model);
 ```
 
-Example reading a model json
+Example reading a model from json
 
 ```C# Snippet:Readme_Read_Simple
 string json = @"{
