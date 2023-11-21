@@ -365,7 +365,9 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
     $parameters += $fields
   }
 
+  Write-Host "Creating work item"
   $workItem = Invoke-AzBoardsCmd "work-item create" $parameters $outputCommand
+  Write-Host $workItem
   $workItemId = $workItem.id
   Write-Host "Created work item [$workItemId]."
   if ($parentId)
