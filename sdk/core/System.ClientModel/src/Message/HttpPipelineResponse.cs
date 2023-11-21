@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace System.ClientModel.Internal.Primitives;
 
-internal class HttpPipelineResponse : PipelineResponse, IDisposable
+internal class HttpPipelineResponse : PipelineResponse
 {
     private readonly HttpResponseMessage _httpResponse;
 
