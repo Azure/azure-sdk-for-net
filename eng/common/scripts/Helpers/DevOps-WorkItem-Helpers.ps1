@@ -366,16 +366,17 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   }
 
   $workItem = Invoke-AzBoardsCmd "work-item create" $parameters $outputCommand
-
+  $workItemId = $workItem.id
+  Write-Host "Created work item [$workItemId]."
   if ($parentId)
   {
-    CreateWorkItemRelation $workItem.id $parentId "parent" $outputCommand
+    CreateWorkItemRelation $workItemId $parentId "parent" $outputCommand
   }
   
   # Add a work item as related if given.
   if ($relatedId)
   {
-    CreateWorkItemRelation $workItem.id $relatedId "Related" $outputCommand
+    CreateWorkItemRelation $workItemId $relatedId "Related" $outputCommand
   }
   return $workItem
 }
@@ -386,7 +387,7 @@ function CreateWorkItemRelation($id, $relatedId, $relationType, $outputCommand =
   $parameters += "--id", $id
   $parameters += "--relation-type", $relationType
   $parameters += "--target-id", $relatedId
-
+  Write-Host "Updating work item [$relatedId] as [$relationType] of [$id]."
   Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
 }
 
@@ -529,6 +530,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   }
 
   $parentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests
+  Write-Host "Found product work item [$($parentItem.id)]. Creating package work item."
   $workItem = CreateWorkItem $title "Package" "Release" "Release" $fields $assignedTo $parentItem.id -outputCommand $outputCommand -relatedId $relatedId -tag $tag
   Write-Host "[$($workItem.id)]$lang - $pkgName($verMajorMinor) - Created"
   return $workItem
