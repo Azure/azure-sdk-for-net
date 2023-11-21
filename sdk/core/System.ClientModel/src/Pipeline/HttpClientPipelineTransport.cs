@@ -194,12 +194,12 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
 
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
-        if (message.Request is not HttpPipelineRequest messageRequest)
+        if (message.Request is not PipelineRequest request)
         {
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
 
-        return messageRequest.BuildRequestMessage(message.CancellationToken);
+        return HttpPipelineRequest.BuildHttpRequestMessage(request, message.CancellationToken);
     }
 
     #region IDisposable

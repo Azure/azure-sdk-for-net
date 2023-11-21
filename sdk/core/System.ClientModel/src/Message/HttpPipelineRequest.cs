@@ -76,16 +76,17 @@ internal class HttpPipelineRequest : PipelineRequest
         }; ;
     }
 
-    internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellationToken)
+    internal static HttpRequestMessage BuildHttpRequestMessage(PipelineRequest request, CancellationToken cancellationToken)
     {
         // TODO: this is confusing where we are passing in message and also
         // using private members on the request.
 
-        HttpMethod method = ToHttpMethod(Method);
-        Uri uri = Uri;
+        HttpMethod method = ToHttpMethod(request.Method);
+        Uri uri = request.Uri;
         HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
 
-        MessageBodyAdapter? httpContent = _content != null ? new MessageBodyAdapter(_content, cancellationToken) : null;
+        MessageBodyAdapter? httpContent = request.Content == null ? null :
+            new MessageBodyAdapter(request.Content, cancellationToken);
         httpRequest.Content = httpContent;
 #if NETSTANDARD
         httpRequest.Headers.ExpectContinue = false;
@@ -93,7 +94,7 @@ internal class HttpPipelineRequest : PipelineRequest
 
         // TODO: Come back and address this implementation per switching on string/list
         // header values once we reimplement assignment of headers to ResponseHeader directly.
-        Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers);
+        request.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers);
         foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
         {
             object headerValue = header.Value.Count() == 1 ? header.Value.First() : header.Value;
@@ -169,5 +170,5 @@ internal class HttpPipelineRequest : PipelineRequest
         GC.SuppressFinalize(this);
     }
 
-    public override string ToString() => BuildRequestMessage(default).ToString();
+    public override string ToString() => BuildHttpRequestMessage(this, default).ToString();
 }
