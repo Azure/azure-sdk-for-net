@@ -19,9 +19,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Initializes a new instance of BackupProperties. </summary>
         /// <param name="azureStorageResourceUri"> Azure storage Resource Uri. </param>
-        internal BackupProperties(Uri azureStorageResourceUri)
+        /// <param name="lastBackupOn"> Last Date Time that Customer Enabled Backup was taken. </param>
+        /// <param name="lastBackupStatus"> Status of last backup. </param>
+        internal BackupProperties(Uri azureStorageResourceUri, DateTimeOffset? lastBackupOn, string lastBackupStatus)
         {
             AzureStorageResourceUri = azureStorageResourceUri;
+            LastBackupOn = lastBackupOn;
+            LastBackupStatus = lastBackupStatus;
         }
 
         /// <summary> Azure storage Resource Uri. </summary>

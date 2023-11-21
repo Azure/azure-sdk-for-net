@@ -66,9 +66,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Initializes a new instance of BackupProperties. </summary>
         /// <param name="azureStorageResourceUri"> Azure storage Resource Uri. </param>
-        public static BackupProperties BackupProperties(Uri azureStorageResourceUri = null)
+        /// <param name="lastBackupOn"> Last Date Time that Customer Enabled Backup was taken. </param>
+        /// <param name="lastBackupStatus"> Status of last backup. </param>
+        /// <returns> A new <see cref="Models.BackupProperties"/> instance for mocking. </returns>
+        public static BackupProperties BackupProperties(Uri azureStorageResourceUri = null, DateTimeOffset? lastBackupOn = null, string lastBackupStatus = null)
         {
-            return new BackupProperties(azureStorageResourceUri);
+            return new BackupProperties(azureStorageResourceUri, lastBackupOn, lastBackupStatus);
         }
 
         /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkData. </summary>

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     continue;
                 }
             }
-            return new BackupProperties(azureStorageResourceUri.Value);
+            return new BackupProperties(azureStorageResourceUri.Value, Optional.ToNullable(lastBackupDateTime), lastBackupStatus.Value);
         }
     }
 }
