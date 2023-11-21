@@ -10,8 +10,10 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelineTransport : PipelinePolicy, IDisposable
 {
-    public static PipelineTransport Create(HttpClient client)
-        => new HttpClientPipelineTransport(client);
+    public static PipelineTransport Create(HttpClient client,
+        Action<PipelineMessage, HttpRequestMessage>? onSendingRequest = default,
+        Action<PipelineMessage, HttpResponseMessage>? onReceivedResponse = default)
+        => new HttpClientPipelineTransport(client, onSendingRequest, onReceivedResponse);
 
     /// <summary>
     /// TBD: needed for inheritdoc.
@@ -45,10 +47,6 @@ public abstract class PipelineTransport : PipelinePolicy, IDisposable
 
         await ProcessAsync(message).ConfigureAwait(false);
     }
-
-    protected virtual void OnSendingRequest(PipelineMessage message) { }
-
-    protected virtual void OnReceivedResponse(PipelineMessage message) { }
 
     /// <inheritdoc/>
     public virtual void Dispose() { }

@@ -21,22 +21,30 @@ internal class HttpClientPipelineTransport : PipelineTransport
     private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
+    private readonly Action<PipelineMessage, HttpRequestMessage>? _onSendingRequest;
+    private readonly Action<PipelineMessage, HttpResponseMessage> _onReceivedResponse;
+
     private bool _disposed;
 
-    public HttpClientPipelineTransport() : this(CreateDefaultClient())
+    public HttpClientPipelineTransport() : this(CreateDefaultClient(), default, default)
     {
         // We will dispose the httpClient.
         _ownsClient = true;
     }
 
-    public HttpClientPipelineTransport(HttpClient client)
+    public HttpClientPipelineTransport(HttpClient client,
+        Action<PipelineMessage, HttpRequestMessage>? onSendingRequest,
+        Action<PipelineMessage, HttpResponseMessage>? onReceivedResponse)
     {
         ClientUtilities.AssertNotNull(client, nameof(client));
 
-        _httpClient = client;
-
         // The caller will dispose the httpClient.
         _ownsClient = false;
+
+        _httpClient = client;
+
+        _onSendingRequest = onSendingRequest;
+        _onReceivedResponse = onReceivedResponse ?? OnReceivedResponse;
     }
 
     private static HttpClient CreateDefaultClient()
@@ -98,7 +106,10 @@ internal class HttpClientPipelineTransport : PipelineTransport
     {
         using HttpRequestMessage httpRequest = BuildRequestMessage(message);
 
-        OnSendingRequest(message);
+        if (_onSendingRequest is not null)
+        {
+            _onSendingRequest(message, httpRequest);
+        }
 
         HttpResponseMessage responseMessage;
         Stream? contentStream = null;
@@ -157,7 +168,10 @@ internal class HttpClientPipelineTransport : PipelineTransport
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
-        OnReceivedResponse(message, responseMessage);
+        if (_onReceivedResponse is not null)
+        {
+            _onReceivedResponse(message, responseMessage);
+        }
 
         // We set derived values on the MessageResponse here, including Content and IsError
         // to ensure these things happen in the transport.  If derived implementations need
@@ -177,16 +191,8 @@ internal class HttpClientPipelineTransport : PipelineTransport
         }
     }
 
-    /// <summary>
-    /// TBD.  Needed for inheritdoc.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="httpResponse"></param>
     private void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-    {
-        message.Response = new HttpPipelineResponse(httpResponse);
-        OnReceivedResponse(message);
-    }
+        => message.Response = new HttpPipelineResponse(httpResponse);
 
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {

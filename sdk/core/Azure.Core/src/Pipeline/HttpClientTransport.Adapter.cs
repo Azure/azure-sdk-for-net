@@ -16,20 +16,17 @@ namespace Azure.Core.Pipeline
 
             public AzureCoreHttpPipelineTransport(HttpClient client)
             {
-                _httpPipelineTransport = Create(client);
+                _httpPipelineTransport = Create(client,
+                    OnSendingRequest,
+                    OnReceivedResponse);
             }
 
             /// <inheritdoc />
-            protected override void OnSendingRequest(PipelineMessage message)
+            private void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
             {
                 if (message is not HttpMessage httpMessage)
                 {
                     throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
-                }
-
-                if (PipelineRequest.TryGetHttpRequest(message.Request, out HttpRequestMessage httpRequest))
-                {
-                    throw new InvalidOperationException($"Unsupported request type: '{message.Request?.GetType()}'.");
                 }
 
                 HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
@@ -38,17 +35,12 @@ namespace Azure.Core.Pipeline
             }
 
             /// <inheritdoc />
-            protected override void OnReceivedResponse(PipelineMessage message)
+            private void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
             {
                 if (message is not HttpMessage httpMessage)
                 {
                     throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
                 }
-
-                //if (!PipelineResponse.TryGetHttpResponse(message.Response, out HttpResponseMessage httpResponse))
-                //{
-                //    throw new InvalidOperationException($"Unsupported response type: '{message.Response.GetType()}'.");
-                //}
 
                 httpMessage.Response = new HttpClientTransportResponse(
                     httpMessage.Request.ClientRequestId,
