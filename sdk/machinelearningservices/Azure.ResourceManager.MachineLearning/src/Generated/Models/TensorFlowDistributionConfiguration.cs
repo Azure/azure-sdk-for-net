@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> TensorFlow distribution configuration. </summary>
     public partial class TensorFlowDistributionConfiguration : MachineLearningDistributionConfiguration
     {
-        /// <summary> Initializes a new instance of TensorFlowDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TensorFlowDistributionConfiguration"/>. </summary>
         public TensorFlowDistributionConfiguration()
         {
             DistributionType = DistributionType.TensorFlow;
         }
 
-        /// <summary> Initializes a new instance of TensorFlowDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TensorFlowDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameterServerCount"> Number of parameter server tasks. </param>
         /// <param name="workerCount"> Number of workers. If not specified, will default to the instance count. </param>
-        internal TensorFlowDistributionConfiguration(DistributionType distributionType, int? parameterServerCount, int? workerCount) : base(distributionType)
+        internal TensorFlowDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? parameterServerCount, int? workerCount) : base(distributionType, serializedAdditionalRawData)
         {
             ParameterServerCount = parameterServerCount;
             WorkerCount = workerCount;

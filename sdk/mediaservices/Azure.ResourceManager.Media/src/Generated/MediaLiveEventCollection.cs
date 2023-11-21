@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveEventLiveEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveEventLiveEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveEventLiveEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveEventLiveEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

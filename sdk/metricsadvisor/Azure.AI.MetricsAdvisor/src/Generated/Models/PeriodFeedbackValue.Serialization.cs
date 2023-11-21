@@ -5,31 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class PeriodFeedbackValue : IUtf8JsonSerializable
+    internal partial class PeriodFeedbackValue : IUtf8JsonSerializable, IJsonModel<PeriodFeedbackValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodFeedbackValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PeriodFeedbackValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PeriodFeedbackValue)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("periodType"u8);
             writer.WriteStringValue(PeriodType.ToString());
             writer.WritePropertyName("periodValue"u8);
             writer.WriteNumberValue(PeriodValue);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeriodFeedbackValue DeserializePeriodFeedbackValue(JsonElement element)
+        PeriodFeedbackValue IJsonModel<PeriodFeedbackValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(PeriodFeedbackValue)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeriodFeedbackValue(document.RootElement, options);
+        }
+
+        internal static PeriodFeedbackValue DeserializePeriodFeedbackValue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MetricPeriodType periodType = default;
             int periodValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("periodType"u8))
@@ -42,8 +85,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                     periodValue = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeriodFeedbackValue(periodType, periodValue);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PeriodFeedbackValue(periodType, periodValue, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeriodFeedbackValue>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PeriodFeedbackValue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PeriodFeedbackValue IPersistableModel<PeriodFeedbackValue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeriodFeedbackValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePeriodFeedbackValue(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(PeriodFeedbackValue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PeriodFeedbackValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

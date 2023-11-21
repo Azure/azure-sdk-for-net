@@ -5,22 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteGuidance
+    public partial class RouteGuidance : IUtf8JsonSerializable, IJsonModel<RouteGuidance>
     {
-        internal static RouteGuidance DeserializeRouteGuidance(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteGuidance>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteGuidance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteGuidance>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteGuidance)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Instructions))
+            {
+                writer.WritePropertyName("instructions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Instructions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(InstructionGroups))
+            {
+                writer.WritePropertyName("instructionGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in InstructionGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteGuidance IJsonModel<RouteGuidance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteGuidance>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RouteGuidance)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteGuidance(document.RootElement, options);
+        }
+
+        internal static RouteGuidance DeserializeRouteGuidance(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<RouteInstruction>> instructions = default;
             Optional<IReadOnlyList<RouteInstructionGroup>> instructionGroups = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instructions"u8))
@@ -51,8 +119,44 @@ namespace Azure.Maps.Routing.Models
                     instructionGroups = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteGuidance(Optional.ToList(instructions), Optional.ToList(instructionGroups));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteGuidance(Optional.ToList(instructions), Optional.ToList(instructionGroups), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteGuidance>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteGuidance>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteGuidance)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouteGuidance IPersistableModel<RouteGuidance>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteGuidance>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteGuidance(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RouteGuidance)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteGuidance>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

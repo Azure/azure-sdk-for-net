@@ -14,10 +14,53 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Bulk collections action properties. </summary>
     public partial class BulkCollectionsActionContent
     {
-        /// <summary> Initializes a new instance of BulkCollectionsActionContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionContent"/>. </summary>
         public BulkCollectionsActionContent()
         {
             CollectionIds = new ChangeTrackingList<Guid>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionContent"/>. </summary>
+        /// <param name="collectionIds"> collection ids list that the action is performed on. </param>
+        /// <param name="action"> Action to perform (For example: EnableCollections, DisableCollections). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BulkCollectionsActionContent(IList<Guid> collectionIds, string action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CollectionIds = collectionIds;
+            Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> collection ids list that the action is performed on. </summary>

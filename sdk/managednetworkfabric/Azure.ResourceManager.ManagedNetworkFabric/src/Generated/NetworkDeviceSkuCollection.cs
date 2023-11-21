@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMaintenanceModelFactory
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Maintenance.Models
             tags ??= new Dictionary<string, string>();
             extensionProperties ??= new Dictionary<string, string>();
 
-            return new MaintenanceConfigurationData(id, name, resourceType, systemData, tags, location, @namespace, extensionProperties, maintenanceScope, visibility, installPatches, startOn, expireOn, duration, timeZone, recurEvery);
+            return new MaintenanceConfigurationData(id, name, resourceType, systemData, tags, location, @namespace, extensionProperties, maintenanceScope, visibility, installPatches, startOn, expireOn, duration, timeZone, recurEvery, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceApplyUpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceApplyUpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <returns> A new <see cref="Maintenance.MaintenanceApplyUpdateData"/> instance for mocking. </returns>
         public static MaintenanceApplyUpdateData MaintenanceApplyUpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MaintenanceUpdateStatus? status = null, ResourceIdentifier resourceId = null, DateTimeOffset? lastUpdatedOn = null)
         {
-            return new MaintenanceApplyUpdateData(id, name, resourceType, systemData, status, resourceId, lastUpdatedOn);
+            return new MaintenanceApplyUpdateData(id, name, resourceType, systemData, status, resourceId, lastUpdatedOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceConfigurationAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
         public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier maintenanceConfigurationId = null, ResourceIdentifier resourceId = null, MaintenanceConfigurationAssignmentFilter filter = null)
         {
-            return new MaintenanceConfigurationAssignmentData(id, name, resourceType, systemData, location, maintenanceConfigurationId, resourceId, filter);
+            return new MaintenanceConfigurationAssignmentData(id, name, resourceType, systemData, location, maintenanceConfigurationId, resourceId, filter, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceUpdate"/>. </summary>
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <returns> A new <see cref="Models.MaintenanceUpdate"/> instance for mocking. </returns>
         public static MaintenanceUpdate MaintenanceUpdate(MaintenanceScope? maintenanceScope = null, MaintenanceImpactType? impactType = null, MaintenanceUpdateStatus? status = null, int? impactDurationInSec = null, DateTimeOffset? notBefore = null, ResourceIdentifier resourceId = null)
         {
-            return new MaintenanceUpdate(maintenanceScope, impactType, status, impactDurationInSec, notBefore, resourceId);
+            return new MaintenanceUpdate(maintenanceScope, impactType, status, impactDurationInSec, notBefore, resourceId, serializedAdditionalRawData: null);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
@@ -14,5 +15,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// <summary> The DataLakeGen2SharedKeyCredential. </summary>
     public partial class DataLakeSharedKeyCredentialEntity : DataSourceCredentialEntity
     {
+        /// <summary> Initializes a new instance of <see cref="DataLakeSharedKeyCredentialEntity"/>. </summary>
+        /// <param name="credentialKind"> Type of data source credential. </param>
+        /// <param name="id"> Unique id of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
+        /// <param name="description"> Description of data source credential. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="parameters"></param>
+        internal DataLakeSharedKeyCredentialEntity(DataSourceCredentialKind credentialKind, string id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DataLakeGen2SharedKeyParam parameters) : base(credentialKind, id, name, description, serializedAdditionalRawData)
+        {
+            Parameters = parameters;
+            CredentialKind = credentialKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeSharedKeyCredentialEntity"/> for deserialization. </summary>
+        internal DataLakeSharedKeyCredentialEntity()
+        {
+        }
     }
 }

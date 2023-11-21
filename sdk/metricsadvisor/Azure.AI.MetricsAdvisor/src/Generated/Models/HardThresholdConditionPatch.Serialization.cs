@@ -5,12 +5,166 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class HardThresholdConditionPatch : IUtf8JsonSerializable
+    internal partial class HardThresholdConditionPatch : IUtf8JsonSerializable, IJsonModel<HardThresholdConditionPatch>
     {
+        void IJsonModel<HardThresholdConditionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardThresholdConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HardThresholdConditionPatch)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LowerBound))
+            {
+                writer.WritePropertyName("lowerBound"u8);
+                writer.WriteNumberValue(LowerBound.Value);
+            }
+            if (Optional.IsDefined(UpperBound))
+            {
+                writer.WritePropertyName("upperBound"u8);
+                writer.WriteNumberValue(UpperBound.Value);
+            }
+            if (Optional.IsDefined(AnomalyDetectorDirection))
+            {
+                writer.WritePropertyName("anomalyDetectorDirection"u8);
+                writer.WriteStringValue(AnomalyDetectorDirection.Value.ToString());
+            }
+            if (Optional.IsDefined(SuppressCondition))
+            {
+                writer.WritePropertyName("suppressCondition"u8);
+                writer.WriteObjectValue(SuppressCondition);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HardThresholdConditionPatch IJsonModel<HardThresholdConditionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardThresholdConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(HardThresholdConditionPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHardThresholdConditionPatch(document.RootElement, options);
+        }
+
+        internal static HardThresholdConditionPatch DeserializeHardThresholdConditionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<double> lowerBound = default;
+            Optional<double> upperBound = default;
+            Optional<AnomalyDetectorDirection> anomalyDetectorDirection = default;
+            Optional<SuppressConditionPatch> suppressCondition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("lowerBound"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lowerBound = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("upperBound"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upperBound = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("anomalyDetectorDirection"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    anomalyDetectorDirection = new AnomalyDetectorDirection(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("suppressCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    suppressCondition = SuppressConditionPatch.DeserializeSuppressConditionPatch(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HardThresholdConditionPatch(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), Optional.ToNullable(anomalyDetectorDirection), suppressCondition.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<HardThresholdConditionPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardThresholdConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HardThresholdConditionPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HardThresholdConditionPatch IPersistableModel<HardThresholdConditionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardThresholdConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHardThresholdConditionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(HardThresholdConditionPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HardThresholdConditionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

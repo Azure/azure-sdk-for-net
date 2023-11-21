@@ -15,5 +15,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// <summary> The WebhookHookInfo. </summary>
     public partial class WebNotificationHook : NotificationHook
     {
+        /// <summary> Initializes a new instance of <see cref="WebNotificationHook"/>. </summary>
+        /// <param name="hookKind"> hook type. </param>
+        /// <param name="id"> Hook unique id. </param>
+        /// <param name="name"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="internalExternalLink"> hook external link. </param>
+        /// <param name="administrators"> hook administrators. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="hookParameter"></param>
+        internal WebNotificationHook(NotificationHookKind hookKind, string id, string name, string description, string internalExternalLink, IList<string> administrators, IDictionary<string, BinaryData> serializedAdditionalRawData, WebhookHookParameter hookParameter) : base(hookKind, id, name, description, internalExternalLink, administrators, serializedAdditionalRawData)
+        {
+            HookParameter = hookParameter;
+            HookKind = hookKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebNotificationHook"/> for deserialization. </summary>
+        internal WebNotificationHook()
+        {
+        }
     }
 }

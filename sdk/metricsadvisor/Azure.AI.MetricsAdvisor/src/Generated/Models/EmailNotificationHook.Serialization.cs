@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Models;
@@ -12,15 +15,28 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class EmailNotificationHook : IUtf8JsonSerializable
+    public partial class EmailNotificationHook : IUtf8JsonSerializable, IJsonModel<EmailNotificationHook>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailNotificationHook>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EmailNotificationHook>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EmailNotificationHook>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EmailNotificationHook)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("hookParameter"u8);
             writer.WriteObjectValue(HookParameter);
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("hookId"u8);
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -43,11 +59,40 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EmailNotificationHook DeserializeEmailNotificationHook(JsonElement element)
+        EmailNotificationHook IJsonModel<EmailNotificationHook>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EmailNotificationHook>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EmailNotificationHook)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmailNotificationHook(document.RootElement, options);
+        }
+
+        internal static EmailNotificationHook DeserializeEmailNotificationHook(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +104,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Optional<string> description = default;
             Optional<string> externalLink = default;
             Optional<IList<string>> admins = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookParameter"u8))
@@ -105,8 +152,44 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     admins = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), serializedAdditionalRawData, hookParameter);
         }
+
+        BinaryData IPersistableModel<EmailNotificationHook>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmailNotificationHook>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EmailNotificationHook)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EmailNotificationHook IPersistableModel<EmailNotificationHook>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmailNotificationHook>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEmailNotificationHook(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EmailNotificationHook)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EmailNotificationHook>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

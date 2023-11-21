@@ -5,22 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Rendering
 {
-    public partial class RegionalCopyright
+    public partial class RegionalCopyright : IUtf8JsonSerializable, IJsonModel<RegionalCopyright>
     {
-        internal static RegionalCopyright DeserializeRegionalCopyright(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegionalCopyright>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RegionalCopyright>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RegionalCopyright>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RegionalCopyright)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Copyrights))
+            {
+                writer.WritePropertyName("copyrights"u8);
+                writer.WriteStartArray();
+                foreach (var item in Copyrights)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Country))
+            {
+                writer.WritePropertyName("country"u8);
+                writer.WriteObjectValue(Country);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RegionalCopyright IJsonModel<RegionalCopyright>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegionalCopyright>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RegionalCopyright)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegionalCopyright(document.RootElement, options);
+        }
+
+        internal static RegionalCopyright DeserializeRegionalCopyright(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<string>> copyrights = default;
             Optional<RegionalCopyrightCountry> country = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("copyrights"u8))
@@ -46,8 +109,44 @@ namespace Azure.Maps.Rendering
                     country = RegionalCopyrightCountry.DeserializeRegionalCopyrightCountry(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegionalCopyright(Optional.ToList(copyrights), country.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RegionalCopyright(Optional.ToList(copyrights), country.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RegionalCopyright>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegionalCopyright>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RegionalCopyright)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RegionalCopyright IPersistableModel<RegionalCopyright>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegionalCopyright>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRegionalCopyright(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RegionalCopyright)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RegionalCopyright>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
