@@ -1,21 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.ClientModel.Primitives;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net;
 
 namespace System.ClientModel.Internal.Primitives;
 
 // This adds the Http dependency, and some implementation
 
-public class HttpPipelineRequest : PipelineRequest, IDisposable
+internal class HttpPipelineRequest : PipelineRequest, IDisposable
 {
     private const string AuthorizationHeaderName = "Authorization";
 

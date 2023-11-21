@@ -11,7 +11,7 @@ namespace System.ClientModel.Internal.Primitives;
 
 // Introduces the dependency on System.Net.Http;
 
-public class HttpClientPipelineTransport : PipelineTransport, IDisposable
+internal class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.

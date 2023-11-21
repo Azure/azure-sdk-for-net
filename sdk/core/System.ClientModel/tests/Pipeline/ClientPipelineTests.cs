@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Internal.Primitives;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
@@ -116,9 +115,20 @@ public class ClientPipelineTests
             }
         }
 
-        private class TransportRequest : HttpPipelineRequest
+        private class TransportRequest : PipelineRequest
         {
             public TransportRequest() { }
+
+            public override string Method { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public override Uri Uri { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public override InputContent? Content { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public override MessageHeaders Headers => throw new NotImplementedException();
+
+            public override void Dispose()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private class TransportResponse : PipelineResponse

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Net.Http;
 
 namespace System.ClientModel.Internal.Primitives;
 
-public class HttpPipelineResponse : PipelineResponse, IDisposable
+internal class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
 
