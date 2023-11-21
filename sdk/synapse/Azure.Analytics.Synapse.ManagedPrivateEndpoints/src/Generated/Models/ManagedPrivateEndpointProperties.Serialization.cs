@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
-    public partial class ManagedPrivateEndpointProperties : IUtf8JsonSerializable
+    public partial class ManagedPrivateEndpointProperties : IUtf8JsonSerializable, IJsonModel<ManagedPrivateEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedPrivateEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedPrivateEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ManagedPrivateEndpointProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -31,10 +42,20 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsReserved))
+            {
+                writer.WritePropertyName("isReserved"u8);
+                writer.WriteBooleanValue(IsReserved.Value);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
@@ -51,11 +72,40 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 writer.WritePropertyName("isCompliant"u8);
                 writer.WriteBooleanValue(IsCompliant.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedPrivateEndpointProperties DeserializeManagedPrivateEndpointProperties(JsonElement element)
+        ManagedPrivateEndpointProperties IJsonModel<ManagedPrivateEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ManagedPrivateEndpointProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedPrivateEndpointProperties(document.RootElement, options);
+        }
+
+        internal static ManagedPrivateEndpointProperties DeserializeManagedPrivateEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +118,8 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             Optional<bool> isReserved = default;
             Optional<IList<string>> fqdns = default;
             Optional<bool> isCompliant = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -131,8 +183,44 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     isCompliant = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), Optional.ToList(fqdns), Optional.ToNullable(isCompliant));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), Optional.ToList(fqdns), Optional.ToNullable(isCompliant), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedPrivateEndpointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ManagedPrivateEndpointProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedPrivateEndpointProperties IPersistableModel<ManagedPrivateEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedPrivateEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ManagedPrivateEndpointProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedPrivateEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

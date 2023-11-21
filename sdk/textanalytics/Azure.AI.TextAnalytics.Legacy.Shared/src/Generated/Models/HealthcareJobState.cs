@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The HealthcareJobState. </summary>
     internal partial class HealthcareJobState : JobMetadata
     {
-        /// <summary> Initializes a new instance of HealthcareJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareJobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
@@ -25,20 +25,26 @@ namespace Azure.AI.TextAnalytics.Legacy
             Errors = new ChangeTrackingList<TextAnalyticsError>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareJobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
         /// <param name="errors"></param>
         /// <param name="nextLink"></param>
-        internal HealthcareJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, HealthcareResult results, IReadOnlyList<TextAnalyticsError> errors, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status)
+        internal HealthcareJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, IDictionary<string, BinaryData> serializedAdditionalRawData, HealthcareResult results, IReadOnlyList<TextAnalyticsError> errors, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, serializedAdditionalRawData)
         {
             Results = results;
             Errors = errors;
             NextLink = nextLink;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareJobState"/> for deserialization. </summary>
+        internal HealthcareJobState()
+        {
         }
 
         /// <summary> Gets the results. </summary>

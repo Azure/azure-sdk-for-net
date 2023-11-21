@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Legacy;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class SentimentAnalysisTaskParameters : IUtf8JsonSerializable
+    internal partial class SentimentAnalysisTaskParameters : IUtf8JsonSerializable, IJsonModel<SentimentAnalysisTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentimentAnalysisTaskParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SentimentAnalysisTaskParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SentimentAnalysisTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SentimentAnalysisTaskParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ModelVersion))
             {
@@ -35,7 +48,122 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SentimentAnalysisTaskParameters IJsonModel<SentimentAnalysisTaskParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentimentAnalysisTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SentimentAnalysisTaskParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentimentAnalysisTaskParameters(document.RootElement, options);
+        }
+
+        internal static SentimentAnalysisTaskParameters DeserializeSentimentAnalysisTaskParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
+            Optional<bool> opinionMining = default;
+            Optional<StringIndexType> stringIndexType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("model-version"u8))
+                {
+                    modelVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("loggingOptOut"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loggingOptOut = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("opinionMining"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    opinionMining = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SentimentAnalysisTaskParameters(modelVersion.Value, Optional.ToNullable(loggingOptOut), Optional.ToNullable(opinionMining), Optional.ToNullable(stringIndexType), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SentimentAnalysisTaskParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentimentAnalysisTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SentimentAnalysisTaskParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SentimentAnalysisTaskParameters IPersistableModel<SentimentAnalysisTaskParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentimentAnalysisTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSentimentAnalysisTaskParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SentimentAnalysisTaskParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SentimentAnalysisTaskParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

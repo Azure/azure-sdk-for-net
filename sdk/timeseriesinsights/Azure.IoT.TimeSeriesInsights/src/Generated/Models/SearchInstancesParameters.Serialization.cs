@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class SearchInstancesParameters : IUtf8JsonSerializable
+    internal partial class SearchInstancesParameters : IUtf8JsonSerializable, IJsonModel<SearchInstancesParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchInstancesParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SearchInstancesParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchInstancesParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SearchInstancesParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
@@ -35,7 +47,126 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("pageSize"u8);
                 writer.WriteNumberValue(PageSize.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SearchInstancesParameters IJsonModel<SearchInstancesParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchInstancesParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SearchInstancesParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchInstancesParameters(document.RootElement, options);
+        }
+
+        internal static SearchInstancesParameters DeserializeSearchInstancesParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> recursive = default;
+            Optional<InstancesSortParameter> sort = default;
+            Optional<bool> highlights = default;
+            Optional<int> pageSize = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recursive"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recursive = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("sort"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sort = InstancesSortParameter.DeserializeInstancesSortParameter(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("highlights"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    highlights = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("pageSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchInstancesParameters(Optional.ToNullable(recursive), sort.Value, Optional.ToNullable(highlights), Optional.ToNullable(pageSize), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SearchInstancesParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchInstancesParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SearchInstancesParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SearchInstancesParameters IPersistableModel<SearchInstancesParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchInstancesParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSearchInstancesParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SearchInstancesParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchInstancesParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

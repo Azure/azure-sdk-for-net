@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketFileFilesClientDiagnostics, Pipeline, "SupportTicketFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketFileFilesClientDiagnostics, Pipeline, "SupportTicketFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketFileFilesClientDiagnostics, Pipeline, "SupportTicketFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketFileFilesClientDiagnostics, Pipeline, "SupportTicketFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

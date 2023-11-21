@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Legacy;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class EntityLinkingTaskParameters : IUtf8JsonSerializable
+    internal partial class EntityLinkingTaskParameters : IUtf8JsonSerializable, IJsonModel<EntityLinkingTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityLinkingTaskParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EntityLinkingTaskParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EntityLinkingTaskParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ModelVersion))
             {
@@ -30,7 +43,112 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        EntityLinkingTaskParameters IJsonModel<EntityLinkingTaskParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(EntityLinkingTaskParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEntityLinkingTaskParameters(document.RootElement, options);
+        }
+
+        internal static EntityLinkingTaskParameters DeserializeEntityLinkingTaskParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
+            Optional<StringIndexType> stringIndexType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("model-version"u8))
+                {
+                    modelVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("loggingOptOut"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loggingOptOut = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EntityLinkingTaskParameters(modelVersion.Value, Optional.ToNullable(loggingOptOut), Optional.ToNullable(stringIndexType), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EntityLinkingTaskParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EntityLinkingTaskParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EntityLinkingTaskParameters IPersistableModel<EntityLinkingTaskParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEntityLinkingTaskParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(EntityLinkingTaskParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EntityLinkingTaskParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

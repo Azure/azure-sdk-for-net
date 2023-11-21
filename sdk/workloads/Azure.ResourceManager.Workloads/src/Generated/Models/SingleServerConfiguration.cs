@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the single server configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
     public partial class SingleServerConfiguration : InfrastructureConfiguration
     {
-        /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerConfiguration"/>. </summary>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
@@ -30,9 +30,10 @@ namespace Azure.ResourceManager.Workloads.Models
             DeploymentType = SapDeploymentType.SingleServer;
         }
 
-        /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerConfiguration"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkConfiguration"> Network configuration for the server. </param>
         /// <param name="databaseType"> The database type. </param>
         /// <param name="subnetId"> The subnet id. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// Please note <see cref="SingleServerCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SingleServerFullResourceNames"/>.
         /// </param>
-        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, DiskConfiguration dbDiskConfiguration, SingleServerCustomResourceNames customResourceNames) : base(deploymentType, appResourceGroup)
+        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, DiskConfiguration dbDiskConfiguration, SingleServerCustomResourceNames customResourceNames) : base(deploymentType, appResourceGroup, serializedAdditionalRawData)
         {
             NetworkConfiguration = networkConfiguration;
             DatabaseType = databaseType;
@@ -52,6 +53,11 @@ namespace Azure.ResourceManager.Workloads.Models
             DBDiskConfiguration = dbDiskConfiguration;
             CustomResourceNames = customResourceNames;
             DeploymentType = deploymentType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SingleServerConfiguration"/> for deserialization. </summary>
+        internal SingleServerConfiguration()
+        {
         }
 
         /// <summary> Network configuration for the server. </summary>

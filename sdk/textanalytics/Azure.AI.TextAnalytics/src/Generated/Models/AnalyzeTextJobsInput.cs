@@ -15,7 +15,39 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextJobsInput. </summary>
     internal partial class AnalyzeTextJobsInput
     {
-        /// <summary> Initializes a new instance of AnalyzeTextJobsInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/>. </summary>
         /// <param name="analysisInput"></param>
         /// <param name="tasks">
         /// The set of tasks to execute on the input documents.
@@ -30,6 +62,28 @@ namespace Azure.AI.TextAnalytics.Models
 
             AnalysisInput = analysisInput;
             Tasks = tasks.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/>. </summary>
+        /// <param name="displayName"> Optional display name for the analysis job. </param>
+        /// <param name="analysisInput"></param>
+        /// <param name="tasks">
+        /// The set of tasks to execute on the input documents.
+        /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisLROTask"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextJobsInput(string displayName, MultiLanguageAnalysisInput analysisInput, IList<AnalyzeTextLROTask> tasks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DisplayName = displayName;
+            AnalysisInput = analysisInput;
+            Tasks = tasks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/> for deserialization. </summary>
+        internal AnalyzeTextJobsInput()
+        {
         }
 
         /// <summary> Optional display name for the analysis job. </summary>

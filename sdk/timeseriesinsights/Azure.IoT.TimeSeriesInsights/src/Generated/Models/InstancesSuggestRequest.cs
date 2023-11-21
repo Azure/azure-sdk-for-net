@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -13,7 +14,39 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to get search string suggestions for time series instances search based on prefix text. </summary>
     internal partial class InstancesSuggestRequest
     {
-        /// <summary> Initializes a new instance of InstancesSuggestRequest. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestRequest"/>. </summary>
         /// <param name="searchString"> Search string for which suggestions are required. Empty is allowed, but not null. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchString"/> is null. </exception>
         public InstancesSuggestRequest(string searchString)
@@ -21,6 +54,22 @@ namespace Azure.IoT.TimeSeriesInsights
             Argument.AssertNotNull(searchString, nameof(searchString));
 
             SearchString = searchString;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestRequest"/>. </summary>
+        /// <param name="searchString"> Search string for which suggestions are required. Empty is allowed, but not null. </param>
+        /// <param name="take"> Maximum number of suggestions expected in the result. Defaults to 10 when not set. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancesSuggestRequest(string searchString, int? take, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SearchString = searchString;
+            Take = take;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestRequest"/> for deserialization. </summary>
+        internal InstancesSuggestRequest()
+        {
         }
 
         /// <summary> Search string for which suggestions are required. Empty is allowed, but not null. </summary>
