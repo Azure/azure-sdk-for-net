@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerRegistryRegistriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerRegistryRegistriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), ContainerRegistryRegistriesClientDiagnostics, Pipeline, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), ContainerRegistryRegistriesClientDiagnostics, Pipeline, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerRegistryRegistriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerRegistryRegistriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), ContainerRegistryRegistriesClientDiagnostics, Pipeline, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), ContainerRegistryRegistriesClientDiagnostics, Pipeline, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries", "value", "nextLink", cancellationToken);
         }
     }
 }

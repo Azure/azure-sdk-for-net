@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogApiKey. </summary>
     public partial class DatadogApiKey
     {
-        /// <summary> Initializes a new instance of DatadogApiKey. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogApiKey"/>. </summary>
         /// <param name="key"> The value of the API key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public DatadogApiKey(string key)
@@ -23,17 +56,24 @@ namespace Azure.ResourceManager.Datadog.Models
             Key = key;
         }
 
-        /// <summary> Initializes a new instance of DatadogApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogApiKey"/>. </summary>
         /// <param name="createdBy"> The user that created the API key. </param>
         /// <param name="name"> The name of the API key. </param>
         /// <param name="key"> The value of the API key. </param>
         /// <param name="created"> The time of creation of the API key. </param>
-        internal DatadogApiKey(string createdBy, string name, string key, string created)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogApiKey(string createdBy, string name, string key, string created, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedBy = createdBy;
             Name = name;
             Key = key;
             Created = created;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatadogApiKey"/> for deserialization. </summary>
+        internal DatadogApiKey()
+        {
         }
 
         /// <summary> The user that created the API key. </summary>

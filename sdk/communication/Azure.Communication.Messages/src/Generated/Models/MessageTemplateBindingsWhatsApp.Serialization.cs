@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateBindingsWhatsApp : IUtf8JsonSerializable
+    internal partial class MessageTemplateBindingsWhatsApp : IUtf8JsonSerializable, IJsonModel<MessageTemplateBindingsWhatsApp>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateBindingsWhatsApp>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MessageTemplateBindingsWhatsApp>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindingsWhatsApp>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MessageTemplateBindingsWhatsApp)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Header))
             {
@@ -55,7 +67,146 @@ namespace Azure.Communication.Messages
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MessageTemplateBindingsWhatsApp IJsonModel<MessageTemplateBindingsWhatsApp>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindingsWhatsApp>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MessageTemplateBindingsWhatsApp)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMessageTemplateBindingsWhatsApp(document.RootElement, options);
+        }
+
+        internal static MessageTemplateBindingsWhatsApp DeserializeMessageTemplateBindingsWhatsApp(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<MessageTemplateBindingsWhatsAppComponent>> header = default;
+            Optional<IList<MessageTemplateBindingsWhatsAppComponent>> body = default;
+            Optional<IList<MessageTemplateBindingsWhatsAppComponent>> footer = default;
+            Optional<IList<MessageTemplateBindingsWhatsAppButton>> button = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("header"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MessageTemplateBindingsWhatsAppComponent> array = new List<MessageTemplateBindingsWhatsAppComponent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MessageTemplateBindingsWhatsAppComponent.DeserializeMessageTemplateBindingsWhatsAppComponent(item));
+                    }
+                    header = array;
+                    continue;
+                }
+                if (property.NameEquals("body"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MessageTemplateBindingsWhatsAppComponent> array = new List<MessageTemplateBindingsWhatsAppComponent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MessageTemplateBindingsWhatsAppComponent.DeserializeMessageTemplateBindingsWhatsAppComponent(item));
+                    }
+                    body = array;
+                    continue;
+                }
+                if (property.NameEquals("footer"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MessageTemplateBindingsWhatsAppComponent> array = new List<MessageTemplateBindingsWhatsAppComponent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MessageTemplateBindingsWhatsAppComponent.DeserializeMessageTemplateBindingsWhatsAppComponent(item));
+                    }
+                    footer = array;
+                    continue;
+                }
+                if (property.NameEquals("button"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MessageTemplateBindingsWhatsAppButton> array = new List<MessageTemplateBindingsWhatsAppButton>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MessageTemplateBindingsWhatsAppButton.DeserializeMessageTemplateBindingsWhatsAppButton(item));
+                    }
+                    button = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MessageTemplateBindingsWhatsApp(Optional.ToList(header), Optional.ToList(body), Optional.ToList(footer), Optional.ToList(button), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MessageTemplateBindingsWhatsApp>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindingsWhatsApp>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MessageTemplateBindingsWhatsApp)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MessageTemplateBindingsWhatsApp IPersistableModel<MessageTemplateBindingsWhatsApp>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindingsWhatsApp>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMessageTemplateBindingsWhatsApp(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MessageTemplateBindingsWhatsApp)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MessageTemplateBindingsWhatsApp>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

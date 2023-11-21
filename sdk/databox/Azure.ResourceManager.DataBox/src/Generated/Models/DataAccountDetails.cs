@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
@@ -14,18 +17,52 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class DataAccountDetails
     {
-        /// <summary> Initializes a new instance of DataAccountDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataAccountDetails"/>. </summary>
         protected DataAccountDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataAccountDetails"/>. </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        internal DataAccountDetails(DataAccountType dataAccountType, string sharePassword)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataAccountDetails(DataAccountType dataAccountType, string sharePassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataAccountType = dataAccountType;
             SharePassword = sharePassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Account Type of the data to be transferred. </summary>

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetParquetFormat : IUtf8JsonSerializable
+    public partial class DatasetParquetFormat : IUtf8JsonSerializable, IJsonModel<DatasetParquetFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetParquetFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatasetParquetFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetParquetFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DatasetParquetFormat)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
@@ -30,23 +40,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
             }
-            foreach (var item in AdditionalProperties)
+            if (AdditionalProperties != null)
             {
-                writer.WritePropertyName(item.Key);
+                foreach (var item in AdditionalProperties)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DatasetParquetFormat DeserializeDatasetParquetFormat(JsonElement element)
+        DatasetParquetFormat IJsonModel<DatasetParquetFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetParquetFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DatasetParquetFormat)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetParquetFormat(document.RootElement, options);
+        }
+
+        internal static DatasetParquetFormat DeserializeDatasetParquetFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,5 +113,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetParquetFormat(type, serializer.Value, deserializer.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<DatasetParquetFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetParquetFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DatasetParquetFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DatasetParquetFormat IPersistableModel<DatasetParquetFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetParquetFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatasetParquetFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DatasetParquetFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatasetParquetFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

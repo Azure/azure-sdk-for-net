@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,23 +18,57 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// </summary>
     public abstract partial class ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepProperties"/>. </summary>
         protected ContainerRegistryTaskStepProperties()
         {
             BaseImageDependencies = new ChangeTrackingList<ContainerRegistryBaseImageDependency>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepProperties"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
-        internal ContainerRegistryTaskStepProperties(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTaskStepProperties(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerRegistryTaskStepType = containerRegistryTaskStepType;
             BaseImageDependencies = baseImageDependencies;
             ContextPath = contextPath;
             ContextAccessToken = contextAccessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the step. </summary>

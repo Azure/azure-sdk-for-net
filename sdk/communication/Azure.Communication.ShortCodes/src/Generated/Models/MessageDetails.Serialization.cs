@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class MessageDetails : IUtf8JsonSerializable
+    public partial class MessageDetails : IUtf8JsonSerializable, IJsonModel<MessageDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MessageDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MessageDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SupportedProtocols))
             {
@@ -71,11 +82,40 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MessageDetails DeserializeMessageDetails(JsonElement element)
+        MessageDetails IJsonModel<MessageDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MessageDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMessageDetails(document.RootElement, options);
+        }
+
+        internal static MessageDetails DeserializeMessageDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +129,8 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<string> confirmationMessage = default;
             Optional<MessageDirectionality> directionality = default;
             Optional<IList<UseCase>> useCases = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedProtocols"u8))
@@ -162,8 +204,44 @@ namespace Azure.Communication.ShortCodes.Models
                     useCases = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MessageDetails(Optional.ToList(supportedProtocols), Optional.ToNullable(recurrence), helpMessage.Value, optOutMessage.Value, optInMessage.Value, optInReply.Value, confirmationMessage.Value, Optional.ToNullable(directionality), Optional.ToList(useCases));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MessageDetails(Optional.ToList(supportedProtocols), Optional.ToNullable(recurrence), helpMessage.Value, optOutMessage.Value, optInMessage.Value, optInReply.Value, confirmationMessage.Value, Optional.ToNullable(directionality), Optional.ToList(useCases), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MessageDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MessageDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MessageDetails IPersistableModel<MessageDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMessageDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MessageDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MessageDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

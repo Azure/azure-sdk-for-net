@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownLayout : IUtf8JsonSerializable
+    internal partial class UnknownLayout : IUtf8JsonSerializable, IJsonModel<MediaCompositionLayout>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaCompositionLayout>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaCompositionLayout>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaCompositionLayout>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaCompositionLayout)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -33,11 +45,40 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownLayout DeserializeUnknownLayout(JsonElement element)
+        MediaCompositionLayout IJsonModel<MediaCompositionLayout>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaCompositionLayout>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(MediaCompositionLayout)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownLayout(document.RootElement, options);
+        }
+
+        internal static UnknownLayout DeserializeUnknownLayout(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +87,8 @@ namespace Azure.Communication.MediaComposition
             Optional<LayoutResolution> resolution = default;
             Optional<string> placeholderImageUri = default;
             Optional<ScalingMode> scalingMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -76,8 +119,44 @@ namespace Azure.Communication.MediaComposition
                     scalingMode = new ScalingMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaCompositionLayout>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaCompositionLayout>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaCompositionLayout)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MediaCompositionLayout IPersistableModel<MediaCompositionLayout>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaCompositionLayout>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUnknownLayout(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(MediaCompositionLayout)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaCompositionLayout>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

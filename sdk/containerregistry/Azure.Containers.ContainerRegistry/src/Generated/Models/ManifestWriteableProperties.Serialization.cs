@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestWriteableProperties : IUtf8JsonSerializable
+    internal partial class ManifestWriteableProperties : IUtf8JsonSerializable, IJsonModel<ManifestWriteableProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManifestWriteableProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManifestWriteableProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManifestWriteableProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ManifestWriteableProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CanDelete))
             {
@@ -35,7 +47,126 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WritePropertyName("readEnabled"u8);
                 writer.WriteBooleanValue(CanRead.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ManifestWriteableProperties IJsonModel<ManifestWriteableProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManifestWriteableProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ManifestWriteableProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManifestWriteableProperties(document.RootElement, options);
+        }
+
+        internal static ManifestWriteableProperties DeserializeManifestWriteableProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> deleteEnabled = default;
+            Optional<bool> writeEnabled = default;
+            Optional<bool> listEnabled = default;
+            Optional<bool> readEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("deleteEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deleteEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("writeEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("listEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    listEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("readEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    readEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManifestWriteableProperties(Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ManifestWriteableProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManifestWriteableProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ManifestWriteableProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManifestWriteableProperties IPersistableModel<ManifestWriteableProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManifestWriteableProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManifestWriteableProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ManifestWriteableProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManifestWriteableProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,18 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Returns the requested Docker multi-arch-manifest file. </summary>
     internal partial class ManifestList : Manifest
     {
-        /// <summary> Initializes a new instance of ManifestList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestList"/>. </summary>
         internal ManifestList()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
         }
 
-        /// <summary> Initializes a new instance of ManifestList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestList"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> List of V2 image layer information. </param>
-        internal ManifestList(int? schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests) : base(schemaVersion)
+        internal ManifestList(int? schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string mediaType, IReadOnlyList<ManifestListAttributes> manifests) : base(schemaVersion, serializedAdditionalRawData)
         {
             MediaType = mediaType;
             Manifests = manifests;

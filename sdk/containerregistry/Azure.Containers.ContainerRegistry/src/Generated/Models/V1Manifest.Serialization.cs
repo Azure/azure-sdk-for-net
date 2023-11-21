@@ -5,16 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class V1Manifest
+    internal partial class V1Manifest : IUtf8JsonSerializable, IJsonModel<V1Manifest>
     {
-        internal static V1Manifest DeserializeV1Manifest(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<V1Manifest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<V1Manifest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<V1Manifest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(V1Manifest)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture"u8);
+                writer.WriteStringValue(Architecture);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Tag))
+            {
+                writer.WritePropertyName("tag"u8);
+                writer.WriteStringValue(Tag);
+            }
+            if (Optional.IsCollectionDefined(FsLayers))
+            {
+                writer.WritePropertyName("fsLayers"u8);
+                writer.WriteStartArray();
+                foreach (var item in FsLayers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(History))
+            {
+                writer.WritePropertyName("history"u8);
+                writer.WriteStartArray();
+                foreach (var item in History)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Signatures))
+            {
+                writer.WritePropertyName("signatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in Signatures)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SchemaVersion))
+            {
+                writer.WritePropertyName("schemaVersion"u8);
+                writer.WriteNumberValue(SchemaVersion.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        V1Manifest IJsonModel<V1Manifest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<V1Manifest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(V1Manifest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeV1Manifest(document.RootElement, options);
+        }
+
+        internal static V1Manifest DeserializeV1Manifest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +122,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<IReadOnlyList<History>> history = default;
             Optional<IReadOnlyList<ImageSignature>> signatures = default;
             Optional<int> schemaVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("architecture"u8))
@@ -94,8 +192,44 @@ namespace Azure.Containers.ContainerRegistry
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new V1Manifest(Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new V1Manifest(Optional.ToNullable(schemaVersion), serializedAdditionalRawData, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
+
+        BinaryData IPersistableModel<V1Manifest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<V1Manifest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(V1Manifest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        V1Manifest IPersistableModel<V1Manifest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<V1Manifest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeV1Manifest(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(V1Manifest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<V1Manifest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

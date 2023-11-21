@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlMISource : IUtf8JsonSerializable
+    public partial class SqlMISource : IUtf8JsonSerializable, IJsonModel<SqlMISource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMISource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlMISource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlMISource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SqlMISource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlReaderQuery))
             {
@@ -113,23 +123,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
-            foreach (var item in AdditionalProperties)
+            if (AdditionalProperties != null)
             {
-                writer.WritePropertyName(item.Key);
+                foreach (var item in AdditionalProperties)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SqlMISource DeserializeSqlMISource(JsonElement element)
+        SqlMISource IJsonModel<SqlMISource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlMISource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SqlMISource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlMISource(document.RootElement, options);
+        }
+
+        internal static SqlMISource DeserializeSqlMISource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -279,5 +306,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SqlMISource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, storedProcedureParameters.Value, isolationLevel.Value, produceAdditionalTypes.Value, partitionOption.Value, partitionSettings.Value);
         }
+
+        BinaryData IPersistableModel<SqlMISource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlMISource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SqlMISource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlMISource IPersistableModel<SqlMISource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlMISource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlMISource(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SqlMISource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlMISource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

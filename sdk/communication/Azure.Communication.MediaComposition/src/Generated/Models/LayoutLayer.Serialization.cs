@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.MediaComposition;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class LayoutLayer : IUtf8JsonSerializable
+    public partial class LayoutLayer : IUtf8JsonSerializable, IJsonModel<LayoutLayer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LayoutLayer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LayoutLayer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LayoutLayer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LayoutLayer)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("zIndex"u8);
             writer.WriteNumberValue(ZIndex);
@@ -23,17 +35,48 @@ namespace Azure.Communication.MediaComposition.Models
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LayoutLayer DeserializeLayoutLayer(JsonElement element)
+        LayoutLayer IJsonModel<LayoutLayer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LayoutLayer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LayoutLayer)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLayoutLayer(document.RootElement, options);
+        }
+
+        internal static LayoutLayer DeserializeLayoutLayer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int zIndex = default;
             Optional<LayerVisibility> visibility = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zIndex"u8))
@@ -50,8 +93,44 @@ namespace Azure.Communication.MediaComposition.Models
                     visibility = new LayerVisibility(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LayoutLayer(zIndex, Optional.ToNullable(visibility));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LayoutLayer(zIndex, Optional.ToNullable(visibility), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LayoutLayer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LayoutLayer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LayoutLayer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LayoutLayer IPersistableModel<LayoutLayer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LayoutLayer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLayoutLayer(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LayoutLayer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LayoutLayer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

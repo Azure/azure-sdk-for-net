@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RestSink : IUtf8JsonSerializable
+    public partial class RestSink : IUtf8JsonSerializable, IJsonModel<RestSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RestSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RestSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RequestMethod))
             {
@@ -89,23 +99,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
-            foreach (var item in AdditionalProperties)
+            if (AdditionalProperties != null)
             {
-                writer.WritePropertyName(item.Key);
+                foreach (var item in AdditionalProperties)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static RestSink DeserializeRestSink(JsonElement element)
+        RestSink IJsonModel<RestSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RestSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestSink(document.RootElement, options);
+        }
+
+        internal static RestSink DeserializeRestSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -235,5 +262,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new RestSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, additionalHeaders.Value, httpRequestTimeout.Value, requestInterval.Value, httpCompressionType.Value);
         }
+
+        BinaryData IPersistableModel<RestSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RestSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RestSink IPersistableModel<RestSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRestSink(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RestSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RestSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

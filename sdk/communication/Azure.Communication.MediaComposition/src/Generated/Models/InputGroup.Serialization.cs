@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class InputGroup : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownInputGroup))]
+    public partial class InputGroup : IUtf8JsonSerializable, IJsonModel<InputGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InputGroup>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InputGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InputGroup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(InputGroup)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -42,11 +54,40 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InputGroup DeserializeInputGroup(JsonElement element)
+        InputGroup IJsonModel<InputGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InputGroup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(InputGroup)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInputGroup(document.RootElement, options);
+        }
+
+        internal static InputGroup DeserializeInputGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,5 +102,36 @@ namespace Azure.Communication.MediaComposition
             }
             return UnknownInputGroup.DeserializeUnknownInputGroup(element);
         }
+
+        BinaryData IPersistableModel<InputGroup>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InputGroup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(InputGroup)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InputGroup IPersistableModel<InputGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InputGroup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInputGroup(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(InputGroup)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InputGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

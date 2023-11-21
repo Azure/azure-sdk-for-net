@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure PostgreSQL linked service. </summary>
     public partial class AzurePostgreSqlLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzurePostgreSqlLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlLinkedService"/>. </summary>
         public AzurePostgreSqlLinkedService()
         {
             LinkedServiceType = "AzurePostgreSql";
         }
 
-        /// <summary> Initializes a new instance of AzurePostgreSqlLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<string> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHostRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<string> GetAvailableSizes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHostRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>

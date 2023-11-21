@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
@@ -12,12 +14,13 @@ namespace Azure.Communication.MediaComposition
     /// <summary> The UnknownLayout. </summary>
     internal partial class UnknownLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of UnknownLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
-        internal UnknownLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode) : base(kind, resolution, placeholderImageUri, scalingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, resolution, placeholderImageUri, scalingMode, serializedAdditionalRawData)
         {
             Kind = kind;
         }

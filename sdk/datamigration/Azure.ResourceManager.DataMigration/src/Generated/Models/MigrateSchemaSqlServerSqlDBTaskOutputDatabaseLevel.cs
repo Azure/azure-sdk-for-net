@@ -6,21 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel. </summary>
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel : MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
         internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel()
         {
             ResultType = "DatabaseLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="state"> State of the schema migration for this database. </param>
         /// <param name="stage"> Schema migration stage for this database. </param>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="numberOfSuccessfulOperations"> Number of successful operations for this database. </param>
         /// <param name="numberOfFailedOperations"> Number of failed operations for this database. </param>
         /// <param name="fileId"> Identifier for the file resource containing the schema of this database. </param>
-        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id, string resultType, string databaseName, MigrationState? state, SchemaMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string databaseErrorResultPrefix, string schemaErrorResultPrefix, long? numberOfSuccessfulOperations, long? numberOfFailedOperations, string fileId) : base(id, resultType)
+        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, MigrationState? state, SchemaMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string databaseErrorResultPrefix, string schemaErrorResultPrefix, long? numberOfSuccessfulOperations, long? numberOfFailedOperations, string fileId) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             State = state;

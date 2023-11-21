@@ -5,25 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the data disk image. </summary>
     public partial class SharedGalleryDataDiskImage : SharedGalleryDiskImage
     {
-        /// <summary> Initializes a new instance of SharedGalleryDataDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryDataDiskImage"/>. </summary>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         internal SharedGalleryDataDiskImage(int lun)
         {
             Lun = lun;
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryDataDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryDataDiskImage"/>. </summary>
         /// <param name="diskSizeGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
-        internal SharedGalleryDataDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching, int lun) : base(diskSizeGB, hostCaching)
+        internal SharedGalleryDataDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching, IDictionary<string, BinaryData> serializedAdditionalRawData, int lun) : base(diskSizeGB, hostCaching, serializedAdditionalRawData)
         {
             Lun = lun;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryDataDiskImage"/> for deserialization. </summary>
+        internal SharedGalleryDataDiskImage()
+        {
         }
 
         /// <summary> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </summary>
