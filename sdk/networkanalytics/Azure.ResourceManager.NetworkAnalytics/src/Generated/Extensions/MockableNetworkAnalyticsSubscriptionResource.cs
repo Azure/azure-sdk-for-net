@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProductRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), DataProductClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProducts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), DataProductClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProductRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), DataProductClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProducts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), DataProductClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductsCatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProductsCatalogRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProductsCatalogResource(Client, DataProductsCatalogData.DeserializeDataProductsCatalogData(e)), DataProductsCatalogClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProductsCatalogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataProductsCatalogResource(Client, DataProductsCatalogData.DeserializeDataProductsCatalogData(e)), DataProductsCatalogClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProductsCatalogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductsCatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProductsCatalogRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProductsCatalogResource(Client, DataProductsCatalogData.DeserializeDataProductsCatalogData(e)), DataProductsCatalogClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProductsCatalogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataProductsCatalogResource(Client, DataProductsCatalogData.DeserializeDataProductsCatalogData(e)), DataProductsCatalogClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProductsCatalogs", "value", "nextLink", cancellationToken);
         }
     }
 }

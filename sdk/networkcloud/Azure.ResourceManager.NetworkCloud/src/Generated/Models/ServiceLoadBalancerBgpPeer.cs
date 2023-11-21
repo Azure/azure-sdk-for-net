@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ServiceLoadBalancerBgpPeer represents the configuration of the BGP service load balancer for the Kubernetes cluster. </summary>
     public partial class ServiceLoadBalancerBgpPeer
     {
-        /// <summary> Initializes a new instance of ServiceLoadBalancerBgpPeer. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceLoadBalancerBgpPeer"/>. </summary>
         /// <param name="name"> The name used to identify this BGP peer for association with a BGP advertisement. </param>
         /// <param name="peerAddress"> The IPv4 or IPv6 address used to connect this BGP session. </param>
         /// <param name="peerAsn"> The autonomous system number expected from the remote end of the BGP session. </param>
@@ -28,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             PeerAsn = peerAsn;
         }
 
-        /// <summary> Initializes a new instance of ServiceLoadBalancerBgpPeer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLoadBalancerBgpPeer"/>. </summary>
         /// <param name="bfdEnabled"> The indicator of BFD enablement for this BgpPeer. </param>
         /// <param name="bgpMultiHop"> The indicator to enable multi-hop peering support. </param>
         /// <param name="holdTime"> The requested BGP hold time value. This field uses ISO 8601 duration format, for example P1H. </param>
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="peerAddress"> The IPv4 or IPv6 address used to connect this BGP session. </param>
         /// <param name="peerAsn"> The autonomous system number expected from the remote end of the BGP session. </param>
         /// <param name="peerPort"> The port used to connect this BGP session. </param>
-        internal ServiceLoadBalancerBgpPeer(BfdEnabled? bfdEnabled, BgpMultiHop? bgpMultiHop, string holdTime, string keepAliveTime, long? myAsn, string name, string password, string peerAddress, long peerAsn, long? peerPort)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceLoadBalancerBgpPeer(BfdEnabled? bfdEnabled, BgpMultiHop? bgpMultiHop, string holdTime, string keepAliveTime, long? myAsn, string name, string password, string peerAddress, long peerAsn, long? peerPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BfdEnabled = bfdEnabled;
             BgpMultiHop = bgpMultiHop;
@@ -51,6 +85,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             PeerAddress = peerAddress;
             PeerAsn = peerAsn;
             PeerPort = peerPort;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceLoadBalancerBgpPeer"/> for deserialization. </summary>
+        internal ServiceLoadBalancerBgpPeer()
+        {
         }
 
         /// <summary> The indicator of BFD enablement for this BgpPeer. </summary>

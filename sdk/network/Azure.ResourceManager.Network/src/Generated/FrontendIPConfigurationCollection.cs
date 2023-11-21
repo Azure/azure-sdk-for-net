@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontendIPConfigurationResource(Client, FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(e)), _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, "FrontendIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontendIPConfigurationResource(Client, FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(e)), _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, "FrontendIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontendIPConfigurationResource(Client, FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(e)), _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, "FrontendIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontendIPConfigurationResource(Client, FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(e)), _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, "FrontendIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

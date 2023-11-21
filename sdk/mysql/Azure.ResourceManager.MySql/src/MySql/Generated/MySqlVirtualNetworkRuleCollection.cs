@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlVirtualNetworkRuleResource(Client, MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(e)), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "MySqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlVirtualNetworkRuleResource(Client, MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(e)), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "MySqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlVirtualNetworkRuleResource(Client, MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(e)), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "MySqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlVirtualNetworkRuleResource(Client, MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(e)), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "MySqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

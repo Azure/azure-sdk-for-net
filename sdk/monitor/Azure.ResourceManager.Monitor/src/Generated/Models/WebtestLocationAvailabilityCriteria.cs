@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies the metric alert rule criteria for a web test resource. </summary>
     public partial class WebtestLocationAvailabilityCriteria : MetricAlertCriteria
     {
-        /// <summary> Initializes a new instance of WebtestLocationAvailabilityCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebtestLocationAvailabilityCriteria"/>. </summary>
         /// <param name="webTestId"> The Application Insights web test Id. </param>
         /// <param name="componentId"> The Application Insights resource Id. </param>
         /// <param name="failedLocationCount"> The number of failed locations. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = MonitorOdataType.MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria;
         }
 
-        /// <summary> Initializes a new instance of WebtestLocationAvailabilityCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebtestLocationAvailabilityCriteria"/>. </summary>
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="webTestId"> The Application Insights web test Id. </param>
@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.Monitor.Models
             ComponentId = componentId;
             FailedLocationCount = failedLocationCount;
             OdataType = odataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebtestLocationAvailabilityCriteria"/> for deserialization. </summary>
+        internal WebtestLocationAvailabilityCriteria()
+        {
         }
 
         /// <summary> The Application Insights web test Id. </summary>

@@ -5,16 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class BatchQueryResponse
+    internal partial class BatchQueryResponse : IUtf8JsonSerializable, IJsonModel<BatchQueryResponse>
     {
-        internal static BatchQueryResponse DeserializeBatchQueryResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchQueryResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchQueryResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchQueryResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(BatchQueryResponse)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteNumberValue(Status.Value);
+            }
+            if (Optional.IsDefined(Body))
+            {
+                writer.WritePropertyName("body"u8);
+                writer.WriteObjectValue(Body);
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                writer.WritePropertyName("headers"u8);
+                writer.WriteStartObject();
+                foreach (var item in Headers)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BatchQueryResponse IJsonModel<BatchQueryResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchQueryResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(BatchQueryResponse)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchQueryResponse(document.RootElement, options);
+        }
+
+        internal static BatchQueryResponse DeserializeBatchQueryResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +95,8 @@ namespace Azure.Monitor.Query.Models
             Optional<int> status = default;
             Optional<LogsBatchQueryResult> body = default;
             Optional<IReadOnlyDictionary<string, string>> headers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -62,8 +136,44 @@ namespace Azure.Monitor.Query.Models
                     headers = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchQueryResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchQueryResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BatchQueryResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BatchQueryResponse IPersistableModel<BatchQueryResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchQueryResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchQueryResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BatchQueryResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchQueryResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,55 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> PrivateDnsZoneConfig resource. </summary>
     public partial class PrivateDnsZoneConfig
     {
-        /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneConfig"/>. </summary>
         public PrivateDnsZoneConfig()
         {
             RecordSets = new ChangeTrackingList<RecordSet>();
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneConfig"/>. </summary>
         /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="privateDnsZoneId"> The resource id of the private dns zone. </param>
         /// <param name="recordSets"> A collection of information regarding a recordSet, holding information to identify private resources. </param>
-        internal PrivateDnsZoneConfig(string name, string privateDnsZoneId, IReadOnlyList<RecordSet> recordSets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateDnsZoneConfig(string name, string privateDnsZoneId, IReadOnlyList<RecordSet> recordSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PrivateDnsZoneId = privateDnsZoneId;
             RecordSets = recordSets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>

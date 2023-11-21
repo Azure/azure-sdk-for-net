@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortsLocationRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRoutePortsLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortsLocationResource(Client, ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(e)), _expressRoutePortsLocationClientDiagnostics, Pipeline, "ExpressRoutePortsLocationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ExpressRoutePortsLocationResource(Client, ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(e)), _expressRoutePortsLocationClientDiagnostics, Pipeline, "ExpressRoutePortsLocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortsLocationRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRoutePortsLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortsLocationResource(Client, ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(e)), _expressRoutePortsLocationClientDiagnostics, Pipeline, "ExpressRoutePortsLocationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ExpressRoutePortsLocationResource(Client, ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(e)), _expressRoutePortsLocationClientDiagnostics, Pipeline, "ExpressRoutePortsLocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

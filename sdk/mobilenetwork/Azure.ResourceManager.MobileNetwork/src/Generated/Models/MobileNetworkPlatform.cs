@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Platform specific packet core control plane version properties. </summary>
     public partial class MobileNetworkPlatform
     {
-        /// <summary> Initializes a new instance of MobileNetworkPlatform. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatform"/>. </summary>
         public MobileNetworkPlatform()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatform"/>. </summary>
         /// <param name="platformType"> The platform type where this version can be deployed. </param>
         /// <param name="versionState"> The state of this packet core control plane version on this platform. </param>
         /// <param name="minimumPlatformSoftwareVersion"> The minimum software version of the platform where this packet core version can be deployed. </param>
         /// <param name="maximumPlatformSoftwareVersion"> The maximum software version of the platform where this packet core version can be deployed. </param>
         /// <param name="recommendedVersion"> Indicates whether this is the recommended version for this platform. </param>
         /// <param name="obsoleteVersion"> Indicates whether this version is obsoleted for this platform. </param>
-        internal MobileNetworkPlatform(MobileNetworkPlatformType? platformType, MobileNetworkVersionState? versionState, string minimumPlatformSoftwareVersion, string maximumPlatformSoftwareVersion, MobileNetworkRecommendedVersion? recommendedVersion, MobileNetworkObsoleteVersion? obsoleteVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkPlatform(MobileNetworkPlatformType? platformType, MobileNetworkVersionState? versionState, string minimumPlatformSoftwareVersion, string maximumPlatformSoftwareVersion, MobileNetworkRecommendedVersion? recommendedVersion, MobileNetworkObsoleteVersion? obsoleteVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlatformType = platformType;
             VersionState = versionState;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             MaximumPlatformSoftwareVersion = maximumPlatformSoftwareVersion;
             RecommendedVersion = recommendedVersion;
             ObsoleteVersion = obsoleteVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The platform type where this version can be deployed. </summary>
