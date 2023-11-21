@@ -38,12 +38,14 @@ if (!$?){
 } else {
   # Force update the extension to the latest version if it was already installed
   # this is needed to ensure we have the authentication issue fixed from earlier versions
+  Write-Host 'Updating azure-devops extension'
   az extension update -n azure-devops *> $null
 }
 
 . (Join-Path $PSScriptRoot SemVer.ps1)
 . (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
+Write-Host 'Checking Azure DevOps access'
 CheckDevOpsAccess
 
 $parsedNewVersion = [AzureEngSemanticVersion]::new($version)
@@ -76,6 +78,7 @@ if ($tag -and  $tag.Contains("Release Planner App Test")) {
   $ignoreReleasePlannerTests = $false
 }
 
+Write-Host 'Create or update package work item'
 $workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false -relatedId $relatedWorkItemId -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests
 
 if (!$workItem) {
